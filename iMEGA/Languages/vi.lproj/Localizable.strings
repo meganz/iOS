@@ -1365,7 +1365,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Multi-factor authentication required";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Business account has expired";
 /* SDK error returned when the credit card has been rejected */
@@ -1379,7 +1379,7 @@
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Lỗi không xác định được";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="Đang gọi...";
 /* notification subtitle of incoming calls */
 "Incoming call"="Cuộc gọi đến";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Bạn bỏ lỡ một cuộc gọi thoại";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] cuộc gọi thoại bị lỡ";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Bạn bỏ lỡ một cuộc gọi video";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] cuộc gọi video bị lỡ";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Một cuộc gọi thoại và một cuộc gọi video bị lỡ";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Một cuộc gọi thoại và [A] cuộc gọi video bị lỡ";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] cuộc gọi thoại và một cuộc gọi video bị lỡ";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] cuộc gọi thoại và [B] cuộc gọi video bị lỡ";
 /* Button title to see the available bonus */
 "getBonus"="Nhận thêm Thưởng";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1511,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Trước khi tiến hành việc đăng xuất, chúng tôi khuyên nên lưu lại Mã Khoá Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có mã sẽ không lấy lại được tài khoản.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Đừng hiện lại nữa";
+"dontShowAgain"="Không hiện nữa";
 /* Label for test password button and titles */
 "testPassword"="Kiểm Tra Mật Khẩu";
 /* Label for recovery key button */
