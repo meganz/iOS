@@ -775,13 +775,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (sender.tag) {
                 [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                     if (granted) {
-                        [self openCallViewWithVideo:sender.tag active:[[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]];
+                        [self openCallViewWithVideo:sender.tag];
                     } else {
                         [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                     }
                 }];
             } else {
-                [self openCallViewWithVideo:sender.tag active:[[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]];
+                [self openCallViewWithVideo:sender.tag];
             }
         } else {
             [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
@@ -789,10 +789,24 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }];
 }
 
-- (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
+- (void)openCallViewWithVideo:(BOOL)videoCall {
+    CallType callType;
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoom.chatId];
+    
+    if (call) {
+        if (call.status == MEGAChatCallStatusRingIn) {
+            callType = CallTypeIncoming;
+        } else {
+            callType = CallTypeActive;
+        }
+    } else {
+        callType = CallTypeOutgoing;
+    }
+    
     if (self.chatRoom.isGroup) {
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-        groupCallVC.callType = active ? CallTypeActive : [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId] ? CallTypeActive : CallTypeOutgoing;
+        groupCallVC.callType = callType;
+        groupCallVC.callId = call.callId;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -804,7 +818,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
         callVC.videoCall = videoCall;
-        callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
+        callVC.callType = callType;
+        callVC.callId = call.callId;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
         callVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -1607,7 +1622,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
         if (granted) {
             [self.timer invalidate];
-            [self openCallViewWithVideo:NO active:YES];
+            [self openCallViewWithVideo:NO];
         } else {
             [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
         }
