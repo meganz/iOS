@@ -232,6 +232,23 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download]))
     }
     
+    func testPreviewFileLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewLink)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
+    }
+    
+    func testPreviewPdfFileLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewLink)
+            .setIsPdf(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .thumbnailView]))
+    }
+    
     // MARK: - Chat tests
     
     func testChatSharedMediaFile() {
