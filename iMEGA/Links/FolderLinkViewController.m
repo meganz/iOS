@@ -162,9 +162,9 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (self.isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
+            [self.tableView reloadEmptyDataSet];
         }
         
-        [self.tableView reloadEmptyDataSet];
         if (self.searchController.active) {
             if (UIDevice.currentDevice.iPad) {
                 if (self != UIApplication.mnz_visibleViewController) {

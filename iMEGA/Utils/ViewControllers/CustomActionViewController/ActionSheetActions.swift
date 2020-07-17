@@ -130,4 +130,8 @@ extension NodeAction {
     class func forwardAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("forward", "Item of a menu to forward a message chat to another chatroom"), detail: nil, image: UIImage(named: "forwardToolbar"), type: .forward)
     }
+    
+    class func searchAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("Search", "Title of the Spotlight Search section"), detail: nil, image: UIImage(named: "search"), type: .search)
+    }
 }
