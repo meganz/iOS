@@ -19,10 +19,44 @@ extension ChatViewController {
         chatInputBar?.set(text: editMessage!.message.content)
     }
     
-    func deleteMessage(_ message: ChatMessage) {
-        selectedMessages.insert(message)
-        customToolbar(type: .delete)
-        setEditing(true, animated: true)
+    func deleteMessage(_ chatMessage: ChatMessage) {
+        
+        let megaMessage =  chatMessage.message
+        
+        if megaMessage.type == .attachment ||
+            megaMessage.type == .voiceClip {
+            if audioController.playingMessage?.messageId == chatMessage.messageId {
+                if audioController.state == .playing {
+                    audioController.stopAnyOngoingPlaying()
+                }
+            }
+            MEGASdkManager.sharedMEGAChatSdk()?.revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
+        } else {
+            let foundIndex = messages.firstIndex { message -> Bool in
+                guard let localChatMessage = message as? ChatMessage else {
+                    return false
+                }
+                
+                return chatMessage == localChatMessage
+            }
+            
+            guard let index = foundIndex else {
+                return
+            }
+            
+            if megaMessage.status == .sending {
+                chatRoomDelegate.chatMessage.remove(at: index)
+                messagesCollectionView.performBatchUpdates({
+                    messagesCollectionView.deleteSections([index])
+                }, completion: nil)
+            } else {
+                let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
+                let deleteMessage = MEGASdkManager.sharedMEGAChatSdk()?.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
+                deleteMessage?.chatId = chatRoom.chatId
+                chatRoomDelegate.chatMessage[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
+            }
+        }
+        
     }
     
     func removeRichPreview(_ message: ChatMessage) {
