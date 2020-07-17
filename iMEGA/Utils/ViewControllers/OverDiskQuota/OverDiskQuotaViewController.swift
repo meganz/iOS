@@ -38,20 +38,15 @@ final class OverDiskQuotaViewController: UIViewController {
         }
 
         func overDiskQuotaMessage(with traitCollection: UITraitCollection) -> NSAttributedString {
-            let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>",
-                                                  "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
-
-            let formattedMessage = String(format: message,
-                                        overDiskQuotaData.email,
-                                        overDiskQuotaData.formattedWarningDates(with: dateFormatter),
-                                        overDiskQuotaData.numberOfFiles(with: numberFormatter),
-                                        overDiskQuotaData.takingUpStorage(with: byteCountFormatter),
-                                        suggestedPlan)
+            var message: String
+            if let plan = overDiskQuotaData.plan {
+                message = suggestingMEGAPlan(from: overDiskQuotaData, withPlanName: plan)
+            } else {
+                message = suggestingContactSupport(from: overDiskQuotaData)
+            }
 
             let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadline2)]
-            return formattedMessage.attributedString(
-                with: styleMarks,
-                attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
+            return message.attributedString(with: styleMarks, attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
         }
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
@@ -78,13 +73,23 @@ final class OverDiskQuotaViewController: UIViewController {
             return calendar.dateComponents([.day], from: startDate, to: endDate).day!
         }
 
-        private var suggestedPlan: String {
-            if let plan = overDiskQuotaData.plan {
-                return String(format: AMLocalizedString("upgrade to <b>%@</b>", "Asks user to upgrade to plan"), plan)
-            }
+        private func suggestingMEGAPlan(from overDiskQuotaData: OverDiskQuotaInternal, withPlanName plan: String) -> String {
+            let localisedWarning = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>")
+            return String(format: localisedWarning,
+                          overDiskQuotaData.email,
+                          overDiskQuotaData.formattedWarningDates(with: dateFormatter),
+                          overDiskQuotaData.numberOfFiles(with: numberFormatter),
+                          overDiskQuotaData.takingUpStorage(with: byteCountFormatter),
+                          plan)
+        }
 
-            return AMLocalizedString("contact support for a custom plan",
-                                     "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
+        private func suggestingContactSupport(from overDiskQuotaData: OverDiskQuotaInternal) -> String {
+            let localisedWarning = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>")
+            return String(format: localisedWarning,
+                          overDiskQuotaData.email,
+                          overDiskQuotaData.formattedWarningDates(with: dateFormatter),
+                          overDiskQuotaData.numberOfFiles(with: numberFormatter),
+                          overDiskQuotaData.takingUpStorage(with: byteCountFormatter))
         }
     }
 
