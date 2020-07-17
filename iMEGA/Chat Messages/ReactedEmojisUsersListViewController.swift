@@ -62,7 +62,6 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         }
         
         addHeaderView(emojiList: emojiList)
-        headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0)
         let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
         updateEmojiHeaderViewDescription()
         guard let foundIndex = emojiList.firstIndex(of: selectedEmoji) else {
@@ -72,7 +71,12 @@ class ReactedEmojisUsersListViewController: UIViewController  {
                                                selectedPage: foundIndex,
                                                initialUserHandleList: userHandleList)
         add(viewController: reactedUsersListPageViewController)
-
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0, animated: false)
     }
     
     private func updateEmojiHeaderViewDescription() {

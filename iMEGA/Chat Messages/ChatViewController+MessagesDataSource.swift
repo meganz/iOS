@@ -100,23 +100,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
                                                       chatId: chatRoom.chatId,
                                                       messageId: chatMessage.message.messageId)
         
-        if UIDevice.current.iPadDevice {
-            let navController = MEGANavigationController(rootViewController: vc)
-            navController.navigationBar.isTranslucent = false
-            navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
-            navController.modalPresentationStyle = .popover;
-
-            if let popover = navController.popoverPresentationController {
-                popover.delegate = self
-
-                popover.sourceView = sender
-                popover.sourceRect = sender.bounds
-
-                present(navController, animated: true, completion: nil)
-            }
-        } else {
-            presentPanModal(vc)
-        }
+        presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)
     }
 }
 
