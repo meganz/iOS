@@ -80,9 +80,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     }
     
     private func updateEmojiHeaderViewDescription() {
-        if let selectedEmojiName = localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString {
-            headerView.updateDescription(text: selectedEmojiName)
-        }
+        headerView.updateDescription(text: localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString)
     }
     
     private func addHeaderView(emojiList: [String]) {
