@@ -1365,7 +1365,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Multi-factor authentication required";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Business account has expired";
 /* SDK error returned when the credit card has been rejected */
@@ -1379,7 +1379,7 @@
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Eroare necunoscută";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="Se apelează...";
 /* notification subtitle of incoming calls */
 "Incoming call"="Apel de intrare";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Apel audio ratat";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] apeluri audio ratate";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Apel video ratat";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] apeluri video ratate";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="1 apel audio ratat și 1 apel video ratat";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="1 apel audio ratat și [A] apeluri video ratate";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] apeluri audio ratate și 1 apel video ratat";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] apeluri audio ratate și [B] apeluri video ratate";
 /* Button title to see the available bonus */
 "getBonus"="Obține bonusul";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1511,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Înainte de a te deconecta, îți recomandăm să exporți cheia de recuperare într-un loc sigur. Reține că nu poți să resetezi parola dacă o uiți.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Nu-mi afișa din nou";
+"dontShowAgain"="Nu afișa din nou";
 /* Label for test password button and titles */
 "testPassword"="Testează parola";
 /* Label for recovery key button */
