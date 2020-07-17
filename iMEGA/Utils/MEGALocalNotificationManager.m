@@ -39,7 +39,7 @@
 - (void)processNotification {
     MEGALogDebug(@"[Notification] process notification: %@\n%@", self.chatRoom, self.message);
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
-        if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation || self.message.type == MEGAChatMessageTypeVoiceClip || (self.message.type == MEGAChatMessageTypeCallEnded && (self.message.termCode == MEGAChatMessageEndCallReasonCancelled || self.message.termCode == MEGAChatMessageEndCallReasonCancelled))) {
+        if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation || self.message.type == MEGAChatMessageTypeVoiceClip || (self.message.type == MEGAChatMessageTypeCallEnded && (self.message.termCode == MEGAChatMessageEndCallReasonCancelled || self.message.termCode == MEGAChatMessageEndCallReasonNoAnswer))) {
             if (self.message.deleted) {
                 [self removePendingAndDeliveredNotificationForMessage];
             } else {
