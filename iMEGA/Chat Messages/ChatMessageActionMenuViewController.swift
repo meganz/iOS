@@ -3,7 +3,7 @@ import UIKit
 class ChatMessageActionMenuViewController: ActionSheetViewController {
     weak var chatViewController: ChatViewController?
     private let separatorLineView = UIView.newAutoLayout()
-    
+    var emojiViews = [UIView]()
     var chatMessage: ChatMessage? {
         didSet {
             configureActions()
@@ -31,14 +31,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
         self.chatViewController?.copyMessage(chatMessage)
     }
-    
-//     lazy var  selectAction = ActionSheetAction(title: AMLocalizedString("select"), detail: nil, image: UIImage(named: "select"), style: .default) {
-//        guard let chatMessage = self.chatMessage else {
-//                return
-//            }
-    //            self.chatViewController?.copyMessage(chatMessage)
-    //    }
-    
+
     lazy var deleteAction = ActionSheetAction(title: AMLocalizedString("delete"), detail: nil, image: UIImage(named: "delete"), style: .destructive) {
         guard let chatMessage = self.chatMessage else {
             return
@@ -116,6 +109,9 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         super.updateAppearance()
         
         separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        emojiViews.forEach { (view) in
+            view.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
+        }
     }
     
     func configureActions() {
@@ -233,18 +229,20 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             emojiView.backgroundColor = UIColor.mnz_whiteF2F2F2()
             emojiView.autoSetDimensions(to: CGSize(width: 44, height: 44))
             emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
-
+            emojiViews.append(emojiView)
+            
             emojiHeader.addArrangedSubview(emojiView)
         }
         
         let addMoreView = UIButton()
         addMoreView.setImage(UIImage(named: "addReactionSmall"), for: .normal)
         addMoreView.layer.cornerRadius = 22
-        addMoreView.backgroundColor = UIColor.mnz_whiteF2F2F2()
+        addMoreView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
         addMoreView.imageView?.contentMode = .scaleAspectFit
-        addMoreView.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        addMoreView.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         addMoreView.autoSetDimensions(to: CGSize(width: 44, height: 44))
         addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
+        emojiViews.append(addMoreView)
 
         emojiHeader.addArrangedSubview(addMoreView)
 
@@ -259,6 +257,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         
     }
+    
     
     @objc func emojiPress(_ sender: UIButton) {
         let emoji = sender.attributedTitle(for: .normal)?.string
@@ -278,7 +277,6 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
         
     }
-    
     
     // MARK: - Internal methods used by the extension of this class
 
