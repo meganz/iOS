@@ -388,6 +388,7 @@
 - (IBAction)hangCall:(UIButton *)sender {
     [self removeAllVideoListeners];
     [self.megaCallManager endCallWithCallId:self.callId chatId:self.chatRoom.chatId];
+    [MEGASdkManager.sharedMEGAChatSdk hangChatCall:self.chatRoom.chatId];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
