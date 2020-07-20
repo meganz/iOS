@@ -118,7 +118,7 @@ class ChatViewController: MessagesViewController {
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         }
         reloadInputViews()
-        updateRightBarButtons()
+        configureNavigationBar()
     }
     
     override func viewDidLoad() {
@@ -824,7 +824,7 @@ class ChatViewController: MessagesViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.reachabilityChanged,
                                                object: nil,
                                                queue: OperationQueue.main) { [weak self] _ in
-                                                self?.updateRightBarButtons()
+                                                self?.configureNavigationBar()
         }
         
         NotificationCenter.default.addObserver(self,

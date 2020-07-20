@@ -36,7 +36,7 @@ extension ChatViewController {
         setTitleView()
     }
     
-    func updateRightBarButtons() {
+    private func updateRightBarButtons() {
         guard !isEditing else {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
             return
