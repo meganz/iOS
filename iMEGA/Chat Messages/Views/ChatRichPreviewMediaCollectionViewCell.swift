@@ -54,8 +54,11 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     guard visibleIndexPaths.contains(indexPath) else {
                         return
                     }
-                    
-                    messagesCollectionView.reloadItems(at: [indexPath])
+                    if self.isLastSectionVisible(collectionView: messagesCollectionView) {
+                        messagesCollectionView.reloadDataAndKeepOffset()
+                    } else {
+                        messagesCollectionView.reloadItems(at: [indexPath])
+                    }
                 }))
                 
                 return
@@ -70,8 +73,11 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                         return
                     }
                     
-                    messagesCollectionView.reloadItems(at: [indexPath])
-                    
+                    if self.isLastSectionVisible(collectionView: messagesCollectionView) {
+                        messagesCollectionView.reloadDataAndKeepOffset()
+                    } else {
+                        messagesCollectionView.reloadItems(at: [indexPath])
+                    }
                 }))
                 return
             }
@@ -85,8 +91,11 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                         return
                     }
                     
-                    messagesCollectionView.reloadItems(at: [indexPath])
-                    
+                    if self.isLastSectionVisible(collectionView: messagesCollectionView) {
+                        messagesCollectionView.reloadDataAndKeepOffset()
+                    } else {
+                        messagesCollectionView.reloadItems(at: [indexPath])
+                    }
                 }))
                 return
             }
