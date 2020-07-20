@@ -140,8 +140,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             guard messagesCollectionView.numberOfSections > indexPath.section else {
                 return
             }
-
-            messagesCollectionView.reloadItems(at: [indexPath])
+            
+            if self.isLastSectionVisible(collectionView: messagesCollectionView) {
+                messagesCollectionView.reloadDataAndKeepOffset()
+            } else {
+                messagesCollectionView.reloadItems(at: [indexPath])
+            }
         }
 
         durationLabel.isHidden = true
