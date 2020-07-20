@@ -137,6 +137,38 @@ class ChatViewController: MessagesViewController {
         configurePreviewerButton()
         addObservers()
         addChatBottomInfoScreenToView()
+        configureGuesture()
+      
+    }
+    
+    
+     @objc private func longPressed(_ gesture: UIGestureRecognizer) {
+        
+        let touchLocation = gesture.location(in: messagesCollectionView)
+        guard let indexPath = messagesCollectionView.indexPathForItem(at: touchLocation) else { return }
+        
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("Ouch. nil data source for messages")
+        }
+        
+        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage, let cell = messagesCollectionView.cellForItem(at: indexPath) as? MessageContentCell else {
+            return
+        }
+        
+        switch chatMessage.kind {
+        case .custom:
+            
+            let megaMessage = chatMessage.message
+            if megaMessage.isManagementMessage {
+                return
+            }
+            selectedIndexPathForMenu = indexPath
+            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
+            present(viewController: menu)
+        default:
+            return
+        }
+        
     }
     
     override var hidesBottomBarWhenPushed: Bool {
@@ -242,225 +274,8 @@ class ChatViewController: MessagesViewController {
 
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("Ouch. nil data source for messages")
-        }
         
-        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        let message = chatMessage.message
-        if MEGASdkManager.sharedMEGAChatSdk()?.initState() == .anonymous
-        && action != NSSelectorFromString("copy:") {
-            return false
-        }
-        
-        switch chatMessage.message.type {
-        case .invalid, .revokeAttachment:
-            return false
-        case .normal:
-            //All messages
-            if action == NSSelectorFromString("copy:")
-            || action == NSSelectorFromString("forward:") {
-                return true
-            }
-            
-            //Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if action == NSSelectorFromString("delete:") {
-                    if message.isDeletable {
-                        if editMessage?.message.messageId != message.messageId {
-                            return true
-                        }
-                    }
-                }
-                
-                if action == NSSelectorFromString("edit:") {
-                    return message.isEditable
-                }
-            }
-        case .containsMeta:
-            //All messages
-            if (action == NSSelectorFromString("copy:") && message.containsMeta.type != .geolocation)
-                || action == NSSelectorFromString("forward:") {
-                return true
-            }
-            
-            //Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if action == NSSelectorFromString("delete:") {
-                    if message.isDeletable {
-                        if editMessage?.message.messageId != message.messageId {
-                            return true
-                        }
-                    }
-                }
-                
-                if action == NSSelectorFromString("edit:") {
-                    return message.isEditable
-                }
-                
-                if action == NSSelectorFromString("removeRichPreview:") && message.containsMeta.type != .geolocation {
-                    return message.isEditable
-                }
-            }
-        case .alterParticipants, .truncate, .privilegeChange, .chatTitle:
-            if action == NSSelectorFromString("copy:") {
-                return true
-            }
-        case .attachment:
-            if action == NSSelectorFromString("download:")
-                || action == NSSelectorFromString("forward:") {
-                return true
-            }
-            
-            //Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if action == NSSelectorFromString("delete:") && message.isDeletable {
-                    return true
-                }
-            } else {
-                if action == NSSelectorFromString("importMessage:") {
-                    return true
-                }
-            }
-            
-        case .voiceClip:
-            if (action == NSSelectorFromString("download:")
-                || action == NSSelectorFromString("forward:")) && message.richNumber != nil {
-                return true
-            }
-            
-            //Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if action == NSSelectorFromString("delete:") && message.isDeletable {
-                    return true
-                }
-            } else {
-                if action == NSSelectorFromString("importMessage:") {
-                    return true
-                }
-            }
-            
-        case .contact:
-            if action == NSSelectorFromString("forward:") {
-                return true
-            }
-            
-            //Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if action == NSSelectorFromString("delete:") && message.isDeletable {
-                    return true
-                }
-            }
-            
-            if action == NSSelectorFromString("addContact:") {
-                if message.usersCount == 1 {
-                    let email = message.userEmail(at: 0)!
-                    let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email)
-                    if user?.visibility != .visible {
-                        return true
-                    } else {
-                        for index in 0...message.usersCount - 1 {
-                            let email = message.userEmail(at: index)!
-                            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email)
-                            if user?.visibility == .visible {
-                                return false
-                            }
-                        }
-                        return true
-                    }
-                    
-                }
-            }
-        default:
-            return false
-            
-        }
-        return false
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("Ouch. nil data source for messages")
-        }
-        
-        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        
-        if action == NSSelectorFromString("copy:") {
-            copyMessage(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("edit:") {
-            editMessage(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("forward:") {
-            forwardMessage(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("importMessage:") {
-            importMessage(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("download:") {
-            downloadMessage(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("addContact:") {
-            addContactMessage(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("removeRichPreview:") {
-            removeRichPreview(chatMessage)
-            return
-        }
-        
-        if action == NSSelectorFromString("delete:") {
-            deleteMessage(chatMessage)
-            return
-        } else {
-            super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
-        }
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
-        
-        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,         let cell = messagesCollectionView.cellForItem(at: indexPath) as? MessageContentCell else {
-            return false
-        }
-        
-        var shouldShowMenu = false
-      
-        switch chatMessage.kind {
-        case .custom:
-            shouldShowMenu = false
-            
-            let megaMessage = chatMessage.message
-            if megaMessage.isManagementMessage {
-                shouldShowMenu = false
-            }
-            selectedIndexPathForMenu = indexPath
-            shouldShowMenu = true
-        default:
-            selectedIndexPathForMenu = indexPath
-            shouldShowMenu = true
-        }
-        
-        if shouldShowMenu {
-            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
-            present(viewController: menu)
-        }
-        
         return false
     }
     
@@ -770,6 +585,12 @@ class ChatViewController: MessagesViewController {
         previewerView.autoAlignAxis(toSuperviewAxis: .vertical)
         previewerView.autoSetDimensions(to: CGSize(width: 75, height: 34))
         previewerView.isHidden = true
+    }
+    
+    func configureGuesture() {
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:)))
+        
+        messagesCollectionView.addGestureRecognizer(longPressRecognizer)
     }
     
     private func registerCustomCells() {
