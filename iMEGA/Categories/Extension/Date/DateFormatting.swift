@@ -5,10 +5,14 @@ import Foundation
 /// Discussion: Adding this protocol is mean to extract the ability of formatting a `Date` object out of `DateFormatter` and shadow other abilities that a
 /// `DateFormatter`. For example, instead of returning `DateFormatter` from a dateFormatterFactory, returning the shadow - `DateFormatting`
 /// which end users to alter the formatter while using.
-protocol DateFormatting {
+@objc protocol DateFormatting {
 
-    func string(from date: Date) -> String
+    func localisedString(from date: Date) -> String
 }
 
-// `DateFormatter` is already conforming to `DateFormatting` protocol
-extension DateFormatter: DateFormatting {}
+// Make `DateFormatter` conforming to `DateFormatting` protocol
+extension DateFormatter: DateFormatting {
+    func localisedString(from date: Date) -> String {
+        string(from: date)
+    }
+}

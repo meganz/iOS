@@ -339,18 +339,18 @@ enum SessionSectionRow: Int {
         let startingOfToday = Date().startOfDay(on: calendar)
         guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,
                                                                 on: Calendar.current) else {
-            return DateFormatter.dateMedium
+                                                                    return DateFormatter.dateMedium()
         }
         let numberOfDaysAWeek = 7
         if daysOfDistance > numberOfDaysAWeek  {
-            return DateFormatter.dateMedium
+            return DateFormatter.dateMedium()
         }
 
         if expiryDate.isToday(on: calendar) || expiryDate.isTomorrow(on: calendar) {
-            return DateFormatter.dateMediumRelative
+            return DateFormatter.dateRelativeMedium()
         }
 
-        return DateFormatter.dateMediumWithWeekday
+        return DateFormatter.dateMediumWithWeekday()
     }
 
     // MARK: - IBActions
@@ -406,10 +406,10 @@ extension ProfileViewController: UITableViewDataSource {
             if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate)
+                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
                 } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate))
+                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
                 }
             }
             return planFooterString
