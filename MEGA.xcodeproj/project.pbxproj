@@ -1079,6 +1079,10 @@
 		BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E9D235541E1001C18E0 /* GlobalDNDNotificationControl.swift */; };
 		BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */; };
 		BF943EA62355449B001C18E0 /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */; };
+		BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A41B24B2AC1B0035A183 /* ChatUploader.swift */; };
+		BF99A41F24B2AD040035A183 /* ChatUploadTransfer+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A41D24B2AD030035A183 /* ChatUploadTransfer+CoreDataClass.swift */; };
+		BF99A42024B2AD040035A183 /* ChatUploadTransfer+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A41E24B2AD030035A183 /* ChatUploadTransfer+CoreDataProperties.swift */; };
+		BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */; };
 		BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */; };
 		BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */; };
 		BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */; };
@@ -2483,6 +2487,11 @@
 		BF943E9A23554181001C18E0 /* PushNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationControl.swift; sourceTree = "<group>"; };
 		BF943E9D235541E1001C18E0 /* GlobalDNDNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDNDNotificationControl.swift; sourceTree = "<group>"; };
 		BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatNotificationControl.swift; path = Chat/ChatNotificationControl.swift; sourceTree = "<group>"; };
+		BF99A41A24B2AA500035A183 /* MEGACD 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 6.xcdatamodel"; sourceTree = "<group>"; };
+		BF99A41B24B2AC1B0035A183 /* ChatUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUploader.swift; sourceTree = "<group>"; };
+		BF99A41D24B2AD030035A183 /* ChatUploadTransfer+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatUploadTransfer+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BF99A41E24B2AD030035A183 /* ChatUploadTransfer+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatUploadTransfer+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+ChatUploadTransfer.swift"; sourceTree = "<group>"; };
 		BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDelegate.swift; sourceTree = "<group>"; };
 		BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewFlowLayout.swift; sourceTree = "<group>"; };
 		BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDataSource.swift; sourceTree = "<group>"; };
@@ -3648,6 +3657,9 @@
 				A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */,
 				41D1E0B91B58F0B800982830 /* MOOfflineNode.h */,
 				41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */,
+				BF99A41E24B2AD030035A183 /* ChatUploadTransfer+CoreDataProperties.swift */,
+				BF99A41D24B2AD030035A183 /* ChatUploadTransfer+CoreDataClass.swift */,
+				BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */,
 			);
 			path = ManagedObjects;
 			sourceTree = "<group>";
@@ -3714,6 +3726,7 @@
 				2F3083BB2428169E0058DF91 /* Chat.storyboard */,
 				41CD146E1DB150F600E545BC /* MessagesViewController.h */,
 				41CD146F1DB150F600E545BC /* MessagesViewController.m */,
+				BF99A41B24B2AC1B0035A183 /* ChatUploader.swift */,
 				5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */,
 				5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */,
 				5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */,
@@ -6164,10 +6177,12 @@
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
+				BF99A42024B2AD040035A183 /* ChatUploadTransfer+CoreDataProperties.swift in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
+				BF99A41F24B2AD040035A183 /* ChatUploadTransfer+CoreDataClass.swift in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
 				A86B9F7D2316D6AB00F35E7A /* FLEXImagePreviewViewController.m in Sources */,
@@ -6232,6 +6247,7 @@
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
+				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
@@ -6419,6 +6435,7 @@
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
 				837B9C07247817F100D409B4 /* NodeActionBuilder.swift in Sources */,
+				BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */,
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				A86B9F642316D6AB00F35E7A /* FLEXKeychainQuery.m in Sources */,
@@ -7804,13 +7821,14 @@
 		4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				BF99A41A24B2AA500035A183 /* MEGACD 6.xcdatamodel */,
 				5B3740CC2421600B00BA75EA /* MEGACD 5.xcdatamodel */,
 				BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */,
 				417B5AA91DEC771200A193D5 /* MEGACD 3.xcdatamodel */,
 				41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */,
 				4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */,
 			);
-			currentVersion = 5B3740CC2421600B00BA75EA /* MEGACD 5.xcdatamodel */;
+			currentVersion = BF99A41A24B2AA500035A183 /* MEGACD 6.xcdatamodel */;
 			path = MEGACD.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -1159,12 +1159,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
 }
 
-- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData asVoiceClip:(BOOL)asVoiceClip {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self showProgressViewUnderNavigationBar];
-    });
-    
-    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(MEGATransfer *transfer) {
+- (MEGAStartUploadTransferDelegate *)startUploadTransferDelegate {
+    return [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(MEGATransfer *transfer) {
         long long totalBytes = transfer.totalBytes.longLongValue;
         self.totalBytesToUpload += totalBytes;
         self.remainingBytesToUpload += totalBytes;
@@ -1194,17 +1190,24 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self resetAndHideProgressView];
         }
     }];
+}
+
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData asVoiceClip:(BOOL)asVoiceClip {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showProgressViewUnderNavigationBar];
+    });
     
     if (!appData) {
         appData = [NSString new];
     }
     appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId asVoiceClip:asVoiceClip];
     
-    [MEGASdkManager.sharedMEGASdk startUploadForChatWithLocalPath:path
-                                                           parent:parentNode
-                                                          appData:appData
-                                                isSourceTemporary:!asVoiceClip
-                                                         delegate:startUploadTransferDelegate];
+    [ChatUploader.sharedInstance uploadWithFilepath:path
+                                            appData:appData
+                                         chatRoomId:self.chatRoom.chatId
+                                         parentNode:parentNode
+                                  isSourceTemporary:!asVoiceClip
+                                           delegate:self.startUploadTransferDelegate];
 }
 
 - (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
