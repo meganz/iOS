@@ -235,7 +235,11 @@ static NSString *kPath = @"kPath";
             [self.offline setEditMode:NO];
         }];
     }];
-    deleteAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    if (@available(iOS 13.0, *)) {
+        deleteAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    } else {
+        deleteAction.image = [UIImage imageNamed:@"delete"];
+    }
     deleteAction.backgroundColor = UIColor.mnz_redError;
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
