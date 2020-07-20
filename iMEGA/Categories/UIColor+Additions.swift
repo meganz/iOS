@@ -191,6 +191,54 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_reactionBubbleBoarder(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+            case .dark:
+                return UIColor.mnz_(fromHexString: "38383A")
+            @unknown default:
+                return UIColor.white
+            }
+        } else {
+            return UIColor.white
+        }
+    }
+    
+    @objc class func mnz_reactionBubbleBackgroundColor(_ traitCollection: UITraitCollection, selected: Bool) -> UIColor {
+         if #available(iOS 13.0, *) {
+             switch traitCollection.userInterfaceStyle {
+             case .unspecified, .light:
+                if selected {
+                    return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+                } else {
+                    return  UIColor.mnz_secondaryBackground(for: traitCollection)
+                }
+                
+             case .dark:
+                if selected {
+                    return UIColor(red: 0, green: 163.0/255.0, blue: 130.0/255.0, alpha: 0.3)
+                } else {
+                    return  UIColor.mnz_secondaryBackground(for: traitCollection)
+                }
+                
+             @unknown default:
+                if selected {
+                    return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+                } else {
+                    return  UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+                }
+            }
+         } else {
+            if selected {
+                return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+            } else {
+                return  UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+            }
+        }
+    }
+    
     // MARK: - Objects
     @objc class func mnz_chatIncomingBubble(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {

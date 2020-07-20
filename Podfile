@@ -8,9 +8,9 @@ target 'MEGA' do
   pod 'MessageKit'
   pod 'YYWebImage'
   pod 'PanModal'
-  pod 'ISEmojiView'
   pod 'FlexLayout'
   pod 'PinLayout'
+  pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
 
   # Pods for MEGA
 

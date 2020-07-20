@@ -32,8 +32,9 @@ class ReactionEmojiButton: UIButton {
         let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)])
         let attributedCount = NSAttributedString(string: " \(count)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .medium),
                                                                                    NSAttributedString.Key.baselineOffset:3,
-                                                                                
+                                                                                  
         ])
+        setTitleColor(.mnz_label(), for: .normal)
         let attributedString = NSMutableAttributedString()
         attributedString.append(attributedEmoji)
         attributedString.append(attributedCount)
@@ -46,13 +47,25 @@ class ReactionEmojiButton: UIButton {
         layer.cornerRadius = 12
         
         if emojiSelected {
-            backgroundColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 0.1)
             layer.borderColor = UIColor.mnz_(fromHexString: "009476").cgColor
         } else {
-            backgroundColor = UIColor.mnz_(fromHexString: "f9f9f9")
-            layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
+            layer.borderColor = UIColor.mnz_reactionBubbleBoarder(self.traitCollection).cgColor
         }
+        backgroundColor = UIColor.mnz_reactionBubbleBackgroundColor(self.traitCollection, selected: emojiSelected)
+
+    }
+    
+    private func updateAppearance () {
+        configure()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         
+        guard #available(iOS 13, *) else {
+            return
+        }
+        updateAppearance()
     }
     
     @objc func longPress(_ tapGesture: UITapGestureRecognizer) {

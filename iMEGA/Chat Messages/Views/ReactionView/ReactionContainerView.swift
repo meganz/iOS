@@ -15,10 +15,11 @@ class ReactionContainerView: UIView {
         let addMoreView = UIButton()
         addMoreView.setImage(UIImage(named: "addReactionSmall"), for: .normal)
         addMoreView.imageView?.contentMode = .scaleAspectFit
-        addMoreView.layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
+        addMoreView.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+        addMoreView.layer.borderColor = UIColor.mnz_reactionBubbleBoarder(addMoreView.traitCollection).cgColor
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12
-        addMoreView.backgroundColor = UIColor.mnz_(fromHexString: "f9f9f9")
+        addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: addMoreView.traitCollection)
 
         return addMoreView
     }()
@@ -73,12 +74,28 @@ class ReactionContainerView: UIView {
         super.init(frame: .zero)
         addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
         addSubview(rootFlexContainer)
+        updateAppearance()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    private func updateAppearance() {
+        addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: self.traitCollection)
+        addMoreView.layer.borderColor = UIColor.mnz_reactionBubbleBoarder(self.traitCollection).cgColor
 
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard #available(iOS 13, *) else {
+            return
+        }
+        updateAppearance()
+    }
+    
     func emojiSelected(_ userhandles: MEGAHandleList) -> Bool {
         for index in 0..<userhandles.size {
             if userhandles.megaHandle(at: index) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {

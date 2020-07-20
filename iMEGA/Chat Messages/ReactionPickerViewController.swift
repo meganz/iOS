@@ -13,6 +13,12 @@ class ReactionPickerViewController: UIViewController {
         let emojiView = EmojiView(keyboardSettings: keyboardSettings)
         emojiView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 300)
         emojiView.delegate = self
+        
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
         view.addSubview(emojiView)
         return emojiView
         
