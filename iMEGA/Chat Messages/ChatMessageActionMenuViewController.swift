@@ -16,7 +16,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             return
         }
         self.chatViewController?.forwardMessage(chatMessage)
-    }
+     }
     
      lazy var editAction = ActionSheetAction(title: AMLocalizedString("edit"), detail: nil, image: UIImage(named: "rename"), style: .default) {
         guard let chatMessage = self.chatMessage else {
@@ -131,14 +131,87 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [forwardAction, copyAction]
             //Your messages
             if isFromCurrentSender(message: chatMessage) {
-                actions.append(contentsOf: [editAction, deleteAction])
+                if chatMessage.message.isEditable {
+                    actions.append(contentsOf: [editAction])
+                }
+                if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
+                    actions.append(contentsOf: [deleteAction])
+                }
+                
+                
             }
             
         case .containsMeta:
             //All messages
-            actions = [forwardAction, copyAction]
-
-            break
+            actions = [forwardAction]
+            if chatMessage.message.containsMeta.type != .geolocation {
+                actions.append(contentsOf: [copyAction])
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+               
+                if chatMessage.message.isEditable {
+                    actions.append(contentsOf: [editAction])
+                    if chatMessage.message.containsMeta.type != .geolocation {
+                        actions.append(contentsOf: [removeRichLinkAction])
+                    }
+                }
+                if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
+                    actions.append(contentsOf: [deleteAction])
+                }
+                
+            }
+            
+        case .alterParticipants, .truncate, .privilegeChange, .chatTitle:
+            //All messages
+            actions = [copyAction]
+            
+        case .attachment:
+            actions = [saveForOfflineAction, forwardAction]
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if chatMessage.message.isDeletable {
+                    actions.append(contentsOf: [deleteAction])
+                }
+            } else {
+                actions.append(contentsOf: [importAction])
+            }
+        case .voiceClip:
+            actions = [saveForOfflineAction]
+            if (chatMessage.message.richNumber) != nil {
+                actions.append(forwardAction)
+            }
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if chatMessage.message.isDeletable {
+                    actions.append(contentsOf: [deleteAction])
+                }
+            } else {
+                actions.append(contentsOf: [importAction])
+            }
+        case .contact:
+            actions = [forwardAction]
+         
+            if chatMessage.message.usersCount == 1 {
+                if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
+                    actions.append(contentsOf: [addContactAction])
+                } else {
+                    for index in 0..<chatMessage.message.usersCount {
+                        if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
+                            return
+                        }
+                    }
+                    actions.append(contentsOf: [addContactAction])
+                }
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if chatMessage.message.isDeletable {
+                    actions.append(contentsOf: [deleteAction])
+                }
+            }
         default:
             break
         }
