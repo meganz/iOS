@@ -2030,8 +2030,8 @@
         <image name="backArrow" width="13" height="21"/>
         <image name="callVideoRound" width="37" height="37"/>
         <image name="callVideoRound, disabled" width="37" height="37"/>
-        <image name="checkBox" width="20" height="20"/>
-        <image name="checkBoxSelected" width="20" height="20"/>
+        <image name="checkBox" width="24" height="24"/>
+        <image name="checkBoxSelected" width="72" height="72"/>
         <image name="contactVerified" width="14" height="14"/>
         <image name="contact_request_accept" width="28" height="28"/>
         <image name="contact_request_deny" width="28" height="28"/>

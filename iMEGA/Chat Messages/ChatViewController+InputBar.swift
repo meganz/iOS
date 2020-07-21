@@ -1,5 +1,6 @@
 import Foundation
 import MessageKit
+import ISEmojiView
 
 extension ChatViewController {
     
@@ -9,6 +10,8 @@ extension ChatViewController {
         guard !isEditing else {
             return nil
         }
+   
+//        return emojiInputView
         
         if let chatRoom = chatRoom,
             chatRoom.isPublicChat,
@@ -21,7 +24,6 @@ extension ChatViewController {
             chatInputBar = ChatInputBar()
             chatInputBar?.delegate = self
         }
-        
         return chatInputBar
     }
     
@@ -38,7 +40,7 @@ extension ChatViewController {
         }
         return joinInputBar
     }
-    
+
     // MARK: - Interface methods.
     
      func present(viewController: UIViewController) {

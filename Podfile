@@ -7,6 +7,11 @@ target 'MEGA' do
   use_frameworks!
   pod 'MessageKit'
   pod 'YYWebImage'
+  pod 'PanModal'
+  pod 'FlexLayout'
+  pod 'PinLayout'
+  pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
+
   # Pods for MEGA
 
   target 'MEGAUnitTests' do

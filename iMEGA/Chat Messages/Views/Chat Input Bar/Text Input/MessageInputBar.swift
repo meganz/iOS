@@ -145,6 +145,9 @@ class MessageInputBar: UIView {
     func set(text: String, showKeyboard: Bool) {
         messageTextView.set(text: text, showKeyboard: showKeyboard)
         updateTextUI()
+        if !text.isEmpty {
+            showSendButtonUI()
+        }
     }
     
     func set(keyboardAppearance: UIKeyboardAppearance) {
@@ -325,6 +328,34 @@ class MessageInputBar: UIView {
         expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
+    private func showSendButtonUI() {
+        if !self.messageTextView.isFirstResponder
+            || self.backgroundViewTrailingButtonConstraint.isActive {
+            return
+        }
+        
+        self.sendButton.alpha = 0.0
+        self.sendButton.isHidden = false
+        MEGALogDebug("[MessageInputBar] Send Button UI triggered")
+        
+        UIView.animate(withDuration: self.animationDuration, animations: {
+            self.backgroundViewTrailingTextViewConstraint.isActive = false
+            self.backgroundViewTrailingButtonConstraint.isActive = true
+            self.micButton.alpha = 0.0
+            self.sendButton.alpha = 1.0
+            self.layoutIfNeeded()
+            MEGALogDebug("[MessageInputBar] Send Button UI animation started")
+            
+        }) { _ in
+            self.micButton.isHidden = true
+            self.micButton.alpha = 1.0
+            
+            self.sendButton.isHidden = false
+            self.sendButton.alpha = 1.0
+            MEGALogDebug("[MessageInputBar] Send Button UI animation completed")
+        }
+    }
+    
     private func keyboardWillShowNotification() -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
@@ -335,31 +366,7 @@ class MessageInputBar: UIView {
                 return
             }
                         
-            if !self.messageTextView.isFirstResponder
-                || self.backgroundViewTrailingButtonConstraint.isActive {
-                return
-            }
-                        
-            self.sendButton.alpha = 0.0
-            self.sendButton.isHidden = false
-            MEGALogDebug("[MessageInputBar] Keyboard will show notification triggered")
-
-            UIView.animate(withDuration: self.animationDuration, animations: {
-                self.backgroundViewTrailingTextViewConstraint.isActive = false
-                self.backgroundViewTrailingButtonConstraint.isActive = true
-                self.micButton.alpha = 0.0
-                self.sendButton.alpha = 1.0
-                self.layoutIfNeeded()
-                MEGALogDebug("[MessageInputBar] Keyboard will show notification animation started")
-
-            }) { _ in
-                self.micButton.isHidden = true
-                self.micButton.alpha = 1.0
-                
-                self.sendButton.isHidden = false
-                self.sendButton.alpha = 1.0
-                MEGALogDebug("[MessageInputBar] Keyboard will show notification animation completed")
-            }
+            self.showSendButtonUI()
         }
     }
     

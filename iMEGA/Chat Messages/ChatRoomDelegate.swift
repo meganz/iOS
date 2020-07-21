@@ -39,6 +39,28 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - MEGAChatRoomDelegate methods
 
+    func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
+     
+        let index = messages.firstIndex { (message) -> Bool in
+            guard let message = message as? ChatMessage else {
+                return false
+            }
+            
+            return messageId == message.message.messageId
+        }
+        
+        UIView.performWithoutAnimation {
+            chatViewController?.messagesCollectionView.performBatchUpdates({
+                chatViewController?.messagesCollectionView.reloadSections([index ?? 0])
+            },  completion: { _ in
+                if index == self.messages.count - 1 {
+                    self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                }
+            })
+        }
+        
+    }
+    
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
         chatViewController?.chatRoom = chat
@@ -126,7 +148,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 
                 self.chatViewController?.messagesCollectionView.reloadData()
                 self.chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
-                
+                self.chatViewController?.messagesCollectionView.scrollToBottom(animated: false)
+
                 return
             }
             
