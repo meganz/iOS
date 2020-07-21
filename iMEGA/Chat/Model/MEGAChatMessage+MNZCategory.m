@@ -338,6 +338,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
         UIFont *textFont = textFontRegular;
         if (self.content.mnz_isPureEmojiString) {
             textFont = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[self.content mnz_emojiCount]];
+            textColor = UIColor.mnz_label;
         }
         self.attributedText = [NSAttributedString mnz_attributedStringFromMessage:self.content
                                                                              font:textFont
