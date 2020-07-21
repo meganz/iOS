@@ -61,11 +61,10 @@ extension ChatNotificationControl {
     
     private func turnOnDND(chatId: Int64, option: DNDTurnOnOption) {
         updatePushNotificationSettings {
-            if option == .forever {
-                self.pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
+            if let timeStamp = dndTimeInterval(dndTurnOnOption: option) {
+                self.pushNotificationSettings?.setChatDndForChatId(chatId, untilTimestamp: timeStamp)
             } else {
-                self.pushNotificationSettings?.setChatDndForChatId(chatId,
-                                                                   untilTimestamp: dndTimeInterval(dndTurnOnOption: option))
+                MEGALogDebug("[ChatNotificationControl] timestamp is nil")
             }
         }
     }

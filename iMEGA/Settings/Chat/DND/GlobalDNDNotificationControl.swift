@@ -40,10 +40,10 @@ class GlobalDNDNotificationControl: PushNotificationControl {
 extension GlobalDNDNotificationControl {
     private func turnOnDND(dndTurnOnOption: DNDTurnOnOption) {
         updatePushNotificationSettings {
-            if dndTurnOnOption == .forever {
-                self.pushNotificationSettings?.globalChatsDndEnabled = true
+            if let timeStamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption) {
+                self.pushNotificationSettings?.globalChatsDNDTimestamp = timeStamp
             } else {
-                self.pushNotificationSettings?.globalChatsDNDTimestamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption)
+                MEGALogDebug("[GlobalDNDNotificationControl] timestamp is nil")
             }
         }
     }
