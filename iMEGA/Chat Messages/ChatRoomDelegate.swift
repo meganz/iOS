@@ -44,6 +44,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         chatViewController?.chatRoom = chat
         chatRoom = chat
         switch chat.changes {
+        case .participants:
+            chatViewController?.reloadInputViews()
         case .userTyping:
             guard !(chatViewController?.isEditing ?? false)  else {
                 return
