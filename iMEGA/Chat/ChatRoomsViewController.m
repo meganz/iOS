@@ -10,6 +10,7 @@
 #import "Helper.h"
 #import "MEGAChatChangeGroupNameRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
+#import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -584,6 +585,9 @@
 
 - (void)presentGroupOrContactDetailsForChatListItem:(MEGAChatListItem *)chatListItem {
     if (chatListItem.isGroup) {
+        if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:chatListItem.chatId]]) {
+            return;
+        }
         GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
         groupChatDetailsVC.chatRoom = chatRoom;

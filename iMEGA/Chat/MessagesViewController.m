@@ -1007,6 +1007,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.navigationItem.backBarButtonItem = backBarButton;
     
     if (self.chatRoom.isGroup) {
+        if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]) {
+            return;
+        }
         GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
         groupChatDetailsVC.chatRoom = self.chatRoom;
         
@@ -1365,12 +1368,18 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (BOOL)shouldShowJoinView {
-    return self.chatRoom.isPublicChat && self.chatRoom.isPreview && !self.chatLinkBeenClosed;
+    return (self.chatRoom.isPublicChat && self.chatRoom.isPreview && !self.chatLinkBeenClosed) || [MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
 }
 
 - (void)updateJoinView {
-    BOOL hidden = !self.shouldShowJoinView;
-    [self.inputToolbar mnz_setJoinViewHidden:hidden];
+    JoinViewState newState;
+    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
+    if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:base64Handle]) {
+        newState = self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo ? JoinViewStateJoining : JoinViewStateLeaving;
+    } else {
+        newState = self.shouldShowJoinView ? JoinViewStateDefault : JoinViewStateHidden;
+    }
+    [self.inputToolbar mnz_setJoinViewState:newState];
 }
 
 - (void)setLastMessageAsSeen {
@@ -2125,11 +2134,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     } else {
         MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
             self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-            sender.enabled = YES;
+            [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
             [self updateJoinView];
         }];
         [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
-        sender.enabled = NO;
+        [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+        [self updateJoinView];
     }
 }
 

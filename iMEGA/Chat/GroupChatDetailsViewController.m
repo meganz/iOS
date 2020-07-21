@@ -14,6 +14,7 @@
 #import "GroupChatDetailsViewTableViewCell.h"
 
 #import "MEGAInviteContactRequestDelegate.h"
+#import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "MEGAGlobalDelegate.h"
@@ -225,7 +226,14 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
+        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            if (!error.type) {
+                [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+            }
+        }];
+        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId delegate:delegate];
+        [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+        [self.navigationController popViewControllerAnimated:YES];
     }]];
     
     [self presentViewController:leaveAlertController animated:YES completion:nil];
