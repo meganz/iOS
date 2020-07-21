@@ -8,7 +8,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         print("Accessory view tapped")
-        cell.forward(nil)
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
+                print("Failed to identify message when audio cell receive tap gesture")
+                return
+        }
+        forwardMessage(message)
     }
     
     func didSelectURL(_ url: URL) {
@@ -43,14 +48,11 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     }
     
     func didTapMessage(in cell: MessageCollectionViewCell) {
-        print("Message view tapped")
-        let indexPath = messagesCollectionView.indexPath(for: cell)!
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return }
-           
-        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-            return
-        }
-
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let messagesDataSource = messagesCollectionView.messagesDataSource,
+            let chatMessage = messagesDataSource.messageForItem(at: indexPath,
+                                                                in: messagesCollectionView) as? ChatMessage else { return }
+        
         let megaMessage = chatMessage.message
         
         switch megaMessage.type {
@@ -61,10 +63,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                     node = MEGASdkManager.sharedMEGASdk()?.authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
 
                 }
-                if node == nil {
-                    return
-                }
-                if node!.name.mnz_isImagePathExtension || node!.name.mnz_isImagePathExtension {
+                
+                if let node = node,
+                    (node.name.mnz_isImagePathExtension || node.name.mnz_isImagePathExtension ) {
                     let attachments = messages.filter { (message) -> Bool in
                         guard let localChatMessage = message as? ChatMessage else {
                             return false
