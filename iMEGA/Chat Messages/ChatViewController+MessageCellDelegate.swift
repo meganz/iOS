@@ -4,6 +4,64 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     
     func didTapAvatar(in cell: MessageCollectionViewCell) {
         print("Avatar tapped")
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let chatMessage = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,
+            let cell = cell as? MessageContentCell
+        else {
+                print("Failed to identify message when audio cell receive tap gesture")
+                return
+        }
+        
+        let userName = chatMessage.displayName
+        guard let userEmail = chatRoom.peerEmail(byHandle: chatMessage.message.userHandle) else {
+            return
+        }
+        var actions = [ActionSheetAction]()
+        
+        let infoAction = ActionSheetAction(title: AMLocalizedString("info"), detail: nil, image: nil, style: .default) { [weak self] in
+            guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
+                return
+            }
+            
+            contactDetailsVC.contactDetailsMode = self?.chatRoom.isGroup ?? false ? .fromGroupChat : .fromChat
+            contactDetailsVC.userEmail = userEmail
+            contactDetailsVC.userName = userName
+            contactDetailsVC.userHandle = chatMessage.message.userHandle
+            contactDetailsVC.groupChatRoom = self?.chatRoom;
+            self?.navigationController?.pushViewController(contactDetailsVC, animated: true)
+        }
+        actions.append(infoAction)
+        
+        let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: userEmail)
+        if user == nil || user?.visibility != MEGAUserVisibility.visible {
+            let addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: nil, style: .default) {
+                if MEGAReachabilityManager.isReachableHUDIfNot() {
+                    MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
+                }
+                
+                
+            }
+            actions.append(addContactAction)
+
+        }
+        
+        if chatRoom.ownPrivilege == .moderator,
+        chatRoom.isGroup {
+            let removeParticipantAction = ActionSheetAction(title: AMLocalizedString("removeParticipant"), detail: nil, image: nil, style: .default) {
+                MEGASdkManager.sharedMEGAChatSdk()?.remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
+            }
+            actions.append(removeParticipantAction)
+
+        }
+        
+        let userActionSheet = ActionSheetViewController(actions: actions,
+                                                        headerTitle: userName,
+                                                        dismissCompletion: {
+            
+        
+        },
+                                                        sender: cell.avatarView)
+        present(viewController: userActionSheet)
     }
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
