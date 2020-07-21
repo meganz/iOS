@@ -7,6 +7,12 @@ class ChatTitleView: UIView {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var statusView: UIView!
     
+    var lastGreen: Int? {
+        didSet{
+            updateSubtitleLabel()
+        }
+    }
+    
     var chatRoom: MEGAChatRoom! {
         didSet {
             guard chatRoom != nil else {
@@ -61,7 +67,18 @@ class ChatTitleView: UIView {
             if let status = chatRoom.onlineStatus {
                 subtitleLabel.isHidden = (status == .invalid)
                 subtitleLabel.text = NSString.chatStatusString(status)
+                switch status {
+                case .offline, .away:
+                    if let lastGreen = lastGreen {
+                        subtitleLabel.text = NSString.mnz_lastGreenString(fromMinutes: lastGreen)
+                    }
+                default:
+                    subtitleLabel.isHidden = (status == .invalid)
+                    subtitleLabel.text = NSString.chatStatusString(status)
+                }
             }
+            
+         
         }
     }
     
