@@ -54,6 +54,9 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     guard visibleIndexPaths.contains(indexPath), error?.type == .apiOk else {
                         return
                     }
+                    megaMessage.richNumber = request?.publicNode.size
+                    megaMessage.node = request?.publicNode
+                    
                     if self.isLastSectionVisible(collectionView: messagesCollectionView) {
                         messagesCollectionView.reloadDataAndKeepOffset()
                     } else {
@@ -72,6 +75,9 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     guard visibleIndexPaths.contains(indexPath), error.type == .apiOk else {
                         return
                     }
+                    megaMessage.richString = NSString.mnz_string(byFiles: request.megaFolderInfo.files, andFolders: request.megaFolderInfo.folders)
+                    megaMessage.richNumber = NSNumber(floatLiteral: Double(request.megaFolderInfo.currentSize > 0 ? request.megaFolderInfo.currentSize : -1))
+                    megaMessage.richTitle = request.text
                     
                     if self.isLastSectionVisible(collectionView: messagesCollectionView) {
                         messagesCollectionView.reloadDataAndKeepOffset()
@@ -87,9 +93,11 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                 
                 MEGASdkManager.sharedMEGAChatSdk()?.checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath), error.type == .MEGAChatErrorTypeOk else {
+                    guard visibleIndexPaths.contains(indexPath), (error.type == .MEGAChatErrorTypeOk || error.type == .MegaChatErrorTypeExist) else {
                         return
                     }
+                    megaMessage.richString = request.text
+                    megaMessage.richNumber = NSNumber(floatLiteral: Double(request.number))
                     
                     if self.isLastSectionVisible(collectionView: messagesCollectionView) {
                         messagesCollectionView.reloadDataAndKeepOffset()

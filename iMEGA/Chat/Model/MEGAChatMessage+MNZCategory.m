@@ -89,46 +89,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
         URLType type = [match.URL mnz_type];
         if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink) {
             self.MEGALink = match.URL;
-            switch (type) {
-                case URLTypeFileLink: {
-                    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        self.richNumber = request.publicNode.size;
-                        self.node = request.publicNode;
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
-                    
-                    break;
-                }
-                    
-                case URLTypeFolderLink: {
-                    MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        if (!error.type) {
-                            self.richString = [NSString mnz_stringByFiles:request.megaFolderInfo.files andFolders:request.megaFolderInfo.folders];
-                            self.richNumber = @(request.megaFolderInfo.currentSize ?: -1);
-                            self.richTitle = request.text;
-                        }
-
-                    }];
-                    [MEGASdkManager.sharedMEGASdk getPublicLinkInformationWithFolderLink:self.MEGALink.mnz_MEGAURL delegate:delegate];
-                    
-                    break;
-                }
-                    
-                case URLTypePublicChatLink: {
-                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
-                            self.richString = request.text;
-                            self.richNumber = @(request.number);
-                        }
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:self.MEGALink delegate:delegate];
-                    
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
 
             return YES;
         }
