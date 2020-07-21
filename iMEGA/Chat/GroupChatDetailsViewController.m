@@ -51,6 +51,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
 @property (nonatomic) NSMutableSet<NSNumber *> *requestedParticipantsMutableSet;
+@property (atomic) NSUInteger pendingCellsToLoadAfterThresold;
 
 @property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
@@ -85,7 +86,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self loadVisibleParticipants];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -167,6 +167,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     }
     if (usersHandles.count) {
         [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:usersHandles delegate:self];
+    }
+}
+
+- (void)loadVisibleParticipantsIfNeeded {
+    if (--self.pendingCellsToLoadAfterThresold == 0) {
+        [self loadVisibleParticipants];
     }
 }
 
@@ -578,9 +584,18 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle] ?: @"";
+                peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
                 peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
+                if (!peerFullname) {
+                    peerFullname = @"";
+                    if (![self.requestedParticipantsMutableSet containsObject:[self.participantsMutableArray objectAtIndex:index]]) {
+                        self.pendingCellsToLoadAfterThresold++;
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self loadVisibleParticipantsIfNeeded];
+                        });
+                    }
+                }
             }
             
             BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
