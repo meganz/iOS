@@ -163,7 +163,6 @@ class ChatViewController: MessagesViewController {
             if megaMessage.isManagementMessage {
                 return
             }
-            selectedIndexPathForMenu = indexPath
             let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
             present(viewController: menu)
         default:
