@@ -16,14 +16,25 @@ extension ChatViewController: MEGAChatDelegate {
         if chatRoom.peerHandle(at: 0) == userHandle,
         onlineStatus != .invalid {
             configureNavigationBar()
+            switch chatRoom.onlineStatus {
+            case .offline, .away:
+                api.requestLastGreen(userHandle)
+            default:
+                break
+            }
+
         }
     }
     
     func onChatPresenceLastGreen(_ api: MEGAChatSdk!, userHandle: UInt64, lastGreen: Int) {
-        guard !chatRoom.isGroup else {
-            return
+        
+        switch chatRoom.onlineStatus {
+        case .offline, .away:
+            if let titleView = navigationItem.titleView as? ChatTitleView {
+                titleView.lastGreen = lastGreen
+            }
+        default:
+            break
         }
-        
-        
     }
 }
