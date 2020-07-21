@@ -2032,8 +2032,6 @@
 "Share with"="分享";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="请联系您的企业帐户管理员解决此问题并激活帐户。";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="直到再次开启时";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分钟";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2044,8 +2042,6 @@
 "24 hours"="24小时";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="静音聊天通知";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="通知将保持静音，直到关闭勿扰模式";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow at %@"="通知将保持静音至%@";
 /* Chat Notifications DND: Remaining time left if until today */
