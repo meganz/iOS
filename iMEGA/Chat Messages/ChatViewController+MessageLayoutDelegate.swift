@@ -56,6 +56,24 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         
         return .zero
     }
+    
+    func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        
+        
+        guard let message = messages[section] as? ChatMessage else {
+            return .zero
+        }
+        let list = MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactions(forChat: message.chatRoom.chatId , messageId: message.message.messageId)
+
+        if message.message.isManagementMessage || list?.size == 0 {
+            return .zero
+        }
+
+        let reactionViewTemplate = ReactionContainerView()
+        reactionViewTemplate.chatMessage = message
+        return reactionViewTemplate.sizeThatFits(CGSize(width: messagesCollectionView.bounds.width, height: .greatestFiniteMagnitude))
+        
+    }
 }
 
 extension ChatViewController: MessagesEditCollectionOverlayViewDelegate {

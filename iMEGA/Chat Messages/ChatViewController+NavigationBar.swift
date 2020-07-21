@@ -71,7 +71,7 @@ extension ChatViewController {
         if chatRoom.isGroup {
             pushGroupDetailsViewController()
         } else {
-            pushContactDetailsViewController()
+            pushContactDetailsViewController(withPeerHandle: chatRoom.peerHandle(at: 0))
         }
     }
     
@@ -85,10 +85,9 @@ extension ChatViewController {
         }
     }
     
-    private func pushContactDetailsViewController() {
+    func pushContactDetailsViewController(withPeerHandle peerHandle: UInt64) {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
         if let contactDetailsViewController = storyboard.instantiateViewController(withIdentifier:"ContactDetailsViewControllerID") as? ContactDetailsViewController {
-            let peerHandle = chatRoom.peerHandle(at: 0)
             let peerEmail = MEGASdkManager.sharedMEGAChatSdk()?.contacEmail(byHandle: peerHandle)
 
             contactDetailsViewController.contactDetailsMode = .fromChat

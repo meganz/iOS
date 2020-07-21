@@ -60,4 +60,53 @@ extension ChatViewController: MessagesDataSource {
         chatMessageHeaderView.chatRoom = chatRoom
         return chatMessageHeaderView
     }
+    
+    func messageFooterView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
+        guard let chatMessageReactionView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MessageReactionReusableView.reuseIdentifier, for: indexPath) as? MessageReactionReusableView else {
+            fatalError("Failed to dequeue MessageReactionReusableView")
+        }
+        
+        if let chatMessage = messages[indexPath.section] as? ChatMessage  {
+            chatMessageReactionView.chatMessage = chatMessage
+            chatMessageReactionView.indexPath = indexPath
+        }
+        
+        chatMessageReactionView.delegate = self
+        return chatMessageReactionView
+    }
+}
+
+extension ChatViewController: MessageReactionReusableViewDelegate {
+    func addMorePressed(chatMessage: ChatMessage, sender: UIView) {
+        let vc = ReactionPickerViewController()
+        
+        vc.message = chatMessage
+        presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)
+    }
+
+    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
+        guard let emojisStringList = MEGASdkManager
+            .sharedMEGAChatSdk()?
+            .getMessageReactions(forChat: chatRoom.chatId,
+                                 messageId: chatMessage.message.messageId) else {
+                                    MEGALogDebug("Could not fetch the emoji list for a message")
+                                    return
+        }
+        
+        let emojis = (0..<emojisStringList.size).compactMap { emojisStringList.string(at: $0) }
+        let vc = ReactedEmojisUsersListViewController(delegate: self,
+                                                      emojiList: emojis,
+                                                      selectedEmoji: emoji,
+                                                      chatId: chatRoom.chatId,
+                                                      messageId: chatMessage.message.messageId)
+        
+        presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)
+    }
+}
+
+extension ChatViewController: ReactedEmojisUsersListViewControllerDelegate {
+    
+    func didSelectUserhandle(_ userhandle: UInt64) {
+        pushContactDetailsViewController(withPeerHandle: userhandle)
+    }
 }
