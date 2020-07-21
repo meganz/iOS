@@ -18,6 +18,7 @@ class ChatViewController: MessagesViewController {
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
     var selectedMessages = Set<ChatMessage>()
+    var lastGreenString: String?
     
     let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatViewController.shareSelectedMessages))
     let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
@@ -118,7 +119,7 @@ class ChatViewController: MessagesViewController {
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         }
         reloadInputViews()
-        updateRightBarButtons()
+        configureNavigationBar()
     }
     
     override func viewDidLoad() {
@@ -621,7 +622,9 @@ class ChatViewController: MessagesViewController {
 
         configureNavigationBar()
         chatRoomDelegate.openChatRoom()
-
+        if !chatRoom.isGroup {
+            MEGASdkManager.sharedMEGAChatSdk()?.requestLastGreen(chatRoom.peerHandle(at: 0))
+        }
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
@@ -659,7 +662,7 @@ class ChatViewController: MessagesViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.reachabilityChanged,
                                                object: nil,
                                                queue: OperationQueue.main) { [weak self] _ in
-                                                self?.updateRightBarButtons()
+                                                self?.configureNavigationBar()
         }
         
         NotificationCenter.default.addObserver(self,

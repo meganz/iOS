@@ -36,7 +36,7 @@ extension ChatViewController {
         setTitleView()
     }
     
-    func updateRightBarButtons() {
+    private func updateRightBarButtons() {
         guard !isEditing else {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
             return
@@ -62,11 +62,7 @@ extension ChatViewController {
         let titleView = ChatTitleView.instanceFromNib
         titleView.chatRoom = chatRoom
         titleView.tapHandler = { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.didTapTitle()
+            self?.didTapTitle()
         }
         navigationItem.titleView = titleView
     }
