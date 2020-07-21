@@ -66,6 +66,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         chatViewController?.chatRoom = chat
         chatRoom = chat
         switch chat.changes {
+        case .participants:
+            chatViewController?.reloadInputViews()
         case .userTyping:
             guard !(chatViewController?.isEditing ?? false)  else {
                 return
@@ -100,6 +102,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 let statusString = AMLocalizedString("linkRemoved",
                                                      "Message shown when the link to a file or folder has been removed")
                 SVProgressHUD.showInfo(withStatus: statusString)
+            } else {
+                api.closeChatRoom(chat.chatId, delegate: self)
+                chatViewController?.navigationController?.popViewController(animated: true)
             }
         case .updatePreviewers:
             chatViewController?.previewerView.isHidden = chatRoom.previewersCount == 0
