@@ -51,7 +51,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                 
                 MEGASdkManager.sharedMEGASdk()?.publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath) else {
+                    guard visibleIndexPaths.contains(indexPath), error?.type == .apiOk else {
                         return
                     }
                     if self.isLastSectionVisible(collectionView: messagesCollectionView) {
@@ -69,7 +69,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                 
                 MEGASdkManager.sharedMEGASdk()?.getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath) else {
+                    guard visibleIndexPaths.contains(indexPath), error.type == .apiOk else {
                         return
                     }
                     
@@ -87,7 +87,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                 
                 MEGASdkManager.sharedMEGAChatSdk()?.checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath) else {
+                    guard visibleIndexPaths.contains(indexPath), error.type == .MEGAChatErrorTypeOk else {
                         return
                     }
                     
