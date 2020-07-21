@@ -2,7 +2,7 @@
 
 import UIKit
 
-protocol ChatMessageOptionsTableViewControllerDataSource: class {
+protocol ChatMessageOptionsTableViewControllerDataSource: AnyObject {
     func headerViewHeight() -> CGFloat
     func headerView() -> UIView?
     func numberOfItems(forViewController viewController: ChatMessageOptionsTableViewController) -> Int
@@ -81,4 +81,3 @@ extension ChatMessageOptionsTableViewController: MessageOptionItemTableCellDeleg
         chatMessageOptionDataSource?.setLabel(label, forIndex: index, viewController: self)
     }
 }
-
