@@ -87,6 +87,14 @@ class ChatViewController: MessagesViewController {
         return chatBottomInfoScreen
     }()
     
+    
+//    internal var messageCollectionViewBottomInset: CGFloat = 0 {
+//        didSet {
+//            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
+//            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+//        }
+//    }
+    
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
     private var chatBottomInfoScreenBottomPadding: CGFloat = 5.0
 

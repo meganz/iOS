@@ -4,7 +4,11 @@
   A community-driven replacement for JSQMessagesViewController https://messagekit.github.io
 </p>
 
-[![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
+[![Tests](https://github.com/MessageKit/MessageKit/workflows/Tests/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Tests%22)
+[![Build framework](https://github.com/MessageKit/MessageKit/workflows/Build%20Framework/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Build+Framework%22)
+[![Build example app](https://github.com/MessageKit/MessageKit/workflows/Build%20Example%20app/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22PR+Example+app%22)
+[![Danger](https://github.com/MessageKit/MessageKit/workflows/Danger/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Danger%22)
+
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">
@@ -87,7 +91,7 @@ The `MessageInputBar`, derrived from [InputBarAccessoryView](https://github.com/
 
 Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md) and the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md).
 
-We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHib with the **"Question"** tag.
+We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHub with the **"Question"** tag.
 
 For more on how to use the MessageInputBar, see the dependency it is based on [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView). You can also see this [short guide]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md) 
 
@@ -134,7 +138,7 @@ Great! Look over these things first.
 - Download the project and check out the current code base. Suggest any improvements by opening a new issue. 
 - Check out the [What's Next](#whats-next) section :point_down: to see where we are headed.
 - Check [StackOverflow](https://stackoverflow.com/questions/tagged/messagekit)
-- Install [SwiftLint](https://github.com/realm/SwiftLint) too keep yourself in :neckbeard: style. 
+- Install [SwiftLint](https://github.com/realm/SwiftLint) to keep yourself in :neckbeard: style. 
 - Be kind and helpful.  
 
 
