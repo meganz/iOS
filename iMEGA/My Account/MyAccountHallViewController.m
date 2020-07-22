@@ -339,6 +339,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                     cell.detailLabel.text = [NSString stringWithFormat:@"%@ / %@", [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue], [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
                 }
             }
+            
+            cell.pendingView.hidden = YES;
+            cell.pendingLabel.text = nil;
             break;
         }
             

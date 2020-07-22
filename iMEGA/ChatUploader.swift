@@ -29,7 +29,7 @@
         if let store = store,
             let context = context {
             context.perform {
-                MEGALogInfo("[ChatUploader] inseted new entry File path \(filepath)")
+                MEGALogInfo("[ChatUploader] inserted new entry File path \(filepath)")
                 // insert into database only if the duplicate path does not exsist - "allowDuplicateFilePath" parameter
                 store.insertChatUploadTransfer(withFilepath: filepath,
                                                chatRoomId: String(chatRoomId),

@@ -310,6 +310,10 @@
     [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
+- (void)download {
+    [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
@@ -324,12 +328,12 @@
     [self import];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
-    [self shareFileLink];
+- (IBAction)openAction:(UIButton *)sender {
+    [self open];
 }
 
-- (IBAction)openAction:(UIBarButtonItem *)sender {
-    [self open];
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    [self shareFileLink];
 }
 
 - (IBAction)sendToContactAction:(UIBarButtonItem *)sender {
@@ -345,6 +349,10 @@
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
+        case MegaNodeActionTypeDownload:
+            [self download];
+            break;
+            
         case MegaNodeActionTypeImport:
             [self import];
             break;

@@ -29,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString * _Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end;
 + (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders;
-+ (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls;
 + (NSString *)localizedSortOrderType:(MEGASortOrderType)sortOrderType;
 
 + (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus;

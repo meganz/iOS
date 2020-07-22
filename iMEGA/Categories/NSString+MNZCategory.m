@@ -250,43 +250,6 @@ static NSString* const B = @"[B]";
     return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
-+ (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls {
-    NSString *missedAudioCallsString = [NSString stringWithFormat:@"%ld", (long)missedAudioCalls];
-    NSString *missedVideoCallsString = [NSString stringWithFormat:@"%ld", (long)missedVideoCalls];
-    NSString *missedString;
-    if (missedVideoCalls == 0) {
-        if (missedAudioCalls == 1) {
-            missedString = AMLocalizedString(@"missedAudioCall", @"Notification text body shown when you have missed one audio call");
-        } else { //missedAudioCalls > 1
-            missedString = AMLocalizedString(@"missedAudioCalls", @"Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
-        }
-    } else if (missedVideoCalls == 1) {
-        if (missedAudioCalls == 0) {
-            missedString = AMLocalizedString(@"missedVideoCall", @"Notification text body shown when you have missed one video call");
-        } else if (missedAudioCalls == 1) {
-            missedString = AMLocalizedString(@"missedAudioCallAndMissedVideoCall", @"Notification text body shown when you have missed one audio call and one video call");
-        } else { //missedAudioCalls > 1
-            missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCall", @"Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
-        }
-    } else { // missedVideoCalls > 1
-        if (missedAudioCalls == 0) {
-            missedString = AMLocalizedString(@"missedVideoCalls", @"Notification text body shown when you have missed several video calls. [A] = {number of missed video calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
-        } else if (missedAudioCalls == 1) {
-            missedString = AMLocalizedString(@"missedAudioCallAndMissedVideoCalls", @"Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
-        } else { //missedAudioCalls > 1
-            missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCalls", @"Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
-            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedVideoCallsString];            
-        }
-    }
-    
-    return missedString;
-}
-
 + (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus {
     NSString *onlineStatusString;
     switch (onlineStatus) {

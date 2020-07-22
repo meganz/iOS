@@ -332,6 +332,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - Private
 
 - (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
     self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
