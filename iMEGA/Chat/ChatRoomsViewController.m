@@ -119,9 +119,9 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
-//    if (@available(iOS 13.0, *)) {
-//        [self configPreviewingRegistration];
-//    }
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1127,13 +1127,17 @@
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
     ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.previewMode = YES;
     chatViewController.chatRoom = chatRoom;
     
     return chatViewController;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    ChatViewController *chatViewController = (ChatViewController *)viewControllerToCommit;
+    chatViewController.previewMode = NO;
+
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 #pragma mark - MEGAChatDelegate

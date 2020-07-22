@@ -18,7 +18,7 @@ extension ChatViewController {
             chatRoom.isPreview,
             !chatRoomDelegate.hasChatRoomClosed {
             return joinInputBar
-        } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
+        } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue || previewMode {
             return nil
         } else if chatInputBar == nil {
             chatInputBar = ChatInputBar()
