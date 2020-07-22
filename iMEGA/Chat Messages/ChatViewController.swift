@@ -168,7 +168,7 @@ class ChatViewController: MessagesViewController {
         case .custom:
             
             let megaMessage = chatMessage.message
-            if megaMessage.isManagementMessage {
+            if megaMessage.isManagementMessage || chatMessage.transfer != nil {
                 return
             }
             let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
