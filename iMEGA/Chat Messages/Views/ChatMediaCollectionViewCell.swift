@@ -88,8 +88,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     override open func setupSubviews() {
         super.setupSubviews()
-        messageContainerView.addSubview(loadingIndicator)
         messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(loadingIndicator)
         messageContainerView.addSubview(progressView)
         imageView.addSubview(playIconView)
         imageView.addSubview(durationLabel)
