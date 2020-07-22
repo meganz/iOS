@@ -381,8 +381,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             messagesCollectionView.reloadData()
             if chatViewController?.keyboardVisible ?? false {
                 chatViewController?.additionalBottomInset = 0
-                messagesCollectionView.scrollToLastItem()
             }
+            messagesCollectionView.scrollToBottom(animated: true)
             return;
         }
         UIView.setAnimationsEnabled(false)
@@ -408,8 +408,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 }
             }
         }, completion: { [weak self] _ in
+            UIView.setAnimationsEnabled(true)
             if lastSectionVisible || scrollToBottom {
-                UIView.setAnimationsEnabled(true)
                 self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
             } else {
                 self?.chatViewController?.showNewMessagesToJumpToBottomIfRequired()
@@ -424,8 +424,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             chatViewController.messagesCollectionView.reloadData()
             if chatViewController.keyboardVisible {
                 chatViewController.additionalBottomInset = 0
-                chatViewController.messagesCollectionView.scrollToBottom()
             }
+            chatViewController.messagesCollectionView.scrollToBottom(animated: true)
             return;
         }
         chatViewController.messagesCollectionView.reloadData()
