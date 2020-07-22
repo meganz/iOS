@@ -19,6 +19,11 @@ class ChatViewController: MessagesViewController {
     var addToChatViewController: AddToChatViewController?
     var selectedMessages = Set<ChatMessage>()
     var lastGreenString: String?
+    @objc var previewMode = false {
+        didSet {
+            reloadInputViews()
+        }
+    }
     
     let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatViewController.shareSelectedMessages))
     let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
@@ -86,14 +91,6 @@ class ChatViewController: MessagesViewController {
         chatBottomInfoScreen.isHidden = true
         return chatBottomInfoScreen
     }()
-    
-    
-//    internal var messageCollectionViewBottomInset: CGFloat = 0 {
-//        didSet {
-//            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
-//            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
-//        }
-//    }
     
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
     private var chatBottomInfoScreenBottomPadding: CGFloat = 5.0
@@ -200,8 +197,8 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-         
         checkIfChatHasActiveCall()
+        reloadInputViews()
 
         if (presentingViewController != nil) && parent != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
