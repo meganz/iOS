@@ -19,19 +19,37 @@ class GlobalDNDNotificationControl: PushNotificationControl {
     }
     
     @objc func turnOnDND(_ sender: UIView) {
-        let alertController = DNDTurnOnOption.alertController(delegate: self, identifier: nil)
+        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: true, identifier: nil)
         show(alertController: alertController, sender: sender)
+    }
+    
+    @objc func turnOffChatNotification() {
+        updatePushNotificationSettings {
+            self.pushNotificationSettings?.globalChatsDndEnabled = true
+        }
     }
     
     @objc func turnOffDND() {
         updatePushNotificationSettings {
-            self.pushNotificationSettings?.globalChatsDndEnabled = false;
+            self.pushNotificationSettings?.globalChatsDndEnabled = false
         }
     }
     
     @objc func configure(dndSwitch: UISwitch) {
         dndSwitch.isEnabled = isNotificationSettingsLoaded()
         dndSwitch.setOn(isGlobalDNDEnabled, animated: false)
+    }
+    
+    @objc func configure(notificationSwitch: UISwitch) {
+        guard let pushNotificationSettings = pushNotificationSettings else {
+            notificationSwitch.isEnabled = false
+            return
+        }
+        
+        
+        notificationSwitch.isEnabled = isNotificationSettingsLoaded()
+        notificationSwitch.setOn(!(isGlobalDNDEnabled && (pushNotificationSettings.globalChatsDNDTimestamp == 0)),
+                                 animated: false)
     }
 }
 
