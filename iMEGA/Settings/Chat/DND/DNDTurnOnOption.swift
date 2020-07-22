@@ -6,6 +6,7 @@ enum DNDTurnOnOption {
     case sixHours
     case twentyFourHours
     case morningEightAM
+    case forever
     
     private var isMorningEightToday: Bool {
         let calendar = Calendar.current
@@ -46,6 +47,8 @@ enum DNDTurnOnOption {
             return 86400
         case .morningEightAM:
             return timeLeftUntilEightAM
+        case .forever:
+            return 0
         }
     }
     
@@ -60,11 +63,14 @@ enum DNDTurnOnOption {
         case .twentyFourHours:
             return AMLocalizedString("24 hours")
         case .morningEightAM:
-            return isMorningEightToday ?  AMLocalizedString("Until this morning, 08:00") : AMLocalizedString("Until tomorrow morning, 08:00")
+            return isMorningEightToday ?  AMLocalizedString("Until this morning") : AMLocalizedString("Until tomorrow morning")
+        case .forever:
+            return AMLocalizedString("Until I turn it back on")
         }
     }
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
+                                isGlobalSetting: Bool,
                                 identifier: Int64?) -> UIAlertController {
         let alertMessage = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
         let alertController = UIAlertController(title: nil,
@@ -78,7 +84,7 @@ enum DNDTurnOnOption {
 
         addAction(for: alertController,
                   delegate: delegate,
-                  options: [thirtyMinutes, oneHour, sixHours, twentyFourHours, morningEightAM],
+                  options: [thirtyMinutes, oneHour, sixHours, twentyFourHours, isGlobalSetting ? morningEightAM : forever],
                   identifier: identifier)
         
         return alertController

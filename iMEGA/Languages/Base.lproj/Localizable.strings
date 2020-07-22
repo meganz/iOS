@@ -2033,9 +2033,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contact your business account administrator to resolve the issue and activate your account.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning, 08:00"="Until this morning, 08:00";
+"Until this morning"="Until this morning";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning, 08:00"="Until tomorrow morning, 08:00";
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2051,9 +2053,11 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat notifications";
+"Chat Notifications"="Chat Notifications";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Do Not Disturb";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnecting…";
 /* Title shown when the user reconnect in a call. */
