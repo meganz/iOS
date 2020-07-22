@@ -23,7 +23,7 @@
         return;
     }
     
-    if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground) {
+    if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground || message.type == MEGAChatMessageTypeCallEnded) {
         if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
             ChatViewController *chatViewController = (ChatViewController *) UIApplication.mnz_visibleViewController;
             if (chatViewController.chatRoom.chatId == chatId) {

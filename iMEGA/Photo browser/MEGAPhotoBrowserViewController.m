@@ -35,7 +35,9 @@ static const CGFloat GapBetweenPages = 10.0;
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -133,6 +135,8 @@ static const CGFloat GapBetweenPages = 10.0;
         default:
             break;
     }
+    
+    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
     
     [self updateAppearance];
 }
@@ -1048,12 +1052,6 @@ static const CGFloat GapBetweenPages = 10.0;
             
         case MegaNodeActionTypeImport:
             [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
-            break;
-            
-        case MegaNodeActionTypeOpen:
-            if (node.name.mnz_isVideoPathExtension) {
-                [self playVideo:nil];
-            }
             break;
             
         case MegaNodeActionTypeRemove:

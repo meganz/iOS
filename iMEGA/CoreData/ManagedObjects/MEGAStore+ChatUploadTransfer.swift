@@ -31,6 +31,7 @@ extension MEGAStore {
             transfer.appData = appData
         }
         MEGAStore.shareInstance()?.save(context)
+        
         if transfers.isEmpty {
             MEGALogError("ChatUploadTransfer object does not exists")
         }

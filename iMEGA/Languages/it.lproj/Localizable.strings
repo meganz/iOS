@@ -1365,7 +1365,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Multi-factor authentication required";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Business account has expired";
 /* SDK error returned when the credit card has been rejected */
@@ -1379,7 +1379,7 @@
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="Chiamata in corso...";
 /* notification subtitle of incoming calls */
 "Incoming call"="Chiamata in arrivo";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Chiamata audio persa";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] ha perso una chiamata audio";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Chiamata video persa";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] ha perso una chiamata video";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Chiamata audio e chiamata video persa";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Chiamata audio persa e [A] ha perso una chiamata video";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] ha perso una chiamata audio e una chiamata video";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] chiamate audio perse e [B] chiamate video perse";
 /* Button title to see the available bonus */
 "getBonus"="Ottieni il bonus";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1511,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Prima di effettuare il logout TI raccomandiamo di esportare la tua Chiave di Recupero in un posto sicuro. Ricorda che non potrai resettare la tua password se la dimentichi.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Non mostrare di nuovo";
+"dontShowAgain"="Non mostrare più";
 /* Label for test password button and titles */
 "testPassword"="Testa la password";
 /* Label for recovery key button */
@@ -2209,7 +2193,7 @@
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="Stessa per tutte";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"Sorting preference"="Ordina preferenze";
+"Sorting preference"="Preferenze di elencazione";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Preferenze modalità di visualizzazione";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
