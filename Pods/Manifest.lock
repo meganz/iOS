@@ -19,7 +19,7 @@ PODS:
 DEPENDENCIES:
   - FlexLayout
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
-  - MessageKit
+  - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
   - YYWebImage
@@ -28,7 +28,6 @@ SPEC REPOS:
   trunk:
     - FlexLayout
     - InputBarAccessoryView
-    - MessageKit
     - PanModal
     - PinLayout
     - YYCache
@@ -39,11 +38,16 @@ EXTERNAL SOURCES:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
+  MessageKit:
+    :git: https://github.com/lhr000lhrmega/MessageKit.git
 
 CHECKOUT OPTIONS:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
+  MessageKit:
+    :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
+    :git: https://github.com/lhr000lhrmega/MessageKit.git
 
 SPEC CHECKSUMS:
   FlexLayout: 025dd153bd5618dcc9f93ef914106d7dc2a86fdc
@@ -56,6 +60,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 17b17ccd101764a41651f5e1f207d3d539a919db
+PODFILE CHECKSUM: 3d3ad8f8e64bb9dbd1eab71490f57954558ddcb1
 
 COCOAPODS: 1.8.4

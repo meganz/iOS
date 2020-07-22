@@ -91,8 +91,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
-            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+            UIView.performWithoutAnimation {
+                messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
+                messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+            }
         }
     }
 
@@ -185,6 +187,60 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
     }
 
+    // MARK: - Typing Indicator API
+
+    /// Sets the typing indicator sate by inserting/deleting the `TypingBubbleCell`
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
+    ///   - animated: A Boolean value determining if the insertion is to be animated
+    ///   - updates: A block of code that will be executed during `performBatchUpdates`
+    ///              when `animated` is `TRUE` or before the `completion` block executes
+    ///              when `animated` is `FALSE`
+    ///   - completion: A completion block to execute after the insertion/deletion
+    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+
+        guard isTypingIndicatorHidden != isHidden else {
+            completion?(false)
+            return
+        }
+
+        let section = messagesCollectionView.numberOfSections
+        messagesCollectionView.setTypingIndicatorViewHidden(isHidden)
+
+        if animated {
+            messagesCollectionView.performBatchUpdates({ [weak self] in
+                self?.performUpdatesForTypingIndicatorVisability(at: section)
+                updates?()
+                }, completion: completion)
+        } else {
+            performUpdatesForTypingIndicatorVisability(at: section)
+            updates?()
+            completion?(true)
+        }
+    }
+
+    /// Performs a delete or insert on the `MessagesCollectionView` on the provided section
+    ///
+    /// - Parameter section: The index to modify
+    private func performUpdatesForTypingIndicatorVisability(at section: Int) {
+        if isTypingIndicatorHidden {
+            messagesCollectionView.deleteSections([section - 1])
+        } else {
+            messagesCollectionView.insertSections([section])
+        }
+    }
+
+    /// A method that by default checks if the section is the last in the
+    /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
+    /// is FALSE
+    ///
+    /// - Parameter section
+    /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
+    public func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
+        return !messagesCollectionView.isTypingIndicatorHidden && section == self.numberOfSections(in: messagesCollectionView) - 1
+    }
+
     // MARK: - UICollectionViewDataSource
 
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -199,7 +255,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-
+        if isSectionReservedForTypingIndicator(section) {
+            return 1
+        }
         return collectionView.messagesDataSource?.numberOfItems(inSection: section, in: collectionView) ?? 0
     }
 
@@ -207,6 +265,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// - If you override this method, remember to call MessagesDataSource's customCell(for:at:in:)
     /// for MessageKind.custom messages, if necessary.
     ///
+    /// - If you are using the typing indicator you will need to ensure that the section is not
+    /// reserved for it with `isSectionReservedForTypingIndicator` defined in
     /// `MessagesCollectionViewFlowLayout`
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
@@ -216,6 +276,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
+        }
+
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return messagesDataSource.typingIndicator(at: indexPath, in: messagesCollectionView)
         }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
@@ -281,7 +345,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
             fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
-
+        if isSectionReservedForTypingIndicator(section) {
+            return .zero
+        }
         return layoutDelegate.headerViewSize(for: section, in: messagesCollectionView)
     }
 
@@ -297,12 +363,18 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
             fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
-
+        if isSectionReservedForTypingIndicator(section) {
+            return .zero
+        }
         return layoutDelegate.footerViewSize(for: section, in: messagesCollectionView)
     }
 
     open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
+
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return false
+        }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
@@ -316,6 +388,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return false
+        }
         return (action == NSSelectorFromString("copy:"))
     }
 
@@ -337,6 +412,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             break
         }
     }
+    
+    
 
     // MARK: - Helpers
     
