@@ -280,6 +280,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                         chatMessage[index] = receivedMessage
                         chatViewController?.messagesCollectionView.performBatchUpdates({
                             chatViewController?.messagesCollectionView.reloadSections([index])
+                            if isLastSectionVisible() {
+                                chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                            }
                         }, completion: nil)
                     }
                     
