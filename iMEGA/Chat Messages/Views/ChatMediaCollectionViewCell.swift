@@ -137,7 +137,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             loadingIndicator.startAnimating()
         }
         imageView.mnz_setPreview(by: node) { _ in
-            guard messagesCollectionView.numberOfSections > indexPath.section else {
+            guard messagesCollectionView.cellForItem(at: indexPath) != nil else {
                 return
             }
             
