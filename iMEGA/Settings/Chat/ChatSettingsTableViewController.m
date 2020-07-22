@@ -271,7 +271,9 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     switch (self.sections[section].intValue) {
         case ChatSettingsSectionNotification:
-            footerTitle = self.globalDNDNotificationControl.timeRemainingToDeactiveDND;
+            if (!self.globalDNDNotificationControl.isForeverOptionEnabled) {
+                footerTitle = self.globalDNDNotificationControl.timeRemainingToDeactiveDND;
+            }
             break;
             
         case ChatSettingsSectionRichPreview:

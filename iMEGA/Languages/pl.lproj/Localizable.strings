@@ -2042,8 +2042,6 @@
 "24 hours"="24 godziny";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Wycisz powiadomienia czatu dla";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Powiadomienia będą wyciszane do jutra do godziny %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Powiadomienia będą wyciszane do %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */

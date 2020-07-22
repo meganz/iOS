@@ -2042,8 +2042,6 @@
 "24 hours"="24小時";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="的聊天通知轉成靜音";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="通知保持靜音直到明天%@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="通知保持靜音直到%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */

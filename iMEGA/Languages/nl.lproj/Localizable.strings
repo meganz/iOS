@@ -2042,8 +2042,6 @@
 "24 hours"="24 uren";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Demp gesprek notificaties voor";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Meldingen worden tot morgen uitgezet op %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Meldingen worden tot zwijgen gebracht tot %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
