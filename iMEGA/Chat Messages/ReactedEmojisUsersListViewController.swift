@@ -23,6 +23,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     private let emojiList: [String]
     private let localSavedEmojis = EmojiListReader.readFromFile()
     private weak var delegate: ReactedEmojisUsersListViewControllerDelegate?
+    private var isShortFormEnabled = true
 
     init(delegate: ReactedEmojisUsersListViewControllerDelegate,
          emojiList: [String],
@@ -194,11 +195,19 @@ extension ReactedEmojisUsersListViewController: PanModalPresentable {
         return false
     }
 
-     var longFormHeight: PanModalHeight {
-        return .contentHeight(300)
+    var shortFormHeight: PanModalHeight {
+        return isShortFormEnabled ? .contentHeight(300.0) : longFormHeight
     }
     
     var anchorModalToLongForm: Bool {
         return false
+    }
+
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+        guard isShortFormEnabled, case .longForm = state
+            else { return }
+
+        isShortFormEnabled = false
+        panModalSetNeedsLayoutUpdate()
     }
 }
