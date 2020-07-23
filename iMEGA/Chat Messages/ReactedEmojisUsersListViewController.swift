@@ -196,7 +196,12 @@ extension ReactedEmojisUsersListViewController: PanModalPresentable {
     }
 
     var shortFormHeight: PanModalHeight {
-        return isShortFormEnabled ? .contentHeight(300.0) : longFormHeight
+        return isShortFormEnabled ? .contentHeight(300) : longFormHeight
+    }
+    
+    
+    var longFormHeight: PanModalHeight {
+        return .contentHeight(view.bounds.height)
     }
     
     var anchorModalToLongForm: Bool {
