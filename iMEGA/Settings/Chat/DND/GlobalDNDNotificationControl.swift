@@ -18,20 +18,39 @@ class GlobalDNDNotificationControl: PushNotificationControl {
         return pushNotificationSettings?.globalChatsDndEnabled ?? false
     }
     
+    @objc var isForeverOptionEnabled: Bool {
+        guard let pushNotificationSettings = pushNotificationSettings else {
+            return false
+        }
+        
+        return (isGlobalDNDEnabled && (pushNotificationSettings.globalChatsDNDTimestamp == 0))
+    }
+    
     @objc func turnOnDND(_ sender: UIView) {
-        let alertController = DNDTurnOnOption.alertController(delegate: self, identifier: nil)
+        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: true, identifier: nil)
         show(alertController: alertController, sender: sender)
+    }
+    
+    @objc func turnOffChatNotification() {
+        updatePushNotificationSettings {
+            self.pushNotificationSettings?.globalChatsDndEnabled = true
+        }
     }
     
     @objc func turnOffDND() {
         updatePushNotificationSettings {
-            self.pushNotificationSettings?.globalChatsDndEnabled = false;
+            self.pushNotificationSettings?.globalChatsDndEnabled = false
         }
     }
     
     @objc func configure(dndSwitch: UISwitch) {
         dndSwitch.isEnabled = isNotificationSettingsLoaded()
         dndSwitch.setOn(isGlobalDNDEnabled, animated: false)
+    }
+    
+    @objc func configure(notificationSwitch: UISwitch) {
+        notificationSwitch.isEnabled = isNotificationSettingsLoaded()
+        notificationSwitch.setOn(!isForeverOptionEnabled, animated: false)
     }
 }
 
@@ -40,10 +59,10 @@ class GlobalDNDNotificationControl: PushNotificationControl {
 extension GlobalDNDNotificationControl {
     private func turnOnDND(dndTurnOnOption: DNDTurnOnOption) {
         updatePushNotificationSettings {
-            if dndTurnOnOption == .forever {
-                self.pushNotificationSettings?.globalChatsDndEnabled = true
+            if let timeStamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption) {
+                self.pushNotificationSettings?.globalChatsDNDTimestamp = timeStamp
             } else {
-                self.pushNotificationSettings?.globalChatsDNDTimestamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption)
+                MEGALogDebug("[GlobalDNDNotificationControl] timestamp is nil")
             }
         }
     }
