@@ -97,7 +97,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         let vc = ReactedEmojisUsersListViewController(delegate: self,
                                                       emojiList: emojis,
                                                       selectedEmoji: emoji,
-                                                      chatId: chatRoom.chatId,
+                                                      chatRoom: chatRoom,
                                                       messageId: chatMessage.message.messageId)
         
         presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)

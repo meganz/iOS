@@ -18,7 +18,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         }
     }
     
-    private let chatId: UInt64
+    private let chatRoom: MEGAChatRoom
     private let messageId: UInt64
     private let emojiList: [String]
     private let localSavedEmojis = EmojiListReader.readFromFile()
@@ -27,12 +27,12 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     init(delegate: ReactedEmojisUsersListViewControllerDelegate,
          emojiList: [String],
          selectedEmoji: String,
-         chatId: UInt64,
+         chatRoom: MEGAChatRoom,
          messageId: UInt64) {
         self.delegate = delegate
         self.emojiList = emojiList
         self.selectedEmoji = selectedEmoji
-        self.chatId = chatId
+        self.chatRoom = chatRoom
         self.messageId = messageId
         super.init(nibName: nil, bundle: nil)
     }
@@ -62,7 +62,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         }
         
         addHeaderView(emojiList: emojiList)
-        let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
+        let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatRoom.chatId, messageId: messageId)
         updateEmojiHeaderViewDescription()
         let foundIndex = emojiList.firstIndex(of: selectedEmoji) ?? 0
         reactedUsersListPageViewController.set(numberOfPages: emojiList.count,
@@ -132,12 +132,12 @@ extension ReactedEmojisUsersListViewController: EmojiCarousalViewDelegate {
     }
     
     func numberOfUsersReacted(toEmoji emoji: String) -> Int {
-        let handleList = userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId)
+        let handleList = userhandleList(forEmoji: emoji, chatId: chatRoom.chatId, messageId: messageId)
         return handleList.count
     }
         
     func didSelect(emoji: String, atIndex index: Int) {
-        let userHandleList = userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId)
+        let userHandleList = userhandleList(forEmoji: emoji, chatId: chatRoom.chatId, messageId: messageId)
         reactedUsersListPageViewController.didSelectPage(withIndex: index, userHandleList: userHandleList)
         selectedEmoji = emoji
     }
@@ -145,7 +145,7 @@ extension ReactedEmojisUsersListViewController: EmojiCarousalViewDelegate {
 
 extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControllerDelegate {
     func userHandleList(atIndex index: Int) -> [UInt64] {
-        return userhandleList(forEmoji: emojiList[index], chatId: chatId, messageId: messageId)
+        return userhandleList(forEmoji: emojiList[index], chatId: chatRoom.chatId, messageId: messageId)
     }
     
     func pageChanged(toIndex index: Int) {
@@ -161,6 +161,24 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
         
         dismiss(animated: true, completion: nil)
         delegate?.didSelectUserhandle(userhandle)
+    }
+    
+    func userName(forHandle handle: UInt64) -> String? {
+        guard let myHandle = MEGASdkManager.sharedMEGASdk()?.myUser?.handle, myHandle != handle else {
+            if let myFullName = MEGASdkManager.sharedMEGAChatSdk()?.myFullname {
+                return String(format: "%@ (%@)", myFullName, AMLocalizedString("me", "The title for my message in a chat. The message was sent from yourself."))
+            }
+
+            return nil
+        }
+        
+        if let username = chatRoom.userNickname(forUserHandle: handle), !username.isEmpty {
+            return username
+        } else if let fullName = chatRoom.peerFullname(byHandle: handle), !fullName.isEmpty {
+            return fullName
+        } else {
+            return chatRoom.peerEmail(byHandle: handle)
+        }
     }
 }
 
