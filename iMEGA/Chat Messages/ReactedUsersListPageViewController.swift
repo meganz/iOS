@@ -5,6 +5,7 @@ protocol ReactedUsersListPageViewControllerDelegate: class {
     func userHandleList(atIndex index: Int) -> [UInt64]
     func pageChanged(toIndex index: Int)
     func didSelectUserhandle(_ userhandle: UInt64)
+    func userName(forHandle handle: UInt64) -> String?
 }
 
 class ReactedUsersListPageViewController: UIPageViewController {
@@ -132,8 +133,7 @@ extension ReactedUsersListPageViewController: ChatMessageOptionsTableViewControl
             return
         }
         
-        let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: userHandleList[index])
-        label.text = user?.displayName
+        label.text = usersListDelegate?.userName(forHandle: userHandleList[index])
     }
     
     func didSelect(cellAtIndex index: Int, viewController: ChatMessageOptionsTableViewController) {
