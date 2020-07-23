@@ -524,6 +524,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)updateAppearance {
     self.view.backgroundColor = self.collectionView.backgroundColor = UIColor.mnz_background;
     
+    self.navigationSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatOutgoingBubble:self.traitCollection]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatIncomingBubble:self.traitCollection]];
@@ -556,7 +558,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.navigationSubtitleLabel = [[UILabel alloc] init];
     self.navigationSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
-    self.navigationSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 - (void)instantiateNavigationTitle {
