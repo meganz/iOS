@@ -1,5 +1,4 @@
 #import "ContactTableViewCell.h"
-#import "MEGAPushNotificationSettings.h"
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
@@ -34,6 +33,7 @@
     self.delegate = nil;
     [self.notificationsSwitch setOn:YES];
     
+    self.avatarImageView.image = nil;
     [self updateAppearance];
 }
 

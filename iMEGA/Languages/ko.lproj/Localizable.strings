@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="휴대전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="충분하지 않은 할당량";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="다단계 인증이 요구됨";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="관리자가 아닌 이용자의 접근이 금지됨";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="비즈니스 계정이 만료됨";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="신용 카드 거절됨";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="결제 실패";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="사기 방지에 의해 거절됨";
 /* SDK error returned when there are too many requests */
 "Too many requests"="요청이 너무 많습니다";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="잔고 오류";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP 오류";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="통화중...";
 /* notification subtitle of incoming calls */
 "Incoming call"="전화 수신중";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="부재중 전화";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A]개의 부재중 전화";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="부재중 영상통화";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A]개의 부재중 영상통화";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="부재중 전화와 영상통화";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="부재중 전화와 [A]개의 영상통화";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A]개의 부재중 전화와 영상통화";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]개의 부재중 전화와 [B]개의 부재중 영상통화";
 /* Button title to see the available bonus */
 "getBonus"="보너스 얻기";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1977,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="MEGA에 누가 있는지 보기";
+"See who's already on MEGA"="MEGA에서 지인들 찾기";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X]명의 지인을 MEGA에서 발견함";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2048,8 +2032,6 @@
 "Share with"="다른 사람과 공유";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="내가 다시 켜기 전까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,12 +2042,8 @@
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="%@까지 알림을 울리지 않기";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2101,7 +2079,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="업로드 (%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="앨범";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="선택 해제";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
