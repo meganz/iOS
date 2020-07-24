@@ -5,11 +5,8 @@
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
-
 #import "UIApplication+MNZCategory.h"
-
 #import "TestPasswordViewController.h"
-
 #import "MEGAGenericRequestDelegate.h"
 
 @interface PasswordReminderViewController ()
@@ -141,6 +138,7 @@
     } else {
         [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkippedWithDelegate:delegate];
     }
+    [OverDiskQuotaService.sharedService invalidate];
 }
 
 - (void)configureUI {

@@ -1392,7 +1392,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
-            [self setEditMode:NO];;
+            [self setEditMode:NO];
         }];
         for (MEGANode *node in self.selectedNodesArray) {
             [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
@@ -1732,7 +1732,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:numFilesAction folders:numFoldersAction completion:^{
-                [self setEditMode:NO];;
+                [self setEditMode:NO];
             }];
             for (MEGANode *node in self.selectedNodesArray) {
                 [MEGASdkManager.sharedMEGASdk moveNode:node newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
