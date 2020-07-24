@@ -313,7 +313,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 }
 
 - (BOOL)shouldShowChatNotificationEnabledCell {
-    return (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 1 : 0;
+    return (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && !self.chatRoom.isPreview  ? YES : NO;
 }
 
 #pragma mark - IBActions
@@ -674,8 +674,10 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     CGFloat height;
     switch (section) {
-        case GroupChatDetailsSectionChatNotifications:
-            height = 10.0f;
+        case GroupChatDetailsSectionChatNotifications: {
+            NSString *remainingTimeString = [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
+            height = ([self shouldShowChatNotificationEnabledCell] && remainingTimeString && !remainingTimeString.mnz_isEmpty) ? UITableViewAutomaticDimension : 10.0f;
+        }
             break;
             
         case GroupChatDetailsSectionRenameGroup:

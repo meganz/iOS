@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtenez %1$s d’espace de stockage et %2$s de transferts pour chaque parrainage";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="Sélectionnez des contacts sur votre appareil ou saisissez plusieurs adresses courriel";
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Quota insuffisant";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="L’authentification à deux facteurs est exigée.";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="L’accès est refusé pour les utilisateurs qui ne sont pas administrateurs";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="Le compte d’entreprise est arrivé à expiration";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="La carte de crédit a été refusée";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Échec de facturation";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="La protection contre les fraudes a refusé cette opération";
 /* SDK error returned when there are too many requests */
 "Too many requests"="Il y a trop de requêtes";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Erreur de solde";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="Erreur HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="Appel…";
 /* notification subtitle of incoming calls */
 "Incoming call"="Appel entrant";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Un appel vocal a été manqué";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] appels vocaux ont été manqués";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Appel vidéo manqué";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] appels vidéo manqués";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Un appel vocal et un appel vidéo ont été manqués";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Un appel vocal et [A] appels vidéo ont été manqués";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] appels vocaux et un appel vidéo ont été manqués";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] appels vocaux et [B] appels vidéo ont été manqués";
 /* Button title to see the available bonus */
 "getBonus"="Obtenir des primes";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1977,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA n’utilisera pas ces données et n’interagira jamais avec vos contacts sans votre consentement.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Voyez qui se trouve déjà sur MEGA";
+"See who's already on MEGA"="Découvrir vos contacts sur MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacts ont été trouvés sur MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2048,8 +2032,6 @@
 "Share with"="Partager avec";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte d’entreprise pour résoudre la situation et activer votre compte.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,12 +2042,8 @@
 "24 hours"="24 heures";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="Les notifications seront en sourdine jusqu’à %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2227,7 +2205,7 @@
 /* Title shown when there are no shared files */
 "No Shared Files"="Il n’y a aucun fichier partagé";
 /* Error message shown when opening a folder link which doesn’t exist */
-"Folder link unavailable"="Lien de dossier non disponible";
+"Folder link unavailable"="Le lien de dossier n’est pas disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Lien de fichier non disponible";
 /* Header of block with all shared files in chat. */

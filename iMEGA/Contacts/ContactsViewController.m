@@ -263,8 +263,7 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            self.contactsTableViewHeader = [NSBundle.mainBundle loadNibNamed:@"ContactsTableViewHeader" owner:self options: nil].firstObject;
-            self.contactsTableViewHeader.navigationController = self.navigationController;
+            [self setupContactsTableViewHeader];
             
             NSArray *buttonsItems = @[self.addBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
@@ -467,6 +466,7 @@
     [self.tableView reloadData];
     
     if (self.contactsMode == ContactsModeDefault) {
+        [self setupContactsTableViewHeader];
         self.tableView.tableHeaderView = self.contactsTableViewHeader;
     } else if (self.contactsMode == ContactsModeChatStartConversation) {
         if (self.visibleUsersArray.count == 0) {
@@ -1060,6 +1060,11 @@
     messagesVC.chatRoom = chatRoom;
     
     [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
+- (void)setupContactsTableViewHeader {
+    self.contactsTableViewHeader = [NSBundle.mainBundle loadNibNamed:@"ContactsTableViewHeader" owner:self options: nil].firstObject;
+    self.contactsTableViewHeader.navigationController = self.navigationController;
 }
 
 #pragma mark - IBActions

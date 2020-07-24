@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每当推荐成功便能获取%1$s的存储空间和%2$s的流量";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="从手机通讯录中选择联系人或输入多个电子邮件地址";
 /*  */
 "insertYourFriendsEmails"="请填入您好友的电子邮件：";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="流量不足";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="多重验证请求";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="拒绝非管理员用户访问";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="企业帐户已到期";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="信用卡已拒绝";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="购买失败";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="拒绝欺诈保护";
 /* SDK error returned when there are too many requests */
 "Too many requests"="请求过多";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="余额错误";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP错误";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="正在通话中…";
 /* notification subtitle of incoming calls */
 "Incoming call"="来电";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="一个未接语音通话";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] 个未接语音通话";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="一个未接语视频话";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] 个未接视频通话";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="一个未接语音通话和一个未接视频通话";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="一个未接语音通话和 [A] 个未接视频通话";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] 个未接语音通话和一个未接视频通话";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]个未接语音通话和[B]个未接视频通话";
 /* Button title to see the available bonus */
 "getBonus"="获得奖励";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1977,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不会将这些数据用于任何其他目的，并且未经您的允许绝不会与您的联系人互动。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="查看谁在用MEGA";
+"See who's already on MEGA"="发现联系人";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="已发现[X]个联系人";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2048,8 +2032,6 @@
 "Share with"="分享";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="请联系您的企业帐户管理员解决此问题并激活帐户。";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="直到再次开启时";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分钟";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,12 +2042,8 @@
 "24 hours"="24小时";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="静音聊天通知";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="通知将保持静音至%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat信息通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2101,7 +2079,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="上传(%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="相簿";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="取消选择";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

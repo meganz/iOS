@@ -1365,7 +1365,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Multi-factor authentication required";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Business account has expired";
 /* SDK error returned when the credit card has been rejected */
@@ -1379,7 +1379,7 @@
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="جار الاتصال";
 /* notification subtitle of incoming calls */
 "Incoming call"="مكالمة واردة";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="اتصال صوتي فائت";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] اتصالات صوتية فائتة";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="اتصال مرئي فائت";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] اتصالات مرئية فائتة";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="اتصال صوتي ومرئي فائت";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="اتصال صوتي فائت [A] واتصالات مرئية فائتة";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] اتصالات صوتية فائتة واتصال مرئي فائت";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] اتصالات صوتية فائتة و [B] اتصالات مرئية فائتة";
 /* Button title to see the available bonus */
 "getBonus"="احصل على علاوة";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1511,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="ننصح بتصدير مفتاح الاسترجاع الخاص بك وحفظه بمكان آمن قبل تسجيل الخروج. يرجى الملاحظة انه من غير الممكن إعادة تعيين كلمة المرور في حال نسيانها.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="عدم الإظهار مرة اخرى";
+"dontShowAgain"="لا تظهر مرة أخرى";
 /* Label for test password button and titles */
 "testPassword"="اختبار كلمة المرور";
 /* Label for recovery key button */
@@ -2048,8 +2032,6 @@
 "Share with"="مشاركة مع";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="تواصل مع مشرف حساب الأعمال الخاص بك لحل هذه المشكلة وتفعيل حسابك.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="حتى أقوم بتشغيلها مرة أخرى";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 دقيقة";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,10 +2042,6 @@
 "24 hours"="24 ساعة";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="كتم صوت الإشعارات لـ";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */

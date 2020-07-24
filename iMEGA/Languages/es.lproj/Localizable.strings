@@ -1365,7 +1365,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Multi-factor authentication required";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Business account has expired";
 /* SDK error returned when the credit card has been rejected */
@@ -1379,7 +1379,7 @@
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error desconocido";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="Llamando...";
 /* notification subtitle of incoming calls */
 "Incoming call"="Llamada entrante";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Una llamada perdida";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] llamadas perdidas";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Una videollamada perdida";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] videollamadas perdidas";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Una llamada y una videollamada perdidas";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Una llamada y [A] videollamadas perdidas";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] llamadas y una videollamada perdidas";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] llamadas perdidas y [B] videollamadas perdidas";
 /* Button title to see the available bonus */
 "getBonus"="Obtén bono";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -2048,8 +2032,6 @@
 "Share with"="Compartir con";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Ponte en contacto con el administrador de tu cuenta Business para resolver el problema y activar tu cuenta.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Hasta que vuelva a activarlas";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutos";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,12 +2042,6 @@
 "24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Silenciar las notificaciones del chat durante:";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del Chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */

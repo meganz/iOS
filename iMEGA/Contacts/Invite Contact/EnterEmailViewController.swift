@@ -105,7 +105,7 @@ class EnterEmailViewController: UIViewController {
         customizeTokenField()
         tokenFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        inviteContactsButton.mnz_setupPrimary(traitCollection)
+        inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
     
     func updateBottomConstraint(_ newValue:CGFloat) {
@@ -115,11 +115,11 @@ class EnterEmailViewController: UIViewController {
 
     func disableInviteContactsButton() {
         inviteContactsButton.setTitle(AMLocalizedString("invite", "A button on a dialog which invites a contact to join MEGA."), for: .normal)
-        inviteContactsButton.backgroundColor = UIColor.mnz_tertiaryGray(for: self.traitCollection)
+        inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
 
     func enableInviteContactsButton() {
-        inviteContactsButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+        inviteContactsButton.mnz_setupPrimary(traitCollection)
         let inputText = tokenField.inputText()!
         let tokensNumber = tokens.count + (inputText.mnz_isValidEmail() ? 1 : 0)
         let inviteContactsString = tokensNumber == 1 ?
