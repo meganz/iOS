@@ -2032,8 +2032,6 @@
 "Share with"="共有先";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="あなたのビジネスアカウント管理者に連絡して問題を解決し、あなたのアカウントを有効にしてください。";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="再びそれをオンにするまで";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2044,10 +2042,6 @@
 "24 hours"="24時間";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="以下用のチャット通知をミュート：";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="「邪魔しないでください（Do Not Disturb）」モードがオフになるまで通知は停止されます";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="通知は明日の%@までサイレントになります";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="通知は%@までサイレントになります";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */

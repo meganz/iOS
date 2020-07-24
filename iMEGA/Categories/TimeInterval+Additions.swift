@@ -12,7 +12,7 @@ extension TimeInterval {
         let time = dateFormatter.string(from: date)
                 
         if Calendar.current.isDateInTomorrow(date) {
-            return String(format: AMLocalizedString("Notifications will be silenced until tomorrow at %@", "Chat Notifications DND: Remaining time left if until tomorrow"), time)
+            return String(format: AMLocalizedString("Notifications will be silenced until tomorrow, %@", "Chat Notifications DND: Remaining time left if until tomorrow"), time)
         } else {
             return String(format: AMLocalizedString("Notifications will be silenced until %@", "Chat Notifications DND: Remaining time left if until today"), time)
         }
