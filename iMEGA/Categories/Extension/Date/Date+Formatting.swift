@@ -1,27 +1,37 @@
 import Foundation
 
-enum DateTemplateFormat {
-    /// Monday Jun 1, 2020
-    case dateMediumWithWeekday
+enum DateStyle {
 
-    fileprivate var style: StringTemplateStyle {
-        switch self {
-        case .dateMediumWithWeekday:
-            return StringTemplateStyle(dateFormat: "EEEE MMM dd, yyyy")
-        }
-    }
+    static var dateStyleFactory: DateStyleFactory = DateStyleFactoryImpl()
 }
 
-enum DateStyleFormat {
-    /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday" when relative is `true`
-    case dateMedium(isRelative: Bool)
+protocol DateStyleFactory {
 
-    fileprivate var style: DateFormatStyle {
-        switch self {
-        case .dateMedium(let relative):
-            return DateFormatStyle(dateStyle: .medium, timeStyle: .none, relativeDateFormatting: relative)
-        }
+    func templateStyle(
+        fromTemplate template: String,
+        calendar: Calendar?,
+        timeZone: TimeZone?,
+        locale: Locale?) -> DateStyle.StringTemplateStyle
+
+    func systemStyle(
+        ofDateStyle dateStyle: DateFormatter.Style,
+        timeStyle: DateFormatter.Style,
+        relativeDateFormatting: Bool?,
+        calendar: Calendar?,
+        timeZone: TimeZone?,
+        locale: Locale?) -> DateStyle.DateFormatStyle
+}
+
+private struct DateStyleFactoryImpl: DateStyleFactory {
+
+    func templateStyle(fromTemplate template: String, calendar: Calendar?, timeZone: TimeZone?, locale: Locale?) -> DateStyle.StringTemplateStyle {
+        DateStyle.StringTemplateStyle(dateFormat: template, calendar: calendar, timeZone: timeZone, locale: locale)
     }
+
+    func systemStyle(ofDateStyle dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style, relativeDateFormatting: Bool?, calendar: Calendar?, timeZone: TimeZone?, locale: Locale?) -> DateStyle.DateFormatStyle {
+        DateStyle.DateFormatStyle(dateStyle: dateStyle, timeStyle: timeStyle, relativeDateFormatting: relativeDateFormatting, calendar: calendar, timeZone: timeZone, locale: locale)
+    }
+
 }
 
 /// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a cache pool to hold popular
@@ -31,9 +41,9 @@ final class DateFormatterPool {
 
     // MARK: - Cache for date formatter
 
-    private lazy var stringTemplateFormatterCache: [StringTemplateStyle: DateFormatter] = [:]
+    private lazy var stringTemplateFormatterCache: [DateStyle.StringTemplateStyle: DateFormatter] = [:]
 
-    private lazy var styleFormatterCache: [DateFormatStyle: DateFormatter] = [:]
+    private lazy var styleFormatterCache: [DateStyle.DateFormatStyle: DateFormatter] = [:]
 
     // MARK: - Static
 
@@ -50,12 +60,12 @@ final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting template.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateTemplateFormat) -> DateFormatting {
-        if let cachedStyle = stringTemplateFormatterCache[formattingStyle.style] {
+    func dateFormatter(of formattingStyle: DateStyle.StringTemplateStyle) -> DateFormatting {
+        if let cachedStyle = stringTemplateFormatterCache[formattingStyle] {
             return cachedStyle
         }
-        let styleFormatter = formattingStyle.style.buildDateFormatter()
-        stringTemplateFormatterCache[formattingStyle.style] = styleFormatter
+        let styleFormatter = formattingStyle.buildDateFormatter()
+        stringTemplateFormatterCache[formattingStyle] = styleFormatter
         return styleFormatter
     }
 
@@ -64,12 +74,12 @@ final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting styles.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateStyleFormat) -> DateFormatting {
-        if let cachedStyle = styleFormatterCache[formattingStyle.style] {
+    func dateFormatter(of formattingStyle: DateStyle.DateFormatStyle) -> DateFormatting {
+        if let cachedStyle = styleFormatterCache[formattingStyle] {
             return cachedStyle
         }
-        let styleFormatter = formattingStyle.style.buildDateFormatter()
-        styleFormatterCache[formattingStyle.style] = styleFormatter
+        let styleFormatter = formattingStyle.buildDateFormatter()
+        styleFormatterCache[formattingStyle] = styleFormatter
         return styleFormatter
     }
 }
@@ -81,44 +91,60 @@ private protocol DateFormatterProvidable {
     func buildDateFormatter() -> DateFormatter
 }
 
-/// A template string style configuration
-fileprivate struct StringTemplateStyle: Hashable {
-    typealias FormatString = String
+extension DateStyle {
+    /// A template string style configuration
+    struct StringTemplateStyle: Hashable {
+        typealias FormatString = String
 
-    let calendar: Calendar = .current
-    let dateFormat: FormatString
+        let dateFormat: FormatString
+        var calendar: Calendar? = nil
+        var timeZone: TimeZone? = nil
+        var locale: Locale? = nil
+    }
 }
 
-extension StringTemplateStyle: DateFormatterProvidable {
+extension DateStyle.StringTemplateStyle: DateFormatterProvidable {
     func buildDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = dateFormat
-        formatter.calendar = calendar
+        formatter.setLocalizedDateFormatFromTemplate(dateFormat)
+
+        if let calendar = calendar { formatter.calendar = calendar }
+        if let locale = locale { formatter.locale = locale }
+        if let timeZone = timeZone { formatter.timeZone = timeZone }
         return formatter
     }
 }
 
-/// A formatter provided style configuration
-fileprivate struct DateFormatStyle: Hashable {
+extension DateStyle {
+    /// A formatter provided style configuration
+    struct DateFormatStyle: Hashable {
 
-    let calendar: Calendar = .current
-    let dateStyle: DateFormatter.Style
-    let timeStyle: DateFormatter.Style
+        let dateStyle: DateFormatter.Style
+        let timeStyle: DateFormatter.Style
 
-    /// If a date formatter uses relative date formatting, where possible it replaces the date component of its output with a phrase—such as
-    ///  “today” or “tomorrow”—that indicates a relative date. The available phrases depend on the locale for the date formatter; whereas,
-    ///  for dates in the future, English may only allow “tomorrow,” French may allow “the day after the day after tomorrow,”
-    let relativeDateFormatting: Bool
+        /// If a date formatter uses relative date formatting, where possible it replaces the date component of its output with a phrase—such as
+        ///  “today” or “tomorrow”—that indicates a relative date. The available phrases depend on the locale for the date formatter; whereas,
+        ///  for dates in the future, English may only allow “tomorrow,” French may allow “the day after the day after tomorrow,”
+        var relativeDateFormatting: Bool? = nil
+        var calendar: Calendar? = nil
+        var timeZone: TimeZone? = nil
+        var locale: Locale? = nil
+    }
 }
 
-extension DateFormatStyle: DateFormatterProvidable {
+extension DateStyle.DateFormatStyle: DateFormatterProvidable {
 
     func buildDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = calendar
         formatter.dateStyle = dateStyle
         formatter.timeStyle = timeStyle
-        formatter.doesRelativeDateFormatting = relativeDateFormatting
+        if let calendar = calendar { formatter.calendar = calendar }
+        if let locale = locale { formatter.locale = locale }
+        if let timeZone = timeZone { formatter.timeZone = timeZone }
+        if let relativeDateFormatting = relativeDateFormatting {
+            formatter.doesRelativeDateFormatting = relativeDateFormatting
+        }
         return formatter
     }
 }

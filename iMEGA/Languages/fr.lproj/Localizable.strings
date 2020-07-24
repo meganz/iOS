@@ -2032,8 +2032,6 @@
 "Share with"="Partager avec";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte d’entreprise pour résoudre la situation et activer votre compte.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2044,10 +2042,6 @@
 "24 hours"="24 heures";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Les notifications seront en sourdine jusqu’à désactivation de Ne pas déranger";
-/* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Les notifications seront en sourdine jusqu’à demain %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Les notifications seront en sourdine jusqu’à %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */

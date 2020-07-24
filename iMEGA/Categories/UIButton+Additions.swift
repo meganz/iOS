@@ -17,6 +17,19 @@ extension UIButton {
         setupLayer()
     }
     
+    @objc func mnz_setupPrimary_disabled(_ traitCollection: UITraitCollection) {
+        var darkMode = false
+        if #available(iOS 13.0, *) {
+            if traitCollection.userInterfaceStyle == .dark {
+                darkMode = true
+            }
+        }
+        backgroundColor = UIColor.mnz_turquoise(for: traitCollection)?.withAlphaComponent(darkMode ? 0.2 : 0.3)
+        setTitleColor(UIColor.white.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)
+        
+        setupLayer()
+    }
+    
     @objc func mnz_setupDestructive(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_basicButton(for: traitCollection)
         setTitleColor(UIColor.mnz_red(for: traitCollection), for: UIControl.State.normal)
