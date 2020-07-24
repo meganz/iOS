@@ -1290,6 +1290,7 @@
 		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
+		BFC470A424C66E4F00A23820 /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0E24BFE2B100D7D13B /* Date+Manipulation.swift */; };
 		BFC7940C2418511300BFDCC4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */; };
 		BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */; };
@@ -8193,6 +8194,7 @@
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */,
 				94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */,
+				BFC470A424C66E4F00A23820 /* Date+Manipulation.swift in Sources */,
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
 				77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */,
