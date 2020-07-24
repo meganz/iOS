@@ -33,6 +33,7 @@
     self.delegate = nil;
     [self.notificationsSwitch setOn:YES];
     
+    self.avatarImageView.image = nil;
     [self updateAppearance];
 }
 
