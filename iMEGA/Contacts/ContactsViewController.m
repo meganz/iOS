@@ -29,7 +29,6 @@
 #import "ContactTableViewCell.h"
 #import "ContactRequestsViewController.h"
 #import "EmptyStateView.h"
-#import "MessagesViewController.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 

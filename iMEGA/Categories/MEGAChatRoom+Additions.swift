@@ -7,7 +7,7 @@ extension MEGAChatRoom {
         return MEGASdkManager.sharedMEGAChatSdk()?.userOnlineStatus(peerHandle(at: 0))
     }
     
-    var participantsNames: String {
+    var participantNames: String {
         return (0..<peerCount).reduce("") { (result, index) in
             if let nickname = userNickname(atIndex: index)?.trim {
                 let appendResult = (index == peerCount-1) ? nickname : "\(nickname), "

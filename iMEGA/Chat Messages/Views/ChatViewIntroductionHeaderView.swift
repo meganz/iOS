@@ -48,7 +48,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             return
         }
         
-        participantsLabel.text = chatRoom.participantsNames
+        participantsLabel.text = chatRoom.participantNames
 
         if chatRoom.isGroup {
             avatarImageView.isHidden = true

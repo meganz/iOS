@@ -55,7 +55,7 @@ class ChatTitleView: UIView {
             if chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.ro.rawValue {
                 subtitleLabel.text = AMLocalizedString("Inactive chat", "Subtitle of chat screen when the chat is inactive");
             } else if chatRoom.hasCustomTitle {
-                subtitleLabel.text = chatRoom.participantsNames
+                subtitleLabel.text = chatRoom.participantNames
             } else if chatRoom.peerCount > 0 {
                 subtitleLabel.text = String(format: AMLocalizedString("%d participants", "Plural of participant. 2 participants") , chatRoom.peerCount + 1)
             } else {

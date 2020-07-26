@@ -3,7 +3,6 @@
 
 #import "MEGALocalNotificationManager.h"
 #import "MEGAStore.h"
-#import "MessagesViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGA-Swift.h"
 
