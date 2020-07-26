@@ -76,7 +76,6 @@
 #import "InitialLaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
-#import "MessagesViewController.h"
 #import "OnboardingViewController.h"
 #import "ChatImageUploadQuality.h"
 #import "MEGANode.h"
