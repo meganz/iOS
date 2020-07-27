@@ -1,5 +1,5 @@
 
-protocol AddToChatMediaCollectionSourceDelegate: class {
+protocol AddToChatMediaCollectionSourceDelegate: AnyObject {
     func moreButtonTapped()
     func sendAsset(asset: PHAsset)
     func showCamera()
@@ -19,12 +19,12 @@ class AddToChatMediaCollectionSource: NSObject {
         return PHPhotoLibrary.authorizationStatus() == .authorized
     }
     
-    private var fetchOptions: PHFetchOptions {
+    private lazy var fetchOptions: PHFetchOptions = {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchOptions.fetchLimit = maxNumberOfAssetsFetched
         return fetchOptions
-    }
+    }()
     
     var showLiveFeedIfRequired = false {
         didSet {

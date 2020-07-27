@@ -60,7 +60,6 @@ extension ChatViewController {
         initDuration = TimeInterval(call.duration)
         if !(timer?.isValid ?? false) {
             
-            print(call.duration)
             let startTime = Date().timeIntervalSince1970
             let time = Date().timeIntervalSince1970 - startTime + self.initDuration!
             
@@ -110,8 +109,6 @@ extension ChatViewController : MEGAChatCallDelegate {
             configureNavigationBar()
         case .inProgress:
             configureTopBannerButtonForInProgressCall(call)
-            print(call.duration)
-
         case .reconnecting:
             setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
         case .destroyed:
