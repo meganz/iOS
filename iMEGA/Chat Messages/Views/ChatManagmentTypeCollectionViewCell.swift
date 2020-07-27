@@ -15,7 +15,7 @@ class ChatManagmentTypeCollectionViewCell: TextMessageCell {
         }
 
         let megaMessage = chatMessage.message
-        megaMessage.text()
+        megaMessage.generateAttributedString()
         
         messageLabel.attributedText = megaMessage.attributedText
 
@@ -32,7 +32,7 @@ open class ChatManagmentTypeCollectionViewSizeCalculator: TextMessageSizeCalcula
         }
         
         let megaMessage = chatMessage.message
-        megaMessage.text()
+        megaMessage.generateAttributedString()
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .attributedText(megaMessage.attributedText))
         return super.messageContainerSize(for: dummyMssage)
     }

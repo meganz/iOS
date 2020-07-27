@@ -41,7 +41,7 @@ extension ChatMessage: MessageType {
     
     var kind: MessageKind {
         
-        message.text()
+        message.generateAttributedString()
 
         if case .callEnded = message.type {
             return .custom(message)
