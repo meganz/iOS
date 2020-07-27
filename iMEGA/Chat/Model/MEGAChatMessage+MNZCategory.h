@@ -25,6 +25,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 
 - (BOOL)containsMEGALink;
 - (BOOL)shouldShowForwardAccessory;
-- (void)generateAttributedString;
+- (NSString *)generateAttributedString;
 
 @end
