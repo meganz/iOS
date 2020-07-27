@@ -19,13 +19,22 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     var currentNode: MEGANode?
     var currentTransfer: MEGATransfer?
 
+    let autoDownloadThresholdSize = 5.0 * 1024 * 1024
+
     open var imageView: YYAnimatedImageView = {
         let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-
+    
+    open var downloadGifIcon: UIImageView = {
+        let downloadGifIcon = UIImageView(image: UIImage(named: "download_gif"))
+        downloadGifIcon.isHidden = true
+//        downloadGifIcon.contentMode = .center
+        return downloadGifIcon
+    }()
+    
     open var playIconView: UIImageView = {
         let playIconView = UIImageView(image: UIImage(named: "playButton"))
         playIconView.isHidden = true
@@ -62,7 +71,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         super.init(frame: frame)
         MEGASdkManager.sharedMEGASdk()?.add(self)
     }
-
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         MEGASdkManager.sharedMEGASdk()?.add(self)
@@ -74,6 +83,9 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open func setupConstraints() {
         imageView.autoPinEdgesToSuperviewEdges()
         playIconView.autoCenterInSuperview()
+        downloadGifIcon.autoCenterInSuperview()
+        downloadGifIcon.autoSetDimensions(to: CGSize(width: 40, height: 40))
+
         durationLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         durationLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         durationLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
@@ -91,6 +103,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(loadingIndicator)
         messageContainerView.addSubview(progressView)
+        imageView.addSubview(downloadGifIcon)
         imageView.addSubview(playIconView)
         imageView.addSubview(durationLabel)
         setupConstraints()
@@ -112,6 +125,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             progressView.isHidden = false
             durationLabel.isHidden = true
             playIconView.isHidden = true
+            downloadGifIcon.isHidden = true
             let path = NSHomeDirectory().append(pathComponent: transfer.path)
             imageView.yy_imageURL = URL(fileURLWithPath: path)
             return
@@ -134,14 +148,15 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             }
         } else {
             loadingIndicator.isHidden = false
+            downloadGifIcon.isHidden = true
             loadingIndicator.startAnimating()
         }
         imageView.mnz_setPreview(by: node) { [weak self] _ in
-            guard let `self` = self, messagesCollectionView.cellForItem(at: indexPath) != nil else {
+            guard messagesCollectionView.cellForItem(at: indexPath) != nil, let strongSelf = self else {
                 return
             }
             
-            if self.isLastSectionVisible(collectionView: messagesCollectionView) {
+            if strongSelf.isLastSectionVisible(collectionView: messagesCollectionView) {
                 messagesCollectionView.reloadDataAndKeepOffset()
             } else {
                 messagesCollectionView.reloadItems(at: [indexPath])
@@ -154,13 +169,18 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
                 imageView.yy_imageURL = URL(fileURLWithPath: originalImagePath)
-                return
+                downloadGifIcon.isHidden = true
+            } else if node.size.doubleValue < autoDownloadThresholdSize {
+                MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
+                downloadGifIcon.isHidden = true
+            } else {
+                downloadGifIcon.isHidden = !loadingIndicator.isHidden
             }
-            MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
         } else if name.mnz_isVideoPathExtension {
             durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(node.duration))
             durationLabel.isHidden = false
-            playIconView.isHidden = false
+            playIconView.isHidden = !loadingIndicator.isHidden
+            downloadGifIcon.isHidden = true
         }
     }
 
@@ -174,6 +194,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         if currentNode?.handle == transfer.nodeHandle {
             if transfer.path != nil, FileManager.default.fileExists(atPath: transfer.path) {
                 imageView.yy_imageURL = URL(fileURLWithPath: transfer.path)
+                downloadGifIcon.isHidden = true
+
             }
         }
     }
