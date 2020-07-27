@@ -30,6 +30,6 @@ extension String {
     }
     
     func append(pathComponent: String) -> String {
-        return (self as NSString).appendingPathComponent(pathComponent)
+        return URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
     }
 }

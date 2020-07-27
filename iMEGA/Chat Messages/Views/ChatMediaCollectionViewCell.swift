@@ -136,8 +136,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
         }
-        imageView.mnz_setPreview(by: node) { _ in
-            guard messagesCollectionView.cellForItem(at: indexPath) != nil else {
+        imageView.mnz_setPreview(by: node) { [weak self] _ in
+            guard let `self` = self, messagesCollectionView.cellForItem(at: indexPath) != nil else {
                 return
             }
             
