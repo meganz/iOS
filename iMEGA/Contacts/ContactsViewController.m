@@ -2045,8 +2045,12 @@
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
                 
-                NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
-                [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
+                if (indexPath.section == 0) {
+                    [self.recentlyAddedUsersArray removeObjectAtIndex:indexPath.row];
+                } else {
+                    NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
+                    [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
+                }
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
             
