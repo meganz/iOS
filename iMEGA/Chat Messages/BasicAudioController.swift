@@ -145,7 +145,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
             guard FileManager.default.fileExists(atPath: nodePath),
                 let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: nodePath)) else {
-                    print("Failed to create audio player for URL: \(nodePath)")
+                    MEGALogInfo("Failed to create audio player for URL: \(nodePath)")
                     return
             }
             audioCell.waveView.wml_startAnimating()
@@ -164,7 +164,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
                 
             }
         default:
-            print("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
+            MEGALogInfo("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
         }
     }
 

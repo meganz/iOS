@@ -3,12 +3,11 @@ import MessageKit
 extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     
     func didTapAvatar(in cell: MessageCollectionViewCell) {
-        print("Avatar tapped")
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
             let chatMessage = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,
             let cell = cell as? MessageContentCell
         else {
-                print("Failed to identify message when audio cell receive tap gesture")
+                MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
                 return
         }
         
@@ -65,17 +64,16 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     }
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
-        print("Accessory view tapped")
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
             let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-                print("Failed to identify message when audio cell receive tap gesture")
+                MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
                 return
         }
         forwardMessage(message)
     }
     
     func didSelectURL(_ url: URL) {
-        print("URL Selected: \(url)")
+        MEGALogInfo("URL Selected: \(url)")
         MEGALinkManager.linkURL = url;
         MEGALinkManager.processLinkURL(url)
     }
@@ -83,7 +81,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     func didTapPlayButton(in cell: AudioMessageCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
             let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
-                print("Failed to identify message when audio cell receive tap gesture")
+                MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
                 return
         }
         guard audioController.state != .stopped else {
