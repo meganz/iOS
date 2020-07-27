@@ -1,6 +1,5 @@
 
 #import "MEGAChatMessage.h"
-#import "JSQMessageData.h"
 
 @class MEGAChatRoom;
 
@@ -12,7 +11,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
     MEGAChatMessageWarningDialogConfirmation
 };
 
-@interface MEGAChatMessage (MNZCategory) <JSQMessageData>
+@interface MEGAChatMessage (MNZCategory)
 
 @property (nonatomic) uint64_t chatId;
 @property (copy, nonatomic) NSAttributedString *attributedText;
@@ -22,8 +21,10 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 @property (copy, nonatomic) NSString *richString;
 @property (copy, nonatomic) NSNumber *richNumber;
 @property (copy, nonatomic) NSString *richTitle;
+@property (readonly) NSString *senderId;
 
 - (BOOL)containsMEGALink;
 - (BOOL)shouldShowForwardAccessory;
+- (void)generateAttributedString;
 
 @end

@@ -1,6 +1,6 @@
 extension MEGAChatRoom {
     var onlineStatus: MEGAChatStatus? {
-        if isGroup {
+        guard !isGroup else {
             return nil
         }
         

@@ -4,19 +4,13 @@
 #import <objc/runtime.h>
 
 #import "Helper.h"
-#import "MEGAAttachmentMediaItem.h"
-#import "MEGACallManagementMediaItem.h"
-#import "MEGADialogMediaItem.h"
+
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
-#import "MEGALocationMediaItem.h"
 #import "MEGAGenericRequestDelegate.h"
-#import "MEGAPhotoMediaItem.h"
-#import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-#import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
@@ -119,7 +113,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     return NO;
 }
 
-- (NSString *)text {
+- (NSString *)generateAttributedString {
     NSString *text;
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
     
@@ -316,73 +310,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
     return text;
 }
 
-- (id<JSQMessageMediaData>)media {
-    static NSCache *cache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [NSCache new];
-        cache.countLimit = 200;
-    });
-    
-    id<JSQMessageMediaData> media = [cache objectForKey:@(self.messageHash)];
-    if (media) {
-        return media;
-    }
-    
-    switch (self.type) {
-        case MEGAChatMessageTypeContact:
-            media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
-        case MEGAChatMessageTypeAttachment: {
-            MEGANode *node = [self.nodeList nodeAtIndex:0];
-            if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
-                media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-            } else {
-                media = [[MEGAPhotoMediaItem alloc] initWithMEGAChatMessage:self];
-            }
-            
-            break;
-        }
-            
-        case MEGAChatMessageTypeVoiceClip:
-            media = [[MEGAVoiceClipMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
-        case MEGAChatMessageTypeContainsMeta: {
-            if (self.containsMeta.type == MEGAChatContainsMetaTypeRichPreview) {
-                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
-            } else if (self.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                media = [[MEGALocationMediaItem alloc] initWithMEGAChatMessage:self];
-            }
-            break;
-        }
-            
-        case MEGAChatMessageTypeNormal: {
-            if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
-                media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
-            } else if (self.richNumber) {
-                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
-            }
-            
-            break;
-        }
-            
-        case MEGAChatMessageTypeCallStarted:
-        case MEGAChatMessageTypeCallEnded:
-            media = [[MEGACallManagementMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
-        default:
-            break;
-    }
-    
-    if (media && self.type != MEGAChatMessageTypeContact) {
-        [cache setObject:media forKey:@(self.messageHash)];
-    }
-    return media;
-}
-
 - (NSUInteger)messageHash {
     return self.hash;
 }
@@ -442,10 +369,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
     } else {
         return messageHash;
     }
-}
-
-- (id)debugQuickLookObject {
-    return [self.media mediaView] ?: [self.media mediaPlaceholderView];
 }
 
 #pragma mark - Properties

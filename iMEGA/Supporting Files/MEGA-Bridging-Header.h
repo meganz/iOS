@@ -103,6 +103,6 @@
 #import "ShareLocationViewController.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ChatAttachedContactsViewController.h"
-#import "MEGALoadingMessagesHeaderView.h"
 #import "MEGAChatMessage.h"
+#import "MEGAChatMessage+MNZCategory.h"
 #import "MEGATransfer+MNZCategory.h"
