@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -124,7 +124,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iif-bv-Vsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="thumbnailsView" style="plain" id="vvK-JU-zPC" userLabel="Item">
+                <barButtonItem image="thumbnailsThin" style="plain" id="vvK-JU-zPC" userLabel="Item">
                     <connections>
                         <action selector="thumbnailTapped:" destination="zUo-yM-mbH" id="O05-bw-iff"/>
                     </connections>
@@ -270,6 +270,6 @@
         <image name="moreSelected" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
-        <image name="thumbnailsView" width="28" height="28"/>
+        <image name="thumbnailsThin" width="28" height="28"/>
     </resources>
 </document>
