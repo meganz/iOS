@@ -91,7 +91,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Has intentado acceder demasiadas veces. Por favor, espera hasta las %@ e inténtalo de nuevo.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Por favor, comprueba tu correo y pulsa en el enlace para confirmar tu cuenta.";
+"accountNotConfirmed"="Ve a la bandeja de entrada de tu correo y pulsa en el enlace que te hemos envíado para confirmar tu cuenta.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Tu cuenta ha sido bloqueada. Por favor contacta con support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
@@ -107,7 +107,7 @@
 /*  */
 "pleaseStrengthenYourPassword"="Por favor, elige una contraseña más segura.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Muy Débil";
+"veryWeak"="Muy débil";
 /*  */
 "weak"="Débil";
 /*  */
@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtén %1$s de almacenamiento y %2$s de transferencia por cada invitación";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="Seleccionar contactos telefónicos o añadir correos electrónicos";
 /*  */
 "insertYourFriendsEmails"="Introduce el correo electrónico de tu(s) amigo(s):";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Cuota insuficiente";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="Se requiere la autenticación de dos factores.";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for non-admin users";
+"Access denied for users"="Acceso denegado para usuarios que no son administradores";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="La cuenta Business ha caducado";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="Tarjeta de crédito rechazada";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Cobro fallido";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="Rechazado por la protección contra fraudes";
 /* SDK error returned when there are too many requests */
 "Too many requests"="Demasiadas solicitudes";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Error en el saldo";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP Error";
+"HTTP error"="Error HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error desconocido";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1961,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA no utilizará estos datos para ningún otro propósito y nunca interactuará con tus contactos sin tu consentimiento.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Descubre quién está ya en MEGA";
+"See who's already on MEGA"="Descubre tus contactos en MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contactos encontrados en MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2032,6 +2032,12 @@
 "Share with"="Compartir con";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Ponte en contacto con el administrador de tu cuenta Business para resolver el problema y activar tu cuenta.";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Until this morning";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutos";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2042,10 +2048,16 @@
 "24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Silenciar las notificaciones del chat durante:";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Las notificaciones estarán silenciadas hasta las %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del Chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="No molestar";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconectando...";
 /* Title shown when the user reconnect in a call. */
@@ -2077,7 +2089,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Subir (%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="Álbumes";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deseleccionar";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2208,3 +2220,21 @@
 "File link unavailable"="Enlace del archivo no disponible";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Archivos compartidos";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="Almacenamiento lleno";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph> Nos hemos puesto en contacto contigo en la dirección de correo <b>%@</b> el <b>%@</b> pero sigues teniendo %@ archivos que ocupan <b>%@</b> en tu cuenta de MEGA. Tienes que ampliar tu cuenta a <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Nos hemos puesto en contacto contigo en la dirección de correo <b>%@</b> el <b>%@</b> pero sigues teniendo %@ archivos que ocupan <b>%@</b> en tu cuenta de MEGA. Tienes que contactar con nuestro soporte técnico para un plan personalizado.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d días";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Te quedan <warn>%@</warn> para ampliar tu cuenta.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="Después de eso, tus datos estarán sujetos a eliminación.";
