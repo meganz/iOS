@@ -271,10 +271,10 @@
             self.thumbnailsPopulated = YES;
         }
         self.collectionView.hidden = NO;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"fullsize"];
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"pageView"];
     } else {
         self.collectionView.hidden = YES;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     }
 }
 
@@ -283,7 +283,7 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModePreviewLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isPageView:self.collectionView.hidden sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -427,7 +427,8 @@
             }
             break;
             
-        case MegaNodeActionTypeThumbnailView:
+        case MegaNodeActionTypePdfPageView:
+        case MegaNodeActionTypePdfThumbnailView:
             [self thumbnailTapped:nil];
             break;
             
@@ -559,7 +560,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:[self.pdfView.document pageAtIndex:indexPath.item]];
-    self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+    self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     self.collectionView.hidden = YES;
 }
 
@@ -594,7 +595,7 @@
 - (void)didSelectSearchResult:(PDFSelection *)result {
     if (!self.collectionView.hidden) {
         self.collectionView.hidden = YES;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     }
     result.color = UIColor.systemYellowColor;
     [self.pdfView setCurrentSelection:result];

@@ -240,13 +240,24 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
     }
     
-    func testPreviewPdfFileLink() {
+    func testPreviewPdfPageViewFileLink() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewLink)
             .setIsPdf(true)
+            .setIsPageView(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .thumbnailView]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfThumbnailView]))
+    }
+    
+    func testPreviewPdfThumbnailFileLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewLink)
+            .setIsPdf(true)
+            .setIsPageView(false)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfPageView]))
     }
     
     // MARK: - Chat tests
