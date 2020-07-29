@@ -206,8 +206,8 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegateFlowLayout {
         return CGSize(width: cellDefaultWidth, height: collectionView.bounds.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout
-        collectionViewLayout: UICollectionViewLayout,
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return minimumLineSpacing
     }
