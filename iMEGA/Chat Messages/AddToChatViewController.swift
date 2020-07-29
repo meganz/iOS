@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol AddToChatViewControllerDelegate: class {
+protocol AddToChatViewControllerDelegate: AnyObject {
     func send(asset: PHAsset)
     func loadPhotosView()
     func showCamera()
@@ -22,20 +22,20 @@ class AddToChatViewController: UIViewController {
     // MARK:- Properties.
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var patchView: UIView!
-    @IBOutlet weak var contentViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var contentViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var contentViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var contentViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var patchView: UIView!
+    @IBOutlet private weak var contentViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentViewTrailingConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var mediaCollectionView: UICollectionView!
-    @IBOutlet weak var mediaCollectionViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var mediaCollectionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var mediaCollectionView: UICollectionView!
+    @IBOutlet private weak var mediaCollectionViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var mediaCollectionViewTopConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var menuView: UIView!
-    @IBOutlet weak var menuViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var menuViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var menuViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var menuView: UIView!
+    @IBOutlet private weak var menuViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var menuViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var menuViewTrailingConstraint: NSLayoutConstraint!
 
     var dismissHandler: (() -> Void)?
     private var presentAndDismissAnimationDuration: TimeInterval = 0.4
