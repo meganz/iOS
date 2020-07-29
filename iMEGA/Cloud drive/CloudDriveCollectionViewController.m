@@ -16,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewTopConstraint;
 
-@property (assign, nonatomic, getter=isSearchViewVisible) BOOL searchViewVisible;
-
 @end
 
 @implementation CloudDriveCollectionViewController
@@ -137,17 +135,9 @@
 #pragma mark - UIScrolViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.isSearchViewVisible) {
-        self.searchViewTopConstraint.constant = - scrollView.contentOffset.y - 50; //keep the search view next to collection view offset when scroll
-        if (scrollView.contentOffset.y > 50 && !self.cloudDrive.searchController.isActive) { //hide search view when collection offset up is higher than search view height
-            [self resetSearchBarPosition];
-        }
-    } else {
-        if (scrollView.contentOffset.y < 0) { //Show the scroll and adjust insets when collection scrolls down
-            self.searchViewVisible = YES;
-            self.collectionView.contentInset = self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0);
-        }
-    }
+    //keep the search view next to collection view offset when scroll and adjust collection insets to the offset simulating that the search bar is embed into the collection
+    self.searchViewTopConstraint.constant = - scrollView.contentOffset.y - 50;
+    self.collectionView.contentInset = UIEdgeInsetsMake(MAX(0, MIN(-scrollView.contentOffset.y, 50)), 0, 0, 0);
     
     if (self.cloudDrive.searchController.isActive) {
         [self.cloudDrive.searchController.searchBar resignFirstResponder];
@@ -155,18 +145,17 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (self.searchViewVisible && scrollView.contentOffset.y > -50 && scrollView.contentOffset.y < 0) { //Search bar is partially visible
+    if (scrollView.contentOffset.y > -50 && scrollView.contentOffset.y < 0) { //Search bar is partially visible when end dragging
         if ([scrollView.panGestureRecognizer velocityInView:scrollView].y < 0) { //Hide search bar if scrolling up
-            self.searchViewVisible = NO;
             [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
                 self.searchViewTopConstraint.constant = -50;
-                self.collectionView.contentOffset = CGPointMake(0, 0);
-                self.collectionView.contentInset = self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+                self.collectionView.contentOffset = CGPointZero;
+                self.collectionView.contentInset = UIEdgeInsetsZero;
                 [self.view layoutIfNeeded];
             } completion:nil];
         } else { //Show search bar if scrolling down
             [UIView animateWithDuration:.2 animations:^{
-                self.collectionView.contentInset = self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0);
+                self.collectionView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
                 self.searchViewTopConstraint.constant = 0;
                 self.collectionView.contentOffset = CGPointMake(0, -50);
                 [self.view layoutIfNeeded];
@@ -207,8 +196,7 @@
 }
 
 - (void)resetSearchBarPosition {
-    self.searchViewVisible = NO;
-    self.collectionView.contentInset = self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.collectionView.contentInset = UIEdgeInsetsZero;
 }
 
 @end
