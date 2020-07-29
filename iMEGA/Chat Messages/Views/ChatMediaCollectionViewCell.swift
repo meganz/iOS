@@ -44,7 +44,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var loadingIndicator: UIActivityIndicatorView = {
         let loadingIndicator = UIActivityIndicatorView(style: .gray)
         loadingIndicator.startAnimating()
-        loadingIndicator.isHidden = true
+        loadingIndicator.hidesWhenStopped = true
         return loadingIndicator
     }()
     
@@ -132,6 +132,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         }
 
         progressView.isHidden = true
+        loadingIndicator.stopAnimating()
 
         let node = megaMessage.nodeList.node(at: 0)!
         currentNode = node
@@ -140,14 +141,13 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
         
         if FileManager.default.fileExists(atPath: previewFilePath) || FileManager.default.fileExists(atPath: originalImagePath) {
-            loadingIndicator.isHidden = true
+            loadingIndicator.stopAnimating()
             if let previewImage = UIImage(contentsOfFile: previewFilePath) ?? UIImage(contentsOfFile: originalImagePath),
                 (previewImage.size.width / previewImage.size.height).precised(2) != (messageContainerView.frame.width / messageContainerView.frame.height).precised(2),
                 messagesCollectionView.numberOfSections > indexPath.section {
                 messagesCollectionView.reloadItems(at: [indexPath])
             }
         } else {
-            loadingIndicator.isHidden = false
             downloadGifIcon.isHidden = true
             loadingIndicator.startAnimating()
         }
