@@ -334,6 +334,13 @@ enum SessionSectionRow: Int {
         present(addPhoneNumberController, animated: true, completion: nil)
     }
     
+    private func showPhoneNumberView() {
+        let phoneNumberController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "PhoneNumberViewControllerID")
+        let navigation = MEGANavigationController(rootViewController: phoneNumberController)
+        navigation.addRightCancelButton()
+        present(navigation, animated: true, completion: nil)
+    }
+    
     func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatting {
         let calendar = Calendar.current
         let startingOfToday = Date().startOfDay(on: calendar)
@@ -465,7 +472,6 @@ extension ProfileViewController: UITableViewDataSource {
                         cell.detailLabel.text = phoneNumber
                     }
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
-                    cell.accessoryType = .none
                 }
             case .changePassword:
                 cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password")
@@ -563,6 +569,8 @@ extension ProfileViewController: UITableViewDelegate {
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     showAddPhoneNumber()
+                } else {
+                    showPhoneNumberView()
                 }
             case .changePassword:
                 presentChangeViewController(changeType: .password)
@@ -652,7 +660,7 @@ extension ProfileViewController: MEGARequestDelegate {
         case .MEGARequestTypeGetUserEmail:
             emailLabel.text = request.email
             
-        case .MEGARequestTypeCheckSMSVerificationCode:
+        case .MEGARequestTypeCheckSMSVerificationCode, .MEGARequestTypeResetSmsVerifiedNumber:
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
         default:
