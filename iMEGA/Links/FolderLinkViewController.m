@@ -162,9 +162,9 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (self.isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
+            [self.tableView reloadEmptyDataSet];
         }
         
-        [self.tableView reloadEmptyDataSet];
         if (self.searchController.active) {
             if (UIDevice.currentDevice.iPad) {
                 if (self != UIApplication.mnz_visibleViewController) {
@@ -182,6 +182,8 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            
             [self updateAppearance];
             
             [self.tableView reloadData];
@@ -1024,10 +1026,6 @@
         case MegaNodeActionTypeDownload:
             self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
             [self downloadAction:nil];
-            break;
-            
-        case MegaNodeActionTypeOpen:
-            [self openNode:node];
             break;
             
         case MegaNodeActionTypeImport:

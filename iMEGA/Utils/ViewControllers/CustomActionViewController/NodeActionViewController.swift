@@ -33,7 +33,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsMediaFile(node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable()))
             .setIsFile(node.isFile())
             .setIsRestorable(node.mnz_isRestorable())
-            .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf" && node.size.int64Value < MEGAMaxFileLinkAutoOpenSize)
+            .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
             .setisIncomingShareChildView(isIncoming)
             .setIsExported(node.isExported())
             .setIsOutshare(node.isOutShare())
