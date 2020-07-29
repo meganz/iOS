@@ -2,7 +2,7 @@
 
 import UIKit
 
-protocol AddToChatMenuPageViewControllerDelegate: class {
+protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
     func loadPhotosView()
     func showCloudDrive()
     func startVoiceCall()
@@ -19,7 +19,7 @@ class AddToChatMenuPageViewController: UIPageViewController {
     
     weak var menuDelegate: AddToChatMenuPageViewControllerDelegate?
     
-    private var menuPages: [AddToChatMenuViewController]!
+    private var menuPages = [AddToChatMenuViewController]()
 
     private var numberOfMenuPerPages: Int {
         return menuPerRow * numberOfRowsForMenu
@@ -43,11 +43,25 @@ class AddToChatMenuPageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        menuPages = (0..<numberOfPagesRequired).compactMap { [weak self] pageIndex in
-            guard let menus = menus else {
-                return nil
-            }
-            
+        populateMenuPages()
+        
+        if let firsPage = menuPages.first {
+            setViewControllers([firsPage],
+                               direction: .forward,
+                               animated: false,
+                               completion: nil)
+        }
+        
+        dataSource = self
+        delegate = self
+    }
+    
+    private func populateMenuPages() {
+        guard let menus = menus else {
+            return
+        }
+        
+        menuPages = (0..<numberOfPagesRequired).map { [weak self] pageIndex in
             let menuViewController = AddToChatMenuViewController(nibName: nil, bundle: nil)
             menuViewController.delegate = self
             
@@ -60,21 +74,9 @@ class AddToChatMenuPageViewController: UIPageViewController {
             
             return menuViewController
         }
-        
-        setViewControllers([menuPages.first!],
-                           direction: .forward,
-                           animated: false,
-                           completion: nil)
-        
-        dataSource = self
-        delegate = self
     }
     
     func updateAudioVideoMenu() {
-        guard let menuPages = menuPages else {
-            return
-        }
-        
         menuPages.forEach { menuViewController in
             menuViewController.updateMenus()
         }
@@ -114,8 +116,13 @@ extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPag
 
 extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
     func didTap(menu: AddToChatMenu) {
-        switch menu.nameKey {
-        case "Photos":
+        guard let menuNameKey = menu.menuNameKey else {
+            MEGALogDebug("Menu name key is nil for didTap")
+            return
+        }
+        
+        switch menuNameKey {
+        case .photos:
             DevicePermissionsHelper.photosPermission { granted in
                 if granted {
                     self.menuDelegate?.loadPhotosView()
@@ -123,33 +130,37 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
                     DevicePermissionsHelper.alertPhotosPermission()
                 }
             }
-        case "File":
+        case .file:
             menuDelegate?.showCloudDrive()
-        case "Voice":
+        case .voice:
             menuDelegate?.startVoiceCall()
-        case "Video":
+        case .video:
             menuDelegate?.startVideoCall()
-        case "Contact":
+        case .contact:
             menuDelegate?.showContacts()
-        case "Start Group":
+        case .startGroup:
             menuDelegate?.startGroupChat()
-        case "Location":
+        case .location:
             menuDelegate?.showLocation()
-        case "Voice Clip":
+        case .voiceClip:
             menuDelegate?.showVoiceClip()
-        default:
-            break
         }
     }
     
     func shouldDisable(menu: AddToChatMenu) -> Bool {
-        switch menu.nameKey {
-        case "Voice":
+        guard let menuNameKey = menu.menuNameKey else {
+            MEGALogDebug("Menu name key is nil for shouldDisable")
+            return false
+        }
+        
+        switch menuNameKey {
+        case .voice:
             return menuDelegate?.shouldDisableAudioMenu() ?? false
-        case "Video":
+        case .video:
             return menuDelegate?.shouldDisableVideoMenu() ?? false
         default:
             return false
         }
     }
 }
+
