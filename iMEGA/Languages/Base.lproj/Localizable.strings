@@ -2238,3 +2238,15 @@
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>You have <warn>%@</warn> left to upgrade.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="After that, your data is subject to deletion.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="Modify Phone Number";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="Remove Phone Number";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="This operation will remove your current phone number and start the process of associating a new phone number with your account.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="Your phone number has been removed successfully.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
