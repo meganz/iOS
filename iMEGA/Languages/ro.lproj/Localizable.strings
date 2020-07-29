@@ -175,7 +175,7 @@
 /* Title for the folder link view */
 "folderLink"="Linkul folderului";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Descarcă";
+"downloadButton"="Descărcare";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Folderul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when a folder can't be created. */
@@ -339,7 +339,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respectă drepturile de autor ale celorlalți și impune utilizatorilor serviciului de stocare în cloud MEGA să se conformeze cu legislațiile privind drepturile de autor.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Ai interdicția strică de a folosi serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poți încărca, descărca, stoca, partaja, afișa, distribui, trimite e-mail, oferi link, transmite sau altfel pune la dispoziție fișiere, date sau conținut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entități.";
+"copyrightMessagePart2"="Ai interdicția strică de a folosi serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poți încărca, descărca, stoca, partaja, afișa, distribui, reda în flux, trimite e-mail, oferi link, transmite sau altfel pune la dispoziție fișiere, date sau conținut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entități.";
 /* button caption text that the user clicks when he agrees */
 "agree"="De acord";
 /* button caption text that the user clicks when he disagrees */
@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obține %1$s stocare și %2$s transferuri pentru fiecare recomandare";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="Selectează din contactele de pe telefon sau introdu mai multe adrese de e-mail";
 /*  */
 "insertYourFriendsEmails"="Introdu e-mailul(urile) prietenului:";
 /*  */
@@ -932,7 +932,7 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Cotă de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Cotă de transferuri";
+"Transfer Quota"="Cotă de transfer";
 /* achievement type */
 "registrationBonus"="Bonus de înregistrare";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Cotă insuficientă";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="Este necesară autentificarea cu mai mulți factori";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Acces interzis pentru utilizatorii non-admin";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="Contul business a expirat";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="Card de credit respins";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Facturare eșuată";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="Respins(ă) de protecția împotriva fraudelor";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Prea multe cereri";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Eroare privind soldul";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="Eroare HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Eroare necunoscută";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1390,7 +1390,7 @@
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori, prin intermediul browserelor web standard, împreună cu aplicații dedicate pentru dispozitivele mobile. Spre deosebire de ceilalți furnizori de stocare în cloud, datele tale sunt criptate și decriptate doar de către dispozitivele client ale tale și niciodată de către noi.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Încarcă fișierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, transmite, vezi, partajează, redenumește sau șterge fișierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale și vezi modificările acestora în timp real.";
+"generalDescriptionParagraph2"="Încarcă fișierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, redă în flux, vezi, partajează, redenumește sau șterge fișierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale și vezi modificările acestora în timp real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Procesul de criptare înseamnă că nu putem să îți accesăm sau să îți resetăm parola astfel încât TREBUIE să o reții (excepție făcând cazul în care ai cheia de recuperare păstrată ca backup) sau vei pierde accesul la fișierele tale stocate.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
@@ -1406,22 +1406,6 @@
 "calling..."="Se apelează...";
 /* notification subtitle of incoming calls */
 "Incoming call"="Apel de intrare";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Apel audio ratat";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] apeluri audio ratate";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Apel video ratat";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] apeluri video ratate";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="1 apel audio ratat și 1 apel video ratat";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="1 apel audio ratat și [A] apeluri video ratate";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] apeluri audio ratate și 1 apel video ratat";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] apeluri audio ratate și [B] apeluri video ratate";
 /* Button title to see the available bonus */
 "getBonus"="Obține bonusul";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1495,7 +1479,7 @@
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Revenire la versiunea anterioară";
 /*  */
-"download"="Descarcă";
+"download"="Descărcare";
 /* Singular of file. 1 file */
 "file"="fișier";
 /* Title of section to display information of the current version of a file. */
@@ -1511,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Înainte de a te deconecta, îți recomandăm să exporți cheia de recuperare într-un loc sigur. Reține că nu poți să resetezi parola dacă o uiți.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Nu-mi afișa din nou";
+"dontShowAgain"="Nu afișa din nou";
 /* Label for test password button and titles */
 "testPassword"="Testează parola";
 /* Label for recovery key button */
@@ -1649,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Caută";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Îți va permite să cauți fișierele/folderele MEGA în căutarea cu Spotlight a dispozitivului";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu deții cheile";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1739,7 +1723,7 @@
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvat(ă) în Poze";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save Item"="Nu se poate salva elementul";
+"Could not save Item"="Nu s-a putut salva elementul.";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
 "Encrypted Key Rotation"="Rotația cheii criptate";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
@@ -1773,7 +1757,7 @@
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Vizualizare tip listă";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Vizualizare tip miniatură";
+"Thumbnail view"="Vizualizare tip miniaturi";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
 /* There are no notifications to display. */
@@ -1977,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Vezi cine este deja pe MEGA";
+"See who's already on MEGA"="Descoperă-ți contactele pe MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacte găsite pe MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2048,8 +2032,12 @@
 "Share with"="Partajează cu";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contactează administratorul contului business pentru a rezolva problema și pentru a-ți activa contul.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Până când le pornesc din nou";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Until this morning";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 de minute";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,16 +2048,16 @@
 "24 hours"="24 de ore";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Amuțește notificările de chat timp de";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="Notificările vor fi silențioase până la %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificări de chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Nu deranja";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Se reconectează…";
 /* Title shown when the user reconnect in a call. */
@@ -2101,7 +2089,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Încarcă (%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="Albume";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deselectează";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2203,7 +2191,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Pictograma aplicației";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="Configurează ordinea de sortare și modul de vizualizare implicit (listă sau miniaturi).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Per folder";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
@@ -2215,7 +2203,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurează ordinea de sortare a coloanelor pe o bază per folder sau folosește aceeași ordine pentru toate folderele.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Selectează modul de vizualizare (listă sau miniaturi) pe o bază per folder sau folosește același mod de vizualizare pentru toate folderele.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Când te deconectezi, transferurile în curs vor fi anulate.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2225,10 +2213,28 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat creat în %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="Niciun fișier partajat";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Linkul folderului indisponibil";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Linkul fișierului indisponibil";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Fișiere partajate";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="Stocare plină";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să faci upgrade la <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să contactezi asistența pentru un plan personalizat.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d zile";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Ai <warn>%@</warn> rămas(e) pentru a face upgrade.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="După aceea, datele tale sunt supuse ștergerii.";

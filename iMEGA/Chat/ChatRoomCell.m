@@ -42,6 +42,11 @@
     [self updateAppearance];
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.avatarImageView.image = nil;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     UIColor *color = self.onlineStatusView.backgroundColor;
     [super setSelected:selected animated:animated];

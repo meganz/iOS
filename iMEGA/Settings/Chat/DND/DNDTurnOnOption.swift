@@ -1,16 +1,59 @@
 import Foundation
 
-enum DNDTurnOnOption: TimeInterval {
-    case forever = 0
-    case thirtyMinutes = 1800
-    case oneHour = 3600
-    case sixHours = 21600
-    case twentyFourHours = 86400
+enum DNDTurnOnOption {
+    case thirtyMinutes
+    case oneHour
+    case sixHours
+    case twentyFourHours
+    case morningEightAM
+    case forever
+    
+    private var isMorningEightToday: Bool {
+        let calendar = Calendar.current
+        let comp = calendar.dateComponents([.hour], from: Date())
+        if let hour = comp.hour, hour < 8 {
+            return true
+        }
+
+        return false
+    }
+    
+    private var timeLeftUntilEightAM: TimeInterval? {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        if let today = now.startOfDay(on: calendar) {
+            var dayComponent = DateComponents()
+            dayComponent.day = !isMorningEightToday ? 1 : 0
+            dayComponent.hour = 8
+            
+            if let date = calendar.date(byAdding: dayComponent, to: today) {
+                return date.timeIntervalSince(now)
+            }
+        }
+        
+        return 0
+    }
+    
+    var timeInterval: TimeInterval? {
+        switch self {
+        case .thirtyMinutes:
+            return 3600
+        case .oneHour:
+            return 3600
+        case .sixHours:
+            return 21600
+        case .twentyFourHours:
+            return 86400
+        case .morningEightAM:
+            return timeLeftUntilEightAM
+        case .forever:
+            return 0
+        }
+    }
     
     private var localizedTitle: String {
         switch self {
-        case .forever:
-            return AMLocalizedString("Until I Turn it On Again", "Chat Notifications DND: Option that does not deactivate DND automatically")
         case .thirtyMinutes:
             return AMLocalizedString("30 minutes", "Chat Notifications DND: Option that deactivates DND after 30 minutes")
         case .oneHour:
@@ -19,10 +62,15 @@ enum DNDTurnOnOption: TimeInterval {
             return AMLocalizedString("6 hours")
         case .twentyFourHours:
             return AMLocalizedString("24 hours")
+        case .morningEightAM:
+            return isMorningEightToday ?  AMLocalizedString("Until this morning") : AMLocalizedString("Until tomorrow morning")
+        case .forever:
+            return AMLocalizedString("Until I turn it back on")
         }
     }
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
+                                isGlobalSetting: Bool,
                                 identifier: Int64?) -> UIAlertController {
         let alertMessage = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
         let alertController = UIAlertController(title: nil,
@@ -33,17 +81,23 @@ enum DNDTurnOnOption: TimeInterval {
         alertController.addAction(UIAlertAction(title: cancelString,
                                                 style: .cancel,
                                                 handler: delegate.cancelAction))
-        
-        alertController.addAction(UIAlertAction(title: thirtyMinutes.localizedTitle, style: .default, handler: delegate.action(for: thirtyMinutes, identifier: identifier)))
-        
-        alertController.addAction(UIAlertAction(title: oneHour.localizedTitle, style: .default, handler: delegate.action(for: oneHour, identifier: identifier)))
-        
-        alertController.addAction(UIAlertAction(title: sixHours.localizedTitle, style: .default, handler: delegate.action(for: sixHours, identifier: identifier)))
-        
-        alertController.addAction(UIAlertAction(title: twentyFourHours.localizedTitle, style: .default, handler: delegate.action(for: twentyFourHours, identifier: identifier)))
-        
-        alertController.addAction(UIAlertAction(title: forever.localizedTitle, style: .default, handler: delegate.action(for: forever, identifier: identifier)))
+
+        addAction(for: alertController,
+                  delegate: delegate,
+                  options: [thirtyMinutes, oneHour, sixHours, twentyFourHours, isGlobalSetting ? morningEightAM : forever],
+                  identifier: identifier)
         
         return alertController
+    }
+    
+    private static func addAction(for alertController: UIAlertController,
+                                  delegate: DNDTurnOnAlertControllerAction,
+                                  options: [DNDTurnOnOption],
+                                  identifier: Int64?) {
+        options
+            .map({ UIAlertAction(title: $0.localizedTitle,
+                                 style: .default,
+                                 handler: delegate.action(for: $0, identifier: identifier))})
+            .forEach(alertController.addAction)
     }
 } 
