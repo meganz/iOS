@@ -27,6 +27,7 @@
 		2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */; };
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
+		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -1312,6 +1313,8 @@
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
+		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
+		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -3035,6 +3038,15 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */ = {
+			isa = PBXGroup;
+			children = (
+				2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */,
+				2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */,
+			);
+			path = FDFullscreenPopGesture;
+			sourceTree = "<group>";
+		};
 		41136FB91E1692650031C516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -3674,6 +3686,7 @@
 		41BADDA61A8E064E008408B3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */,
 				5D79B519249846E70070FECD /* Foundation */,
 				5D03C99D2488972400BE5EEB /* UIKit */,
 				5DD8C8E224B5AF400033F479 /* Extension */,
@@ -6647,6 +6660,7 @@
 				B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,

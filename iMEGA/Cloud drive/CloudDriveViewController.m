@@ -335,6 +335,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.cdTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cdTableView.tableView.emptyDataSetDelegate = self;
     self.cdTableView.tableView.emptyDataSetSource = self;
+        
+    self.fd_interactivePopDisabled = YES;
 }
 
 - (void)initCollection {
@@ -357,6 +359,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     self.cdCollectionView.collectionView.emptyDataSetDelegate = self;
     self.cdCollectionView.collectionView.emptyDataSetSource = self;
+    
+    self.fd_interactivePopDisabled = NO;
 }
 
 - (void)changeViewModePreference {
