@@ -27,6 +27,15 @@ pipeline {
    agent any
 
    stages {
+
+        stage('Bump Version') {
+            steps {
+                injectEnvironments({
+                    sh "fastlane bump BUILD_NUMBER:$BUILD_NUMBER"
+                })
+            }
+        }
+
       stage('Submodule update') {
          steps {
             injectEnvironments({
