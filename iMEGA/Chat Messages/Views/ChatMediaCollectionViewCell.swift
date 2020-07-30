@@ -31,7 +31,6 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var downloadGifIcon: UIImageView = {
         let downloadGifIcon = UIImageView(image: UIImage(named: "download_gif"))
         downloadGifIcon.isHidden = true
-//        downloadGifIcon.contentMode = .center
         return downloadGifIcon
     }()
     
