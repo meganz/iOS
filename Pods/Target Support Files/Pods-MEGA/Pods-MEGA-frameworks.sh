@@ -162,6 +162,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework"
@@ -173,6 +174,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework"

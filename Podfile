@@ -11,6 +11,7 @@ target 'MEGA' do
   pod 'FlexLayout'
   pod 'PinLayout'
   pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
+  pod "Haptica"
 
   # Pods for MEGA
 
@@ -24,7 +25,6 @@ end
 target 'MEGANotifications' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'YYWebImage'
 
   # Pods for MEGANotifications
 
