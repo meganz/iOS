@@ -12,6 +12,7 @@ target 'MEGA' do
   pod 'PinLayout'
   pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
   pod "Haptica"
+  pod 'FDFullscreenPopGesture', '1.1'
 
   # Pods for MEGA
 
