@@ -37,13 +37,29 @@ end
 default_platform(:ios)
 
 platform :ios do
-  
-  desc "Build App using development certificate for Appcenter"
-  lane :build_using_development do |options|
+  desc "Bump and tag version"
+  lane :bump do |options|
+    ensure_git_status_clean
+    bump_message = "Bump build number."
+    # If our latest commit isn't a build bump, then bump the build.
+    build_is_already_bumped = last_git_commit[:message].include? bump_message
+    next if build_is_already_bumped
     increment_build_number(
       build_number: Time.new.strftime("%Y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
       xcodeproj: PROJECT
     )
+    commit_version_bump(
+      message: bump_message,
+      xcodeproj: PROJECT
+    )
+    add_git_tag(
+      sign: true
+    )
+    push_to_git_remote
+  end
+
+  desc "Build App using development certificate for Appcenter"
+  lane :build_using_development do |options|
 
     gym(
       workspace: WORKSPACE,
@@ -58,13 +74,18 @@ platform :ios do
 
   desc "Upload to Appcenter"
   lane :upload_to_appcenter do |options|
-    # Get the 20 latest commints from the current branch.
-    changelog_from_git_commits(
-      commits_count: 20,  
-      pretty: "- %s",
-      date_format: "short",
-      match_lightweight_tag: false,
-      merge_commit_filtering: "exclude_merges"
+    # 1. Do some math to get build tags
+    # build_number = get_build_number(xcodeproj: PROJECT_PATH)
+    # last_build_number = build_number.to_i - 1
+    # build_tag = "builds/iosbump/" + build_number
+    # last_build_tag = "builds/iosbump/" + last_build_number.to_s
+    # 2. Generate a change log
+    comments = changelog_from_git_commits(
+        # between: [last_build_tag, build_tag],
+        pretty: "- %s",
+        date_format: "short",
+        match_lightweight_tag: false,
+        merge_commit_filtering: "exclude_merges"
     )
 
     # Upload the IPA to Appcenter.
@@ -75,7 +96,7 @@ platform :ios do
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       destinations: APPCENTER_DESTINATIONS,
       destination_type: "group",
-      release_notes: lane_context[SharedValues::FL_CHANGELOG],
+      release_notes: comments,
       notify_testers: true
     )
 
