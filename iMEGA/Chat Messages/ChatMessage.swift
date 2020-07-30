@@ -42,29 +42,21 @@ extension ChatMessage: MessageType {
     var kind: MessageKind {
         
         message.generateAttributedString()
-
-        if case .callEnded = message.type {
+        
+        switch message.type {
+        case .callEnded, .callStarted, .attachment, .containsMeta, .contact, .voiceClip:
             return .custom(message)
-        } else if case .callStarted = message.type {
-            return .custom(message)
-        } else if case .attachment = message.type {
-            return .custom(message)
-        } else if case .contact = message.type {
-            return .custom(message)
-        } else if case .containsMeta = message.type {
-            return .custom(message)
-        } else if case .normal = message.type {
-            return .custom(message)
-        } else if case .voiceClip = message.type {
-            return .custom(message)
-        } else if message.isManagementMessage {
+        default:
+            break
+        }
+        
+        if message.isManagementMessage {
             return .custom(message)
         }
         
         if transfer?.transferChatMessageType() == .voiceClip || transfer?.transferChatMessageType() == .attachment {
             return .custom(message)
         }
-        
         
         return .text(message.type.description)
     }
