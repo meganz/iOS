@@ -44,7 +44,7 @@ extension ChatMessage: MessageType {
         message.generateAttributedString()
         
         switch message.type {
-        case .callEnded, .callStarted, .attachment, .containsMeta, .contact, .voiceClip:
+        case .callEnded, .callStarted, .attachment, .containsMeta, .contact, .voiceClip, .normal:
             return .custom(message)
         default:
             break
