@@ -1,4 +1,5 @@
 import UIKit
+import Haptica
 
 class ChatMessageActionMenuViewController: ActionSheetViewController {
     weak var chatViewController: ChatViewController?
@@ -67,6 +68,16 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.removeRichPreview(chatMessage)
     }
     
+    /**
+     Haptic feedback generator (during presentation)
+     */
+    private let feedbackGenerator = UISelectionFeedbackGenerator()
+
+    override func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((Bool) -> Void)?) {
+        super.presentView(presentedView, presentingView: presentingView, animationDuration: animationDuration, completion: completion)
+        
+        feedbackGenerator.selectionChanged()
+    }
     
     // MARK: - ChatMessageActionMenuViewController initializers
     
@@ -223,6 +234,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         let emojis = ["😀", "☹️", "🤣", "👍", "👎"]
         emojis.forEach { (emoji) in
             let emojiView = UIButton()
+            emojiView.addHaptic(.selection, forControlEvents: .touchDown)
             let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)])
             emojiView.setAttributedTitle(attributedEmoji, for: .normal)
             emojiView.layer.cornerRadius = 22

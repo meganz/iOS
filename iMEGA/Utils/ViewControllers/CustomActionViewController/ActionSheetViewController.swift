@@ -118,6 +118,36 @@ class ActionSheetViewController: UIViewController {
         dismissCompletion?()
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+        view.layoutIfNeeded()
+        
+        layoutViews(to: view.frame.size)
+        backgroundView.alpha = 0
+        
+        UIView.animate(withDuration: animationDuration,
+                       animations: { [weak self] in
+                        self?.backgroundView.alpha = 1.0
+                        self?.view.layoutIfNeeded()
+                        
+            },
+                       completion: { finished in
+                        completion?(finished)
+        })
+    }
+    
+    func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+        top?.constant = CGFloat(view.bounds.height)
+        UIView.animate(withDuration: animationDuration,
+                       animations: { [weak self] in
+                        self?.backgroundView.alpha = 0
+                        self?.view.layoutIfNeeded()
+                        
+            },
+                       completion: { _ in
+                        completion?(true)
+        })
+    }
 }
 
 // MARK: PureLayout Implementation
@@ -235,36 +265,6 @@ extension ActionSheetViewController: UITableViewDelegate {
             self.view.layoutIfNeeded()
         }
 
-    }
-
-    func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
-        view.layoutIfNeeded()
-
-        layoutViews(to: view.frame.size)
-        backgroundView.alpha = 0
-
-        UIView.animate(withDuration: animationDuration,
-                       animations: { [weak self] in
-                        self?.backgroundView.alpha = 1.0
-                        self?.view.layoutIfNeeded()
-
-            },
-                       completion: { finished in
-                        completion?(finished)
-        })
-    }
-
-    func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
-        top?.constant = CGFloat(view.bounds.height)
-        UIView.animate(withDuration: animationDuration,
-                       animations: { [weak self] in
-                        self?.backgroundView.alpha = 0
-                        self?.view.layoutIfNeeded()
-
-            },
-                       completion: { _ in
-                        completion?(true)
-        })
     }
 }
 
