@@ -120,14 +120,18 @@ class ReactionContainerView: UIView {
     }
     
     private func layout() {
-        rootFlexContainer.pin.width(min(UIScreen.main.bounds.width * 0.8, 300))
         rootFlexContainer.pin.top()
-        rootFlexContainer.flex.layout(mode: .adjustHeight)
         if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
             rootFlexContainer.pin.right()
+            rootFlexContainer.pin.width(UIScreen.main.bounds.width - 40)
+
         } else {
             rootFlexContainer.pin.left(30)
+            rootFlexContainer.pin.width(UIScreen.main.bounds.width - 70)
+
         }
+        rootFlexContainer.flex.layout(mode: .adjustHeight)
+
     }
     
     override func layoutSubviews() {
