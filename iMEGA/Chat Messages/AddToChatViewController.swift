@@ -73,21 +73,24 @@ class AddToChatViewController: UIViewController {
         }
         
         updateAppearance()
-        preferredContentSize = requiredSize(forWidth: iPadPopoverWidth)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        preferredContentSize = requiredSize(forWidth: min((view.bounds.width-20), iPadPopoverWidth))
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if UIDevice.current.iPadDevice {
             presentationAnimationComplete()
-        }
+        }        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         contentViewHeightConstraint.constant = requiredSize(forWidth: view.bounds.width).height
-        view.layoutIfNeeded()
     }
     
     func presentationAnimationComplete() {

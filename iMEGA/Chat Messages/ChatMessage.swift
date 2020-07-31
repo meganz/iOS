@@ -58,7 +58,7 @@ extension ChatMessage: MessageType {
             return .custom(message)
         }
         
-        return .text(message.type.description)
+        return .text("")
     }
 }
 
@@ -88,50 +88,5 @@ extension ChatMessage: Hashable {
 extension ChatMessage: Comparable {
     static func < (lhs: ChatMessage, rhs: ChatMessage) -> Bool {
         return lhs.message.messageIndex < rhs.message.messageIndex
-    }
-}
-
-extension MEGAChatMessageType: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .unknown:
-            return "This is unknown type message"
-        case .invalid:
-            return "This is invalid type message"
-        case .normal:
-            return "This is normal type message"
-        case .alterParticipants:
-            return "This is alterParticipants type message"
-        case .truncate:
-            return "This is truncate type message"
-        case .privilegeChange:
-            return "This is privilegeChange type message"
-        case .chatTitle:
-            return "This is chatTitle type message"
-        case .callEnded:
-            return "This is callEnded type message"
-        case .callStarted:
-            return "This is callStarted type message"
-        case .publicHandleCreate:
-            return "This is publicHandleCreate type message"
-        case .publicHandleDelete:
-            return "This is publicHandleDelete type message"
-        case .setPrivateMode:
-            return "This is setPrivateMode type message"
-        case .highestManagement:
-            return "This is highestManagement type message"
-        case .attachment:
-            return "This is attachment type message"
-        case .revokeAttachment:
-            return "This is revokeAttachment type message"
-        case .contact:
-            return "This is contact type message"
-        case .containsMeta:
-            return "This is containsMeta type message"
-        case .voiceClip:
-            return "This is voiceClip type message"
-        @unknown default:
-            return "default case executed"
-        }
     }
 }
