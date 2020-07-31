@@ -837,7 +837,7 @@ class ChatViewController: MessagesViewController {
     @objc func startAudioCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
-                self.openCallViewWithVideo(videoCall: false, active: (MEGASdkManager.sharedMEGAChatSdk()?.hasCall(inChatRoom:self.chatRoom.chatId))!)
+                self.openCallViewWithVideo(videoCall: false)
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
@@ -849,7 +849,7 @@ class ChatViewController: MessagesViewController {
             if granted {
                 DevicePermissionsHelper.videoPermission { (videoPermission) in
                     if videoPermission {
-                        self.openCallViewWithVideo(videoCall: true, active: (MEGASdkManager.sharedMEGAChatSdk()?.hasCall(inChatRoom:self.chatRoom.chatId))!)
+                        self.openCallViewWithVideo(videoCall: true)
                     } else {
                         DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
                     }
@@ -907,14 +907,20 @@ class ChatViewController: MessagesViewController {
         setEditing(false, animated: true)
     }
 
-    func openCallViewWithVideo(videoCall: Bool, active: Bool) {
-        if UIDevice.current.orientation != .portrait {
-            UIDevice.current.setValue(NSNumber(integerLiteral: UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+    func openCallViewWithVideo(videoCall: Bool) {
+        var callType = CallType.outgoing
+        let call = MEGASdkManager.sharedMEGAChatSdk()?.chatCall(forChatId: chatRoom.chatId)
+        
+        if let call = call {
+            callType = (call.status == .ringIn) ? .incoming : .active
         }
         
         if chatRoom.isGroup {
             let groupCallVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupCallViewControllerID") as! GroupCallViewController
-            groupCallVC.callType = active ? .active : (MEGASdkManager.sharedMEGAChatSdk()?.chatCall(forCallId: chatRoom.chatId) != nil ? .active : .outgoing)
+            groupCallVC.callType = callType
+            if let call = call {
+                groupCallVC.callId = call.callId
+            }
             groupCallVC.videoCall = videoCall
             groupCallVC.chatRoom = chatRoom
             groupCallVC.modalTransitionStyle = .crossDissolve
@@ -925,7 +931,10 @@ class ChatViewController: MessagesViewController {
             let callVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "CallViewControllerID") as! CallViewController
             callVC.chatRoom = chatRoom
             callVC.videoCall = videoCall
-            callVC.callType = active ? .active : .outgoing
+            callVC.callType = callType
+            if let call = call {
+                callVC.callId = call.callId
+            }
             callVC.modalTransitionStyle = .crossDissolve
             callVC.modalPresentationStyle = .fullScreen
             callVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager

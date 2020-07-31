@@ -93,7 +93,7 @@ extension ChatViewController {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
                 self.timer?.invalidate()
-                self.openCallViewWithVideo(videoCall: false, active: true)
+                self.openCallViewWithVideo(videoCall: false)
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
