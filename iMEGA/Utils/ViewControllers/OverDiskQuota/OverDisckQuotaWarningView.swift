@@ -47,6 +47,7 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
         trait.backgroundStyler(of: .primary)(self)
         setupContainerView(containerView, with: traitCollection)
         setupDetailLabel(detailLabel, with: traitCollection)
+        setupTitleLabel(titleLabel, with: traitCollection)
     }
 
     private func setupContainerView(_ containerView: UIView, with trait: UITraitCollection) {
