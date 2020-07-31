@@ -40,7 +40,7 @@ platform :ios do
   desc "Bump and tag version"
   lane :bump do |options|
     ensure_git_status_clean
-    bump_message = "Bump build number."
+    bump_message = "Bump build number. [skip ci]"
     # If our latest commit isn't a build bump, then bump the build.
     build_is_already_bumped = last_git_commit[:message].include? bump_message
     next if build_is_already_bumped
