@@ -1,6 +1,7 @@
 import UIKit
 import FlexLayout
 import PinLayout
+import Haptica
 
 protocol ReactionEmojiViewDelegate: class {
     func emojiLongPressed(_ emoji: String, sender: UIView)
@@ -41,13 +42,15 @@ class ReactionContainerView: UIView {
                     }
                     let isEmojiSelected = emojiSelected(userhandles)
                     let emojiButton = ReactionEmojiButton(count: Int(userhandles.size), emoji: emoji, emojiSelected: isEmojiSelected)
+                    emojiButton.addHaptic(.selection, forControlEvents: .touchDown)
+                    
                     if let delegate = delegate {
                         emojiButton.buttonPressed = { [weak self] emoji, emojiButton in
-                          if isEmojiSelected {
-                            MEGASdkManager.sharedMEGAChatSdk()?.deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
-                              } else {
-                            MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
-                              }
+                            if isEmojiSelected {
+                                MEGASdkManager.sharedMEGAChatSdk()?.deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+                            } else {
+                                MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+                            }
                         }
                         emojiButton.buttonLongPress = delegate.emojiLongPressed
                     }
