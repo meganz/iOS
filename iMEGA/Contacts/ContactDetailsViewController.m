@@ -163,7 +163,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
     
@@ -180,12 +179,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     if (self.isMovingFromParentViewController) {
         [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
-    }
-    
-    // Creates a glitch in the animation when the view controller is presented.
-    // So do not remove it if the view controller is presented
-    if (self.presentedViewController == nil) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
@@ -397,7 +390,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             if (chatRoom.isArchived) {
-                [self.navigationController setNavigationBarHidden:NO animated:NO];
                 if (self.navigationController.childViewControllers.count >= 3) {
                     NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
                     [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
