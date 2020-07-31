@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="รับพื้นที่เก็บข้อมูลขนาด %1$s และการถ่ายโอน %2$s จากการชวนเพื่อนในแต่ละครั้ง";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในโทรศัพท์หรือกรอกอีเมลได้หลายที่อยู่";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="โควต้าไม่เพียงพอ";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="ต้องการการรับรองความถูกต้องด้วยหลายปัจจัย";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for non-admin users";
+"Access denied for users"="ปฏิเสธการเข้าถึงสำหรับผู้ใช้ที่ไม่ใช่ผู้ดูแลระบบ";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="บัญชีธุรกิจหมดอายุแล้ว";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="บัตรเครดิตถูกปฏิเสธ";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="การเรียกเก็บเงินล้มเหลว";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="ถูกปฏิเสธโดยการป้องกันการฉ้อโกง";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="มีคำขอมากเกินไป";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="ยอดคงเหลือผิดพลาด";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP Error";
+"HTTP error"="ข้อผิดพลาด HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1633,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="ช่วยให้ค้นหาไฟล์/โฟลเดอร์ใน MEGA ผ่าน Spotlight Search อุปกรณ์ของคุณ";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1961,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA จะไม่ใช้ข้อมูลนี้เพื่อวัตถุประสงค์อื่นใดและจะไม่โต้ตอบกับผู้ติดต่อของคุณโดยไม่ได้รับความยินยอมจากคุณ";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="ดูว่าใครอยู่ใน MEGA แล้ว";
+"See who's already on MEGA"="ค้นหาผู้ติดต่อของคุณใน MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2032,6 +2032,12 @@
 "Share with"="แชร์กับ";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Until this morning";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 นาที";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2042,12 +2048,16 @@
 "24 hours"="24 ชั่วโมง";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="ปิดเสียงแจ้งเตือนแชทเป็นเวลา";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึง %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="การแจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="ห้ามรบกวน";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="กำลังเชื่อมต่อใหม่...";
 /* Title shown when the user reconnect in a call. */
@@ -2079,7 +2089,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="อัปโหลด (%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="อัลบัม";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="ไม่เลือก";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2203,10 +2213,28 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="แชทสร้างเมื่อ %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="ไม่มีไฟล์ที่แชร์";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="ลิงก์โฟลเดอร์ยังไม่พร้อมใช้งาน";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="ลิงก์ไฟล์ไม่พร้อมใช้งาน";
 /* Header of block with all shared files in chat. */
 "Shared Files"="ไฟล์ที่ใช้ร่วมกัน";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="พื้นที่เก็บข้อมูลเต็มแล้ว";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>เราได้ติดต่อคุณทางอีเมลถึง <b>%@</b> เมื่อ <b>%@</b> แต่คุณยังมีไฟล์ %@ รายการสูงถึง <b>%@</b> ในบัญชี MEGA ของคุณ ซึ่งคุณต้องอัปเกรดเป็น <b>%@</b></paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>เราได้ติดต่อคุณทางอีเมลถึง <b>%@</b> เมื่อ <b>%@</b> แต่คุณยังมีไฟล์ %@ รายการสูงถึง <b>%@</b> ในบัญชี MEGA ของคุณ คุณจำเป็นต้องติดต่อฝ่ายสนับสนุนเพื่อกำหนดแผนบัญชีของคุณเอง</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d วัน";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>คุณมีเวลาเหลืออีก <warn>%@</warn> ในการอัปเกรด</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="หลังจากนั้นข้อมูลของคุณอาจถูกลบ";
