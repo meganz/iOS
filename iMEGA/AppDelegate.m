@@ -300,7 +300,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
-    [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    [LTHPasscodeViewController.sharedUser setDelegate:self];
 
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTasks) {
