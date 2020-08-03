@@ -283,7 +283,7 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModePreviewLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -429,6 +429,10 @@
             
         case MegaNodeActionTypeThumbnailView:
             [self thumbnailTapped:nil];
+            break;
+            
+        case MegaNodeActionTypeSearch:
+            [self searchTapped:nil];
             break;
             
         default:

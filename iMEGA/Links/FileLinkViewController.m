@@ -328,12 +328,12 @@
     [self import];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
-    [self shareFileLink];
+- (IBAction)openAction:(UIButton *)sender {
+    [self open];
 }
 
-- (IBAction)openAction:(UIBarButtonItem *)sender {
-    [self open];
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    [self shareFileLink];
 }
 
 - (IBAction)sendToContactAction:(UIBarButtonItem *)sender {

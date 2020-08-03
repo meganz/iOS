@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="ご紹介ごとに%1$sのストレージと%2$sの転送を取得";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="電話の連絡先から選択するか、複数のメールアドレスを入力してください";
 /*  */
 "insertYourFriendsEmails"="お友達のEメールを入力:";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="容量が足りません";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="多要素認証が必要です";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="管理者以外のユーザーはアクセスを拒否されています";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="ビジネスアカウントの有効期限が切れています";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="クレジットカードが拒否されました";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="請求できませんでした";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="不正防止により拒否されました";
 /* SDK error returned when there are too many requests */
 "Too many requests"="要求が多すぎます";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="残高エラー";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTPエラー";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知のエラー";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1406,22 +1406,6 @@
 "calling..."="着信中…";
 /* notification subtitle of incoming calls */
 "Incoming call"="着信";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="不在音声着信";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A]件の不在音声着信";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="不在ビデオ着信";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A]件の不在ビデオ着信";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="不在音声着信および不在ビデオ着信";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="不在音声着信および[A]件の不在ビデオ着信";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A]件の不在音声着信および不在ビデオ着信";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信と[B]件の不在ビデオ着信";
 /* Button title to see the available bonus */
 "getBonus"="ボーナスを獲得";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1511,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="ログアウトする前に、回復キーを安全な場所にエクスポートすることをお勧めいたします。パスワードを忘れた場合、パスワードのリセットはできないことにご注意ください。";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="今後表示しない";
+"dontShowAgain"="次回から表示しない";
 /* Label for test password button and titles */
 "testPassword"="パスワードのテスト";
 /* Label for recovery key button */
@@ -1977,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="すでにMEGAにいる人を確認";
+"See who's already on MEGA"="MEGAであなたの連絡先を見つける";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="MEGAで[X]件の連絡先が見つかりました";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2048,8 +2032,12 @@
 "Share with"="共有先";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="あなたのビジネスアカウント管理者に連絡して問題を解決し、あなたのアカウントを有効にしてください。";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="再びそれをオンにするまで";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Until this morning";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2060,16 +2048,16 @@
 "24 hours"="24時間";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="以下用のチャット通知をミュート：";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="通知は%@までサイレントになります";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="チャット通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="邪魔しないでください";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="再接続中...";
 /* Title shown when the user reconnect in a call. */
@@ -2101,7 +2089,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="アップロード (%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="アルバム";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="選択を解除";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2232,3 +2220,21 @@
 "File link unavailable"="ファイルリンクがありません";
 /* Header of block with all shared files in chat. */
 "Shared Files"="共有ファイル";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="ストレージがいっぱい";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph><b>%@</b>に<b>%@</b>にメールでご連絡いたしましたが、あなたのMEGAアカウントで%@ファイルが<b>%@</b>を占有しているため、<b>%@</b>にアップグレードする必要がございます。</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph><b>%@</b>に<b>%@</b>にメールでご連絡いたしましたが、あなたのMEGAアカウントで%@ファイルが<b>%@</b>を占有しているため、カスタムプランについてサポートにご連絡いただく必要がございます。</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d日";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>アップグレードまで残り<warn>%@</warn>日です。</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="その後、あなたのデータは削除の対象です。";

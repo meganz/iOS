@@ -334,23 +334,30 @@ enum SessionSectionRow: Int {
         present(addPhoneNumberController, animated: true, completion: nil)
     }
     
+    private func showPhoneNumberView() {
+        let phoneNumberController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "PhoneNumberViewControllerID")
+        let navigation = MEGANavigationController(rootViewController: phoneNumberController)
+        navigation.addRightCancelButton()
+        present(navigation, animated: true, completion: nil)
+    }
+    
     func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatting {
         let calendar = Calendar.current
         let startingOfToday = Date().startOfDay(on: calendar)
         guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,
                                                                 on: Calendar.current) else {
-            return DateFormatter.dateMedium
+                                                                    return DateFormatter.dateMedium()
         }
         let numberOfDaysAWeek = 7
         if daysOfDistance > numberOfDaysAWeek  {
-            return DateFormatter.dateMedium
+            return DateFormatter.dateMedium()
         }
 
         if expiryDate.isToday(on: calendar) || expiryDate.isTomorrow(on: calendar) {
-            return DateFormatter.dateMediumRelative
+            return DateFormatter.dateRelativeMedium()
         }
 
-        return DateFormatter.dateMediumWithWeekday
+        return DateFormatter.dateMediumWithWeekday()
     }
 
     // MARK: - IBActions
@@ -406,10 +413,10 @@ extension ProfileViewController: UITableViewDataSource {
             if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate)
+                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
                 } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate))
+                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
                 }
             }
             return planFooterString
@@ -465,7 +472,6 @@ extension ProfileViewController: UITableViewDataSource {
                         cell.detailLabel.text = phoneNumber
                     }
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
-                    cell.accessoryType = .none
                 }
             case .changePassword:
                 cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password")
@@ -563,6 +569,8 @@ extension ProfileViewController: UITableViewDelegate {
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     showAddPhoneNumber()
+                } else {
+                    showPhoneNumberView()
                 }
             case .changePassword:
                 presentChangeViewController(changeType: .password)
@@ -652,7 +660,7 @@ extension ProfileViewController: MEGARequestDelegate {
         case .MEGARequestTypeGetUserEmail:
             emailLabel.text = request.email
             
-        case .MEGARequestTypeCheckSMSVerificationCode:
+        case .MEGARequestTypeCheckSMSVerificationCode, .MEGARequestTypeResetSmsVerifiedNumber:
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
         default:

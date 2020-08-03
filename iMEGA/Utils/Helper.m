@@ -1069,6 +1069,7 @@ static MEGAIndexer *indexer;
     searchController.searchBar.delegate = searchBarDelegate;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    searchController.searchBar.translucent = NO;
     
     return searchController;
 }

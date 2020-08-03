@@ -44,6 +44,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "MEGAPurchase.h"
 
 #import "AppDelegate.h"
 #import "BrowserViewController.h"
@@ -75,3 +76,4 @@
 #import "SelectableTableViewCell.h"
 #import <PureLayout/PureLayout.h>
 #import "MEGAChatMessage.h"
+#import "MEGATransfer+MNZCategory.h"
