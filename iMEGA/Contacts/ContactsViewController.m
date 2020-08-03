@@ -928,6 +928,7 @@
         }
            
         case ContactsModeFolderSharedWith:
+        case ContactsModeChatNamingGroup:
             break;
             
         default: {
