@@ -121,7 +121,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                 }
                 
                 if let node = node,
-                    (node.name.mnz_isImagePathExtension || node.name.mnz_isImagePathExtension ) {
+                    (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension ) {
                     let attachments = messages.filter { (message) -> Bool in
                         guard let localChatMessage = message as? ChatMessage else {
                             return false
