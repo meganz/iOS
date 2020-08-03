@@ -538,7 +538,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             cell.leftImageView.hidden = YES;
             if (self.chatRoom.isPublicChat) {
                 cell.enableLabel.hidden = YES;
-                cell.nameLabel.enabled = cell.userInteractionEnabled = self.chatRoom.peerCount <= 100;
+                cell.nameLabel.enabled = cell.userInteractionEnabled = self.chatRoom.peerCount < 100;
             } else {
                 cell.enableLabel.hidden = cell.userInteractionEnabled = NO;
             }
@@ -789,7 +789,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == GroupChatDetailsSectionEncryptedKeyRotation && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        if (self.chatRoom.peerCount <= 100) {
+        if (self.chatRoom.peerCount < 100) {
             return [AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
         } else {
             return AMLocalizedString(@"Key rotation is disabled for conversations with more than 100 participants.", @"Footer to explain why key rotation is disabled for public chats with many participants");
