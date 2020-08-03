@@ -99,10 +99,6 @@ extension NodeAction {
         return NodeAction(title: AMLocalizedString("Import to Cloud Drive", "Button title that triggers the importing link action"), detail: nil, image: UIImage(named: "import"), type: .import)
     }
     
-    class func openAction() -> NodeAction {
-        return NodeAction(title: AMLocalizedString("openButton", "Button title to trigger the action of opening the file without downloading or opening it."), detail: nil, image: UIImage(named: "openWith"), type: .open)
-    }
-    
     class func revertVersionAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("revert", "A button label which reverts a certain version of a file to be the current version of the selected file."), detail: nil, image: UIImage(named: "history"), type: .revertVersion)
     }
@@ -133,5 +129,9 @@ extension NodeAction {
     
     class func forwardAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("forward", "Item of a menu to forward a message chat to another chatroom"), detail: nil, image: UIImage(named: "forwardToolbar"), type: .forward)
+    }
+    
+    class func searchAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("Search", "Title of the Spotlight Search section"), detail: nil, image: UIImage(named: "search"), type: .search)
     }
 }

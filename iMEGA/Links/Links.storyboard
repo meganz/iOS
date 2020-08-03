@@ -453,7 +453,7 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="openAction:" destination="2U9-0D-RuC" eventType="touchUpInside" id="nwM-tZ-gbO"/>
+                                                            <action selector="openAction:" destination="2U9-0D-RuC" eventType="touchUpInside" id="bkw-7V-vMX"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>

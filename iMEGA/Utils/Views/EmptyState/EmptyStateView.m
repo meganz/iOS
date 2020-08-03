@@ -40,6 +40,7 @@
         if (buttonTitle == nil || buttonTitle.mnz_isEmpty) {
             self.button.hidden = YES;
         } else {
+            self.button.hidden = NO;
             [self.button setTitle:buttonTitle forState:UIControlStateNormal];
         }
     }
