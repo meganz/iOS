@@ -1,7 +1,6 @@
 
 #import "DevicePermissionsHelper.h"
 
-#import <AVFoundation/AVFoundation.h>
 #import <Contacts/Contacts.h>
 #import <Photos/Photos.h>
 #import <UserNotifications/UserNotifications.h>
@@ -210,6 +209,10 @@
 
 + (BOOL)isAudioPermissionAuthorizedOrNotDetermined {
     return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusAuthorized || [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
+}
+
++ (AVAuthorizationStatus )audioPermissionAuthorizationStatus {
+    return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
 }
 
 + (BOOL)isVideoPermissionAuthorizedOrNotDetermined {
