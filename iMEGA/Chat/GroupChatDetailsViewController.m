@@ -84,10 +84,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [self.tableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
