@@ -120,7 +120,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         MEGAChatRoom *chatRoom = self.groupChatRoom ?: self.chatRoom;
         self.userName = [chatRoom userDisplayNameForUserHandle:self.userHandle];
         if (!self.userName) {
-            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
                     return;
                 }
