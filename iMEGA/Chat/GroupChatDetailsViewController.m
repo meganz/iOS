@@ -233,7 +233,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
             }
         }];
-        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId delegate:delegate];
+        [MEGASdkManager.sharedMEGAChatSdk leaveChat:self.chatRoom.chatId delegate:delegate];
         [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
         [self.navigationController popViewControllerAnimated:YES];
     }]];
@@ -385,7 +385,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
                     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
-                        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                        if (MEGAReachabilityManager.isReachableHUDIfNot) {
                             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
                             [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                         }
@@ -401,7 +401,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
                     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
-                        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                        if (MEGAReachabilityManager.isReachableHUDIfNot) {
                             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
                             [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                         }
