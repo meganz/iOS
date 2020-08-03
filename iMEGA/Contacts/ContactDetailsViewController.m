@@ -830,15 +830,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowsInSection;
-    if ([self isSharedFolderSection:section]) {
+    ContactDetailsSection contactDetailsSection = self.contactDetailsSections[section].unsignedIntValue;
+    if ([self isSharedFolderSection:contactDetailsSection]) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
     } else if (self.shouldAllowToAddContact) {
         rowsInSection = 1;
-    } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
+    } else if (contactDetailsSection == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {
         rowsInSection = 1;
     }
+    
     return rowsInSection;
 }
 
