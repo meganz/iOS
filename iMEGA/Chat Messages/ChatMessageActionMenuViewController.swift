@@ -68,6 +68,13 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.removeRichPreview(chatMessage)
     }
     
+    lazy var saveToPhotosAction = ActionSheetAction(title: AMLocalizedString("Save to Photos"), detail: nil, image: UIImage(named: "saveToPhotos"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.saveToPhotos(chatMessage)
+    }
+    
     /**
      Haptic feedback generator (during presentation)
      */
@@ -176,6 +183,13 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             
         case .attachment:
             actions = [saveForOfflineAction, forwardAction]
+            
+            if chatMessage.message.nodeList.size.uintValue == 1,
+                let node = chatMessage.message.nodeList.node(at: 0),
+                (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                actions.append(saveToPhotosAction)
+            }
+            
             //Your messages
             if isFromCurrentSender(message: chatMessage) {
                 if chatMessage.message.isDeletable {

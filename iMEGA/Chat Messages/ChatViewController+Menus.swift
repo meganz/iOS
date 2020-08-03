@@ -129,4 +129,20 @@ extension ChatViewController {
         }
         
     }
+    
+    func saveToPhotos(_ chatMessage: ChatMessage) {
+        if chatMessage.message.nodeList.size.uintValue == 1,
+            var node = chatMessage.message.nodeList.node(at: 0),
+            (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            if chatRoom.isPreview,
+                let sdk = MEGASdkManager.sharedMEGASdk(),
+                let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
+                node = authorizedNode
+            }
+            
+            node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdkFolder())
+        } else {
+            MEGALogDebug("Wrong Message type to be saved to album")
+        }
+    }
 }
