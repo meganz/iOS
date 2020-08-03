@@ -1394,7 +1394,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     JoinViewState newState;
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
     if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:base64Handle]) {
-        newState = self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo ? JoinViewStateJoining : JoinViewStateLeaving;
+        newState = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo ? JoinViewStateJoining : JoinViewStateLeaving;
     } else {
         newState = self.shouldShowJoinView ? JoinViewStateDefault : JoinViewStateHidden;
     }
