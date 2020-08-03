@@ -446,6 +446,10 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedVoiceButton() {
+        if !isAudioPermissionAuthorized() {
+            return
+        }
+        
         showTapAndHoldMessage()
     }
     
@@ -679,6 +683,10 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             return false
         }
         
+        if !isAudioPermissionAuthorized() {
+            return false
+        }
+        
         if chatSDK.mnz_existsActiveCall {
             let message = AMLocalizedString("It is not possible to record voice messages while there is a call in progress", "Message shown when there is an ongoing call and the user tries to record a voice message")
             SVProgressHUD.setDefaultMaskType(.clear)
@@ -687,6 +695,20 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         }
         
         return true
+    }
+    
+    private func isAudioPermissionAuthorized() -> Bool {
+        switch DevicePermissionsHelper.audioPermissionAuthorizationStatus() {
+        case .notDetermined:
+            DevicePermissionsHelper.audioPermissionModal(false, forIncomingCall: false, withCompletionHandler: nil)
+            return false
+        case .restricted, .denied:
+            DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            return false
+        default:
+            return true
+        }
     }
 }
 

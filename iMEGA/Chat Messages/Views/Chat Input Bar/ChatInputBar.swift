@@ -17,7 +17,6 @@ class ChatInputBar: UIView {
         let recognizer = UILongPressGestureRecognizer(target: self, action:#selector(longPress))
         recognizer.minimumPressDuration = 0.1
         recognizer.delegate = self
-        recognizer.cancelsTouchesInView = false
         return recognizer
     }()
     
