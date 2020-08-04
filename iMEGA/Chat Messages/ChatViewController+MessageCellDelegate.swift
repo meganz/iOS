@@ -69,7 +69,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                 MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
                 return
         }
-        forwardMessage(message)
+        
+        selectedMessages = [message]
+        forwardSelectedMessages()
     }
     
     func didSelectURL(_ url: URL) {
