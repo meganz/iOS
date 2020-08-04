@@ -38,10 +38,11 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"e2c76c37a";
+    
+    self.sdkVersionSHALabel.text = NSBundle.mainBundle.infoDictionary[@"SDK_GIT_COMMIT_HASH"];
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"61230e7a";
+    self.megachatSdkSHALabel.text = NSBundle.mainBundle.infoDictionary[@"CHAT_SDK_GIT_COMMIT_HASH"];
     
     self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     
