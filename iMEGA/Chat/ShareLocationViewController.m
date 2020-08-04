@@ -7,6 +7,7 @@
 
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #import "LocationSearchTableViewController.h"
 
@@ -87,6 +88,7 @@
     }
     
     self.navigationItem.title = AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
+    [self updateAppearance];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -99,6 +101,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
             [self updateAppearance];
         }
     }
