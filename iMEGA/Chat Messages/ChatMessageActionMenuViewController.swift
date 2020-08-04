@@ -82,6 +82,13 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.share(chatMessage)
     }
     
+    lazy var selectAction = ActionSheetAction(title: AMLocalizedString("select"), detail: nil, image: UIImage(named: "select"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.select(chatMessage)
+    }
+    
     /**
      Haptic feedback generator (during presentation)
      */
@@ -149,7 +156,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = []
         case .normal:
             //All messages
-            actions = [forwardAction, copyAction]
+            actions = [forwardAction, copyAction, selectAction]
             //Your messages
             if isFromCurrentSender(message: chatMessage) {
                 if chatMessage.message.isEditable {
@@ -164,7 +171,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             
         case .containsMeta:
             //All messages
-            actions = [forwardAction, shareAction]
+            actions = [forwardAction, shareAction, selectAction]
             if chatMessage.message.containsMeta.type != .geolocation {
                 actions.append(contentsOf: [copyAction])
             }
@@ -189,7 +196,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [copyAction]
             
         case .attachment:
-            actions = [saveForOfflineAction, forwardAction, shareAction]
+            actions = [saveForOfflineAction, forwardAction, shareAction, selectAction]
             
             if chatMessage.message.nodeList.size.uintValue == 1,
                 let node = chatMessage.message.nodeList.node(at: 0),
@@ -206,7 +213,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [importAction])
             }
         case .voiceClip:
-            actions = [saveForOfflineAction, shareAction]
+            actions = [saveForOfflineAction, shareAction, selectAction]
             if (chatMessage.message.richNumber) != nil {
                 actions.append(forwardAction)
             }
@@ -219,7 +226,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [importAction])
             }
         case .contact:
-            actions = [forwardAction, shareAction]
+            actions = [forwardAction, shareAction, selectAction]
          
             if chatMessage.message.usersCount == 1 {
                 if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {

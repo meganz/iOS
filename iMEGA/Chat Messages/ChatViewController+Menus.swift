@@ -160,4 +160,8 @@ extension ChatViewController {
             }
         }
     }
+    
+    func select(_ chatMessage: ChatMessage) {
+        forwardMessage(chatMessage)
+    }
 }
