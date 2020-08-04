@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -2238,12 +2238,12 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Ftb-Jb-Hx3" secondAttribute="bottom" id="8p1-ut-Odo"/>
                             <constraint firstAttribute="top" secondItem="Ftb-Jb-Hx3" secondAttribute="top" id="D1E-mu-Y7T"/>
-                            <constraint firstItem="w2f-jP-LlU" firstAttribute="trailing" secondItem="Ftb-Jb-Hx3" secondAttribute="trailing" id="Fwi-zL-WOa"/>
+                            <constraint firstAttribute="trailing" secondItem="Ftb-Jb-Hx3" secondAttribute="trailing" id="Fwi-zL-WOa"/>
                             <constraint firstItem="aqm-74-Pnd" firstAttribute="top" secondItem="w2f-jP-LlU" secondAttribute="top" constant="5" id="IG1-RH-o5s"/>
                             <constraint firstItem="0d8-4F-QiD" firstAttribute="leading" secondItem="w2f-jP-LlU" secondAttribute="leading" constant="15" id="Vqr-8M-QKr"/>
                             <constraint firstItem="w2f-jP-LlU" firstAttribute="trailing" secondItem="0d8-4F-QiD" secondAttribute="trailing" constant="15" id="iGu-kd-mK1"/>
                             <constraint firstItem="w2f-jP-LlU" firstAttribute="bottom" secondItem="0d8-4F-QiD" secondAttribute="bottom" constant="30" id="lGI-dh-NVb"/>
-                            <constraint firstItem="Ftb-Jb-Hx3" firstAttribute="leading" secondItem="w2f-jP-LlU" secondAttribute="leading" id="uHM-Lf-AtB"/>
+                            <constraint firstItem="Ftb-Jb-Hx3" firstAttribute="leading" secondItem="Pic-mr-sPU" secondAttribute="leading" id="uHM-Lf-AtB"/>
                             <constraint firstItem="w2f-jP-LlU" firstAttribute="trailing" secondItem="aqm-74-Pnd" secondAttribute="trailing" constant="8" id="yqc-gn-LHL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="w2f-jP-LlU"/>
