@@ -2238,3 +2238,15 @@
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Il vous reste <warn>%@</warn> pour surclasser votre compte.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="Ce délai révolu, vos données pourraient être supprimées.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="Modifier le numéro de téléphone";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="Supprimer le numéro de téléphone";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Le numéro de téléphone associé sera supprimé de votre compte. Si vous choisissez ultérieurement d’ajouter un numéro de téléphone, il vous sera demandé de le confirmer.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Cette opération supprimera votre numéro de téléphone actuel et lancera le processus d’association d’un nouveau numéro de téléphone à votre compte.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="Votre numéro de téléphone a été supprimé avec succès.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="Échec de suppression de votre numéro de téléphone, veuillez ressayer ultérieurement.";

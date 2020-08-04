@@ -2238,3 +2238,15 @@
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>您还有<warn>%@</warn>时间升级您的帐户。</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="否则，您的数据将被删除。";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="修改手机号码";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="解除绑定手机号码";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="这将从您的帐户中删除您当前所关联的手机号。如需再次添加手机号，则需要进行验证。";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作将解除与您当前手机号的绑定状态，并将您的新手机号与您的帐户关联。";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="您的手机号已成功解除绑定。";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="手机号解除绑定失败，请稍后再试。";
