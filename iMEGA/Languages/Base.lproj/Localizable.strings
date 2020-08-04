@@ -107,7 +107,7 @@
 /*  */
 "pleaseStrengthenYourPassword"="Please strengthen your password.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Very Weak";
+"veryWeak"="Very weak";
 /*  */
 "weak"="Weak";
 /*  */
