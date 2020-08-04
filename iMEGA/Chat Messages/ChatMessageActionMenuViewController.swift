@@ -75,6 +75,13 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.saveToPhotos(chatMessage)
     }
     
+    lazy var shareAction = ActionSheetAction(title: AMLocalizedString("share"), detail: nil, image: UIImage(named: "share"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.share(chatMessage)
+    }
+    
     /**
      Haptic feedback generator (during presentation)
      */
@@ -157,7 +164,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             
         case .containsMeta:
             //All messages
-            actions = [forwardAction]
+            actions = [forwardAction, shareAction]
             if chatMessage.message.containsMeta.type != .geolocation {
                 actions.append(contentsOf: [copyAction])
             }
@@ -182,7 +189,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [copyAction]
             
         case .attachment:
-            actions = [saveForOfflineAction, forwardAction]
+            actions = [saveForOfflineAction, forwardAction, shareAction]
             
             if chatMessage.message.nodeList.size.uintValue == 1,
                 let node = chatMessage.message.nodeList.node(at: 0),
@@ -199,7 +206,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [importAction])
             }
         case .voiceClip:
-            actions = [saveForOfflineAction]
+            actions = [saveForOfflineAction, shareAction]
             if (chatMessage.message.richNumber) != nil {
                 actions.append(forwardAction)
             }
@@ -212,7 +219,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [importAction])
             }
         case .contact:
-            actions = [forwardAction]
+            actions = [forwardAction, shareAction]
          
             if chatMessage.message.usersCount == 1 {
                 if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
