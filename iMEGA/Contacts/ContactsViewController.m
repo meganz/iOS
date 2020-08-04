@@ -835,7 +835,8 @@
 
 - (void)updatePendingContactRequestsLabel {
     if (self.contactsMode == ContactsModeDefault) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        MEGAContactRequestList *incomingContactsLists = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        self.contactsTableViewHeader.requestsDetailLabel.text = incomingContactsLists.size.intValue == 0 ? @"" : incomingContactsLists.size.stringValue;
     }
 }
 
