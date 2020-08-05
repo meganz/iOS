@@ -122,6 +122,8 @@
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -375,6 +377,9 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    self.navigationController.view.backgroundColor = UIColor.mnz_background;
+
     self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
     
     self.topBannerButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];

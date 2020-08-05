@@ -25,8 +25,6 @@
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
-#define kSmallPeersLayout 7
-
 @interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -144,7 +142,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    if (self.callType == CallTypeActive && self.peersInCall.count >= kSmallPeersLayout) {
+    if (self.callType == CallTypeActive && self.peersInCall.count >= MEGAGroupCallsPeersChangeLayout) {
         [self configureUserFocusedCallLayout];
     }
 }
@@ -170,7 +168,7 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self removeAllVideoListeners];
-        if (self.call.numParticipants >= kSmallPeersLayout) {
+        if (self.call.numParticipants >= MEGAGroupCallsPeersChangeLayout) {
             UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
             if (orientation == UIInterfaceOrientationPortrait) {
                 [UIView animateWithDuration:0.3f animations:^{
@@ -233,7 +231,7 @@
     MEGAGroupCallPeer *peer = [self.peersInCall objectAtIndex:indexPath.row];
     GroupCallCollectionViewCell *groupCallCell = (GroupCallCollectionViewCell *)cell;
     [groupCallCell configureCellForPeer:peer inChat:self.chatRoom.chatId numParticipants:self.call.numParticipants];
-    if (self.peersInCall.count >= kSmallPeersLayout && self.manualMode && [peer isEqualToPeer:self.peerManualMode]) {
+    if (self.peersInCall.count >= MEGAGroupCallsPeersChangeLayout && self.manualMode && [peer isEqualToPeer:self.peerManualMode]) {
         [groupCallCell showUserOnFocus];
     } else {
         [groupCallCell hideUserOnFocus];
@@ -241,7 +239,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.peersInCall.count >= kSmallPeersLayout) {
+    if (self.peersInCall.count >= MEGAGroupCallsPeersChangeLayout) {
         MEGAGroupCallPeer *peer = [self.peersInCall objectAtIndex:indexPath.row];
         GroupCallCollectionViewCell *groupCallCell = (GroupCallCollectionViewCell *)cell;
         if (!groupCallCell.videoImageView.hidden) {
@@ -259,7 +257,7 @@
     if (indexPath.item == self.peersInCall.count - 1) {
         return;
     }
-    if (self.peersInCall.count >= kSmallPeersLayout) {
+    if (self.peersInCall.count >= MEGAGroupCallsPeersChangeLayout) {
         //remove border stroke of previous manual selected participant
         NSUInteger previousPeerIndex;
         if (self.manualMode) {
@@ -388,6 +386,7 @@
 - (IBAction)hangCall:(UIButton *)sender {
     [self removeAllVideoListeners];
     [self.megaCallManager endCallWithCallId:self.callId chatId:self.chatRoom.chatId];
+    [MEGASdkManager.sharedMEGAChatSdk hangChatCall:self.chatRoom.chatId];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -827,7 +826,7 @@
         MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
         [self.peersInCall insertObject:remoteUser atIndex:0];
     }
-    if (self.call.numParticipants >= kSmallPeersLayout) {
+    if (self.call.numParticipants >= MEGAGroupCallsPeersChangeLayout) {
         [self showSpinner];
         self.shouldHideAcivity = YES;
         [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
@@ -859,7 +858,7 @@
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
             [weakSelf.megaCallManager addCall:weakSelf.call];
             [weakSelf.megaCallManager startCall:weakSelf.call];
-            if (self.call.numParticipants >= kSmallPeersLayout) {
+            if (self.call.numParticipants >= MEGAGroupCallsPeersChangeLayout) {
                 [self showSpinner];
                 [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
             }
@@ -986,7 +985,7 @@
         [self.collectionView reloadData];
     }
     
-    if (self.peersInCall.count == kSmallPeersLayout) {
+    if (self.peersInCall.count == MEGAGroupCallsPeersChangeLayout) {
         [self configureUserFocusedCallLayout];
     }
 }
@@ -1004,11 +1003,11 @@
         [self.peersInCall removeObject:peerDestroyed];
         [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
         
-        if (self.peersInCall.count == kSmallPeersLayout - 1) {
+        if (self.peersInCall.count == MEGAGroupCallsPeersChangeLayout - 1) {
             [self configureGridCallLayout];
         }
         
-        if (self.call.numParticipants >= kSmallPeersLayout) {
+        if (self.call.numParticipants >= MEGAGroupCallsPeersChangeLayout) {
             MEGAGroupCallPeer *focusedPeer = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
             if ([focusedPeer isEqualToPeer:peerDestroyed]) {
                 [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
@@ -1088,7 +1087,7 @@
         }
     }
     
-    if ([session hasChanged:MEGAChatSessionChangeAudioLevel] && self.call.numParticipants >= kSmallPeersLayout && !self.isManualMode) {
+    if ([session hasChanged:MEGAChatSessionChangeAudioLevel] && self.call.numParticipants >= MEGAGroupCallsPeersChangeLayout && !self.isManualMode) {
         
         if (session.audioDetected) {
             if (self.lastPeerTalking.peerId != session.peerId) {
@@ -1248,7 +1247,7 @@
         return NO;
     }
     
-    if ((CGRectContainsPoint(self.collectionView.frame, [touch locationInView:self.view]) && self.call.numParticipants >= kSmallPeersLayout)) {
+    if ((CGRectContainsPoint(self.collectionView.frame, [touch locationInView:self.view]) && self.call.numParticipants >= MEGAGroupCallsPeersChangeLayout)) {
         return NO;
     }
     

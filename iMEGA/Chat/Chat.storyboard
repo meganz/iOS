@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -412,8 +412,8 @@
                             <constraint firstItem="NLC-Rp-Ah7" firstAttribute="trailing" secondItem="m3W-p0-Lqo" secondAttribute="trailing" id="FTe-6q-Ufu"/>
                             <constraint firstItem="Eno-hS-WFi" firstAttribute="trailing" secondItem="m3W-p0-Lqo" secondAttribute="trailing" id="LGw-tS-iIG"/>
                             <constraint firstItem="NLC-Rp-Ah7" firstAttribute="leading" secondItem="m3W-p0-Lqo" secondAttribute="leading" id="UNu-Qs-8bz"/>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="m3W-p0-Lqo" secondAttribute="leading" id="cHf-GK-XiU"/>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="trailing" secondItem="m3W-p0-Lqo" secondAttribute="trailing" id="kH0-jQ-WtE"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="lqj-pM-q0p" secondAttribute="leading" id="cHf-GK-XiU"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="trailing" secondItem="lqj-pM-q0p" secondAttribute="trailing" id="kH0-jQ-WtE"/>
                             <constraint firstAttribute="bottom" secondItem="OEw-WR-Lm7" secondAttribute="bottom" id="mwA-QN-YBH"/>
                             <constraint firstItem="Eno-hS-WFi" firstAttribute="leading" secondItem="m3W-p0-Lqo" secondAttribute="leading" id="qo6-bB-gGE"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="Eno-hS-WFi" secondAttribute="bottom" id="zgU-eU-itE"/>
@@ -683,7 +683,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ud-Pe-lKf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1313.0434782608697" y="-238.04347826086959"/>
+            <point key="canvasLocation" x="1458" y="-238"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eHV-V3-Ggx">
@@ -1514,8 +1514,8 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JW3-U7-IQu" userLabel="Notifications Label">
-                                                    <rect key="frame" x="58.000000000000007" y="13" width="86.666666666666686" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <rect key="frame" x="58.000000000000007" y="11.999999999999998" width="96.666666666666686" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2238,12 +2238,12 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Ftb-Jb-Hx3" secondAttribute="bottom" id="8p1-ut-Odo"/>
                             <constraint firstAttribute="top" secondItem="Ftb-Jb-Hx3" secondAttribute="top" id="D1E-mu-Y7T"/>
-                            <constraint firstItem="w2f-jP-LlU" firstAttribute="trailing" secondItem="Ftb-Jb-Hx3" secondAttribute="trailing" id="Fwi-zL-WOa"/>
+                            <constraint firstAttribute="trailing" secondItem="Ftb-Jb-Hx3" secondAttribute="trailing" id="Fwi-zL-WOa"/>
                             <constraint firstItem="aqm-74-Pnd" firstAttribute="top" secondItem="w2f-jP-LlU" secondAttribute="top" constant="5" id="IG1-RH-o5s"/>
                             <constraint firstItem="0d8-4F-QiD" firstAttribute="leading" secondItem="w2f-jP-LlU" secondAttribute="leading" constant="15" id="Vqr-8M-QKr"/>
                             <constraint firstItem="w2f-jP-LlU" firstAttribute="trailing" secondItem="0d8-4F-QiD" secondAttribute="trailing" constant="15" id="iGu-kd-mK1"/>
                             <constraint firstItem="w2f-jP-LlU" firstAttribute="bottom" secondItem="0d8-4F-QiD" secondAttribute="bottom" constant="30" id="lGI-dh-NVb"/>
-                            <constraint firstItem="Ftb-Jb-Hx3" firstAttribute="leading" secondItem="w2f-jP-LlU" secondAttribute="leading" id="uHM-Lf-AtB"/>
+                            <constraint firstItem="Ftb-Jb-Hx3" firstAttribute="leading" secondItem="Pic-mr-sPU" secondAttribute="leading" id="uHM-Lf-AtB"/>
                             <constraint firstItem="w2f-jP-LlU" firstAttribute="trailing" secondItem="aqm-74-Pnd" secondAttribute="trailing" constant="8" id="yqc-gn-LHL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="w2f-jP-LlU"/>

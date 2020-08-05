@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @property (nonatomic) BOOL logoMoved;
+@property (nonatomic) BOOL shouldMoveLogo;
 
 @end
 
@@ -28,6 +29,8 @@
     self.descriptionLabel.text = AMLocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
     [self.setupButton setTitle:AMLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup") forState:UIControlStateNormal];
     [self.skipButton setTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") forState:UIControlStateNormal];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -57,8 +60,21 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+
             [self updateAppearance];
+            if (self.logoMoved) {
+                self.shouldMoveLogo = YES;
+            }
         }
+    }
+}
+
+- (void)didBecomeActive {
+    if (self.shouldMoveLogo) {
+        self.shouldMoveLogo = NO;
+        [self moveLogo];
+        [self centerLabels];
     }
 }
 
@@ -143,9 +159,7 @@
     }
     
     if (request.type == MEGARequestTypeFetchNodes) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self performAnimation];
-        });
+        [self performAnimation];
     }
 }
 
