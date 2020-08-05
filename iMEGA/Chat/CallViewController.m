@@ -19,7 +19,6 @@
 #import "MEGAChatStartCallRequestDelegate.h"
 
 #import "DevicePermissionsHelper.h"
-#import "MEGA-Swift.h"
 
 @interface CallViewController () <UIGestureRecognizerDelegate, MEGAChatRequestDelegate, MEGAChatCallDelegate>
 
@@ -117,20 +116,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
-    uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
-    NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:peerHandle];
-    if (displayName) {
-        self.nameLabel.text = displayName;
-    } else {
-        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-            if (error.type) {
-                return;
-            }
-            self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
-            self.nameLabel.text = [self.chatRoom userDisplayNameForUserHandle:peerHandle];
-        }];
-        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(peerHandle)] delegate:delegate];
-    }
+    self.nameLabel.text = self.chatRoom.title;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
