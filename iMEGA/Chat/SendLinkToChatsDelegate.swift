@@ -13,11 +13,7 @@ class SendLinkToChatsDelegate: NSObject {
 
 extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
     func send(_ viewController: SendToViewController!, toChats chats: [MEGAChatListItem]!, andUsers users: [MEGAUser]!) {
-        if (navigationController != nil) {
-            navigationController?.popViewController(animated: true)
-        } else {
-            viewController.dismiss(animated: true, completion: nil)
-        }
+        viewController.dismiss(animated: true, completion: nil)
         
         chats.forEach {
             MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: $0.chatId, message: link)
