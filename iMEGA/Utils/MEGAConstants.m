@@ -122,6 +122,10 @@ const NSUInteger MEGADropFirstCharactersFromSession = 44;
 
 const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
 
+#pragma mark - Calls
+
+const NSUInteger MEGAGroupCallsPeersChangeLayout = 7;
+
 #pragma mark - Add Your Phone Number
 
 const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount = 10;

@@ -31,6 +31,11 @@ Upload to Appcenter
 fastlane ios build_release
 ```
 build a app store release version
+### ios upload_to_itunesconnect
+```
+fastlane ios upload_to_itunesconnect
+```
+Upload to iTunesConnect
 
 ----
 
