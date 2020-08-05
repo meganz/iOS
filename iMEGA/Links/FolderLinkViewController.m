@@ -43,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
 @property (strong, nonatomic) UISearchController *searchController;
@@ -161,9 +162,9 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (self.isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
+            [self.tableView reloadEmptyDataSet];
         }
         
-        [self.tableView reloadEmptyDataSet];
         if (self.searchController.active) {
             if (UIDevice.currentDevice.iPad) {
                 if (self != UIApplication.mnz_visibleViewController) {
@@ -181,6 +182,8 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            
             [self updateAppearance];
             
             [self.tableView reloadData];
@@ -264,9 +267,7 @@
 
 - (void)setActionButtonsEnabled:(BOOL)boolValue {
     [_moreBarButtonItem setEnabled:boolValue];
-    
-    [_importBarButtonItem setEnabled:boolValue];
-    [_shareBarButtonItem setEnabled:boolValue];
+    [self setToolbarButtonsEnabled:boolValue];
 }
 
 - (void)internetConnectionChanged {
@@ -281,6 +282,7 @@
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue {
     [self.shareBarButtonItem setEnabled:boolValue];
     [self.importBarButtonItem setEnabled:boolValue];
+    self.downloadBarButtonItem.enabled = boolValue;
 }
 
 - (void)addSearchBar {
@@ -536,6 +538,49 @@
     }
     
     return;
+}
+    
+- (IBAction)downloadAction:(UIBarButtonItem *)sender {
+    //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
+    if (self.selectedNodesArray.count != 0) {
+        for (MEGANode *node in _selectedNodesArray) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
+                [self setEditing:NO animated:YES];
+                return;
+            }
+        }
+    } else {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:_parentNode isFolderLink:YES]) {
+            return;
+        }
+    }
+    
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if (self.selectedNodesArray.count) {
+            for (MEGANode *node in self.selectedNodesArray) {
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+            }
+        } else {
+            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+        }
+        
+        //FIXME: Temporal fix. This lets the SDK process some transfers before going back to the Transfers view (In case it is on the navigation stack)
+        [SVProgressHUD show];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    } else {
+        if (self.selectedNodesArray.count != 0) {
+            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
+        } else {
+            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
+        }
+        
+        MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
+        
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
+    }
 }
 
 - (void)openNode:(MEGANode *)node {
@@ -978,8 +1023,9 @@
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
-        case MegaNodeActionTypeOpen:
-            [self openNode:node];
+        case MegaNodeActionTypeDownload:
+            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            [self downloadAction:nil];
             break;
             
         case MegaNodeActionTypeImport:

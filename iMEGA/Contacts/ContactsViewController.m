@@ -1,8 +1,6 @@
 
 #import "ContactsViewController.h"
 
-#import <ContactsUI/ContactsUI.h>
-
 #import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
@@ -33,7 +31,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate>
+@interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -265,8 +263,7 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            self.contactsTableViewHeader = [NSBundle.mainBundle loadNibNamed:@"ContactsTableViewHeader" owner:self options: nil].firstObject;
-            self.contactsTableViewHeader.navigationController = self.navigationController;
+            [self setupContactsTableViewHeader];
             
             NSArray *buttonsItems = @[self.addBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
@@ -469,6 +466,7 @@
     [self.tableView reloadData];
     
     if (self.contactsMode == ContactsModeDefault) {
+        [self setupContactsTableViewHeader];
         self.tableView.tableHeaderView = self.contactsTableViewHeader;
     } else if (self.contactsMode == ContactsModeChatStartConversation) {
         if (self.visibleUsersArray.count == 0) {
@@ -837,7 +835,8 @@
 
 - (void)updatePendingContactRequestsLabel {
     if (self.contactsMode == ContactsModeDefault) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        MEGAContactRequestList *incomingContactsLists = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        self.contactsTableViewHeader.requestsDetailLabel.text = incomingContactsLists.size.intValue == 0 ? @"" : incomingContactsLists.size.stringValue;
     }
 }
 
@@ -987,15 +986,8 @@
 }
 
 - (void)showEmailContactPicker {
-    CNContactPickerViewController *contactsPickerViewController = CNContactPickerViewController.new;
-    contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-    contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-    contactsPickerViewController.delegate = self;
-    [self presentViewController:contactsPickerViewController animated:YES completion:^{
-        if (self.childViewControllers.count == 0) {
-            [self insertItemListSubviewWithCompletion:nil];
-        }
-    }];
+    MEGANavigationController *contactsPickerNavigation = [MEGANavigationController.alloc initWithRootViewController:[ContactsPickerViewController instantiateWithContactKeys:@[CNContactEmailAddressesKey] delegate:self]];
+    [self presentViewController:contactsPickerNavigation animated:YES completion:nil];
 }
 
 - (void)selectUser:(MEGAUser *)user {
@@ -1069,6 +1061,11 @@
     messagesVC.chatRoom = chatRoom;
     
     [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
+- (void)setupContactsTableViewHeader {
+    self.contactsTableViewHeader = [NSBundle.mainBundle loadNibNamed:@"ContactsTableViewHeader" owner:self options: nil].firstObject;
+    self.contactsTableViewHeader.navigationController = self.navigationController;
 }
 
 #pragma mark - IBActions
@@ -1794,39 +1791,19 @@
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
 }
 
-#pragma mark - CNContactPickerDelegate
+#pragma mark - ContactsPickerViewControllerDelegate
 
-- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
-    NSMutableArray<NSString *> *contactEmails = NSMutableArray.new;
-    for (CNContact *contact in contacts) {
-        for (CNContactProperty *contactProperty in contact.emailAddresses) {
-            NSString *email = contactProperty.value;
-            if (email.mnz_isValidEmail) {
-                [contactEmails addObject:email];
-            } else {
-                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
-            }
-        }
-    }
-    if (self.contactsMode == ContactsModeShareFoldersWith) {
-        if (contactEmails.count) {
-            for (NSString *email in contactEmails) {
+- (void)contactsPicker:(ContactsPickerViewController *)contactsPicker didSelectContacts:(NSArray<NSString *> *)values {
+    if (self.childViewControllers.count == 0) {
+        [self insertItemListSubviewWithCompletion:^{
+            for (NSString *email in values) {
                 [self inviteEmailToShareFolder:email];
             }
-        } else if (self.selectedUsersArray.count == 0) {
-            [self removeUsersListSubview];
-        }
+        }];
     } else {
-        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:contactEmails.count];
-        for (NSString *email in contactEmails) {
-            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        for (NSString *email in values) {
+            [self inviteEmailToShareFolder:email];
         }
-    }
-}
-
-- (void)contactPickerDidCancel:(CNContactPickerViewController *)picker {
-    if (self.selectedUsersArray.count == 0) {
-        [self removeUsersListSubview];
     }
 }
 
@@ -2069,8 +2046,12 @@
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
                 
-                NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
-                [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
+                if (indexPath.section == 0) {
+                    [self.recentlyAddedUsersArray removeObjectAtIndex:indexPath.row];
+                } else {
+                    NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
+                    [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
+                }
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
             

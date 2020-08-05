@@ -128,7 +128,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="eZO-Um-Lk6">
                                                                         <rect key="frame" x="17" y="0.0" width="341" height="60"/>
                                                                         <subviews>
-                                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verificationNumber" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdY-ap-gBU">
+                                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phoneNumber" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdY-ap-gBU">
                                                                                 <rect key="frame" x="0.0" y="18" width="24" height="24"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="24" id="NWA-Yb-UY4"/>
@@ -648,9 +648,9 @@
     <resources>
         <image name="addPhoneNumberMedium" width="128" height="128"/>
         <image name="delete" width="28" height="28"/>
+        <image name="phoneNumber" width="24" height="24"/>
         <image name="standardDisclosureIndicator" width="7.5" height="12"/>
         <image name="verificationCountry" width="24" height="24"/>
         <image name="verificationHeader" width="375" height="291"/>
-        <image name="verificationNumber" width="24" height="24"/>
     </resources>
 </document>

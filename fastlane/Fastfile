@@ -41,7 +41,7 @@ platform :ios do
   desc "Build App using development certificate for Appcenter"
   lane :build_using_development do |options|
     increment_build_number(
-      build_number: options[:BUILD_NUMBER],
+      build_number: Time.new.strftime("%Y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
       xcodeproj: PROJECT
     )
 
@@ -98,7 +98,7 @@ platform :ios do
   lane :build_release do |options|
 
     increment_build_number(
-      build_number: options[:BUILD_NUMBER],
+      build_number: Time.new.strftime("%Y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
       xcodeproj: PROJECT
     )
 
@@ -114,7 +114,40 @@ platform :ios do
       }
     )
 
-    pilot(ipa: "#{BUILD_DIR}/MEGA.ipa")
+  end
+
+  desc "Upload to iTunesConnect"
+  lane :upload_to_itunesconnect do |options|
+    # Get the 20 latest commints from the current branch.
+    changelog_from_git_commits(
+      commits_count: 20,  
+      pretty: "- %s",
+      date_format: "short",
+      match_lightweight_tag: false,
+      merge_commit_filtering: "exclude_merges"
+    )
+    
+    upload_to_testflight(
+      skip_submission: false,
+      username:"jn@mega.co.nz",
+      groups:["MEGA"],
+      ipa: "#{BUILD_DIR}/MEGA.ipa",
+      changelog: lane_context[SharedValues::FL_CHANGELOG],
+
+    ) # to only upload the build
+
+      # Send a Slack message to the channel with the build information.
+      slack(
+        message: "🎉New iTunesConnect version available!",
+        channel: APPCENTER_SLACK_CHANNEL_NAME,
+        success: true, 
+        default_payloads: [:git_branch, :git_author],      
+        payload: {  
+          "Build Number" => lane_context[SharedValues::BUILD_NUMBER],
+          "Changelog Notes" => lane_context[SharedValues::FL_CHANGELOG]
+        },
+        slack_url: APPCENTER_SLACK_URL
+      )
   end
 
 end

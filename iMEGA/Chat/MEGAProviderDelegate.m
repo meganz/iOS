@@ -26,8 +26,6 @@
 @property (strong, nonatomic) AVAudioPlayer *player;
 
 @property (getter=isOutgoingCall) BOOL outgoingCall;
-@property (nonatomic, strong) NSMutableDictionary *missedCallsDictionary;
-@property (nonatomic, strong) NSMutableArray *currentNotifications;
 
 @property (nonatomic, strong) NSNumber *callId;
 @property (nonatomic, strong) NSNumber *chatId;
@@ -58,9 +56,6 @@
     
     [MEGASdkManager.sharedMEGAChatSdk addChatCallDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk addChatDelegate:self];
-    
-    self.missedCallsDictionary = NSMutableDictionary.new;
-    self.currentNotifications = NSMutableArray.new;
     
     return self;
 }
@@ -245,56 +240,6 @@
     NSUUID *uuid = [self.megaCallManager uuidForChatId:chatId callId:callId];
     [self.provider reportCallWithUUID:uuid endedAtDate:nil reason:CXCallEndedReasonRemoteEnded];
     [self.megaCallManager removeCallByUUID:uuid];
-    [self missedCallNotificationWithCallId:callId chatId:chatId];
-}
-
-- (void)missedCallNotificationWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
-    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
-        NSInteger missedVideoCalls, missedAudioCalls;
-        if (call.hasVideoInitialCall) {
-            missedVideoCalls = 1;
-            missedAudioCalls = 0;
-        } else {
-            missedAudioCalls = 1;
-            missedVideoCalls = 0;
-        }
-        
-        for (UNNotification *notification in notifications) {
-            if ([[MEGASdk base64HandleForUserHandle:chatId] isEqualToString:notification.request.identifier]) {
-                missedAudioCalls = [notification.request.content.userInfo[@"missedAudioCalls"] integerValue];
-                missedVideoCalls = [notification.request.content.userInfo[@"missedVideoCalls"] integerValue];
-                if (call.hasVideoInitialCall) {
-                    missedVideoCalls++;
-                } else {
-                    missedAudioCalls++;
-                }
-                break;
-            }
-        }
-        
-        NSString *notificationText = [NSString mnz_stringByMissedAudioCalls:missedAudioCalls andMissedVideoCalls:missedVideoCalls];
-        
-        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-        content.title = chatRoom.title;
-        content.body = notificationText;
-        content.sound = UNNotificationSound.defaultSound;
-        content.userInfo = @{@"missedAudioCalls" : @(missedAudioCalls),
-                             @"missedVideoCalls" : @(missedVideoCalls),
-                             @"chatId" : @(chatId)
-                             };
-        content.categoryIdentifier = @"nz.mega.chat.call";
-        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-        NSString *identifier = [MEGASdk base64HandleForUserHandle:chatRoom.chatId];
-        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-            if (error) {
-                MEGALogError(@"Add NotificationRequest failed with error: %@", error);
-            }
-        }];
-    }];
 }
 
 #pragma mark - CXProviderDelegate
@@ -472,24 +417,15 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     switch (call.status) {
-        case MEGAChatCallStatusInitial:
-            break;
-            
-        case MEGAChatCallStatusHasLocalStream:
-            break;
-            
         case MEGAChatCallStatusRequestSent:
             self.outgoingCall = YES;
             [self.provider reportOutgoingCallWithUUID:call.uuid startedConnectingAtDate:nil];
             break;
             
         case MEGAChatCallStatusRingIn: {
-            if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
-                self.missedCallsDictionary[@(call.chatId)] = call;
-                NSUUID *uuid = [self.megaCallManager uuidForChatId:call.chatId callId:call.callId];
-                if (uuid) {
-                    [self updateCall:call];
-                }
+            NSUUID *uuid = [self.megaCallManager uuidForChatId:call.chatId callId:call.callId];
+            if (uuid) {
+                [self updateCall:call];
             }
             break;
         }
@@ -507,29 +443,32 @@
             if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
                 [self callUpdateVideoForCall:call];
             }
-
-            [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
+            
+            if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
+                switch (call.callCompositionChange) {
+                    case MEGAChatCallCompositionChangePeerRemoved:
+                        if (call.participants.size < MEGAGroupCallsPeersChangeLayout && [api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
+                            [api enableAudioMonitor:NO chatId:call.chatId];
+                        }
+                        break;
+                        
+                    case MEGAChatCallCompositionChangePeerAdded:
+                        if (call.participants.size >= MEGAGroupCallsPeersChangeLayout && ![api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
+                            [api enableAudioMonitor:YES chatId:call.chatId];
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+            }
             break;
         }
-            
-        case MEGAChatCallStatusUserNoPresent:
-            break;
             
         case MEGAChatCallStatusTerminatingUserParticipation:
             if ([call hasChangedForType:MEGAChatCallChangeTypeStatus]) {
                 [self reportEndCall:call];
             }
-            break;
-            
-        case MEGAChatCallStatusDestroyed:
-            if (call.isLocalTermCode) {
-                [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
-            }
-            if ([self.missedCallsDictionary objectForKey:@(call.chatId)]) {
-                [self missedCallNotificationWithCallId:call.callId chatId:call.chatId];
-                [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
-            }
-            
             break;
             
         default:

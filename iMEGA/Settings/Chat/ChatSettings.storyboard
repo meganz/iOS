@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -47,8 +47,49 @@
                             </tableViewSection>
                             <tableViewSection id="vTY-TS-RSp" userLabel="CHAT">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="DXK-8r-sx5" userLabel="Chat Table View Cell">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="JiY-kS-IKS" userLabel="Chat Table View Cell">
                                         <rect key="frame" x="0.0" y="97.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="JiY-kS-IKS" id="EMR-Vp-1Kk">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSs-CA-M24">
+                                                    <rect key="frame" x="16" y="11.5" width="138" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3d-vZ-ACF">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="PXh-YU-nx9"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="notificationSwitchValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="ski-tU-8va"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="T3d-vZ-ACF" firstAttribute="trailing" secondItem="EMR-Vp-1Kk" secondAttribute="trailingMargin" id="N4X-ak-wEi"/>
+                                                <constraint firstItem="fSs-CA-M24" firstAttribute="leading" secondItem="EMR-Vp-1Kk" secondAttribute="leadingMargin" id="Ptd-14-Fi7"/>
+                                                <constraint firstItem="T3d-vZ-ACF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fSs-CA-M24" secondAttribute="trailing" constant="8" id="Q9U-Td-4Mq"/>
+                                                <constraint firstItem="fSs-CA-M24" firstAttribute="centerY" secondItem="EMR-Vp-1Kk" secondAttribute="centerY" id="S3D-HM-Ly1"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="T3d-vZ-ACF" secondAttribute="trailing" id="ZYQ-di-QUx"/>
+                                                <constraint firstItem="T3d-vZ-ACF" firstAttribute="centerY" secondItem="EMR-Vp-1Kk" secondAttribute="centerY" id="goL-Kj-7WJ"/>
+                                                <constraint firstItem="fSs-CA-M24" firstAttribute="leading" secondItem="EMR-Vp-1Kk" secondAttribute="leadingMargin" id="jyt-su-WTX"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Ptd-14-Fi7"/>
+                                                    <exclude reference="N4X-ak-wEi"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="DXK-8r-sx5" userLabel="Chat Table View Cell">
+                                        <rect key="frame" x="0.0" y="141.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="DXK-8r-sx5" id="uoV-2J-6Ii">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -93,7 +134,7 @@
                             <tableViewSection footerTitle="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption." id="vGa-mh-a18" userLabel="RICH PREVIEWS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="cL9-c1-YGJ" userLabel="Use mobile data Table View Cell">
-                                        <rect key="frame" x="0.0" y="177" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="221" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="cL9-c1-YGJ" id="IfR-nI-PY0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -138,7 +179,7 @@
                             <tableViewSection footerTitle="" id="1NT-gH-FSO" userLabel="VIDEO QUALITY">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Iqe-oQ-1D1" detailTextLabel="zJp-ev-jV6" style="IBUITableViewCellStyleValue1" id="7IU-WC-7wj" userLabel="Video quality Table View Cell">
-                                        <rect key="frame" x="0.0" y="285" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="329" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7IU-WC-7wj" id="Um3-2U-7oG">
                                             <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
@@ -169,7 +210,7 @@
                             <tableViewSection id="ehf-F0-uHn" userLabel="VIDEO QUALITY">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="PvF-TJ-KqG" detailTextLabel="waA-RD-zxW" style="IBUITableViewCellStyleValue1" id="crP-PW-TFd" userLabel="Video quality Table View Cell">
-                                        <rect key="frame" x="0.0" y="369" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="413" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="crP-PW-TFd" id="3H2-oO-cLL">
                                             <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
@@ -208,6 +249,8 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="4km-6t-WFt"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="chatNotificationsLabel" destination="fSs-CA-M24" id="bgW-Bf-dsR"/>
+                        <outlet property="chatNotificationsSwitch" destination="T3d-vZ-ACF" id="JOR-US-fwG"/>
                         <outlet property="doNotDisturbLabel" destination="NnB-KH-a3D" id="EBx-3S-iKE"/>
                         <outlet property="doNotDisturbSwitch" destination="L2z-sU-BH0" id="nlX-mG-NLy"/>
                         <outlet property="imageQualityLabel" destination="Iqe-oQ-1D1" id="zLA-gG-cnS"/>

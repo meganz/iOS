@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <items>
                                     <navigationItem id="u26-RZ-kaH">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Bfh-QP-H1o">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="Bfh-QP-H1o">
                                             <connections>
                                                 <action selector="didPressCloseButton:" destination="yD8-RT-K0O" id="y4q-pJ-tUt"/>
                                             </connections>
@@ -49,13 +49,12 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="9ow-6i-pKC"/>
                                     <barButtonItem id="Ytc-aC-zrZ">
-                                        <color key="tintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="didPressCenterToolbarButton:" destination="yD8-RT-K0O" id="GsB-ll-PuH"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ojh-69-QhP"/>
-                                    <barButtonItem title="Item" image="openWith" style="plain" id="Rck-W5-yGE">
+                                    <barButtonItem image="share" style="plain" id="Rck-W5-yGE">
                                         <connections>
                                             <action selector="didPressRightToolbarButton:" destination="yD8-RT-K0O" id="08B-ip-amX"/>
                                         </connections>
@@ -92,6 +91,7 @@
                     </view>
                     <connections>
                         <outlet property="centerToolbarItem" destination="Ytc-aC-zrZ" id="HwJ-in-pI9"/>
+                        <outlet property="closeBarButtonItem" destination="Bfh-QP-H1o" id="5tf-Af-tnV"/>
                         <outlet property="customActionsButton" destination="YVt-M3-aSH" id="YEr-Op-Iyv"/>
                         <outlet property="leftToolbarItem" destination="xTs-Xs-c6Q" id="SN4-Os-Oha"/>
                         <outlet property="navigationBar" destination="FGv-7h-IkY" id="T9E-zi-bd6"/>
@@ -120,7 +120,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <items>
                                     <navigationItem id="iZJ-x1-GIX">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="vUv-17-6IT">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="vUv-17-6IT">
                                             <connections>
                                                 <action selector="didPressClose:" destination="p3Y-sw-UEZ" id="Zz4-LR-U1a"/>
                                             </connections>
@@ -210,6 +210,7 @@
                         <viewLayoutGuide key="safeArea" id="HRi-IQ-AyN"/>
                     </view>
                     <connections>
+                        <outlet property="closeBarButtonItem" destination="vUv-17-6IT" id="cwH-ax-YoD"/>
                         <outlet property="collectionView" destination="70h-sa-EZW" id="ZF1-jf-5no"/>
                         <outlet property="navigationBar" destination="dht-79-RjI" id="yTX-uo-sTl"/>
                         <outlet property="navigationItem" destination="iZJ-x1-GIX" id="h4W-IZ-kid"/>
@@ -223,7 +224,7 @@
     </scenes>
     <resources>
         <image name="more" width="28" height="28.666666030883789"/>
-        <image name="openWith" width="28" height="28"/>
+        <image name="share" width="28" height="28"/>
         <image name="thumbnailsView" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
     </resources>

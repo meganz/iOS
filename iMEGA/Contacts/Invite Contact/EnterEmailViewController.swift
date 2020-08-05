@@ -105,7 +105,7 @@ class EnterEmailViewController: UIViewController {
         customizeTokenField()
         tokenFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        inviteContactsButton.mnz_setupPrimary(traitCollection)
+        inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
     
     func updateBottomConstraint(_ newValue:CGFloat) {
@@ -115,11 +115,11 @@ class EnterEmailViewController: UIViewController {
 
     func disableInviteContactsButton() {
         inviteContactsButton.setTitle(AMLocalizedString("invite", "A button on a dialog which invites a contact to join MEGA."), for: .normal)
-        inviteContactsButton.backgroundColor = UIColor.mnz_tertiaryGray(for: self.traitCollection)
+        inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
 
     func enableInviteContactsButton() {
-        inviteContactsButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+        inviteContactsButton.mnz_setupPrimary(traitCollection)
         let inputText = tokenField.inputText()!
         let tokensNumber = tokens.count + (inputText.mnz_isValidEmail() ? 1 : 0)
         let inviteContactsString = tokensNumber == 1 ?
@@ -186,12 +186,8 @@ class EnterEmailViewController: UIViewController {
             presentedViewController?.dismiss(animated: false, completion: nil)
         }
 
-        let contactsPickerVC = CNContactPickerViewController()
-        contactsPickerVC.predicateForEnablingContact = NSPredicate(format: "emailAddresses.@count > 0")
-        contactsPickerVC.predicateForSelectionOfProperty = NSPredicate(format: "key == 'emailAddresses'")
-        contactsPickerVC.displayedPropertyKeys = [CNContactEmailAddressesKey]
-        contactsPickerVC.delegate = self
-        present(contactsPickerVC, animated: true, completion: nil)
+        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactEmailAddressesKey], delegate: self))
+        present(contactsPickerNavigation, animated: true, completion: nil)
     }
 }
 
@@ -261,27 +257,23 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
     }
 }
 
-// MARK: - CNContactPickerDelegate
-extension EnterEmailViewController: CNContactPickerDelegate {
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
-        guard let email = contactProperty.contact.emailAddresses.first?.value as String? else { return }
-        if email.mnz_isValidEmail() {
+// MARK: - ContactsPickerViewControllerDelegate
+
+extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
+    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String]) {
+        values.forEach { (email) in
             if !tokens.contains(email) {
                 tokens.append(email)
             }
             instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
-        } else {
-            instructionsLabel.text = AMLocalizedString("theEmailAddressFormatIsInvalid", "Add contacts and share dialog error message when user try to add wrong email address") + ": " + email + "\n"
-            instructionsLabel.textColor = UIColor.mnz_red(for: traitCollection)
+            
+            if tokens.count == 0 {
+                disableInviteContactsButton()
+            } else {
+                enableInviteContactsButton()
+            }
         }
-
         tokenField.reloadData()
-
-        if tokens.count == 0 {
-            disableInviteContactsButton()
-        } else {
-            enableInviteContactsButton()
-        }
     }
 }
