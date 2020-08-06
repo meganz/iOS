@@ -886,7 +886,7 @@
 #pragma mark - UIAdaptivePresentationControllerDelegate
 
 - (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
-    return !(self.selectedUsersMutableArray.count != 0 || self.selectedGroupChatsMutableArray.count != 0);
+    return self.selectedUsersMutableArray.count == 0 && self.selectedGroupChatsMutableArray.count == 0;
 }
 
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
