@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
 @property (nonatomic) NSMutableSet<NSNumber *> *requestedParticipantsMutableSet;
-@property (atomic) NSUInteger pendingCellsToLoadAfterThresold;
+@property (atomic) NSUInteger pendingCellsToLoadAfterThreshold;
 
 @property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
@@ -167,7 +167,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 }
 
 - (void)loadVisibleParticipantsIfNeeded {
-    if (--self.pendingCellsToLoadAfterThresold == 0) {
+    if (--self.pendingCellsToLoadAfterThreshold == 0) {
         [self loadVisibleParticipants];
     }
 }
@@ -586,7 +586,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 if (!peerFullname) {
                     peerFullname = @"";
                     if (![self.requestedParticipantsMutableSet containsObject:[self.participantsMutableArray objectAtIndex:index]]) {
-                        self.pendingCellsToLoadAfterThresold++;
+                        self.pendingCellsToLoadAfterThreshold++;
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             [self loadVisibleParticipantsIfNeeded];
                         });
