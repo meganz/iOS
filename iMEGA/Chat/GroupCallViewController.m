@@ -495,11 +495,7 @@
     if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {
         MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
             if (error.type != MEGAChatErrorTypeOk) {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if (error.type == MEGAChatErrorTooMany) {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                    }
-                }];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if (self.videoCall && !AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
                     MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
@@ -848,11 +844,7 @@
     
     MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
         if (error.type) {
-            [weakSelf dismissViewControllerAnimated:YES completion:^{
-                if (error.type == MEGAChatErrorTooMany) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                }
-            }];
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             [self initDataSource];
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
@@ -974,8 +966,20 @@
     remoteUser.video = CallPeerVideoUnknown;
     remoteUser.audio = CallPeerAudioUnknown;
     
-    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
-    remoteUser.name = userName;
+    NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+    if (displayName) {
+        remoteUser.name = displayName;
+    } else {
+        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            if (error.type) {
+                return;
+            }
+            self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
+            NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+            remoteUser.name = displayName;
+        }];
+        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] delegate:delegate];
+    }
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
     
@@ -1102,7 +1106,7 @@
                     self.peerTalkingVideoView.hidden = NO;
                     self.peerTalkingImageView.hidden = YES;
                 } else {
-                    [self.peerTalkingImageView mnz_setImageForUserHandle:session.peerId name:[self.chatRoom peerFullnameByHandle:session.peerId]];
+                    [self.peerTalkingImageView mnz_setImageForUserHandle:session.peerId name:peerUpdated.name];
                     self.peerTalkingVideoView.hidden = YES;
                     self.peerTalkingImageView.hidden = NO;
                 }
@@ -1185,13 +1189,43 @@
                 MEGALogDebug(@"GROUPCALLACTIVITY MEGAChatCallChangeTypeCallComposition with call participants: %tu and peers in call: %tu with call composition change: %llu", call.numParticipants, self.peersInCall.count, call.callCompositionChange);
 
                 switch (call.callCompositionChange) {
-                    case MEGAChatCallCompositionChangePeerRemoved:
-                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
-                        break;
+                    case MEGAChatCallCompositionChangePeerRemoved: {
+                        NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange];
+                        if (displayName) {
+                            [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), displayName] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                        } else {
+                            MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                if (error.type) {
+                                    return;
+                                }
+                                
+                                self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
+                                [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                            }];
+                            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] delegate:delegate];
+                        }
                         
-                    case MEGAChatCallCompositionChangePeerAdded:
-                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                         break;
+                    }
+                        
+                    case MEGAChatCallCompositionChangePeerAdded: {
+                        NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange];
+                        if (displayName) {
+                            [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), displayName] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                        } else {
+                            MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                if (error.type) {
+                                    return;
+                                }
+                                
+                                self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
+                                [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                            }];
+                            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] delegate:delegate];
+                        }
+                        
+                        break;
+                    }
                         
                     default:
                         break;

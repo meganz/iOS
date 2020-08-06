@@ -136,6 +136,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @property (nonatomic) BOOL chatLinkBeenClosed;
 
 @property (nonatomic) BOOL loadingState;
+@property (nonatomic) BOOL awaitingLoad;
 
 @property (nonatomic) NSString *lastGreenString;
 
@@ -300,7 +301,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
-
+    [MEGASdkManager.sharedMEGAChatSdk addChatRequestDelegate:self];
+    
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
@@ -444,6 +446,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    [MEGASdkManager.sharedMEGAChatSdk removeChatRequestDelegate:self];
     
     [self saveChatDraft];
     [self.inputToolbar mnz_lockRecordingIfNeeded];
@@ -603,6 +606,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)loadMessages {
+    if (self.awaitingLoad) {
+        MEGALogWarning(@"[Chat Links Scalability] avoid loadMessages because of an ongoing load");
+        return;
+    }
     NSUInteger messagesToLoad = 32;
     if (self.isFirstLoad && (self.unreadMessages > messagesToLoad || self.unreadMessages < 0)) {
         messagesToLoad = ABS(self.unreadMessages);
@@ -616,14 +623,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case 0:
             MEGALogDebug(@"loadMessagesForChat: there's no more history available (not even in the server)");
+            self.awaitingLoad = YES;
             break;
             
         case 1:
             MEGALogDebug(@"loadMessagesForChat: messages will be fetched locally");
+            self.awaitingLoad = YES;
             break;
             
         case 2:
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
+            self.awaitingLoad = YES;
             break;
             
         default:
@@ -642,7 +652,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.navigationItem.hidesBackButton = YES;
     } else {
         self.navigationItem.hidesBackButton = NO;
-        self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
+        [self showOrHideInputToolbar];
         [self updateJoinView];
         
         if (self.chatRoom.isGroup) {
@@ -665,11 +675,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
+            NSString *participantsNames = [self.chatRoom participantsNamesWithMe:NO];
             if (self.chatRoom.isGroup) {
                 if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
                     chatRoomState = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
                 } else if (self.chatRoom.hasCustomTitle) {
-                    chatRoomState = [self participantsNames];
+                    chatRoomState = participantsNames;
                 } else {
                     if (self.chatRoom.peerCount) {
                         chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Plural of participant. 2 participants").capitalizedString, self.chatRoom.peerCount + 1];
@@ -696,7 +707,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             //Configure open message header that uses navigation bar info
             if (self.openMessageHeaderView) {
                 self.openMessageHeaderView.onlineStatusView.backgroundColor = self.navigationStatusView.backgroundColor;
-                self.openMessageHeaderView.onlineStatusLabel.text = chatRoomState;
+                if (![chatRoomState isEqualToString:participantsNames]) {
+                    self.openMessageHeaderView.onlineStatusLabel.text = chatRoomState;
+                }
+                self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
             }
         }
         
@@ -805,6 +819,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     if (self.chatRoom.isGroup) {
+        if (self.chatRoom.peerCount > 20) {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Unable to start a call because the participants limit was exceeded.", @"Error shown when trying to start a call in a group with more peers than allowed")];
+            return;
+        }
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = callType;
         groupCallVC.callId = call.callId;
@@ -1005,6 +1023,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.navigationItem.backBarButtonItem = backBarButton;
     
     if (self.chatRoom.isGroup) {
+        if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]) {
+            return;
+        }
         GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
         groupChatDetailsVC.chatRoom = self.chatRoom;
         
@@ -1019,37 +1040,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         contactDetailsVC.userHandle = peerHandle;
         [self.navigationController pushViewController:contactDetailsVC animated:YES];
     }
-}
-
-- (NSString *)participantsNames {
-    NSString *participantsNames = @"";
-    for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
-        NSString *peerName = [self.chatRoom userNicknameAtIndex:i];
-        
-        if (peerName == nil || peerName.mnz_isEmpty) {
-            NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
-            
-            if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
-                peerName = peerFirstname;
-            } else {
-                NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
-                if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
-                    peerName = peerLastname;
-                }
-            }
-        }
-        
-        if (!peerName.length) {
-            peerName = [self.chatRoom peerEmailByHandle:[self.chatRoom peerHandleAtIndex:i]];
-        }
-        
-        if (self.chatRoom.peerCount == 1 || (i + 1) == self.chatRoom.peerCount) {
-            participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
-        } else {
-            participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
-        }
-    }
-    return participantsNames;
 }
 
 - (BOOL)isAParticipant:(MEGAUser *)user {
@@ -1073,7 +1063,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
-    self.openMessageHeaderView.conversationWithLabel.text = [self participantsNames];
+    self.openMessageHeaderView.conversationWithLabel.text = [self.chatRoom participantsNamesWithMe:NO];
     self.openMessageHeaderView.conversationWithAvatar.image = self.chatRoom.isGroup ? nil : self.peerAvatar;
     self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
     
@@ -1307,27 +1297,15 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self hideJumpToBottom];
 }
 
-- (NSString *)usernameForUserHandle:(uint64_t)handle {
-    NSString *username = [self.chatRoom userNicknameForUserHandle:handle];
-    
-    if (!username.length) {
-        username = [self.chatRoom peerFirstnameByHandle:handle];
-        username = username.length ? username : [self.chatRoom peerEmailByHandle:handle];
-    }
-
-    return username;
-}
-
 - (void)setTypingIndicator {
-    NSString *typingString = nil;
     NSMutableAttributedString *typingAttributedString = nil;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
         NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
-        NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = [self.chatRoom participantNameForUserHandle:firstUserHandle.unsignedLongLongValue];
         
-        typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
+        NSString *typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
         
         typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
         [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
@@ -1340,10 +1318,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
-    NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
-    NSString *secondUsername = [self usernameForUserHandle:secondUserHandle.unsignedLongLongValue];
-
-    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", secondUsername]];
+    NSString *firstUserDisplayName = [self.chatRoom participantNameForUserHandle:firstUserHandle.unsignedLongLongValue];
+    NSString *secondUserDisplayName = [self.chatRoom participantNameForUserHandle:secondUserHandle.unsignedLongLongValue];
+    NSString *whoIsTypingString = [NSString stringWithFormat:@"%@, %@", firstUserDisplayName, secondUserDisplayName];
     
     NSString *twoOrMoreUsersAreTypingString;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 2) {
@@ -1410,12 +1387,18 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (BOOL)shouldShowJoinView {
-    return self.chatRoom.isPublicChat && self.chatRoom.isPreview && !self.chatLinkBeenClosed;
+    return (self.chatRoom.isPublicChat && self.chatRoom.isPreview && !self.chatLinkBeenClosed) || [MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
 }
 
 - (void)updateJoinView {
-    BOOL hidden = !self.shouldShowJoinView;
-    [self.inputToolbar mnz_setJoinViewHidden:hidden];
+    JoinViewState newState;
+    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
+    if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:base64Handle]) {
+        newState = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo ? JoinViewStateJoining : JoinViewStateLeaving;
+    } else {
+        newState = self.shouldShowJoinView ? JoinViewStateDefault : JoinViewStateHidden;
+    }
+    [self.inputToolbar mnz_setJoinViewState:newState];
 }
 
 - (void)setLastMessageAsSeen {
@@ -1453,8 +1436,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         return;
     }
     
-    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:userHandle];
-    NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
+    NSString *userEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
+    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:userHandle] ?: userEmail;
     
     if (!userEmail) {
         return;
@@ -1468,20 +1451,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = weakSelf.chatRoom.isGroup ? ContactDetailsModeFromGroupChat : ContactDetailsModeFromChat;
         contactDetailsVC.userEmail = userEmail;
-        contactDetailsVC.userName = userName;
         contactDetailsVC.userHandle = userHandle;
         contactDetailsVC.groupChatRoom = weakSelf.chatRoom;
         [weakSelf.navigationController pushViewController:contactDetailsVC animated:YES];
     }]];
-    
-    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-    
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
     if (!user || user.visibility != MEGAUserVisibilityVisible) {
         [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-                [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:[weakSelf.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                [weakSelf showOrHideInputToolbar];
             }
         }]];
     }
@@ -1489,16 +1469,20 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && self.chatRoom.isGroup) {
         [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             [MEGASdkManager.sharedMEGAChatSdk removeFromChat:weakSelf.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
-            weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+            [weakSelf showOrHideInputToolbar];
         }]];
     }
     
     ActionSheetViewController *userActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:userName dismissCompletion:^{
-        weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+        [weakSelf showOrHideInputToolbar];
     } sender:senderView];
     
     self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
     [self presentViewController:userActionSheet animated:YES completion:nil];
+}
+
+- (void)showOrHideInputToolbar {
+    self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
 }
 
 - (void)loadPhotoAppBrowserViewController {
@@ -2104,12 +2088,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     if (error.type) {
                         UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            [weakSelf showOrHideInputToolbar];
                         }]];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                                 if (error.type) {
                                     UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", AMLocalizedString(error.name, nil)] preferredStyle:UIAlertControllerStyleAlert];
                                     [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                        [weakSelf showOrHideInputToolbar];
                                     }]];
                                     [weakSelf presentViewController:enableGeolocationAlert animated:YES completion:nil];
                                 } else {
@@ -2127,7 +2113,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 [MEGASdkManager.sharedMEGASdk isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
             }]];
             
-            ActionSheetViewController *uploadOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") dismissCompletion:nil sender:nil];
+            ActionSheetViewController *uploadOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") dismissCompletion:^{
+                [weakSelf showOrHideInputToolbar];
+            } sender:nil];
             [self presentViewController:uploadOptionsActionSheet animated:YES completion:nil];
             break;
         }
@@ -2164,11 +2152,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     } else {
         MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
             self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-            sender.enabled = YES;
+            [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
             [self updateJoinView];
         }];
         [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
-        sender.enabled = NO;
+        [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+        [self updateJoinView];
     }
 }
 
@@ -2272,7 +2261,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *avatarKey = @(message.userHandle);
     UIImage *avatar = [self.avatarImages objectForKey:avatarKey];
     if (!avatar) {
-        avatar = [UIImage mnz_imageForUserHandle:message.userHandle name:self.chatRoom.title size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
+        MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            if (!error.type) {
+                UIImage *avatar = [UIImage imageWithContentsOfFile:request.file];
+                [self.avatarImages setObject:avatar forKey:avatarKey];
+            }
+        }];
+        avatar = [UIImage mnz_imageForUserHandle:message.userHandle name:self.chatRoom.title size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:delegate];
         if (avatar) {
             [self.avatarImages setObject:avatar forKey:avatarKey];
         } else {
@@ -3111,6 +3106,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
         }
     } else {
+        self.awaitingLoad = NO;
         if (!self.loadMessagesLater) {
             [SVProgressHUD dismiss];
             self.loadingState = NO;
@@ -3292,13 +3288,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self customNavigationBarLabel];
             [self updateToolbarPlaceHolder];
             
-            if (self.collectionView.indexPathsForVisibleItems.count > 0) {
-                [self.collectionView performBatchUpdates:^{
-                    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-                    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-                } completion:nil];
-            }
-            
             break;
         }
             
@@ -3309,7 +3298,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {
-            if (chat.userTypingHandle != api.myUserHandle) {
+            if (chat.userTypingHandle != api.myUserHandle && [self.chatRoom participantNameForUserHandle:chat.userTypingHandle]) {
                 NSNumber *userTypingHandle = [NSNumber numberWithUnsignedLongLong:chat.userTypingHandle];
                 NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingHandle];
                 if (userTypingTimer) {
@@ -3380,6 +3369,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [self updateNavigationBarButtonsState];
 
         if (newState == MEGAChatConnectionOnline) {
+            self.chatRoom = [api chatRoomForChatId:self.chatRoom.chatId];
+            [self customNavigationBarLabel];
             [self checkIfChatHasActiveCall];
             if (self.loadMessagesLater) {
                 self.loadMessagesLater = NO;
@@ -3409,9 +3400,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 #pragma mark - MEGAChatRequest
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    if (error.type) return;
-    
     switch (request.type) {
+        case MEGAChatRequestTypeGetPeerAttributes:
+            if (error.type) {
+                return;
+            }
+            [self customNavigationBarLabel];
+            break;
+
         case MEGAChatRequestTypeInviteToChatRoom: {
             switch (error.type) {
                 case MEGAChatErrorTypeArgs: //If the chat is not a group chat (cannot invite peers)
