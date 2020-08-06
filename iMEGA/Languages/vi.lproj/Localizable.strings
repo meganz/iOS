@@ -107,7 +107,7 @@
 /*  */
 "pleaseStrengthenYourPassword"="Xin tạo một mật khẩu phức tạp hơn.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Quá Yếu";
+"veryWeak"="Quá đơn giản";
 /*  */
 "weak"="Yếu";
 /*  */
@@ -471,7 +471,7 @@
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to your Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Bật tính năng Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -673,7 +673,7 @@
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Dùng Các Định Dạng Thông Dụng Nhất";
 /* Title for custom settings */
-"Custom Settings"="Custom Settings";
+"Custom Settings"="Thiết Đặt Tùy Chỉnh";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Dung Lượng của %@ Bị Đầy";
 /* Title to show when device local storage is almost full */
@@ -689,15 +689,15 @@
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Tải lên các ảnh trong Album Bị Ẩn";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Các phiên bản ảnh và video trong mục Live Photos sẽ được phép tải lên.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="Chỉ cho phép các phiên bản ảnh trong mục Live Photos  mới được tải lên.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="Tất cả các ảnh trong mục Chụp Liên Tục sẽ được phép tải lên.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Chỉ cho phép các ảnh được đánh dấu là ưa thích mới được tải lên.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Album Bị Ẩn là nơi dấu hình ảnh và videos trong kho Ảnh của thiết bị.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Tải lên các Album Chia Sẻ";
 /* Footer description for Upload Shared Albums title when option enabled */
@@ -707,7 +707,7 @@
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Tải lên các albums được đồng bộ với iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Các albums đồng bộ là nơi chứa các hình ảnh và videos được đồng bộ hóa từ iTunes vào kho Ảnh của thiết bị.";
 /* App means “Application” */
 "App version"="Phiên bản ứng dụng";
 /* Title of the label where the SDK version is shown */
@@ -1367,7 +1367,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="Tài khoản doanh nghiệp đã hết hạn";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Thẻ bị từ chối";
 /* SDK error returned when the billing failed */
@@ -1377,7 +1377,7 @@
 /* SDK error returned when there are too many requests */
 "Too many requests"="Quá nhiều yêu cầu";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Số dư tài khoản bị lỗi";
 /* SDK error returned upon a HTTP error */
 "HTTP error"="Lỗi HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
@@ -1767,9 +1767,9 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Gói thành viện hạng PRO sắp hết hạn";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="Thông báo tranh chấp";
+"Takedown notice"="Thông báo gỡ bỏ";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="Tranh chấp đã được giải quyết thành công";
+"Takedown reinstated"="Nội dung gỡ bỏ đã được khôi phục";
 /* Label shown inside an unseen notification */
 "New"="Mới";
 /* When a contact sent a contact/friend request */
@@ -1833,7 +1833,7 @@
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Hạng PRO đã hết hạn %1 ngày qua";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Một %1 của bạn (tên %2) đã bị tháo bỏ do vi phạm bản quyền.";
+"Your publicly shared %1 (%2) has been taken down."="Một %1 chia sẻ công cộng của bạn (tên %2) đã bị gỡ bỏ.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Nội dung %1 (tên %2) đã được phục hồi lại.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
@@ -1869,7 +1869,7 @@
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "Send Location"="Gửi Vị Trí";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Vị trí địa lý này sẽ được mở bằng một ứng dụng cung cấp bản đồ không nằm trong hệ thống hỗ trợ mã hóa đầu-cuối thuộc nền tảng của MEGA.";
 /* Text shown in location-type messages */
 "Pinned Location"="Vị Trí Được Đánh Dấu";
 /* Plural of participant. 2 participants */
@@ -2001,11 +2001,11 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Ngay lập tức";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="Tệp tin này bị xác định vi phạm tranh chấp quyền sở hữu.";
+"This file has been the subject of a takedown notice."="Tệp tin này đã bị yêu cầu cần phải gỡ bỏ.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="Thư mục này bị xác định vi phạm tranh chấp quyền sở hữu.";
+"This folder has been the subject of a takedown notice."="Thư mục này đã bị yêu cầu cần phải gỡ bỏ.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="Phản Đối Tranh Chấp";
+"Dispute Takedown"="Yêu Cầu Gỡ Bỏ";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="User management is only available from a desktop web browser.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -2141,11 +2141,11 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
-"Clear Selected"="Clear Selected";
+"Clear Selected"="Dọn Mục Đã Chọn";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
+"MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Chọn Thư Mục";
 /* Title of the folder selection screen for camera uploads */
@@ -2213,7 +2213,7 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="Cuộc chát được tạo vào ngày %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="Không Có Tệp Tin Chia Sẻ";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Liên kết thư mục bất khả dụng";
 /* Error message shown when opening a file link which doesn’t exist */
@@ -2238,3 +2238,15 @@
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Quý khách còn lại <warn>%@</warn> để nâng cấp.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="Nếu không sau đó, dữ liệu sẽ bị xóa.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="Sửa Số Điện Thoại";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="Xóa Số Điện Thoại";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="This operation will remove your current phone number and start the process of associating a new phone number with your account.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="Your phone number has been removed successfully.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
