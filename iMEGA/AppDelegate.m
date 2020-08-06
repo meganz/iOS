@@ -1485,7 +1485,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ldd", (long)request.type, (long)error.type)
+    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ld", (long)request.type, (long)error.type)
     
     if ([error type]) {
         switch ([error type]) {
