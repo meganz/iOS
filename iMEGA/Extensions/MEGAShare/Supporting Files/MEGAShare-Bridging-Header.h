@@ -1,6 +1,6 @@
-//
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
+
+#ifndef MEGAShare_Bridging_Header_h
+#define MEGAShare_Bridging_Header_h
 
 #import "MEGASdkManager.h"
 
@@ -11,6 +11,7 @@
 #import "NSDate+DateTools.h"
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
@@ -23,4 +24,7 @@
 
 #import "CustomModalAlertViewController.h"
 #import "SelectableTableViewCell.h"
+
 #import "Helper.h"
+
+#endif /* MEGAShare_Bridging_Header_h */
