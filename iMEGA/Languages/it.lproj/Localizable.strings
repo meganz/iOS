@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Ottieni %1$s di spazio di archiviazione e %2$s di banda di trasferimento per ogni utente invitato";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="Seleziona dai contatti del telefono e inserisci più indirizzi email";
 /*  */
 "insertYourFriendsEmails"="Inserisci la/e mail del/i tuo/i amico/i:";
 /*  */
@@ -1363,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Non hai abbastanza banda di trasferimento";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="Autenticazione a più fattori richiesta";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for non-admin users";
+"Access denied for users"="Accesso negato per gli utenti non amministratori";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="L’account Business è scaduto";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="Carta di credito rifiutata";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Fatturazione fallita";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="Respinta dalla protezione frodi";
 /* SDK error returned when there are too many requests */
 "Too many requests"="Troppe richieste";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Errore nel bilancio";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP Error";
+"HTTP error"="Errore HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1961,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA non utilizzerà mai questi dati per altri motivi e non interagirà mai con i tuoi contatti senza il tuo consenso.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Guarda chi è già su MEGA";
+"See who's already on MEGA"="Scopri i tuoi contatti su MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contatti trovati su MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2032,6 +2032,12 @@
 "Share with"="Condividi con";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contatta l'amministratore del tuo account business per risolvere il problema ed attivare il tuo account.";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Fino a questa mattina";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Fino a domani mattina";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Finché non lo riattivo";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minuti";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2042,12 +2048,16 @@
 "24 hours"="24 ore";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Muta le notifiche delle chat per";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Le notifiche verranno silenziate fino a domani, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="Le notifiche saranno silenziate fino alle %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifiche delle chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Non disturbare";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifiche mutate";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Riconnessione...";
 /* Title shown when the user reconnect in a call. */
@@ -2079,7 +2089,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Carica (%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="Albums";
+"Albums"="Album";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deseleziona";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2210,3 +2220,33 @@
 "File link unavailable"="File link non disponibile";
 /* Header of block with all shared files in chat. */
 "Shared Files"="File condivisi";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="Archivio pieno";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="I tuoi dati sono a rischio!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Ti abbiamo contattato per email a <b>%@</b> il <b>%@</b> ma hai ancora %@ file che occupano <b>%@</b> nel tuo account MEGA, e ti richiede di aggiornare a <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Ti abbiamo contattato per email a <b>%@</b> il <b>%@</b> ma hai ancora %@ file che occupano <b>%@</b> nel tuo account MEGA, che ti richiede di contattare il supporto per un piano personalizzato.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d giorni";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Devi agire immediatamente per salvare i tuoi dati.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Ti rimangono <warn>%@</warn> per aggiornare.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="Dopodiché, i tuoi dati saranno soggetti ad eliminazione.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="Modifica il numero di telefono";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="Rimuovi il numero di telefono";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Questo rimuoverà il numero del telefono che hai associato a questo account. Se in futuro scegli di aggiungere un numero di telefono ti verrà richiesto di verificarlo.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Questa operazione rimuoverà il tuo numero di telefono corrente e inizierà il processo di associare un nuovo numero di telefono con il tuo account.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="Il tuo numero di telefono è stato rimosso con successo.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="Rimozione del numero di telefono fallita, per favore riprova più tardi.";
