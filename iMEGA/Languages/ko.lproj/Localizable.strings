@@ -1154,7 +1154,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="개인정보 인증";
+"verifyCredentials"="자격증명 인증";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="인증";
 /* Button title */
@@ -1168,11 +1168,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="공유된 폴더";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="연락처 개인정보";
+"contactCredentials"="연락처 자격증명";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="현실에서 가장 확실한 방법은 직접 만나는 것입니다. 만약 증명된 OTR이나 PGP 같은 이미 증명된 다른 방법이 있다면, 그것을 사용해도 좋습니다.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"My credentials"="내 개인 정보";
+"My credentials"="내 자격증명";
 /* Button to reset the password */
 "reset"="재설정";
 /* Button title */
@@ -2032,6 +2032,12 @@
 "Share with"="다른 사람과 공유";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Until this morning";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2042,12 +2048,16 @@
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="%@까지 알림을 울리지 않기";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="방해금지";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
@@ -2210,3 +2220,33 @@
 "File link unavailable"="파일 링크가 사용불가능합니다";
 /* Header of block with all shared files in chat. */
 "Shared Files"="공유된 파일";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="저장소 가득 참";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 <b>%@</b>로 업그레이드가 필요합니다.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 개인화된 요금제를 위해 고객지원에 연락하는 것을 필요로 합니다.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d일";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>업그레이드까지 <warn>%@</warn> 남았습니다.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="그 이후, 당신의 데이터는 삭제 대상이 됩니다.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="휴대전화 번호 수정";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="휴대전화 번호 삭제";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="이것은 당신의 계정에 연결된 전화번호를 삭제합니다. 만약 나중에 전화번호를 추가하려면 전화번호를 인증해야합니다.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="이 행동은 현재 전화 번호를 삭제하고 새 전화번호를 계정과 연결하는 과정을 시작합니다.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="전화번호가 성공적으로 삭제되었습니다.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="전화번호 삭제를 실패하였습니다, 다시 시도하세요.";

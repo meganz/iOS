@@ -10,6 +10,7 @@
 #import "Helper.h"
 #import "MEGAChatChangeGroupNameRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
+#import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -122,6 +123,8 @@
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -376,7 +379,8 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
-    
+    self.navigationController.view.backgroundColor = UIColor.mnz_background;
+
     self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
     
     self.topBannerButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -586,6 +590,9 @@
 
 - (void)presentGroupOrContactDetailsForChatListItem:(MEGAChatListItem *)chatListItem {
     if (chatListItem.isGroup) {
+        if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:chatListItem.chatId]]) {
+            return;
+        }
         GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
         groupChatDetailsVC.chatRoom = chatRoom;
@@ -593,15 +600,11 @@
     } else {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
         NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:[chatRoom peerHandleAtIndex:0]];
-        NSString *peerFirstname = [chatRoom peerFirstnameAtIndex:0];
-        NSString *peerLastname  = [chatRoom peerLastnameAtIndex:0];
-        NSString *peerName      = [NSString stringWithFormat:@"%@ %@", peerFirstname, peerLastname];
         uint64_t peerHandle     = [chatRoom peerHandleAtIndex:0];
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
         contactDetailsVC.userEmail          = peerEmail;
-        contactDetailsVC.userName           = peerName;
         contactDetailsVC.userHandle         = peerHandle;
         [self.navigationController pushViewController:contactDetailsVC animated:YES];
     }
@@ -1165,9 +1168,6 @@
                     [cell updateUnreadCountChange:item.unreadCount];
                     break;
                     
-                case MEGAChatListItemChangeTypeParticipants:
-                    break;
-                    
                 case MEGAChatListItemChangeTypeTitle:
                     [self.tableView beginUpdates];
                     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -1181,6 +1181,7 @@
                     
                 case MEGAChatListItemChangeTypeLastMsg:
                 case MEGAChatListItemChangeTypeLastTs:
+                case MEGAChatListItemChangeTypeParticipants:
                     [cell updateLastMessageForChatListItem:item];
                     break;
                     

@@ -10,6 +10,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var chatId: UInt64?
     private var msgId: UInt64?
+    
+    private var waitingForThumbnail = false
+    private var waitingForUserAttributes = false
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
@@ -68,54 +71,73 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.userInfo = ["chatId": chatId, "msgId": message.messageId]
         bestAttemptContent?.body = notificationManager.bodyString()
         bestAttemptContent?.sound = UNNotificationSound.default
+        let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
         if chatRoom.isGroup {
             bestAttemptContent?.title = chatRoom.title ?? ""
-            bestAttemptContent?.subtitle = notificationManager.displayName()
-        } else {
-            bestAttemptContent?.title = notificationManager.displayName()
-        }
-
-        let chatIdBase64 = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
-        bestAttemptContent?.threadIdentifier = chatIdBase64
-        if #available(iOS 12.0, *) {
-            if chatRoom.isGroup {
+            if #available(iOS 12.0, *) {
                 bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
-            } else {
-                bestAttemptContent?.summaryArgument = notificationManager.displayName()
             }
         }
-
+        setupDisplayName(displayName: displayName, for: chatRoom)
+        
+        let chatIdBase64 = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
+        bestAttemptContent?.threadIdentifier = chatIdBase64
+        
         if immediately {
             return true
         }
-
+        
+        var readyToPost = true
+        if displayName == nil {
+            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatId, usersHandles: [message.userHandle] as [NSNumber], delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+                if error.type != .MEGAChatErrorTypeOk {
+                    return
+                }
+                guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
+                    return
+                }
+                let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
+                self?.setupDisplayName(displayName: displayName, for: chatRoom)
+                self?.waitingForUserAttributes = false
+                if !(self?.waitingForThumbnail ?? true) {
+                    self?.postNotification(withError: nil)
+                }
+            })
+            readyToPost = false
+            waitingForUserAttributes = true
+        }
+        
         if message.type == .attachment {
             guard let nodeList = message.nodeList else {
-                return true
+                return readyToPost
             }
             if nodeList.size?.intValue != 1 {
-                return true
+                return readyToPost
             }
             guard let node = nodeList.node(at: 0) else {
-                return true
+                return readyToPost
             }
             if !node.hasThumbnail() {
-                return true
+                return readyToPost
             }
             guard let destinationFilePath = path(for: node, in: "thumbnailsV3") else {
-                return true
+                return readyToPost
             }
 
             MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
                 if let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: node.base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
-                    self?.postNotification(withError: nil)
+                    self?.waitingForThumbnail = false
+                    if !(self?.waitingForUserAttributes ?? true) {
+                        self?.postNotification(withError: nil)
+                    }
                 }
             })
-            return false
+            readyToPost = false
+            waitingForThumbnail = true
         }
-
-        return true
+        
+        return readyToPost
     }
     
     private func postNotification(withError error: String?) {
@@ -234,6 +256,22 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return destinationURL.appendingPathComponent(node.base64Handle).path
         } catch {
             return nil
+        }
+    }
+    
+    private func setupDisplayName(displayName: String?, for chatRoom: MEGAChatRoom) {
+        guard let displayName = displayName else {
+            MEGALogWarning("[Chat Links Scalability] Display name not ready")
+            return
+        }
+        
+        if chatRoom.isGroup {
+            bestAttemptContent?.subtitle = displayName
+        } else {
+            bestAttemptContent?.title = displayName
+            if #available(iOS 12.0, *) {
+                bestAttemptContent?.summaryArgument = displayName
+            }
         }
     }
 
