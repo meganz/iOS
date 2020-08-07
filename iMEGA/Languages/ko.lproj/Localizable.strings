@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="설정 > 일반 > %@ 저장소";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="라이브 포토용 동영상 업로드";
+"Upload Videos for Live Photos"="라이브 포토용 동영상 업로드";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="모든 연사 사진 업로드";
+"Upload All Burst Photos"="모든 연사 사진 업로드";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="숨긴 앨범 업로드";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드되지 않을 것입니다";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
+"Upload Albums Synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="동기화된 앨범은 당신의 기기의 사진 앱이 iTunes에서 공기화한 사진 또는 동영상이 저장되는 곳입니다.";
 /* App means “Application” */
-"App version"="앱 버전";
+"App Version"="앱 버전";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK 버전";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat SDK 버전";
 /* Link to the public code of the app */
-"View source code"="소스 코드 보기";
+"View Source Code"="소스 코드 보기";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="통지";
 /* Title for the MEGA Recovery Key */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="파일 버전";
+"File Versions"="파일 버전";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="파일 버전으로 이용중인 총 용량:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="모든 오래된 파일 버전 기록을 삭제";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="이전 파일 기록 삭제";
+"Delete Previous Versions"="이전 파일 기록 삭제";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="소유하고 계신 모든 현재 버전의 파일들은 남습니다. 오직 오래된 구 버전의 파일 기록만이 제거됩니다.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="%1$s님의 연락처는 당신의 비즈니스 계정의 일부이기 때문에 삭제할 수 없습니다.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="비밀번호 필요";
+"Require Passcode"="비밀번호 필요";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="역할:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="위치 태그 포함";
+"Include Location Tags"="위치 태그 포함";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화되면, 사진과 동영상이 어디서 촬영되었는지에 대한 정보가 업로드됩니다, 공유할 때 주의하세요.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="폴더 선택";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="사진 품질";
+"Image Quality"="사진 품질";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="자동";
 /* Description of Automatic Image Quality option */

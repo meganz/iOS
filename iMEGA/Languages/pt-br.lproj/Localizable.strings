@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Ajustes > Geral > Armazenamento do %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Fazer upload de vídeos de Live Photos";
+"Upload Videos for Live Photos"="Fazer upload de vídeos de Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Fazer upload de todas as fotos em série";
+"Upload All Burst Photos"="Fazer upload de todas as fotos em série";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Fazer upload do Álbum Oculto";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Não será feito o upload dos álbuns compartilhados do aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
+"Upload Albums Synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Álbuns sincronizados permitem sincronizar fotos ou vídeos com o aplicativo Fotos do seu dispositivo no iTunes.";
 /* App means “Application” */
-"App version"="Versão do aplicativo";
+"App Version"="Versão do aplicativo";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat - versão do SDK";
 /* Link to the public code of the app */
-"View source code"="Ver o código-fonte";
+"View Source Code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
 /* Title for the MEGA Recovery Key */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Se o controle de versões de arquivos estiver desativado, ao modificar um arquivo a versão atual será substituída pela nova versão (e suas alterações no arquivo já não serão salvas). Você tem certeza de que quer desativar o controle de versões de arquivos?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="Versões de arquivos";
+"File Versions"="Versões de arquivos";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Espaço ocupado por versões de arquivos:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Deletar todas as versões anteriores dos meus arquivos";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Deletar versões anteriores";
+"Delete Previous Versions"="Deletar versões anteriores";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Todos os arquivos atuais permanecerão. Apenas as versões antigas dos seus arquivos serão deletadas.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Você não pode remover a %1$s dos seus contatos, por fazer parte da sua conta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Solicitar código de acesso";
+"Require Passcode"="Solicitar código de acesso";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Imediatamente";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Função:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Incluir etiquetas de localização";
+"Include Location Tags"="Incluir etiquetas de localização";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Ao ativar, você fará o upload de informações sobre onde as suas fotos foram tiradas e os seus vídeos foram gravados; portanto, tenha cuidado ao compartilhar.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Escolher pasta";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Qualidade da imagem";
+"Image Quality"="Qualidade da imagem";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automático";
 /* Description of Automatic Image Quality option */

@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Cài đặt > Cài đặt chung > Dung lượng %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Tải lên các videos dạng Live Photos";
+"Upload Videos for Live Photos"="Tải lên các videos dạng Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Tải lên các ảnh Chụp Liên Tục";
+"Upload All Burst Photos"="Tải lên các ảnh Chụp Liên Tục";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Tải lên các ảnh trong Album Bị Ẩn";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Nội dung trong các Album Chia Sẻ từ kho Ảnh của máy sẽ không được tải lên.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Tải lên các albums được đồng bộ với iTunes";
+"Upload Albums Synced from iTunes"="Tải lên các albums được đồng bộ với iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Các albums đồng bộ là nơi chứa các hình ảnh và videos được đồng bộ hóa từ iTunes vào kho Ảnh của thiết bị.";
 /* App means “Application” */
-"App version"="Phiên bản ứng dụng";
+"App Version"="Phiên bản ứng dụng";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Phiên bản MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Phiên bản SDK MEGAchát";
 /* Link to the public code of the app */
-"View source code"="Xem mã nguồn";
+"View Source Code"="Xem mã nguồn";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Thỏa Thuận";
 /* Title for the MEGA Recovery Key */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Khi tính năng ghi nhớ lịch sử phiên bản bị tắt đi, phiên bản hiện tại của các tệp tin sẽ được thay thế bằng phiên bản mới nhất (và mọi thay đổi và chỉnh sửa theo thời gian sẽ không được ghi nhớ). Có chắc muốn tắt đi lập lịch sử phiên bản?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="Phiên bản tệp tin";
+"File Versions"="Phiên bản tệp tin";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Không gian chiếm dụng bởi lịch sử phiên bản tệp tin:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Xóa hết tất cả các phiên bản cũ đang ghi nhớ";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Xoá các phiên bản cũ";
+"Delete Previous Versions"="Xoá các phiên bản cũ";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Tất cả các tệp tin đều được giữ nguyên. Chỉ có các nội dung ghi lại phiên bản lịch sử tệp tin sẽ bị xoá.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Yêu cầu passcode";
+"Require Passcode"="Yêu cầu passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Ngay lập tức";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Chức vụ:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Bao gồm vị trí địa lý";
+"Include Location Tags"="Bao gồm vị trí địa lý";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Nếu được bật, tất cả các ảnh và videos tải lên sẽ có kèm theo thông tin vị trí địa lý nơi mà ảnh hay videos đã được chụp, người dùng tự cân nhắc khi chia sẻ.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Chọn Thư Mục";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Chất lượng hình ảnh";
+"Image Quality"="Chất lượng hình ảnh";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Tự điều chỉnh";
 /* Description of Automatic Image Quality option */

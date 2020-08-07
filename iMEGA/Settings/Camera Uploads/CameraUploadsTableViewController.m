@@ -79,7 +79,7 @@
     self.backgroundUploadLabel.text = AMLocalizedString(@"Upload in Background", nil);
     self.advancedLabel.text = AMLocalizedString(@"advanced", nil);
     
-    self.includeGPSTagsLabel.text = AMLocalizedString(@"Include location tags", nil);
+    self.includeGPSTagsLabel.text = AMLocalizedString(@"Include Location Tags", nil);
 
     [self configImageFormatTexts];
     

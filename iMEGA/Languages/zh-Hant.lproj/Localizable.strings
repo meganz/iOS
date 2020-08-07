@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="設定 > 一般 > %@儲存空間";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="上傳作為實時照片的影片";
+"Upload Videos for Live Photos"="上傳作為實時照片的影片";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="上傳所有的連拍照片";
+"Upload All Burst Photos"="上傳所有的連拍照片";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="上傳隱藏的相簿";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="您裝置的相片程式的共享相簿將不會被上傳";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="上傳來自iTunes同步的專輯";
+"Upload Albums Synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您從iTunes將相片與影片同步到您裝置的相片程式的地方。";
 /* App means “Application” */
-"App version"="App 版本";
+"App Version"="App 版本";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK軟體開發包版本";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGA聊天 SDK版本";
 /* Link to the public code of the app */
-"View source code"="檢視來源碼";
+"View Source Code"="檢視來源碼";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
 /* Title for the MEGA Recovery Key */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="檔案版本功能被停用後，當檔案更新時，該檔案將直接被替換為最新版本（系統不會再記錄您修改檔案的歷程）。您確定要停用檔案版本功能嗎？";
 /* Settings preference title to show file versions info of the account */
-"File versions"="檔案版本";
+"File Versions"="檔案版本";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="檔案版本所佔用的總空間大小：";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="刪除我所有舊版本的檔案";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="刪除以前的版本";
+"Delete Previous Versions"="刪除以前的版本";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="所有當前版本檔案將保留。僅歷史版本的檔案會被刪除。";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="您無法以刪除聯絡人方式刪除%1$s，因為他們是您商業帳戶的成員之一。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="需要密碼";
+"Require Passcode"="需要密碼";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="立即";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="職稱:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="包含位置標籤";
+"Include Location Tags"="包含位置標籤";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="如果啟用，您將上傳關於相片與影片拍攝位置的資訊，所以分享時請格外小心。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="選擇資料夾";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="影像品質";
+"Image Quality"="影像品質";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
