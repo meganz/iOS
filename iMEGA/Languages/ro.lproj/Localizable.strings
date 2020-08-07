@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Configurări > General > Stocare %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Încarcă videoclipuri pentru Live Photos";
+"Upload Videos for Live Photos"="Încarcă videoclipuri pentru Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Încarcă toate fotografiile în rafală";
+"Upload All Burst Photos"="Încarcă toate fotografiile în rafală";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Încarcă album ascuns";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Nu vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
+"Upload Albums Synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Albumele sincronizate sunt locul în care sincronizezi fotografiile sau videoclipurile cu aplicația Poze a dispozitivului, de pe iTunes.";
 /* App means “Application” */
-"App version"="Versiunea aplicației";
+"App Version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Versiunea SDK MEGAchat";
 /* Link to the public code of the app */
-"View source code"="Vezi codul sursă";
+"View Source Code"="Vezi codul sursă";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Confirmări";
 /* Title for the MEGA Recovery Key */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fișierelor?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="Versiunile fișierelor";
+"File Versions"="Versiunile fișierelor";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Dimensiunea totală ocupată de versiunile fișierelor:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Șterge toate versiunile mai vechi ale fișierelor mele";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Șterge versiunile anterioare";
+"Delete Previous Versions"="Șterge versiunile anterioare";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Toate fișierele actuale vor rămâne. Doar versiunile istorice ale fișierelor vor fi șterse.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s ca contact, deoarece face parte din contul tău business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Necesită cod de acces";
+"Require Passcode"="Necesită cod de acces";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Imediat";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Include etichetele locațiilor";
+"Include Location Tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Dacă aceasta este activată, vei încărca informații despre locul în care au fost făcute fotografiile și videoclipurile, așa că ai grijă când le împărtășești.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Alege un folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Calitatea imaginii";
+"Image Quality"="Calitatea imaginii";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automat";
 /* Description of Automatic Image Quality option */

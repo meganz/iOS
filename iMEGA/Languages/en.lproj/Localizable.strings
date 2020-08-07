@@ -297,7 +297,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="There is already a file with the same name";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Import from…";
+"uploadFrom"="Import From…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] already uploaded with the name [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload Videos for Live Photos"="Upload Videos for Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload All Burst Photos"="Upload All Burst Photos";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Upload Hidden Album";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload Albums Synced from iTunes"="Upload Albums Synced from iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
-"App version"="App version";
+"App Version"="App Version";
 /* Title of the label where the SDK version is shown */
-"sdkVersion"="MEGA SDK version";
+"sdkVersion"="MEGA SDK Version";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK version";
+"megachatSdkVersion"="MEGAchat SDK Version";
 /* Link to the public code of the app */
-"View source code"="View source code";
+"View Source Code"="View Source Code";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Acknowledgements";
 /* Title for the MEGA Recovery Key */
@@ -753,7 +753,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Currently using %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancel your account";
+"cancelYourAccount"="Cancel Your Account";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -860,11 +860,11 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessions closed";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Change passcode";
+"changePasscodeLabel"="Change Passcode";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Simple passcode";
+"simplePasscodeLabel"="Simple Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Erase local data";
+"eraseAllLocalDataLabel"="Erase Local Data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
 /* Menu item */
@@ -1411,7 +1411,7 @@
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Video quality";
+"videoQuality"="Video Quality";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Low";
 /* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="File versions";
+"File Versions"="File Versions";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Total size taken up by file versions:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Delete all older versions of my files";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Delete previous versions";
+"Delete Previous Versions"="Delete Previous Versions";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="All current files will remain. Only historic versions of your files will be deleted.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require Passcode"="Require Passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Immediately";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Role:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Include location tags";
+"Include Location Tags"="Include Location Tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Choose Folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Image quality";
+"Image Quality"="Image Quality";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatic";
 /* Description of Automatic Image Quality option */

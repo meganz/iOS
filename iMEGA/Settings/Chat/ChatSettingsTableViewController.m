@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     self.richPreviewsLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
     
-    self.imageQualityLabel.text = AMLocalizedString(@"Image quality", @"Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised)");
+    self.imageQualityLabel.text = AMLocalizedString(@"Image Quality", @"Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised)");
     
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
     

@@ -7,7 +7,7 @@ class ChatImageQualityTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = AMLocalizedString("Image quality", "Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original)")
+        navigationItem.title = AMLocalizedString("Image Quality", "Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original)")
         
         updateAppearance()
     }

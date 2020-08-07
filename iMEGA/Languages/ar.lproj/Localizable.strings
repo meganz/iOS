@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="الإعدادات > عام > %@ مساحة التخزين";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="ترفيع فيديوهات من أجل Live Photos";
+"Upload Videos for Live Photos"="ترفيع فيديوهات من أجل Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="ترفيع كل الصور المتتابعة";
+"Upload All Burst Photos"="ترفيع كل الصور المتتابعة";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="ترفيع ألبوم مخفي";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="لن يتم ترفيع الألبومات المشاركة من تطبيق الصور بجهازك.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="يمكنك ترفيع ألبومات تمت مزامنتها من iTunes";
+"Upload Albums Synced from iTunes"="يمكنك ترفيع ألبومات تمت مزامنتها من iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="الألبومات التي تمت مزامنتها هي المكان الذي تقوم فيه بمزامنة الصور أو مقاطع الفيديو مع تطبيق الصور بجهازك من iTunes.";
 /* App means “Application” */
-"App version"="نسخة التطبيق";
+"App Version"="نسخة التطبيق";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="نسخة MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="نسخة حزمة أدوات تطوير البرمجيات لMEGAchat";
 /* Link to the public code of the app */
-"View source code"="عرض مصدر الكود";
+"View Source Code"="عرض مصدر الكود";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="شكر وتقدير";
 /* Title for the MEGA Recovery Key */
@@ -1681,13 +1681,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="عند تعطيل نسخ الملف، سيتم استبدال الإصدار الحالي بالإصدار الجديد بمجرد تحديث الملف (ولن يتم تسجيل التغييرات التي أجريتها على الملف). هل تريد بالتأكيد تعطيل نسخ الملفات؟";
 /* Settings preference title to show file versions info of the account */
-"File versions"="النسخ المعدلة للملف";
+"File Versions"="النسخ المعدلة للملف";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="الحجم الكامل لجميع نسخ الملف:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="حذف جميع النسخ القديمة لملفاتي";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="حذف النسخ القديمة";
+"Delete Previous Versions"="حذف النسخ القديمة";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1997,7 +1997,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="لا يمكنك إزالة %1$s كجهة اتصال لأنها جزء من حساب الأعمال الخاص بك.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="يتطلب رمز المرور";
+"Require Passcode"="يتطلب رمز المرور";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="فوراً";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2081,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="الدور:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="تشمل علامات الموقع";
+"Include Location Tags"="تشمل علامات الموقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="في حالة التمكين، ستقوم بتحميل معلومات حول مكان التقاط الصور ومقاطع الفيديو الخاصة بك، لذا كن حذراً عند مشاركتها.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2151,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="اختر مجلد";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="جودة الصورة";
+"Image Quality"="جودة الصورة";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="تلقائي";
 /* Description of Automatic Image Quality option */
