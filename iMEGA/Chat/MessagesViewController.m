@@ -683,9 +683,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     chatRoomState = participantsNames;
                 } else {
                     if (self.chatRoom.peerCount) {
-                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Plural of participant. 2 participants").capitalizedString, self.chatRoom.peerCount + 1];
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Plural of participant. 2 participants"), self.chatRoom.peerCount + 1];
                     } else {
-                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1];
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant"), 1];
                     }
                 }
                 self.navigationSubtitleLabel.hidden = NO;
