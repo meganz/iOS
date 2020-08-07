@@ -1482,6 +1482,8 @@
 "download"="Download";
 /* Singular of file. 1 file */
 "file"="file";
+/* Label to desing a file matching */
+"File"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Current Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1939,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="This chat link is no longer available";
 /* Text explaining users how the chat links work. */
@@ -2002,6 +2004,8 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
+/* Business user role */
+"User"="User";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
