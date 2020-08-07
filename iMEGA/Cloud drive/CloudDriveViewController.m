@@ -44,7 +44,6 @@
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
@@ -1227,12 +1226,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-    nodeInfoVC.node = node;
-    nodeInfoVC.nodeInfoDelegate = self;
-    nodeInfoVC.incomingShareChildView = self.incomingShareChildView;
-    
+    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -2105,7 +2099,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)presentParentNode:(MEGANode *)node {
+- (void)nodeInfo:(NodeInfoViewController *)nodeInfo presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
 }
 

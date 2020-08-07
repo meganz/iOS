@@ -1442,8 +1442,6 @@
 "codeScanned"="Code scanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Shared with:";
-/*   */
-"details"="Details";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Sharing";
 /* Title of section to display number of all historical versions of files. */
@@ -2260,3 +2258,17 @@
 "Your phone number has been removed successfully."="Your phone number has been removed successfully.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETAILS";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Link Creation";
+/* Text indicating if a node is downloaded locally */
+"Available Offline"="Available Offline";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="SHARE WITH";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="PENDING";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSIONS";

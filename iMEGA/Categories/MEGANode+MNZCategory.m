@@ -846,7 +846,7 @@
 }
 
 
-- (NSArray *)mnz_versions {
+- (NSArray<MEGANode *> *)mnz_versions {
     return [[[MEGASdkManager sharedMEGASdk] versionsForNode:self] mnz_nodesArrayFromNodeList];
 }
 
