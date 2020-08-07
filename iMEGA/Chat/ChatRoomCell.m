@@ -36,6 +36,13 @@
     [self updateAppearance];
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.avatarView.avatarImageView.image = nil;
+    self.avatarView.firstPeerAvatarImageView.image = nil;
+    self.avatarView.secondPeerAvatarImageView.image = nil;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     UIColor *color = self.onlineStatusView.backgroundColor;
     [super setSelected:selected animated:animated];
@@ -182,13 +189,13 @@
             [self.avatarView configureWithMode:AvatarViewModeSingle];
         } else {
             uint64_t firstPeerHandle = [chatRoom peerHandleAtIndex:0];
-            NSString *firstPeerName = [chatRoom userDisplayNameAtIndex:0];
+            NSString *firstPeerName = [chatRoom userDisplayNameForUserHandle:firstPeerHandle];
             if (chatRoom.peerCount == 1) {
                 [self.avatarView.avatarImageView mnz_setImageForUserHandle:firstPeerHandle name:firstPeerName];
                 [self.avatarView configureWithMode:AvatarViewModeSingle];
             } else {
                 uint64_t secondPeerHandle = [chatRoom peerHandleAtIndex:1];
-                NSString *secondPeerName = [chatRoom userDisplayNameAtIndex:1];
+                NSString *secondPeerName = [chatRoom userDisplayNameForUserHandle:secondPeerHandle];
                 [self.avatarView.firstPeerAvatarImageView mnz_setImageForUserHandle:firstPeerHandle name:firstPeerName];
                 [self.avatarView.secondPeerAvatarImageView mnz_setImageForUserHandle:secondPeerHandle name:secondPeerName];
                 [self.avatarView configureWithMode:AvatarViewModeMultiple];
@@ -332,7 +339,11 @@
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
             
-            NSString *fullNameReceiveAction = [self userDisplayNameForHandle:item.lastMessageHandle chatRoom:chatRoom];
+            NSString *fullNameReceiveAction = [chatRoom userDisplayNameForUserHandle:item.lastMessageHandle];
+            if (!fullNameReceiveAction) {
+                fullNameReceiveAction = @"Unknown";
+                MEGALogWarning(@"[Chat Links Scalability] Display name not ready");
+            }
             
             NSString *wasChangedToBy = AMLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
             wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
@@ -364,7 +375,11 @@
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
             
-            NSString *fullNameReceiveAction = [self userDisplayNameForHandle:item.lastMessageHandle chatRoom:chatRoom];
+            NSString *fullNameReceiveAction = [chatRoom userDisplayNameForUserHandle:item.lastMessageHandle];
+            if (!fullNameReceiveAction) {
+                fullNameReceiveAction = @"Unknown";
+                MEGALogWarning(@"[Chat Links Scalability] Display name not ready");
+            }
             
             switch (item.lastMessagePriv) {
                 case -1: {
@@ -499,27 +514,13 @@
         actionAuthor = me ? AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.") : MEGASdkManager.sharedMEGAChatSdk.myFullname;
     } else {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
-        actionAuthor = [self userDisplayNameForHandle:item.lastMessageSender chatRoom:chatRoom];
-    }
-
-    return actionAuthor ? actionAuthor : @"?";
-}
-
-- (NSString *)userDisplayNameForHandle:(uint64_t)handle chatRoom:(MEGAChatRoom *)chatRoom {
-    NSString *userDisplayName = @"";
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
-    NSString *storedDisplayName = moUser.displayName;
-    
-    if (storedDisplayName.length > 0) {
-        userDisplayName = storedDisplayName;
-    } else {
-        NSString *fullName = [chatRoom peerFullnameByHandle:handle];
-        if (fullName.length > 0) {
-            userDisplayName = fullName;
+        actionAuthor = [chatRoom userDisplayNameForUserHandle:item.lastMessageSender];
+        if (!actionAuthor) {
+            MEGALogWarning(@"[Chat Links Scalability] Display name not ready");
         }
     }
-    
-    return userDisplayName;
+
+    return actionAuthor ?: @"Unknown";
 }
 
 @end

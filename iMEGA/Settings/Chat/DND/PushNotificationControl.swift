@@ -64,9 +64,9 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
 extension PushNotificationControl {
     func string(from timeLeft: Int64) -> String? {
         if timeLeft == 0 {
-            return AMLocalizedString("Notifications will be silenced until Do Not Disturb is turned off", "Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch")
+            return AMLocalizedString("Notifications muted", "Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch")
         } else {
-            let remainingTime = ceil(TimeInterval(timeLeft) - NSDate().timeIntervalSince1970)
+            let remainingTime = ceil(TimeInterval(timeLeft) - Date().timeIntervalSince1970)
             return remainingTime.dndFormattedString
         }
     }
@@ -91,8 +91,12 @@ extension PushNotificationControl {
         MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings)
     }
     
-    func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64 {
-        return Int64(ceil(Date().timeIntervalSince1970 + dndTurnOnOption.rawValue))
+    func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64? {
+        guard let timeInterval = dndTurnOnOption.timeInterval else {
+            return nil
+        }
+        
+        return Int64(ceil(Date().timeIntervalSince1970 + timeInterval))
     }
 }
 

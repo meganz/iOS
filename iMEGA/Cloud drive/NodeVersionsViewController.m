@@ -213,7 +213,7 @@
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
     UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
-    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];;
+    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
     versionsSize.textColor = UIColor.mnz_label;
     

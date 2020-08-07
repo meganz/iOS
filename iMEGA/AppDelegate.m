@@ -89,6 +89,7 @@
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
+@property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
@@ -150,6 +151,7 @@
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
     }
     
+    [ChatUploader.sharedInstance setup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -991,6 +993,29 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationProtocol> _Nonnull)overDiskQuotaInformation {
+    if (self.isOverDiskQuotaPresented || [UIApplication.mnz_visibleViewController isKindOfClass:OverDiskQuotaViewController.class]) {
+        return;
+    }
+
+    OverDiskQuotaViewController *overDiskQuotaViewController = OverDiskQuotaViewController.new;
+    [overDiskQuotaViewController setupWith:overDiskQuotaInformation];
+
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(OverDiskQuotaViewController) *weakOverDiskQuotaViewController = overDiskQuotaViewController;
+    overDiskQuotaViewController.dismissAction = ^{
+        [weakOverDiskQuotaViewController dismissViewControllerAnimated:YES completion:^{
+            weakSelf.overDiskQuotaPresented = NO;
+        }];
+    };
+
+    UINavigationController *navigationController = [UINavigationController.alloc initWithRootViewController:overDiskQuotaViewController];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:^{
+        weakSelf.overDiskQuotaPresented = YES;
+    }];
+}
+
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -1395,6 +1420,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
+            } else if (event.number == StorageStatePaywall) {
+                __weak typeof(self) weakSelf = self;
+                NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                        if (infor != nil) {
+                            [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                        }
+                    }];
+                [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
@@ -1451,7 +1485,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ldd", (long)request.type, (long)error.type)
+    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ld", (long)request.type, (long)error.type)
     
     if ([error type]) {
         switch ([error type]) {
@@ -1540,7 +1574,18 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEBusinessPastDue:
                 [self presentAccountExpiredAlertIfNeeded];
                 break;
-                
+            case MEGAErrorTypeApiEPaywall: {
+                __weak typeof(self) weakSelf = self;
+                NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
+                    [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                        if (infor != nil) {
+                            [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                        }
+                    }];
+                [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
+                break;
+            }
             default:
                 break;
         }
@@ -1627,6 +1672,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeAccountDetails:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
+            [OverDiskQuotaService.sharedService updateUserStorageUsed:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed];
             break;
             
         case MEGARequestTypeGetAttrUser: {
@@ -1853,7 +1899,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
         
-        [transfer mnz_parseAppData];
+        [transfer mnz_parseSavePhotosAndSetCoordinatesAppData];
         
         if ([transfer.appData containsString:@">localIdentifier"]) {
             NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
