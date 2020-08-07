@@ -1766,6 +1766,8 @@
 "List view"="List view";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Thumbnail view";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Poor connection.";
 /* There are no notifications to display. */

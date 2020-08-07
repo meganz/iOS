@@ -7,6 +7,7 @@ final class NodeActionBuilder {
     private var isFile: Bool = false
     private var isRestorable: Bool = false
     private var isPdf: Bool = false
+    private var isPageView: Bool = true
     private var isIncomingShareChildView: Bool = false
     private var isExported: Bool = false
     private var isOutShare: Bool = false
@@ -39,6 +40,11 @@ final class NodeActionBuilder {
     
     func setIsPdf(_ isPdf: Bool) -> NodeActionBuilder {
         self.isPdf = isPdf
+        return self
+    }
+    
+    func setIsPageView(_ isPageView: Bool) -> NodeActionBuilder {
+        self.isPageView = isPageView
         return self
     }
     
@@ -97,7 +103,11 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.shareAction())
             if isPdf {
                 nodeActions.append(NodeAction.searchAction())
-                nodeActions.append(NodeAction.thumbnailPdfAction())
+                if isPageView {
+                    nodeActions.append(NodeAction.pdfThumbnailViewAction())
+                } else {
+                    nodeActions.append(NodeAction.pdfPageViewAction())
+                }
             }
         } else if displayMode == .chatSharedFiles {
             nodeActions.append(NodeAction.forwardAction())
