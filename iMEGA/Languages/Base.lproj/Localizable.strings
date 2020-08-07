@@ -315,13 +315,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Save Image";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Get link";
+"getLink"="Get Link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Get links";
+"getLinks"="Get Links";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Manage link";
+"manageLink"="Manage Link";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Manage links";
+"manageLinks"="Manage Links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Tap file to rename";
 /* */
-"sendToContact"="Send to contact";
+"sendToContact"="Send to Contact";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="My chats";
 /* Toast text upon sending a single file to chat */
@@ -381,9 +381,9 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d files sent successfully";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Remove link";
+"removeLink"="Remove Link";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Remove links";
+"removeLinks"="Remove Links";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link removed";
 /* Message shown when the links to files and/or folders have been removed */
@@ -549,7 +549,7 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Shared with";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Add from contacts";
+"addFromContacts"="Add from Contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Add contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
@@ -585,9 +585,9 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacts";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Share folder";
+"shareFolder"="Share Folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Share folders";
+"shareFolders"="Share Folders";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Select";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1008,7 +1008,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Incoming Shares";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Upgrade account";
+"upgradeAccount"="Upgrade Account";
 /*  */
 "chooseYourAccountType"="Choose your account type";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1765,9 +1765,9 @@
 /* Label shown while leaving a public chat */
 "Leaving..."="Leaving...";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="List view";
+"List View"="List View";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Thumbnail view";
+"Thumbnail View"="Thumbnail View";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
@@ -1913,9 +1913,9 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Enabled";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New chat link";
+"New Chat Link"="New Chat Link";
 /* Text button for init a group chat */
-"New group chat"="New group chat";
+"New Group Chat"="New Group Chat";
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Multiple Images title shown in recents section of webclient */
@@ -2067,7 +2067,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat notifications";
+"Chat Notifications"="Chat Notifications";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Do Not Disturb";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */

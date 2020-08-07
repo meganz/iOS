@@ -1755,9 +1755,9 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Nu ți se permite să activezi funcția video deoarece acest apel a atins numărul maxim de participanți care folosesc funcția video.";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="Vizualizare tip listă";
+"List View"="Vizualizare tip listă";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Vizualizare tip miniaturi";
+"Thumbnail View"="Vizualizare tip miniaturi";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
 /* There are no notifications to display. */
@@ -1903,7 +1903,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="Link de chat nou";
 /* Text button for init a group chat */
-"New group chat"="Chat de group nou";
+"New Group Chat"="Chat de group nou";
 /* Title for the recents section. */
 "Recents"="Recente";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1929,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Link de chat indisponibil";
+"Chat Link Unavailable"="Link de chat indisponibil";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Acest link de chat nu mai este disponibil";
 /* Text explaining users how the chat links work. */
