@@ -27,7 +27,7 @@ import UIKit
     }
     
     @objc func turnOnDND(chatId: Int64, sender: UIView) {
-        let alertController = DNDTurnOnOption.actionSheetViewController(delegate: self, identifier: chatId)
+        let alertController = DNDTurnOnOption.actionSheetViewController(delegate: self, isGlobalSetting: false, identifier: chatId)
         show(alertController: alertController, sender: sender)
     }
     
@@ -61,11 +61,14 @@ extension ChatNotificationControl {
     
     private func turnOnDND(chatId: Int64, option: DNDTurnOnOption) {
         updatePushNotificationSettings {
-            if option == .forever {
-                self.pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
+            if let timeStamp = dndTimeInterval(dndTurnOnOption: option) {
+                if option == .forever {
+                    self.pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
+                }  else {
+                    self.pushNotificationSettings?.setChatDndForChatId(chatId, untilTimestamp: timeStamp)
+                }
             } else {
-                self.pushNotificationSettings?.setChatDndForChatId(chatId,
-                                                                   untilTimestamp: dndTimeInterval(dndTurnOnOption: option))
+                MEGALogDebug("[ChatNotificationControl] timestamp is nil")
             }
         }
     }

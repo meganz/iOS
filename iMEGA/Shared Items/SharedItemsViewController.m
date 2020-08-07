@@ -187,6 +187,8 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     [self updateSelector];

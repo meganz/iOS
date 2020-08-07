@@ -184,7 +184,7 @@
                 
             case UIUserInterfaceStyleDark: {
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                    return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.6];;
+                    return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.6];
                 } else {
                     return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.3];
                 }

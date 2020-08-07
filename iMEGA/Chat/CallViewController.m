@@ -1,17 +1,18 @@
 
 #import "CallViewController.h"
-#import "MEGARemoteImageView.h"
-#import "MEGALocalImageView.h"
-#import "AVAudioSession+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-#import "UIApplication+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "LTHPasscodeViewController.h"
+
+#import "MEGALocalImageView.h"
+#import "MEGARemoteImageView.h"
+#import "AVAudioSession+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
@@ -115,7 +116,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
-    self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
+    self.nameLabel.text = self.chatRoom.title;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -415,6 +416,7 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     [self.megaCallManager endCallWithCallId:self.callId chatId:self.chatRoom.chatId];
+    [MEGASdkManager.sharedMEGAChatSdk hangChatCall:self.chatRoom.chatId];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

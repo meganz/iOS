@@ -78,10 +78,6 @@
 
 #pragma mark - Avatars
 
-+ (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
-    return [self mnz_imageForUserHandle:userHandle name:@"?" size:size delegate:delegate];
-}
-
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle name:(NSString *)name size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
     UIImage *image = nil;
     
