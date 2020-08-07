@@ -124,7 +124,7 @@ extension NodeAction {
     }
     
     class func pdfPageViewAction() -> NodeAction {
-        return NodeAction(title: AMLocalizedString("Page view", "Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF."), detail: nil, image: UIImage(named: "pageView"), type: .pdfPageView)
+        return NodeAction(title: AMLocalizedString("Page View", "Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF."), detail: nil, image: UIImage(named: "pageView"), type: .pdfPageView)
     }
     
     class func pdfThumbnailViewAction() -> NodeAction {
