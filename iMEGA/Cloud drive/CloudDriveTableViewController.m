@@ -252,26 +252,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
-    
-    if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
-        return [UISwipeActionsConfiguration configurationWithActions:@[]];
-    }
-    
-    UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        if ([node mnz_downloadNodeOverwriting:NO]) {
-            [self reloadRowAtIndexPath:[self.cloudDrive.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
-        }
-        
-        [self setTableViewEditing:NO animated:YES];
-    }];
-    downloadAction.image = [UIImage imageNamed:@"infoDownload"];
-    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    
-    return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
-}
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
@@ -319,6 +299,23 @@
         }
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         
+        if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
+            
+            UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                if ([node mnz_downloadNodeOverwriting:NO]) {
+                    [self reloadRowAtIndexPath:[self.cloudDrive.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+                }
+                
+                [self setTableViewEditing:NO animated:YES];
+            }];
+            downloadAction.image = [UIImage imageNamed:@"infoDownload"];
+            downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+            
+            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];
+        } else {
+            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
+        }
+
         return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
     }
     
@@ -330,6 +327,9 @@
 #pragma mark - MGSwipeTableCellDelegate
 
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return NO;
+    }
     return !self.tableView.isEditing;
 }
 
@@ -353,20 +353,7 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
-
-    if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-        if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
-            return nil;
-        } else {
-            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_downloadNodeOverwriting:NO];
-                return YES;
-            }];
-            [downloadButton iconTintColor:[UIColor whiteColor]];
-            
-            return @[downloadButton];
-        }
-    } else if (direction == MGSwipeDirectionRightToLeft) {
+    if (direction == MGSwipeDirectionRightToLeft) {
         if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
             return nil;
         }
@@ -398,8 +385,18 @@
                 return YES;
             }];
             [rubbishBinButton iconTintColor:UIColor.whiteColor];
-            
-            return @[rubbishBinButton, shareButton];
+            if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
+                
+                MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                    [node mnz_downloadNodeOverwriting:NO];
+                    return YES;
+                }];
+                [downloadButton iconTintColor:[UIColor whiteColor]];
+                
+                return @[rubbishBinButton, shareButton, downloadButton];
+            } else {
+                return @[rubbishBinButton, shareButton];
+            }
         }
     }
     
