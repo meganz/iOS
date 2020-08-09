@@ -166,7 +166,6 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         calculators.append(contentsOf: [
             chatAttributedTextMessageSizeCalculator,
             chatViewAttachmentCellCalculator,
-            chatViewCallCollectionCellCalculator,
             chatMediaCollectionViewSizeCalculator,
             chatRichPreviewMediaCollectionViewSizeCalculator,
             chatVoiceClipCollectionViewSizeCalculator,
