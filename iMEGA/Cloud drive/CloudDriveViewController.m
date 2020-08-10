@@ -1067,7 +1067,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }]];
     
     ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:sortByActionSheet animated:YES completion:nil];    
+    [self presentViewController:sortByActionSheet animated:YES completion:nil];
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
