@@ -38,7 +38,7 @@ enum DNDTurnOnOption {
     var timeInterval: TimeInterval? {
         switch self {
         case .thirtyMinutes:
-            return 3600
+            return 1800
         case .oneHour:
             return 3600
         case .sixHours:

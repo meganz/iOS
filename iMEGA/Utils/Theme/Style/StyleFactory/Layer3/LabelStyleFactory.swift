@@ -15,6 +15,8 @@ enum MEGALabelStyle {
 
     // MARK: - Paragraph
 
+    case multiline
+
     case note1
     case note2
 }
@@ -34,6 +36,14 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
         case .headline: return headlineStyler()
         case .note1: return mainNoteStyler()
         case .note2: return subNoteStyler()
+        case .multiline: return multilineStyler()
+        }
+    }
+
+    private func multilineStyler() -> LabelStyler {
+        let paragraphStyleFactory = self.paragraphStyleFactory
+        return { label in
+            paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping).applied(on: label)
         }
     }
 

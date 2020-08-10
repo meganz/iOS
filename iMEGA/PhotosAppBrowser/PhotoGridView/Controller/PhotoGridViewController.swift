@@ -160,7 +160,8 @@ extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
             return
         }
         
-        completionBlock(selectedAssets)
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.completionBlock(selectedAssets)
+        }
     }
 }
