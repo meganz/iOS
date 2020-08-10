@@ -352,6 +352,7 @@
 		5D92DD1524BFE2B200D7D13B /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0E24BFE2B100D7D13B /* Date+Manipulation.swift */; };
 		5D92DD1624BFE2B200D7D13B /* DateFormatter+TemplateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0F24BFE2B100D7D13B /* DateFormatter+TemplateFormatter.swift */; };
 		5D92DD1724BFE2B200D7D13B /* DateFormatter+SystemDateRelativeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD1024BFE2B200D7D13B /* DateFormatter+SystemDateRelativeFormatter.swift */; };
+		5D9D0C5C24E163E600519D4E /* TraitEnviromentAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9D0C5B24E163E600519D4E /* TraitEnviromentAware.swift */; };
 		5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */; };
 		5DA9759924B6CD6C00FBD045 /* UIControl.State+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
@@ -1780,6 +1781,7 @@
 		5D92DD0E24BFE2B100D7D13B /* Date+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Manipulation.swift"; sourceTree = "<group>"; };
 		5D92DD0F24BFE2B100D7D13B /* DateFormatter+TemplateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+TemplateFormatter.swift"; sourceTree = "<group>"; };
 		5D92DD1024BFE2B200D7D13B /* DateFormatter+SystemDateRelativeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+SystemDateRelativeFormatter.swift"; sourceTree = "<group>"; };
+		5D9D0C5B24E163E600519D4E /* TraitEnviromentAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraitEnviromentAware.swift; sourceTree = "<group>"; };
 		5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyleFactory.swift; sourceTree = "<group>"; };
 		5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl.State+Hashable.swift"; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
@@ -4283,6 +4285,7 @@
 				5D8DC6B2248CB1340067A4F9 /* UIColor+Image.swift */,
 				5D8DC6B4248CB1D70067A4F9 /* UIButton+BackgroundColor.swift */,
 				5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */,
+				5D9D0C5B24E163E600519D4E /* TraitEnviromentAware.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -6710,6 +6713,7 @@
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
+				5D9D0C5C24E163E600519D4E /* TraitEnviromentAware.swift in Sources */,
 				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
 				5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
