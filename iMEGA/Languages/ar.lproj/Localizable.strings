@@ -107,7 +107,7 @@
 /*  */
 "pleaseStrengthenYourPassword"="كلمة السر غير صالحة.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="ضعيف جدا";
+"veryWeak"="ضعيفة جداً";
 /*  */
 "weak"="ضعيف";
 /*  */
@@ -909,8 +909,6 @@
 "profile"="الملف الشخصي";
 /* Title of the Achievements section */
 "achievementsTitle"="الإنجازات";
-/* Title of the Used storage section */
-"usedStorage"="المساحة المستخدمة";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="ادع أصدقائك واحصل على ترقيات";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="احصل %1$s من المساحة و %2$s من عمليات النقل لكل دعوة";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="حدد جهات الاتصال من قائمة جهات اتصال هاتفك أو أدخل عناوين بريد إلكتروني متعددة.";
+"Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الهاتف أو أدخل عناوين بريد إلكتروني متعددة";
 /*  */
 "insertYourFriendsEmails"="أدخل بريد صديقك الإليكتروني:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="التجديد في";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="مشاركات واردة";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="من %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="مستخدم من %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="المساحة المتوفرة %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="ترقية الحساب";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]السواقة السحابية ممتلئة تقريباً.[/S] [A]قم بترقية حسابك الآن[/A] الى حساب برو PRO و احصل [S]تصل حتى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]سواقتك السحابية ممتلئة.[/S] [A]قم بترقية حسابك الآن[/A] إلى حساب برو PRO و احصل على [S]يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="التخزين";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="التخزين";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="محدود";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="بيانات جهة الاتصال";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="من الأفضل القيام بذلك في واقع الحياة من خلال اللقاء وجها لوجه. إذا كان لديك قناة أخرى موثوقة بالفعل، مثل OTR اوPGP، يمكنك أيضا استخدام ذلك.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="بياناتك";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="بياناتي";
 /* Button to reset the password */
 "reset"="إعادة تعيين";
 /* Button title */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="لا يوجد حجم متاح كافي";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="مطلوب المصادقة متعددة العوامل";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="الولوج ممنوع لغيرمستخدمي مدير النظام";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="انتهت صلاحية حساب الأعمال";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="تم رفض بطاقة الائتمان";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="فشلت الفوترة";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="تم الرفض بواسطة الحماية من الاحتيال";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="طلبات كثيرة جداً";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="رصيد خاطئ";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="خطأ بروتوكول HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="جار الاتصال";
 /* notification subtitle of incoming calls */
 "Incoming call"="مكالمة واردة";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="اتصال صوتي فائت";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] اتصالات صوتية فائتة";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="اتصال مرئي فائت";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] اتصالات مرئية فائتة";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="اتصال صوتي ومرئي فائت";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="اتصال صوتي فائت [A] واتصالات مرئية فائتة";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] اتصالات صوتية فائتة واتصال مرئي فائت";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] اتصالات صوتية فائتة و [B] اتصالات مرئية فائتة";
 /* Button title to see the available bonus */
 "getBonus"="احصل على علاوة";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1519,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="ننصح بتصدير مفتاح الاسترجاع الخاص بك وحفظه بمكان آمن قبل تسجيل الخروج. يرجى الملاحظة انه من غير الممكن إعادة تعيين كلمة المرور في حال نسيانها.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="عدم الإظهار مرة اخرى";
+"dontShowAgain"="لا تظهر مرة أخرى";
 /* Label for test password button and titles */
 "testPassword"="اختبار كلمة المرور";
 /* Label for recovery key button */
@@ -1657,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="البحث";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="سيسمح بالبحث عن ملفات/مجلدات ميغا MEGA في بحث Spotlight الخاص بجهازك";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="تعرف على الموجودين بالفعل على ميغا MEGA";
+"See who's already on MEGA"="اكتشف جهات الاتصال الخاصة بك على ميغا MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] جهات اتصال وجدت على ميغا MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="مشاركة مع";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="تواصل مع مشرف حساب الأعمال الخاص بك لحل هذه المشكلة وتفعيل حسابك.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="حتى أقوم بتشغيلها مرة أخرى";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Until this morning";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Until tomorrow morning";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Until I turn it back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 دقيقة";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24 ساعة";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="كتم صوت الإشعارات لـ";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="صامت إلى الأبد";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="الإشعارات ستكون صامتة حتى %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="تنبيهات المحادثة";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="عدم الإزعاج";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notifications muted";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="إعادة اتصال ...";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="إرسال (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="تحميل (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="ألبومات";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="إلغاء التحديد";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2234,3 +2220,33 @@
 "File link unavailable"="رابط الملف غير متوفر";
 /* Header of block with all shared files in chat. */
 "Shared Files"="الملفات المشاركة";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="المساحة ممتلئة";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>لقد اتصلنا بك عبر البريد الإلكتروني <b>%@</b> بتاريخ <b>%@</b> ولكن لا يزال لديك %@ ملف يستهلكون <b>%@</b> في حسابك على ميغا MEGA الذي يتطلب منك الترقية إلى <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>لقد اتصلنا بك عبر البريد الإلكتروني <b>%@</b> بتاريخ <b>%@</b> ولكن لا يزال لديك %@ ملف يستهلكون <b>%@</b> في حساب ميغا MEGA، مما يتطلب منك الاتصال بالدعم للحصول على باقة مخصصة.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d يوم";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>لديك  <warn>%@</warn> متبقية للترقية.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="بعد ذلك، تخضع بياناتك للحذف.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="تعديل رقم الهاتف";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="أزالة رقم الهاتف";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="سيؤدي هذا إلى إزالة رقم هاتفك المرتبط من حسابك. إذا اخترت لاحقاً إضافة رقم هاتف، فستتم مطالبتك بالتحقق منه.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="ستؤدي هذه العملية إلى إزالة رقم هاتفك الحالي وبدء عملية ربط رقم هاتف جديد بحسابك.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="تمت إزالة رقم هاتفك بنجاح.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="أخفقت إزالة رقم هاتفك، يرجى إعادة المحاولة لاحقاً.";

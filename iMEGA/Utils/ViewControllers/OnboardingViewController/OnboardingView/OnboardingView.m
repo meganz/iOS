@@ -38,6 +38,16 @@
     [self.customView prepareForInterfaceBuilder];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)customInit {
@@ -45,6 +55,7 @@
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - Setters

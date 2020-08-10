@@ -1,3 +1,4 @@
+//
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
@@ -5,15 +6,18 @@
 
 #import "LocalizationSystem.h"
 #import "SVProgressHUD.h"
+#import <PureLayout/PureLayout.h>
 
 #import "NSDate+DateTools.h"
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "UIDevice+MNZCategory.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAStore.h"
 

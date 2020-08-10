@@ -909,8 +909,6 @@
 "profile"="โปรไฟล์";
 /* Title of the Achievements section */
 "achievementsTitle"="ความสำเร็จ";
-/* Title of the Used storage section */
-"usedStorage"="พื้นที่เก็บข้อมูลที่ใช้";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="เชิญเพื่อนและรับโบนัส";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="รับพื้นที่เก็บข้อมูลขนาด %1$s และการถ่ายโอน %2$s จากการชวนเพื่อนในแต่ละครั้ง";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="เลือกผู้ติดต่อจากรายชื่อในโทรศัพท์ของคุณหรือกรอกที่อยู่อีเมลพร้อมกัน";
+"Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในโทรศัพท์หรือกรอกอีเมลได้หลายที่อยู่";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="ต่ออายุเมื่อ";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="แชร์ขาเข้า";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="จาก %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="ใช้ไปแล้ว %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="ใช้ได้อีก %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="อัปเกรดบัญชี";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ที่เก็บข้อมูล";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="ที่เก็บข้อมูล";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="ถูกจำกัด";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="ข้อมูลรับรองการติดต่อ";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="สิ่งนี้ทำได้ดีที่สุดในชีวิตจริงได้โดยการประชุมแบบเห็นหน้า หากคุณมีช่องทางที่ได้รับการตรวจสอบแล้ว เช่น OTR ที่ตรวจสอบแล้วหรือ PGP คุณอาจใช้ช่องดังกล่าวได้";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="ข้อมูลรับรองของคุณ";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="ข้อมูลประจำตัวของฉัน";
 /* Button to reset the password */
 "reset"="รีเซ็ต";
 /* Button title */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="โควต้าไม่เพียงพอ";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="ต้องการการรับรองความถูกต้องด้วยหลายปัจจัย";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="ปฏิเสธการเข้าถึงสำหรับผู้ใช้ที่ไม่ใช่ผู้ดูแลระบบ";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="บัญชีธุรกิจหมดอายุแล้ว";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="บัตรเครดิตถูกปฏิเสธ";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="การเรียกเก็บเงินล้มเหลว";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="ถูกปฏิเสธโดยการป้องกันการฉ้อโกง";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="มีคำขอมากเกินไป";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="ยอดคงเหลือผิดพลาด";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="ข้อผิดพลาด HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="กำลังโทร...";
 /* notification subtitle of incoming calls */
 "Incoming call"="สายเรียกเข้า";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="สายที่ไม่ได้รับ";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] สายที่ไม่ได้รับ";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="การสนทนาทางวิดีโอที่ไม่ได้รับ";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] การสนทนาทางวิดีโอที่ไม่ได้รับ";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="การโทรด้วยเสียงที่ไม่ได้รับและการสนทนาทางวิดีโอที่ไม่ได้รับ";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="สายโทรด้วยเสียงที่ไม่ได้รับและ [A] สายสนทนาทางวิดีโอที่ไม่ได้รับ";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] สายโทรด้วยเสียงที่ไม่ได้รับและสายสนทนาทางวิดีโอที่ไม่ได้รับ";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] สายที่ไม่ได้รับและอีก [B] สายวิดีโอที่ไม่ได้รับ";
 /* Button title to see the available bonus */
 "getBonus"="รับโบนัส";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1657,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="ช่วยให้ค้นหาไฟล์/โฟลเดอร์ใน MEGA ผ่าน Spotlight Search อุปกรณ์ของคุณ";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA จะไม่ใช้ข้อมูลนี้เพื่อวัตถุประสงค์อื่นใดและจะไม่โต้ตอบกับผู้ติดต่อของคุณโดยไม่ได้รับความยินยอมจากคุณ";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="ดูว่าใครอยู่ใน MEGA แล้ว";
+"See who's already on MEGA"="ค้นหาผู้ติดต่อของคุณใน MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="แชร์กับ";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="จนกว่าฉันจะเปิดอีกครั้ง";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="จนกว่าจะถึงเช้านี้";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="จนกว่าจะถึงพรุ่งนี้เช้า";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="จนกว่าฉันจะเปิดอีกครั้ง";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 นาที";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24 ชั่วโมง";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="ปิดเสียงแจ้งเตือนแชทเป็นเวลา";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="ปิดเสียงตลอดไป";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึงพรุ่งนี้ เวลา %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึง %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="การแจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="ห้ามรบกวน";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="การแจ้งเตือนถูกปิดเสียง";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="กำลังเชื่อมต่อใหม่...";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="ส่ง (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="อัปโหลด (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="อัลบัม";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="ไม่เลือก";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2227,10 +2213,40 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="แชทสร้างเมื่อ %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="ไม่มีไฟล์ที่แชร์";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="ลิงก์โฟลเดอร์ยังไม่พร้อมใช้งาน";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="ลิงก์ไฟล์ไม่พร้อมใช้งาน";
 /* Header of block with all shared files in chat. */
 "Shared Files"="ไฟล์ที่ใช้ร่วมกัน";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="พื้นที่เก็บข้อมูลเต็มแล้ว";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="ข้อมูลของคุณอยู่ในความเสี่ยง!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>เราได้ติดต่อคุณทางอีเมลถึง <b>%@</b> เมื่อ <b>%@</b> แต่คุณยังมีไฟล์ %@ รายการสูงถึง <b>%@</b> ในบัญชี MEGA ของคุณ ซึ่งคุณต้องอัปเกรดเป็น <b>%@</b></paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>เราได้ติดต่อคุณทางอีเมลถึง <b>%@</b> เมื่อ <b>%@</b> แต่คุณยังมีไฟล์ %@ รายการสูงถึง <b>%@</b> ในบัญชี MEGA ของคุณ คุณจำเป็นต้องติดต่อฝ่ายสนับสนุนเพื่อกำหนดแผนบัญชีของคุณเอง</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d วัน";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>คุณต้องดำเนินการทันทีเพื่อปกป้องข้อมูลของคุณ</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>คุณมีเวลาเหลืออีก <warn>%@</warn> ในการอัปเกรด</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="หลังจากนั้นข้อมูลของคุณอาจถูกลบ";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="แก้ไขหมายเลขโทรศัพท์";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="ลบหมายเลขโทรศัพท์";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="วิธีนี้จะเป็นการลบหมายเลขโทรศัพท์ที่เกี่ยวข้องของคุณออกจากบัญชีของคุณ หากภายหลังคุณเลือกที่จะเพิ่มหมายเลขโทรศัพท์ คุณจะต้องยืนยันหมายเลขโทรศัพท์อีกครั้ง";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="การดําเนินการนี้จะลบหมายเลขโทรศัพท์ปัจจุบันของคุณและเริ่มกระบวนการเชื่อมโยงหมายเลขโทรศัพท์ใหม่กับบัญชีของคุณอีกครั้ง";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="หมายเลขโทรศัพท์ของคุณถูกลบเรียบร้อยแล้ว";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="ไม่สามารถลบหมายเลขโทรศัพท์ของคุณได้";

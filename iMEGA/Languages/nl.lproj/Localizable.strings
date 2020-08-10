@@ -107,7 +107,7 @@
 /*  */
 "pleaseStrengthenYourPassword"="Kies a.u.b. een sterker wachtwoord.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Erg Zwak";
+"veryWeak"="Heel Zwak";
 /*  */
 "weak"="Zwak";
 /*  */
@@ -909,8 +909,6 @@
 "profile"="Profiel";
 /* Title of the Achievements section */
 "achievementsTitle"="Beloningen";
-/* Title of the Used storage section */
-"usedStorage"="Gebruikte opslag";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Nodig vrienden uit en krijg bonussen";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Krijg %1$s aan opslag en %2$s aan overdrachten voor elke verwijzing";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selecteer contacten vanuit de contactlijst op uw telefoon of voer meerdere e-mailadressen in.";
+"Select from phone contacts or enter multiple email addresses"="Maak een keuze uit telefooncontacten of voer meerdere e-mailadressen in";
 /*  */
 "insertYourFriendsEmails"="Plaats e-mail(s) van uw vriend:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Vernieuwd op";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Binnenkomende Mappen";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="van %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="gebruikt van %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="beschikbaar van %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade account";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Opslag";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Opslag";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Beperkt";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Contact identiteit";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Dit kan het beste gebeuren door elkaar in het echte leven, face to face te ontmoeten. Als u een andere al geverifieerde kanaal heeft, zoals geverifieerd OTR of PGP, dan kunt u deze ook gebruiken.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Uw Identiteit";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mijn gegevens";
 /* Button to reset the password */
 "reset"="Reset";
 /* Button title */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Niet genoeg tegoed";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="Multi-factor authenticatie vereist";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="Toegang geweigerd voor niet-admin-gebruikers";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="Zakelijk account is verlopen";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="Credit kaart geweigerd";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Facturering mislukt";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="Afgewezen door fraudebescherming";
 /* SDK error returned when there are too many requests */
 "Too many requests"="Te veel verzoeken";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Saldo-fout";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP fout";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Onbekende fout";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="Bellen...";
 /* notification subtitle of incoming calls */
 "Incoming call"="Inkomende oproep";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Gemiste audio oproep";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] gemiste audio oproepen";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Gemiste video oproep";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] gemiste video oproepen";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Gemiste audio oproep en gemiste video oproep";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Gemiste audio oproep en [A] gemiste video oproep";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] gemiste audio oproepen en gemiste video oproepen";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] gemiste audio oproepen en [B] gemiste video oproepen";
 /* Button title to see the available bonus */
 "getBonus"="Krijg Bonus";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1519,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Voordat u uitlogt raden we u aan uw Herstelsleutel te exporteren naar een veilige plek. Merk op dat u uw wachtwoord niet kunt resetten als u het vergeet.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Laat me niet meer zien";
+"dontShowAgain"="Laat niet opnieuw zien";
 /* Label for test password button and titles */
 "testPassword"="Wachtwoord Testen";
 /* Label for recovery key button */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA zal deze gegevens niet voor andere doeleinden gebruiken en zal nooit zonder uw toestemming met uw contacten communiceren.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Zie wie al bij MEGA is";
+"See who's already on MEGA"="Ontdek uw contacten op MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacten gevonden op MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="Deel met";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Neem contact op met uw zakelijke accountbeheerder om het probleem op te lossen en uw account te activeren,.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Totdat ik het weer aan zet";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Tot deze morgen";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Tot morgenochtend";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Totdat ik het weer aanzet";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minuten";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24 uren";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Demp gesprek notificaties voor";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Voor altijd gedempt";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Meldingen worden tot morgen uitgezet, %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Meldingen worden tot zwijgen gebracht tot %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat notificaties";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Niet Storen";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Notificaties gedempt";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Opnieuw verbinding maken...";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="Versturen (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Uploaden (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deselecteren";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2234,3 +2220,33 @@
 "File link unavailable"="Bestandskoppeling onbeschikbaar";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Gedeelde Bestanden";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="Opslagruimte Vol";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Uw Gegevens lopen Risico!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph> We hebben per e-mail contact met u opgenomen naar <b>%@</b> op <b>%@</b> maar u heeft nog steeds %@ bestanden die <b>%@</b> in uw MEGA opnemen account, waarvoor u moet upgraden naar <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>We hebben per e-mail contact met u opgenomen <b>%@</b> op <b>%@</b> maar u heeft nog steeds %@ bestanden opgenomen <b>%@</b> in uw MEGA account, waardoor u contact moet opnemen met de ondersteuning voor een aangepast abonnement.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d dagen";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>U moet gelijk reageren om uw gegevens te redden.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body> U heefy nog <warn>%@</warn> om te upgraden.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="Daarna worden uw gegevens verwijderd.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="Wijzig Telefoonnummer";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="Verwijder Telefoonnummer";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Hiermee wordt uw gekoppelde telefoonnummer uit uw account verwijderd. Als u er later voor kiest om een ​​telefoonnummer toe te voegen, moet u dit verifiëren.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Met deze bewerking wordt uw huidige telefoonnummer verwijderd en wordt het proces gestart om een ​​nieuw telefoonnummer aan uw account te koppelen.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="Uw telefoonnummer is succesvol verwijderd.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="Kan uw telefoonnummer niet verwijderen. Probeer het later opnieuw.";

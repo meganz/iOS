@@ -179,7 +179,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Le dossier que vous tentez de télécharger est plus grand que la mémoire disponible.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Le dossier '%@' ne peut pas être créé";
+"folderCreationError"="Le dossier « %@ » ne peut pas être créé";
 /* */
 "folderLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
 /* */
@@ -229,7 +229,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="La demande a été supprimée";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Il n’y a aucune requête en attente";
+"noRequestPending"="Il n’y a aucune demande en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -880,7 +880,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tous";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
-"Completed"="Terminé";
+"Completed"="Terminés";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Téléchargements";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
-/* Title of the Used storage section */
-"usedStorage"="Espace de stockage utilisé";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invitez des amis et obtenez des primes";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtenez %1$s d’espace de stockage et %2$s de transferts pour chaque parrainage";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Choisissez des contacts de la liste de contacts de votre téléphone ou saisissez plusieurs adresses courriel.";
+"Select from phone contacts or enter multiple email addresses"="Sélectionnez des contacts sur votre appareil ou saisissez plusieurs adresses courriel";
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Se renouvelle le";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partages entrants";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="sur %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="utilisés sur %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponibles sur %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Espace de stockage";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Espace de stockage";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limité";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1162,7 +1154,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"=" Confirmer les coordonnées";
+"verifyCredentials"=" Confirmer le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Confirmer";
 /* Button title */
@@ -1176,11 +1168,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Dossiers partagés";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Coordonnées du contact";
+"contactCredentials"="Numéro d’identification du contact";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="La meilleure façon de le faire est de se rencontrer physiquement. Si vous avez un autre moyen de communication vérifiée, tel qu'OTR ou PGP, vous pouvez aussi l'utiliser.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Vos coordonnées";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mon numéro d’identification";
 /* Button to reset the password */
 "reset"="Réinitialiser";
 /* Button title */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Quota insuffisant";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="L’authentification à deux facteurs est exigée.";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="L’accès est refusé pour les utilisateurs qui ne sont pas administrateurs";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="Le compte d’entreprise est arrivé à expiration";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="La carte de crédit a été refusée";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Échec de facturation";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="La protection contre les fraudes a refusé cette opération";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Il y a trop de requêtes";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Erreur de solde";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="Erreur HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="Appel…";
 /* notification subtitle of incoming calls */
 "Incoming call"="Appel entrant";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Un appel vocal a été manqué";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] appels vocaux ont été manqués";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Appel vidéo manqué";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] appels vidéo manqués";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Un appel vocal et un appel vidéo ont été manqués";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Un appel vocal et [A] appels vidéo ont été manqués";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] appels vocaux et un appel vidéo ont été manqués";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] appels vocaux et [B] appels vidéo ont été manqués";
 /* Button title to see the available bonus */
 "getBonus"="Obtenir des primes";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1555,7 +1531,7 @@
 /* Title to preview document */
 "previewContent"="Aperçu du contenu";
 /* Title of the notification for a missed call */
-"missedCall"="Appel manqué";
+"missedCall"="Un appel a été manqué";
 /* When an outgoing call of user A with user B had been rejected by user B */
 "callWasRejected"="L’appel a été refusé";
 /* When an active call of user A with user B had cancelled */
@@ -1657,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Recherche";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permettra de chercher des fichiers ou des dossiers MEGA dans la recherche Spotlight de votre appareil.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,7 +1657,7 @@
 /* Message warning the user about the risk of not setting up permissions */
 "The MEGA app may not work as expected without the required permissions. Are you sure?"="L’appli MEGA pourrait ne pas fonctionner comme prévu sans les autorisations nécessaires. Êtes-vous certain ?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
-"%1 of %2"="%1 sur %2";
+"%1 of %2"="%1 de %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Autoriser l’accès à Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
@@ -1853,7 +1829,7 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Votre abonnement PRO arrivera à expiration dans %1 jours.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Votre abonnement PRO a expiré il y a 1 jour";
+"Your PRO membership plan expired 1 day ago"="Votre abonnement PRO a expiré il y a un jour";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Votre abonnement PRO a expiré il y a %1 jours";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA n’utilisera pas ces données et n’interagira jamais avec vos contacts sans votre consentement.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Voyez qui se trouve déjà sur MEGA";
+"See who's already on MEGA"="Découvrir vos contacts sur MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacts ont été trouvés sur MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="Partager avec";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte d’entreprise pour résoudre la situation et activer votre compte.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Jusqu’à ce que je les réactive";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="Jusqu’à ce matin";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="Jusqu’à demain matin";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24 heures";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Plus aucune notification";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="Les notifications seront en sourdine jusqu’à demain, %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Les notifications seront en sourdine jusqu’à %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Ne pas déranger";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="Les notifications sont en sourdine";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnexion…";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="Envoyer (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Téléverser (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Dessélectionner";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2201,7 +2187,7 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Agencement";
+"Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
@@ -2215,7 +2201,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurer l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
@@ -2229,8 +2215,38 @@
 /* Title shown when there are no shared files */
 "No Shared Files"="Il n’y a aucun fichier partagé";
 /* Error message shown when opening a folder link which doesn’t exist */
-"Folder link unavailable"="Lien de dossier non disponible";
+"Folder link unavailable"="Le lien de dossier n’est pas disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Lien de fichier non disponible";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Fichiers partagés";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="L’espace de stockage est plein";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Vos données sont en danger !";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Nous vous avons contacté par courriel à l’adresse <b>%@</b> le <b>%@</b>, mais vous avez encore %@ fichiers qui occupent <b>%@</b> dans votre compte MEGA, ce qui vous demande de surclasser votre compte en <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Nous vous avons contacté par courriel à l’adresse <b>%@</b> le <b>%@</b>, mais vous avez encore %@ fichiers qui occupent <b>%@</b> dans votre compte MEGA, ce qui vous demande de contacter notre équipe d’assistance afin d’établir un abonnement personnalisé.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d jours";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Vous devez agir immédiatement afin de sauver vos données.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Il vous reste <warn>%@</warn> pour surclasser votre compte.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="Ce délai révolu, vos données pourraient être supprimées.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="Modifier le numéro de téléphone";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="Supprimer le numéro de téléphone";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Le numéro de téléphone associé sera supprimé de votre compte. Si vous choisissez ultérieurement d’ajouter un numéro de téléphone, il vous sera demandé de le confirmer.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Cette opération supprimera votre numéro de téléphone actuel et lancera le processus d’association d’un nouveau numéro de téléphone à votre compte.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="Votre numéro de téléphone a été supprimé avec succès.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="Échec de suppression de votre numéro de téléphone, veuillez ressayer ultérieurement.";

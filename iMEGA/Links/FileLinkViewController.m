@@ -60,8 +60,6 @@
     
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
-    self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
-    self.navigationController.toolbar.backgroundColor = UIColor.whiteColor;
 
     [self.openButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
     [self.importButton setTitle:AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action") forState:UIControlStateNormal];
@@ -75,6 +73,8 @@
     }
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -95,7 +95,31 @@
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    
+    self.mainView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    
+    self.sizeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    [self.importButton mnz_setupPrimary:self.traitCollection];
+    [self.openButton mnz_setupBasic:self.traitCollection];
+}
 
 - (void)processRequestResult {
     [SVProgressHUD dismiss];
@@ -286,6 +310,10 @@
     [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
+- (void)download {
+    [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
@@ -300,12 +328,12 @@
     [self import];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
-    [self shareFileLink];
+- (IBAction)openAction:(UIButton *)sender {
+    [self open];
 }
 
-- (IBAction)openAction:(UIBarButtonItem *)sender {
-    [self open];
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    [self shareFileLink];
 }
 
 - (IBAction)sendToContactAction:(UIBarButtonItem *)sender {
@@ -321,6 +349,10 @@
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
+        case MegaNodeActionTypeDownload:
+            [self download];
+            break;
+            
         case MegaNodeActionTypeImport:
             [self import];
             break;

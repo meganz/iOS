@@ -12,6 +12,11 @@ extern NSString * const MEGAFirstRunValue;
 
 extern NSString * const MEGAGroupIdentifier;
 
+extern NSString * const MEGASortingPreference;
+extern NSString * const MEGASortingPreferenceType;
+
+extern NSString * const MEGAViewModePreference;
+
 extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
 
 extern uint64_t const MEGAInvalidHandle;
@@ -117,3 +122,7 @@ extern const NSUInteger MEGADropFirstCharactersFromSession;
 #pragma mark - File size
 
 extern const long long MEGAMaxFileLinkAutoOpenSize;
+
+#pragma mark - Add Your Phone Number
+
+extern const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount;

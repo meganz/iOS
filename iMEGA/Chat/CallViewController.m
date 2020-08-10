@@ -146,7 +146,10 @@
         self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
         [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
     } else if (self.videoCall) {
-        self.enableDisableVideoButton.selected = self.videoCall;
+        if (self.callType == CallTypeOutgoing) {
+            self.enableDisableVideoButton.selected = YES;
+            self.localVideoImageView.hidden = NO;
+        }
         
         if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
             MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
@@ -154,7 +157,6 @@
         }
         
         self.remoteAvatarImageView.hidden = YES;
-        self.localVideoImageView.hidden = NO;
         
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
     } else {
@@ -208,6 +210,16 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Status bar
 
 - (BOOL)prefersStatusBarHidden {
@@ -233,6 +245,10 @@
 
 #pragma mark - Private
 
+- (void)updateAppearance {
+    self.nameLabel.textColor = self.statusCallLabel.textColor = UIColor.whiteColor;
+}
+
 - (void)answerChatCall {
     if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {
         MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
@@ -240,7 +256,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
         self.statusCallLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
@@ -399,6 +415,7 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     [self.megaCallManager endCallWithCallId:self.callId chatId:self.chatRoom.chatId];
+    [MEGASdkManager.sharedMEGAChatSdk hangChatCall:self.chatRoom.chatId];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

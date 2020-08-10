@@ -909,8 +909,6 @@
 "profile"="檔案";
 /* Title of the Achievements section */
 "achievementsTitle"="成果";
-/* Title of the Used storage section */
-"usedStorage"="已使用空間";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="邀請朋友並獲得獎勵";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每筆推薦成功，皆可獲得%1$s的儲存空間和%2$s的傳輸配額";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="請從手機通訊錄中選擇聯絡人，或輸入多個電子郵件地址。";
+"Select from phone contacts or enter multiple email addresses"="選擇手機連絡人或者輸入多個email";
 /*  */
 "insertYourFriendsEmails"="請填入您好友的電子郵件：";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="更新";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的分享";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 中的";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="%@ 中已用";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為PRO帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為PRO帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="儲存空間";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="儲存空間";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="有限制的";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="聯絡人憑證";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="這最好由實際面對面來完成。如您有其他已驗證管道，如已驗證的OTR或PGP，也可以使採用。";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="您的憑證";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="我的憑證";
 /* Button to reset the password */
 "reset"="重設";
 /* Button title */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="配額不足";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="需要多重驗證";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="非管理者用戶存取拒絕";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="商業帳戶已過期";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="信用卡被拒絕";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="付款失敗";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="詐欺保護拒絕";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="太多請求";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="餘額錯誤";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP錯誤";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的錯誤";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="撥號中...";
 /* notification subtitle of incoming calls */
 "Incoming call"="來電";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="一通未接語音來電";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A]通未接語音來電";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="一通未接視訊來電";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A]通未接視訊來電";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="一通未接語音來電 和 一通未接視訊來電";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="一通未接語音來電 和 [A]通未接視訊來電";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A]通未接語音來電 和 一通未接視訊來電";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]通未接語音來電和[B]通未接視訊來電";
 /* Button title to see the available bonus */
 "getBonus"="獲得獎勵";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1519,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="在登出之前，我們建議您將還原金鑰匯出到安全的地方。請注意，如果忘記密碼，您將無法重設密碼。";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="不再顯示";
+"dontShowAgain"="請別再顯示";
 /* Label for test password button and titles */
 "testPassword"="測試密碼";
 /* Label for recovery key button */
@@ -1615,7 +1591,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="開始設定";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="請輸入您的驗證程式所生成的6位碼。";
+"pleaseEnterTheSixDigitCode"="請輸入您身份驗證程式所生成的6位數字代碼。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="為什麼需要雙重驗證？";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1625,11 +1601,11 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用雙重驗證程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要驗證用的應用程式才能在MEGA上啟用雙重驗證。您在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要身份驗證應用程式才能在MEGA上啟用雙重驗證。您可以在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="已啟用雙重驗證";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="下次登入您的帳戶時，系統會要求您輸入驗證程式提供的6位碼。";
+"twoFactorAuthenticationEnabledDescription"="下次登入您的帳戶時，系統會要求您輸入身份驗證程式提供的6位數字代碼。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="請將您的還原金鑰儲存在安全的位置";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1637,7 +1613,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="已停用雙重驗證";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="請掃描或複製種子到您的身份驗證App中。請務必將此種子備份於安全之處，以防設備遺失所帶來的風險。";
+"scanOrCopyTheSeed"="請掃描或複製種子到您的身份驗證程式中。請務必將此種子備份於安全之處，以防設備遺失所帶來的風險。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="您的驗證設備不見了？";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
@@ -1657,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="搜尋";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="將允許在您裝置的Spotlight搜尋中搜尋MEGA檔案/資料夾";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您握有鑰匙";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1779,7 +1755,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="由於此通話已達到視訊參與人數上限，因此您無法開啟視訊。";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="顯示列表";
+"List view"="清單檢視";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="縮圖檢視";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不會將這些資料用於任何其他目的，並且未經您的同意絕不會與您的聯絡人互動。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="查看誰已經在MEGA上";
+"See who's already on MEGA"="查看您在MEGA上的聯絡人";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="在MEGA上找到[X]個聯絡人";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="與之分享";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="請聯繫您的商業帳戶管理員來解決問題並啟用您的帳戶。";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="直到我再次打開";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="直到今天早上";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="直到明天早上";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="直到我重新打開";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分鐘";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24小時";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="的聊天通知轉成靜音";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="永遠靜音";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="通知保持靜音直到明天, %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="通知保持靜音直到%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="訊息通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="請勿打擾";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="通知靜音";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重新連線中…";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="傳送 (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="上傳 (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="相簿";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="取消選取";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2225,7 +2211,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您離線下載到裝置中的檔案將會被刪除，而且正在進行中的傳輸將取消。";
 /* Default title of an empty chat. */
-"Chat created on %s1"="於%s1創建對話";
+"Chat created on %s1"="對話建立於%s1";
 /* Title shown when there are no shared files */
 "No Shared Files"="無共享的檔案";
 /* Error message shown when opening a folder link which doesn’t exist */
@@ -2234,3 +2220,33 @@
 "File link unavailable"="這不是有效的檔案連接";
 /* Header of block with all shared files in chat. */
 "Shared Files"="共享檔案";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="空間已滿";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="您的資料正面臨風險！";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>我們已經在<b>%@</b>透過email <b>%@</b>通知您，但您的MEGA帳戶仍然有%@個檔案共使用<b>%@</b>，您需要升級至<b>%@</b>。</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>我們已經在<b>%@</b>透過email <b>%@</b>通知您，但您的MEGA帳戶仍然有%@個檔案共使用<b>%@</b>，您需要聯絡客服支援以取得客製化方案。</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d天";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>您必須立即採取行動以保存資料。</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>您剩下<warn>%@</warn>可以升級。</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="在這之後您的資料將被刪除。";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="修改手機號碼";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="移除手機號碼";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="這將從您的帳號移除所關聯的手機門號。如果您之後選擇新增手機門號，則需要再進行驗證。";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作將移除您目前的手機門號並開始進行將新的門號與您的帳戶做連結。";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="您的手機號碼已成功移除。";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="無法移除您的手機號碼，請稍後再試。";

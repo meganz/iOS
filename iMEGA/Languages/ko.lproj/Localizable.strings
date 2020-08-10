@@ -909,8 +909,6 @@
 "profile"="프로필";
 /* Title of the Achievements section */
 "achievementsTitle"="도전 과제";
-/* Title of the Used storage section */
-"usedStorage"="이용한 저장 공간";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="친구들을 초대하고 보너스를 받으세요";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="휴대전화의 연락처 목록에서 선택하거나 여러 이메일 주소를 입력하세요.";
+"Select from phone contacts or enter multiple email addresses"="휴대전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="재결제일";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="들어오는 공유";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 중";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="사용됨. 전체 공간: %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="사용가능함. 전체 공간: %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="저장소";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="저장소";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="제한됨";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1126,7 +1118,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="상태";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL 미리보기";
+"richUrlPreviews"="고급 URL 미리보기";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="MEGAchat 경험을 향상하세요. URL 컨텐츠가 종단간 암호화 없이 수신됩니다.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1162,7 +1154,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="개인정보 인증";
+"verifyCredentials"="자격증명 인증";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="인증";
 /* Button title */
@@ -1176,11 +1168,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="공유된 폴더";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="연락처 개인정보";
+"contactCredentials"="연락처 자격증명";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="현실에서 가장 확실한 방법은 직접 만나는 것입니다. 만약 증명된 OTR이나 PGP 같은 이미 증명된 다른 방법이 있다면, 그것을 사용해도 좋습니다.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="당신의 개인정보";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="내 자격증명";
 /* Button to reset the password */
 "reset"="재설정";
 /* Button title */
@@ -1246,7 +1238,7 @@
 /* */
 "done"="완료";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Rich URL 미리보기 활성화";
+"enableRichUrlPreviews"="고급 URL 미리보기 활성화";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="항상 허용";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1256,7 +1248,7 @@
 /* */
 "never"="절대 안함";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="풍부한 URL 미리보기를 영구히 해제하려고 합니다. 당신은 풍부한 URL 미리보기를 설정에서 다시 활성화할 수 있습니다. 진행하시겠습니까?";
+"richPreviewsConfirmation"="고급 URL 미리보기를 영구히 해제하려고 합니다. 당신은 고급 URL 미리보기를 설정에서 다시 활성화할 수 있습니다. 진행하시겠습니까?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="미리보기 제거";
 /* */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="충분하지 않은 할당량";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="다단계 인증이 요구됨";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="관리자가 아닌 이용자의 접근이 금지됨";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="비즈니스 계정이 만료됨";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="신용 카드 거절됨";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="결제 실패";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="사기 방지에 의해 거절됨";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="요청이 너무 많습니다";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="잔고 오류";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP 오류";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="통화중...";
 /* notification subtitle of incoming calls */
 "Incoming call"="전화 수신중";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="부재중 전화";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A]개의 부재중 전화";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="부재중 영상통화";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A]개의 부재중 영상통화";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="부재중 전화와 영상통화";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="부재중 전화와 [A]개의 영상통화";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A]개의 부재중 전화와 영상통화";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]개의 부재중 전화와 [B]개의 부재중 영상통화";
 /* Button title to see the available bonus */
 "getBonus"="보너스 얻기";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1657,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="검색";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="기기의 Spotlight 검색에서 MEGA 파일/폴더 검색을 허용";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="MEGA에 누가 있는지 보기";
+"See who's already on MEGA"="MEGA에서 지인들 찾기";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X]명의 지인을 MEGA에서 발견함";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="다른 사람과 공유";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="내가 다시 켜기 전까지";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="오늘 아침까지";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="내일 아침까지";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="내가 다시 켤 때까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="영구적으로 차단";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="알림을 내일, %@까지 알리지 않습니다";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="%@까지 알림을 울리지 않기";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="방해금지";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="알림 꺼짐";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="전송 (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="업로드 (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="앨범";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="선택 해제";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2234,3 +2220,33 @@
 "File link unavailable"="파일 링크가 사용불가능합니다";
 /* Header of block with all shared files in chat. */
 "Shared Files"="공유된 파일";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="저장소 가득 참";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="당신의 데이터가 위험합니다!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 <b>%@</b>로 업그레이드가 필요합니다.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 개인화된 요금제를 위해 고객지원에 연락하는 것을 필요로 합니다.</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d일";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>데이터를 지키려면 즉시 조치해야합니다.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>업그레이드까지 <warn>%@</warn> 남았습니다.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="그 이후, 당신의 데이터는 삭제 대상이 됩니다.";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="휴대전화 번호 수정";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="휴대전화 번호 삭제";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="이것은 당신의 계정에 연결된 전화번호를 삭제합니다. 만약 나중에 전화번호를 추가하려면 전화번호를 인증해야합니다.";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="이 행동은 현재 전화 번호를 삭제하고 새 전화번호를 계정과 연결하는 과정을 시작합니다.";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="전화번호가 성공적으로 삭제되었습니다.";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="전화번호 삭제를 실패하였습니다, 다시 시도하세요.";

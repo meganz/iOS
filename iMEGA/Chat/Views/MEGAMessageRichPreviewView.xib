@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Medium.otf">
-            <string>SFUIText-Medium</string>
-        </array>
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,9 +16,8 @@
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tel-1l-FT9" customClass="JSQMessagesCellTextView">
                     <rect key="frame" x="13" y="10" width="257" height="18"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="out-hG-Jo5">
@@ -47,13 +36,12 @@
                                                 <constraint firstAttribute="height" constant="84" id="Bhw-Q2-sJ5"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="4"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="GW4-UE-c2n" firstAttribute="top" secondItem="ncy-Z3-STn" secondAttribute="top" constant="10" id="I6M-hF-0hL"/>
                                         <constraint firstAttribute="width" constant="100" id="ZGc-7i-eTr"/>
@@ -62,7 +50,7 @@
                                         <constraint firstItem="GW4-UE-c2n" firstAttribute="leading" secondItem="ncy-Z3-STn" secondAttribute="leading" constant="10" id="zqL-qR-gce"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                             <integer key="value" value="4"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
@@ -78,14 +66,14 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="Yhw-rz-XXC"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
-                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eV-MZ-2Wb">
                                                     <rect key="frame" x="0.0" y="28" width="157" height="30"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="mjW-gd-eE1">
@@ -108,8 +96,8 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="14" id="amR-Y5-H7c"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -119,10 +107,8 @@
                                                     </constraints>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="jOg-7m-dox" firstAttribute="leading" secondItem="RTU-7q-Gmf" secondAttribute="leading" constant="10" id="Jnl-vK-UBe"/>
                                         <constraint firstAttribute="bottom" secondItem="jOg-7m-dox" secondAttribute="bottom" constant="10" id="Tgm-Mm-HSw"/>
@@ -131,7 +117,6 @@
                                     </constraints>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="ncy-Z3-STn" firstAttribute="leading" secondItem="TO4-7T-aZZ" secondAttribute="leading" id="5T0-U5-ztJ"/>
                                 <constraint firstAttribute="bottom" secondItem="ncy-Z3-STn" secondAttribute="bottom" id="7F8-cS-7hL"/>
@@ -143,7 +128,6 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="TO4-7T-aZZ" firstAttribute="leading" secondItem="out-hG-Jo5" secondAttribute="leading" id="DEc-CX-zVj"/>
                         <constraint firstAttribute="bottom" secondItem="TO4-7T-aZZ" secondAttribute="bottom" id="Ddk-3M-B3u"/>
@@ -152,13 +136,12 @@
                         <constraint firstAttribute="trailing" secondItem="TO4-7T-aZZ" secondAttribute="trailing" id="qHH-4a-0RK"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <integer key="value" value="4"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="out-hG-Jo5" secondAttribute="bottom" constant="3" id="LJP-3S-MbS"/>
                 <constraint firstItem="tel-1l-FT9" firstAttribute="top" secondItem="1G9-Uh-i9W" secondAttribute="top" constant="10" id="Th6-M7-5qa"/>
@@ -177,6 +160,7 @@
                 <outlet property="imageImageView" destination="GW4-UE-c2n" id="6so-uL-Lb5"/>
                 <outlet property="imageView" destination="ncy-Z3-STn" id="Tjh-Uc-Uog"/>
                 <outlet property="linkLabel" destination="ohQ-Fw-GPd" id="VGX-Ag-BbR"/>
+                <outlet property="richPreviewView" destination="out-hG-Jo5" id="tyq-u7-vlS"/>
                 <outlet property="richViewHeightConstraint" destination="Xnk-FH-vVH" id="dto-CH-ghR"/>
                 <outlet property="titleLabel" destination="UVp-JU-QNG" id="3bY-6z-iNp"/>
             </connections>

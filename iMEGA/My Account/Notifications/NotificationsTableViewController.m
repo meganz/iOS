@@ -6,19 +6,20 @@
 
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
+#import "ContactRequestsViewController.h"
+#import "EmptyStateView.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASDKManager.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGAUserAlert.h"
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
-#import "UIColor+MNZCategory.h"
-#import "NSString+MNZCategory.h"
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>
 
@@ -46,6 +47,7 @@
     self.boldFont = [UIFont boldSystemFontOfSize:14.0f];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,6 +73,17 @@
     [[MEGASdkManager sharedMEGASdk] acknowledgeUserAlerts];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)configureTypeLabel:(UILabel *)typeLabel forType:(MEGAUserAlertType)type {
@@ -88,7 +101,7 @@
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
             typeLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_green00897B;
+            typeLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             break;
             
         case MEGAUserAlertTypeNewShare:
@@ -96,28 +109,28 @@
         case MEGAUserAlertTypeNewShareNodes:
         case MEGAUserAlertTypeRemovedSharesNodes:
             typeLabel.text = AMLocalizedString(@"shared", @"Title of the tab bar item for the Shared Items section").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_orangeFFA500;
+            typeLabel.textColor = UIColor.systemOrangeColor;
             break;
             
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
             typeLabel.text = AMLocalizedString(@"Payment info", @"The header of a notification related to payments").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypePaymentReminder:
             typeLabel.text = AMLocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedown:
             typeLabel.text = AMLocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedownReinstated:
             typeLabel.text = AMLocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         default:
@@ -384,13 +397,14 @@
     [self configureTypeLabel:cell.typeLabel forType:userAlert.type];
     if (userAlert.isSeen) {
         cell.theNewView.hidden = YES;
-        cell.backgroundColor = UIColor.mnz_grayFAFAFA;
+        cell.backgroundColor = [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
     } else {
         cell.theNewView.hidden = NO;
-        cell.backgroundColor = UIColor.whiteColor;
+        cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
     [self configureContentLabel:cell.contentLabel forAlert:userAlert];
+    cell.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.dateLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[userAlert timestampAtIndex:0]]];
     
     return cell;
@@ -409,8 +423,9 @@
         case MEGAUserAlertTypeIncomingPendingContactRequest:
         case MEGAUserAlertTypeIncomingPendingContactReminder: {
             if ([[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue) {
-                UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
-                [self presentViewController:contactRequestsNC animated:YES completion:nil];
+                ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+                
+                [self.navigationController pushViewController:contactRequestsVC animated:YES];
             }
             break;
         }
@@ -467,28 +482,33 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         text = AMLocalizedString(@"No notifications",  @"There are no notifications to display.");
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
         image = [UIImage imageNamed:@"notificationsEmptyState"];
@@ -498,37 +518,16 @@
     return image;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
-    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return UIColor.whiteColor;
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }

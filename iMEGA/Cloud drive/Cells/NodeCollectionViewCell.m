@@ -44,7 +44,7 @@
     
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
-        self.nameLabel.textColor = UIColor.mnz_redMain;
+        self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
     }

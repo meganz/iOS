@@ -23,7 +23,7 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar"), style: .plain, target: self, action: #selector(forwardTapped)
     )
     
-    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "download"), style: .plain, target: self, action: #selector(downloadTapped)
+    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline"), style: .plain, target: self, action: #selector(downloadTapped)
     )
     
     private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "import"), style: .plain, target: self, action: #selector(importTapped)
@@ -50,6 +50,7 @@ class ChatSharedItemsViewController: UIViewController {
         
         MEGASdkManager.sharedMEGAChatSdk()?.openNodeHistory(forChat: chatRoom.chatId, delegate: self)
         
+        updateAppearance()
         loadMoreFiles()
         
         view.addGestureRecognizer(UILongPressGestureRecognizer.init(target: self, action: #selector(longPress(recognizer:))))
@@ -61,6 +62,15 @@ class ChatSharedItemsViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(traitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
+        }
+    }
     // MARK: - Actions
     
     @IBAction func actionsTapped(_ sender: UIButton) {
@@ -142,6 +152,14 @@ class ChatSharedItemsViewController: UIViewController {
     
     // MARK: - Private methods
 
+    func updateAppearance() {
+        view.backgroundColor = UIColor.mnz_background()
+        
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        
+        tableView.reloadData()
+    }
+    
     private func selectedMessages() -> [MEGAChatMessage]? {
         guard let selectedMessagesIndexPaths = tableView.indexPathsForSelectedRows else {
             return nil
@@ -415,16 +433,21 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
 
 extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
     
-    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let attributes = Helper.titleAttributesForEmptyState() as? [NSAttributedString.Key : Any]
+    func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
+        return EmptyStateView(image: imageForEmptyState(), title: titleForEmtyState(), description: nil, buttonTitle: nil)
+    }
+    
+//MARK: - Empty State
+    
+    func titleForEmtyState() -> String {
         if (MEGAReachabilityManager.isReachable()) {
-            return NSAttributedString(string: AMLocalizedString("No Shared Files","Title shown when there are no shared files"), attributes: attributes)
+            return AMLocalizedString("No Shared Files","Title shown when there are no shared files")
         } else {
-            return NSAttributedString(string: AMLocalizedString("noInternetConnection", "No Internet Connection"), attributes: attributes)
+            return AMLocalizedString("noInternetConnection", "No Internet Connection")
         }
     }
     
-    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
+    func imageForEmptyState() -> UIImage? {
         if (MEGAReachabilityManager.isReachable()) {
             return UIImage(named: "sharedFilesEmptyState")
         } else {

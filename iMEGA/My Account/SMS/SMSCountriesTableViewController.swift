@@ -35,14 +35,15 @@ class SMSCountriesTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: countryCellReuseId)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.backgroundColor = .clear
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
             tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.barTintColor = .white
+            searchController.searchBar.barTintColor = .mnz_backgroundElevated(traitCollection)
             tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
         }
+        
+        updateAppearance()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +51,29 @@ class SMSCountriesTableViewController: UITableViewController {
 
         navigationController?.isNavigationBarHidden = false
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if navigationController != nil {
+                    AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                }
+                AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+                
+                updateAppearance()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func updateAppearance() {
+        tableView.sectionIndexColor = UIColor.mnz_turquoise(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+    }
+    
     private func buildCountrySections() -> [[SMSCountry]] {
         guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else {
             return []
