@@ -57,6 +57,7 @@ enum SessionSectionRow: Int {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fd_prefersNavigationBarHidden = true
         avatarExpandedPosition = view.frame.size.height * 0.5
         avatarCollapsedPosition = view.frame.size.height * 0.3
         avatarViewHeightConstraint.constant = avatarCollapsedPosition
