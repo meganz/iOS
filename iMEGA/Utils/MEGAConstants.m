@@ -12,6 +12,11 @@ NSString * const MEGAFirstRunValue = @"1strun";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
+NSString * const MEGASortingPreference = @"MEGASortingPreference";
+NSString * const MEGASortingPreferenceType = @"SortOrderType";
+
+NSString * const MEGAViewModePreference = @"MEGAViewModePreference";
+
 NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalDataEnabled";
 
 uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
@@ -116,3 +121,7 @@ const NSUInteger MEGADropFirstCharactersFromSession = 44;
 #pragma mark - File size
 
 const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
+
+#pragma mark - Add Your Phone Number
+
+const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount = 10;

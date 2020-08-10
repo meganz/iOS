@@ -1,5 +1,6 @@
 
 typedef NS_ENUM (NSInteger, DisplayMode) {
+    DisplayModeUnknown = -1,
     DisplayModeCloudDrive = 0,
     DisplayModeRubbishBin,
     DisplayModeSharedItem,
@@ -11,4 +12,5 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeRecents,
     DisplayModeChatAttachment,
     DisplayModeChatSharedFiles,
+    DisplayModePreviewLink,
 };

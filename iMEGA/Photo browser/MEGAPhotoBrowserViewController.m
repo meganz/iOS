@@ -27,7 +27,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "MEGA-Swift.h"
 
@@ -36,7 +35,9 @@ static const CGFloat GapBetweenPages = 10.0;
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -78,7 +79,7 @@ static const CGFloat GapBetweenPages = 10.0;
         }
     }
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]];
     MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
     photoBrowserVC.api = api;
     photoBrowserVC.mediaNodes = mediaNodesArray;
@@ -134,16 +135,14 @@ static const CGFloat GapBetweenPages = 10.0;
         default:
             break;
     }
+    
+    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    self.navigationBar.barTintColor = [UIColor whiteColor];
-    
-    if (@available(iOS 11.0, *)) {} else {
-        self.navigationBar.tintColor = UIColor.mnz_redMain;
-    }
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
 }
@@ -227,6 +226,19 @@ static const CGFloat GapBetweenPages = 10.0;
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Status bar
 
 - (BOOL)prefersStatusBarHidden {
@@ -295,7 +307,7 @@ static const CGFloat GapBetweenPages = 10.0;
         }
     }
     
-    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:[UIColor mnz_black333333]];
+    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:UIColor.mnz_label];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
@@ -313,7 +325,7 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
-    self.view.backgroundColor = transparent ? [UIColor clearColor] : [UIColor whiteColor];
+    self.view.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
     // Toggle the play button:
@@ -360,6 +372,14 @@ static const CGFloat GapBetweenPages = 10.0;
     self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.encryptedLink ? self.encryptedLink : self.publicLink navigationController:self.navigationController];
     sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)updateAppearance {
+    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    [self reloadTitle];
+    
+    self.view.backgroundColor = UIColor.mnz_background;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -588,7 +608,7 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView *activityIndicator = UIActivityIndicatorView.mnz_init;
     activityIndicator.frame = CGRectMake((view.frame.size.width-activityIndicator.frame.size.width)/2, (view.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
     [activityIndicator startAnimating];
     [view addSubview:activityIndicator];
@@ -668,7 +688,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         default: {
-            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
+            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
             pickerVC.mediaNodes = self.mediaNodes;
             pickerVC.delegate = self;
             pickerVC.api = self.api;
@@ -820,10 +840,10 @@ static const CGFloat GapBetweenPages = 10.0;
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isInterfaceHidden) {
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
-            self.view.backgroundColor = [UIColor whiteColor];
+            self.view.backgroundColor = UIColor.mnz_background;
             self.interfaceHidden = NO;
         } else {
-            self.view.backgroundColor = [UIColor blackColor];
+            self.view.backgroundColor = UIColor.mnz_background;
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
         }
@@ -924,11 +944,11 @@ static const CGFloat GapBetweenPages = 10.0;
     UIColor *color;
     switch (index) {
         case 0:
-            color = [UIColor mnz_whiteFFFFFF_02];
+            color = [UIColor.whiteColor colorWithAlphaComponent:0.2];
             break;
  
         default:
-            color = [UIColor mnz_black000000_01];
+            color = [UIColor.blackColor colorWithAlphaComponent:0.1];
             break;
     }
     return color;
@@ -1027,17 +1047,11 @@ static const CGFloat GapBetweenPages = 10.0;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_moveToTheRubbishBinInViewController:self];
+            [node mnz_askToMoveToTheRubbishBinInViewController:self];
             break;
             
         case MegaNodeActionTypeImport:
             [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
-            break;
-            
-        case MegaNodeActionTypeOpen:
-            if (node.name.mnz_isVideoPathExtension) {
-                [self playVideo:nil];
-            }
             break;
             
         case MegaNodeActionTypeRemove:

@@ -43,18 +43,12 @@ enum SessionSectionRow: Int {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var avatarViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var avatarBottomSeparatorView: UIView!
+    
     @IBOutlet weak var tableView: UITableView!
     
     private var avatarExpandedPosition: CGFloat = 0.0
     private var avatarCollapsedPosition: CGFloat = 0.0
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = NSLocale.autoupdatingCurrent
-        return dateFormatter
-    }()
     
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
     
@@ -83,6 +77,8 @@ enum SessionSectionRow: Int {
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
+        
+        updateAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +97,27 @@ enum SessionSectionRow: Int {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
     // MARK: - Private
+    
+    private func updateAppearance() {
+        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.reloadData()
+        
+        nameLabel.textColor = UIColor.white
+        emailLabel.textColor = UIColor.white
+        avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+    }
     
     private func configureGestures() -> Void {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ??  ~0) ?? "")
@@ -195,7 +211,6 @@ enum SessionSectionRow: Int {
                 }
             })
         }
-        fromPhotosAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
         changeAvatarAlertController.addAction(fromPhotosAlertAction)
         
         let captureAlertAction = UIAlertAction.init(title: AMLocalizedString("capturePhotoVideo", "Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA."), style: .default) { (UIAlertAction) in
@@ -215,7 +230,6 @@ enum SessionSectionRow: Int {
                 }
             })
         }
-        captureAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
         changeAvatarAlertController.addAction(captureAlertAction)
         
         changeAvatarAlertController.modalPresentationStyle = .popover;
@@ -228,7 +242,6 @@ enum SessionSectionRow: Int {
             let removeAvatarAlertAction = UIAlertAction.init(title: AMLocalizedString("Remove Photo", "Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk().setAvatarUserWithSourceFilePath(nil)
             }
-            removeAvatarAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
             changeAvatarAlertController.addAction(removeAvatarAlertAction)
         }
         
@@ -275,8 +288,8 @@ enum SessionSectionRow: Int {
         return [.logout]
     }
     
-    func pushChangeViewController(changeType: ChangeType) -> Void {
-        let changePasswordViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
+    func presentChangeViewController(changeType: ChangeType) -> Void {
+        let changePasswordViewController = UIStoryboard.init(name: "ChangeCredentials", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         if changeType == .email {
             switch twoFactorAuthStatus {
@@ -291,7 +304,10 @@ enum SessionSectionRow: Int {
                         return
                     }
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
-                    self.navigationController?.pushViewController(changePasswordViewController, animated: true)
+                    let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+                    navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+                    
+                    self.present(navigationController, animated: true, completion: nil)
                  }))
                  twoFactorAuthStatus = .querying
                  tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
@@ -299,10 +315,16 @@ enum SessionSectionRow: Int {
                 return
             case .disabled, .enabled:
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .enabled
-                    self.navigationController?.pushViewController(changePasswordViewController, animated: true)
+                    let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+                    navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+                    
+                    present(navigationController, animated: true, completion: nil)
             }
         } else {
-            navigationController?.pushViewController(changePasswordViewController, animated: true)
+            let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+            navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+            
+            present(navigationController, animated: true, completion: nil)
         }
     }
     
@@ -312,6 +334,25 @@ enum SessionSectionRow: Int {
         present(addPhoneNumberController, animated: true, completion: nil)
     }
     
+    func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatting {
+        let calendar = Calendar.current
+        let startingOfToday = Date().startOfDay(on: calendar)
+        guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,
+                                                                on: Calendar.current) else {
+                                                                    return DateFormatter.dateMedium()
+        }
+        let numberOfDaysAWeek = 7
+        if daysOfDistance > numberOfDaysAWeek  {
+            return DateFormatter.dateMedium()
+        }
+
+        if expiryDate.isToday(on: calendar) || expiryDate.isTomorrow(on: calendar) {
+            return DateFormatter.dateRelativeMedium()
+        }
+
+        return DateFormatter.dateMediumWithWeekday()
+    }
+
     // MARK: - IBActions
     
     @IBAction func backTouchUpInside(_ sender: UIButton) {
@@ -361,13 +402,14 @@ extension ProfileViewController: UITableViewDataSource {
                 return nil
             }
             var planFooterString = ""
+
             if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + dateFormatter.string(from: renewDate)
+                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
                 } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), dateFormatter.string(from: renewDate))
+                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
                 }
             }
             return planFooterString
@@ -422,6 +464,7 @@ extension ProfileViewController: UITableViewDataSource {
                     } catch {
                         cell.detailLabel.text = phoneNumber
                     }
+                    cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                     cell.accessoryType = .none
                 }
             case .changePassword:
@@ -430,8 +473,10 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         case .security:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
+            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackgroundGrouped(traitCollection)
             cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
             cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
+            cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
             return cell
         case .plan:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
@@ -446,6 +491,7 @@ extension ProfileViewController: UITableViewDataSource {
                 switch accountType {
                 case .free:
                     cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
+                    cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 case .proI:
                     cell.detailLabel.text = "Pro I"
                     cell.detailLabel.textColor = UIColor.mnz_redProI()
@@ -457,13 +503,14 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.detailLabel.textColor = UIColor.mnz_redProIII()
                 case .lite:
                     cell.detailLabel.text = "Lite"
-                    cell.detailLabel.textColor = UIColor.mnz_orangeFFA500()
+                    cell.detailLabel.textColor = UIColor.systemOrange
                 case .business:
                     if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
                         cell.detailLabel.text = AMLocalizedString("Active", "")
                     } else {
                         cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
                     }
+                    cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                     cell.nameLabel.text = AMLocalizedString("Business", "")
                     cell.accessoryType = .none
                 default:
@@ -475,6 +522,7 @@ extension ProfileViewController: UITableViewDataSource {
                 } else {
                     cell.detailLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
                 }
+                cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
                 cell.accessoryType = .none
             }
@@ -484,6 +532,7 @@ extension ProfileViewController: UITableViewDataSource {
             case .logout:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
                 cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
+                cell.logoutLabel.textColor = UIColor.mnz_red(for: traitCollection)
                 return cell
             }
         }
@@ -493,26 +542,30 @@ extension ProfileViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableViewSections()[indexPath.section] {
         case .profile:
             switch rowsForProfileSection()[indexPath.row] {
             case .changeName:
-                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameViewControllerID")
-                navigationController?.pushViewController(changeNameNavigationController, animated: true)
+                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
+                navigationController?.present(changeNameNavigationController, animated: true)
             case .changePhoto:
                 guard let cell = tableView.cellForRow(at: indexPath) else {
                     return
                 }
                 presentChangeAvatarController(tableView:tableView, cell: cell)
             case .changeEmail:
-                pushChangeViewController(changeType: .email)
+                presentChangeViewController(changeType: .email)
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     showAddPhoneNumber()
                 }
             case .changePassword:
-                pushChangeViewController(changeType: .password)
+                presentChangeViewController(changeType: .password)
             }
         case .security:
             switch rowsForSecuritySection()[indexPath.row] {
@@ -525,7 +578,7 @@ extension ProfileViewController: UITableViewDelegate {
             default:
                 if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
                     if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil) {
-                        let upgradeViewController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
+                        let upgradeViewController = UIStoryboard.init(name: "UpgradeAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
                         navigationController?.pushViewController(upgradeViewController, animated: true)
                     } else {
                         MEGAReachabilityManager.isReachableHUDIfNot()

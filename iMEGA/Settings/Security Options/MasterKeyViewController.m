@@ -3,6 +3,7 @@
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #import "Helper.h"
 
@@ -10,8 +11,12 @@
 
 @interface MasterKeyViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *illustrationView;
 @property (weak, nonatomic) IBOutlet UIButton *carbonCopyMasterKeyButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveMasterKey;
+
+@property (weak, nonatomic) IBOutlet UIView *whyDoINeedARecoveryKeyTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *whyDoINeedARecoveryKeyView;
 @property (weak, nonatomic) IBOutlet UILabel *whyDoINeedARecoveryKeyLabel;
 
 @end
@@ -30,6 +35,8 @@
     [self.saveMasterKey setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
     self.whyDoINeedARecoveryKeyLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,6 +61,30 @@
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.illustrationView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    [self.carbonCopyMasterKeyButton mnz_setupBasic:self.traitCollection];
+    [self.saveMasterKey mnz_setupPrimary:self.traitCollection];
+    
+    self.whyDoINeedARecoveryKeyTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.whyDoINeedARecoveryKeyView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.whyDoINeedARecoveryKeyLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions

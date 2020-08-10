@@ -8,6 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGASDK+MNZCategory.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
@@ -32,10 +33,22 @@
     self.helpCentreLabel.text = AMLocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
     self.joinBetaLabel.text = AMLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
     self.rateUsLabel.text = AMLocalizedString(@"rateUsLabel", @"Title to rate the app");
+    
+    [self updateAppearance];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -45,6 +58,10 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -68,8 +85,14 @@
     }
 }
 
-
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
 
 - (void)sendFeedback {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {

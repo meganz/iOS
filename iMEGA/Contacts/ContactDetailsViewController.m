@@ -3,7 +3,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -32,7 +31,8 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionNicknameVerifyCredentials = 0,
+    ContactDetailsSectionDonotDisturb = 0,
+    ContactDetailsSectionNicknameVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
     ContactDetailsSectionClearChatHistory,
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactDetailsRowVerifyCredentials
 };
 
-@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate, PushNotificationControlProtocol, ContactTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -59,22 +59,25 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 @property (weak, nonatomic) IBOutlet GradientView *gradientView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *avatarBottomSeparatorView;
+
+@property (weak, nonatomic) IBOutlet UIView *actionsView;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoLabel;
+@property (weak, nonatomic) IBOutlet UIView *actionsBottomSeparatorView;
+
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
-
 @property (strong, nonatomic) MEGAUser *user;
 @property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
 @property (strong, nonatomic) MEGAChatRoom *chatRoom; // The chat room of the contact. Used for send a message or make a call
+@property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panAvatar;
 @property (assign, nonatomic) CGFloat avatarExpandedPosition;
@@ -97,7 +100,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [super viewDidLoad];
     
     self.navigationItem.title = @"";
-
+    
     self.avatarExpandedPosition = self.view.frame.size.height * 0.5;
     self.avatarCollapsedPosition = self.view.frame.size.height * 0.3;
     self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition;
@@ -107,9 +110,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     
     [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
-    self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).").lowercaseString;
-    self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
-    self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
+    self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).");
+    self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call");
+    self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");
         
     self.userNickname = self.user.mnz_nickname;
     
@@ -133,7 +136,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.statusLabel.text = [NSString chatStatusString:userStatus];
         [self configureShadowInLayer:self.statusLabel.layer];
         
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
         [self configureShadowInLayer:self.onlineStatusView.layer];
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
@@ -148,7 +151,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,10 +200,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     return UIInterfaceOrientationMaskAll;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -207,13 +211,32 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private - Table view cells
+
+- (ContactTableViewCell *)cellForDNDWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
+    cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
+    [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
+                                             chatId:self.chatRoom.chatId];
+    cell.delegate = self;
+    return cell;
+}
 
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
     cell.nameLabel.text = AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
-    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.nameLabel.textColor = UIColor.mnz_label;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
@@ -222,12 +245,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
-    
-    cell.nameLabel.text = self.userNickname.length == 0 ?
-    AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") :
-    AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
-    
-    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.nameLabel.text = self.userNickname.length == 0 ? AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") : AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
+    cell.nameLabel.textColor = UIColor.mnz_label;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -237,7 +256,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
     cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
-    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.nameLabel.textColor = UIColor.mnz_label;
     cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? AMLocalizedString(@"verified", @"Button title") : @"";
     
     return cell;
@@ -247,11 +266,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
+        cell.avatarImageView.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
         cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-        cell.nameLabel.textColor = UIColor.mnz_redMain;
+        cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else { //Add contact
         cell.avatarImageView.image = [UIImage imageNamed:@"add"];
-        cell.avatarImageView.tintColor = UIColor.mnz_gray777777;
+        cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     }
     
@@ -285,9 +305,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForArchiveChatWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-    cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+    cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
@@ -296,7 +316,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForAddParticipantAsContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"add"];
-    cell.avatarImageView.tintColor = UIColor.mnz_gray777777;
+    cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
     
@@ -335,13 +355,25 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
     cell.nameLabel.text = AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
-    cell.nameLabel.textColor = UIColor.mnz_redMain;
+    cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
 }
 
 #pragma mark - Private - Others
+
+- (void)updateAppearance {
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.messageLabel.textColor = self.callLabel.textColor = self.videoLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.actionsView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.whiteColor;
+    self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+}
 
 - (void)showClearChatHistoryAlert {
     UIAlertController *clearChatHistoryAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.") message:AMLocalizedString(@"clearTheFullMessageHistory", @"A confirmation message for a user to confirm that they want to clear the history of a chat.") preferredStyle:UIAlertControllerStyleAlert];
@@ -403,7 +435,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:privilege == MEGAChatRoomPrivilegeStandard ? @"✓" : @"" image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:privilege == MEGAChatRoomPrivilegeRo ? @"✓" : @"" image:[UIImage imageNamed:@"readOnly"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:privilege == MEGAChatRoomPrivilegeRo ? @"✓" : @"" image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
     }]];
     
@@ -433,7 +465,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:sender withConfirmAction:^{
         MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed
-            
+            [MEGAStore.shareInstance updateUserWithHandle:self.user.handle interactedWith:NO];
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
@@ -446,27 +478,31 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
 }
 
-- (void)pushVerifyCredentialsViewController {
+- (void)presentVerifyCredentialsViewController {
     VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
     verifyCredentialsVC.user = self.user;
     verifyCredentialsVC.userName = self.userName;
-    [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:verifyCredentialsVC];
+    [navigationController addRightCancelButton];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)openChatRoomWithChatId:(uint64_t)chatId {
+- (void)openChatRoom:(MEGAChatRoom *)chatRoom {
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom                = self.chatRoom;
+    messagesVC.chatRoom = chatRoom;
+    
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
 - (void)sendMessageToContact {
     if (self.contactDetailsMode == ContactDetailsModeDefault || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         if (self.chatRoom) {
-            [self openChatRoomWithChatId:self.chatRoom.chatId];
+            [self openChatRoom:self.chatRoom];
         } else {
             [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 self.chatRoom = chatRoom;
-                [self openChatRoomWithChatId:chatRoom.chatId];
+                [self openChatRoom:self.chatRoom];
             }];
         }
     } else {
@@ -475,7 +511,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            [self openChatRoomWithChatId:self.chatRoom.chatId];
+            [self openChatRoom:self.chatRoom];
         }
     }
 }
@@ -533,6 +569,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+    callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self presentViewController:callVC animated:YES completion:nil];
 }
 
@@ -689,7 +727,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
@@ -697,7 +735,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -806,8 +844,13 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionDonotDisturb:
+            cell = [self cellForDNDWithIndexPath:indexPath];
+            break;
+            
         case ContactDetailsSectionSharedItems:
             cell = [self cellForSharedItemsWithIndexPath:indexPath];
             break;
@@ -862,18 +905,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
     }
-
-    if (@available(iOS 11.0, *)) {
-        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
     
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if ([self isSharedFolderSection:section]) {
-        self.participantsHeaderViewLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
-        return self.participantsHeaderView;
+        GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
+        headerView.titleLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
+        headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
+        
+        return headerView;
     }
     
     return nil;
@@ -882,15 +924,32 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0 || [self isSharedFolderSection:section]) {
         return 24;
+    } else if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
+        NSString *timeRemainingString = [self.chatNotificationControl
+                                         timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
+        if (timeRemainingString.length > 0) {
+            return 10.0f;
+        }
     }
     
-        return 0.01f;
+    return 0.01f;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
+        return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
     
+    return nil;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-        return 24.0f;
+    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
+        return UITableViewAutomaticDimension;
     }
     
+    return 24.0f;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -902,7 +961,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionSharedItems:
             [self showSharedItemsNameViewContoller];
@@ -915,7 +973,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                     break;
                     
                 case ContactDetailsRowVerifyCredentials:
-                    [self pushVerifyCredentialsViewController];
+                    [self presentVerifyCredentialsViewController];
                     break;
                     
                 default:
@@ -1007,7 +1065,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     if (userHandle == self.user.handle) {
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
@@ -1070,6 +1128,25 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (shouldProcessOnNodesUpdate) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
+    }
+}
+
+#pragma mark - ContactTableViewCellDelegate
+
+- (void)notificationSwitchValueChanged:(UISwitch *)sender {
+    if (sender.isOn) {
+        [self.chatNotificationControl turnOffDNDWithChatId:self.chatRoom.chatId];
+    } else {
+        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId sender:sender];
+    }
+}
+
+#pragma mark - ChatNotificationControlProtocol
+
+- (void)pushNotificationSettingsLoaded {
+    ContactTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (cell.notificationsSwitch != nil) {
+        cell.notificationsSwitch.enabled = YES;
     }
 }
 

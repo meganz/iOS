@@ -4,6 +4,7 @@
 
 @dynamic base64userHandle;
 @dynamic firstname;
+@dynamic interactedwith;
 @dynamic lastname;
 @dynamic email;
 @dynamic nickname;

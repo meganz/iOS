@@ -8,7 +8,6 @@
 
 #import "CustomModalAlertViewController.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 
 @implementation DevicePermissionsHelper
 
@@ -118,7 +117,7 @@
 #pragma mark - Modals
 
 + (void)modalAudioPermissionForIncomingCall:(BOOL)incomingCall withCompletionHandler:(void (^)(BOOL granted))handler {
-    CustomModalAlertViewController *permissionsModal = [self permissionsModal];
+    CustomModalAlertViewController *permissionsModal = CustomModalAlertViewController.alloc.init;
     __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"groupChat"];
@@ -137,7 +136,7 @@
 }
 
 + (void)modalNotificationsPermission {
-    CustomModalAlertViewController *permissionsModal = [self permissionsModal];
+    CustomModalAlertViewController *permissionsModal = CustomModalAlertViewController.alloc.init;
     __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"micAndCamPermission"];
@@ -156,16 +155,6 @@
     
     [UIApplication.mnz_presentingViewController presentViewController:permissionsModal animated:YES completion:nil];
 }
-
-+ (CustomModalAlertViewController *)permissionsModal {
-    CustomModalAlertViewController *permissionsModal = [[CustomModalAlertViewController alloc] init];
-    
-    permissionsModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;    
-    
-    return permissionsModal;
-}
-
-
 
 #pragma mark - Permissions status
 

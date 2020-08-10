@@ -909,8 +909,6 @@
 "profile"="资料";
 /* Title of the Achievements section */
 "achievementsTitle"="成就";
-/* Title of the Used storage section */
-"usedStorage"="已用容量";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="邀请朋友并获得奖励";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每当推荐成功便能获取%1$s的存储空间和%2$s的流量";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="从手机通讯录选择联系人，或输入多个电子邮件地址。";
+"Select from phone contacts or enter multiple email addresses"="从手机通讯录中选择联系人或输入多个电子邮件地址";
 /*  */
 "insertYourFriendsEmails"="请填入您好友的电子邮件：";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="更新";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="传入的分享";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 中的";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="%@ 中已用";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="共%@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升级帐户";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="储存空间";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="储存空间";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="限制";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="联系人凭证";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="这最好由实际面对面来完成。如您有其他已验证管道，如已验证的OTR或PGP，也可以使采用。";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="您的凭证";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="我的验证码";
 /* Button to reset the password */
 "reset"="重置密码";
 /* Button title */
@@ -1371,23 +1363,23 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="流量不足";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="多重验证请求";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for users";
+"Access denied for users"="拒绝非管理员用户访问";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="企业帐户已到期";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="信用卡已拒绝";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="购买失败";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="拒绝欺诈保护";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="请求过多";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="余额错误";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP error";
+"HTTP error"="HTTP错误";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1414,22 +1406,6 @@
 "calling..."="正在通话中…";
 /* notification subtitle of incoming calls */
 "Incoming call"="来电";
-/* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="一个未接语音通话";
-/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] 个未接语音通话";
-/* Notification text body shown when you have missed one video call */
-"missedVideoCall"="一个未接语视频话";
-/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] 个未接视频通话";
-/* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="一个未接语音通话和一个未接视频通话";
-/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="一个未接语音通话和 [A] 个未接视频通话";
-/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] 个未接语音通话和一个未接视频通话";
-/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]个未接语音通话和[B]个未接视频通话";
 /* Button title to see the available bonus */
 "getBonus"="获得奖励";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1657,7 +1633,7 @@
 /* Title of the Spotlight Search section */
 "Search"="搜索";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="允许在设备的Spotlight搜索中搜索MEGA文件/文件夹";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1985,7 +1961,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不会将这些数据用于任何其他目的，并且未经您的允许绝不会与您的联系人互动。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="查看谁在用MEGA";
+"See who's already on MEGA"="发现联系人";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="已发现[X]个联系人";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,8 +2032,12 @@
 "Share with"="分享";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="请联系您的企业帐户管理员解决此问题并激活帐户。";
-/* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="直到再次开启时";
+/* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
+"Until this morning"="直至上午";
+/* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
+"Until tomorrow morning"="直至明天上午";
+/*Chat Notifications DND: Option to turn the DND on forever */
+"Until I turn it back on"="直至打开前";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分钟";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2068,12 +2048,16 @@
 "24 hours"="24小时";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="静音聊天通知";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="保持静音";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow, %@"="通知将保持静默，直至明天%@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="通知将保持静音至%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat信息通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="勿扰模式";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Notifications muted"="通知已静音";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重连中……";
 /* Title shown when the user reconnect in a call. */
@@ -2104,6 +2088,8 @@
 "Send (%d)"="发送(%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="上传(%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="相簿";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="取消选择";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2234,3 +2220,33 @@
 "File link unavailable"="这不是有效的文件链接";
 /* Header of block with all shared files in chat. */
 "Shared Files"="已共享文件";
+/* Over Disk Quota Screen Navigation Bar Title*/
+"Storage Full"="空间已满";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="您的数据存在风险！";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>我们已经在<b>%@</b>向您的邮箱<b>%@</b>发送了邮件，但您的MEGA帐户中仍有%@个文件并占用了<b>%@</b>的存储空间，因此我们需要您升级至<b>%@</b>。</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>我们已经在<b>%@</b>向您的帐户<b>%@</b>发送了邮件，但您的帐户中仍有%@个文件并占用<b>%@</b>的存储空间，因此我们建议您联系客服并咨询适合您当前的专属会员方案。</paragraph>";
+/* Over Disk Quota of number of days*/
+"%d days"="%d 天";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>您必须立即采取行动以保存您的数据。</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>您还有<warn>%@</warn>时间升级您的帐户。</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="否则，您的数据将被删除。";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="修改手机号码";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="解除绑定手机号码";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="这将从您的帐户中删除您当前所关联的手机号。如需再次添加手机号，则需要进行验证。";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作将解除与您当前手机号的绑定状态，并将您的新手机号与您的帐户关联。";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="您的手机号已成功解除绑定。";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="手机号解除绑定失败，请稍后再试。";

@@ -16,18 +16,12 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/AMLocalizedString"]
 	path = iMEGA/Vendor/AMLocalizedString
 	url = https://github.com/tagyro/AMLocalizedString.git
-[submodule "iMEGA/Vendor/CTAssetsPickerController"]
-	path = iMEGA/Vendor/CTAssetsPickerController
-url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/DateTools"]
 	path = iMEGA/Vendor/DateTools
 	url = https://github.com/MatthewYork/DateTools.git
 [submodule "iMEGA/Vendor/PureLayout"]
 	path = iMEGA/Vendor/PureLayout
 	url = https://github.com/smileyborg/PureLayout
-[submodule "iMEGA/Vendor/UIBarButtonItem-Badge"]
-	path = iMEGA/Vendor/UIBarButtonItem-Badge
-	url = https://github.com/meganz/UIBarButtonItem-Badge.git
 [submodule "iMEGA/Vendor/PieChartView"]
 	path = iMEGA/Vendor/PieChartView
 	url = https://github.com/astrokin/PieChart.git

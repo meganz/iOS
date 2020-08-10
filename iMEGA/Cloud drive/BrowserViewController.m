@@ -4,14 +4,21 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
+#import "EmptyStateView.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 #import "NSFileManager+MNZCategory.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
@@ -63,7 +70,6 @@
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    self.navigationController.navigationBar.translucent = NO;
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
@@ -85,6 +91,8 @@
     [self addSearchBar];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [self updateAppearance];
     
     [self reloadUI];
 }
@@ -122,14 +130,39 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+#ifdef MNZ_SHARE_EXTENSION
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [ExtensionAppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+#elif MNZ_PICKER_EXTENSION
+            
+#else
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+#endif
+            
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
 #pragma mark - Private
 
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    
+    [self updateSelector];
+}
+
 - (void)setupBrowser {
     self.parentBrowser = !self.isChildBrowser;
-    
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -138,7 +171,7 @@
             [self setupDefaultElements];
             
             self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
@@ -147,7 +180,7 @@
             [self setupDefaultElements];
             
             self.toolBarMoveBarButtonItem.title = AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder");
-            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarMoveBarButtonItem]];
             break;
         }
@@ -157,7 +190,7 @@
             [self setupDefaultElements];
             
             self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]}  forState:UIControlStateNormal];
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]}  forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
@@ -166,7 +199,7 @@
             [self setupDefaultElements];
             
             self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
             break;
         }
@@ -176,7 +209,7 @@
             
             self.navigationItem.rightBarButtonItem = nil;
             self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
             break;
         }
@@ -185,7 +218,7 @@
             [self setupDefaultElements];
             
             self.toolbarSendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
-            [self.toolbarSendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self.toolbarSendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
              [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
             
             if (self.isParentBrowser) {
@@ -212,6 +245,8 @@
 
 - (void)setupDefaultElements {
     if (self.parentBrowser) {
+        [self updateSelector];
+        
         [self.incomingButton setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forState:UIControlStateNormal];
         [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forState:UIControlStateNormal];
     } else {
@@ -225,7 +260,7 @@
                                                              action:@selector(cancel:)];
     self.navigationItem.rightBarButtonItem = self.cancelBarButtonItem;
     self.toolBarNewFolderBarButtonItem.title = AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
-    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
 }
 
 - (void)reloadUI {
@@ -445,7 +480,7 @@
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
     if (alertController) {
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
     }
@@ -475,6 +510,20 @@
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
+}
+
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+    
+    self.incomingButton.titleLabel.font = self.incomingButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
+    [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
 #pragma mark - IBActions
@@ -572,10 +621,6 @@
     }
 }
 
-- (IBAction)extendedNavigationBar_backButtonTapped:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (IBAction)sendNodes:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.selectedNodesMutableDictionary.count > 0) {
@@ -597,8 +642,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = !self.incomingButton.selected;
     
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
-    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     if (self.searchController.isActive) {
         self.searchController.active = NO;
@@ -615,8 +659,7 @@
     sender.selected = !sender.selected;
     self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
     
-    self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     if (self.searchController.isActive) {
         self.searchController.active = NO;
@@ -675,9 +718,10 @@
     
     cell.node = node;
     
+    cell.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
-            cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
         } else {
             cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         }
@@ -842,7 +886,16 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
@@ -860,21 +913,19 @@
         text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
@@ -897,37 +948,16 @@
     return image;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Turn Mobile Data on", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }
