@@ -84,7 +84,8 @@ class NodeInfoViewController: UIViewController {
     //MARK: - Private methods
 
     private func updateAppearance() {
-        tableView.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+        view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        tableView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
     
     private func fetchFolderInfo() {
@@ -338,14 +339,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.nameLabel.text = node.name;
-        if (node.type == .file) {
-            cell.previewImage.mnz_setThumbnail(by: node)
-            cell.sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
-            cell.shareButton.isHidden = true
-        } else if (node.type == .folder) {
-            cell.previewImage.mnz_image(for: node)
-        }
+        cell.configure(forNode: node)
         
         return cell
     }
@@ -355,9 +349,8 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoOfflineTableViewCell")
         }
 
-        cell.titleLabel.text = AMLocalizedString("Available Offline", "Text indicating if a node is downloaded locally")
-        cell.offlineSwitch.isOn = MEGAStore.shareInstance()?.offlineNode(with: node) != nil
-
+        cell.configure(forNode: node)
+        
         return cell
     }
     
@@ -366,50 +359,8 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.valueLabel.textColor = UIColor.mnz_label()
-
-        switch detailRows()[indexPath.row] {
-        case .location:
-            cell.keyLabel.text = AMLocalizedString("location", "Title label of a node property.")
-            cell.valueLabel.text = MEGASdkManager.sharedMEGASdk().parentNode(for: node)?.name
-            cell.valueLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
-        case .fileSize:
-            cell.keyLabel.text = AMLocalizedString("totalSize", "Size of the file or folder you are sharing")
-            cell.valueLabel.text = node.mnz_numberOfVersions() == 0 ? Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk()) : Helper.memoryStyleString(fromByteCount: node.mnz_versionsSize())
-        case .currentFileVersionSize:
-            cell.keyLabel.text = AMLocalizedString("currentVersion", "Title of section to display information of the current version of a file")
-            cell.valueLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
-        case .fileType:
-            cell.keyLabel.text = AMLocalizedString("type", "Refers to the type of a file or folder.")
-            cell.valueLabel.text = node.mnz_fileType()
-        case .folderSize:
-            cell.keyLabel.text = AMLocalizedString("totalSize", "Size of the file or folder you are sharing")
-            cell.valueLabel.text = Helper.memoryStyleString(fromByteCount: (folderInfo?.currentSize ?? 0) + (folderInfo?.versionsSize ?? 0))
-        case .currentFolderVersionsSize:
-            cell.keyLabel.text = AMLocalizedString("currentVersions", "Title of section to display information of all current versions of files.")
-            cell.valueLabel.text = Helper.memoryStyleString(fromByteCount: folderInfo?.currentSize ?? 0)
-        case .previousFolderVersionsSize:
-            cell.keyLabel.text = AMLocalizedString("previousVersions", "A button label which opens a dialog to display the full version history of the selected file.")
-            cell.valueLabel.text = Helper.memoryStyleString(fromByteCount: folderInfo?.versionsSize ?? 0)
-        case .countVersions:
-            cell.keyLabel.text = AMLocalizedString("versions", "Title of section to display number of all historical versions of files")
-            guard let versions = folderInfo?.versions else {
-                fatalError("Could not get versions from folder info")
-            }
-            cell.valueLabel.text = String(versions)
-        case .contains:
-            cell.keyLabel.text = AMLocalizedString("contains", "Label for what a selection contains.")
-            cell.valueLabel.text = NSString.mnz_string(byFiles: folderInfo?.files ?? 0, andFolders: folderInfo?.folders ?? 0)
-        case .addedDate:
-            cell.keyLabel.text = AMLocalizedString("Added", "A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.")
-            cell.valueLabel.text = (node.creationTime as NSDate).mnz_formattedDefaultDateForMedia()
-        case .modificationDate:
-            cell.keyLabel.text = AMLocalizedString("modified", "A label for any 'Modified' text or title.")
-            cell.valueLabel.text = (node.modificationTime as NSDate).mnz_formattedDefaultDateForMedia()
-        case .linkCreationDate:
-            cell.keyLabel.text = AMLocalizedString("Link Creation", "Text referencing the date of creation of a link")
-            cell.valueLabel.text = (node.modificationTime as NSDate).mnz_formattedDefaultDateForMedia()
-        }
+        cell.configure(forNode: node, rowType: detailRows()[indexPath.row], folderInfo: folderInfo)
+        
         return cell
     }
     
@@ -418,16 +369,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoActionTableViewCell")
         }
         
-        cell.iconImageView.image = UIImage(named: "link")
-        cell.iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
-        if self.node.isExported() {
-            cell.titleLabel.text = AMLocalizedString("manageLink", "Item menu option upon right click on one or multiple files.")
-        } else {
-            cell.titleLabel.text = AMLocalizedString("getLink", "Title shown under the action that allows you to get a link to file or folder")
-        }
-        cell.subtitleLabel.isHidden = true
-        cell.separatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
-        cell.separatorView.isHidden = true
+        cell.configureLinkCell(forNode: node)
         
         return cell;
     }
@@ -437,14 +379,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoActionTableViewCell")
         }
         
-        cell.iconImageView.image = UIImage(named: "versions")
-        cell.iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
-        cell.titleLabel.text = AMLocalizedString("versions", "Title of section to display number of all historical versions of files.")
-        cell.subtitleLabel.text = String(node.mnz_numberOfVersions())
-        cell.subtitleLabel.isHidden = false
-        cell.separatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
-        cell.separatorView.isHidden = true
-        cell.accessoryType = .disclosureIndicator
+        cell.configureVersionsCell(forNode: node)
         
         return cell;
     }
@@ -454,6 +389,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get ContactTableViewCell")
         }
         
+        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
         cell.avatarImageView.image = UIImage(named: "inviteToChat")
         cell.nameLabel.text = AMLocalizedString("addContactButton", "Button title to 'Add' the contact to your contacts list")
@@ -471,6 +407,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get MEGAUser for ContactTableViewCell")
         }
         
+        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.avatarImageView.mnz_setImage(forUserHandle: user.handle, name: user.mnz_displayName)
         cell.verifiedImageView.isHidden = !MEGASdkManager.sharedMEGASdk().areCredentialsVerified(of: user)
         if user.mnz_displayName != "" {
@@ -492,6 +429,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get ContactTableViewCell")
         }
         
+        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: pendingOutShares()[indexPath.row].user)
         cell.nameLabel.text = pendingOutShares()[indexPath.row].user
         cell.shareLabel.isHidden = true
@@ -504,6 +442,7 @@ class NodeInfoViewController: UIViewController {
     private func removeSharingCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoRemoveSharing", for: indexPath)
         
+        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         guard let removeLabel = cell.viewWithTag(1) as? UILabel else {
             fatalError("Could not get RemoveLabel")
         }
@@ -589,7 +528,7 @@ extension NodeInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch sections()[section] {
         case .details, .link, .versions, .sharing, .pendingSharing:
-            return 58
+            return 52
         case .removeSharing:
             return 38
         case .info:
@@ -606,12 +545,12 @@ extension NodeInfoViewController: UITableViewDelegate {
             fatalError("Could not get NodeInfoHeaderTableViewCell")
         }
         
-        header.contentView.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+        header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         header.titleLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
         
         switch sections()[section] {
         case .details:
-            header.titleLabel.text = AMLocalizedString("DETAILS", "ext used for a title or header listing the details of something.")
+            header.titleLabel.text = AMLocalizedString("DETAILS", "Text used for a title or header listing the details of something.")
         case .link:
             header.titleLabel.text = AMLocalizedString("LINK", "Text used as title or header for reference an url, for instance, a node link.")
         case .versions:
@@ -631,7 +570,7 @@ extension NodeInfoViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = tableView.dequeueReusableCell(withIdentifier: "nodeInfoTableFooter")
-        footer?.contentView.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+        footer?.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
         guard let separator = footer?.viewWithTag(2) else {
             return footer
