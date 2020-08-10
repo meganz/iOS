@@ -76,6 +76,9 @@
                                                                                 <constraint firstAttribute="width" constant="12" id="gn2-1r-3bB"/>
                                                                             </constraints>
                                                                         </imageView>
+                                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mutedChat" translatesAutoresizingMaskIntoConstraints="NO" id="9Bu-tm-jlh">
+                                                                            <rect key="frame" x="74" y="7" width="0.0" height="24"/>
+                                                                        </imageView>
                                                                         <view contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0ef-yO-BBV">
                                                                             <rect key="frame" x="76" y="0.0" width="243" height="37.666666666666664"/>
                                                                         </view>
@@ -169,6 +172,7 @@
                                             <outlet property="chatLastMessage" destination="lpz-9f-lNv" id="2ZL-gl-eBy"/>
                                             <outlet property="chatLastTime" destination="6xG-n6-aut" id="Hrr-Zv-HWx"/>
                                             <outlet property="chatTitle" destination="7PO-mE-tsu" id="2ag-pX-u1G"/>
+                                            <outlet property="mutedChatImageView" destination="9Bu-tm-jlh" id="xfq-VC-s9l"/>
                                             <outlet property="onCallDuration" destination="etS-x8-kj3" id="eUh-Vh-Cqg"/>
                                             <outlet property="onCallInfoView" destination="ah5-N3-lyf" id="TPx-1t-Ogv"/>
                                             <outlet property="onCallMicImageView" destination="cni-H6-QI3" id="QK3-2e-c5K"/>
@@ -2358,6 +2362,7 @@
         <image name="micOff" width="60" height="60"/>
         <image name="micOn" width="60" height="60"/>
         <image name="moreSelected" width="28" height="28"/>
+        <image name="mutedChat" width="24" height="24"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>
