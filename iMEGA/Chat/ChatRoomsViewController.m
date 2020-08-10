@@ -64,6 +64,7 @@
 @property (assign, nonatomic) NSInteger contactsOnMegaCount;
 
 @property (nonatomic) GlobalDNDNotificationControl *globalDNDNotificationControl;
+@property (nonatomic) ChatNotificationControl *chatNotificationControl;
 
 @end
 
@@ -178,6 +179,7 @@
     }
     
     self.globalDNDNotificationControl = [GlobalDNDNotificationControl.alloc initWithDelegate:self];
+    self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -686,7 +688,8 @@
 - (UITableViewCell *)chatRoomCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    [cell configureCellForChatListItem:chatListItem];
+    BOOL muted = [self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId];
+    [cell configureCellForChatListItem:chatListItem isMuted:muted];
     return cell;
 }
 

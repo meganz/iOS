@@ -98,7 +98,7 @@
     self.activeCallImageView.hidden = YES;
 }
 
-- (void)configureCellForChatListItem:(MEGAChatListItem *)chatListItem {
+- (void)configureCellForChatListItem:(MEGAChatListItem *)chatListItem isMuted:(BOOL)muted {
     self.chatListItem = chatListItem;
     [self.timer invalidate];
 
@@ -121,8 +121,6 @@
             self.onlineStatusView.hidden = YES;
         }
     }
-    
-    self.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:chatListItem.chatId];
@@ -156,6 +154,7 @@
         self.chatLastTime.hidden = NO;
     }
     [self updateUnreadCountChange:chatListItem.unreadCount];
+    self.mutedChatImageView.hidden = !muted;
 }
 
 - (void)configureCellForUser:(MEGAUser *)user {
