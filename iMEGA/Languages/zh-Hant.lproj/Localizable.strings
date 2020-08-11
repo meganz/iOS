@@ -2033,11 +2033,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="請聯繫您的商業帳戶管理員來解決問題並啟用您的帳戶。";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="直到今天早上";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="直到明天早上";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="直到我重新打開";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分鐘";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2049,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="的聊天通知轉成靜音";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="通知保持靜音直到明天, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="通知保持靜音直到%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2057,7 +2057,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="請勿打擾";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="通知靜音";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重新連線中…";
 /* Title shown when the user reconnect in a call. */
@@ -2223,7 +2223,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="空間已滿";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="您的資料正面臨風險！";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>我們已經在<b>%@</b>透過email <b>%@</b>通知您，但您的MEGA帳戶仍然有%@個檔案共使用<b>%@</b>，您需要升級至<b>%@</b>。</paragraph>";
@@ -2233,8 +2233,20 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d天";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>您必須立即採取行動以保存資料。</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>您剩下<warn>%@</warn>可以升級。</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="在這之後您的資料將被刪除。";
+/* Title for action to modify the registered phone number. */
+"Modify Phone Number"="修改手機號碼";
+/* Title for action to remove the registered phone number. */
+"Remove Phone Number"="移除手機號碼";
+/* Message for action to remove the registered phone number. */
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="這將從您的帳號移除所關聯的手機門號。如果您之後選擇新增手機門號，則需要再進行驗證。";
+/* Message for action to modify the registered phone number. */
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作將移除您目前的手機門號並開始進行將新的門號與您的帳戶做連結。";
+/* Information message shown to users when the operation of removing phone number succeed. */
+"Your phone number has been removed successfully."="您的手機號碼已成功移除。";
+/* A message shown to users when phone number removal fails. */
+"Failed to remove your phone number, please try again later."="無法移除您的手機號碼，請稍後再試。";

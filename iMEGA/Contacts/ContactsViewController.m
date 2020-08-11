@@ -489,7 +489,8 @@
 - (void)addUserToIndexedTableView:(MEGAUser *)user {
     MOUser *moUser = [MEGAStore.shareInstance fetchUserWithUserHandle:user.handle];
     
-    NSInteger daysSinceUserAdded = user.timestamp.daysAgo;
+    NSDateComponents *components = [NSCalendar.currentCalendar components:NSCalendarUnitDay fromDate:user.timestamp toDate:NSDate.date options:0];
+    NSInteger daysSinceUserAdded = components.day;
     if (daysSinceUserAdded <= 3) {
         if (moUser.interactedWith.boolValue) {
             [self indexedSectionForUser:user];
@@ -834,7 +835,8 @@
 
 - (void)updatePendingContactRequestsLabel {
     if (self.contactsMode == ContactsModeDefault) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        MEGAContactRequestList *incomingContactsLists = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        self.contactsTableViewHeader.requestsDetailLabel.text = incomingContactsLists.size.intValue == 0 ? @"" : incomingContactsLists.size.stringValue;
     }
 }
 
@@ -927,6 +929,7 @@
         }
            
         case ContactsModeFolderSharedWith:
+        case ContactsModeChatNamingGroup:
             break;
             
         default: {
@@ -2044,8 +2047,12 @@
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
                 
-                NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
-                [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
+                if (indexPath.section == 0) {
+                    [self.recentlyAddedUsersArray removeObjectAtIndex:indexPath.row];
+                } else {
+                    NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
+                    [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
+                }
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
             

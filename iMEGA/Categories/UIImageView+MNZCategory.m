@@ -27,7 +27,7 @@ static const void *base64HandleKey = &base64HandleKey;
 }
 
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle {
-    [self mnz_setImageForUserHandle:userHandle name:@"?"];
+    [self mnz_setImageForUserHandle:userHandle name:@"Unknown"];
 }
 
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name {

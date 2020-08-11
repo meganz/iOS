@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -42,7 +42,7 @@
                             <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z54-Be-FUS">
                                 <rect key="frame" x="0.0" y="729" width="375" height="49"/>
                                 <items>
-                                    <barButtonItem title="Item" image="thumbnailsView" style="plain" id="xTs-Xs-c6Q">
+                                    <barButtonItem title="Item" image="thumbnailsThin" style="plain" id="xTs-Xs-c6Q">
                                         <connections>
                                             <action selector="didPressLeftToolbarButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
                                         </connections>
@@ -225,7 +225,7 @@
     <resources>
         <image name="more" width="28" height="28.666666030883789"/>
         <image name="share" width="28" height="28"/>
-        <image name="thumbnailsView" width="28" height="28"/>
+        <image name="thumbnailsThin" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
