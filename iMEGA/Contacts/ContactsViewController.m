@@ -493,7 +493,8 @@
 - (void)addUserToIndexedTableView:(MEGAUser *)user {
     MOUser *moUser = [MEGAStore.shareInstance fetchUserWithUserHandle:user.handle];
     
-    NSInteger daysSinceUserAdded = user.timestamp.daysAgo;
+    NSDateComponents *components = [NSCalendar.currentCalendar components:NSCalendarUnitDay fromDate:user.timestamp toDate:NSDate.date options:0];
+    NSInteger daysSinceUserAdded = components.day;
     if (daysSinceUserAdded <= 3) {
         if (moUser.interactedWith.boolValue) {
             [self indexedSectionForUser:user];
@@ -932,6 +933,7 @@
         }
            
         case ContactsModeFolderSharedWith:
+        case ContactsModeChatNamingGroup:
             break;
             
         default: {

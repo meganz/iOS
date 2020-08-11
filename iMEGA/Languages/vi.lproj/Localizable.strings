@@ -659,9 +659,9 @@
 /* Message for the location based background upload when the location data access is denied by users */
 "Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Xin chọn dòng “Luôn luôn” ở phần Dịch Vụ Định Vị trong Cài Đặt, để MEGA được thường xuyên thực hiện việc tải lên trong nền dựa vào các thay đổi vị trí của người dùng.";
 /* Title for turn on a feature */
-"Turn On"="Turn On";
+"Turn On"="Bật";
 /* Title for turn on a feature in settings */
-"Turn On in Settings"="Turn On in Settings";
+"Turn On in Settings"="Bật trong Cài Đặt";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Tất cả các videos sẽ được tải lên vào thư mục Camera Uploads.";
 /* Footer for video uploads switch section when disabled */
@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Nhận thêm %1$s vào không gian lưu trữ và %2$s để truyền tải cho mỗi lời giới thiệu bạn bè";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
+"Select from phone contacts or enter multiple email addresses"="Chọn vào sổ danh bạ hoặc điền vào các địa chỉ email";
 /*  */
 "insertYourFriendsEmails"="Nhập địa chỉ email của bạn bè:";
 /*  */
@@ -956,11 +956,11 @@
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Tài khoản đã nhận thêm được %1$s không gian lưu trữ và %2$s băng thông truyền tải qua việc xác thực số điện thoại thành công.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Nhận miễn phí %@ khi thêm số điện thoại vào tài khoản. Giúp dễ dàng kết nối với người khác trong danh bạ có sử dụng MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
-"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.";
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Thêm số điện thoại vào MEGA để kết nối vào danh bạ và tìm bạn bè dễ dàng hơn.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been locked temporarily due to potential abuse. Please verify your phone number to unlock your account.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Tài khoản của quý khách tạm thời bị khóa do xác định có thể bị lạm dụng. Xin xác thực số điện thoại để mở khóa tài khoản.";
 /* Verify your account title */
 "Verify Your Account"="Xác Thực Tài Khoản";
 /* Add your phone number title */
@@ -1363,17 +1363,17 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Không đủ băng thông";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authentication required";
+"Multi-factor authentication required"="Cần sử dụng xác minh 2-bước";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for non-admin users";
+"Access denied for users"="Truy cập bị từ chối cho tất cả thành viên dưới hạng admin";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Tài khoản doanh nghiệp đã hết hạn";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Thẻ bị từ chối";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Thanh toán thất bại";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="Bị từ chối bởi phòng chống gian lận";
 /* SDK error returned when there are too many requests */
 "Too many requests"="Quá nhiều yêu cầu";
 /* SDK error returned when there is a balance error */
@@ -1629,11 +1629,11 @@
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào kho thư viện ảnh của máy.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="Spotlight Search";
+"Spotlight Search"="Cho phép Spotlight Search";
 /* Title of the Spotlight Search section */
 "Search"="Tìm kiếm";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Khi được bật, Spotlight Search của iOS sẽ được phép hiển thị nội dung tìm kiếm có trong MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Chính bạn là người giữ chìa khóa";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1905,7 +1905,7 @@
 /* Text button for init a group chat */
 "New group chat"="Nhóm chát mới";
 /* Title for the recents section. */
-"Recents"="Lịch sử hoạt động";
+"Recents"="Hoạt Động Gần Đây";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 tệp Hình Ảnh";
 /* Multiple videos title shown in recents section of web client. */
@@ -1943,7 +1943,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Xin đi vào mục Quyền Riêng Tư trong Cài Đặt của iOS. Bật chức năng Dịch Vụ Định Vị và chỉnh MEGA từ “Khi dùng Ứng dụng” sang “Luôn luôn”.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA truy cập vào dịch vụ dịnh vị khi người dùng chia sẻ địa điểm của mình tới các người khác trong khi chát hoặc có tùy chọn ”Tải Lên trong Nền” cho Camera Uploads để thực hiện việc tải lên hình ảnh và videos dựa vào các thay đổi vị trí của người dùng.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Sử dụng Mạng Điện Thoại đã tắt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1957,9 +1957,9 @@
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Cần Quyền Cho Phép Truy Cập vào Danh Bạ";
 /* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Dễ dàng tìm thêm người để kết nối trên MEGA từ sổ danh bạ của bạn.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA sẽ không bao giờ sử dụng dữ liệu này cho bất kỳ mục đích nào khác và không giao tiếp với người nào trong danh bạ của bạn mà không có sự cho phép.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Xem ai đã có mặt trên MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -1981,7 +1981,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="SỔ DANH BẠ TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Xin chào! Mời bạn cùng sử dụng MEGA để có ngay 50 GB không gian lưu trữ miễn phí và công cụ giao tiếp bảo mật.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp tôi gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -1995,7 +1995,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Truyền Tải";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Không thể xóa tên %1$s khỏi danh bạ vì đây là nhân viên trong tài khoản Doanh Nghiệp này.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Yêu cầu passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2007,17 +2007,17 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Yêu Cầu Gỡ Bỏ";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
-"User management is only available from a desktop web browser."="User management is only available from a desktop web browser.";
+"User management is only available from a desktop web browser."="Bộ quản lý nhân viên cỉ hỗ trợ trên phiên bản trình duyệt web dành cho máy tính.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
-"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.";
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Đã có vấn đề xảy ra với việc thanh toán gần đây. Xin truy cập MEGA bằng trình duyệt web trên máy tính để biết thêm thông tin.";
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Tài khoản doanh nghiệp của quý khách đã hết hạn";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Đã có vấn đề xảy ra với việc xử lý thanh toán gần đây. Tài khoản sẽ bị giới hạn chức năng cho đến khi việc thanh toán được thực hiện giải quyết trên phiên bản nền web.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tài khoản của bạn hiện đang bị [B]đình chỉ[/B]. Bạn chỉ có khả năng xem duyệt dữ liệu của mình.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Mặc dù MEGA không có quyền truy cập vào dữ liệu của bạn, nhưng người quản trị tài khoản doanh nghiệp sẽ có khả năng xem nội dung Camera Uploads có trong tài khoản nhân viên của bạn";
 /* */
 "Something went wrong"="Có vấn đề xảy ra";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
@@ -2033,11 +2033,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Liên hệ với ban tổng quản lý tài khoản doanh nghiệp để giải quyết và khôi phục tài khoản của bạn.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="Cho đến buổi sáng hôm nay";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="Cho đến buổi sáng ngày mai";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Cho đến khi tôi bật lại";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 phút";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2049,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Im lặng tất cả các thông báo chát trong";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Tất cả các thông báo sẽ im lặng cho tới %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2057,7 +2057,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Không Làm Phiền";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="Đã im lặng tất cả thông báo";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Đang kết nối lại…";
 /* Title shown when the user reconnect in a call. */
@@ -2105,13 +2105,13 @@
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Xin nhập một số điện thoại hợp lệ.";
 /* Error message that will show to user when user reached the sms verification daily limit */
-"You have reached the daily limit"="You have reached the daily limit";
+"You have reached the daily limit"="Đã đạt mức giới hạn hằng ngày";
 /* Error message that will be shown when the code introduced do not match with the one you received */
 "The verification code doesn't match."="Mã xác thực không trùng khớp.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Mã không đúng. Xin thử lại hoặc lấy cái mới.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="This number is already associated with a MEGA account.";
+"This number is already associated with a Mega account"="Số điện thoại này đã được sử dụng bởi một tài khoản MEGA khác.";
 /* Country label for a button, title, etc. */
 "Country"="Quốc gia";
 /* Error message that will show to user its account is already verified */
@@ -2121,7 +2121,7 @@
 /* Text related to verified phone number. Used as title or cell description.  */
 "Phone Number"="Số Điện Thoại";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Please enter the verification code sent to";
+"Please type the verification code sent to"="Xin điền mã số xác thực đã được gửi đến";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Không có nhận được mã?";
 /* Message shown when verify phone number successfully */
@@ -2129,7 +2129,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Tài khoản của quý khách tạm thời bị khóa để đảm bảo an toàn.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email address[/S] and follow the steps in MEGA’s email to unlock your account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Xin xác thực địa chỉ email[/S] và thực hiện các bước tiếp theo có trong email gửi từ MEGA để mở khóa tài khoản.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Tại sao tôi đang thấy cái này?";
 /* Text to notify user an email has been sent */
@@ -2139,7 +2139,7 @@
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Quý khách hiện tại có thể đang dùng một mật khẩu duy nhất cho tất cả các dịch vụ khác bao gồm cả MEGA, một trong các dịch vụ đó đã bị tấn công và để lộ thông tin gần đây.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Mật khẩu có nguy cơ đã bị tiết lộ và hacker sử dụng để thử truy cập vào các dịch vụ khác nhau, có thể bao gồm cả MEGA.";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Dọn Mục Đã Chọn";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
@@ -2191,7 +2191,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Biểu Tượng App";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="Tùy chỉnh sắp xếp thứ tự và kiểu xem mặc định (Danh Sách hoặc Ảnh Nhỏ).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Riêng từng thư mục";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
@@ -2203,11 +2203,11 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Quyết định cách sắp xếp dữ liệu và tệp tin sẽ được áp dụng cho tất cả thư mục cho đồng bộ, hoặc tự chỉnh riêng lẻ cho từng thư mục có trong Ổ Mây.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Chọn kiểu xem (Danh Sách hoặc Ảnh Nhỏ) khác nhau cho từng thư mục, hoặc giống nhau hếy cho tất cả thư mục.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Khi đăng xuất, tất cả các phiên truyền tải chưa xong sẽ bị hủy.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="When you logout, files from your Offline section will be deleted from your device.";
+"When you logout, files from your Offline section will be deleted from your device."="Khi đăng xuất, các tệp tin trong phần Ngoại Tuyến sẽ bị xóa khỏi thiết bị.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Khi đăng xuất, các tệp tin trong phần Ngoại Tuyến sẽ bị xóa khỏi máy và các phiên truyền tải chưa xong sẽ bị hủy.";
 /* Default title of an empty chat. */
@@ -2223,7 +2223,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="Hết Không Gian Lưu Trữ";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="Dữ Liệu Sắp Bị Mất!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Chúng tôi đã gửi thông báo vào địa chỉ email <b>%@</b> của quý khách vào ngày <b>%@</b> nhưng quý khách vẫn còn %@ tệp tin chiếm tới <b>%@</b> trong tài khoản MEGA, quý khách cần phải nâng câp lên <b>%@</b> để đáp ứng dung lượng.</paragraph>";
@@ -2233,7 +2233,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d ngày";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Quý khách cần hành động ngay để giữ dữ liệu của mình.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Quý khách còn lại <warn>%@</warn> để nâng cấp.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2243,10 +2243,10 @@
 /* Title for action to remove the registered phone number. */
 "Remove Phone Number"="Xóa Số Điện Thoại";
 /* Message for action to remove the registered phone number. */
-"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it.";
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Thao tác này sẽ xóa số điện thoại hiện có trong tài khoản. Nếu sau này muốn thêm số điện thoại khác, hệ thống sẽ yêu cầu xác thực số điện thoại đó.";
 /* Message for action to modify the registered phone number. */
-"This operation will remove your current phone number and start the process of associating a new phone number with your account."="This operation will remove your current phone number and start the process of associating a new phone number with your account.";
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Thao tác này sẽ xóa số điện thoại hiện tại và bắt đầu quy trình gắn kết số điện thoại mới cho tài khoản này.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Your phone number has been removed successfully.";
+"Your phone number has been removed successfully."="Số điện thoại đã được xóa bỏ thành công.";
 /* A message shown to users when phone number removal fails. */
-"Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
+"Failed to remove your phone number, please try again later."="Xóa bỏ số điện thoại đã thất bại, xin thử lại sau.";
