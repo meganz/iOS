@@ -130,6 +130,7 @@
         } else {
             self.activeCallImageView.hidden = YES;
             self.onCallInfoView.hidden = NO;
+            self.chatLastMessage.text = call.status == MEGAChatCallStatusInProgress || call.status == MEGAChatCallStatusDestroyed ? AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating") : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             if (chatListItem.isGroup) {
                 self.onCallMicImageView.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalAudio"];
                 self.onCallVideoImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalVideo"];
@@ -435,25 +436,7 @@
         }
             
         case MEGAChatMessageTypeCallStarted: {
-            MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:item.chatId];
-            switch (call.status) {
-                case MEGAChatCallStatusUserNoPresent:
-                    self.chatLastMessage.text = AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
-                    break;
-                
-                case MEGAChatCallStatusInProgress:
-                    self.chatLastMessage.text = AMLocalizedString(@"Call Started", @"Text to inform the user there is an active call and is participating");
-                    break;
-                
-                case MEGAChatCallStatusDestroyed:
-                    self.chatLastMessage.text = AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
-                    break;
-                    
-                default:
-                    self.chatLastMessage.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
-                    break;
-            }
-            
+            self.chatLastMessage.text = AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
             break;
         }
 
