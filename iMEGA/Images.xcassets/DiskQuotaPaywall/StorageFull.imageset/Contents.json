@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "storageFullXL.png",
+      "filename" : "storageFullIP8.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "storageFullXL@2x.png",
+      "filename" : "storageFullIP8@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "storageFullXL@3x.png",
+      "filename" : "storageFullIP8@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

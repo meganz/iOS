@@ -99,7 +99,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [super viewDidLoad];
     
     self.navigationItem.title = @"";
-    
+    self.fd_prefersNavigationBarHidden = YES;
     self.avatarExpandedPosition = self.view.frame.size.height * 0.5;
     self.avatarCollapsedPosition = self.view.frame.size.height * 0.3;
     self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition;

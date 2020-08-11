@@ -28,6 +28,7 @@
 #import "UIFont+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UINavigationController+FDFullscreenPopGesture.h"
 #import "UITableView+MNZCategory.h"
 #import "NSDate+DateTools.h"
 #import "NSFileManager+MNZCategory.h"
