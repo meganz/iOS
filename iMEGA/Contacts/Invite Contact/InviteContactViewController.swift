@@ -157,11 +157,9 @@ extension InviteContactViewController: UIAdaptivePresentationControllerDelegate 
     }
     
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        let discardChangesActionSheet = Helper.confirmDiscardChangesAlert {
+        let discardChangesActionSheet = UIAlertController().discardChanges(fromSourceView: navigationController?.view, sourceRect: CGRect(x: 20, y: 20, width: 1, height: 1), withConfirmAction: {
             self.dismiss(animated: true, completion: nil)
-        }
-        discardChangesActionSheet.popoverPresentationController?.sourceView = navigationController?.view
-        discardChangesActionSheet.popoverPresentationController?.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
+        })
         present(discardChangesActionSheet, animated: true, completion: nil)
     }
 }
