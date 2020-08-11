@@ -136,7 +136,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let node = megaMessage.nodeList.node(at: 0)!
         currentNode = node
         let name = node.name! as NSString
-                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+        let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
         let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
         
         if FileManager.default.fileExists(atPath: previewFilePath) || FileManager.default.fileExists(atPath: originalImagePath) {
@@ -144,6 +144,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             if let previewImage = UIImage(contentsOfFile: previewFilePath) ?? UIImage(contentsOfFile: originalImagePath),
                 (previewImage.size.width / previewImage.size.height).precised(2) != (messageContainerView.frame.width / messageContainerView.frame.height).precised(2),
                 messagesCollectionView.numberOfSections > indexPath.section {
+                imageView.image = nil
                 messagesCollectionView.reloadItems(at: [indexPath])
             }
         } else {
