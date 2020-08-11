@@ -2033,11 +2033,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="오늘 아침까지";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="내일 아침까지";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="내가 다시 켤 때까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2049,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="알림을 내일, %@까지 알리지 않습니다";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="%@까지 알림을 울리지 않기";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2057,7 +2057,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="방해금지";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="알림 꺼짐";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
@@ -2223,7 +2223,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="저장소 가득 참";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="당신의 데이터가 위험합니다!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 <b>%@</b>로 업그레이드가 필요합니다.</paragraph>";
@@ -2233,7 +2233,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d일";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>데이터를 지키려면 즉시 조치해야합니다.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>업그레이드까지 <warn>%@</warn> 남았습니다.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
