@@ -423,8 +423,10 @@
         return;
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink isIncoming:NO sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    if (self.parentNode.name) {
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink isIncoming:NO sender:sender];
+        [self presentViewController:nodeActions animated:YES completion:nil];
+    }
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
