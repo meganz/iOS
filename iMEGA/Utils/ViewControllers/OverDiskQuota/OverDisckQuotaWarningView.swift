@@ -63,7 +63,7 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
-        let style = trait.styler(of: .note1)
+        let style = trait.styler(of: .multiline)
         style(titleLabel)
     }
 }

@@ -36,6 +36,7 @@
 #import "UIImageView+WMLTemplatedAnimation.h"
 #import "NSURL+MNZCategory.h"
 
+#import "UINavigationController+FDFullscreenPopGesture.h"
 #import "UITableView+MNZCategory.h"
 #import "NSDate+DateTools.h"
 

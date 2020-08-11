@@ -561,12 +561,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     private func username(forHandle handle: UInt64) -> String? {
         if let userNickname = chatRoom.userNickname(forUserHandle: handle) {
             return userNickname
-        } else if let userFirstName = chatRoom.peerFirstname(byHandle: handle) {
-            return userFirstName
-        } else if let userEmail = chatRoom.peerEmail(byHandle: handle) {
-            return userEmail
         }
-        
+        // fix me
+//        else if let userFirstName = chatRoom.peerFirstname(byHandle: handle) {
+//            return userFirstName
+//        } else if let userEmail = chatRoom.peerEmail(byHandle: handle) {
+//            return userEmail
+//        }
+//
         return nil
     }
     

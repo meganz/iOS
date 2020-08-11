@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -113,6 +113,7 @@
                         <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
                         <outlet property="closeBarButtonItem" destination="uL1-bJ-jlX" id="rFw-EA-UYI"/>
                         <outlet property="collectionView" destination="xcl-UM-x0L" id="syf-l2-XOd"/>
+                        <outlet property="downloadBarButtonItem" destination="r08-LH-yXr" id="vnS-8m-Jzk"/>
                         <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
                         <outlet property="importBarButtonItem" destination="vTK-Lp-W8C" id="Cfb-Zr-1Ra"/>
                         <outlet property="moreBarButtonItem" destination="R1j-r6-Sll" id="Fif-Wa-O5U"/>
@@ -124,7 +125,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iif-bv-Vsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="thumbnailsView" style="plain" id="vvK-JU-zPC" userLabel="Item">
+                <barButtonItem image="thumbnailsThin" style="plain" id="vvK-JU-zPC" userLabel="Item">
                     <connections>
                         <action selector="thumbnailTapped:" destination="zUo-yM-mbH" id="O05-bw-iff"/>
                     </connections>
@@ -147,6 +148,11 @@
                 <barButtonItem title="Item" image="import" style="plain" id="vTK-Lp-W8C" userLabel="Import">
                     <connections>
                         <action selector="importAction:" destination="zUo-yM-mbH" id="pBE-HU-HM5"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="offline" style="plain" id="r08-LH-yXr" userLabel="download">
+                    <connections>
+                        <action selector="downloadAction:" destination="zUo-yM-mbH" id="phJ-iB-YwS"/>
                     </connections>
                 </barButtonItem>
             </objects>
@@ -268,8 +274,10 @@
     <resources>
         <image name="import" width="28" height="28"/>
         <image name="moreSelected" width="28" height="28"/>
+        <image name="offline" width="28" height="28"/>
+        <image name="openWith" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
-        <image name="thumbnailsView" width="28" height="28"/>
+        <image name="thumbnailsThin" width="28" height="28"/>
     </resources>
 </document>

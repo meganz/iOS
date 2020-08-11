@@ -55,7 +55,8 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             avatarImageViewHeightConstraint.constant = 0.0
             avatarImageViewWidthConstraint.constant = 0.0
         } else {
-            avatarImageView.image = chatRoom.avatarImage(delegate: self)
+//            fix me
+//            avatarImageView.image = chatRoom.avatarImage(delegate: self)
         }
         
 
@@ -166,7 +167,8 @@ extension ChatViewIntroductionHeaderView: MEGARequestDelegate {
             MEGALogError("ChatMessageHeaderView: Could not fetch avatar image")
             return
         }
-        
-        avatarImageView.image = chatRoom?.avatarImage(delegate: nil)
+        //        fix me
+
+//        avatarImageView.image = chatRoom?.avatarImage(delegate: nil)
     }
 }

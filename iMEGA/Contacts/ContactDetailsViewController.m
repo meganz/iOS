@@ -115,8 +115,23 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         
     self.userNickname = self.user.mnz_nickname;
     
-    if (self.userName.length == 0) {
-        self.userName = self.user.mnz_fullName;
+    if (self.contactDetailsMode == ContactDetailsModeFromChat || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
+        MEGAChatRoom *chatRoom = self.groupChatRoom ?: self.chatRoom;
+        self.userName = [chatRoom userDisplayNameForUserHandle:self.userHandle];
+        if (!self.userName) {
+            MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                if (error.type) {
+                    return;
+                }
+                self.userName = [[MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle] userDisplayNameForUserHandle:self.userHandle];
+                [self updateUserDetails];
+            }];
+            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:chatRoom.chatId usersHandles:@[@(self.userHandle)] delegate:delegate];
+        }
+    } else {
+        if (self.userName.length == 0) {
+            self.userName = self.user.mnz_fullName;
+        }
     }
     
     [self configureShadowInLayer:self.backButton.layer];
@@ -820,15 +835,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowsInSection;
-    if ([self isSharedFolderSection:section]) {
+    ContactDetailsSection contactDetailsSection = self.contactDetailsSections[section].unsignedIntValue;
+    if ([self isSharedFolderSection:contactDetailsSection]) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
     } else if (self.shouldAllowToAddContact) {
         rowsInSection = 1;
-    } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
+    } else if (contactDetailsSection == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {
         rowsInSection = 1;
     }
+    
     return rowsInSection;
 }
 

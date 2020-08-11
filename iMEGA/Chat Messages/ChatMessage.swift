@@ -75,7 +75,10 @@ extension ChatMessage: SenderType {
     }
 
     var displayName: String {
-        return chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? chatRoom.peerEmail(byHandle: message.userHandle) ?? ""
+        //        fix me
+
+        return ""
+//        return chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? chatRoom.peerEmail(byHandle: message.userHandle) ?? ""
     }
 }
 
