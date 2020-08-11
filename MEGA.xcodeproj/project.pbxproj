@@ -11,7 +11,6 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */; };
-		2F25A2DA240C840A005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F3083BC2428169F0058DF91 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F3083BB2428169E0058DF91 /* Chat.storyboard */; };
@@ -27,6 +26,7 @@
 		2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */; };
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
+		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -373,6 +373,8 @@
 		7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */; };
 		77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */; };
+		772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
+		772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		7747B2D8208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7747B2D9208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
@@ -476,12 +478,12 @@
 		77B3AE212163BD2B008E889A /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B3AE222163BDB8008E889A /* UserNotifications.framework */; };
 		77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
-		77B9FEE823CCAF440002D0CD /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		77BE2FEF24000CB600514DB8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
 		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
+		77D7E853243719E0005D2795 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */; };
 		77D9A56E202355F800B48470 /* PhotoBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77D9A56D202355F800B48470 /* PhotoBrowser.storyboard */; };
 		77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
@@ -708,7 +710,6 @@
 		943229231EDD845E007DB542 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
 		943229251EDD8479007DB542 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229241EDD8479007DB542 /* CoreData.framework */; };
 		943229291EDD84D9007DB542 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
-		9432292E1EDD85CE007DB542 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292D1EDD85CE007DB542 /* Photos.framework */; };
 		943229301EDD862F007DB542 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292F1EDD862F007DB542 /* LocalAuthentication.framework */; };
 		943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229321EDD86C3007DB542 /* SystemConfiguration.framework */; };
 		943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
@@ -740,7 +741,6 @@
 		943F8B341EF286C700AFD89F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		943F8B361EF286D200AFD89F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229241EDD8479007DB542 /* CoreData.framework */; };
 		943F8B371EF286D600AFD89F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
-		943F8B391EF286E300AFD89F /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292D1EDD85CE007DB542 /* Photos.framework */; };
 		943F8B3A1EF286EA00AFD89F /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292F1EDD862F007DB542 /* LocalAuthentication.framework */; };
 		943F8B3B1EF286EE00AFD89F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229321EDD86C3007DB542 /* SystemConfiguration.framework */; };
 		943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432293A1EDD88E3007DB542 /* MediaPlayer.framework */; };
@@ -873,6 +873,7 @@
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
+		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		A86B9F252316D6AB00F35E7A /* FLEXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E472316D6AA00F35E7A /* FLEXTableViewController.m */; };
 		A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E4A2316D6AA00F35E7A /* FLEXScopeCarousel.m */; };
 		A86B9F272316D6AB00F35E7A /* FLEXTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E4B2316D6AA00F35E7A /* FLEXTableViewSection.m */; };
@@ -1182,7 +1183,6 @@
 		BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */; };
 		BFAB115523CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB115423CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift */; };
 		BFC470A424C66E4F00A23820 /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0E24BFE2B100D7D13B /* Date+Manipulation.swift */; };
-		BFC7940C2418511300BFDCC4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
 		BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933F024A5864C00BC2A75 /* SingleTapView.swift */; };
 		BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */; };
@@ -1315,6 +1315,8 @@
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
+		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
+		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -1891,6 +1893,7 @@
 		77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGASetAttrUserRequestDelegate.m; path = API/Requests/MEGASetAttrUserRequestDelegate.m; sourceTree = "<group>"; };
 		77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+MNZCategory.h"; sourceTree = "<group>"; };
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
+		77F63E7E24C0A95800DEEA66 /* JoinViewState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewState.h; sourceTree = "<group>"; };
 		77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareFilesDestinationTableViewController.h; sourceTree = "<group>"; };
 		77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareFilesDestinationTableViewController.m; sourceTree = "<group>"; };
 		77FD1FFC2359A59C004FB892 /* libwebrtc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebrtc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebrtc.a; sourceTree = "<group>"; };
@@ -2860,7 +2863,6 @@
 				9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */,
 				943229301EDD862F007DB542 /* LocalAuthentication.framework in Frameworks */,
 				9432293B1EDD88E3007DB542 /* MediaPlayer.framework in Frameworks */,
-				9432292E1EDD85CE007DB542 /* Photos.framework in Frameworks */,
 				9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */,
 				9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */,
 				943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */,
@@ -2940,7 +2942,6 @@
 				943F8B341EF286C700AFD89F /* ImageIO.framework in Frameworks */,
 				943F8B3A1EF286EA00AFD89F /* LocalAuthentication.framework in Frameworks */,
 				943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */,
-				943F8B391EF286E300AFD89F /* Photos.framework in Frameworks */,
 				943F8B2F1EF2869700AFD89F /* QuartzCore.framework in Frameworks */,
 				943F8B311EF286AC00AFD89F /* Security.framework in Frameworks */,
 				943F8B3B1EF286EE00AFD89F /* SystemConfiguration.framework in Frameworks */,
@@ -3037,6 +3038,15 @@
 				5BF5387F23741DB70023F2E4 /* MEGA.entitlements */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */ = {
+			isa = PBXGroup;
+			children = (
+				2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */,
+				2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */,
+			);
+			path = FDFullscreenPopGesture;
 			sourceTree = "<group>";
 		};
 		41136FB91E1692650031C516 /* Views */ = {
@@ -3678,6 +3688,7 @@
 		41BADDA61A8E064E008408B3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */,
 				5D79B519249846E70070FECD /* Foundation */,
 				5D03C99D2488972400BE5EEB /* UIKit */,
 				5DD8C8E224B5AF400033F479 /* Extension */,
@@ -4016,6 +4027,7 @@
 				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
 				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 				83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */,
+				77F63E7E24C0A95800DEEA66 /* JoinViewState.h */,
 				5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */,
 				5B3C3FF8241952D1003B1650 /* ViewModePreference.swift */,
 			);
@@ -6137,7 +6149,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = MEGA;
 				TargetAttributes = {
 					137361891A6664C300B740E8 = {
@@ -6566,7 +6578,6 @@
 				A86B9F3B2316D6AB00F35E7A /* FLEXNetworkTransaction.m in Sources */,
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
-				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */,
@@ -6674,6 +6685,7 @@
 				B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
@@ -6719,7 +6731,6 @@
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
 				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
-				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
 				417279551DB663FA001AC818 /* JSQMessagesComposerTextView.m in Sources */,
 				5D92DD1124BFE2B200D7D13B /* DateFormatting.swift in Sources */,
 				A86B9F4B2316D6AB00F35E7A /* FLEXIvarEditorViewController.m in Sources */,
@@ -7178,15 +7189,16 @@
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGAStoreStack.m in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
+				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
 				7794AF1C231FDF590039C1D2 /* SVIndefiniteAnimatedView.m in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
-				77B9FEE823CCAF440002D0CD /* MEGALocalNotificationManager.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				7794AF17231FDF120039C1D2 /* SAMKeychain.m in Sources */,
 				7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
 				774941E62416552600FC5CB6 /* MEGALogger.m in Sources */,
 				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
+				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7226,6 +7238,7 @@
 				8395FE3324E2C6EC00B1C952 /* UIAlertController+Additions.swift in Sources */,
 				5BE689B72419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
+				A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */,
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
 				5BC3D061242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				5BE689BA2419189400462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
@@ -7344,7 +7357,7 @@
 				834AD6082024697300D2527F /* MGSwipeButton.m in Sources */,
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
-				2F25A2DA240C840A005EF524 /* MEGAFunctions.swift in Sources */,
+				77D7E853243719E0005D2795 /* MEGAFunctions.swift in Sources */,
 				A824A91C2039F50B00D777D2 /* SDAVAssetExportSession.m in Sources */,
 				5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
@@ -7354,7 +7367,6 @@
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				BF943EA62355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
-				BFC7940C2418511300BFDCC4 /* MEGAFunctions.swift in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
@@ -7662,7 +7674,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
@@ -7695,7 +7707,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -7719,7 +7731,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7749,7 +7761,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -7776,7 +7788,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -7796,7 +7808,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -7827,7 +7839,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -7845,7 +7857,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
@@ -7869,7 +7881,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -7888,7 +7900,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7907,7 +7919,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -7926,7 +7938,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7945,7 +7957,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7975,7 +7987,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7999,7 +8011,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8027,7 +8039,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8041,6 +8053,7 @@
 		943F8B1B1EF26E9C00AFD89F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -8049,7 +8062,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8079,7 +8092,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8092,6 +8105,7 @@
 		943F8B1C1EF26E9C00AFD89F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -8101,7 +8115,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8129,7 +8143,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
