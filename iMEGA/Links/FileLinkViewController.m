@@ -341,8 +341,10 @@
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    if (self.node.name) {
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO sender:sender];
+        [self presentViewController:nodeActions animated:YES completion:nil];
+    }
 }
 
 #pragma mark - NodeActionViewControllerDelegate
