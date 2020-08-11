@@ -65,8 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction;
 
-+ (UIAlertController *)confirmDiscardChangesAlertWithConfirmAction:(void (^)(void))confirmAction;
-
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;

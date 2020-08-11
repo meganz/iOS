@@ -1979,14 +1979,10 @@
 
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
     if (self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
-        UIAlertController *confirmDismissAlert = [Helper confirmDiscardChangesAlertWithConfirmAction:^{
+        UIBarButtonItem *sender = self.contactsMode == ContactsModeShareFoldersWith ? self.navigationItem.leftBarButtonItem : self.navigationItem.rightBarButtonItem;
+        UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:sender withConfirmAction:^{
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
-        if (self.contactsMode == ContactsModeShareFoldersWith) {
-            confirmDismissAlert.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
-        } else {
-            confirmDismissAlert.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
-        }
         [self presentViewController:confirmDismissAlert animated:YES completion:nil];
     }
 }

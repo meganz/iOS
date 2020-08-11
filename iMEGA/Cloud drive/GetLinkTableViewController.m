@@ -553,10 +553,9 @@
 }
 
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
-    UIAlertController *confirmDismissAlert = [Helper confirmDiscardChangesAlertWithConfirmAction:^{
+    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.doneBarButtonItem withConfirmAction:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
-    confirmDismissAlert.popoverPresentationController.barButtonItem = self.doneBarButtonItem;
     [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 

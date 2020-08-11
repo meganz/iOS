@@ -576,10 +576,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
-    UIAlertController *confirmDismissAlert = [Helper confirmDiscardChangesAlertWithConfirmAction:^{
+    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.navigationItem.leftBarButtonItem withConfirmAction:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
-    confirmDismissAlert.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
     [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 
