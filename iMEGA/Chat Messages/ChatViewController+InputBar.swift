@@ -10,9 +10,7 @@ extension ChatViewController {
         guard !isEditing else {
             return nil
         }
-   
-//        return emojiInputView
-        
+           
         if let chatRoom = chatRoom,
             chatRoom.isPublicChat,
             chatRoom.isPreview,
