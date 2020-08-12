@@ -90,7 +90,11 @@ enum DNDTurnOnOption {
             actions.append(ActionSheetAction(title: forever.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: forever, identifier: identifier)))
         }
         
-        let actionSheetViewController = ActionSheetViewController(actions: actions, headerTitle: headerTitle, dismissCompletion: nil, sender: nil)
+        let dismissCompletion = {
+            delegate.cancelAction()
+        }
+        
+        let actionSheetViewController = ActionSheetViewController(actions: actions, headerTitle: headerTitle, dismissCompletion: dismissCompletion, sender: nil)
         
         return actionSheetViewController
     }
