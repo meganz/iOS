@@ -34,4 +34,6 @@ extension TraitEnviromentAware {
 
         contentSizeCategoryDidChange(to: currentTrait.preferredContentSizeCategory)
     }
+
+    func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory) {}
 }
