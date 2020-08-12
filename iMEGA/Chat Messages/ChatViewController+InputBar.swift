@@ -14,7 +14,7 @@ extension ChatViewController {
         if let chatRoom = chatRoom,
             chatRoom.isPublicChat,
             chatRoom.isPreview,
-            !chatRoomDelegate.hasChatRoomClosed {
+        !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
             return joinInputBar
         } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue || previewMode {
             return nil
