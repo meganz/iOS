@@ -24,7 +24,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     var whoIsTyping: [UInt64: Timer] = [:]
-    
+    var awaitingLoad = false
+
     // MARK: - Init
 
     init(chatRoom: MEGAChatRoom, chatViewController: ChatViewController) {
@@ -131,7 +132,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 api.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
             }
         } else {
-
+            awaitingLoad = false
             if chatMessage.count == 0 {
                 loadingState = false
                 
@@ -445,15 +446,22 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     private func loadMessages(count: Int = 32) {
+        if awaitingLoad {
+            MEGALogWarning("[Chat Links Scalability] avoid loadMessages because of an ongoing load")
+            return
+        }
         switch MEGASdkManager.sharedMEGAChatSdk()!.loadMessages(forChat: chatRoom.chatId, count: count){
         case .error:
             MEGALogDebug("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
         case .none:
             MEGALogDebug("loadMessagesForChat: there's no more history available (not even in the server)")
+            awaitingLoad = true
         case .local:
             MEGALogDebug("loadMessagesForChat: messages will be fetched locally")
+            awaitingLoad = true
         case .remote:
             MEGALogDebug("loadMessagesForChat: messages will be requested to the server")
+            awaitingLoad = true
         @unknown default:
             MEGALogError("loadMessagesForChat: unknown case executed")
         }

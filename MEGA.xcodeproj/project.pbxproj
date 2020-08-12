@@ -44,6 +44,7 @@
 		2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */; };
 		2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */; };
 		2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */; };
+		2F94199924E258D8001A1FAE /* ChatViewController+ChatRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F94199824E258D8001A1FAE /* ChatViewController+ChatRequestDelegate.swift */; };
 		2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */; };
 		2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
 		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
@@ -1132,7 +1133,7 @@
 		BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatInputBar.swift */; };
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
-		BF5C36762491C90A004DDA2F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		BF5C36762491C90A004DDA2F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
@@ -1392,6 +1393,7 @@
 		2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditCollectionOverlayView.swift; sourceTree = "<group>"; };
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
+		2F94199824E258D8001A1FAE /* ChatViewController+ChatRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+ChatRequestDelegate.swift"; sourceTree = "<group>"; };
 		2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionCollectionViewCell.xib; sourceTree = "<group>"; };
 		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
@@ -5691,6 +5693,7 @@
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
 				2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */,
 				BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */,
+				2F94199824E258D8001A1FAE /* ChatViewController+ChatRequestDelegate.swift */,
 				2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */,
 				2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */,
 				2F3B13D32471F5E60026DE64 /* ChatViewController+Toolbar.swift */,
@@ -7033,6 +7036,7 @@
 				A86B9F562316D6AB00F35E7A /* FLEXArgumentInputFontsPickerView.m in Sources */,
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
 				A86B9F732316D6AB00F35E7A /* FLEXTableColumnHeader.m in Sources */,
+				2F94199924E258D8001A1FAE /* ChatViewController+ChatRequestDelegate.swift in Sources */,
 				A86B9F7B2316D6AB00F35E7A /* FLEXClassesTableViewController.m in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
@@ -7703,8 +7707,8 @@
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
-				BF5C36762491C90A004DDA2F /* BuildFile in Sources */,
-				BF5C36762491C90A004DDA2F /* BuildFile in Sources */,
+				BF5C36762491C90A004DDA2F /* (null) in Sources */,
+				BF5C36762491C90A004DDA2F /* (null) in Sources */,
 				941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,

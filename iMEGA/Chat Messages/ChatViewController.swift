@@ -189,6 +189,7 @@ class ChatViewController: MessagesViewController {
         super.viewWillAppear(animated)
         MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatDelegate)
         MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatRequestDelegate)
 
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
@@ -255,6 +256,7 @@ class ChatViewController: MessagesViewController {
         saveDraft()
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatDelegate)
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatRequestDelegate)
 
         if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
