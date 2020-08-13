@@ -38,6 +38,18 @@ extension ChatViewController {
         }
         return joinInputBar
     }
+    
+    func updateJoinView() {
+        var newState: JoinViewState
+        if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
+            newState = chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue ? .joining : .leaving;
+        } else {
+            newState = .default
+        }
+        
+        joinInputBar.setJoinViewState(newState: newState)
+        
+    }
 
     // MARK: - Interface methods.
     
@@ -99,9 +111,16 @@ extension ChatViewController {
                 self.closeChatRoom()
                 self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
                 button.isEnabled = true
+                MEGALinkManager.joiningOrLeavingChatBase64Handles.remove(MEGASdk.base64Handle(forUserHandle: self.chatRoom.chatId))
+                self.updateJoinView()
+
             }
             MEGASdkManager.sharedMEGAChatSdk()?.autojoinPublicChat(chatRoom.chatId,
                                                                    delegate: delegate)
+            if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
+                MEGALinkManager.joiningOrLeavingChatBase64Handles.add(handle)
+            }
+            updateJoinView()
             button.isEnabled = false
         }
     }

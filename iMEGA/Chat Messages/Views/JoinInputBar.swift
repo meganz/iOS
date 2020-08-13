@@ -14,8 +14,30 @@ class JoinInputBar: UIView {
         
         let title = AMLocalizedString("Join", "Button text in public chat previews that allows the user to join the chat")
         joinButton.setTitle(title, for: .normal)
-        indicator.startAnimating()
-        
+        joinButton.isHidden = false
+        joiningOrLeavingView.isHidden = true
+    }
+    
+    func setJoinViewState(newState: JoinViewState) {
+        switch newState {
+        case .joining:
+            joinButton.isHidden = true
+            joiningOrLeavingView.isHidden = false
+            indicator.startAnimating()
+            joiningOrLeavingLabel.text = AMLocalizedString("Joining...", "Label shown while joining a public chat")
+
+        case.leaving:
+            joinButton.isHidden = true
+            joiningOrLeavingView.isHidden = false
+            indicator.startAnimating()
+            joiningOrLeavingLabel.text = AMLocalizedString("Leaving...", "Label shown while leaving a public chat")
+
+        default:
+            joinButton.isHidden = false
+            joiningOrLeavingView.isHidden = true
+            indicator.stopAnimating()
+            break
+        }
     }
     
     @IBAction func joinButtonTapped(_ sender: UIButton) {
