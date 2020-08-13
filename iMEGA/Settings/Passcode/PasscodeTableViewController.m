@@ -9,7 +9,7 @@
 
 #import "MEGA-Swift.h"
 
-@interface PasscodeTableViewController ()  <UIAdaptivePresentationControllerDelegate, LTHPasscodeViewControllerDelegate> {
+@interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
 }
 
@@ -63,21 +63,12 @@
 
     self.navigationItem.backBarButtonItem = [UIBarButtonItem.alloc initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
-    if (@available(iOS 13.0, *)) {
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    }
-    
     [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configureView];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    LTHPasscodeViewController.sharedUser.delegate = (AppDelegate<LTHPasscodeViewControllerDelegate> *)UIApplication.sharedApplication.delegate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -91,14 +82,6 @@
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self updateAppearance];
         }
-    }
-}
-
-
-- (void)applicationDidEnterBackground:(NSNotification*)notification {
-    if (UIApplication.mnz_visibleViewController.class == LTHPasscodeViewController.class) {
-        [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:NO completion:nil];
-        [self configureView];
     }
 }
         
@@ -161,7 +144,6 @@
 #pragma mark - IBActions
 
 - (IBAction)passcodeSwitchValueChanged:(UISwitch *)sender {
-    LTHPasscodeViewController.sharedUser.delegate = self;
     if (![LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showForEnablingPasscodeInViewController:self asModal:YES];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -172,7 +154,6 @@
 }
 
 - (IBAction)simplePasscodeSwitchValueChanged:(UISwitch *)sender {
-    LTHPasscodeViewController.sharedUser.delegate = self;
     [[LTHPasscodeViewController sharedUser] setIsSimple:self.simplePasscodeSwitch.isOn inViewController:self asModal:YES];
 }
 
@@ -256,18 +237,6 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - UIAdaptivePresentationControllerDelegate
-
-- (void)presentationControllerWillDismiss:(UIPresentationController *)presentationController {
-    [self configureView];
-}
-
-#pragma mark - LTHPasscodeViewControllerDelegate
-
-- (void)passcodeViewControllerWillClose {
-    [self configureView];
 }
 
 @end
