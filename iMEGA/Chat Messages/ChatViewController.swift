@@ -914,6 +914,11 @@ class ChatViewController: MessagesViewController {
         }
         
         if chatRoom.isGroup {
+            guard chatRoom.peerCount <= 20 else {
+                SVProgressHUD.showError(withStatus: AMLocalizedString("Unable to start a call because the participants limit was exceeded.", "Error shown when trying to start a call in a group with more peers than allowed"))
+                return
+            }
+            
             let groupCallVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupCallViewControllerID") as! GroupCallViewController
             groupCallVC.callType = callType
             if let call = call {
