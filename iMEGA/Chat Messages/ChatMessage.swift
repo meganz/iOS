@@ -75,10 +75,9 @@ extension ChatMessage: SenderType {
     }
 
     var displayName: String {
-        //        fix me
-
-        return ""
-//        return chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? chatRoom.peerEmail(byHandle: message.userHandle) ?? ""
+        let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: message.userHandle) ?? ""
+        let userName = chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? userEmail
+        return userName
     }
 }
 

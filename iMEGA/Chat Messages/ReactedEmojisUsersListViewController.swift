@@ -172,15 +172,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
 
             return nil
         }
-        // fix me
-//        if let username = chatRoom.userNickname(forUserHandle: handle), !username.isEmpty {
-//            return username
-//        } else if let fullName = chatRoom.peerFullname(byHandle: handle), !fullName.isEmpty {
-//            return fullName
-//        } else {
-//            return chatRoom.peerEmail(byHandle: handle)
-//        }
-        return nil
+        return chatRoom.participantName(forUserHandle: handle)
     }
 }
 
