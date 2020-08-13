@@ -107,3 +107,4 @@
 #import "MEGAChatMessage.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGATransfer+MNZCategory.h"
+#import "JoinViewState.h"
