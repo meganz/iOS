@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -33,18 +33,58 @@
                         <action selector="joinButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="loO-Tv-I65"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJt-i0-G95" userLabel="Joining Or Leaving View">
+                    <rect key="frame" x="162.5" y="53.5" width="89.5" height="19.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joining..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uN9-ZE-9ac">
+                            <rect key="frame" x="0.0" y="0.0" width="65.5" height="19.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yLz-go-npB">
+                            <rect key="frame" x="69.5" y="-0.5" width="20" height="20"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="9iK-IY-ivQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="3tJ-eU-OSt"/>
+                                <constraint firstItem="9iK-IY-ivQ" firstAttribute="centerY" secondItem="yLz-go-npB" secondAttribute="centerY" id="psY-gg-xz3"/>
+                                <constraint firstItem="9iK-IY-ivQ" firstAttribute="centerX" secondItem="yLz-go-npB" secondAttribute="centerX" id="qk3-hW-0iq"/>
+                                <constraint firstAttribute="height" constant="20" id="uHM-zD-VOS"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="uN9-ZE-9ac" firstAttribute="top" secondItem="jJt-i0-G95" secondAttribute="top" id="L83-PT-dMa"/>
+                        <constraint firstItem="uN9-ZE-9ac" firstAttribute="leading" secondItem="jJt-i0-G95" secondAttribute="leading" id="XSI-Yt-nkB"/>
+                        <constraint firstAttribute="bottom" secondItem="uN9-ZE-9ac" secondAttribute="bottom" id="myE-9Y-nM8"/>
+                        <constraint firstAttribute="trailing" secondItem="yLz-go-npB" secondAttribute="trailing" id="p9b-v4-XBK"/>
+                        <constraint firstItem="yLz-go-npB" firstAttribute="centerY" secondItem="jJt-i0-G95" secondAttribute="centerY" id="sgf-7I-zc0"/>
+                        <constraint firstItem="yLz-go-npB" firstAttribute="leading" secondItem="uN9-ZE-9ac" secondAttribute="trailing" constant="4" id="uzf-hi-1VC"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="X8z-te-gWV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="5L3-ww-YbM"/>
+                <constraint firstItem="jJt-i0-G95" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="YnX-Xi-y7C"/>
                 <constraint firstItem="X8z-te-gWV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="jDb-DQ-tpZ"/>
+                <constraint firstItem="jJt-i0-G95" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="pAs-OP-o3k"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="indicator" destination="9iK-IY-ivQ" id="Q9T-JZ-Uvp"/>
                 <outlet property="joinButton" destination="X8z-te-gWV" id="XTK-JI-wep"/>
+                <outlet property="joiningOrLeavingLabel" destination="uN9-ZE-9ac" id="ud0-f5-Fel"/>
+                <outlet property="joiningOrLeavingView" destination="jJt-i0-G95" id="M3Z-0v-984"/>
             </connections>
             <point key="canvasLocation" x="5.7971014492753632" y="110.49107142857143"/>
         </view>
