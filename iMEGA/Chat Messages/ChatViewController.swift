@@ -499,25 +499,19 @@ class ChatViewController: MessagesViewController {
     }
     
     func avatarImage(for message: MessageType) -> UIImage? {
-//        fix me
-//        guard let peerEmail = chatRoom.peerEmail(byHandle: UInt64(message.sender.senderId)!),
-//            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
-//                return nil
-//        }
-        return nil
-//        return UIImage.mnz_image(forUserHandle: user.handle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGABaseRequestDelegate())
+        return UIImage.mnz_image(forUserHandle: UInt64(message.sender.senderId)!, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (request, error) in
+        })
     }
 
     func initials(for message: MessageType) -> String {
-        //        fix me
 
         if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
             return (user.displayName as NSString).mnz_initialForAvatar()
         }
 
-//        if let peerFullname = chatRoom.peerFullname(byHandle:UInt64(message.sender.senderId)!) {
-//            return (peerFullname as NSString).mnz_initialForAvatar()
-//        }
+        if let peerFullname = chatRoom.participantName(forUserHandle:UInt64(message.sender.senderId)!) {
+            return (peerFullname as NSString).mnz_initialForAvatar()
+        }
 
         return ""
     }

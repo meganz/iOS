@@ -12,10 +12,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
         
         let userName = chatMessage.displayName
-        // fix me
-//        guard let userEmail = chatRoom.peerEmail(byHandle: chatMessage.message.userHandle) else {
-//            return
-//        }
+        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
+            return
+        }
         var actions = [ActionSheetAction]()
         
         let infoAction = ActionSheetAction(title: AMLocalizedString("info"), detail: nil, image: nil, style: .default) { [weak self] in
@@ -24,7 +23,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
             }
             
             contactDetailsVC.contactDetailsMode = self?.chatRoom.isGroup ?? false ? .fromGroupChat : .fromChat
-//            contactDetailsVC.userEmail = userEmail
+            contactDetailsVC.userEmail = userEmail
             contactDetailsVC.userName = userName
             contactDetailsVC.userHandle = chatMessage.message.userHandle
             contactDetailsVC.groupChatRoom = self?.chatRoom;
@@ -32,18 +31,18 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
         actions.append(infoAction)
         
-//        let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: userEmail)
-//        if user == nil || user?.visibility != MEGAUserVisibility.visible {
-//            let addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: nil, style: .default) {
-//                if MEGAReachabilityManager.isReachableHUDIfNot() {
-//                    MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
-//                }
-//                
-//                
-//            }
-//            actions.append(addContactAction)
-//
-//        }
+        let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: userEmail)
+        if user == nil || user?.visibility != MEGAUserVisibility.visible {
+            let addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: nil, style: .default) {
+                if MEGAReachabilityManager.isReachableHUDIfNot() {
+                    MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
+                }
+                
+                
+            }
+            actions.append(addContactAction)
+
+        }
         
         if chatRoom.ownPrivilege == .moderator,
         chatRoom.isGroup {

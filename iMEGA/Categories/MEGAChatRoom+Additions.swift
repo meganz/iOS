@@ -12,21 +12,11 @@ extension MEGAChatRoom {
     
     var participantNames: String {
         return (0..<peerCount).reduce("") { (result, index) in
-            // fix me
-//            if let nickname = userNickname(atIndex: index)?.trim {
-//                let appendResult = (index == peerCount-1) ? nickname : "\(nickname), "
-//                return result + appendResult
-//            }
-//            else if let peerFirstname = peerFirstname(at: index)?.trim {
-//                let appendResult = (index == peerCount-1) ? peerFirstname : "\(peerFirstname), "
-//                return result + appendResult
-//            } else if let peerLastname = peerLastname(at: index)?.trim {
-//                let appendResult = (index == peerCount-1) ? peerLastname : "\(peerLastname), "
-//                return result + appendResult
-//            } else if let peerEmail = peerEmail(byHandle: peerHandle(at: index))?.trim {
-//                let appendResult = (index == peerCount-1) ? peerEmail : "\(peerEmail), "
-//                return result + appendResult
-//            }
+            let userHandle = peerHandle(at: index)
+
+            if let name = participantName(forUserHandle: userHandle) {
+                return result + name
+            }
             
             return ""
         }

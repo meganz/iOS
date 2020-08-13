@@ -55,8 +55,8 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             avatarImageViewHeightConstraint.constant = 0.0
             avatarImageViewWidthConstraint.constant = 0.0
         } else {
-//            fix me
-//            avatarImageView.image = chatRoom.avatarImage(delegate: self)
+            let userHandle = chatRoom.peerHandle(at: 0)
+            avatarImageView.image = UIImage.mnz_image(forUserHandle: userHandle, name: chatRoom.title ?? "", size: CGSize(width: 88, height: 88), delegate: self)
         }
         
 
