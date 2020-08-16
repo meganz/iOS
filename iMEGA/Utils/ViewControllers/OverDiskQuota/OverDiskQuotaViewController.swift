@@ -296,7 +296,7 @@ extension OverDiskQuotaViewController: TraitEnviromentAware {
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
     }
 
-    func colorAppearanceDidChang(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         setupTraitCollectionAwareView(with: currentTrait)
     }
 }
