@@ -23,7 +23,7 @@
     }
     
     if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground || message.type == MEGAChatMessageTypeCallEnded) {
-        if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
+        if ([UIApplication.mnz_visibleViewController isKindOfClass:[ChatViewController class]] && message.status != MEGAChatMessageStatusSeen) {
             ChatViewController *chatViewController = (ChatViewController *) UIApplication.mnz_visibleViewController;
             if (chatViewController.chatRoom.chatId == chatId) {
                 MEGALogDebug(@"[Chat notification] The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
