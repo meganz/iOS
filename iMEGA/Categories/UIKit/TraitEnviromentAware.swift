@@ -15,11 +15,14 @@ protocol TraitEnviromentAware {
     /// - Parameters:
     ///   - to: The new value of applications's `UITraitCollection`.
     ///   - from: The previous value of applications's `UITraitCollection`.
-    func colorAppearanceDidChang(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?)
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?)
     
     /// Will handle application's `UIContentSizeCategory` updates.
     /// - Parameter contentSizeCategory: New `UIContentSizeCategory` value for the system.
-    func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory)
+    func contentSizeCategoryDidChange(
+        to contentSizeCategory: UIContentSizeCategory,
+        from previousContentSizeCategory: UIContentSizeCategory?
+    )
 }
 
 extension TraitEnviromentAware {
@@ -29,11 +32,17 @@ extension TraitEnviromentAware {
         from previousTrait: UITraitCollection?
     ) {
         if #available(iOS 13, *), currentTrait.hasDifferentColorAppearance(comparedTo: previousTrait) {
-            colorAppearanceDidChang(to: currentTrait, from: previousTrait)
+            colorAppearanceDidChange(to: currentTrait, from: previousTrait)
         }
 
-        contentSizeCategoryDidChange(to: currentTrait.preferredContentSizeCategory)
+        if currentTrait.preferredContentSizeCategory != previousTrait?.preferredContentSizeCategory {
+            contentSizeCategoryDidChange(
+                to: currentTrait.preferredContentSizeCategory,
+                from: previousTrait?.preferredContentSizeCategory
+            )
+        }
     }
 
-    func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory) {}
+    func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory,
+                                      from previousContentSizeCategory: UIContentSizeCategory?) {}
 }
