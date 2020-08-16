@@ -201,7 +201,7 @@ class ChatViewController: MessagesViewController {
         checkIfChatHasActiveCall()
         reloadInputViews()
 
-        if (presentingViewController != nil) && parent != nil {
+        if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
         }
         
