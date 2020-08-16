@@ -68,7 +68,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         chatRoom = chat
         switch chat.changes {
         case .participants:
-            chatViewController?.reloadInputViews()
+            if UIApplication.mnz_visibleViewController() == chatViewController {
+                chatViewController?.reloadInputViews()
+            }
         case .userTyping:
             guard !(chatViewController?.isEditing ?? false)  else {
                 return
