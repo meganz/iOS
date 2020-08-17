@@ -100,8 +100,6 @@ class AudioRecordingInputBar: UIView {
             self.layoutIfNeeded()
             self.suggestionLabel.alpha = 0.0
         }, completion: { _ in
-            self.lockView.removeFromSuperview()
-            self.suggestionLabel.removeFromSuperview()
             self.placeholderViewTopConstraint = placeholderViewTopConstraint
             placeholderViewTopConstraint?.isActive = true
             self.layoutIfNeeded()
