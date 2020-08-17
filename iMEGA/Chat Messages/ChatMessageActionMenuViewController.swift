@@ -11,7 +11,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
     }
     
-    var sender: Any?
+    var sender: UIView?
     lazy var forwardAction = ActionSheetAction(title: AMLocalizedString("forward"), detail: nil, image: UIImage(named: "forwardToolbar"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
@@ -102,7 +102,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     
     // MARK: - ChatMessageActionMenuViewController initializers
     
-    convenience init(chatMessage: ChatMessage?, sender: Any?, chatViewController: ChatViewController) {
+    convenience init(chatMessage: ChatMessage?, sender: UIView?, chatViewController: ChatViewController) {
         self.init(nibName: nil, bundle: nil)
         
         self.chatMessage = chatMessage
