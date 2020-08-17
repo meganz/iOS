@@ -1,6 +1,6 @@
 import UserNotifications
 
-class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
+class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate, MEGAChatDelegate {
     private static var session: String?
     private static var setLogToConsole = false
     private static let genericBody = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
@@ -147,6 +147,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private func postNotification(withError error: String?) {
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatNotificationDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatDelegate)
 
         guard let contentHandler = contentHandler else {
             return
@@ -216,20 +217,18 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             postNotification(withError: "Already notified")
         }
         
-        if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            if message.type != .unknown && generateNotification(with: message, immediately: false) {
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: MEGAInvalidHandle)
+        
+        if MEGASdkManager.sharedMEGAChatSdk()?.areAllChatsLoggedIn ?? false,
+            let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId),
+            message.type != .unknown,
+            generateNotification(with: message, immediately: false) {
                 MEGALogDebug("Message exists in karere cache")
                 postNotification(withError: nil)
                 return
-            }
         }
-        
-        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
-        MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
-            if error.type != .MEGAChatErrorTypeOk {
-                self?.postNotification(withError: "Error in pushReceived \(error)")
-            }
-        })
     }
     
     private func restartExtensionProcess(with session: String) {
@@ -439,8 +438,29 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
 
         if generateNotification(with: message, immediately: false) {
-            postNotification(withError: nil)
+            MEGALogDebug("On Chat notification for message \(message)")
+            if api.areAllChatsLoggedIn {
+                postNotification(withError: nil)
+            } else {
+                MEGALogWarning("But not logged in all chats")
+            }
         }
     }
 
+    // MARK: - MEGAChatDelegate
+
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
+        if chatId == MEGAInvalidHandle && newState == 3 {
+            MEGALogDebug("Logged in all chats")
+            if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: self.chatId ?? MEGAInvalidHandle, messageId: self.msgId ?? MEGAInvalidHandle) {
+                if message.type != .unknown && generateNotification(with: message, immediately: false) {
+                    postNotification(withError: nil)
+                } else {
+                    MEGALogWarning("Message unknown or generate notification return false")
+                }
+            } else {
+                MEGALogWarning("Message not found in karere cache")
+            }
+        }
+    }
 }
