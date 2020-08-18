@@ -410,7 +410,7 @@ extension ChatViewController: ChatInputBarDelegate {
                 
                 if let index = firstIndex,
                     index != NSNotFound {
-                    chatRoomDelegate.chatMessage[index] = ChatMessage(message: message, chatRoom: chatRoom)
+                    chatRoomDelegate.chatMessages[index] = ChatMessage(message: message, chatRoom: chatRoom)
                     messagesCollectionView.reloadDataAndKeepOffset()
                 }
             }
