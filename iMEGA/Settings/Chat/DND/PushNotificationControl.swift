@@ -6,8 +6,8 @@ import UIKit
 }
 
 protocol DNDTurnOnAlertControllerAction {
-    var cancelAction: (() -> Void) { get }
-    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?)-> ((() -> Void))
+    var cancelAction: ((UIAlertAction) -> Void)? { get }
+    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?)-> (((UIAlertAction) -> Void)?)
 }
 
 class PushNotificationControl: NSObject, MEGARequestDelegate {
@@ -71,7 +71,7 @@ extension PushNotificationControl {
         }
     }
     
-    func show(alertController: ActionSheetViewController, sender: UIView) {
+    func show(alertController: UIAlertController, sender: UIView) {
         if UIDevice.current.iPad {
             alertController.modalPresentationStyle = .popover
             alertController.popoverPresentationController?.sourceView = sender
