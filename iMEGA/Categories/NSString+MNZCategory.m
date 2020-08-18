@@ -168,11 +168,11 @@ static NSString* const B = @"[B]";
 + (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray {
     NSString *unitString;
     if (componentsSeparatedByStringArray.count == 1) {
-        unitString = @"KB";
+        unitString = @"B";
     } else {
         unitString = [componentsSeparatedByStringArray objectAtIndex:1];
-        if ([unitString isEqualToString:@"bytes"] || ([unitString length] == 0)) {
-            unitString = @"KB";
+        if ([unitString isEqualToString:@"KB"] || [unitString isEqualToString:@"bytes"] || ([unitString length] == 0)) {
+            unitString = @"B";
         }
     }
     
