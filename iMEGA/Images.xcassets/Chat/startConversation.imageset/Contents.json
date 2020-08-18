@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "archiveChat.png",
+      "filename" : "startConversation-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "archiveChatDark.png",
+      "filename" : "startConversation.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "archiveChat@2x.png",
+      "filename" : "startConversation@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "archiveChatDark@2x.png",
+      "filename" : "startConversation@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "archiveChat@3x.png",
+      "filename" : "startConversation@3x-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,16 +44,13 @@
           "value" : "dark"
         }
       ],
-      "filename" : "archiveChatDark@3x.png",
+      "filename" : "startConversation@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
+    "author" : "xcode",
+    "version" : 1
   }
 }
