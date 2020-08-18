@@ -69,33 +69,35 @@ enum DNDTurnOnOption {
         }
     }
     
-    static func actionSheetViewController(delegate: DNDTurnOnAlertControllerAction,
-                                          isGlobalSetting: Bool,
-                                          identifier: Int64?) -> ActionSheetViewController {
-        let headerTitle = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
+    static func alertController(delegate: DNDTurnOnAlertControllerAction,
+                                isGlobalSetting: Bool,
+                                identifier: Int64?) -> UIAlertController {
+        let alertMessage = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
+        let alertController = UIAlertController(title: nil,
+                                                message: alertMessage,
+                                                preferredStyle: .actionSheet)
         
-        var actions = [BaseAction]()
-        
-        actions.append(ActionSheetAction(title: thirtyMinutes.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: thirtyMinutes, identifier: identifier)))
+        let cancelString = AMLocalizedString("cancel")
+        alertController.addAction(UIAlertAction(title: cancelString,
+                                                style: .cancel,
+                                                handler: delegate.cancelAction))
 
-        actions.append(ActionSheetAction(title: oneHour.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: oneHour, identifier: identifier)))
+        addAction(for: alertController,
+                  delegate: delegate,
+                  options: [thirtyMinutes, oneHour, sixHours, twentyFourHours, isGlobalSetting ? morningEightAM : forever],
+                  identifier: identifier)
         
-        actions.append(ActionSheetAction(title: sixHours.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: sixHours, identifier: identifier)))
-        
-        actions.append(ActionSheetAction(title: twentyFourHours.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: twentyFourHours, identifier: identifier)))
-        
-        if isGlobalSetting {
-            actions.append(ActionSheetAction(title: morningEightAM.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: morningEightAM, identifier: identifier)))
-        } else {
-            actions.append(ActionSheetAction(title: forever.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: forever, identifier: identifier)))
-        }
-        
-        let dismissCompletion = {
-            delegate.cancelAction()
-        }
-        
-        let actionSheetViewController = ActionSheetViewController(actions: actions, headerTitle: headerTitle, dismissCompletion: dismissCompletion, sender: nil)
-        
-        return actionSheetViewController
+        return alertController
+    }
+    
+    private static func addAction(for alertController: UIAlertController,
+                                  delegate: DNDTurnOnAlertControllerAction,
+                                  options: [DNDTurnOnOption],
+                                  identifier: Int64?) {
+        options
+            .map({ UIAlertAction(title: $0.localizedTitle,
+                                 style: .default,
+                                 handler: delegate.action(for: $0, identifier: identifier))})
+            .forEach(alertController.addAction)
     }
 } 

@@ -27,7 +27,7 @@ class GlobalDNDNotificationControl: PushNotificationControl {
     }
     
     @objc func turnOnDND(_ sender: UIView) {
-        let alertController = DNDTurnOnOption.actionSheetViewController(delegate: self, isGlobalSetting: true, identifier: nil)
+        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: true, identifier: nil)
         show(alertController: alertController, sender: sender)
     }
     
@@ -72,14 +72,14 @@ extension GlobalDNDNotificationControl {
 // MARK:- DNDTurnOnAlertControllerAction extension
 
 extension GlobalDNDNotificationControl: DNDTurnOnAlertControllerAction {
-    var cancelAction: (() -> Void) {
-        return {
+    var cancelAction: ((UIAlertAction) -> Void)? {
+        return { _ in
             self.delegate?.tableView?.reloadData()
         }
     }
     
-    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?) -> ((() -> Void)) {
-        return {
+    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?) -> (((UIAlertAction) -> Void)?) {
+        return { _ in
             self.turnOnDND(dndTurnOnOption: dndTurnOnOption)
         }
     }
