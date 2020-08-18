@@ -31,7 +31,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate>
+@interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -151,13 +151,15 @@
         self.enterGroupNameTextFieldDelegate = EnterGroupNameTextFieldDelegate.new;
         self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
     }
-    
+
     [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationController.presentationController.delegate = self;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -2011,6 +2013,26 @@
     }
     
     [self.tableView reloadData];
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    if (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    if (self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
+        UIBarButtonItem *sender = self.contactsMode == ContactsModeShareFoldersWith ? self.navigationItem.leftBarButtonItem : self.navigationItem.rightBarButtonItem;
+        UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:sender withConfirmAction:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [self presentViewController:confirmDismissAlert animated:YES completion:nil];
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate
