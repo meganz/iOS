@@ -297,7 +297,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="มีไฟล์ชื่อเดียวกันอยู่แล้ว";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="นำเข้าจาก...";
+"uploadFrom"="นำเข้าจาก…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] ถูกอัปโหลดไปแล้วด้วยชื่อ [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="ละเมิดข้อกำหนดในการให้บริการ";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="การถ่ายโอนล้มเหลวเนื่องจากมีโครงสร้างของไดเรกทอรีที่ซ้ำกัน";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="ไม่สามารถเข้าถึงได้เนื่องจากการละเมิด ToS/AUP";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="ดาวน์โหลด";
 /* Singular of file. 1 file */
 "file"="ไฟล์";
+/* Label to desing a file matching */
+"File"="ไฟล์";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="เวอร์ชันปัจจุบัน";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="ช่วยให้ค้นหาไฟล์/โฟลเดอร์ใน MEGA ผ่าน Spotlight Search อุปกรณ์ของคุณ";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="เมื่อเปิดใช้งาน จะอนุญาตให้ค้นหาไฟล์และโฟลเดอร์ MEGA ใน Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="รับลิงก์แชท";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การหมุนคีย์ จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="ในการสร้างลิงก์แชทคุณจะต้องตั้งชื่อกลุ่มก่อน";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="คุณไม่ได้รับอนุญาตให้เข้าร่วมการโทรนี้เนื่องจากมีผู้เข้าร่วมถึงจำนวนสูงสุดแล้ว";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="คุณไม่ได้รับอนุญาตให้เปิดใช้งานวิดีโอเนื่องจากการโทรนี้มีผู้เข้าร่วมถึงจำนวนสูงสุดที่ใช้วิดีโอแล้ว";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="มุมมองรายการ";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="มุมมองภาพตัวอย่าง";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="การเชื่อมต่อแย่";
 /* There are no notifications to display. */
@@ -1992,6 +2004,8 @@
 "Business"="ธุรกิจ";
 /* */
 "Administrator"="แอดมิน";
+/* Business user role */
+"User"="ผู้ใช้";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="ถ่ายโอน";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="หมายเลขโทรศัพท์ของคุณถูกลบเรียบร้อยแล้ว";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="ไม่สามารถลบหมายเลขโทรศัพท์ของคุณได้";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="ยกเลิกการเปลี่ยนแปลง";

@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Ketentuan Layanan dilanggar";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transfer gagal karena struktur direktori rekursif";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Tidak dapat diakses karena pelanggaran ToS / AUP";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Unduh";
 /* Singular of file. 1 file */
 "file"="file";
+/* Label to desing a file matching */
+"File"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versi sekarang";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Dapatkan tautan obrolan";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi tombol sedikit lebih aman, tetapi tidak memungkinkan Anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Untuk membuat tautan obrolan, Anda harus memberi nama grup.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="Anda tidak diizinkan untuk bergabung dengan panggilan ini karena telah mencapai jumlah maksimum peserta.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Anda tidak diizinkan untuk mengaktifkan video karena panggilan ini telah mencapai jumlah maksimum peserta menggunakan video.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List View"="List View";
+"List View"="Tampilan Daftar";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Thumbnail View";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Koneksi lemah.";
 /* There are no notifications to display. */
@@ -1992,6 +2004,8 @@
 "Business"="Bisnis";
 /* */
 "Administrator"="Administrator";
+/* Business user role */
+"User"="Pengguna";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Until tomorrow morning";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 menit";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Matikan pemberitahuan obrolan untuk";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Pemberitahuan akan dibungkam hingga %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Nomor telepon anda telah berhasil dihapus.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Gagal menghapus nomor telepon anda, silakan coba lagi nanti.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Discard Changes";

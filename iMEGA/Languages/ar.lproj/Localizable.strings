@@ -587,7 +587,7 @@
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="مجلد المشاركة";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="الملفات المشاركة";
+"shareFolders"="المجلدات المشاركة";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="تحديد";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -715,7 +715,7 @@
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="نسخة حزمة أدوات تطوير البرمجيات لMEGAchat";
 /* Link to the public code of the app */
-"View Source Code"="عرض مصدر الكود";
+"View Source Code"="الاطلاع على الرماز المصدري";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="شكر وتقدير";
 /* Title for the MEGA Recovery Key */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="تم خرق شروط الخدمة";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="فشل عملية التراسل بسبب وجود عودية في بنية المجلد";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="لا يمكن الوصول إليها بسبب انتهاك شروط استخدام الخدمة أو سياسة الاستخدام المقبول";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="تنزيل";
 /* Singular of file. 1 file */
 "file"="ملف";
+/* Label to desing a file matching */
+"File"="ملف";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="النسخة الحالية";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="استخرج رابط المحادثة";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="تعد ميزة تدوير المفاتيح أكثر أماناً بقليل، لكنها لا تسمح لك بإنشاء رابط محادثة ولن يرى المشاركون الجدد الرسائل السابقة.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="لإنشاء رابط محادثة، يجب عليك تسمية المجموعة.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="لا يمكنك الانضمام إلى هذه المكالمة لأنها بلغت الحد الأقصى لعدد المشاركين.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="لا يمكنك القيام بمكالمة الفيديو لأن هذه المكالمة بلغت الحد الأقصى لعدد المشاركين الذين يستخدمون الفيديو.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="طريقة عرض القائمة";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="عرض الصور مصغرة";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="اتصال ضعيف.";
 /* There are no notifications to display. */
@@ -1992,6 +2004,8 @@
 "Business"="الأعمال Business";
 /* */
 "Administrator"="مدير";
+/* Business user role */
+"User"="مستخدم";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="التحميل";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2033,11 +2047,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="تواصل مع مشرف حساب الأعمال الخاص بك لحل هذه المشكلة وتفعيل حسابك.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="حتى هذا الصباح";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="حتى صباح الغد";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="حتى أعيد تشغيله";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 دقيقة";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="كتم صوت الإشعارات لـ";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="ستكون الإشعارات صامتة حتى الغد، %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="الإشعارات ستكون صامتة حتى %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2057,7 +2071,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="عدم الإزعاج";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="تم كتم صوت الإشعارات";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="إعادة اتصال ...";
 /* Title shown when the user reconnect in a call. */
@@ -2223,7 +2237,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="المساحة ممتلئة";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="بياناتك في خطر!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>لقد اتصلنا بك عبر البريد الإلكتروني <b>%@</b> بتاريخ <b>%@</b> ولكن لا يزال لديك %@ ملف يستهلكون <b>%@</b> في حسابك على ميغا MEGA الذي يتطلب منك الترقية إلى <b>%@</b>.</paragraph>";
@@ -2233,7 +2247,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d يوم";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>يجب أن تتصرف فوراً لحفظ بياناتك.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>لديك  <warn>%@</warn> متبقية للترقية.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="تمت إزالة رقم هاتفك بنجاح.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="أخفقت إزالة رقم هاتفك، يرجى إعادة المحاولة لاحقاً.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="تجاهل التغييرات";

@@ -179,7 +179,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="The folder ‘%@’ can’t be created";
+"folderCreationError"="The folder “%@” can’t be created";
 /* */
 "folderLinkUnavailableText1"="This could be due to the following reasons:";
 /* */
@@ -315,13 +315,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Save Image";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Get link";
+"getLink"="Get Link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Get links";
+"getLinks"="Get Links";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Manage link";
+"manageLink"="Manage Link";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Manage links";
+"manageLinks"="Manage Links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Tap file to rename";
 /* */
-"sendToContact"="Send to contact";
+"sendToContact"="Send to Contact";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="My chats";
 /* Toast text upon sending a single file to chat */
@@ -381,9 +381,9 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d files sent successfully";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Remove link";
+"removeLink"="Remove Link";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Remove links";
+"removeLinks"="Remove Links";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link removed";
 /* Message shown when the links to files and/or folders have been removed */
@@ -585,9 +585,9 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacts";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Share folder";
+"shareFolder"="Share Folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Share folders";
+"shareFolders"="Share Folders";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Select";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1008,7 +1008,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Incoming Shares";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Upgrade account";
+"upgradeAccount"="Upgrade Account";
 /*  */
 "chooseYourAccountType"="Choose your account type";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1110,7 +1110,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed the group chat name to ‘[B]’";
+"changedGroupChatNameTo"="[A] changed the group chat name to “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Add Participant…";
 /* Menu item to add participants to a chat */
@@ -1270,7 +1270,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Are you sure you want to abort the registration?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelled your email address, correct it and click ‘Resend’.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and click “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Resend";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Terms of Service breached";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transfer failed due to a recursive directory structure";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Download";
 /* Singular of file. 1 file */
 "file"="file";
+/* Label to desing a file matching */
+"File"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Current Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Search";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allows searching for MEGA files and folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Get chat link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="List View";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Thumbnail View";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Poor connection.";
 /* There are no notifications to display. */
@@ -1943,7 +1955,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobile Data is turned off";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1992,6 +2004,8 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
+/* Business user role */
+"User"="User";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Until tomorrow morning";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,11 +2063,11 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat notifications";
+"Chat Notifications"="Chat Notifications";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Do Not Disturb";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2209,7 +2223,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files. */
 "When you logout, files from your Offline section will be deleted from your device."="When you logout, files from your Offline section will be deleted from your device.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you log out, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat created on %s1";
 /* Title shown when there are no shared files */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Your phone number has been removed successfully.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Discard Changes";
