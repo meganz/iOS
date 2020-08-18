@@ -55,7 +55,7 @@ extension ChatViewController {
             }
             
             if megaMessage.status == .sending {
-                chatRoomDelegate.chatMessage.remove(at: index)
+                chatRoomDelegate.chatMessages.remove(at: index)
                 messagesCollectionView.performBatchUpdates({
                     messagesCollectionView.deleteSections([index])
                 }, completion: nil)
@@ -63,7 +63,7 @@ extension ChatViewController {
                 let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
                 let deleteMessage = MEGASdkManager.sharedMEGAChatSdk()?.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
                 deleteMessage?.chatId = chatRoom.chatId
-                chatRoomDelegate.chatMessage[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
+                chatRoomDelegate.chatMessages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
             }
         }
         

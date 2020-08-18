@@ -712,7 +712,7 @@ class ChatViewController: MessagesViewController {
         showOrHideJumpToBottom()
 
         // When there are no messages and the introduction text is shown and the keyboard appears the content inset is not added automatically and we do need to add the inset to the collection
-        guard chatRoomDelegate.chatMessage.count == 0,
+        guard chatRoomDelegate.chatMessages.count == 0,
             let inputView = inputAccessoryView as? ChatInputBar,
             inputView.isTextViewTheFirstResponder() else {
             return
