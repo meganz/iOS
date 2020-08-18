@@ -124,7 +124,7 @@ extension ReactedUsersListPageViewController: ChatMessageOptionsTableViewControl
             return
         }
         
-        imageView.mnz_setImageAvatarOrColor(forUserHandle: userHandleList[index])
+        imageView.mnz_setImage(forUserHandle: userHandleList[index])
     }
     
     func setLabel(_ label: UILabel, forIndex index: Int, viewController: ChatMessageOptionsTableViewController) {
