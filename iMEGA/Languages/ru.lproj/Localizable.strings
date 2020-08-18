@@ -715,7 +715,7 @@
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Версия MEGAchat SDK";
 /* Link to the public code of the app */
-"View Source Code"="Исходный код";
+"View Source Code"="Посмотреть исходный код";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Благодарности";
 /* Title for the MEGA Recovery Key */
@@ -860,7 +860,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Сессии закрыты";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Изменить код доступа";
+"changePasscodeLabel"="Изменить пароль";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Простой код доступа";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1008,7 +1008,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящие общие папки";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Улучшить аккаунт";
+"upgradeAccount"="Повысить учётную запись";
 /*  */
 "chooseYourAccountType"="Выберите тип учётной записи";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Нарушены условия предоставления услуг";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Передача не удалась из-за рекурсивной структуры директорий";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Недоступно из-за нарушения условий предоставления услуг/политики допустимого использования";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Скачать";
 /* Singular of file. 1 file */
 "file"="файл";
+/* Label to desing a file matching */
+"File"="Файл";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Текущая версия";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Ссылка на чат";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Для создания ссылки на чат нужно назвать группу.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="Вы не можете присоединиться к этому вызову, так как в нём максимальное количество участников.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Вы не можете включить видео, так в этом вызове уже максимальное количество участников, использующих видео.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List View"="Вид списка";
+"List View"="Список";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Значки";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Плохое соединение.";
 /* There are no notifications to display. */
@@ -1992,6 +2004,8 @@
 "Business"="Бизнес";
 /* */
 "Administrator"="Администратор";
+/* Business user role */
+"User"="Пользователь";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Передача";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2033,11 +2047,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Обратитесь к администратору своего аккаунта, чтобы найти выход и активировать аккаунт.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="До сегодняшнего утра";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="До завтрашнего утра";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Пока я не включу их снова";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 минут";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Отключить уведомления чата на";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Уведомления будут отключены до завтра, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Уведомления будут отключены до %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2057,7 +2071,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Не беспокоить";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="Уведомления отключены";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Переподключение…";
 /* Title shown when the user reconnect in a call. */
@@ -2223,7 +2237,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="Хранилище заполнено";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="Ваши данные под угрозой!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Мы писали вам по электронной почте <b>%@</b> <b>%@</b>, но у вас всё ещё %@ файлов, занимающих <b>%@</b> на вашем MEGA-аккаунте, для чего требуется улучшить его до <b>%@</b>.</paragraph>";
@@ -2233,7 +2247,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d д.";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Вы должны действовать немедленно, чтобы сохранить свои данные. </warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>У вас остаётся <warn>%@</warn> для улучшения.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Номер телефона успешно удалён.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Не удалось удалить номер телефона, повторите попытку позже.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Отменить изменения";

@@ -179,7 +179,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="The folder ‘%@’ can’t be created";
+"folderCreationError"="The folder “%@” can’t be created";
 /* */
 "folderLinkUnavailableText1"="This could be due to the following reasons:";
 /* */
@@ -1110,7 +1110,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed the group chat name to ‘[B]’";
+"changedGroupChatNameTo"="[A] changed the group chat name to “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Add Participant…";
 /* Menu item to add participants to a chat */
@@ -1270,7 +1270,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Are you sure you want to abort the registration?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelled your email address, correct it and click ‘Resend’.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and click “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Resend";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Terms of Service breached";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transfer failed due to a recursive directory structure";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
 /* Error shown when SSL check has failed */
@@ -1635,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Search";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allows searching for MEGA files and folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1761,9 +1761,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining...";
+"Joining..."="Joining…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving...";
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="List View";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1955,7 +1955,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobile Data is turned off";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2051,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Until tomorrow morning";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2063,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2223,7 +2223,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files. */
 "When you logout, files from your Offline section will be deleted from your device."="When you logout, files from your Offline section will be deleted from your device.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you log out, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat created on %s1";
 /* Title shown when there are no shared files */

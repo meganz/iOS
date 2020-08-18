@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Terms of Service breached";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transfer wegen Verzeichnisrekursion fehlgeschlagen";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Download";
 /* Singular of file. 1 file */
 "file"="Upload";
+/* Label to desing a file matching */
+"File"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Aktuelle Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allows searching for MEGA files and folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Chatlink erstellen";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Schlüsselrotation ist etwas sicherer, jedoch können Sie keine Chatlinks exportieren, und alte Nachrichten bleiben neuen Teilnehmern unzugänglich.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Link-Export ist nur für Chats mit gesetztem Titel erlaubt.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="Diese Konferenz hat die maximale Teilnehmerzahl erreicht. Sie können derzeit nicht teilnehmen.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Die maximale Anzahl von Video-Teilnehmern ist erreicht, bitte beschränken Sie sich auf Audio.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Listenansicht";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Thumbnail-Ansicht";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Schlechte Verbindung.";
 /* There are no notifications to display. */
@@ -1943,7 +1955,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobile Data is turned off";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1992,6 +2004,8 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
+/* Business user role */
+"User"="User";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Until tomorrow morning";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 Minuten";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Stummschalten für";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Ihre Mobilnummer wurde erfolgreich entfernt.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Die Entfernung Ihrer Mobilnummer ist fehlgeschlagen - bitte versuchen Sie es später noch einmal.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Discard Changes";

@@ -860,7 +860,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesiones cerradas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Cambiar el código de acceso";
+"changePasscodeLabel"="Cambiar código de acceso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acceso simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Términos de uso incumplidos";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transferencia fallida debido a una estructura de carpetas recursiva";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="No accesible por infringir los Términos de servicio";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Descargar";
 /* Singular of file. 1 file */
 "file"="archivo";
+/* Label to desing a file matching */
+"File"="Archivo";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versión actual";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Buscar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite buscar archivos/carpetas de MEGA con Spotlight";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Al activar, permitirá buscar archivos y carpetas de MEGA en la Búsqueda con Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Obtén enlace de chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotación de la clave es ligeramente más segura, pero no podrás crear un enlace del chat y los nuevos participantes no verán los mensajes anteriores.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Para crear un enlace del chat, debes ponerle nombre al grupo.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="No puedes unirte a esta llamada ya que se ha alcanzado el número máximo de participantes.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="No puedes activar el video ya que se alcanzado el número máximo de participantes que usan el video en esta llamada.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List View"="Ver como lista";
+"List View"="Vista de lista";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Vista en miniatura";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Vista de pagina";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Mala conexión.";
 /* There are no notifications to display. */
@@ -1992,12 +2004,14 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrador";
+/* Business user role */
+"User"="Usuario";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferencia";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="No puedes eliminar %1$s como contacto porque es parte de tu cuenta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Solicitar código";
+"Require Passcode"="Solicitar código de acceso";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Inmediatamente";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Seleccionar carpeta";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image Quality"="Calidad de imagen";
+"Image Quality"="Calidad de la imagen";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automática";
 /* Description of Automatic Image Quality option */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Tu número de teléfono se ha eliminado.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="No se ha podido eliminar el número de teléfono, inténtalo más tarde.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Descartar los cambios";
