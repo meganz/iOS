@@ -41,18 +41,21 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     // MARK: - MEGAChatRoomDelegate methods
 
     func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
-     
-        let index = messages.firstIndex { (message) -> Bool in
+        
+        guard let index = messages.firstIndex(where: { (message) -> Bool in
             guard let message = message as? ChatMessage else {
                 return false
             }
             
             return messageId == message.message.messageId
+        }),
+            let numberOfSections = chatViewController?.messagesCollectionView.numberOfSections,
+            numberOfSections > index else {
+                return
         }
-        
         UIView.performWithoutAnimation {
             chatViewController?.messagesCollectionView.performBatchUpdates({
-                chatViewController?.messagesCollectionView.reloadSections([index ?? 0])
+                chatViewController?.messagesCollectionView.reloadSections([index])
             },  completion: { _ in
                 if index == self.messages.count - 1 {
                     self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)

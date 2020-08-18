@@ -22,6 +22,17 @@ extension MEGAChatRoom {
         }
     }
     
+    var canAddReactions: Bool {
+        if isPublicChat,
+        isPreview {
+            return false
+        } else if ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     @objc func userNickname(atIndex index: UInt) -> String? {
         let userHandle = peerHandle(at: index)
         return userNickname(forUserHandle: userHandle)
