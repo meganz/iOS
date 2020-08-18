@@ -78,6 +78,10 @@ extension ChatViewController: MessagesDataSource {
 
 extension ChatViewController: MessageReactionReusableViewDelegate {
     func addMorePressed(chatMessage: ChatMessage, sender: UIView) {
+        guard chatRoom.canAddReactions else {
+            return
+        }
+    
         let vc = ReactionPickerViewController()
         
         vc.message = chatMessage

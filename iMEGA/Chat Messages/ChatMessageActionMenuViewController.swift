@@ -254,6 +254,10 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     func configureHeaderView() {
+        guard let chatMessage = chatMessage, chatMessage.chatRoom.canAddReactions else {
+            return
+        }
+        
         let emojiHeader = UIStackView()
         emojiHeader.axis = .horizontal
         emojiHeader.distribution = .equalSpacing
