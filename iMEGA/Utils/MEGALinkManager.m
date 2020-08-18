@@ -722,12 +722,23 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
-    chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-    chatViewController.publicChatLink = publicChatLink;
+    
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:ChatViewController.class]) {
+        ChatViewController *currentChatViewController = (ChatViewController *)UIApplication.mnz_visibleViewController;
+        if (currentChatViewController.chatRoom.chatId == chatId) {
+            [SVProgressHUD dismiss];
+            return;
+        }
+    }
     
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     if ([rootViewController isKindOfClass:MainTabBarController.class]) {
+     
+        ChatViewController *chatViewController = [ChatViewController.alloc init];
+        chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+        chatViewController.publicChatLink = publicChatLink;
+        
+        
         MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
         mainTBC.selectedIndex = CHAT;
         
@@ -739,13 +750,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
         }
     } else {
-        if ([UIApplication.mnz_visibleViewController isKindOfClass:ChatViewController.class]) {
-            ChatViewController *currentChatViewController = (ChatViewController *)UIApplication.mnz_visibleViewController;
-            if (currentChatViewController.chatRoom.chatId == chatViewController.chatRoom.chatId) {
-                [SVProgressHUD dismiss];
-                return;
-            }
-        }
+        ChatViewController *chatViewController = [ChatViewController.alloc init];
+           chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+           chatViewController.publicChatLink = publicChatLink;
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:chatViewController];
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
