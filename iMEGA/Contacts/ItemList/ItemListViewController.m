@@ -100,7 +100,7 @@
     itemCell.nameLabel.text = item.name;
     
     if (item.isGroup) {
-        itemCell.avatarImageView.image =  [UIImage imageForName:item.name.uppercaseString size:itemCell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(itemCell.avatarImageView.frame.size.width/2.0f)]];
+        itemCell.avatarImageView.image =  [UIImage imageForName:item.name.uppercaseString size:itemCell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(itemCell.avatarImageView.frame.size.width/2.0f)]];
     } else {
         [itemCell.avatarImageView mnz_setImageForUserHandle:item.handle name:item.name];
     }

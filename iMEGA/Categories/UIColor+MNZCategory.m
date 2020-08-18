@@ -334,6 +334,16 @@
     return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
 }
 
+#pragma mark Gradients
+
++ (UIColor *)mnz_grayC2C2C2 {
+    return [UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_grayDBDBDB {
+    return [UIColor colorWithRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:1.0];
+}
+
 #pragma mark - Green
 
 + (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection {

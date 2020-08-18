@@ -50,23 +50,41 @@ final class OverDiskQuotaViewController: UIViewController {
         }
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
-            let daysLeft = daysDistance(from: Date(), endDate: overDiskQuotaData.deadline)
-            let daysLeftLocalized = String(format: AMLocalizedString("%d days", "Count of days"), daysLeft)
-            let warningTitleMessage = AMLocalizedString("<body>You have <warn>%@</warn> left to upgrade.</body>",
-                                                        "Warning message to tell user time left to upgrade subscription.")
-            var formattedTitleMessage = String(format: warningTitleMessage, daysLeftLocalized)
-
-            if daysLeft < 1 {
-                formattedTitleMessage = AMLocalizedString("<body><warn>You must act immediately to save your data.</warn><body>",
-                                                          "<body><warn>You must act immediately to save your data.</warn><body>")
-            }
+            let formattedTitleMessage = titleMessage(for: overDiskQuotaData.deadline)
             let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.caption1)]
             return formattedTitleMessage.attributedString(
                 with: styleMarks,
-                attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
+                attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory
+            )
         }
 
         // MARK: - Privates
+
+        private func daysLeftLocalized(from startDate: Date, to endDate: Date) -> String {
+            let dateComponentsFormatter = DateComponentsFormatter()
+            dateComponentsFormatter.allowedUnits = .day
+            dateComponentsFormatter.unitsStyle = .short
+            return dateComponentsFormatter.string(from: startDate, to: endDate)!
+        }
+
+        private func titleMessage(for deadline: Date) -> String {
+            let daysLeft = daysDistance(from: Date(), endDate: deadline)
+            switch daysLeft {
+            case 0..<1: return
+                AMLocalizedString(
+                    "<body><warn>You must act immediately to save your data.</warn><body>",
+                    "<body><warn>You must act immediately to save your data.</warn><body>"
+                )
+            default:
+                let warningTitleMessage = AMLocalizedString(
+                    "<body>You have <warn>%@</warn> left to upgrade.</body>",
+                    "Warning message to tell user time left to upgrade subscription."
+                )
+                let formattedTitleMessage = String(format: warningTitleMessage,
+                                                   daysLeftLocalized(from: Date(), to: deadline))
+                return formattedTitleMessage
+            }
+        }
 
         private func daysDistance(from startDate: Date, endDate: Date) -> Int {
             let calendar = Calendar.current
@@ -125,18 +143,6 @@ final class OverDiskQuotaViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationController(navigationController, with: traitCollection)
-    }
-
-    // MARK: - Support Trait
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if #available(iOS 13, *) {
-            if previousTraitCollection != traitCollection {
-                setupTraitCollectionAwareView(with: traitCollection)
-            }
-        }
     }
 
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
@@ -279,4 +285,18 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 private extension Selector {
     static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton(button:))
     static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton(button:))
+}
+
+// MARK: - TraitEnviromentAware
+
+extension OverDiskQuotaViewController: TraitEnviromentAware {
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        setupTraitCollectionAwareView(with: currentTrait)
+    }
 }

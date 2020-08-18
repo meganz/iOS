@@ -49,6 +49,8 @@ final class PhotoGridViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateBottomView()
+        
+        navigationController?.presentationController?.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -160,7 +162,25 @@ extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
             return
         }
         
-        completionBlock(selectedAssets)
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.completionBlock(selectedAssets)
+        }
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension PhotoGridViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        dataSource?.selectedAssets.count == 0
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        if (dataSource?.selectedAssets.count ?? 0) > 0 {
+            let discardChangesActionSheet = UIAlertController().discardChanges(fromBarButton: navigationItem.rightBarButtonItem, withConfirmAction: {
+                self.dismiss(animated: true, completion: nil)
+            })
+            present(discardChangesActionSheet, animated: true, completion: nil)
+        }
     }
 }

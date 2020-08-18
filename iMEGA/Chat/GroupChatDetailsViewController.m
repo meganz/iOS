@@ -120,7 +120,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     self.nameLabel.text = self.chatRoom.chatTitle;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
-    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(avatarSize.width/2.0f)]];
+    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
     if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {

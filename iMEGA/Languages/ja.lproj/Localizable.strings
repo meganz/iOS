@@ -2033,11 +2033,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="あなたのビジネスアカウント管理者に連絡して問題を解決し、あなたのアカウントを有効にしてください。";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="今日の朝まで";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="明日の朝まで";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="オンにするまで";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2049,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="以下用のチャット通知をミュート：";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="通知は明日の%@までサイレントになります";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="通知は%@までサイレントになります";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2057,7 +2057,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="邪魔しないでください";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="通知をミュートしました";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="再接続中...";
 /* Title shown when the user reconnect in a call. */
@@ -2223,7 +2223,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="ストレージがいっぱい";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="あなたのデータは危険にさらされています！";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph><b>%@</b>に<b>%@</b>にメールでご連絡いたしましたが、あなたのMEGAアカウントで%@ファイルが<b>%@</b>を占有しているため、<b>%@</b>にアップグレードする必要がございます。</paragraph>";
@@ -2233,7 +2233,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d日";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>すぐに行動してデータを保存する必要があります。</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>アップグレードまで残り<warn>%@</warn>日です。</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
