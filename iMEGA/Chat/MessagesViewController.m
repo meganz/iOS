@@ -680,7 +680,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
                     chatRoomState = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
                 } else if (self.chatRoom.hasCustomTitle) {
-                    chatRoomState = participantsNames;
+                    chatRoomState = [self.chatRoom participantsNamesWithMe:NO];
                 } else {
                     if (self.chatRoom.peerCount) {
                         chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Plural of participant. 2 participants").capitalizedString, self.chatRoom.peerCount + 1];

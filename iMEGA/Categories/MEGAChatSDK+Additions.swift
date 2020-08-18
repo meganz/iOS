@@ -22,6 +22,34 @@ extension MEGAChatSdk {
         createChatGroup(true, peers: peerList, title:title, delegate: delegate)
     }
     
+    @objc func recentChats(max: Int) -> [MEGAChatListItem] {
+        var recentChats = [MEGAChatListItem]()
+        
+        guard let chatListItems = self.chatListItems else {
+            return recentChats
+        }
+        
+        for i in 0..<chatListItems.size {
+            guard let chatListItem = chatListItems.chatListItem(at: i) else {
+                continue
+            }
+            if chatListItem.ownPrivilege.rawValue >= MEGAChatRoomPrivilege.standard.rawValue {
+                recentChats.append(chatListItem)
+            }
+            
+        }
+        
+        recentChats.sort { (a, b) -> Bool in
+            let aDate = a.lastMessageDate ?? Date(timeIntervalSince1970: 0)
+            let bDate = b.lastMessageDate ?? Date(timeIntervalSince1970: 0)
+            return aDate.compare(bDate) == ComparisonResult.orderedDescending
+        }
+        
+        return [MEGAChatListItem](recentChats[0..<min(max, recentChats.count)])
+    }
+    
+    // MARK: - Private
+    
     private func createChatDelegate(completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) -> MEGAChatGenericRequestDelegate {
         let delegate = MEGAChatGenericRequestDelegate { (request, error) in
             if error.type.rawValue == MEGAChatErrorType.MEGAChatErrorTypeOk.rawValue {

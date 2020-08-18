@@ -45,6 +45,7 @@
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
 @property (nonatomic, strong) NSMutableArray *outSharesForNodeMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAShare *> *pendingShareUsersArray;
+@property (nonatomic) NSArray<MEGAChatListItem *> *recentsArray;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -469,6 +470,8 @@
         [self setupContactsTableViewHeader];
         self.tableView.tableHeaderView = self.contactsTableViewHeader;
     } else if (self.contactsMode == ContactsModeChatStartConversation) {
+        self.recentsArray = [MEGASdkManager.sharedMEGAChatSdk recentChatsWithMax:3];
+        
         if (self.visibleUsersArray.count == 0) {
             self.tableView.tableFooterView = self.tableViewFooter;
         } else {
@@ -1344,9 +1347,10 @@
             numberOfRows = (section == 0) ? (self.visibleUsersArray.count + 1) : self.pendingShareUsersArray.count;
             break;
             
-        case ContactsModeChatStartConversation:
-            numberOfRows = (section == 0) ? 3 : [self defaultNumberOfRows]; //'Invite Contact', 'New Group Chat' and 'New Chat Link'
+        case ContactsModeChatStartConversation: {
+            numberOfRows = (section == 0 || section == 1) ? 3 : [self defaultNumberOfRows]; //'Invite Contact', 'New Group Chat' and 'New Chat Link'
             break;
+        }
             
         case ContactsModeChatNamingGroup: {
             numberOfRows = (section == 0) ? self.selectedUsersArray.count + 1 : [self defaultNumberOfRows];
@@ -1378,8 +1382,11 @@
         }
             
         case ContactsModeFolderSharedWith:
-        case ContactsModeChatStartConversation:
             numberOfSections = 2;
+            break;
+            
+        case ContactsModeChatStartConversation:
+            numberOfSections = 3;
             break;
         
         default: //ContactsModeShareFoldersWith, ContactsModeChatAddParticipant, ContactsModeChatAttachParticipant, ContactsModeChatCreateGroup and ContactsModeChatNamingGroup
@@ -1437,6 +1444,32 @@
                 ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" indexPath:indexPath];
                 [cell configureCellForContactsModeChatStartConversation:indexPath];
                 
+                return cell;
+            } if (indexPath.section == 1) {
+                ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
+                MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
+                MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
+                if (chatListItem.isGroup) {
+                    cell.nameLabel.text = chatListItem.title;
+                    cell.shareLabel.text = [chatRoom participantsNamesWithMe:YES];
+                    cell.onlineStatusView.backgroundColor = nil;
+                    cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+                    cell.verifiedImageView.hidden = YES;
+                } else {
+                    uint64_t peerHandle = chatListItem.peerHandle;
+                    cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
+                    MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:peerHandle];
+                    cell.shareLabel.text = [NSString chatStatusString:userStatus];
+                    cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
+                    [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
+                    NSString *peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:peerHandle];
+                    if (peerEmail) {
+                        MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
+                        cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+                    } else {
+                        cell.verifiedImageView.hidden = YES;
+                    }
+                }
                 return cell;
             } else {
                 cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
@@ -1513,7 +1546,11 @@
         headerView.titleLabel.text = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
         return headerView;
     }
-    if (section == 1 && self.contactsMode >= ContactsModeChatStartConversation) {
+    if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
+        headerView.titleLabel.text = AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+        return headerView;
+    }
+    if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {
         headerView.titleLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         return headerView;
     }
@@ -1555,6 +1592,10 @@
             if (self.contactsMode == ContactsModeFolderSharedWith && self.pendingShareUsersArray.count > 0) {
                 heightForHeader = 50.0;
             }
+            break;
+            
+        case 2:
+            heightForHeader = 35.0f;
             break;
             
         default: {
@@ -1660,6 +1701,11 @@
                 } else {
                     [self newChatLink];
                 }
+            } else if (indexPath.section == 1) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
+                    self.chatSelected(chatListItem.chatId);
+                }];
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
                 if (!user) {
