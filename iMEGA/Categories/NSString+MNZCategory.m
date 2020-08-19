@@ -718,6 +718,9 @@ static NSString* const B = @"[B]";
 - (NSString *)mnz_initialForAvatar {
     NSString *trimmedSelf = [self stringByTrimmingCharactersInSet:
                          [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (trimmedSelf.length == 0) {
+        return @"";
+    }
     NSUInteger end = [trimmedSelf rangeOfComposedCharacterSequenceAtIndex:0].length;
     return [trimmedSelf substringToIndex:end].uppercaseString;
 }

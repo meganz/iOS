@@ -9,6 +9,7 @@
 #import <PureLayout/PureLayout.h>
 
 #import "NSDate+DateTools.h"
+
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -24,7 +25,7 @@
 
 #import "CustomModalAlertViewController.h"
 #import "SelectableTableViewCell.h"
-
+#import "MegaNodeActionType.h"
 #import "Helper.h"
 
 #endif /* MEGAShare_Bridging_Header_h */
