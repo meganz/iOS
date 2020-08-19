@@ -848,6 +848,7 @@
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
+		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		A86B9F252316D6AB00F35E7A /* FLEXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E472316D6AA00F35E7A /* FLEXTableViewController.m */; };
 		A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E4A2316D6AA00F35E7A /* FLEXScopeCarousel.m */; };
 		A86B9F272316D6AB00F35E7A /* FLEXTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E4B2316D6AA00F35E7A /* FLEXTableViewSection.m */; };
@@ -7553,6 +7554,7 @@
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
 				5BE689B72419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
+				A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */,
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
 				5BC3D061242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				5BE689BA2419189400462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
