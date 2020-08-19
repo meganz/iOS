@@ -2266,3 +2266,5 @@
 "Your phone number has been removed successfully."="Your phone number has been removed successfully.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Discard Changes";

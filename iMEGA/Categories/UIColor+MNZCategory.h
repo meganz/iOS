@@ -46,6 +46,11 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_grayFAFAFA;
 + (UIColor *)mnz_grayF7F7F7;
 
+#pragma mark Gradients
+
++ (UIColor *)mnz_grayC2C2C2;
++ (UIColor *)mnz_grayDBDBDB;
+
 #pragma mark - Green
 
 + (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection;

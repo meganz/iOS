@@ -286,6 +286,11 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (void)reloadTitleForIndex:(NSUInteger)newIndex {
+    if (newIndex >= self.mediaNodes.count) {
+        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", newIndex, self.mediaNodes.count);
+        return;
+    }
+    
     NSString *subtitle;
     
     switch (self.displayMode) {
@@ -329,6 +334,10 @@ static const CGFloat GapBetweenPages = 10.0;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
     // Toggle the play button:
+    if (self.currentIndex >= self.mediaNodes.count) {
+        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
+        return;
+    }
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.name.mnz_isVideoPathExtension) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];

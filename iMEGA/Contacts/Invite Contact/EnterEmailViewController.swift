@@ -29,6 +29,8 @@ class EnterEmailViewController: UIViewController {
         disableInviteContactsButton()
         
         updateAppearance()
+        
+        navigationController?.presentationController?.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -275,5 +277,13 @@ extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
             }
         }
         tokenField.reloadData()
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension EnterEmailViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        false
     }
 }
