@@ -59,12 +59,12 @@
     self.fileVersioningLabel.text = AMLocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
     [[MEGASdkManager sharedMEGASdk] getFileVersionsOptionWithDelegate:self];
     
-    self.fileVersionsLabel.text = AMLocalizedString(@"File versions", @"Settings preference title to show file versions info of the account");
+    self.fileVersionsLabel.text = AMLocalizedString(@"File Versions", @"Settings preference title to show file versions info of the account");
     long long totalNumberOfVersions = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] numberOfVersionFilesForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
     self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
     [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
     
-    self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete previous versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
+    self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete Previous Versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
     [self updateDeleteVersionsUIBy:[self totalNumberOfFileVersionsOfCurrentAccount]];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];

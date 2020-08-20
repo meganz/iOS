@@ -297,7 +297,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Există deja un fișier cu același nume";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Importă din...";
+"uploadFrom"="Importă din…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] încărcat deja cu numele [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -383,7 +383,7 @@
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Elimină linkul";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Elimină linkurile";
+"removeLinks"="Elimină linkuri";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link eliminat";
 /* Message shown when the links to files and/or folders have been removed */
@@ -587,7 +587,7 @@
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partajează folderul";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Foldere partajate";
+"shareFolders"="Partajează foldere";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selectează";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Configurări > General > Stocare %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Încarcă videoclipuri pentru Live Photos";
+"Upload Videos for Live Photos"="Încarcă videoclipuri pentru Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Încarcă toate fotografiile în rafală";
+"Upload All Burst Photos"="Încarcă toate fotografiile în rafală";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Încarcă album ascuns";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Nu vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
+"Upload Albums Synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Albumele sincronizate sunt locul în care sincronizezi fotografiile sau videoclipurile cu aplicația Poze a dispozitivului, de pe iTunes.";
 /* App means “Application” */
-"App version"="Versiunea aplicației";
+"App Version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Versiunea SDK MEGAchat";
 /* Link to the public code of the app */
-"View source code"="Vezi codul sursă";
+"View Source Code"="Vezi codul sursă";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Confirmări";
 /* Title for the MEGA Recovery Key */
@@ -753,7 +753,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="În prezent folosind %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Anulează contul";
+"cancelYourAccount"="Anulează-ți contul";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Vei pierde toate datele asociate cu acest cont. Sigur vrei să continui?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Au fost încălcați Termenii de utilizare a serviciului";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transferul a eșuat din cauza unei structuri recursive a directoarelor";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Indisponibil din cauza încălcării ToS/AUP";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Descărcare";
 /* Singular of file. 1 file */
 "file"="fișier";
+/* Label to desing a file matching */
+"File"="Fișier";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versiunea actuală";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fișierelor?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="Versiunile fișierelor";
+"File Versions"="Versiunile fișierelor";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Dimensiunea totală ocupată de versiunile fișierelor:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Șterge toate versiunile mai vechi ale fișierelor mele";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Șterge versiunile anterioare";
+"Delete Previous Versions"="Șterge versiunile anterioare";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Toate fișierele actuale vor rămâne. Doar versiunile istorice ale fișierelor vor fi șterse.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Obține linkul chatului";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotația cheii este puțin mai sigură, dar nu îți permite să creezi un link al chatului, iar noii participanți nu vor vedea mesajele din trecut.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Pentru a creat un link de chat trebuie să denumești grupul.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="Nu ți se permite să te alături acestui apel deoarece acesta a atins numărul maxim de participanți.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Nu ți se permite să activezi funcția video deoarece acest apel a atins numărul maxim de participanți care folosesc funcția video.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="Vizualizare tip listă";
+"List View"="Vizualizare tip listă";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Vizualizare tip miniaturi";
+"Thumbnail View"="Vizualizare tip miniaturi";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="Link de chat nou";
 /* Text button for init a group chat */
-"New group chat"="Chat de group nou";
+"New Group Chat"="Chat de group nou";
 /* Title for the recents section. */
 "Recents"="Recente";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Link de chat indisponibil";
+"Chat Link Unavailable"="Link de chat indisponibil";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Acest link de chat nu mai este disponibil";
 /* Text explaining users how the chat links work. */
@@ -1992,12 +2004,14 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
+/* Business user role */
+"User"="Utilizator";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferuri";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s ca contact, deoarece face parte din contul tău business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Necesită cod de acces";
+"Require Passcode"="Necesită cod de acces";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Imediat";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Until tomorrow morning";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 de minute";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Amuțește notificările de chat timp de";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notificările vor fi silențioase până la %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Include etichetele locațiilor";
+"Include Location Tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Dacă aceasta este activată, vei încărca informații despre locul în care au fost făcute fotografiile și videoclipurile, așa că ai grijă când le împărtășești.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Alege un folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Calitatea imaginii";
+"Image Quality"="Calitatea imaginilor";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automat";
 /* Description of Automatic Image Quality option */
@@ -2223,7 +2237,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="Stocare plină";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="Datele tale sunt în pericol!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să faci upgrade la <b>%@</b>.</paragraph>";
@@ -2233,7 +2247,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d zile";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Trebuie să acționezi numaidecât pentru a-ți salva datele.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Ai <warn>%@</warn> rămas(e) pentru a face upgrade.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Numărul tău de telefon a fost eliminat cu succes.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu,";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Discard Changes";

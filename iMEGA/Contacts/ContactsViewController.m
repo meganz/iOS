@@ -684,7 +684,7 @@
             if (self.getChatLinkEnabled) {
                 self.navigationItem.title = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
             } else {
-                self.navigationItem.title = AMLocalizedString(@"New group chat", @"Text button for init a group chat");
+                self.navigationItem.title = AMLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             }
             break;
     }

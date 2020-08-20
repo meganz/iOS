@@ -17,7 +17,7 @@ class ContactsGroupsViewController: UIViewController {
         super.viewDidLoad()
 
         title = AMLocalizedString("Groups", "Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts")
-        newGroupChatLabel.text = AMLocalizedString("New group chat", "Text button for init a group chat")
+        newGroupChatLabel.text = AMLocalizedString("New Group Chat", "Text button for init a group chat")
         
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         if #available(iOS 11.0, *) {
