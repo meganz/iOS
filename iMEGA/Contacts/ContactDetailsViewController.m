@@ -313,6 +313,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForArchiveChatWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
+    cell.avatarImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
     cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
@@ -782,10 +783,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 #pragma mark - IBActions
 
-- (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
-    //TODO: Enable/disable notifications
-}
-
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
@@ -836,10 +833,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowsInSection;
     ContactDetailsSection contactDetailsSection = self.contactDetailsSections[section].unsignedIntValue;
-    if ([self isSharedFolderSection:contactDetailsSection]) {
+    if (contactDetailsSection == ContactDetailsSectionSharedFolders) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
-    } else if (self.shouldAllowToAddContact) {
-        rowsInSection = 1;
     } else if (contactDetailsSection == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {

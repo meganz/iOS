@@ -315,11 +315,11 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Salvar imagem";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Obter Link";
+"getLink"="Obter link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obter links";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Administrar link";
+"manageLink"="Gerenciar link";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="Gerenciar links";
 /* Message shown when a link to a file or folder is being generated */
@@ -587,7 +587,7 @@
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Compartilhar pasta";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Pastas compartilhadas";
+"shareFolders"="Compartilhar pastas";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selecionar";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Ajustes > Geral > Armazenamento do %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Fazer upload de vídeos de Live Photos";
+"Upload Videos for Live Photos"="Fazer o upload de vídeos das Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Fazer upload de todas as fotos em série";
+"Upload All Burst Photos"="Fazer o upload de todas as fotos em modo série";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Fazer upload do Álbum Oculto";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Não será feito o upload dos álbuns compartilhados do aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
+"Upload Albums Synced from iTunes"="Fazer o upload dos álbuns sincronizados do iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Álbuns sincronizados permitem sincronizar fotos ou vídeos com o aplicativo Fotos do seu dispositivo no iTunes.";
 /* App means “Application” */
-"App version"="Versão do aplicativo";
+"App Version"="Versão do aplicativo";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat - versão do SDK";
 /* Link to the public code of the app */
-"View source code"="Ver o código-fonte";
+"View Source Code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
 /* Title for the MEGA Recovery Key */
@@ -753,7 +753,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancelar a sua conta";
+"cancelYourAccount"="Cancelar conta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Você perderá todos os dados associados a esta conta. Tem certeza de que deseja continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -860,7 +860,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessões finalizadas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Alterar o código de acesso";
+"changePasscodeLabel"="Mudar o código";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acesso simples";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Infração dos termos de serviço";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Não foi possível fazer a transferência devido a uma estrutura de diretório recursiva";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Não acessível por infringir os termos de serviço";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Fazer download";
 /* Singular of file. 1 file */
 "file"="arquivo";
+/* Label to desing a file matching */
+"File"="Arquivo";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versão atual";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Pesquisar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite pesquisar por arquivos e pastas do MEGA através da Busca Spotlight do seu dispositivo.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Ao ativar, permitirá pesquisar por arquivos e pastas do MEGA na Pesquisa Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Você tem a chave";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Se o controle de versões de arquivos estiver desativado, ao modificar um arquivo a versão atual será substituída pela nova versão (e suas alterações no arquivo já não serão salvas). Você tem certeza de que quer desativar o controle de versões de arquivos?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="Versões de arquivos";
+"File Versions"="Versões de arquivos";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Espaço ocupado por versões de arquivos:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Deletar todas as versões anteriores dos meus arquivos";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Deletar versões anteriores";
+"Delete Previous Versions"="Deletar versões anteriores";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Todos os arquivos atuais permanecerão. Apenas as versões antigas dos seus arquivos serão deletadas.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Obter o link do chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="A rotação de chaves é um pouco mais segura, mas não permite criar um link do chat, e os novos participantes não verão as mensagens anteriores.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Você precisa nomear o grupo para poder criar um link de chat.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="Você não pode participar desta chamada porque o número máximo de participantes foi alcançado.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Você não tem permissão para ativar o vídeo, pois essa chamada alcançou o número máximo de participantes usando o vídeo.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="Visualização em lista";
+"List View"="Visualização em lista";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Visualização em miniaturas";
+"Thumbnail View"="Visualização em miniaturas";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Visualização de página";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexão ruim.";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="Novo link do chat";
 /* Text button for init a group chat */
-"New group chat"="Novo chat de grupo";
+"New Group Chat"="Novo chat de grupo";
 /* Title for the recents section. */
 "Recents"="Atividades recentes";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="itens";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Link de chat não disponível";
+"Chat Link Unavailable"="Link de chat não disponível";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="O link deste chat já não está disponível";
 /* Text explaining users how the chat links work. */
@@ -1992,12 +2004,14 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrador";
+/* Business user role */
+"User"="Usuário";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferência";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Você não pode remover a %1$s dos seus contatos, por fazer parte da sua conta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Solicitar código de acesso";
+"Require Passcode"="Solicitar código de acesso";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Imediatamente";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Função:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Incluir etiquetas de localização";
+"Include Location Tags"="Incluir etiquetas de localização";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Ao ativar, você fará o upload de informações sobre onde as suas fotos foram tiradas e os seus vídeos foram gravados; portanto, tenha cuidado ao compartilhar.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Escolher pasta";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Qualidade da imagem";
+"Image Quality"="Qualidade da imagem";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automático";
 /* Description of Automatic Image Quality option */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="O seu número de telefone foi removido corretamente.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Não foi possível ao remover o seu número de telefone -  tente novamente mais tarde.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Descartar alterações";

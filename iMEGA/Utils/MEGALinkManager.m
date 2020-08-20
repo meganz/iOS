@@ -172,7 +172,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
                     if (error.type == MEGAChatErrorTypeNoEnt) {
                         [SVProgressHUD dismiss];
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat link unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.").capitalizedString message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
@@ -666,7 +666,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat link unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.").capitalizedString message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
