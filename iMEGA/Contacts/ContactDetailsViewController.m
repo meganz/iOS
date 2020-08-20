@@ -793,10 +793,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 #pragma mark - IBActions
 
-- (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
-    //TODO: Enable/disable notifications
-}
-
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
@@ -847,10 +843,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowsInSection;
     ContactDetailsSection contactDetailsSection = self.contactDetailsSections[section].unsignedIntValue;
-    if ([self isSharedFolderSection:contactDetailsSection]) {
+    if (contactDetailsSection == ContactDetailsSectionSharedFolders) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
-    } else if (self.shouldAllowToAddContact) {
-        rowsInSection = 1;
     } else if (contactDetailsSection == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {
