@@ -6,7 +6,7 @@ import UIKit
     case multiple
 }
 
-class AvatarView: UIView {
+class MegaAvatarView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var firstPeerAvatarImageView: UIImageView!
@@ -25,7 +25,7 @@ class AvatarView: UIView {
     }
     
     func customInit() {
-        customView = Bundle.init(for: type(of: self)).loadNibNamed("AvatarView", owner: self, options: nil)?.first as? UIView
+        customView = Bundle.init(for: type(of: self)).loadNibNamed("MegaAvatarView", owner: self, options: nil)?.first as? UIView
         if let view = customView {
             addSubview(view)
             view.frame = bounds
@@ -33,7 +33,7 @@ class AvatarView: UIView {
         
         firstPeerAvatarImageView.layer.masksToBounds = true
         firstPeerAvatarImageView.layer.borderWidth = 1
-        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background()?.cgColor
+        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background().cgColor
         firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / 2
         
         if #available(iOS 11.0, *) {
@@ -67,6 +67,6 @@ class AvatarView: UIView {
     }
     
     func updateAppearance() {
-        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background()?.cgColor
+        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background().cgColor
     }
 }
