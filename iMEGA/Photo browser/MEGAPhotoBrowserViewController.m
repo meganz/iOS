@@ -475,7 +475,7 @@ static const CGFloat GapBetweenPages = 10.0;
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
-            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                     imageView.yy_imageURL = [NSURL fileURLWithPath:temporaryImagePath];
             } else {
@@ -595,7 +595,7 @@ static const CGFloat GapBetweenPages = 10.0;
         case MEGAPhotoModePreview:
             if (node.hasPreview) {
                 MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:requestCompletion];
-                NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+                NSString *path = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
             } else if (node.name.mnz_isImagePathExtension) {
