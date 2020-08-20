@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="이름을 변경하려면 파일을 탭하세요";
 /* */
-"sendToContact"="연락처에게 보내기";
+"sendToContact"="지인에게 보내기";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="내 대화";
 /* Toast text upon sending a single file to chat */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="설정 > 일반 > %@ 저장소";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="라이브 포토용 동영상 업로드";
+"Upload Videos for Live Photos"="라이브 포토 동영상 업로드";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="모든 연사 사진 업로드";
+"Upload All Burst Photos"="모든 연속 촬영 사진 업로드";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="숨긴 앨범 업로드";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드되지 않을 것입니다";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
+"Upload Albums Synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="동기화된 앨범은 당신의 기기의 사진 앱이 iTunes에서 공기화한 사진 또는 동영상이 저장되는 곳입니다.";
 /* App means “Application” */
-"App version"="앱 버전";
+"App Version"="앱 버전";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK 버전";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat SDK 버전";
 /* Link to the public code of the app */
-"View source code"="소스 코드 보기";
+"View Source Code"="소스 코드 보기";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="통지";
 /* Title for the MEGA Recovery Key */
@@ -860,7 +860,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="세션 닫힘";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="패스코드 변경";
+"changePasscodeLabel"="암호 변경";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="단순 암호";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="이용 약관 침해됨";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="재귀적 경로 구조로 인하여 전송 실패";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="이용 약관 위반으로 인하여 접근 불가";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="다운로드";
 /* Singular of file. 1 file */
 "file"="파일";
+/* Label to desing a file matching */
+"File"="파일";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="현재 버전";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="검색";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="기기의 Spotlight 검색에서 MEGA 파일/폴더 검색을 허용";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="활성화하면, Spotlight 검색에서 MEGA의 파일과 폴더 검색을 허용";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="파일 버전";
+"File Versions"="파일 버전";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="파일 버전으로 이용중인 총 용량:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="모든 오래된 파일 버전 기록을 삭제";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="이전 파일 기록 삭제";
+"Delete Previous Versions"="이전 버전 삭제";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="소유하고 계신 모든 현재 버전의 파일들은 남습니다. 오직 오래된 구 버전의 파일 기록만이 제거됩니다.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="대화 링크 얻기";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="키 순환은 약간 더 안전합니다만, 대화 링크를 생성할 수 없고 새로운 참여자는 과거 메시지를 볼 수 없습니다.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="대화 링크를 생성하려면 그룹 이름을 지어야합니다.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="이 통화가 최대 참가자 수에 도달했기 때문에 참여할 수 없습니다.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="이 통화의 최대 영상 사용 참가자 수에 도달했기 때문에 영상을 활성화할 수 없습니다.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="목록 보기";
+"List View"="목록 보기";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="썸네일 보기";
+"Thumbnail View"="섬네일 보기";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="페이지 보기";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="연결 상태 나쁨.";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="새 대화 링크";
 /* Text button for init a group chat */
-"New group chat"="새 그룹 대화";
+"New Group Chat"="새 단체 대화";
 /* Title for the recents section. */
 "Recents"="최근";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="항목";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="대화 링크 사용 불가";
+"Chat Link Unavailable"="대화 링크 이용 불가";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="이 대화 링크는 더 이상 사용할 수 없습니다";
 /* Text explaining users how the chat links work. */
@@ -1992,12 +2004,14 @@
 "Business"="기업용";
 /* */
 "Administrator"="관리자";
+/* Business user role */
+"User"="이용자";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="전송";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="%1$s님의 연락처는 당신의 비즈니스 계정의 일부이기 때문에 삭제할 수 없습니다.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="비밀번호 필요";
+"Require Passcode"="비밀번호 필요";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="역할:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="위치 태그 포함";
+"Include Location Tags"="위치 태그 포함";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화되면, 사진과 동영상이 어디서 촬영되었는지에 대한 정보가 업로드됩니다, 공유할 때 주의하세요.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="폴더 선택";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="사진 품질";
+"Image Quality"="이미지 품질";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="자동";
 /* Description of Automatic Image Quality option */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="전화번호가 성공적으로 삭제되었습니다.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="전화번호 삭제를 실패하였습니다, 다시 시도하세요.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="변경 취소";

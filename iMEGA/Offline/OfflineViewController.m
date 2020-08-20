@@ -728,7 +728,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf changeViewModePreference];

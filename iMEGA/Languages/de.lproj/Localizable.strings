@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Live-Fotos als Video hochladen";
+"Upload Videos for Live Photos"="Live-Fotos als Video hochladen";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Alle Burst-Sequenzen hochladen";
+"Upload All Burst Photos"="Alle Burst-Sequenzen hochladen";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Versteckte Alben hochladen";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Durch die Photos-App freigegebene Alben werden nicht hochgeladen.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Alben hochladen, die von iTunes synchronisiert wurden";
+"Upload Albums Synced from iTunes"="Alben hochladen, die von iTunes synchronisiert wurden";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Sychronisierte Alben sind Fotos und Videos, die von iTunes an Ihre Photos-App synchronisiert werden.";
 /* App means “Application” */
-"App version"="App Version";
+"App Version"="App Version";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK Version";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK version";
+"megachatSdkVersion"="MEGAchat SDK Version";
 /* Link to the public code of the app */
-"View source code"="Quellcode ansehen";
+"View Source Code"="Quellcode ansehen";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Danksagungen";
 /* Title for the MEGA Recovery Key */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Terms of Service breached";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="Transfer wegen Verzeichnisrekursion fehlgeschlagen";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="Download";
 /* Singular of file. 1 file */
 "file"="Upload";
+/* Label to desing a file matching */
+"File"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Aktuelle Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allows searching for MEGA files and folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Bei deaktivierter Dateiversionierung wird die bestehende Datei beim Überschreiben gelöscht (der Änderungsverlauf bleibt dadurch nicht erhalten). Wollen Sie die Dateiversionierung wirklich abschalten?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="Dateiversionen";
+"File Versions"="Dateiversionen";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Platzverbrauch älterer Dateiversionen:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Alle älteren Dateiversionen löschen";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Delete previous versions";
+"Delete Previous Versions"="Delete Previous Versions";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Alle alten Dateiversionen werden gelöscht. Dateiversionen in Ordnerfreigaben eines Kontakts müssen vom Eigentümer entfernt werden.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="Chatlink erstellen";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Schlüsselrotation ist etwas sicherer, jedoch können Sie keine Chatlinks exportieren, und alte Nachrichten bleiben neuen Teilnehmern unzugänglich.";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Link-Export ist nur für Chats mit gesetztem Titel erlaubt.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="Diese Konferenz hat die maximale Teilnehmerzahl erreicht. Sie können derzeit nicht teilnehmen.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Die maximale Anzahl von Video-Teilnehmern ist erreicht, bitte beschränken Sie sich auf Audio.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="Listenansicht";
+"List View"="Listenansicht";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Thumbnail-Ansicht";
+"Thumbnail View"="Thumbnail-Ansicht";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Schlechte Verbindung.";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="Neuer Chatlink";
 /* Text button for init a group chat */
-"New group chat"="Neuer Gruppenchat";
+"New Group Chat"="Neuer Gruppenchat";
 /* Title for the recents section. */
 "Recents"="Neue/Geänderte Dateien";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="Elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Ungültiger Chatlink";
+"Chat Link Unavailable"="Ungültiger Chatlink";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Dieser Chatlink ist nicht mehr verfügbar";
 /* Text explaining users how the chat links work. */
@@ -1943,7 +1955,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobile Data is turned off";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1992,12 +2004,14 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
+/* Business user role */
+"User"="User";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Passcodeschutz";
+"Require Passcode"="Passcodeschutz";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Sofort";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Until tomorrow morning";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn it back on";
+"Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 Minuten";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Stummschalten für";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be silenced until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rolle";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="Ortsinformationen";
+"Include Location Tags"="Ortsinformationen";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Ordner auswählen";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="Bildkompression";
+"Image Quality"="Bildkompression";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="Ihre Mobilnummer wurde erfolgreich entfernt.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Die Entfernung Ihrer Mobilnummer ist fehlgeschlagen - bitte versuchen Sie es später noch einmal.";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="Discard Changes";

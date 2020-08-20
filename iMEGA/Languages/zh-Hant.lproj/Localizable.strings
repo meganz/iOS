@@ -297,7 +297,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已經有一個同名的檔案";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="自...匯入";
+"uploadFrom"="匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="已成功上傳 [A] 檔案，其於MEGA的名稱為 [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -319,7 +319,7 @@
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="取得分享連結";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="管理連接";
+"manageLink"="管理連結";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="管理連結";
 /* Message shown when a link to a file or folder is being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="在檔案上點擊可重新命名";
 /* */
-"sendToContact"="寄給聯絡人";
+"sendToContact"="寄給連絡人";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="我的聊天";
 /* Toast text upon sending a single file to chat */
@@ -383,7 +383,7 @@
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="移除連結";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="移除分享連結";
+"removeLinks"="移除連結";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="已移除連結";
 /* Message shown when the links to files and/or folders have been removed */
@@ -549,7 +549,7 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="共享者";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="使用聯絡人清單新增";
+"addFromContacts"="從通訊錄加入";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="新增聯絡人";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="設定 > 一般 > %@儲存空間";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="上傳作為實時照片的影片";
+"Upload Videos for Live Photos"="上傳作為實時照片的影片";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="上傳所有的連拍照片";
+"Upload All Burst Photos"="上傳所有的連拍照片";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="上傳隱藏的相簿";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="您裝置的相片程式的共享相簿將不會被上傳";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="上傳來自iTunes同步的專輯";
+"Upload Albums Synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您從iTunes將相片與影片同步到您裝置的相片程式的地方。";
 /* App means “Application” */
-"App version"="App 版本";
+"App Version"="應用程式版本";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK軟體開發包版本";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGA聊天 SDK版本";
+"megachatSdkVersion"="MEGAchat SDK版本";
 /* Link to the public code of the app */
-"View source code"="檢視來源碼";
+"View Source Code"="查看原始碼";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
 /* Title for the MEGA Recovery Key */
@@ -860,11 +860,11 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="已關閉之其他登入";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="更改密碼";
+"changePasscodeLabel"="改密碼";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="簡單密碼";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="刪除本地數據";
+"eraseAllLocalDataLabel"="清除本機資料";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
 /* Menu item */
@@ -1008,7 +1008,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的分享";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="升級帳號";
+"upgradeAccount"="升級帳戶";
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="已違反服務條款";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="由於遞迴目錄結構，所以傳輸失敗";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="由於ToS/AUP違規而無法存取";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="下載";
 /* Singular of file. 1 file */
 "file"="文件";
+/* Label to desing a file matching */
+"File"="檔案";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="目前的版本";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="搜尋";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="將允許在您裝置的Spotlight搜尋中搜尋MEGA檔案/資料夾";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="開啟後，允許在Spotlight搜尋裡查詢MEGA檔案及資料夾。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您握有鑰匙";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="檔案版本功能被停用後，當檔案更新時，該檔案將直接被替換為最新版本（系統不會再記錄您修改檔案的歷程）。您確定要停用檔案版本功能嗎？";
 /* Settings preference title to show file versions info of the account */
-"File versions"="檔案版本";
+"File Versions"="檔案版本";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="檔案版本所佔用的總空間大小：";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="刪除我所有舊版本的檔案";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="刪除以前的版本";
+"Delete Previous Versions"="刪除以前的版本";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="所有當前版本檔案將保留。僅歷史版本的檔案會被刪除。";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="取得聊天連結";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="金鑰輪替會稍微安全些，但不允許您建立聊天連接，而且新的參與者將無法看到歴史的訊息。";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="您必須為該群組命名，才能創建聊天連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="您無法加入此通話，因為它已達到參與人數上限。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="由於此通話已達到視訊參與人數上限，因此您無法開啟視訊。";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="清單檢視";
+"List View"="清單檢視";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="縮圖檢視";
+"Thumbnail View"="縮圖檢視";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="頁面檢視";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="連線品質不良";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="新的聊天連結";
 /* Text button for init a group chat */
-"New group chat"="新聊天群組";
+"New Group Chat"="新群組聊天";
 /* Title for the recents section. */
 "Recents"="近期的";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="個項目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="聊天連結無法使用";
+"Chat Link Unavailable"="聊天連結無法使用";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="此聊天連結已無法使用";
 /* Text explaining users how the chat links work. */
@@ -1992,12 +2004,14 @@
 "Business"="商業";
 /* */
 "Administrator"="管理員";
+/* Business user role */
+"User"="用戶";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="傳輸";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="您無法以刪除聯絡人方式刪除%1$s，因為他們是您商業帳戶的成員之一。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="需要密碼";
+"Require Passcode"="需要密碼";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="立即";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="直到明天早上";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="直到我重新打開";
+"Until I turn it back on"="直到我將它們重新開啟";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分鐘";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,7 +2063,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="的聊天通知轉成靜音";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="通知保持靜音直到明天, %@";
+"Notifications will be silenced until tomorrow, %@"="通知保持靜音直到明天，%@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="通知保持靜音直到%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="職稱:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="包含位置標籤";
+"Include Location Tags"="包含位置標籤";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="如果啟用，您將上傳關於相片與影片拍攝位置的資訊，所以分享時請格外小心。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="選擇資料夾";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="影像品質";
+"Image Quality"="影像品質";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
@@ -2209,7 +2223,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files. */
 "When you logout, files from your Offline section will be deleted from your device."="當您登出時，您離線下載到裝置中的檔案將會被刪除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您離線下載到裝置中的檔案將會被刪除，而且正在進行中的傳輸將取消。";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您裝置上可離線存取的檔案將會被刪除，而且正在進行中的傳輸將被取消。";
 /* Default title of an empty chat. */
 "Chat created on %s1"="對話建立於%s1";
 /* Title shown when there are no shared files */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="您的手機號碼已成功移除。";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="無法移除您的手機號碼，請稍後再試。";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="放棄更改";
