@@ -10,7 +10,7 @@
 
 @interface ChatRoomCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet AvatarView *avatarView;
+@property (weak, nonatomic) IBOutlet MegaAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *chatTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chatLastMessage;
 @property (weak, nonatomic) IBOutlet UILabel *chatLastTime;

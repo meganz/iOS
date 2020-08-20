@@ -1,12 +1,12 @@
 
 import UIKit
 
-@objc enum AvatarViewMode: Int {
+@objc enum MegaAvatarViewMode: Int {
     case single
     case multiple
 }
 
-class AvatarView: UIView {
+class MegaAvatarView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var firstPeerAvatarImageView: UIImageView!
@@ -25,7 +25,7 @@ class AvatarView: UIView {
     }
     
     func customInit() {
-        customView = Bundle.init(for: type(of: self)).loadNibNamed("AvatarView", owner: self, options: nil)?.first as? UIView
+        customView = Bundle.init(for: type(of: self)).loadNibNamed("MegaAvatarView", owner: self, options: nil)?.first as? UIView
         if let view = customView {
             addSubview(view)
             view.frame = bounds
@@ -43,7 +43,7 @@ class AvatarView: UIView {
         }
     }
     
-    @objc func configure(mode: AvatarViewMode) {
+    @objc func configure(mode: MegaAvatarViewMode) {
         switch mode {
         case .single:
             avatarImageView.isHidden            = false

@@ -717,7 +717,7 @@
 - (UITableViewCell *)archivedChatsCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"archivedChatsCell" forIndexPath:indexPath];
     cell.avatarView.avatarImageView.image = [UIImage imageNamed:@"archiveChat"];
-    [cell.avatarView configureWithMode:AvatarViewModeSingle];
+    [cell.avatarView configureWithMode:MegaAvatarViewModeSingle];
     cell.chatTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
     cell.chatLastMessage.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
     return cell;
