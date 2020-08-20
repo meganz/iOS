@@ -683,7 +683,7 @@
             if (self.getChatLinkEnabled) {
                 self.navigationItem.title = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
             } else {
-                self.navigationItem.title = AMLocalizedString(@"New group chat", @"Text button for init a group chat");
+                self.navigationItem.title = AMLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             }
             break;
     }
@@ -1561,52 +1561,71 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0f;
-    switch (section) {
-        case 0:
-            if (self.contactsMode == ContactsModeDefault) {
-                if (self.recentlyAddedUsersArray.count > 0) {
-                    heightForHeader = 35.0f;
-                }
-            }
-            
-            if (self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
-                heightForHeader = 25.0f;
-            }
-            if (self.contactsMode == ContactsModeChatNamingGroup) {
-                heightForHeader = 45.0f;
-            }
-            if (self.contactsMode == ContactsModeFolderSharedWith) {
-                heightForHeader = 50.0f;
-            }
-            break;
-
-        case 1:
-            if (self.contactsMode == ContactsModeDefault) {
-                if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
-                    heightForHeader = 28.0f;
-                }
-            }
-            
-            if (self.contactsMode >= ContactsModeChatStartConversation) {
+    switch (self.contactsMode) {
+        case ContactsModeDefault: {
+            if (section == 0 && self.recentlyAddedUsersArray.count > 0) {
                 heightForHeader = 35.0f;
-            }
-            if (self.contactsMode == ContactsModeFolderSharedWith && self.pendingShareUsersArray.count > 0) {
-                heightForHeader = 50.0;
-            }
-            break;
-            
-        case 2:
-            heightForHeader = 35.0f;
-            break;
-            
-        default: {
-            if (self.contactsMode == ContactsModeDefault) {
+            } else {
                 if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
                     heightForHeader = 28.0f;
                 }
             }
             break;
         }
+            
+        case ContactsModeShareFoldersWith: {
+            if (section == 0) {
+                heightForHeader = 25.0f;
+            }
+            break;
+        }
+            
+        case ContactsModeFolderSharedWith: {
+            if (section == 0) {
+                heightForHeader = 50.0f;
+            } else if (section == 1) {
+                if (self.pendingShareUsersArray.count > 0) {
+                    heightForHeader = 50.0;
+                }
+            }
+            break;
+        }
+            
+        case ContactsModeChatStartConversation: {
+            if (section == 1 || section == 2) {
+                heightForHeader = 35.0f;
+            }
+            break;
+        }
+        
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant: {
+            if (section == 1) {
+                heightForHeader = 35.0f;
+            }
+            break;
+        }
+            
+        case ContactsModeChatCreateGroup: {
+            if (section == 0) {
+                heightForHeader = 25.0f;
+            } else if (section == 1) {
+                heightForHeader = 35.0f;
+            }
+            break;
+        }
+            
+        case ContactsModeChatNamingGroup: {
+            if (section == 0) {
+                heightForHeader = 45.0f;
+            } else if (section == 1) {
+                heightForHeader = 35.0f;
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
     
     return heightForHeader;
