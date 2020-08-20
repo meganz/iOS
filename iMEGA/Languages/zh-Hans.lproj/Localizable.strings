@@ -297,7 +297,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已经有一个同名的文件";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="自...导入";
+"uploadFrom"="导入从……";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="已成功上传[A] 文件，其于MEGA的名称为[B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -317,7 +317,7 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="获取链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="创建共享链接";
+"getLinks"="获取链接";
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="管理链接";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
@@ -381,9 +381,9 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="成功发送%d个文件";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="删除链接";
+"removeLink"="移除链接";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="删除链接";
+"removeLinks"="移除链接";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="链接已删除";
 /* Message shown when the links to files and/or folders have been removed */
@@ -549,7 +549,7 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="共享者";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="使用联系人清单新增";
+"addFromContacts"="从联系人中添加";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="新增联系人";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="设置>通用>%@储存空间";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="上传实况照片的视频";
+"Upload Videos for Live Photos"="上传实况照片视频";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="上传所有连拍照片";
+"Upload All Burst Photos"="上传所有连拍快照";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="上传隐藏相册";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="设备照片中的共享相册不会被上传。";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="上传iTunes中已同步的相册";
+"Upload Albums Synced from iTunes"="上传同步至iTunes的相簿";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相册是指您将照片或视频从iTunes同步至设备的照片应用的相册。";
 /* App means “Application” */
-"App version"="App 版本";
+"App Version"="App版本";
 /* Title of the label where the SDK version is shown */
-"sdkVersion"="MEGA SDK软件开发包版本";
+"sdkVersion"="MEGA SDK版本";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat软件开发包版本";
+"megachatSdkVersion"="MEGAchat SDK版本";
 /* Link to the public code of the app */
-"View source code"="检视来源码";
+"View Source Code"="查看源代码";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感谢";
 /* Title for the MEGA Recovery Key */
@@ -753,7 +753,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="目前已使用%s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="取消账户";
+"cancelYourAccount"="取消帐户";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您将遗失所有与此账户相关的资料，确定要继续吗？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -860,11 +860,11 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="会话已关闭";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="更改验证码";
+"changePasscodeLabel"="更改密码";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="简单密码";
+"simplePasscodeLabel"="简易密码";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="删除本地数据";
+"eraseAllLocalDataLabel"="清除本地数据";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
 /* Menu item */
@@ -1008,7 +1008,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="传入的分享";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="升级帐户";
+"upgradeAccount"="升级账户";
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="已违反服务条款";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="递归目录结构时出现错误，传输失败";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="由于违反ToS服务条款或AUP可接受的使用政策而无法访问";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="下载";
 /* Singular of file. 1 file */
 "file"="文件";
+/* Label to desing a file matching */
+"File"="文件";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="当前版本";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="搜索";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="允许在设备的Spotlight搜索中搜索MEGA文件/文件夹";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="开启后，允许在Spotlight搜索中搜索MEGA文件和文件夹。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件版本控制被禁用时，一旦文件被更新，当前版本将被替换为新版本（并且不再记录对文件的更改）。您确定要禁用文件版本控制吗？";
 /* Settings preference title to show file versions info of the account */
-"File versions"="文件版本";
+"File Versions"="文件版本";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="文件版本占用量:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="删除所有旧版本的文件";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="删除历史版本";
+"Delete Previous Versions"="删除过去的文件版本";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="当前所有文件将被保留。仅删除文件的历史版本。";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="获得聊天链接";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="密钥轮换相对更为安全，但不允许您创建聊天链接，新参与者将无法看到过去的消息。";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="创建聊天链接前请先为群组命名。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="参与人数已达上限，您无法加入此通话。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="已使用视频的参与人数已达上限，您无法开启视频。";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="列表显示";
+"List View"="列表视图";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="缩略图";
+"Thumbnail View"="缩略图视图";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="页面视图";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="网络连接不佳。";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="新聊天链接";
 /* Text button for init a group chat */
-"New group chat"="新分组聊天";
+"New Group Chat"="新群组聊天";
 /* Title for the recents section. */
 "Recents"="近期";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="个项目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="聊天链接不可用";
+"Chat Link Unavailable"="聊天链接失效";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="此聊天链接已不可用";
 /* Text explaining users how the chat links work. */
@@ -1992,12 +2004,14 @@
 "Business"="企业";
 /* */
 "Administrator"="管理员";
+/* Business user role */
+"User"="用户";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="传输";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="您无法删除联系人%1$s，因为它们是您的企业帐户的一部分。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="密码请求";
+"Require Passcode"="密码请求";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="立即";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2037,7 +2051,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="直至明天上午";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="直至打开前";
+"Until I turn it back on"="直到打开前";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分钟";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2049,11 +2063,11 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="静音聊天通知";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="通知将保持静默，直至明天%@";
+"Notifications will be silenced until tomorrow, %@"="通知将保持静音直到明天，%@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="通知将保持静音至%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat信息通知";
+"Chat Notifications"="聊天通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="勿扰模式";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="级别：";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="分享位置标签";
+"Include Location Tags"="包含位置标签";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="开启后，您的相关照片和视频的拍摄地点信息将会上传，分享前请谨慎选择。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="选择文件夹";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="图片质量";
+"Image Quality"="图片质量";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自动";
 /* Description of Automatic Image Quality option */
@@ -2209,7 +2223,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files. */
 "When you logout, files from your Offline section will be deleted from your device."="登出帐户后，“离线”中的文件将从您的设备中删除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="登出帐户后，“离线”中的文件将从您的设备中删除，传输中的文件将被取消。";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="登出帐户后，离线中的文件将从您的设备中删除，传输中的文件将取消。";
 /* Default title of an empty chat. */
 "Chat created on %s1"="聊天创建于%s1";
 /* Title shown when there are no shared files */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="您的手机号已成功解除绑定。";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="手机号解除绑定失败，请稍后再试。";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="放弃修改";

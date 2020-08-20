@@ -1,7 +1,7 @@
 
 import UIKit
 
-@objc enum AvatarViewMode: Int {
+@objc enum MegaAvatarViewMode: Int {
     case single
     case multiple
 }
@@ -43,7 +43,7 @@ class MegaAvatarView: UIView {
         }
     }
     
-    @objc func configure(mode: AvatarViewMode) {
+    @objc func configure(mode: MegaAvatarViewMode) {
         switch mode {
         case .single:
             avatarImageView.isHidden            = false

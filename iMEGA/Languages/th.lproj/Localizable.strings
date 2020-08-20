@@ -297,7 +297,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="มีไฟล์ชื่อเดียวกันอยู่แล้ว";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="นำเข้าจาก...";
+"uploadFrom"="นำเข้าจาก…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] ถูกอัปโหลดไปแล้วด้วยชื่อ [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="การตั้งค่า > ทั่วไป > พื้นที่จัดเก็บข้อมูลของ %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="อัปโหลดวิดีโอสำหรับ Live Photos";
+"Upload Videos for Live Photos"="อัปโหลดวิดีโอสำหรับ Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="อัปโหลดรูปภาพต่อเนื่องทั้งหมด";
+"Upload All Burst Photos"="อัปโหลดรูปภาพต่อเนื่องทั้งหมด";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="อัปโหลดอัลบั้มที่ซ่อนอยู่";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,17 +705,17 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="อัลบั้มที่แชร์จากแอปรูปภาพของอุปกรณ์จะไม่ถูกอัปโหลด";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="อัปโหลดอัลบั้มที่ซิงค์จาก iTunes";
+"Upload Albums Synced from iTunes"="อัปโหลดอัลบั้มที่ซิงค์จาก iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="อัลบั้มที่ซิงค์คือที่ที่คุณซิงค์รูปภาพหรือวิดีโอกับแอปรูปภาพของอุปกรณ์จาก iTunes";
 /* App means “Application” */
-"App version"="เวอร์ชันแอป";
+"App Version"="เวอร์ชันแอป";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="เวอร์ชัน MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="เวอร์ชัน MEGAchat SDK";
 /* Link to the public code of the app */
-"View source code"="ดูซอร์สโค้ด";
+"View Source Code"="ดูซอร์สโค้ด";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="กิตติกรรมประกาศ";
 /* Title for the MEGA Recovery Key */
@@ -1355,7 +1355,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="ละเมิดข้อกำหนดในการให้บริการ";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Upload produces recursivity";
+"Upload produces recursivity"="การถ่ายโอนล้มเหลวเนื่องจากมีโครงสร้างของไดเรกทอรีที่ซ้ำกัน";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="ไม่สามารถเข้าถึงได้เนื่องจากการละเมิด ToS/AUP";
 /* Error shown when SSL check has failed */
@@ -1482,6 +1482,8 @@
 "download"="ดาวน์โหลด";
 /* Singular of file. 1 file */
 "file"="ไฟล์";
+/* Label to desing a file matching */
+"File"="ไฟล์";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="เวอร์ชันปัจจุบัน";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1633,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="ช่วยให้ค้นหาไฟล์/โฟลเดอร์ใน MEGA ผ่าน Spotlight Search อุปกรณ์ของคุณ";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="เมื่อเปิดใช้งาน จะอนุญาตให้ค้นหาไฟล์และโฟลเดอร์ MEGA ใน Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1681,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="เมื่อมีการปิดใช้งานเวอร์ชันไฟล์ เวอร์ชันปัจจุบันจะถูกแทนที่ด้วยเวอร์ชันใหม่เมื่อไฟล์ได้รับการอัปเดตแล้ว (และการเปลี่ยนแปลงไฟล์จะไม่ได้รับการบันทึกอีกต่อไป) คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานการกำหนดเวอร์ชันของไฟล์";
 /* Settings preference title to show file versions info of the account */
-"File versions"="ไฟล์เวอร์ชัน";
+"File Versions"="ไฟล์เวอร์ชัน";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="ขนาดโดยรวมของเวอร์ชันไฟล์:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="ลบไฟล์เวอร์ชันเก่าทั้งหมด";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="ลบเวอร์ชันก่อนหน้า";
+"Delete Previous Versions"="ลบเวอร์ชันก่อนหน้า";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="ไฟล์ปัจจุบันทั้งหมดจะยังคงอยู่ ระบบจะลบไฟล์เวอร์ชันที่เก่ากว่าเท่านั้น";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1732,6 +1734,8 @@
 "Get Chat Link"="รับลิงก์แชท";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การหมุนคีย์ จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
+/* Footer to explain why key rotation is disabled for public chats with many participants */
+"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="ในการสร้างลิงก์แชทคุณจะต้องตั้งชื่อกลุ่มก่อน";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1754,10 +1758,18 @@
 "Error. No more participants are allowed in this group call."="คุณไม่ได้รับอนุญาตให้เข้าร่วมการโทรนี้เนื่องจากมีผู้เข้าร่วมถึงจำนวนสูงสุดแล้ว";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="คุณไม่ได้รับอนุญาตให้เปิดใช้งานวิดีโอเนื่องจากการโทรนี้มีผู้เข้าร่วมถึงจำนวนสูงสุดที่ใช้วิดีโอแล้ว";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+/* Label shown while joining a public chat */
+"Joining..."="Joining…";
+/* Label shown while leaving a public chat */
+"Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="มุมมองรายการ";
+"List View"="มุมมองรายการ";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="มุมมองภาพตัวอย่าง";
+"Thumbnail View"="มุมมองภาพตัวอย่าง";
+/* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
+"Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="การเชื่อมต่อแย่";
 /* There are no notifications to display. */
@@ -1903,7 +1915,7 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="ลิงก์แชทใหม่";
 /* Text button for init a group chat */
-"New group chat"="แชทกลุ่มใหม่";
+"New Group Chat"="แชทกลุ่มใหม่";
 /* Title for the recents section. */
 "Recents"="เมื่อเร็ว ๆ นี้";
 /* Multiple Images title shown in recents section of webclient */
@@ -1929,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="รายการ";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="ลิงก์แชทใช้งานไม่ได้";
+"Chat Link Unavailable"="ลิงก์แชทใช้งานไม่ได้";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="ลิงก์แชทนี้ไม่สามารถใช้ได้อีก";
 /* Text explaining users how the chat links work. */
@@ -1992,12 +2004,14 @@
 "Business"="ธุรกิจ";
 /* */
 "Administrator"="แอดมิน";
+/* Business user role */
+"User"="ผู้ใช้";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="ถ่ายโอน";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="คุณไม่สามารถลบ %1$s ออกจากการเป็นผู้ติดต่อได้เนื่องจากเป็นส่วนหนึ่งของบัญชีธุรกิจของคุณ";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="ต้องใช้รหัส";
+"Require Passcode"="ต้องใช้รหัส";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="ทันที";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2081,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="บทบาท:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags"="รวมแท็กตำแหน่งที่ตั้ง";
+"Include Location Tags"="รวมแท็กตำแหน่งที่ตั้ง";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="หากเปิดใช้งาน คุณจะอัปโหลดข้อมูลเกี่ยวกับตำแหน่งที่ถ่ายภาพและวิดีโอของคุณ ดังนั้นโปรดระมัดระวังถ้าคุณจะแชร์ตำแหน่งที่ตั้ง";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2151,7 +2165,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="เลือกโฟลเดอร์";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image quality"="คุณภาพของรูป";
+"Image Quality"="คุณภาพของรูป";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="อัตโนมัติ";
 /* Description of Automatic Image Quality option */
@@ -2250,3 +2264,5 @@
 "Your phone number has been removed successfully."="หมายเลขโทรศัพท์ของคุณถูกลบเรียบร้อยแล้ว";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="ไม่สามารถลบหมายเลขโทรศัพท์ของคุณได้";
+/* Text used to notify the user that some action would discard a non ended action */
+"Discard Changes"="ยกเลิกการเปลี่ยนแปลง";
