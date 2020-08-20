@@ -462,7 +462,7 @@ extension ProfileViewController: UITableViewDataSource {
                 cell.nameLabel.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
-                    cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title").capitalized
+                    cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title")
                 } else {
                     cell.nameLabel.text = AMLocalizedString("Phone Number", "Text related to verified phone number. Used as title or cell description.")
                     let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
@@ -527,7 +527,7 @@ extension ProfileViewController: UITableViewDataSource {
                 if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
                     cell.detailLabel.text = AMLocalizedString("Administrator", "")
                 } else {
-                    cell.detailLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
+                    cell.detailLabel.text = AMLocalizedString("User", "Business user role")
                 }
                 cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
