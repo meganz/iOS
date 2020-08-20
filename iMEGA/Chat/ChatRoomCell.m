@@ -110,9 +110,7 @@
     [self configureAvatar:chatListItem];
     if (chatListItem.isGroup) {
         self.onlineStatusView.hidden = YES;
-        self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
     } else {
-        [self.avatarView.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
         UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:chatListItem.peerHandle]];
         if (statusColor) {
             self.onlineStatusView.backgroundColor = statusColor;
