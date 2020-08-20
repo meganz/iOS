@@ -30,7 +30,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dZ8-bF-ZqB">
                                                     <rect key="frame" x="10" y="12" width="394" height="55"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVG-YG-CPz" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVG-YG-CPz" customClass="MegaAvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="7.6666666666666679" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="Y7J-9b-6XI"/>
@@ -194,7 +194,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="xCQ-kJ-Yo3">
                                                     <rect key="frame" x="15" y="10" width="387" height="39"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAY-It-Fen" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAY-It-Fen" customClass="MegaAvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="5.6666666666666643" width="28" height="28"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="28" id="Qvv-YM-xf6"/>
@@ -581,7 +581,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Jsg-U8-KqV">
                                                     <rect key="frame" x="10" y="10" width="394" height="40"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YQ-BN-oTU" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YQ-BN-oTU" customClass="MegaAvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="QH7-l1-f1o"/>
@@ -1363,7 +1363,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vq-gO-h5T">
-                                                    <rect key="frame" x="60" y="13" width="38.333333333333343" height="18"/>
+                                                    <rect key="frame" x="60" y="13" width="38.666666666666657" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2071,7 +2071,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-9K-HhH">
-                                                    <rect key="frame" x="58" y="34" width="43.666666666666657" height="14"/>
+                                                    <rect key="frame" x="58" y="34" width="44" height="14"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
