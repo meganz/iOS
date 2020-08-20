@@ -33,8 +33,8 @@ class SortingAndViewModeTableViewController: UITableViewController {
         sortingPreferenceSameForAllDetailLabel.text = AMLocalizedString("choosePhotoVideo", "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
         
         viewModePreferencePerFolderLabel.text = AMLocalizedString("Per Folder", "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
-        viewModePreferenceListViewLabel.text = AMLocalizedString("List view", "Text shown for switching from thumbnail view to list view.")
-        viewModePreferenceThumbnailViewLabel.text = AMLocalizedString("Thumbnail view", "Text shown for switching from list view to thumbnail view.")
+        viewModePreferenceListViewLabel.text = AMLocalizedString("List View", "Text shown for switching from thumbnail view to list view.")
+        viewModePreferenceThumbnailViewLabel.text = AMLocalizedString("Thumbnail View", "Text shown for switching from list view to thumbnail view.")
         
         updateAppearance()
     }

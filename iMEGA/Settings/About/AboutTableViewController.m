@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.versionLabel.text = AMLocalizedString(@"App version", @"App means “Application”");
+    self.versionLabel.text = AMLocalizedString(@"App Version", @"App means “Application”");
     self.versionNumberLabel.text = [NSString stringWithFormat:@"%@ (%@)",
                                     [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
                                     [NSBundle.mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
@@ -44,7 +44,7 @@
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
     self.megachatSdkSHALabel.text = NSBundle.mainBundle.infoDictionary[@"CHAT_SDK_GIT_COMMIT_HASH"];
     
-    self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
+    self.viewSourceCodeLabel.text = AMLocalizedString(@"View Source Code", @"Link to the public code of the ap");
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
     

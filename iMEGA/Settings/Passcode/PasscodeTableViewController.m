@@ -36,9 +36,9 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"passcode", nil)];
     [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcode", nil)];
-    [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Change passcode")];
-    [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
-    self.requirePasscodeLabel.text = AMLocalizedString(@"Require passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
+    [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Section title where you can change the app's passcode")];
+    [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Title to describe a simple (four digit) passcode")];
+    self.requirePasscodeLabel.text = AMLocalizedString(@"Require Passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
 
     self.biometricsLabel.text = @"Touch ID";
     
