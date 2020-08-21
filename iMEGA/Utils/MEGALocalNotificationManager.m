@@ -197,16 +197,10 @@
             
         case MEGAChatMessageTypeCallEnded: {
 #ifndef MNZ_APP_EXTENSION
-            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-            
+            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];            
             NSInteger badgeCount = [sharedUserDefaults integerForKey:MEGAApplicationIconBadgeNumber];
-            if (badgeCount > 0) {
-                [sharedUserDefaults setInteger:badgeCount + 1 forKey:MEGAApplicationIconBadgeNumber];
-                UIApplication.sharedApplication.applicationIconBadgeNumber = badgeCount + 1;
-            } else {
-                [sharedUserDefaults setInteger:1 forKey:MEGAApplicationIconBadgeNumber];
-                [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
-            }
+            [sharedUserDefaults setInteger:badgeCount + 1 forKey:MEGAApplicationIconBadgeNumber];
+            UIApplication.sharedApplication.applicationIconBadgeNumber = badgeCount + 1;
 #endif
             body = AMLocalizedString(@"missedCall", @"Title of the notification for a missed call");
             break;

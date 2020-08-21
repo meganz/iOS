@@ -171,13 +171,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
         if let sharedUserDefaults = UserDefaults(suiteName: MEGAGroupIdentifier) {
             let badgeCount = sharedUserDefaults.integer(forKey: MEGAApplicationIconBadgeNumber)
-            if badgeCount > 0 {
-                sharedUserDefaults.set(badgeCount + 1, forKey: MEGAApplicationIconBadgeNumber)
-                bestAttemptContent.badge = badgeCount + 1 as NSNumber
-            } else {
-                sharedUserDefaults.set(1, forKey: MEGAApplicationIconBadgeNumber)
-                bestAttemptContent.badge = 1
-            }
+            sharedUserDefaults.set(badgeCount + 1, forKey: MEGAApplicationIconBadgeNumber)
+            bestAttemptContent.badge = badgeCount + 1 as NSNumber
         }
         contentHandler(bestAttemptContent)
     }
