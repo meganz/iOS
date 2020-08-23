@@ -24,9 +24,16 @@ class AudioRecordingInputBar: UIView {
     lazy var audioRecorder = AudioRecorder()
     var player: AVAudioPlayer?
     var trashButtonTapHandler: (() -> Void)?
+    
+    private lazy var trashedTapGesture: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer(target: self, action:#selector(trashTapGesture))
+        return recognizer
+    }()
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        addGestureRecognizer(trashedTapGesture)
                 
         suggestionLabel.text = AMLocalizedString("Drag left to cancel, release to send", "Action suggestion text to the user in voice recording view")
         audioWavesView = AudioWavesView.instanceFromNib
@@ -131,7 +138,7 @@ class AudioRecordingInputBar: UIView {
         }
     }
     
-    @IBAction func trashButtonTapped(_ button: UIButton) {
+    @objc func trashTapGesture(_ tapGesture: UITapGestureRecognizer) {
         guard locked, let handler = trashButtonTapHandler else {
             return
         }
@@ -150,6 +157,5 @@ class AudioRecordingInputBar: UIView {
         }
     }
 }
-
 
 
