@@ -34,8 +34,9 @@ class AudioWavesView: UIView {
             }
         } else {
             let balance = stackView.arrangedSubviews.count - numberOfViews
-            let viewsToRemove = stackView.arrangedSubviews[0..<balance]
-            viewsToRemove.forEach({ $0.removeFromSuperview() })
+            (0..<balance).forEach { _ in
+                stackView.arrangedSubviews.first?.removeFromSuperview()
+            }
         }
     }
     
