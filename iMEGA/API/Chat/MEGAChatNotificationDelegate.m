@@ -13,8 +13,6 @@
 - (void)onChatNotification:(MEGAChatSdk *)api chatId:(uint64_t)chatId message:(MEGAChatMessage *)message {
     MEGALogDebug(@"[Notification] On chat %@ message %@", [MEGASdk base64HandleForUserHandle:chatId], message);
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
-    
     MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:message.messageId];
     if (moMessage) {
         [MEGAStore.shareInstance deleteMessage:moMessage];

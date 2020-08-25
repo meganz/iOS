@@ -1759,7 +1759,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="U mag geen video inschakelen omdat deze oproep het maximale aantal deelnemers heeft bereikt dat video gebruikt.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
 /* Label shown while joining a public chat */
 "Joining..."="Joining…";
 /* Label shown while leaving a public chat */
@@ -2266,3 +2266,17 @@
 "Failed to remove your phone number, please try again later."="Kan uw telefoonnummer niet verwijderen. Probeer het later opnieuw.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Wijzigingen weggooien";
+/* Title of the Proxy section under Settings */
+"Proxy"="Proxy";
+/* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
+"Proxy Settings"="Proxy Instellingen";
+/* Label to indicate not to use any proxy. String as short as possible. */
+"No proxy"="Geen proxy";
+/* Label to indicate the server IP to be used. String as short as possible. */
+"Server:"="Server:";
+/* Label to indicate a server port to be used. String as short as possible. */
+"Port"="Port";
+/* Label to indicate if the proxy used requires a password. String as short as possible. */
+"Proxy server requires a password"="Proxy server vereist een wachtwoord";
+/* Label to indicate the username of the proxy. String as short as possible. */
+"Username:"="Gebruikersnaam:";
