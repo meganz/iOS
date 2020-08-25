@@ -131,3 +131,8 @@ extern const NSUInteger MEGAGroupCallsPeersChangeLayout;
 #pragma mark - Add Your Phone Number
 
 extern const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount;
+
+#pragma mark - MEGAApplicationIconBadgeNumber
+
+/// Key used for shared user default to store the value of the aplication icon badge
+extern NSString * const MEGAApplicationIconBadgeNumber;
