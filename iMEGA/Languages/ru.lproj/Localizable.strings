@@ -705,7 +705,7 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Общие альбомы из приложения «Фото» не были загружены.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload Albums Synced from iTunes"="Загружать альбомы, синхронизированные из iTunes";
+"Upload Albums Synced from iTunes"="Загружать альбомы, синхронизированные с iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Синхронизированные альбомы, где вы синхронизируете фотографии или видео из iTunes c приложением «Фото» на устройстве.";
 /* App means “Application” */
@@ -1689,7 +1689,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Удалить все старые версии моих файлов";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete Previous Versions"="Удалить прошлые версии";
+"Delete Previous Versions"="Удалить предыдущие версии";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Все текущие файлы останутся. Только прошлые версии файлов будут удалены.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1759,17 +1759,17 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Вы не можете включить видео, так в этом вызове уже максимальное количество участников, использующих видео.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Присоединение…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Выход…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Список";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Значки";
+"Thumbnail View"="Отображение эскизов";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Page View";
+"Page View"="Вид страницы";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Плохое соединение.";
 /* There are no notifications to display. */
@@ -2266,3 +2266,17 @@
 "Failed to remove your phone number, please try again later."="Не удалось удалить номер телефона, повторите попытку позже.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Отменить изменения";
+/* Title of the Proxy section under Settings */
+"Proxy"="Прокси";
+/* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
+"Proxy Settings"="Настройки прокси";
+/* Label to indicate not to use any proxy. String as short as possible. */
+"No proxy"="Без прокси";
+/* Label to indicate the server IP to be used. String as short as possible. */
+"Server:"="Сервер:";
+/* Label to indicate a server port to be used. String as short as possible. */
+"Port"="Port";
+/* Label to indicate if the proxy used requires a password. String as short as possible. */
+"Proxy server requires a password"="Требуется пароль к прокси-серверу";
+/* Label to indicate the username of the proxy. String as short as possible. */
+"Username:"="Имя пользователя:";
