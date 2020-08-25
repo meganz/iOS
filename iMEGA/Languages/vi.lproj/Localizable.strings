@@ -1202,7 +1202,7 @@
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="Người điều hành";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
-"standard"="Thành viên";
+"standard"="Thường";
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Loại Bỏ Thành Viên";
 /* Title show above the name of the persons with whom you're chatting */
@@ -1260,7 +1260,7 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Xem các gói thuê bao";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Đã đọc xong";
+"dismiss"="Đã đọc";
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="Có vài tin nhắn mới";
 /* Notification text body shown when you have received a contact request */
@@ -1735,7 +1735,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên mã khóa giúp cho việc an ninh được nâng cấp hơn, nhưng sẽ không cho phép bất kỳ ai tạo ra đường liên kết tới cuộc chát và người mới tham gia vào chát sẽ không thấy các tin nhắn diễn ra từ trước.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Luân phiên mã khóa bị tắt đối với các cuộc trò chuyện có hơn 100 thành viên.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Để tạo ra liên kết tới chát, đặt tên cho nhóm trước.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1745,7 +1745,7 @@
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="Bạn đã tham gia vào %@";
 /* Users previewing a public chat */
-"Observers"="Theo Dõi";
+"Observers"="Người theo dõi";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên mã khóa";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
@@ -1759,11 +1759,11 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Không thể bật video cho cuộc gọi này được vì quá mức số lượng thành viên tham gia cuộc gọi đang sử dụng video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Không thể tiến hành cuộc gọi do vượt quá số lượng thành viên.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Đang tham gia…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Đang rời khỏi…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Xem kiểu danh sách";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1871,7 +1871,7 @@
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Tùy chỉnh bản đồ";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Thành viên";
+"Standard"="Thường";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Ảnh từ vệ tinh";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -1885,9 +1885,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="Vị Trí Được Đánh Dấu";
 /* Plural of participant. 2 participants */
-"%d participants"="%d người tham gia";
+"%d participants"="%d thành viên";
 /* Singular of participant. 1 participant */
-"%d participant"="%d người tham gia";
+"%d participant"="%d thành viên";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Trượt qua để hủy";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2267,3 +2267,17 @@
 "Failed to remove your phone number, please try again later."="Xóa bỏ số điện thoại đã thất bại, xin thử lại sau.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Hủy bỏ các thay đổi";
+/* Title of the Proxy section under Settings */
+"Proxy"="Proxy";
+/* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
+"Proxy Settings"="Các thiết đặt Proxy";
+/* Label to indicate not to use any proxy. String as short as possible. */
+"No proxy"="Không dùng proxy";
+/* Label to indicate the server IP to be used. String as short as possible. */
+"Server:"="Máy chủ:";
+/* Label to indicate a server port to be used. String as short as possible. */
+"Port"="Port";
+/* Label to indicate if the proxy used requires a password. String as short as possible. */
+"Proxy server requires a password"="Máy chủ proxy yêu cầu mật khẩu";
+/* Label to indicate the username of the proxy. String as short as possible. */
+"Username:"="Username:";

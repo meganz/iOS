@@ -1735,7 +1735,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="密钥轮换相对更为安全，但不允许您创建聊天链接，新参与者将无法看到过去的消息。";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="密钥轮换将被禁用当参与者超过100人时。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="创建聊天链接前请先为群组命名。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,11 +1759,11 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="已使用视频的参与人数已达上限，您无法开启视频。";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
+"Unable to start a call because the participants limit was exceeded."="由于超出参与者人数限制，无法发起通话。";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="正在加入…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="正在离开…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="列表视图";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2266,3 +2266,17 @@
 "Failed to remove your phone number, please try again later."="手机号解除绑定失败，请稍后再试。";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="放弃修改";
+/* Title of the Proxy section under Settings */
+"Proxy"="Proxy代理服务器";
+/* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
+"Proxy Settings"="Proxy代理服务器设定";
+/* Label to indicate not to use any proxy. String as short as possible. */
+"No proxy"="无Proxy代理服务器";
+/* Label to indicate the server IP to be used. String as short as possible. */
+"Server:"="服务器:";
+/* Label to indicate a server port to be used. String as short as possible. */
+"Port"="Port";
+/* Label to indicate if the proxy used requires a password. String as short as possible. */
+"Proxy server requires a password"="Proxy代理服务器需输入密码";
+/* Label to indicate the username of the proxy. String as short as possible. */
+"Username:"="使用者名称:";

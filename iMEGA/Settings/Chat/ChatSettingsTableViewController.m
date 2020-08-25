@@ -83,6 +83,8 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
     
     self.doNotDisturbLabel.text = AMLocalizedString(@"Do Not Disturb", nil);
+
+    self.chatNotificationsLabel.text = AMLocalizedString(@"Chat Notifications", @"Title that refers to disabling the chat notifications forever.");
     
     self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
     
