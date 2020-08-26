@@ -7,7 +7,6 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
-    func safeAreaInsets() -> UIEdgeInsets
 }
 
 class ChatInputBar: UIView {
@@ -131,12 +130,11 @@ class ChatInputBar: UIView {
         return .zero
     }
     
-    // observation: By default the returned left and right safe area insets (super) are wrong when orientation is changed from portrait to landscape and back to portrait. Observed that the inset returned by the view controller is right and hence taking it from there.
+    // observation: By default the returned left and right safe area insets (super) are wrong when orientation is changed from portrait to landscape and back to portrait. Hence taking it from window.
     override var safeAreaInsets: UIEdgeInsets {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, *), let window = window {
             let edgeInsets = super.safeAreaInsets
-            let inputEdgeInsets = self.delegate?.safeAreaInsets() ?? UIEdgeInsets.zero
-            return UIEdgeInsets(top: edgeInsets.top, left: inputEdgeInsets.left, bottom: edgeInsets.bottom, right: inputEdgeInsets.right)
+            return UIEdgeInsets(top: edgeInsets.top, left: window.safeAreaInsets.left, bottom: edgeInsets.bottom, right: window.safeAreaInsets.right)
         } else { }
         return .zero
     }
