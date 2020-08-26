@@ -78,6 +78,8 @@ class AddToChatViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         preferredContentSize = requiredSize(forWidth: min((view.bounds.width-20), iPadPopoverWidth))
+        
+        updateContentViewConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,7 +92,7 @@ class AddToChatViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        contentViewHeightConstraint.constant = requiredSize(forWidth: view.bounds.width).height
+        contentViewHeightConstraint.constant = requiredSize(forWidth: contentView.bounds.width).height
     }
     
     func presentationAnimationComplete() {
@@ -124,6 +126,17 @@ class AddToChatViewController: UIViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { context in            
+            UIView.animate(withDuration: context.transitionDuration) {
+                self.updateContentViewConstraints()
+                self.view.layoutIfNeeded()
+            }
+        })
+    }
+    
     func setUpMenuPageViewController() {
         menuPageViewController = AddToChatMenuPageViewController(transitionStyle: .scroll,
                                                                  navigationOrientation: .horizontal,
@@ -143,6 +156,17 @@ class AddToChatViewController: UIViewController {
         }
         
         menuPageViewController.updateAudioVideoMenu()
+    }
+    
+    private func updateContentViewConstraints() {
+        if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width > UIScreen.main.bounds.height) {
+            let contentViewPadding = (UIScreen.main.bounds.width - UIScreen.main.bounds.height) / 2.0
+            self.contentViewLeadingConstraint.constant = contentViewPadding
+            self.contentViewTrailingConstraint.constant = -contentViewPadding
+        } else if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width < UIScreen.main.bounds.height)  {
+            self.contentViewLeadingConstraint.constant = 0
+            self.contentViewTrailingConstraint.constant = 0
+        }
     }
     
     private func dismiss(completionBlock: (() -> Void)? = nil){

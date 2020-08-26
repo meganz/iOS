@@ -7,6 +7,7 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
+    func safeAreaInsets() -> UIEdgeInsets
 }
 
 class ChatInputBar: UIView {
@@ -128,6 +129,10 @@ class ChatInputBar: UIView {
 
     override var intrinsicContentSize: CGSize {
         return .zero
+    }
+    
+    override var safeAreaInsets: UIEdgeInsets {
+        return self.delegate?.safeAreaInsets() ?? UIEdgeInsets.zero
     }
     
     override init(frame: CGRect) {

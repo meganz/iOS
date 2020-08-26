@@ -33,7 +33,7 @@ class AddToChatViewAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             toView.autoPinEdgesToSuperviewEdges()
         }
         containerView.bringSubviewToFront(addToChatViewController.view)
-        addToChatViewController.view.layoutIfNeeded()
+        containerView.layoutIfNeeded()
 
         guard let contentView = addToChatViewController.contentView,
             let contentSnapShot = contentView.snapshotView(afterScreenUpdates: (type == .present)) else {

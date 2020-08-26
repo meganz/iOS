@@ -277,6 +277,18 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    func safeAreaInsets() -> UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaInsets
+        } else {
+            return .zero
+        }
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         return super.collectionView(collectionView, cellForItemAt: indexPath)
