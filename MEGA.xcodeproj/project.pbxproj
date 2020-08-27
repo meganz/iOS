@@ -561,7 +561,6 @@
 		83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */; };
 		8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */; };
-		8333E52124DC420500BB5A9D /* NodeInfoOfflineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E52024DC420500BB5A9D /* NodeInfoOfflineTableViewCell.swift */; };
 		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
 		834AD6052024694200D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
 		834AD6062024694200D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
@@ -1945,7 +1944,6 @@
 		83337CAA21009494000F40A7 /* ItemListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListModel.m; sourceTree = "<group>"; };
 		8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoPreviewTableViewCell.swift; sourceTree = "<group>"; };
-		8333E52024DC420500BB5A9D /* NodeInfoOfflineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoOfflineTableViewCell.swift; sourceTree = "<group>"; };
 		83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveCollectionViewController.h; sourceTree = "<group>"; };
 		83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveCollectionViewController.m; sourceTree = "<group>"; };
 		834AD6012024694200D2527F /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
@@ -4674,7 +4672,6 @@
 				833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */,
 				8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */,
 				8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */,
-				8333E52024DC420500BB5A9D /* NodeInfoOfflineTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -6888,7 +6885,6 @@
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
 				5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				A86B9F682316D6AB00F35E7A /* FLEXSystemLogTableViewController.m in Sources */,
-				8333E52124DC420500BB5A9D /* NodeInfoOfflineTableViewCell.swift in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,

@@ -13,7 +13,6 @@ enum NodeInfoTableViewSection: Int {
 
 enum InfoSectionRow: Int {
     case preview
-    case offline
 }
 
 enum DetailsSectionRow: Int {
@@ -155,35 +154,6 @@ class NodeInfoViewController: UIViewController {
         showAddShareContactView()
     }
     
-    @IBAction func offlineSwitchTapped(_ sender: UISwitch) {
-        if sender.isOn { //Start download
-            if let downloadImage = UIImage(named: "hudDownload") {
-                SVProgressHUD.show(downloadImage, status: AMLocalizedString("downloadStarted", "Message shown when a download starts"))
-            }
-            node.mnz_downloadNodeOverwriting(false)
-        } else {
-            let nodePath = Helper.pathForOffline() + node.name
-            if FileManager.default.fileExists(atPath: nodePath) {
-                do { //Remove file and data base object if exist
-                    try FileManager.default.removeItem(atPath: nodePath)
-                    if let offlineNode = MEGAStore.shareInstance()?.offlineNode(with: node) {
-                        MEGAStore.shareInstance()?.remove(offlineNode)
-                    }
-                } catch {
-                    SVProgressHUD.showError(withStatus: "")
-                }
-            }
-            
-            if let transfers = MEGASdkManager.sharedMEGASdk().downloadTransfers.mnz_transfersArrayFromTranferList() { //Cancel transfer if it is in progress
-                transfers.forEach { (transfer) in
-                    if transfer.nodeHandle == node.handle {
-                        MEGASdkManager.sharedMEGASdk().cancelTransfer(transfer)
-                    }
-                }
-            }
-        }
-    }
-    
     @objc private func closeButtonTapped() {
         MEGASdkManager.sharedMEGASdk().remove(self)
         dismiss(animated: true, completion: nil)
@@ -293,13 +263,7 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func infoRows() -> [InfoSectionRow] {
-        var infoRows = [InfoSectionRow]()
-        infoRows.append(.preview)
-        if node.isFile() {
-            infoRows.append(.offline)
-        }
-        
-        return infoRows
+        return [.preview]
     }
     
     private func detailRows() -> [DetailsSectionRow] {
@@ -339,16 +303,6 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node)
-        
-        return cell
-    }
-    
-    private func offlineCell (forIndexPath indexPath: IndexPath) -> NodeInfoOfflineTableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoOfflineCell", for: indexPath) as? NodeInfoOfflineTableViewCell else {
-            fatalError("Could not get NodeInfoOfflineTableViewCell")
-        }
-
         cell.configure(forNode: node)
         
         return cell
@@ -481,8 +435,6 @@ extension NodeInfoViewController: UITableViewDataSource {
             switch infoRows()[indexPath.row] {
             case .preview:
                 return previewCell(forIndexPath: indexPath)
-            case .offline:
-                return offlineCell(forIndexPath: indexPath)
             }
         case .details:
             return detailCell(forIndexPath: indexPath)
@@ -519,8 +471,6 @@ extension NodeInfoViewController: UITableViewDelegate {
             switch infoRows()[indexPath.row] {
             case .preview:
                 return 230
-            case .offline:
-                return 44
             }
         }
     }
