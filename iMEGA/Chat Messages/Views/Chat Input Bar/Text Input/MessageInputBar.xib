@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -128,7 +128,7 @@
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="leading" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="13" id="JjR-d1-KwI"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="trailing" secondItem="zpz-gS-Gkz" secondAttribute="trailing" id="OxB-4H-ddg"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Q33-kC-Y9H"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gyg-48-psi" secondAttribute="trailing" id="TjQ-Wj-1H6"/>
+                <constraint firstAttribute="trailing" secondItem="gyg-48-psi" secondAttribute="trailing" id="TjQ-Wj-1H6"/>
                 <constraint firstItem="ul9-iZ-5KV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="38" id="UE7-5x-znS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ckY-Kz-eqN" secondAttribute="bottom" constant="6.5" id="Vpd-Qt-aKW"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="centerX" secondItem="APV-vT-gYp" secondAttribute="centerX" id="WrG-aE-4gw"/>
@@ -143,7 +143,7 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="15" id="lC6-Rd-2PT"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="od0-pO-f9a"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="trailing" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="5" id="q8V-yt-DgD"/>
-                <constraint firstItem="gyg-48-psi" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qdN-uB-Vyz"/>
+                <constraint firstItem="gyg-48-psi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qdN-uB-Vyz"/>
                 <constraint firstAttribute="bottom" secondItem="vXN-Gp-R34" secondAttribute="bottom" id="tc4-65-U4o"/>
                 <constraint firstAttribute="trailing" secondItem="8mz-bo-tiI" secondAttribute="trailing" constant="17" id="v5C-GR-y1d"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="x17-cC-M4D"/>
