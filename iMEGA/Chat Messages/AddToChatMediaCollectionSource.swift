@@ -68,17 +68,21 @@ class AddToChatMediaCollectionSource: NSObject {
 
 extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if hasAuthorizedAccessToPhotoAlbum {
-            updateFetchResult()
-            guard let fetchResult = fetchResult else {
-                return 2
-            }
-            
-            let assetCounts = (fetchResult.count > maxNumberOfAssetsFetched) ? maxNumberOfAssetsFetched : fetchResult.count
-            return 1 + assetCounts
+        let cameraCellCount = 1
+        let photosErrorCellCount = 1
+        
+        guard hasAuthorizedAccessToPhotoAlbum else {
+            return cameraCellCount + photosErrorCellCount
         }
         
-        return 2
+        updateFetchResult()
+        guard let fetchResult = fetchResult else {
+            return cameraCellCount + photosErrorCellCount
+        }
+        
+        let assetCounts = (fetchResult.count > maxNumberOfAssetsFetched) ? maxNumberOfAssetsFetched : fetchResult.count
+        return cameraCellCount + assetCounts
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
