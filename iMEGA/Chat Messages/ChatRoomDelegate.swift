@@ -645,9 +645,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
                 
             })
             
-        }
-        
-        print(transfer.tag)
+        }        
     }
     
     func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
