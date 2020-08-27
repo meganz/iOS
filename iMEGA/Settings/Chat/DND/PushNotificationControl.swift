@@ -10,7 +10,7 @@ protocol DNDTurnOnAlertControllerAction {
     func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?)-> (((UIAlertAction) -> Void)?)
 }
 
-class PushNotificationControl: NSObject {
+class PushNotificationControl: NSObject, MEGARequestDelegate {
     // MARK:- Constants and Variables
     
     var pushNotificationSettings: MEGAPushNotificationSettings? {
@@ -23,19 +23,6 @@ class PushNotificationControl: NSObject {
         }
     }
     
-    private var pushNotificationSettingsDelegate: MEGAGenericRequestDelegate {
-        return MEGAGenericRequestDelegate { [weak self] request, error in
-            if error.type == .apiENoent {
-                self?.pushNotificationSettings = MEGAPushNotificationSettings()
-            } else if error.type == .apiOk {
-                self?.pushNotificationSettings = request.megaPushNotificationSettings
-            }
-            
-            self?.delegate?.tableView?.reloadData()
-            self?.hideProgress()
-        }
-    }
-    
     weak var delegate: PushNotificationControlProtocol?
     
     // MARK:- Initializer
@@ -43,13 +30,32 @@ class PushNotificationControl: NSObject {
     @objc init(delegate: PushNotificationControlProtocol) {
         self.delegate = delegate
         super.init()
-        MEGASdkManager.sharedMEGASdk()?.getPushNotificationSettings(with: pushNotificationSettingsDelegate)
+        MEGASdkManager.sharedMEGASdk()?.add(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk()?.getPushNotificationSettings()
+    }
+    
+    deinit {
+        MEGASdkManager.sharedMEGASdk()?.remove(self as MEGARequestDelegate)
     }
     
     //MARK:- Interface.
     
     @objc func isNotificationSettingsLoaded() -> Bool {
         return pushNotificationSettings != nil
+    }
+    
+    // MARK:- MEGARequestDelegate
+    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        if (request.type == .MEGARequestTypeGetAttrUser || request.type == .MEGARequestTypeSetAttrUser) && request.paramType == MEGAUserAttribute.pushSettings.rawValue {
+            if error.type == .apiENoent {
+                self.pushNotificationSettings = MEGAPushNotificationSettings()
+            } else if error.type == .apiOk {
+                self.pushNotificationSettings = request.megaPushNotificationSettings
+            }
+            
+            self.delegate?.tableView?.reloadData()
+            self.hideProgress()
+        }
     }
 }
 
@@ -82,8 +88,7 @@ extension PushNotificationControl {
         
         showProgress()
         block()
-        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings,
-                                                                    delegate: pushNotificationSettingsDelegate)
+        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings)
     }
     
     func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64? {

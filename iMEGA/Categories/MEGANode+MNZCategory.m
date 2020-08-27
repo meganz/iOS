@@ -726,7 +726,7 @@
     
     NSString *fileType = [fileTypesForExtension objectForKey:self.name.pathExtension];
     if (fileType.length == 0) {
-        fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension.uppercaseString, AMLocalizedString(@"file", nil).capitalizedString];
+        fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension.uppercaseString, AMLocalizedString(@"File", @"Label to desing a file matching")];
     }
     
     return fileType;

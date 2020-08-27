@@ -27,7 +27,7 @@
 #import "ItemListViewController.h"
 #import "NSString+MNZCategory.h"
 
-@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -115,6 +115,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationController.presentationController.delegate = self;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -156,14 +158,12 @@
 
 - (void)setGroupChatsAndRecents {
     self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-    self.recentsMutableArray = [[NSMutableArray alloc] init];
     self.groupChatsMutableArray = [[NSMutableArray alloc] init];
     self.selectedGroupChatsMutableArray = [[NSMutableArray alloc] init];
     if (self.chatListItemList.size) {
         for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
             MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
             if (chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeStandard) {
-                [self.recentsMutableArray addObject:chatListItem];
                 if (chatListItem.isGroup) {
                     [self.groupChatsMutableArray addObject:chatListItem];
                 }
@@ -216,7 +216,7 @@
 }
 
 - (void)sortAndFilterRecents {
-    self.recentsMutableArray = [[[self.recentsMutableArray sortedArrayUsingComparator:[self comparatorToOrderRecents]] subarrayWithRange:NSMakeRange(0, MIN(5, self.recentsMutableArray.count))] mutableCopy];
+    self.recentsMutableArray = [MEGASdkManager.sharedMEGAChatSdk recentChatsWithMax:5].mutableCopy;
     for (NSUInteger i = 0; i < self.recentsMutableArray.count; i++) {
         MEGAChatListItem *chatListItem = [self.recentsMutableArray objectAtIndex:i];
         if (!chatListItem.isGroup) {
@@ -229,14 +229,6 @@
         }
     }
     [self.usersAndGroupChatsMutableArray removeObjectsInArray:self.recentsMutableArray];
-}
-
-- (NSComparator)comparatorToOrderRecents {
-    return ^NSComparisonResult(id a, id b) {
-        NSDate *first  = [(MEGAChatListItem *)a lastMessageDate] ?: [NSDate dateWithTimeIntervalSince1970:0];
-        NSDate *second = [(MEGAChatListItem *)b lastMessageDate] ?: [NSDate dateWithTimeIntervalSince1970:0];
-        return [second compare:first];
-    };
 }
 
 - (void)updateNavigationBarTitle {
@@ -578,19 +570,14 @@
         cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
         
         cell.onlineStatusView.hidden = YES;
-        
-        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
-        cell.avatarImageView.image = avatar;
+
+        [cell configureAvatar:chatListItem];
         
         cell.chatTitle.text = chatListItem.title;
         
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
         cell.chatLastMessage.text = [chatRoom participantsNamesWithMe:YES];
         cell.chatLastTime.hidden = YES;
-        
-        if (@available(iOS 11.0, *)) {
-            cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-        }
         
         for (MEGAChatListItem *tempChatListItem in self.selectedGroupChatsMutableArray) {
             if (tempChatListItem.chatId == chatListItem.chatId) {
@@ -839,6 +826,19 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    return self.selectedUsersMutableArray.count == 0 && self.selectedGroupChatsMutableArray.count == 0;
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.cancelBarButtonItem withConfirmAction:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 
 @end

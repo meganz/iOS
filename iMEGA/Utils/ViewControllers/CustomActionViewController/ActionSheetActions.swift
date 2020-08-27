@@ -3,6 +3,7 @@ import UIKit
 class BaseAction: NSObject {
     var title: String?
     var detail: String?
+    var accessoryView: UIView?
     var image: UIImage?
     var style: UIAlertAction.Style = .default
 }
@@ -15,6 +16,16 @@ class ActionSheetAction: BaseAction {
         super.init()
         self.title = title
         self.detail = detail
+        self.image = image
+        self.style = style
+    }
+    
+    @objc init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+        self.actionHandler = actionHandler
+        super.init()
+        self.title = title
+        self.detail = detail
+        self.accessoryView = accessoryView
         self.image = image
         self.style = style
     }
@@ -128,7 +139,7 @@ extension NodeAction {
     }
     
     class func pdfThumbnailViewAction() -> NodeAction {
-        return NodeAction(title: AMLocalizedString("Thumbnail view", "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
+        return NodeAction(title: AMLocalizedString("Thumbnail View", "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
     }
     
     class func forwardAction() -> NodeAction {

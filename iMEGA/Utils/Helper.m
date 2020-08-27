@@ -1087,8 +1087,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Logout
 
 + (void)logout {
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];    
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
