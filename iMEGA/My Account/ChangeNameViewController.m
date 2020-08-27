@@ -9,7 +9,7 @@
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
-@interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate>
+@interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *firstNameView;
 @property (weak, nonatomic) IBOutlet UIView *firstNameTopSeparatorView;
@@ -54,6 +54,12 @@
     [self.saveButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     
     [self updateAppearance];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.presentationController.delegate = self;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -195,6 +201,19 @@
     }
     
     return YES;
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    return !self.saveButton.enabled;
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.cancelBarButtonItem withConfirmAction:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 
 #pragma mark - MEGARequestDelegate

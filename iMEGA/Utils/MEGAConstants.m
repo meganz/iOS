@@ -129,3 +129,7 @@ const NSUInteger MEGAGroupCallsPeersChangeLayout = 7;
 #pragma mark - Add Your Phone Number
 
 const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount = 10;
+
+#pragma mark - MEGAApplicationIconBadgeNumber
+
+NSString * const MEGAApplicationIconBadgeNumber = @"MEGAApplicationIconBadgeNumber";

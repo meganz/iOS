@@ -145,18 +145,6 @@ final class OverDiskQuotaViewController: UIViewController {
         setupNavigationController(navigationController, with: traitCollection)
     }
 
-    // MARK: - Support Trait
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if #available(iOS 13, *) {
-            if previousTraitCollection != traitCollection {
-                setupTraitCollectionAwareView(with: traitCollection)
-            }
-        }
-    }
-
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
         setupScrollView(contentScrollView, with: traitCollection)
         setupContentView(contentView, with: traitCollection)
@@ -297,4 +285,18 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 private extension Selector {
     static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton(button:))
     static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton(button:))
+}
+
+// MARK: - TraitEnviromentAware
+
+extension OverDiskQuotaViewController: TraitEnviromentAware {
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        setupTraitCollectionAwareView(with: currentTrait)
+    }
 }

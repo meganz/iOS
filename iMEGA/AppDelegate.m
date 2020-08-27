@@ -302,6 +302,8 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
+    [LTHPasscodeViewController.sharedUser setDelegate:self];
+
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTasks) {
         [self beginBackgroundTaskWithName:@"PendingTasks"];
@@ -364,6 +366,10 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
+    
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    [sharedUserDefaults setInteger:0 forKey:MEGAApplicationIconBadgeNumber];    
+    application.applicationIconBadgeNumber = 0;
     
     if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
