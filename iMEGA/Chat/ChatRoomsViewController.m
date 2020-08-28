@@ -1000,6 +1000,50 @@
     }
 }
 
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
+    if (@available(iOS 13.0, *)) {
+        UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+            
+            if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || (self.tableView.numberOfSections == 2 && indexPath.section == 0)) {
+                return nil;
+            }
+            
+            MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+            
+            ChatViewController *chatViewController = [ChatViewController.alloc init];
+            chatViewController.previewMode = YES;
+            chatViewController.chatRoom = chatRoom;
+            
+            return chatViewController;
+            
+        } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+            UIAction *markAsReadAction = [UIAction actionWithTitle:@"Mark as Read" image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                
+            }];
+            UIAction *muteAction = [UIAction actionWithTitle:@"Mute" image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                           
+                       }];
+            UIAction *infoAction = [UIAction actionWithTitle:@"Info" image:[UIImage imageNamed:@"info_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                           
+                       }];
+            UIAction *archiveChatAction = [UIAction actionWithTitle:@"Archive Chat" image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                           
+                       }];
+            
+            return [UIMenu menuWithTitle:@"" children:@[markAsReadAction, muteAction, infoAction, archiveChatAction]];
+        }];
+        return configuration;
+
+    }
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
