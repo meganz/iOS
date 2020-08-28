@@ -44,6 +44,7 @@ class ChatInputBar: UIView {
     private var storedMessageInputBarHeight: CGFloat = 0.0
     private var voiceToTextSwitching = false
     private var animationDuration: TimeInterval = 0.4
+    private var voiceClipInputBarRegularHeight: CGFloat = 320.0
     private var keyboardFrameChangeObserver: NSObjectProtocol!
 
     // MARK:- Interface properties
@@ -56,27 +57,27 @@ class ChatInputBar: UIView {
             
             if voiceRecordingViewEnabled {
                 if let messageInputBarBottomConstraint = constraints
-                    .filter({ $0.firstAttribute == .bottom && $0.firstItem === self.messageInputBar })
+                    .filter({ $0.firstAttribute == .bottom && $0.firstItem === messageInputBar })
                     .first,
                     let messageInputBarTopConstraint = constraints
-                    .filter({ $0.firstAttribute == .top && $0.firstItem === self.messageInputBar })
+                    .filter({ $0.firstAttribute == .top && $0.firstItem === messageInputBar })
                     .first {
                     messageInputBarBottomConstraint.isActive = false
                     messageInputBarTopConstraint.isActive = false
                 }
                 
-                self.messageInputBar.messageTextView.isScrollEnabled = false
-                self.messageInputBar.expandCollapseButton.isHidden = true
+                messageInputBar.messageTextView.isScrollEnabled = false
+                messageInputBar.expandCollapseButton.isHidden = true
 
                 voiceClipInputBar = VoiceClipInputBar.instanceFromNib
                 voiceClipInputBar.delegate = self
                 addSubview(voiceClipInputBar)
                 voiceClipInputBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-                let voiceClipInputBarHeight = self.voiceClipInputBar.bounds.height
+                let voiceClipInputBarHeight = (traitCollection.verticalSizeClass == .compact) ? voiceClipInputBarRegularHeight - 100: voiceClipInputBarRegularHeight
                 let voiceClipInputBarHeightConstraint = voiceClipInputBar.heightAnchor.constraint(equalToConstant: 0)
                 voiceClipInputBarHeightConstraint.isActive = true
                 voiceClipInputBar.autoPinEdge(.top, to: .bottom, of: messageInputBar)
-                self.layoutIfNeeded()
+                layoutIfNeeded()
                 
                 UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = voiceClipInputBarHeight
@@ -149,6 +150,23 @@ class ChatInputBar: UIView {
         
         addMessageInputBar()
         keyboardFrameChangeObserver = keyboardFrameChangedNotification()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if let previousTraitCollection = previousTraitCollection,
+            traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass
+                || traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass {
+            
+            if let voiceClipInputBar = voiceClipInputBar,
+                voiceClipInputBar.superview != nil,
+                let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
+                    .filter({ $0.firstAttribute == .height })
+                    .first {
+                voiceClipInputBarHeightConstraint.constant = (traitCollection.verticalSizeClass == .compact) ? voiceClipInputBarRegularHeight - 100: voiceClipInputBarRegularHeight
+            }
+        }
     }
     
     deinit {
