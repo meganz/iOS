@@ -195,7 +195,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
         MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
-        message.chatId = self.chatRoom.chatId;
+        message.chatId = self.chatRoom.chatId
         if message.hasChanged(for: .status) {
             switch message.status {
             case .unknown, .sending, .sendingManual:
@@ -422,7 +422,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 chatViewController?.additionalBottomInset = 0
             }
             messagesCollectionView.scrollToBottom(animated: true)
-            return;
+            return
         }
         UIView.setAnimationsEnabled(false)
         messagesCollectionView.performBatchUpdates({
@@ -465,7 +465,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 chatViewController.additionalBottomInset = 0
             }
             chatViewController.messagesCollectionView.scrollToBottom(animated: true)
-            return;
+            return
         }
         chatViewController.messagesCollectionView.reloadData()
         chatViewController.messagesCollectionView.scrollToBottom(animated: true)

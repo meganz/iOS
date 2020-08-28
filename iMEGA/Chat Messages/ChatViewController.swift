@@ -212,7 +212,7 @@ class ChatViewController: MessagesViewController {
             customModalAlertVC.viewTitle = chatRoom.title
             customModalAlertVC.detail = AMLocalizedString("People can join your group by using this link.", "Text explaining users how the chat links work.")
             customModalAlertVC.firstButtonTitle = AMLocalizedString("share", "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected")
-            customModalAlertVC.link = publicChatLink?.absoluteString;
+            customModalAlertVC.link = publicChatLink?.absoluteString
             customModalAlertVC.secondButtonTitle = AMLocalizedString("delete", nil)
             customModalAlertVC.dismissButtonTitle = AMLocalizedString("dismiss", "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
             customModalAlertVC.firstCompletion = { [weak customModalAlertVC] in
