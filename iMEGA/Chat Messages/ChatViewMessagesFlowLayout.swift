@@ -52,9 +52,9 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         }
         
         if(editingAttributesinRect.count > 0) {
-            return attributesArray + editingAttributesinRect;
+            return attributesArray + editingAttributesinRect
         } else {
-            return attributesArray;
+            return attributesArray
         }
 
     }
