@@ -375,6 +375,21 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func insertMessage(_ message: MEGAChatMessage, scrollToBottom: Bool = false) {
+        guard let messagesCollectionView = chatViewController?.messagesCollectionView else {
+            return
+        }
+        if let historyMessageIndex = chatMessages.firstIndex(where: { historyMessage -> Bool in
+            guard let historyMessage = historyMessage as? ChatMessage else {
+                return false
+            }
+            return historyMessage.message.messageId == message.messageId
+        }) {
+            chatMessages[historyMessageIndex] = ChatMessage(message: message, chatRoom: chatRoom)
+            messagesCollectionView.reloadSections([historyMessageIndex])
+            return
+        }
+        
+        
         let lastSectionVisible = isLastSectionVisible()
         let unreads = MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
         var unreadNotificationMessageIndex: Int?
@@ -400,9 +415,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
         
         chatMessages.append(ChatMessage(message: message, chatRoom: chatRoom))
-        guard let messagesCollectionView = chatViewController?.messagesCollectionView else {
-            return
-        }
+
         if chatMessages.count == 1 {
             messagesCollectionView.reloadData()
             if chatViewController?.keyboardVisible ?? false {
