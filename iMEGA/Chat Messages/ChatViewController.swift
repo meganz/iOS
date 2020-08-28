@@ -258,7 +258,7 @@ class ChatViewController: MessagesViewController {
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatRequestDelegate)
 
-        if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
+        if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
         }
         audioController.stopAnyOngoingPlaying()
