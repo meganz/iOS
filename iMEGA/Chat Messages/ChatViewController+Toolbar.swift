@@ -107,7 +107,7 @@ extension ChatViewController {
                     
                 })
                 
-                showSuccess = chatIdNumbers?.count ?? 0 > 1;
+                showSuccess = chatIdNumbers?.count ?? 0 > 1
             } else if chatIdNumbers?.count == 1 && self.chatRoom.isPreview {
                 let chatId = chatIdNumbers?.first!.uint64Value
                 let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId!)
