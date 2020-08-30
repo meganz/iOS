@@ -68,7 +68,7 @@ class MeterTable {
         let ampRange = 1.0 - minAmp
         let invAmpRange = 1.0 / ampRange
 
-        let rroot: Double = 1.0 / root;
+        let rroot: Double = 1.0 / root
         table = (0..<tableSize).map { index in
             let decibels = Double(index) * Double(decibelResolution)
             let amp = dbToAmp(decibels)
