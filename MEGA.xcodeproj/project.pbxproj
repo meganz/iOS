@@ -1164,7 +1164,6 @@
 		BF7EBD46245277EB0015255F /* AddToChatMenuItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */; };
 		BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */; };
 		BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */; };
-		BF7EBD4B245293530015255F /* AddToChatMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */; };
 		BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */; };
 		BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */; };
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
@@ -2650,7 +2649,6 @@
 		BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuItemsView.swift; sourceTree = "<group>"; };
 		BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatMenuItemsView.xib; sourceTree = "<group>"; };
 		BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuViewController.swift; sourceTree = "<group>"; };
-		BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatMenuViewController.xib; sourceTree = "<group>"; };
 		BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuView.swift; sourceTree = "<group>"; };
 		BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AddToChatMenus.plist; sourceTree = "<group>"; };
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
@@ -5729,7 +5727,6 @@
 				BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */,
 				BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */,
 				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
-				BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */,
 				BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */,
 				BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */,
 				BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */,
@@ -6446,7 +6443,6 @@
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */,
 				BFC933DF24A44E2300BC2A75 /* EmojiCarousalView.xib in Resources */,
-				BF7EBD4B245293530015255F /* AddToChatMenuViewController.xib in Resources */,
 				BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */,
 				7764AAB1246EE0B200134C88 /* MegaAvatarView.xib in Resources */,
 				A89D2A9D23CE2B3E00AD5488 /* SAMKeychain.bundle in Resources */,
