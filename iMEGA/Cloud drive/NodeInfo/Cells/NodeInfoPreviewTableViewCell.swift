@@ -11,7 +11,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
 
     func configure(forNode node: MEGANode) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        nameLabel.text = node.name;
+        nameLabel.text = node.name
         if (node.type == .file) {
             previewImage.mnz_setThumbnail(by: node)
             sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
