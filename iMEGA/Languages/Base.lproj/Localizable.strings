@@ -2284,8 +2284,6 @@
 "LINK"="LINK";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Link Creation";
-/* Text indicating if a node is downloaded locally */
-"Available Offline"="Available Offline";
 /* Text used for a title or header to list users whom you are sharing something. */
 "SHARE WITH"="SHARE WITH";
 /* Text used for a title or header to list pending users whom you are sharing something. */
