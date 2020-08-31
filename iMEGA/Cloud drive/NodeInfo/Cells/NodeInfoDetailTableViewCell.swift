@@ -49,7 +49,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
             valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime)
         case .linkCreationDate:
             keyLabel.text = AMLocalizedString("Link Creation", "Text referencing the date of creation of a link")
-            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime)
+            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.publicLinkCreationTime ?? Date())
         }
     }
 }
