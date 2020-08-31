@@ -66,7 +66,7 @@ extension ChatViewController {
             self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color:  UIColor.mnz_turquoise(for: self.traitCollection))
             timer = Timer(timeInterval: 1, repeats: true, block: { (timer) in
                 if self.chatCall?.status == .reconnecting {
-                    return;
+                    return
                 }
                 let time = Date().timeIntervalSince1970 - startTime + self.initDuration!
 

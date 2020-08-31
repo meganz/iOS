@@ -62,7 +62,7 @@ class AddToChatMenuPageViewController: UIPageViewController {
         }
         
         menuPages = (0..<numberOfPagesRequired).map { [weak self] pageIndex in
-            let menuViewController = AddToChatMenuViewController(nibName: nil, bundle: nil)
+            let menuViewController = AddToChatMenuViewController()
             menuViewController.delegate = self
             
             let firstItemIndex = (numberOfMenuPerPages * pageIndex)
@@ -85,7 +85,7 @@ class AddToChatMenuPageViewController: UIPageViewController {
     func totalRequiredHeight(forWidth width: CGFloat,
                              horizontalPaddding: CGFloat) -> CGFloat {
         let eachMenuWidth = ceil((width - horizontalPaddding) / CGFloat(menuPerRow))
-        let rowSpacing = AddToChatMenuViewController(nibName: nil, bundle: nil).rowSpacing
+        let rowSpacing = AddToChatMenuViewController().rowSpacing
         return (eachMenuWidth * CGFloat(numberOfRowsForMenu)) + rowSpacing
     }
 }

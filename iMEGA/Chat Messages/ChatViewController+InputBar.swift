@@ -42,7 +42,7 @@ extension ChatViewController {
     func updateJoinView() {
         var newState: JoinViewState
         if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
-            newState = chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue ? .joining : .leaving;
+            newState = chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue ? .joining : .leaving
         } else {
             newState = .default
         }
@@ -147,7 +147,7 @@ extension ChatViewController {
             let navController = MEGANavigationController(rootViewController: addToChatViewController)
             navController.navigationBar.isTranslucent = false
             navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
-            navController.modalPresentationStyle = .popover;
+            navController.modalPresentationStyle = .popover
 
             if let popover = navController.popoverPresentationController {
                 popover.delegate = self
@@ -317,7 +317,7 @@ extension ChatViewController {
                 return
             }
             
-            let title = AMLocalizedString("error");
+            let title = AMLocalizedString("error")
             let message = error?.localizedDescription
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel, handler: nil))

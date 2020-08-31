@@ -26,7 +26,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
             contactDetailsVC.userEmail = userEmail
             contactDetailsVC.userName = userName
             contactDetailsVC.userHandle = chatMessage.message.userHandle
-            contactDetailsVC.groupChatRoom = self?.chatRoom;
+            contactDetailsVC.groupChatRoom = self?.chatRoom
             self?.navigationController?.pushViewController(contactDetailsVC, animated: true)
         }
         actions.append(infoAction)
@@ -76,7 +76,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     
     func didSelectURL(_ url: URL) {
         MEGALogInfo("URL Selected: \(url)")
-        MEGALinkManager.linkURL = url;
+        MEGALinkManager.linkURL = url
         MEGALinkManager.processLinkURL(url)
     }
     

@@ -53,7 +53,7 @@ class ChatTitleView: UIView {
             subtitleLabel.text = AMLocalizedString("archived", "Title of flag of archived chats.")
         } else if chatRoom.isGroup {
             if chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.ro.rawValue {
-                subtitleLabel.text = AMLocalizedString("Inactive chat", "Subtitle of chat screen when the chat is inactive");
+                subtitleLabel.text = AMLocalizedString("Inactive chat", "Subtitle of chat screen when the chat is inactive")
             } else if chatRoom.hasCustomTitle {
                 subtitleLabel.text = chatRoom.participantNames
             } else if chatRoom.peerCount > 0 {
