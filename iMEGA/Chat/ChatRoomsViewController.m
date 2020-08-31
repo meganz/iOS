@@ -1039,7 +1039,7 @@
                 [menus addObject:muteAction];
             }
 
-            UIAction *infoAction = [UIAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"info_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            UIAction *infoAction = [UIAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"infomation_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
             [menus addObject:infoAction];
@@ -1066,6 +1066,14 @@
         
     }
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator API_AVAILABLE(ios(13.0)){
+    ChatViewController *previewViewController = (ChatViewController *)animator.previewViewController;
+    [animator addCompletion:^{
+        [self.navigationController pushViewController:previewViewController animated:NO];
+        previewViewController.previewMode = NO;
+    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
