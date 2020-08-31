@@ -10,6 +10,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var chatId: UInt64?
     private var msgId: UInt64?
+    private var megatime: TimeInterval?
     
     private var waitingForThumbnail = false
     private var waitingForUserAttributes = false
@@ -23,6 +24,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         NotificationService.setupLogging()
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
         removePreviousGenericNotifications()
+        
+        megatime = request.content.userInfo["megatime"] as? TimeInterval
         
         guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
             postNotification(withError: "No session in the Keychain")
@@ -59,7 +62,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 postNotification(withError: "Unknown message")
             } else {
                 let error = !generateNotification(with: message, immediately: true)
-                postNotification(withError: error ? "No chat room for message" : nil)
+                postNotification(withError: error ? "No chat room for message" : nil, message: message)
             }
         } else {
             postNotification(withError: "Service Extension time will expire and message not found")
@@ -105,7 +108,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 self?.setupDisplayName(displayName: displayName, for: chatRoom)
                 self?.waitingForUserAttributes = false
                 if !(self?.waitingForThumbnail ?? true) {
-                    self?.postNotification(withError: nil)
+                    self?.postNotification(withError: nil, message: message)
                 }
             })
             readyToPost = false
@@ -134,7 +137,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
                     self?.waitingForThumbnail = false
                     if !(self?.waitingForUserAttributes ?? true) {
-                        self?.postNotification(withError: nil)
+                        self?.postNotification(withError: nil, message: message)
                     }
                 }
             })
@@ -145,7 +148,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         return readyToPost
     }
     
-    private func postNotification(withError error: String?) {
+    private func postNotification(withError error: String?, message: MEGAChatMessage? = nil) {
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatNotificationDelegate)
 
         guard let contentHandler = contentHandler else {
@@ -173,6 +176,14 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             let badgeCount = sharedUserDefaults.integer(forKey: MEGAApplicationIconBadgeNumber)
             sharedUserDefaults.set(badgeCount + 1, forKey: MEGAApplicationIconBadgeNumber)
             bestAttemptContent.badge = badgeCount + 1 as NSNumber
+        }
+        
+        if message != nil,
+            let megatime = megatime,
+            let msgTime = message?.timestamp.timeIntervalSince1970,
+            (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
+            MEGASdkManager.sharedMEGASdk()?.sendEvent(99300, message: "Delay between chatd and api")
+            MEGALogWarning("Delay between chatd and api")
         }
         contentHandler(bestAttemptContent)
     }
@@ -223,7 +234,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
             if message.type != .unknown && generateNotification(with: message, immediately: false) {
                 MEGALogDebug("Message exists in karere cache")
-                postNotification(withError: nil)
+                postNotification(withError: nil, message: message)
                 return
             }
         }
@@ -443,7 +454,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
 
         if generateNotification(with: message, immediately: false) {
-            postNotification(withError: nil)
+            postNotification(withError: nil, message: message)
         }
     }
 

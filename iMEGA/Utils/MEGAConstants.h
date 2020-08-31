@@ -136,3 +136,8 @@ extern const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount;
 
 /// Key used for shared user default to store the value of the aplication icon badge
 extern NSString * const MEGAApplicationIconBadgeNumber;
+
+#pragma mark - Delay events
+
+/// Minimum delay in seconds to send an event (used for chat messages)
+extern const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent;
