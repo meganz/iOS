@@ -103,7 +103,7 @@ class NodeInfoViewController: UIViewController {
     
     private func reloadOrShowWarningAfterActionOnNode() {
         guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle) else {
-            let alertTitle = node.isFolder() ? AMLocalizedString("youNoLongerHaveAccessToThisFolder_alertTitle", "Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString("youNoLongerHaveAccessToThisFile_alertTitle", "Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be");
+            let alertTitle = node.isFolder() ? AMLocalizedString("youNoLongerHaveAccessToThisFolder_alertTitle", "Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString("youNoLongerHaveAccessToThisFile_alertTitle", "Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be")
             
             let warningAlertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
             warningAlertController.addAction(UIAlertAction(title: AMLocalizedString("ok", "Button title to accept something"), style: .default, handler: { _ in
@@ -325,7 +325,7 @@ class NodeInfoViewController: UIViewController {
         
         cell.configureLinkCell(forNode: node)
         
-        return cell;
+        return cell
     }
     
     private func versionsCell(forIndexPath indexPath: IndexPath) -> NodeInfoActionTableViewCell {
@@ -335,7 +335,7 @@ class NodeInfoViewController: UIViewController {
         
         cell.configureVersionsCell(forNode: node)
         
-        return cell;
+        return cell
     }
     
     private func addContactSharingCell(forIndexPath indexPath: IndexPath) -> ContactTableViewCell {
@@ -601,7 +601,7 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
             }
             
             if nodeUpdated.handle == self.node.handle {
-                self.reloadOrShowWarningAfterActionOnNode();
+                self.reloadOrShowWarningAfterActionOnNode()
                 break
             }
         }
