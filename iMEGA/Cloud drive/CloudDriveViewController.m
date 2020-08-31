@@ -1039,28 +1039,30 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)presentSortByActionSheet {
     MEGASortOrderType sortType = [Helper sortTypeFor:self.parentNode];
     
+    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+    
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:sortType == MEGASortOrderTypeDefaultAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:sortType == MEGASortOrderTypeDefaultDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:sortType == MEGASortOrderTypeSizeDesc ? @"✓" : @"" image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:sortType == MEGASortOrderTypeSizeAsc ? @"✓" : @"" image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:sortType == MEGASortOrderTypeModificationDesc ? @"✓" : @"" image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:sortType == MEGASortOrderTypeModificationAsc ? @"✓" : @"" image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.parentNode];
         [self reloadUI];
     }]];

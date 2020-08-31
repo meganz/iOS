@@ -539,16 +539,17 @@
         [self setEditing:NO animated:YES];
     } else {
         __weak __typeof__(self) weakSelf = self;
-        
+        UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
         [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
             NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
                 weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
                 weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
