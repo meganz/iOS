@@ -638,7 +638,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    private func setLastMessageAsSeen() {
+    @objc func setLastMessageAsSeen() {
         if messages.count > 0 {
             let chatMessages = messages.filter { (message) -> Bool in
                 guard let message = message as? ChatMessage, message.transfer == nil else {
