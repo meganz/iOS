@@ -14,6 +14,16 @@ extension DateFormatter {
                             locale: locale)
     }
     
+    /// 31 Aug 2020, 15:32
+    static func dateMediumTimeShort(calendar: Calendar? = nil,
+                                    timeZone: TimeZone? = nil,
+                                    locale: Locale? = nil) -> DateFormatting {
+        return fromTemplate("dMMMyyyyHHmm",
+                            calendar: calendar,
+                            timeZone: timeZone,
+                            locale: locale)
+    }
+    
     /// Customise a date time formatter which follows provided unicode pattern. For unicode pattern please visit [here](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
     /// - Parameters:
     ///   - template: The unicode Date Field Symbol Table
