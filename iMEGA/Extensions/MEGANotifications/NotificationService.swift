@@ -181,7 +181,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent.badge = badgeCount + 1 as NSNumber
         }
         
-        // Events to detect delays in notificatin for messages
+        // Events to detect delays in notification for messages
         if message != nil,
             let megatime = megatime,
             let msgTime = message?.timestamp.timeIntervalSince1970,
