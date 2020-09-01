@@ -68,6 +68,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 postNotification(withError: error ? "No chat room for message" : nil, message: message)
             }
         } else {
+            MEGASdkManager.sharedMEGASdk()?.sendEvent(99303, message: "NSE will expire and message not found")
             postNotification(withError: "Service Extension time will expire and message not found")
         }
     }
