@@ -6,13 +6,13 @@ import MessageKit
 class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Properties
-
+    var transfers: [ChatMessage] = []
     var chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController?
     var chatMessages: [MessageType] = []
     var messages : [MessageType] {
         get {
-          return  chatMessages
+          return  chatMessages + transfers
         }
     }
     var isChatRoomOpen: Bool = false
@@ -228,20 +228,27 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     }, completion: nil)
                 } else {
                     if message.type == .attachment || message.type == .voiceClip {
-                        let filteredArray = chatMessages.filter { chatMessage in
-                            guard let chatMessage = chatMessage as? ChatMessage, let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
+                        let filteredArray = transfers.filter { chatMessage in
+                            guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
                             return node.handle == chatMessage.transfer?.nodeHandle
                         }
                         
-                        if filteredArray.count > 0, let oldMessage = filteredArray.first as? ChatMessage {
+                        if filteredArray.count > 0, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
                             let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                            chatMessages = chatMessages.map({ (message) -> MessageType in
-                                guard let message = message as? ChatMessage, message != oldMessage else {
-                                    return receivedMessage
-                                }
-                                return message
-                                
+                            transfers[index] = receivedMessage
+                            chatViewController?.messagesCollectionView.performBatchUpdates({
+                                chatViewController?.messagesCollectionView.reloadSections([chatMessages.count + index])
+                            }, completion: { [weak self] _ in
+                                self?.chatMessages.append(receivedMessage)
+                                self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
                             })
+                            //                            chatMessages = chatMessages.map({ (message) -> MessageType in
+//                                guard let message = message as? ChatMessage, message != oldMessage else {
+//                                    return receivedMessage
+//                                }
+//                                return message
+//
+//                            })
                             if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk()?.node(forHandle: transfer.nodeHandle) {
                                 let path = NSHomeDirectory().append(pathComponent: transfer.path)
                                 let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
@@ -448,16 +455,19 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
         }, completion: { [weak self] _ in
             UIView.setAnimationsEnabled(true)
+            guard let self = self else {
+                return
+            }
             if lastSectionVisible || scrollToBottom {
-                self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                self.chatViewController?.messagesCollectionView.scrollToItem(at: IndexPath(item: 0, section: self.chatMessages.count - 1), at: .bottom, animated: true)
             } else {
-                self?.chatViewController?.showNewMessagesToJumpToBottomIfRequired()
+                self.chatViewController?.showNewMessagesToJumpToBottomIfRequired()
             }
         })
     }
     
     func insertTransfer(_ transer: MEGATransfer) {
-        chatMessages.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
+        transfers.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
         guard let chatViewController = self.chatViewController else { return }
         if messages.count == 1 {
             chatViewController.messagesCollectionView.reloadData()
@@ -536,7 +546,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return false
         }
         
-        self.chatMessages = transfers.map({ (transfer) -> ChatMessage in
+        self.transfers = transfers.map({ (transfer) -> ChatMessage in
             return ChatMessage(transfer: transfer, chatRoom: chatRoom)
         })
     }
@@ -629,9 +639,9 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            chatMessages = chatMessages.map({ (chatMessage) -> MessageType in
+            transfers = transfers.map({ (chatMessage) -> ChatMessage in
                 
-                if  let chatMessage = chatMessage as? ChatMessage, chatMessage.transfer?.tag == transfer.tag {
+                if chatMessage.transfer?.tag == transfer.tag {
                     return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
                 
@@ -648,9 +658,9 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            chatMessages = chatMessages.map({ (chatMessage) -> MessageType in
+            transfers = transfers.map({ (chatMessage) -> ChatMessage in
                 
-                if  let chatMessage = chatMessage as? ChatMessage, chatMessage.transfer?.tag == transfer.tag {
+                if chatMessage.transfer?.tag == transfer.tag {
                     return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
                 
