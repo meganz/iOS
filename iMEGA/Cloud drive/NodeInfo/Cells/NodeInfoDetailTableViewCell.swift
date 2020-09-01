@@ -43,13 +43,13 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
             valueLabel.text = NSString.mnz_string(byFiles: folderInfo?.files ?? 0, andFolders: folderInfo?.folders ?? 0)
         case .addedDate:
             keyLabel.text = AMLocalizedString("Added", "A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.")
-            valueLabel.text = (node.creationTime as NSDate).mnz_formattedDefaultDateForMedia()
+            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.creationTime)
         case .modificationDate:
             keyLabel.text = AMLocalizedString("modified", "A label for any 'Modified' text or title.")
-            valueLabel.text = (node.modificationTime as NSDate).mnz_formattedDefaultDateForMedia()
+            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime)
         case .linkCreationDate:
             keyLabel.text = AMLocalizedString("Link Creation", "Text referencing the date of creation of a link")
-            valueLabel.text = (node.modificationTime as NSDate).mnz_formattedDefaultDateForMedia()
+            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.publicLinkCreationTime ?? Date())
         }
     }
 }
