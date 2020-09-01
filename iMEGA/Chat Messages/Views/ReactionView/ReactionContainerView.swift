@@ -116,22 +116,18 @@ class ReactionContainerView: UIView {
     
     @objc func addMorePress(_ sender: UIButton) {
         delegate?.addMorePressed(sender: sender)
-
     }
     
     private func layout() {
         rootFlexContainer.pin.top()
         if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
-            rootFlexContainer.pin.right()
             rootFlexContainer.pin.width(UIScreen.main.bounds.width - 40)
-
+            rootFlexContainer.pin.right()
         } else {
-            rootFlexContainer.pin.left(30)
             rootFlexContainer.pin.width(UIScreen.main.bounds.width - 70)
-
+            rootFlexContainer.pin.left(30)
         }
         rootFlexContainer.flex.layout(mode: .adjustHeight)
-
     }
     
     override func layoutSubviews() {
