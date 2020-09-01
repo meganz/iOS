@@ -15,7 +15,11 @@ extension MEGAChatRoom {
             let userHandle = peerHandle(at: index)
 
             if let name = participantName(forUserHandle: userHandle) {
-                return result + name
+                if index < (peerCount - 1) {
+                    return result + name + ", "
+                } else {
+                    return result + name
+                }
             }
             
             return ""
