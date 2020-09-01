@@ -10,7 +10,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var chatId: UInt64?
     private var msgId: UInt64?
-    private var megatime: TimeInterval?
+    private var megatime: TimeInterval? // set by the api
+    private var megatime2: TimeInterval? // set by the pushserver
+    private var pushReceivedTi = Date().timeIntervalSince1970
     
     private var waitingForThumbnail = false
     private var waitingForUserAttributes = false
@@ -26,6 +28,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         removePreviousGenericNotifications()
         
         megatime = request.content.userInfo["megatime"] as? TimeInterval
+        megatime2 = request.content.userInfo["megatime2"] as? TimeInterval
         
         guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
             postNotification(withError: "No session in the Keychain")
@@ -178,6 +181,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent.badge = badgeCount + 1 as NSNumber
         }
         
+        // Events to detect delays in notificatin for messages
         if message != nil,
             let megatime = megatime,
             let msgTime = message?.timestamp.timeIntervalSince1970,
@@ -185,6 +189,20 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGASdkManager.sharedMEGASdk()?.sendEvent(99300, message: "Delay between chatd and api")
             MEGALogWarning("Delay between chatd and api")
         }
+        
+        if let megatime = megatime,
+            let megatime2 = megatime2,
+            (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
+            MEGASdkManager.sharedMEGASdk()?.sendEvent(99301, message: "Delay between api and pushserver")
+            MEGALogWarning("Delay between api and pushserver")
+        }
+        
+        if let megatime2 = megatime2,
+            (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
+            MEGASdkManager.sharedMEGASdk()?.sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
+            MEGALogWarning("Delay between pushserver and Apple/device/NSE")
+        }
+        
         contentHandler(bestAttemptContent)
     }
     
