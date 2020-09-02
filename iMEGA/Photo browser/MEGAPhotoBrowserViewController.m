@@ -1013,7 +1013,7 @@ static const CGFloat GapBetweenPages = 10.0;
             }
             break;
             
-        case MegaNodeActionTypeFileInfo: {
+        case MegaNodeActionTypeInfo: {
             MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:[self.mediaNodes objectAtIndex:self.currentIndex] delegate:self];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
@@ -1098,7 +1098,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)nodeInfo:(NodeInfoViewController *)nodeInfo presentParentNode:(MEGANode *)node {
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];

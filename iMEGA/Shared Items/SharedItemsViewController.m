@@ -1369,7 +1369,7 @@
             break;
         }
             
-        case MegaNodeActionTypeFileInfo:
+        case MegaNodeActionTypeInfo:
             [self showNodeInfo:node];
             break;
             
@@ -1421,7 +1421,7 @@
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)nodeInfo:(NodeInfoViewController *)nodeInfo presentParentNode:(MEGANode *)node {
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
 }
 

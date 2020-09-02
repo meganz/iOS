@@ -31,7 +31,7 @@ enum DetailsSectionRow: Int {
 }
 
 @objc protocol NodeInfoViewControllerDelegate {
-    func nodeInfo(_ nodeInfo: NodeInfoViewController, presentParentNode node: MEGANode)
+    func nodeInfoViewController(_ nodeInfoViewController: NodeInfoViewController, presentParentNode node: MEGANode)
 }
 
 class NodeInfoViewController: UIViewController {
@@ -129,7 +129,7 @@ class NodeInfoViewController: UIViewController {
         if let parentNode = MEGASdkManager.sharedMEGASdk().parentNode(for: node) {
             MEGASdkManager.sharedMEGASdk().remove(self)
             dismiss(animated: true) {
-                self.delegate?.nodeInfo(self, presentParentNode: parentNode)
+                self.delegate?.nodeInfoViewController(self, presentParentNode: parentNode)
             }
         } else {
             MEGALogError("Unable to find parent node")
@@ -193,6 +193,9 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func prepareShareFolderPermissionsAlertController(fromIndexPat indexPath: IndexPath) {
+        let activeShare = activeOutShares()[indexPath.row - 1].access
+        let checkmarkImageView = UIImageView(image: UIImage(named: "turquoise_checkmark"))
+
         guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else {
             return
         }
@@ -201,14 +204,18 @@ class NodeInfoViewController: UIViewController {
         }
         var actions = [ActionSheetAction]()
 
-        actions.append(ActionSheetAction(title: AMLocalizedString("fullAccess", "Permissions given to the user you share your folder with"), detail: nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
+        actions.append(ActionSheetAction(title: AMLocalizedString("fullAccess", "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
             self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
         })
-        actions.append(ActionSheetAction(title: AMLocalizedString("readAndWrite", "Permissions given to the user you share your folder with"), detail: nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
+        actions.append(ActionSheetAction(title: AMLocalizedString("readAndWrite", "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
             self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
         })
-        actions.append(ActionSheetAction(title: AMLocalizedString("readOnly", "Permissions given to the user you share your folder with"), detail: nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
+        actions.append(ActionSheetAction(title: AMLocalizedString("readOnly", "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
             self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
+        })
+        
+        actions.append(ActionSheetAction(title: AMLocalizedString("remove", "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
+            self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
         let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: AMLocalizedString("permissions", "Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder"), dismissCompletion: nil, sender: cell.permissionsImageView)
@@ -219,9 +226,12 @@ class NodeInfoViewController: UIViewController {
     private func shareNode(withLevel level: MEGAShareType, forUser user: MEGAUser, atIndexPath indexPath: IndexPath) {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk().share(node, with: user, level: level.rawValue, delegate: MEGAShareRequestDelegate.init(toChangePermissionsWithNumberOfRequests: 1, completion: { [weak self] in
-            self?.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }))
+        MEGASdkManager.sharedMEGASdk().share(node, with: user, level: level.rawValue, delegate:
+            MEGAShareRequestDelegate.init(toChangePermissionsWithNumberOfRequests: 1, completion: { [weak self] in
+                if level != .accessUnknown {
+                    self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }))
     }
 
     private func pendingOutShares() -> [MEGAShare] {
@@ -571,6 +581,17 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
         for nodeIndex in 0..<nodeList.size.intValue {
             guard let nodeUpdated = nodeList.node(at: nodeIndex) else {
                 continue
+            }
+            
+            if nodeUpdated.hasChangedType(.outShare) && nodeUpdated.handle == node.handle {
+                guard let sharingSection = sections().firstIndex(of: .sharing) else { return }
+                if nodeUpdated.outShares().count < tableView.numberOfRows(inSection: sharingSection) - 1 {
+                    if nodeUpdated.outShares().count == 0 {
+                        tableView.reloadData()
+                    } else {
+                        tableView.reloadSections([sharingSection], with: .automatic)
+                    }
+                }
             }
             
             if nodeUpdated.hasChangedType(.removed) {

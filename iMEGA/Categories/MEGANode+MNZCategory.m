@@ -824,7 +824,7 @@
 
 #pragma mark - Shares
 
-- (NSMutableArray <MEGAShare *> *)outShares {
+- (nonnull NSMutableArray <MEGAShare *> *)outShares {
     NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.new;
     
     MEGAShareList *outSharesForNodeShareList = [MEGASdkManager.sharedMEGASdk outSharesForNode:self];

@@ -43,7 +43,7 @@
 
 #pragma mark - Shares
 
-- (NSMutableArray <MEGAShare *> *)outShares;
+- (nonnull NSMutableArray <MEGAShare *> *)outShares;
 
 #pragma mark - Versions
 
