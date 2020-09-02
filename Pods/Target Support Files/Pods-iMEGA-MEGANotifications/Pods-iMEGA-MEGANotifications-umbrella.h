@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_MEGAShareVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_MEGAShareVersionString[];
+FOUNDATION_EXPORT double Pods_iMEGA_MEGANotificationsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_iMEGA_MEGANotificationsVersionString[];
 

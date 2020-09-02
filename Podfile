@@ -2,57 +2,55 @@
 platform :ios, '10.0'
 workspace 'iMEGA'
 
-target 'MEGA' do
-  # Comment the next line if you don't want to use dynamic frameworks
+abstract_target 'iMEGA' do
   use_frameworks!
-  pod 'MessageKit', :git => 'https://github.com/lhr000lhrmega/MessageKit.git'
+
   pod 'YYWebImage'
-  pod 'PanModal'
-  pod 'FlexLayout'
-  pod 'PinLayout'
-  pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
-  pod "Haptica"
 
-  # Pods for MEGA
+  target 'MEGA' do
+    # Comment the next line if you don't want to use dynamic frameworks
+    pod 'MessageKit', :git => 'https://github.com/lhr000lhrmega/MessageKit.git'
+    pod 'PanModal'
+    pod 'FlexLayout'
+    pod 'PinLayout'
+    pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
+    pod "Haptica"
 
-  target 'MEGAUnitTests' do
-    inherit! :search_paths
-    # Pods for testing
+    # Pods for MEGA
+
+    target 'MEGAUnitTests' do
+      inherit! :search_paths
+      # Pods for testing
+    end
+
   end
 
-end
+  target 'MEGANotifications' do
+    # Comment the next line if you don't want to use dynamic frameworks
 
-target 'MEGANotifications' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+    # Pods for MEGANotifications
 
-  # Pods for MEGANotifications
+  end
 
-end
+  target 'MEGAPicker' do
+    # Comment the next line if you don't want to use dynamic frameworks
 
-target 'MEGAPicker' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-  pod 'YYWebImage'
+    # Pods for MEGAPicker
 
-  # Pods for MEGAPicker
+  end
 
-end
+  target 'MEGAPickerFileProvider' do
+    # Comment the next line if you don't want to use dynamic frameworks
 
-target 'MEGAPickerFileProvider' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-  pod 'YYWebImage'
+    # Pods for MEGAPickerFileProvider
 
-  # Pods for MEGAPickerFileProvider
+  end
 
-end
+  target 'MEGAShare' do
+    # Comment the next line if you don't want to use dynamic frameworks
 
-target 'MEGAShare' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-  pod 'YYWebImage'
+    # Pods for MEGAShare
 
-  # Pods for MEGAShare
+  end
 
 end

@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_MEGAPickerFileProviderVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_MEGAPickerFileProviderVersionString[];
+FOUNDATION_EXPORT double Pods_iMEGA_MEGAPickerVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_iMEGA_MEGAPickerVersionString[];
 
