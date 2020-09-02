@@ -1002,15 +1002,13 @@
 
 - (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
     if (@available(iOS 13.0, *)) {
+        if (self.chatRoomsType == ChatRoomsTypeDefault && indexPath.section < 2) {
+            return nil;
+        }
         MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
         ChatViewController *chatViewController = [ChatViewController.alloc init];
         UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
-            
-            if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || (self.tableView.numberOfSections == 2 && indexPath.section == 0)) {
-                return nil;
-            }
-            
             chatViewController.previewMode = YES;
             chatViewController.chatRoom = chatRoom;
             
