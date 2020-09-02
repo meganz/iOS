@@ -2049,7 +2049,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             break;
         }
             
-        case MegaNodeActionTypeFileInfo:
+        case MegaNodeActionTypeInfo:
             [self showNodeInfo:node];
             break;
             
@@ -2101,7 +2101,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)nodeInfo:(NodeInfoViewController *)nodeInfo presentParentNode:(MEGANode *)node {
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
 }
 

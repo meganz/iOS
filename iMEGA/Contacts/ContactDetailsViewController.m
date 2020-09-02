@@ -1051,7 +1051,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeFileInfo: {
+        case MegaNodeActionTypeInfo: {
             MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:nil];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;

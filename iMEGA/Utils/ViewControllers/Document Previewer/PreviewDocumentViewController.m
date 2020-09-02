@@ -390,7 +390,7 @@
             [self download];
             break;
             
-        case MegaNodeActionTypeFileInfo: {
+        case MegaNodeActionTypeInfo: {
             MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
@@ -452,7 +452,7 @@
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)nodeInfo:(NodeInfoViewController *)nodeInfo presentParentNode:(MEGANode *)node {
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
         [node navigateToParentAndPresent];
     }];
