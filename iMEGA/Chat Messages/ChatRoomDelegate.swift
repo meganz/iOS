@@ -28,7 +28,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     // MARK: - Init
 
-    init(chatRoom: MEGAChatRoom, chatViewController: ChatViewController) {
+    init(chatRoom: MEGAChatRoom?, chatViewController: ChatViewController?) {
+        guard let chatRoom = chatRoom, let chatViewController = chatViewController else {
+            self.chatRoom = MEGAChatRoom()
+            super.init()
+            return
+        }
         self.chatRoom = chatRoom
         self.chatViewController = chatViewController
         super.init()
@@ -135,7 +140,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 }
             }
             
-            if message.userHandle != api.myUserHandle {
+            if message.userHandle != api.myUserHandle, let chatViewController = chatViewController, !chatViewController.previewMode {
                 api.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
             }
         } else {
@@ -148,10 +153,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 
                 if chatRoom.unreadCount > 0,
                     chatMessages.count >= chatRoom.unreadCount,
-                    let lastMessageId = (chatMessages.last as? ChatMessage)?.message.messageId {
+                    let lastMessageId = (chatMessages.last as? ChatMessage)?.message.messageId, let chatViewController = chatViewController {
                     chatMessages.insert(ChatNotificationMessage(type: .unreadMessage(chatRoom.unreadCount)),
-                                       at: chatMessages.count - chatRoom.unreadCount )
-                    MEGASdkManager.sharedMEGAChatSdk()!.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
+                                       at: chatMessages.count - chatRoom.unreadCount)
+                    if !chatViewController.previewMode {
+                        MEGASdkManager.sharedMEGAChatSdk()!.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
+                    }
                 }
                 
                 self.chatViewController?.messagesCollectionView.reloadData()
@@ -177,8 +184,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             MEGALogError("ChatRoomDelegate: onMessageReceived - message is nil")
             return
         }
-        if UIApplication.shared.applicationState == .active
-        && UIApplication.mnz_visibleViewController() == chatViewController {
+        if UIApplication.shared.applicationState == .active,
+            UIApplication.mnz_visibleViewController() == chatViewController,
+            let chatViewController = chatViewController,
+            !chatViewController.previewMode {
             MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
         } else {
             chatRoom = api.chatRoom(forChatId: chatRoom.chatId)

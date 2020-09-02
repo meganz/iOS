@@ -258,7 +258,7 @@ class ChatViewController: MessagesViewController {
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatRequestDelegate)
 
-        if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
+        if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
         }
         audioController.stopAnyOngoingPlaying()
@@ -638,7 +638,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    private func setLastMessageAsSeen() {
+    @objc func setLastMessageAsSeen() {
         if messages.count > 0 {
             let chatMessages = messages.filter { (message) -> Bool in
                 guard let message = message as? ChatMessage, message.transfer == nil else {

@@ -1189,6 +1189,10 @@
 "more"="More";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Mute";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Unmute";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Mark as Read";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
