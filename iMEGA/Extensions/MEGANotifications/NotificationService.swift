@@ -182,28 +182,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent.badge = badgeCount + 1 as NSNumber
         }
         
-        // Events to detect delays in notification for messages
-        if message != nil,
-            let megatime = megatime,
-            let msgTime = message?.timestamp.timeIntervalSince1970,
-            (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
-            MEGASdkManager.sharedMEGASdk()?.sendEvent(99300, message: "Delay between chatd and api")
-            MEGALogWarning("Delay between chatd and api")
-        }
-        
-        if let megatime = megatime,
-            let megatime2 = megatime2,
-            (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
-            MEGASdkManager.sharedMEGASdk()?.sendEvent(99301, message: "Delay between api and pushserver")
-            MEGALogWarning("Delay between api and pushserver")
-        }
-        
-        if let megatime2 = megatime2,
-            (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
-            MEGASdkManager.sharedMEGASdk()?.sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
-            MEGALogWarning("Delay between pushserver and Apple/device/NSE")
-        }
-        
+        checkDelaysWithMessage(message)
         contentHandler(bestAttemptContent)
     }
     
@@ -314,6 +293,50 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             if #available(iOS 12.0, *) {
                 bestAttemptContent?.summaryArgument = displayName
             }
+        }
+    }
+    
+    /// Check delays between chatd, api, pushserver and Apple/device/NSE.
+    ///
+    /// 1. chatd -> api
+    /// 2. api -> pushserver
+    /// 3. pushserver -> Apple/device/NSE
+    ///
+    /// And send an event to stats if needed (delay > 20.0).
+    /// - Parameters:
+    ///    - message: chat message retrieved from Karere.
+    private func checkDelaysWithMessage(_ message: MEGAChatMessage?) {
+        if message != nil,
+            let megatime = megatime,
+            let msgTime = message?.timestamp.timeIntervalSince1970 {
+            if (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
+                #if !DEBUG
+                MEGASdkManager.sharedMEGASdk()?.sendEvent(99300, message: "Delay between chatd and api")
+                #endif
+                MEGALogWarning("Delay between chatd and api")
+            }
+            MEGALogDebug("Delay between chatd and api: \(megatime - msgTime)")
+        }
+        
+        if let megatime = megatime,
+            let megatime2 = megatime2 {
+            if (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
+                #if !DEBUG
+                MEGASdkManager.sharedMEGASdk()?.sendEvent(99301, message: "Delay between api and pushserver")
+                #endif
+                MEGALogWarning("Delay between api and pushserver")
+            }
+            MEGALogDebug("Delay between api and pushserver: \(megatime2 - megatime)")
+        }
+        
+        if let megatime2 = megatime2 {
+            if (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
+                #if !DEBUG
+                MEGASdkManager.sharedMEGASdk()?.sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
+                #endif
+                MEGALogWarning("Delay between pushserver and Apple/device/NSE")
+            }
+            MEGALogDebug("Delay between pushserver and Apple/device/NSE: \(pushReceivedTi - megatime2)")
         }
     }
 
