@@ -10,6 +10,8 @@ class ChatSharedItemsViewController: UIViewController {
 
     private var chatRoom = MEGAChatRoom()
     private lazy var messagesArray = [MEGAChatMessage]()
+    
+    private var requestedParticipantsMutableSet = Set<UInt64>()
 
     private lazy var cancelBarButton: UIBarButtonItem = UIBarButtonItem(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .plain, target: self, action: #selector(cancelSelectTapped)
     )
@@ -264,6 +266,28 @@ class ChatSharedItemsViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func loadVisibleParticipants() {
+        guard let indexPaths = tableView.indexPathsForVisibleRows else {
+            return
+        }
+        
+        var userHandles = [UInt64]()
+        for indexPath in indexPaths {
+            if indexPath.row >= messagesArray.count {
+                continue
+            }
+            let handle = messagesArray[indexPath.row].userHandle
+            if MEGASdkManager.sharedMEGAChatSdk()?.userFullnameFromCache(byUserHandle: handle) == nil && !requestedParticipantsMutableSet.contains(handle) {
+                userHandles.append(handle)
+                requestedParticipantsMutableSet.insert(handle)
+            }
+        }
+        
+        if userHandles.count > 0 {
+            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: userHandles as [NSNumber], delegate: self)
+        }
+    }
 }
 
 // MARK: - MEGAChatNodeHistoryDelegate.
@@ -354,7 +378,10 @@ extension ChatSharedItemsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sharedItemCell", for: indexPath) as! ChatSharedItemTableViewCell
         
         let message = self.messagesArray[indexPath.row]
-        cell.configure(for: message.nodeList.node(at: 0), ownerHandle: message.userHandle, authToken: chatRoom.authorizationToken)
+        cell.configure(for: message.nodeList.node(at: 0), ownerHandle: message.userHandle, chatRoom: chatRoom)
+        if cell.ownerNameLabel.text == nil {
+            debounce(#selector(loadVisibleParticipants), delay: 0.3)
+        }
         
         return cell
     }
@@ -477,6 +504,40 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             importNodes([node])
             
         default: break
+        }
+    }
+}
+
+// MARK: - MEGAChatRequestDelegate
+
+extension ChatSharedItemsViewController: MEGAChatRequestDelegate {
+    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+        chatRoom = api.chatRoom(forChatId: chatRoom.chatId)
+        
+        if error.type != .MEGAChatErrorTypeOk {
+            return
+        }
+        
+        if request.type == .getPeerAttributes {
+            guard let handleList = request.megaHandleList, let indexPaths = tableView.indexPathsForVisibleRows else {
+                return
+            }
+            
+            var indexPathsToReload = [IndexPath]()
+            for i in 0 ..< handleList.size {
+                let handle = handleList.megaHandle(at: i)
+                for indexPath in indexPaths {
+                    if indexPath.row >= messagesArray.count {
+                        continue
+                    }
+                    let message = messagesArray[indexPath.row]
+                    if message.userHandle == handle {
+                        indexPathsToReload.append(indexPath)
+                    }
+                }
+            }
+            
+            tableView.reloadRows(at: indexPathsToReload, with: .none)
         }
     }
 }
