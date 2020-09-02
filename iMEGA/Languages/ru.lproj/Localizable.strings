@@ -321,7 +321,7 @@
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="Управление ссылкой";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Ссылки";
+"manageLinks"="Управление ссылками";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Создание ссылки…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Коснитесь файла для переименования";
 /* */
-"sendToContact"="Послать контакту";
+"sendToContact"="Отправить контакту";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Мои чаты";
 /* Toast text upon sending a single file to chat */
@@ -585,7 +585,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] контакта/ов:";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Открыть общий доступ к папке";
+"shareFolder"="Поделиться папкой";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Поделиться папками";
 /* Button that allows you to select something (a folder, a message...) */
@@ -683,7 +683,7 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Настройки > Обшие > Хранилище %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Загрузить видео для «живых фото»";
+"Upload Videos for Live Photos"="Загружать видео для живых фото";
 /* Title of the switch to config whether to upload all burst photos */
 "Upload All Burst Photos"="Загружать серийную съёмку";
 /* Title of the switch to config whether to upload Hidden Album */
@@ -753,7 +753,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Удалить учётную запись";
+"cancelYourAccount"="Удалить аккаунт";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Вы потеряете все связанные данные. Действительно  хотите продолжить?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -1635,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Поиск";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Позволит искать файлы/папки MEGA в поиске Spotlight вашего устройства";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Если включено, позволяет искать файлы и папки MEGA в поиске Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ключи хранятся у вас";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1735,7 +1735,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Чередование ключей отключено для разговоров с более чем 100 участниками.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Для создания ссылки на чат нужно назвать группу.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,7 +1759,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Вы не можете включить видео, так в этом вызове уже максимальное количество участников, использующих видео.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Невозможно начать вызов из-за превышения лимита участников.";
 /* Label shown while joining a public chat */
 "Joining..."="Присоединение…";
 /* Label shown while leaving a public chat */

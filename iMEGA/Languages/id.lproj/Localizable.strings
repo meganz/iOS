@@ -315,13 +315,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Simpan gambar";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Dapatkan pranala";
+"getLink"="Dapatkan Tautan";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Dapatkan links";
+"getLinks"="Dapatkan Tautan";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Kelola link";
+"manageLink"="Kelola Tautan";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Kelola link";
+"manageLinks"="Kelola Tautan";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Membuat link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Ketuk file untuk mengganti nama";
 /* */
-"sendToContact"="Kirim ke kontak";
+"sendToContact"="Kirim ke Kontak";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Obrolan saya";
 /* Toast text upon sending a single file to chat */
@@ -381,9 +381,9 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d file berhasil dikirim";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Hapus link";
+"removeLink"="Hapus Tautan";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Hapus links";
+"removeLinks"="Hapus Tautan";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link terhapus";
 /* Message shown when the links to files and/or folders have been removed */
@@ -549,7 +549,7 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Dibagikan bersama";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Tambah dari kontak";
+"addFromContacts"="Tambah dari Kontak";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Tambah kontak";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
@@ -585,7 +585,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] kontak";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Folder Berbagi";
+"shareFolder"="Bagikan Folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Bagikan Folder";
 /* Button that allows you to select something (a folder, a message...) */
@@ -683,9 +683,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Pengaturan> Umum> %@ Penyimpanan";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Unggah video untuk Foto Langsung";
+"Upload Videos for Live Photos"="Unggah Video untuk Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload All Burst Photos"="Unggah semua foto burst";
+"Upload All Burst Photos"="Unggah Semua Foto Beruntun";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Unggah Album Tersembunyi";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,11 +705,11 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Album yang Dibagikan dari aplikasi Foto perangkat Anda tidak akan diunggah.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload Albums Synced from iTunes"="Unggah album yang disinkronkan dari iTunes";
+"Upload Albums Synced from iTunes"="Unggah Album yang Disinkronkan dari iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Album yang disinkronkan adalah tempat Anda menyelaraskan foto atau video ke aplikasi Foto perangkat Anda dari iTunes.";
 /* App means “Application” */
-"App Version"="Versi App";
+"App Version"="Versi Aplikasi";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versi MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -753,7 +753,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Sekarang memakai %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Hapus akun anda";
+"cancelYourAccount"="Batalkan Akun Anda";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Anda akan kehilangan seluruh data yang berhubungan dengan akun ini. Anda yakin ingin melanjutkan?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -862,9 +862,9 @@
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Ganti Paskode";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Passcode sederhana";
+"simplePasscodeLabel"="Passcode Sederhana";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Hapus data lokal";
+"eraseAllLocalDataLabel"="Hapus Data Lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal mencoba passcode";
 /* Menu item */
@@ -1635,7 +1635,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Cari";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Akan memungkinkan pencarian file / folder MEGA di Pencarian Spotlight perangkat Anda";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Saat diaktifkan, izinkan pencarian file dan folder MEGA di Pencarian Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Anda memegang kunci";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1683,13 +1683,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Ketika versi file dinonaktifkan, versi saat ini akan diganti dengan versi baru setelah file diperbarui (dan perubahan anda pada file tidak akan dicatat lagi). Yakin ingin menonaktifkan versi file?";
 /* Settings preference title to show file versions info of the account */
-"File Versions"="Versi file";
+"File Versions"="Versi File";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Ukuran total diambil oleh versi file:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Hapus semua versi lama dari file saya";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete Previous Versions"="Hapus versi sebelumnya";
+"Delete Previous Versions"="Hapus Versi Sebelumnya";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Ini akan menghapus secara permanen semua versi file Anda sendiri. Setiap versi file yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1735,7 +1735,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi tombol sedikit lebih aman, tetapi tidak memungkinkan Anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Rotasi kunci dinonaktifkan untuk percakapan dengan lebih dari 100 peserta.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Untuk membuat tautan obrolan, Anda harus memberi nama grup.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,17 +1759,17 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Anda tidak diizinkan untuk mengaktifkan video karena panggilan ini telah mencapai jumlah maksimum peserta menggunakan video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Tidak dapat memulai panggilan karena batas peserta telah terlampaui.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Bergabung...";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Keluar…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Tampilan Daftar";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Thumbnail View";
+"Thumbnail View"="Tampilan Gambar Kecil";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Page View";
+"Page View"="Tampilan Halaman";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Koneksi lemah.";
 /* There are no notifications to display. */
@@ -1913,9 +1913,9 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Diaktifkan";
 /* Text button for init a group chat with link. */
-"New Chat Link"="Tautan obrolan baru";
+"New Chat Link"="Tautan Obrolan Baru";
 /* Text button for init a group chat */
-"New Group Chat"="Obrolan grup baru";
+"New Group Chat"="Obrolan Grup Baru";
 /* Title for the recents section. */
 "Recents"="Baru-baru ini";
 /* Multiple Images title shown in recents section of webclient */
@@ -1941,7 +1941,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat Link Unavailable"="Tautan obrolan tidak tersedia";
+"Chat Link Unavailable"="Tautan Obrolan Tidak Tersedia";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Tautan obrolan ini tidak lagi tersedia";
 /* Text explaining users how the chat links work. */
@@ -2011,7 +2011,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Anda tidak dapat menghapus %1$s sebagai kontak karena itu adalah bagian dari akun Bisnis anda.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Membutuhkan kode sandi";
+"Require Passcode"="Memerlukan Kode Sandi";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Segera";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2047,11 +2047,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Hubungi administrator akun bisnis Anda untuk menyelesaikan masalah dan aktifkan akun Anda.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="Sampai pagi ini";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="Sampai besok pagi";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn them back on";
+"Until I turn it back on"="Sampai saya menyalakannya kembali";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 menit";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2063,15 +2063,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Matikan pemberitahuan obrolan untuk";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Pemberitahuan akan dibungkam hingga besok, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Pemberitahuan akan dibungkam hingga %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Notifikasi Chat";
+"Chat Notifications"="Pemberitahuan Obrolan";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Jangan ganggu";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="Notifikasi dibisukan";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Menghubungkan kembali ...";
 /* Title shown when the user reconnect in a call. */
@@ -2095,7 +2095,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Wewenang:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include Location Tags"="Sertakan tag lokasi";
+"Include Location Tags"="Sertakan Tag Lokasi";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jika diaktifkan, Anda akan mengunggah informasi tentang tempat foto dan video Anda diambil, jadi berhati-hatilah saat membagikannya.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2237,7 +2237,7 @@
 /* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="Storage Penuh";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Your Data is at Risk!";
+"Your Data is at Risk!"="Data Anda Berisiko!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph> Kami telah menghubungi Anda melalui email ke <b>%@</b> pada <b>%@</b> tetapi Anda masih memiliki %@ file yang mengambil <b>%@</b> di MEGA Anda akun, yang mengharuskan Anda meningkatkan ke <b>%@</b>.</paragraph>";
@@ -2247,7 +2247,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d hari";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Anda harus segera bertindak untuk menyimpan data anda.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Anda masih memiliki <warn>%@</warn> untuk meningkatkan.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2265,7 +2265,7 @@
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Gagal menghapus nomor telepon anda, silakan coba lagi nanti.";
 /* Text used to notify the user that some action would discard a non ended action */
-"Discard Changes"="Discard Changes";
+"Discard Changes"="Membuang perubahan";
 /* Title of the Proxy section under Settings */
 "Proxy"="Proksi";
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
