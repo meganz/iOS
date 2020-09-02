@@ -2057,7 +2057,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 Stunde";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="Sechs Stunden";
+"6 hours"="6 Stunden";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 Stunden";
 /* Chat Notifications DND: Title bar message for the dnd activate options */

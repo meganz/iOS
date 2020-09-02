@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -21,8 +21,6 @@
                         <constraint firstAttribute="width" constant="200" id="ogr-bw-Yid"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="ogr-bw-Yid"/>
@@ -44,8 +42,6 @@
                         <constraint firstAttribute="height" constant="42" id="qHD-Tf-qvv"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="G79-pi-bzl"/>
@@ -54,7 +50,6 @@
                     </variation>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="hIq-3x-tfh" firstAttribute="centerX" secondItem="0sb-yg-ZOf" secondAttribute="centerX" id="3m2-aT-f7U"/>
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="top" secondItem="2jk-LD-Uqt" secondAttribute="top" constant="92" id="66E-pi-u8l"/>

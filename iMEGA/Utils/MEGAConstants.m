@@ -135,3 +135,7 @@ const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount = 10;
 #pragma mark - MEGAApplicationIconBadgeNumber
 
 NSString * const MEGAApplicationIconBadgeNumber = @"MEGAApplicationIconBadgeNumber";
+
+#pragma mark - Delay events
+
+const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;

@@ -10,6 +10,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var chatId: UInt64?
     private var msgId: UInt64?
+    private var megatime: TimeInterval? // set by the api
+    private var megatime2: TimeInterval? // set by the pushserver
+    private var pushReceivedTi = Date().timeIntervalSince1970
     
     private var waitingForThumbnail = false
     private var waitingForUserAttributes = false
@@ -23,6 +26,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         NotificationService.setupLogging()
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
         removePreviousGenericNotifications()
+        
+        megatime = request.content.userInfo["megatime"] as? TimeInterval
+        megatime2 = request.content.userInfo["megatime2"] as? TimeInterval
         
         guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
             postNotification(withError: "No session in the Keychain")
@@ -59,9 +65,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 postNotification(withError: "Unknown message")
             } else {
                 let error = !generateNotification(with: message, immediately: true)
-                postNotification(withError: error ? "No chat room for message" : nil)
+                postNotification(withError: error ? "No chat room for message" : nil, message: message)
             }
         } else {
+            MEGASdkManager.sharedMEGASdk()?.sendEvent(99303, message: "NSE will expire and message not found")
             postNotification(withError: "Service Extension time will expire and message not found")
         }
     }
@@ -105,7 +112,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 self?.setupDisplayName(displayName: displayName, for: chatRoom)
                 self?.waitingForUserAttributes = false
                 if !(self?.waitingForThumbnail ?? true) {
-                    self?.postNotification(withError: nil)
+                    self?.postNotification(withError: nil, message: message)
                 }
             })
             readyToPost = false
@@ -134,7 +141,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
                     self?.waitingForThumbnail = false
                     if !(self?.waitingForUserAttributes ?? true) {
-                        self?.postNotification(withError: nil)
+                        self?.postNotification(withError: nil, message: message)
                     }
                 }
             })
@@ -145,7 +152,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         return readyToPost
     }
     
-    private func postNotification(withError error: String?) {
+    private func postNotification(withError error: String?, message: MEGAChatMessage? = nil) {
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatNotificationDelegate)
 
         guard let contentHandler = contentHandler else {
@@ -174,6 +181,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             sharedUserDefaults.set(badgeCount + 1, forKey: MEGAApplicationIconBadgeNumber)
             bestAttemptContent.badge = badgeCount + 1 as NSNumber
         }
+        
+        checkDelaysWithMessage(message)
         contentHandler(bestAttemptContent)
     }
     
@@ -223,7 +232,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
             if message.type != .unknown && generateNotification(with: message, immediately: false) {
                 MEGALogDebug("Message exists in karere cache")
-                postNotification(withError: nil)
+                postNotification(withError: nil, message: message)
                 return
             }
         }
@@ -284,6 +293,50 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             if #available(iOS 12.0, *) {
                 bestAttemptContent?.summaryArgument = displayName
             }
+        }
+    }
+    
+    /// Check delays between chatd, api, pushserver and Apple/device/NSE.
+    ///
+    /// 1. chatd -> api
+    /// 2. api -> pushserver
+    /// 3. pushserver -> Apple/device/NSE
+    ///
+    /// And send an event to stats if needed (delay > 20.0).
+    /// - Parameters:
+    ///    - message: chat message retrieved from Karere.
+    private func checkDelaysWithMessage(_ message: MEGAChatMessage?) {
+        if message != nil,
+            let megatime = megatime,
+            let msgTime = message?.timestamp.timeIntervalSince1970 {
+            if (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
+                #if !DEBUG
+                MEGASdkManager.sharedMEGASdk()?.sendEvent(99300, message: "Delay between chatd and api")
+                #endif
+                MEGALogWarning("Delay between chatd and api")
+            }
+            MEGALogDebug("Delay between chatd and api: \(megatime - msgTime)")
+        }
+        
+        if let megatime = megatime,
+            let megatime2 = megatime2 {
+            if (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
+                #if !DEBUG
+                MEGASdkManager.sharedMEGASdk()?.sendEvent(99301, message: "Delay between api and pushserver")
+                #endif
+                MEGALogWarning("Delay between api and pushserver")
+            }
+            MEGALogDebug("Delay between api and pushserver: \(megatime2 - megatime)")
+        }
+        
+        if let megatime2 = megatime2 {
+            if (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
+                #if !DEBUG
+                MEGASdkManager.sharedMEGASdk()?.sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
+                #endif
+                MEGALogWarning("Delay between pushserver and Apple/device/NSE")
+            }
+            MEGALogDebug("Delay between pushserver and Apple/device/NSE: \(pushReceivedTi - megatime2)")
         }
     }
 
@@ -443,7 +496,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
 
         if generateNotification(with: message, immediately: false) {
-            postNotification(withError: nil)
+            postNotification(withError: nil, message: message)
         }
     }
 
