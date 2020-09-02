@@ -1000,6 +1000,82 @@
     }
 }
 
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
+    if (@available(iOS 13.0, *)) {
+        MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        ChatViewController *chatViewController = [ChatViewController.alloc init];
+        UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+            
+            if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || (self.tableView.numberOfSections == 2 && indexPath.section == 0)) {
+                return nil;
+            }
+            
+            chatViewController.previewMode = YES;
+            chatViewController.chatRoom = chatRoom;
+            
+            return chatViewController;
+            
+        } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+            NSMutableArray *menus = [NSMutableArray new];
+            
+            if (chatRoom.unreadCount != 0) {
+                UIAction *markAsReadAction = [UIAction actionWithTitle:AMLocalizedString(@"Mark as Read",@"A button label. The button allows the user to mark a conversation as read.") image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                            [chatViewController setLastMessageAsSeen];
+                        }];
+                [menus addObject:markAsReadAction];
+            }
+            
+            BOOL muted = [self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId];
+            if (muted) {
+                UIAction *unmuteAction = [UIAction actionWithTitle:AMLocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    [self.chatNotificationControl turnOffDNDWithChatId:chatListItem.chatId];
+                }];
+                [menus addObject:unmuteAction];
+            } else {
+                UIAction *muteAction = [UIAction actionWithTitle:AMLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId sender:[tableView cellForRowAtIndexPath:indexPath]];
+                }];
+                [menus addObject:muteAction];
+            }
+
+            UIAction *infoAction = [UIAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"infomation_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+            }];
+            [menus addObject:infoAction];
+            
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault: {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                        [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+                    }];
+                    [menus addObject:archiveChatAction];
+                    break;
+                }
+                case ChatRoomsTypeArchived:{
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") image:[UIImage imageNamed:@"unArchiveChat"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
+                    }];
+                    [menus addObject:archiveChatAction];
+                    break;
+                }
+            }
+            return [UIMenu menuWithTitle:@"" children:menus];
+        }];
+        return configuration;
+        
+    }
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator API_AVAILABLE(ios(13.0)){
+    ChatViewController *previewViewController = (ChatViewController *)animator.previewViewController;
+    [animator addCompletion:^{
+        [self.navigationController pushViewController:previewViewController animated:NO];
+        previewViewController.previewMode = NO;
+    }];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
