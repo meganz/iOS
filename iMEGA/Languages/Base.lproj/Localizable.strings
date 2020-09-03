@@ -2280,6 +2280,10 @@
 "Proxy server requires a password"="Proxy server requires a password";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Username:";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Favourite";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Remove Favourite";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="Label...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */

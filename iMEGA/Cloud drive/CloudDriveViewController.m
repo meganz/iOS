@@ -2059,6 +2059,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [self showNodeInfo:node];
             break;
             
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
+            
         case MegaNodeActionTypeLabel:
             [node mnz_labelActionSheetInViewController:self];
             break;
