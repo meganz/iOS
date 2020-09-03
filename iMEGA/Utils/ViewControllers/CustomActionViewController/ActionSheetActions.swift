@@ -41,6 +41,15 @@ class NodeAction: BaseAction {
         self.detail = detail
         self.image = image
     }
+    
+    private init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage?, type: MegaNodeActionType) {
+        self.type = type
+        super.init()
+        self.title = title
+        self.detail = detail
+        self.accessoryView = accessoryView
+        self.image = image
+    }
 }
 
 // MARK: - Node Actions Factory
@@ -148,5 +157,45 @@ extension NodeAction {
     
     class func searchAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("Search", "Title of the Spotlight Search section"), detail: nil, image: UIImage(named: "search"), type: .search)
+    }
+    
+    class func labelAction(label: MEGANodeLabel) -> NodeAction {
+        var detailText = String()
+        var image = UIImage()
+        
+        switch label {
+        case .red:
+            detailText = AMLocalizedString("Red")
+            image = UIImage(named: "Red")!
+            
+        case .orange:
+            detailText = AMLocalizedString("Orange")
+            image = UIImage(named: "Orange")!
+            
+        case .yellow:
+            detailText = AMLocalizedString("Yellow")
+            image = UIImage(named: "Yellow")!
+            
+        case .green:
+            detailText = AMLocalizedString("Green")
+            image = UIImage(named: "Green")!
+            
+        case .blue:
+            detailText = AMLocalizedString("Blue")
+            image = UIImage(named: "Blue")!
+            
+        case .purple:
+            detailText = AMLocalizedString("Purple")
+            image = UIImage(named: "Purple")!
+            
+        case .grey:
+            detailText = AMLocalizedString("Gray")
+            image = UIImage(named: "Gray")!
+            
+        default:
+            detailText = ""
+        }
+        
+        return NodeAction(title: AMLocalizedString("Label...", "Context menu item which allows to mark folders with own color label"), detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: UIImage(named: "label"), type: .label)
     }
 }
