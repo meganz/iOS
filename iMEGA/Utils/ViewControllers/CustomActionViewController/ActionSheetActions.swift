@@ -159,6 +159,10 @@ extension NodeAction {
         return NodeAction(title: AMLocalizedString("Search", "Title of the Spotlight Search section"), detail: nil, image: UIImage(named: "search"), type: .search)
     }
     
+    class func favouriteAction(isFavourite: Bool) -> NodeAction {
+        return NodeAction(title: isFavourite ? AMLocalizedString("Remove Favourite", "Context menu item. Allows user to delete file/folder from favourites") : AMLocalizedString("Favourite", "Context menu item. Allows user to add file/folder to favourites"), detail: nil, image: isFavourite ? UIImage(named: "removeFavourite") : UIImage(named: "favourite"), type: .favourite)
+    }
+    
     class func labelAction(label: MEGANodeLabel) -> NodeAction {
         var detailText = String()
         var image = UIImage()

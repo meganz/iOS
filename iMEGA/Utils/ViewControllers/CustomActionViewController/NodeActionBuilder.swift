@@ -5,6 +5,7 @@ final class NodeActionBuilder {
     private var accessLevel: MEGAShareType = .accessUnknown
     private var isMediaFile: Bool = false
     private var isFile: Bool = false
+    private var isFavourite: Bool = false
     private var label: MEGANodeLabel = .unknown
     private var isRestorable: Bool = false
     private var isPdf: Bool = false
@@ -31,6 +32,11 @@ final class NodeActionBuilder {
     
     func setIsFile(_ isFile: Bool) -> NodeActionBuilder {
         self.isFile = isFile
+        return self
+    }
+    
+    func setIsFavourite(_ isFavourite: Bool) -> NodeActionBuilder {
+        self.isFavourite = isFavourite
         return self
     }
     
@@ -134,6 +140,7 @@ final class NodeActionBuilder {
             case .accessRead, .accessReadWrite:
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
                     nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                     nodeActions.append(NodeAction.labelAction(label: label))
                 }
                 if isMediaFile {
@@ -150,6 +157,7 @@ final class NodeActionBuilder {
             case .accessFull:
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
                     nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                     nodeActions.append(NodeAction.labelAction(label: label))
                 }
                 if isMediaFile {
@@ -175,6 +183,7 @@ final class NodeActionBuilder {
                 if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
                     if displayMode != .nodeInfo {
                         nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                        nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                         nodeActions.append(NodeAction.labelAction(label: label))
                     }
                     if displayMode != .rubbishBin {
@@ -229,6 +238,7 @@ final class NodeActionBuilder {
                     nodeActions.append(NodeAction.shareAction())
                 } else {
                     nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                     nodeActions.append(NodeAction.labelAction(label: label))
                     if isMediaFile {
                         nodeActions.append(NodeAction.saveToPhotosAction())
