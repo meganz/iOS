@@ -2280,3 +2280,21 @@
 "Proxy server requires a password"="Proxy server requires a password";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Username:";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Label...";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Remove Label";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Red";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Orange";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Yellow";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Green";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Blue";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Purple";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Grey";

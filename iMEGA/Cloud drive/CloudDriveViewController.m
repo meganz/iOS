@@ -2059,6 +2059,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [self showNodeInfo:node];
             break;
             
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
+            break;
+            
         case MegaNodeActionTypeLeaveSharing:
             [node mnz_leaveSharingInViewController:self];
             break;
