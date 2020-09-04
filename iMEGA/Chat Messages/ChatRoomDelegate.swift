@@ -522,9 +522,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     private func reloadTransferData() {
-        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList() else {
+        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList(), allTransfers.count > 0 else {
             return
         }
+        chatViewController?.checkTransferPauseStatus()
         let transfers = allTransfers.filter { (transfer) -> Bool in
 
             guard let appData = transfer.appData,
@@ -639,6 +640,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
         }
         if appData.contains("\(chatRoom.chatId)") {
             insertTransfer(transfer)
+            chatViewController?.checkTransferPauseStatus()
         }
     }
     
