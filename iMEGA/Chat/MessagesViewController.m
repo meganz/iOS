@@ -1593,7 +1593,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)configureTopBannerButtonForActiveCall:(MEGAChatCall *)call {
     [self.timer invalidate];
-    NSString *title = self.chatRoom.isGroup ? AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call"): AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
+    NSString *title = self.chatRoom.isGroup ? AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call"): AMLocalizedString(@"Tap to return to call", @"Message shown in a chat room for a one on one call");
     [self setTopBannerButtonTitle:title color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     [self showTopBannerButton];
 }
