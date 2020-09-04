@@ -755,6 +755,25 @@ class ChatViewController: MessagesViewController {
         saveDraft()
     }
     
+    func checkTransferPauseStatus() {
+        if UserDefaults.standard.bool(forKey: "TransfersPaused") {
+            let alertController = UIAlertController(title: AMLocalizedString("Resume Transfers?"), message: nil, preferredStyle: .alert)
+            
+            let cancel = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel) { (action:UIAlertAction) in
+                print("You've pressed default");
+            }
+            
+            let action2 = UIAlertAction(title: AMLocalizedString("resume"), style: .default) { (action:UIAlertAction) in
+                MEGASdkManager.sharedMEGASdk()?.pauseTransfers(false)
+                UserDefaults.standard.set(false, forKey: "TransfersPaused")
+            }
+            
+            alertController.addAction(cancel)
+            alertController.addAction(action2)
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     private func addChatBottomInfoScreenToView() {
         guard let chatBottomInfoScreen = chatBottomInfoScreen else {
             return
