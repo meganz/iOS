@@ -14,8 +14,8 @@ abstract_target 'iMEGA' do
     pod 'FlexLayout'
     pod 'PinLayout'
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
-    pod "Haptica"
-
+    pod 'Haptica'
+    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGA
 
     target 'MEGAUnitTests' do
@@ -34,6 +34,7 @@ abstract_target 'iMEGA' do
 
   target 'MEGAPicker' do
     # Comment the next line if you don't want to use dynamic frameworks
+    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
 
     # Pods for MEGAPicker
 
@@ -48,6 +49,7 @@ abstract_target 'iMEGA' do
 
   target 'MEGAShare' do
     # Comment the next line if you don't want to use dynamic frameworks
+    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
 
     # Pods for MEGAShare
 

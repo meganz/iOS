@@ -10,9 +10,6 @@
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 url=https://github.com/meganz/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/DZNEmptyDataSet"]
-	path = iMEGA/Vendor/DZNEmptyDataSet
-	url = https://github.com/dzenbot/DZNEmptyDataSet.git
 [submodule "iMEGA/Vendor/AMLocalizedString"]
 	path = iMEGA/Vendor/AMLocalizedString
 	url = https://github.com/tagyro/AMLocalizedString.git
