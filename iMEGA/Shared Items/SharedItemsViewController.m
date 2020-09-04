@@ -423,6 +423,7 @@
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
     cell.nameLabel.text = node.name;
+    [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
 
@@ -462,6 +463,7 @@
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
     
     cell.nameLabel.text = node.name;
+    [self setupLabelAndFavouriteForNode:node cell:cell];
     
     NSString *userName;
     NSMutableArray *outSharesMutableArray = node.outShares;
@@ -496,6 +498,15 @@
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     
     return cell;
+}
+
+- (void)setupLabelAndFavouriteForNode:(MEGANode *)node cell:(SharedItemsTableViewCell *)cell {
+    cell.favouriteView.hidden = !node.isFavourite;
+    cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        cell.labelImageView.image = [UIImage imageNamed:labelString];
+    }
 }
 
 - (void)updateSelector {
