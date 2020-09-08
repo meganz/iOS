@@ -28,14 +28,13 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     // MARK: - Init
 
-    init(chatRoom: MEGAChatRoom?, chatViewController: ChatViewController?) {
-        guard let chatRoom = chatRoom, let chatViewController = chatViewController else {
+    init(chatRoom: MEGAChatRoom?) {
+        guard let chatRoom = chatRoom else {
             self.chatRoom = MEGAChatRoom()
             super.init()
             return
         }
         self.chatRoom = chatRoom
-        self.chatViewController = chatViewController
         super.init()
         MEGASdkManager.sharedMEGASdk()?.add(self)
         

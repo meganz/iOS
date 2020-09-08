@@ -57,8 +57,7 @@ class ChatViewController: MessagesViewController {
     var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk()!.myUserHandle), displayName: "")
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
-        return ChatRoomDelegate(chatRoom: chatRoom,
-                                chatViewController: self)
+        return ChatRoomDelegate(chatRoom: chatRoom)
     }()
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
@@ -133,7 +132,7 @@ class ChatViewController: MessagesViewController {
         registerCustomCells()
 
         super.viewDidLoad()
-        
+        chatRoomDelegate.chatViewController = self
         configureMessageCollectionView()
         update()
         
