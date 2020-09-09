@@ -40,7 +40,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .saveToPhotos, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .saveToPhotos, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeMediaFileExported() {
@@ -62,7 +62,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download, .getLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .getLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderExported() {
@@ -73,7 +73,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download, .manageLink, .removeLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderShared() {
@@ -84,7 +84,7 @@ class NodeActionsTests: XCTestCase {
             .setIsOutshare(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download,  .getLink, .manageShare, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .getLink, .manageShare, .share, . rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderSharedExported() {
@@ -96,7 +96,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download,  .manageLink, .removeLink, .manageShare, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .share, . rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFile() {
@@ -106,7 +106,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeExportedFile() {
@@ -117,7 +117,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download, .manageLink, .removeLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .manageLink, .removeLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testRubbishBinNodeFolder() {
@@ -128,7 +128,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.restore, .fileInfo, .rename, .move, .copy, .remove]))
+        XCTAssertTrue(contains(nodeActionTypes: [.restore, .fileInfo, .favourite, .label, .rename, .move, .copy, .remove]))
     }
     
     func testRubbishBinNodeFile() {
@@ -139,7 +139,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.restore, .fileInfo, .sendToChat, .rename, .move, .copy, .remove]))
+        XCTAssertTrue(contains(nodeActionTypes: [.restore, .fileInfo, .favourite, .label, .sendToChat, .rename, .move, .copy, .remove]))
     }
     
     func testFileFolderNodeDoNotShowInfoAction() {
@@ -159,7 +159,7 @@ class NodeActionsTests: XCTestCase {
             .setisIncomingShareChildView(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download, .rename, .copy, .leaveSharing]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .rename, .copy, .leaveSharing]))
     }
     
     func testIncomingReadAndReadWriteSharedFolder() {
@@ -180,7 +180,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .download, .manageShare, .share, .rename, .copy, .removeSharing]))
+        XCTAssertTrue(contains(nodeActionTypes: [.fileInfo, .favourite, .label, .download, .manageShare, .share, .rename, .copy, .removeSharing]))
     }
     
     // MARK: - Links tests
