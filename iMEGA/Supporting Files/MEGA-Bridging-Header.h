@@ -19,8 +19,11 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGATransferList+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
-#import "NSFileManager+MNZCategory.h"
+#import "MEGATransfer+MNZCategory.h"
+#import "NSDate+DateTools.h"
 #import "NSDate+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSObject+Debounce.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
@@ -30,9 +33,6 @@
 #import "UIImageView+MNZCategory.h"
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import "UITableView+MNZCategory.h"
-#import "NSDate+DateTools.h"
-#import "NSFileManager+MNZCategory.h"
-
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
@@ -85,4 +85,3 @@
 #import "SelectableTableViewCell.h"
 #import <PureLayout/PureLayout.h>
 #import "MEGAChatMessage.h"
-#import "MEGATransfer+MNZCategory.h"
