@@ -43,12 +43,12 @@
 
 #pragma mark - Shares
 
-- (NSMutableArray <MEGAShare *> *)outShares;
+- (nonnull NSMutableArray <MEGAShare *> *)outShares;
 
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions;
-- (NSArray *)mnz_versions;
+- (NSArray<MEGANode *> *)mnz_versions;
 - (long long)mnz_versionsSize;
 
 @end
