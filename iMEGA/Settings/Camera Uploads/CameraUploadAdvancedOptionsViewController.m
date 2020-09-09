@@ -41,15 +41,15 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     
     [self.navigationItem setTitle:AMLocalizedString(@"advanced", nil)];
     
-    self.uploadVideosForLivePhotosLabel.text = AMLocalizedString(@"Upload videos for Live Photos", nil);
+    self.uploadVideosForLivePhotosLabel.text = AMLocalizedString(@"Upload Videos for Live Photos", @"Title of the switch to config whether to upload videos for Live Photos");
     self.uploadVideosForlivePhotosSwitch.on = CameraUploadManager.shouldUploadVideosForLivePhotos;
-    self.uploadAllBurstPhotosLabel.text = AMLocalizedString(@"Upload all burst photos", nil);
+    self.uploadAllBurstPhotosLabel.text = AMLocalizedString(@"Upload All Burst Photos", @"Title of the switch to config whether to upload all burst photos");
     self.uploadAllBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
     self.uploadHiddenAlbumLabel.text = AMLocalizedString(@"Upload Hidden Album", nil);
     self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAlbum;
     self.uploadSharedAlbumsLabel.text = AMLocalizedString(@"Upload Shared Albums", nil);
     self.uploadSharedAlbumsSwitch.on = CameraUploadManager.shouldUploadSharedAlbums;
-    self.uploadSyncedAlbumsLabel.text = AMLocalizedString(@"Upload albums synced from iTunes", nil);
+    self.uploadSyncedAlbumsLabel.text = AMLocalizedString(@"Upload Albums Synced from iTunes", @"Title of the switch to config whether to upload synced albums");
     self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
     
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];

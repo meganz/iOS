@@ -42,6 +42,23 @@ class NodeActionViewController: ActionSheetViewController {
 
     }
     
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isPageView: Bool = true, sender: Any) {
+        self.node = node
+        self.displayMode = .previewLink
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(self.displayMode)
+            .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
+            .setIsPageView(isPageView)
+            .build()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

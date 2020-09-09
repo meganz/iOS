@@ -161,7 +161,7 @@
         self.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
         self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
     } else if (indexPath.row == 1) {
-        self.nameLabel.text = AMLocalizedString(@"New group chat", @"Text button for init a group chat");
+        self.nameLabel.text = AMLocalizedString(@"New Group Chat", @"Text button for init a group chat");
         self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
     } else {
         self.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");

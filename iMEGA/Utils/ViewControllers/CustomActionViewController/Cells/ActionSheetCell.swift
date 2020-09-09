@@ -5,6 +5,7 @@ final class ActionSheetCell: UITableViewCell {
     func configureCell(action: BaseAction) {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
+        accessoryView = action.accessoryView
         if detailTextLabel?.text == "✓" {
             detailTextLabel?.textColor =  .mnz_turquoise(for: traitCollection)
         }

@@ -10,6 +10,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var chatId: UInt64?
     private var msgId: UInt64?
+    
+    private var waitingForThumbnail = false
+    private var waitingForUserAttributes = false
+
+    // MARK: - UNNotificationServiceExtension
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
@@ -31,11 +36,13 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             NotificationService.session = session
         } else {
             if NotificationService.session != session {
+                MEGALogDebug("Restart extension process: NSE session != Keychain session")
                 restartExtensionProcess(with: session)
                 return
             }
             if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
                 if sharedUserDefaults.bool(forKey: MEGAInvalidateNSECache) {
+                    MEGALogDebug("Restart extension process: app invalidates the NSE cache")
                     restartExtensionProcess(with: session)
                     return
                 }
@@ -46,6 +53,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
 
     override func serviceExtensionTimeWillExpire() {
+        MEGALogDebug("Service extension time will expire")
         if let chatId = chatId, let msgId = msgId, let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
             if message.type == .unknown {
                 postNotification(withError: "Unknown message")
@@ -54,7 +62,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 postNotification(withError: error ? "No chat room for message" : nil)
             }
         } else {
-            postNotification(withError: "Service Extension time will expire")
+            postNotification(withError: "Service Extension time will expire and message not found")
         }
     }
 
@@ -68,54 +76,73 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.userInfo = ["chatId": chatId, "msgId": message.messageId]
         bestAttemptContent?.body = notificationManager.bodyString()
         bestAttemptContent?.sound = UNNotificationSound.default
+        let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
         if chatRoom.isGroup {
             bestAttemptContent?.title = chatRoom.title ?? ""
-            bestAttemptContent?.subtitle = notificationManager.displayName()
-        } else {
-            bestAttemptContent?.title = notificationManager.displayName()
-        }
-
-        let chatIdBase64 = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
-        bestAttemptContent?.threadIdentifier = chatIdBase64
-        if #available(iOS 12.0, *) {
-            if chatRoom.isGroup {
+            if #available(iOS 12.0, *) {
                 bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
-            } else {
-                bestAttemptContent?.summaryArgument = notificationManager.displayName()
             }
         }
-
+        setupDisplayName(displayName: displayName, for: chatRoom)
+        
+        let chatIdBase64 = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
+        bestAttemptContent?.threadIdentifier = chatIdBase64
+        
         if immediately {
             return true
         }
-
+        
+        var readyToPost = true
+        if displayName == nil {
+            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatId, usersHandles: [message.userHandle] as [NSNumber], delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+                if error.type != .MEGAChatErrorTypeOk {
+                    return
+                }
+                guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
+                    return
+                }
+                let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
+                self?.setupDisplayName(displayName: displayName, for: chatRoom)
+                self?.waitingForUserAttributes = false
+                if !(self?.waitingForThumbnail ?? true) {
+                    self?.postNotification(withError: nil)
+                }
+            })
+            readyToPost = false
+            waitingForUserAttributes = true
+        }
+        
         if message.type == .attachment {
             guard let nodeList = message.nodeList else {
-                return true
+                return readyToPost
             }
             if nodeList.size?.intValue != 1 {
-                return true
+                return readyToPost
             }
             guard let node = nodeList.node(at: 0) else {
-                return true
+                return readyToPost
             }
             if !node.hasThumbnail() {
-                return true
+                return readyToPost
             }
             guard let destinationFilePath = path(for: node, in: "thumbnailsV3") else {
-                return true
+                return readyToPost
             }
 
             MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
                 if let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: node.base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
-                    self?.postNotification(withError: nil)
+                    self?.waitingForThumbnail = false
+                    if !(self?.waitingForUserAttributes ?? true) {
+                        self?.postNotification(withError: nil)
+                    }
                 }
             })
-            return false
+            readyToPost = false
+            waitingForThumbnail = true
         }
-
-        return true
+        
+        return readyToPost
     }
     
     private func postNotification(withError error: String?) {
@@ -133,6 +160,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent.body = NotificationService.genericBody
             bestAttemptContent.sound = nil
         } else {
+            MEGALogDebug("Post notification: message found")
             if let msgId = msgId, let chatId = chatId {
                 MEGAStore.shareInstance()?.insertMessage(msgId, chatId: chatId)
             }
@@ -141,7 +169,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         MEGASdkManager.sharedMEGAChatSdk()?.saveCurrentState()
         
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
-        bestAttemptContent.badge = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats as NSNumber?
+        if let sharedUserDefaults = UserDefaults(suiteName: MEGAGroupIdentifier) {
+            let badgeCount = sharedUserDefaults.integer(forKey: MEGAApplicationIconBadgeNumber)
+            sharedUserDefaults.set(badgeCount + 1, forKey: MEGAApplicationIconBadgeNumber)
+            bestAttemptContent.badge = badgeCount + 1 as NSNumber
+        }
         contentHandler(bestAttemptContent)
     }
     
@@ -167,6 +199,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private func processNotification() {
+        MEGALogDebug("Process notification")
         guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String : String],
             let chatIdBase64 = megadataDictionary["chatid"],
             let msgIdBase64 = megadataDictionary["msgid"]
@@ -189,6 +222,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
             if message.type != .unknown && generateNotification(with: message, immediately: false) {
+                MEGALogDebug("Message exists in karere cache")
                 postNotification(withError: nil)
                 return
             }
@@ -236,10 +270,27 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return nil
         }
     }
+    
+    private func setupDisplayName(displayName: String?, for chatRoom: MEGAChatRoom) {
+        guard let displayName = displayName else {
+            MEGALogWarning("[Chat Links Scalability] Display name not ready")
+            return
+        }
+        
+        if chatRoom.isGroup {
+            bestAttemptContent?.subtitle = displayName
+        } else {
+            bestAttemptContent?.title = displayName
+            if #available(iOS 12.0, *) {
+                bestAttemptContent?.summaryArgument = displayName
+            }
+        }
+    }
 
     // MARK: - Lean init, login and connect
     
     private static func initExtensionProcess(with session: String) -> Bool {
+        MEGALogDebug("Init extension process")
         NSSetUncaughtExceptionHandler { (exception) in
             MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
             MEGALogError("Stack trace: \(exception.callStackSymbols)")
@@ -249,6 +300,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 
         let success = initChat(with: session)
         if success {
+            MEGALogDebug("Init chat success")
             loginToMEGA(with: session)
             if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
                 sharedUserDefaults.set(false, forKey: MEGAInvalidateNSECache)
@@ -293,6 +345,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 
     // As part of the lean init, a cache is required. It will not be generated from scratch.
     private static func copyDatabasesFromMainApp(with session: String) {
+        MEGALogDebug("Copy databases from main app")
         let fileManager = FileManager.default
         
         guard let groupContainerURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier) else {
@@ -334,6 +387,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 let sourceURL = groupSupportURL.appendingPathComponent(filename)
                 let destinationURL = nseCacheURL.appendingPathComponent(filename)
                 do {
+                    MEGALogDebug("Copy item: \(sourceURL.absoluteString)")
                     try fileManager.copyItem(at: sourceURL, to: destinationURL)
                 } catch {
                     MEGALogError("Copy item at path failed with error: \(error)")
@@ -343,19 +397,24 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private static func initChat(with session: String) -> Bool {
+        MEGALogDebug("Init chat")
         if MEGASdkManager.sharedMEGAChatSdk() == nil {
             MEGASdkManager.createSharedMEGAChatSdk()
         }
 
         var chatInit = MEGASdkManager.sharedMEGAChatSdk()?.initState()
         if chatInit == .notDone {
+            MEGALogDebug("Init state == notDone -> Init Karere Lean Mode")
             chatInit = MEGASdkManager.sharedMEGAChatSdk()?.initKarereLeanMode(withSid: session)
             if chatInit == .error {
+                MEGALogError("Init Karere Lean Mode fails -> logout")
                 MEGASdkManager.sharedMEGAChatSdk()?.logout()
                 return false
             }
+            MEGALogDebug("Reset client Id")
             MEGASdkManager.sharedMEGAChatSdk()?.resetClientId()
         } else {
+            MEGALogDebug("Init state != notDone -> Reconnect")
             MEGAReachabilityManager.shared()?.reconnect()
         }
         
@@ -363,12 +422,14 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private static func loginToMEGA(with session: String) {
+        MEGALogDebug("Login to MEGA")
         MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
             if error.type != .apiOk {
                 MEGALogError("Login error \(error)")
                 return
             }
 
+            MEGALogDebug("Connect in background")
             MEGASdkManager.sharedMEGAChatSdk()?.connectInBackground()
         })
     }

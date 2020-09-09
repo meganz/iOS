@@ -14,7 +14,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
-@interface GetLinkTableViewController () <UITextFieldDelegate>
+@interface GetLinkTableViewController () <UITextFieldDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (nonatomic) NSMutableArray *fullLinks;
 @property (nonatomic) NSMutableArray *links;
@@ -135,6 +135,8 @@
     
     self.shareBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
     self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard");
+    
+    self.navigationController.presentationController.delegate = self;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -542,6 +544,19 @@
     }
     
     return YES;
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    return NO;
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.doneBarButtonItem withConfirmAction:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 
 @end

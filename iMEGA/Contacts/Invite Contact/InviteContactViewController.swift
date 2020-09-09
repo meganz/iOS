@@ -46,6 +46,12 @@ class InviteContactViewController: UIViewController {
         updateAppearance()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.presentationController?.delegate = self
+    }
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
@@ -89,14 +95,9 @@ class InviteContactViewController: UIViewController {
         guard MFMessageComposeViewController.canSendText() else {
             return
         }
-
-        let contactsPickerVC = CNContactPickerViewController()
-        contactsPickerVC.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
-        contactsPickerVC.predicateForSelectionOfProperty = NSPredicate(format: "key == 'phoneNumbers'")
-        contactsPickerVC.displayedPropertyKeys = [CNContactPhoneNumbersKey]
-        contactsPickerVC.delegate = self
-
-        present(contactsPickerVC, animated: true, completion: nil)
+        
+        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactPhoneNumbersKey], delegate: self))
+        present(contactsPickerNavigation, animated: true, completion:nil)
     }
 
     @IBAction func enterEmailButtonTapped(_ sender: Any) {
@@ -120,23 +121,6 @@ class InviteContactViewController: UIViewController {
     }
 }
 
-// MARK: - CNContactPickerDelegate
-extension InviteContactViewController: CNContactPickerDelegate {
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
-        picker.dismiss(animated: true) {
-            let composeVC = MFMessageComposeViewController()
-            composeVC.messageComposeDelegate = self
-            if let phoneNumber = contactProperty.value as? CNPhoneNumber {
-                composeVC.recipients = [phoneNumber.stringValue]
-                composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
-                self.present(composeVC, animated: true, completion: nil)
-            } else {
-                SVProgressHUD.showError(withStatus: "error")
-            }
-        }
-    }
-}
-
 // MARK: - MFMessageComposeViewControllerDelegate
 extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -150,5 +134,32 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
         @unknown default:
             controller.dismiss(animated: true, completion: nil)
         }
+    }
+}
+
+// MARK: - ContactsPickerViewControllerDelegate
+
+extension InviteContactViewController: ContactsPickerViewControllerDelegate {
+    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String]) {
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        composeVC.recipients = values
+        composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
+        self.present(composeVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension InviteContactViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return false
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        let discardChangesActionSheet = UIAlertController().discardChanges(fromSourceView: navigationController?.view, sourceRect: CGRect(x: 20, y: 20, width: 1, height: 1), withConfirmAction: {
+            self.dismiss(animated: true, completion: nil)
+        })
+        present(discardChangesActionSheet, animated: true, completion: nil)
     }
 }

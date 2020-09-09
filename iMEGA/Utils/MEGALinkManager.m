@@ -48,6 +48,8 @@ static LinkOption selectedOption;
 
 static NSString *nodeToPresentBase64Handle;
 
+static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
+
 @implementation MEGALinkManager
 
 #pragma mark - Utils to manage MEGA links
@@ -170,7 +172,7 @@ static NSString *nodeToPresentBase64Handle;
                 if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
                     if (error.type == MEGAChatErrorTypeNoEnt) {
                         [SVProgressHUD dismiss];
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat link unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.").capitalizedString message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
@@ -184,6 +186,7 @@ static NSString *nodeToPresentBase64Handle;
                 NSString *chatTitle = request.text;
                 MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (!error.type) {
+                        [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                         NSString *identifier = [MEGASdk base64HandleForUserHandle:chatId];
                         NSString *notificationText = [NSString stringWithFormat:AMLocalizedString(@"You have joined %@", @"Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle];
                         if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
@@ -212,6 +215,7 @@ static NSString *nodeToPresentBase64Handle;
                 MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
                 if (!chatRoom.isPreview && !chatRoom.isActive) {
                     [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                    [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                 } else {
                     [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
                 }
@@ -662,7 +666,7 @@ static NSString *nodeToPresentBase64Handle;
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat link unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.").capitalizedString message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:AMLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
@@ -680,9 +684,11 @@ static NSString *nodeToPresentBase64Handle;
                     [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     return;
                 }
+                [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+            [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
         } else {
             [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
         }
@@ -783,6 +789,13 @@ static NSString *nodeToPresentBase64Handle;
     
     MessagesViewController *messagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
     [messagesVC showOptionsForPeerWithHandle:[MEGASdk handleForBase64UserHandle:base64UserHandle] senderView:nil];
+}
+
++ (NSMutableSet<NSString *> *)joiningOrLeavingChatBase64Handles {
+    if (!joiningOrLeavingChatBase64Handles) {
+        joiningOrLeavingChatBase64Handles = NSMutableSet.new;
+    }
+    return joiningOrLeavingChatBase64Handles;
 }
 
 @end

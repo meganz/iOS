@@ -23,7 +23,6 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
-#import "MEGAQLPreviewController.h"
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
 
@@ -41,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *openInBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) QLPreviewController *previewController;
@@ -141,6 +141,7 @@
     self.navigationItem.rightBarButtonItem = nil;
 
     if (self.node) {
+        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
         [self.imageView mnz_imageForNode:self.node];
     } else {
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
@@ -187,6 +188,15 @@
         [self addObserver:self forKeyPath:@"self.previewController.title" options:NSKeyValueObservingOptionNew context:nil];
     }
     
+    UIBarButtonItem *flexibleItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    NSMutableArray *toolbarItems = NSMutableArray.new;
+    if (self.isLink) {
+        [toolbarItems addObjectsFromArray:@[self.importBarButtonItem, flexibleItem]];
+    }
+    [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem, self.openInBarButtonItem]];
+    self.toolbarItems = toolbarItems.copy;
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
     [self.view addSubview:self.previewController.view];
 }
 
@@ -198,14 +208,6 @@
         self.navigationItem.titleView = titleLabel;
         [self.navigationItem.titleView sizeToFit];
     }
-}
-
-- (void)presentMEGAQlPreviewController {
-    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
-    }];
 }
 
 - (void)presentWebCodeViewController {
@@ -229,13 +231,26 @@
     }
 }
 
-- (void)sendLinkToChat {
-    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
-    SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
-    sendToViewController.sendMode = SendModeFileAndFolderLink;
-    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.fileLink navigationController:self.navigationController];
-    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
-    [self.navigationController pushViewController:sendToViewController animated:YES];
+- (void)sendToChat {
+    if (self.isLink && self.fileLink) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
+        SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
+        sendToViewController.sendMode = SendModeFileAndFolderLink;
+        self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.fileLink navigationController:self.navigationController];
+        sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+        [self.node mnz_sendToChatInViewController:self];
+    }
+}
+
+- (void)download {
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+    if (self.isLink && self.fileLink) {
+        [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+    } else {
+        [self.node mnz_downloadNodeOverwriting:NO];
+    }
 }
 
 #pragma mark - IBActions
@@ -271,10 +286,10 @@
             self.thumbnailsPopulated = YES;
         }
         self.collectionView.hidden = NO;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"fullsize"];
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"pageView"];
     } else {
         self.collectionView.hidden = YES;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     }
 }
 
@@ -283,12 +298,16 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModePreviewLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isPageView:self.collectionView.hidden sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)importAction:(id)sender {
     [self import];
+}
+
+- (IBAction)downloadAction:(id)sender {
+    [self download];
 }
 
 - (void)updateAppearance {
@@ -351,10 +370,10 @@
                 if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
                     [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
                 } else {
-                    [self presentMEGAQlPreviewController];
+                    [self loadQLController];
                 }
             } else {
-                [self presentMEGAQlPreviewController];
+                [self loadQLController];
             }
         }
     }
@@ -369,8 +388,7 @@
             break;
             
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:NO];
+            [self download];
             break;
             
         case MegaNodeActionTypeFileInfo: {
@@ -420,14 +438,11 @@
         }
             
         case MegaNodeActionTypeSendToChat:
-            if (self.isLink && self.fileLink) {
-                [self sendLinkToChat];
-            } else {
-                [node mnz_sendToChatInViewController:self];
-            }
+            [self sendToChat];
             break;
             
-        case MegaNodeActionTypeThumbnailView:
+        case MegaNodeActionTypePdfPageView:
+        case MegaNodeActionTypePdfThumbnailView:
             [self thumbnailTapped:nil];
             break;
             
@@ -470,7 +485,6 @@
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         [self setToolbarItems:@[self.isLink ? self.importBarButtonItem : self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
-        self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
         doubleTap.delegate = self;
@@ -559,7 +573,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:[self.pdfView.document pageAtIndex:indexPath.item]];
-    self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+    self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     self.collectionView.hidden = YES;
 }
 
@@ -594,7 +608,7 @@
 - (void)didSelectSearchResult:(PDFSelection *)result {
     if (!self.collectionView.hidden) {
         self.collectionView.hidden = YES;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     }
     result.color = UIColor.systemYellowColor;
     [self.pdfView setCurrentSelection:result];
