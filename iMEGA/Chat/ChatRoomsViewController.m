@@ -109,7 +109,7 @@
             
         case ChatRoomsTypeArchived:
             self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-            self.navigationItem.rightBarButtonItem = nil;
+            self.navigationItem.rightBarButtonItems = @[];
             break;
     }
     

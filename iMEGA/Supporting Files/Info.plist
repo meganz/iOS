@@ -4,10 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>SDK_GIT_COMMIT_HASH</key>
-	<string></string>
-	<key>CHAT_SDK_GIT_COMMIT_HASH</key>
-	<string></string>
 	<key>CFBundleDisplayName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleDocumentTypes</key>
@@ -124,6 +120,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CHAT_SDK_GIT_COMMIT_HASH</key>
+	<string></string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -153,6 +151,8 @@
 	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
+	<key>SDK_GIT_COMMIT_HASH</key>
+	<string></string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
