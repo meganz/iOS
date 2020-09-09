@@ -78,10 +78,6 @@
 
 #pragma mark - Avatars
 
-+ (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
-    return [self mnz_imageForUserHandle:userHandle name:@"?" size:size delegate:delegate];
-}
-
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle name:(NSString *)name size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
     UIImage *image = nil;
     
@@ -91,6 +87,7 @@
         image = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
         NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
+        NSString *secondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:base64Handle];
         MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
         NSString *initialForAvatar = nil;
         if (user != nil) {
@@ -98,7 +95,7 @@
         } else {
             initialForAvatar = name.mnz_initialForAvatar;
         }
-        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
+        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }

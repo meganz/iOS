@@ -443,6 +443,25 @@
             if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
                 [self callUpdateVideoForCall:call];
             }
+            
+            if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
+                switch (call.callCompositionChange) {
+                    case MEGAChatCallCompositionChangePeerRemoved:
+                        if (call.participants.size < MEGAGroupCallsPeersChangeLayout && [api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
+                            [api enableAudioMonitor:NO chatId:call.chatId];
+                        }
+                        break;
+                        
+                    case MEGAChatCallCompositionChangePeerAdded:
+                        if (call.participants.size >= MEGAGroupCallsPeersChangeLayout && ![api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
+                            [api enableAudioMonitor:YES chatId:call.chatId];
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+            }
             break;
         }
             

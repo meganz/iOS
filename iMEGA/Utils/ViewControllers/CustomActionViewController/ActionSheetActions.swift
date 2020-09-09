@@ -3,6 +3,7 @@ import UIKit
 class BaseAction: NSObject {
     var title: String?
     var detail: String?
+    var accessoryView: UIView?
     var image: UIImage?
     var style: UIAlertAction.Style = .default
 }
@@ -15,6 +16,16 @@ class ActionSheetAction: BaseAction {
         super.init()
         self.title = title
         self.detail = detail
+        self.image = image
+        self.style = style
+    }
+    
+    @objc init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+        self.actionHandler = actionHandler
+        super.init()
+        self.title = title
+        self.detail = detail
+        self.accessoryView = accessoryView
         self.image = image
         self.style = style
     }
@@ -123,8 +134,12 @@ extension NodeAction {
         return NodeAction(title: AMLocalizedString("sendToContact", "Text for the action to send something to a contact through the chat."), detail: nil, image: UIImage(named: "sendMessage"), type: .sendToChat)
     }
     
-    class func thumbnailPdfAction() -> NodeAction {
-        return NodeAction(title: AMLocalizedString("Thumbnail view", "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .thumbnailView)
+    class func pdfPageViewAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("Page View", "Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF."), detail: nil, image: UIImage(named: "pageView"), type: .pdfPageView)
+    }
+    
+    class func pdfThumbnailViewAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("Thumbnail View", "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
     }
     
     class func forwardAction() -> NodeAction {
