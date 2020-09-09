@@ -1712,6 +1712,8 @@
 "There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touch to return to call %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Tap to return to call";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Save to Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
