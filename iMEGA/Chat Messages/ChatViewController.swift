@@ -395,9 +395,13 @@ class ChatViewController: MessagesViewController {
                   let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
                           cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                           return cell
-            } else {
+            } else if chatMessage.message.containsMeta.type == .richPreview {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
-                           cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
+            } else {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
             }
         } else if chatMessage.message.isManagementMessage {

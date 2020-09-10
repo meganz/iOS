@@ -110,7 +110,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             richPreviewContentView.isHidden = false
             
         default:
-            break
+            richPreviewContentView.isHidden = true
         }
         
         

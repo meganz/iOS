@@ -9,10 +9,16 @@ class ChatTextMessageViewCell: TextMessageCell {
         guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return
         }
-
+        
         let megaMessage = chatMessage.message
-
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .attributedText(megaMessage.attributedText))
+        
+        guard let attributedText = megaMessage.attributedText else {
+            let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(chatMessage.message.content))
+            super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
+            return
+        }
+        
+        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .attributedText(attributedText))
         super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
     }
 }
