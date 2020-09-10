@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -1445,13 +1446,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3Y-H0-eDU">
                                 <rect key="frame" x="0.0" y="44" width="600" height="88"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FtX-jr-o0q">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5yw-r4-kyx" customClass="MegaAvatarView" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="10" y="14" width="60" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="QVc-ca-h5z"/>
-                                            <constraint firstAttribute="width" constant="60" id="oah-8F-5Rb"/>
+                                            <constraint firstAttribute="width" constant="60" id="gWU-JS-6SV"/>
+                                            <constraint firstAttribute="height" constant="60" id="ncf-wA-nf5"/>
                                         </constraints>
-                                    </imageView>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inq-ix-hD9">
                                         <rect key="frame" x="0.0" y="87.5" width="600" height="0.5"/>
                                         <constraints>
@@ -1477,33 +1479,19 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="FtX-jr-o0q" firstAttribute="centerY" secondItem="T3Y-H0-eDU" secondAttribute="centerY" id="BJA-5r-vcF"/>
-                                    <constraint firstItem="FtX-jr-o0q" firstAttribute="centerX" secondItem="T3Y-H0-eDU" secondAttribute="centerX" id="Bdd-ou-gaI"/>
+                                    <constraint firstItem="5yw-r4-kyx" firstAttribute="centerY" secondItem="253-NN-L3Q" secondAttribute="centerY" id="Axu-e6-The"/>
                                     <constraint firstAttribute="bottom" secondItem="inq-ix-hD9" secondAttribute="bottom" id="DM0-mZ-aHp"/>
+                                    <constraint firstItem="5yw-r4-kyx" firstAttribute="top" secondItem="T3Y-H0-eDU" secondAttribute="top" constant="14" id="ETO-Jf-A2x"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="253-NN-L3Q" secondAttribute="trailing" constant="10" id="Jzc-dK-uMe"/>
                                     <constraint firstItem="inq-ix-hD9" firstAttribute="leading" secondItem="T3Y-H0-eDU" secondAttribute="leading" id="KP2-6k-FMr"/>
-                                    <constraint firstItem="FtX-jr-o0q" firstAttribute="centerY" secondItem="T3Y-H0-eDU" secondAttribute="centerY" id="QRw-vJ-z23">
-                                        <variation key="heightClass=compact" constant="-44"/>
-                                    </constraint>
-                                    <constraint firstItem="253-NN-L3Q" firstAttribute="leading" secondItem="FtX-jr-o0q" secondAttribute="trailing" constant="8" id="X00-Wl-fi4"/>
-                                    <constraint firstItem="FtX-jr-o0q" firstAttribute="top" secondItem="T3Y-H0-eDU" secondAttribute="top" constant="14" id="cNL-Eo-fxO"/>
-                                    <constraint firstItem="FtX-jr-o0q" firstAttribute="leading" secondItem="T3Y-H0-eDU" secondAttribute="leading" constant="10" id="hJQ-N8-fld"/>
+                                    <constraint firstItem="253-NN-L3Q" firstAttribute="leading" secondItem="5yw-r4-kyx" secondAttribute="trailing" constant="8" id="fBn-gF-4O3"/>
                                     <constraint firstAttribute="trailing" secondItem="inq-ix-hD9" secondAttribute="trailing" id="mzA-IB-0Tl"/>
-                                    <constraint firstItem="253-NN-L3Q" firstAttribute="centerY" secondItem="FtX-jr-o0q" secondAttribute="centerY" id="vIW-qh-J9J"/>
+                                    <constraint firstItem="5yw-r4-kyx" firstAttribute="leading" secondItem="T3Y-H0-eDU" secondAttribute="leading" constant="10" id="tQi-xk-MWO"/>
                                     <constraint firstAttribute="height" constant="88" id="xvg-bz-Ibu"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="BJA-5r-vcF"/>
-                                        <exclude reference="Bdd-ou-gaI"/>
-                                        <exclude reference="QRw-vJ-z23"/>
-                                    </mask>
-                                </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="xvg-bz-Ibu"/>
-                                        <include reference="QRw-vJ-z23"/>
-                                        <exclude reference="cNL-Eo-fxO"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1985,7 +1973,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="avatarImageView" destination="FtX-jr-o0q" id="r6r-Vt-Cew"/>
+                        <outlet property="avatarView" destination="5yw-r4-kyx" id="HbE-tc-eUX"/>
                         <outlet property="groupInfoBottomSeparatorView" destination="inq-ix-hD9" id="Qfh-25-4ju"/>
                         <outlet property="groupInfoView" destination="T3Y-H0-eDU" id="xBt-oO-1Al"/>
                         <outlet property="nameLabel" destination="W71-dB-C1l" id="yNj-4o-SH9"/>

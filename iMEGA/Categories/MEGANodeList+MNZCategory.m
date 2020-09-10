@@ -49,7 +49,7 @@
     
 }
 
-- (NSArray *)mnz_nodesArrayFromNodeList {
+- (NSArray<MEGANode*> *)mnz_nodesArrayFromNodeList {
     NSUInteger nodeListCount = self.size.unsignedIntegerValue;
     NSMutableArray *nodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {

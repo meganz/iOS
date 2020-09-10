@@ -1,6 +1,6 @@
 
 @interface MEGATransferList (MNZCategory)
 
-- (NSArray <MEGATransfer *>*)mnz_transfersArrayFromTranferList;
+- (NSArray<MEGATransfer *> *)mnz_transfersArrayFromTranferList;
 
 @end

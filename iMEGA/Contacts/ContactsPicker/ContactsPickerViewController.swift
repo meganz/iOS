@@ -144,6 +144,8 @@ class ContactsPickerViewController: UIViewController {
     }
     
     @objc private func sendTapped() {
+        searchController.isActive = false
+
         dismiss(animated: true) {
             self.delegate?.contactsPicker(self, didSelectContacts: self.selectedContacts.map( { $0.contactDetail } ))
         }
