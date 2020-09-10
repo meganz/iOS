@@ -56,6 +56,32 @@ class MegaAvatarView: UIView {
         }
     }
     
+    @objc func setup(for chatRoom: MEGAChatRoom) {
+        if chatRoom.peerCount == 0 {
+            avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
+                                                 size: avatarImageView.frame.size,
+                                                 backgroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
+                                                 backgroundGradientColor: UIColor.mnz_grayDBDBDB(),
+                                                 textColor: UIColor.white,
+                                                 font: UIFont.systemFont(ofSize: avatarImageView.frame.size.width/2.0)
+            )
+            configure(mode: .single)
+        } else {
+            let firstPeerHandle = chatRoom.peerHandle(at: 0)
+            let firstPeerName = chatRoom.userDisplayName(forUserHandle: firstPeerHandle)
+            if chatRoom.peerCount == 1 {
+                avatarImageView.mnz_setImage(forUserHandle: firstPeerHandle, name: firstPeerName)
+                configure(mode: .single)
+            } else {
+                let secondPeerHandle = chatRoom.peerHandle(at: 1)
+                let secondPeerName = chatRoom.userDisplayName(forUserHandle: secondPeerHandle)
+                firstPeerAvatarImageView.mnz_setImage(forUserHandle: firstPeerHandle, name: firstPeerName)
+                secondPeerAvatarImageView.mnz_setImage(forUserHandle: secondPeerHandle, name: secondPeerName)
+                configure(mode: .multiple)
+            }
+        }
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         

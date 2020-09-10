@@ -27,15 +27,9 @@ class ChatSharedItemTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(for node:MEGANode, ownerHandle: UInt64, authToken: String?) {
+    func configure(for node:MEGANode, ownerHandle: UInt64, chatRoom: MEGAChatRoom) {
         nameLabel.text = node.name
-        if let ownerName = MEGAStore.shareInstance().fetchUser(withUserHandle: ownerHandle)?.displayName {
-            ownerNameLabel.text = ownerName
-        } else {
-            MEGASdkManager.sharedMEGAChatSdk()?.userFirstname(byUserHandle: ownerHandle, authorizationToken: authToken, delegate: MEGAChatGenericRequestDelegate.init(completion: { [weak self] (request, _) in
-                self?.ownerNameLabel.text = request.text
-            }))
-        }
+        ownerNameLabel.text = chatRoom.userDisplayName(forUserHandle: ownerHandle)
         ownerNameLabel.textColor = .mnz_subtitles(for: traitCollection)
         infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdkManager.sharedMEGASdk())
         infoLabel.textColor = .mnz_subtitles(for: traitCollection)
