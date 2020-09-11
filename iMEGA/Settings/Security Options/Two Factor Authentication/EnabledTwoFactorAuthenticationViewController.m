@@ -44,6 +44,8 @@
     self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [[MEGASdkManager sharedMEGASdk] isMasterKeyExportedWithDelegate:self];
+    
+    [self updateAppearance];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
