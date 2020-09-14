@@ -1349,7 +1349,18 @@
             break;
             
         case ContactsModeChatStartConversation: {
-            numberOfRows = (section == 0 || section == 1) ? 3 : [self defaultNumberOfRows]; //'Invite Contact', 'New Group Chat' and 'New Chat Link'
+            if (section == 0) {
+                numberOfRows = 3;
+            } else if (section == 1) {
+                if (self.recentsArray.count > 3) {
+                    numberOfRows = 3;
+                } else {
+                    numberOfRows = self.recentsArray.count;
+                }
+                
+            } else {
+                numberOfRows = [self defaultNumberOfRows];
+            }
             break;
         }
             

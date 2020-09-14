@@ -6,7 +6,7 @@
 - (BOOL)mnz_existsFolderWithName:(NSString *)name;
 - (BOOL)mnz_existsFileWithName:(NSString *)name;
 
-- (NSArray *)mnz_nodesArrayFromNodeList;
+- (NSArray<MEGANode*> *)mnz_nodesArrayFromNodeList;
 - (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList;
 
 #pragma mark - onNodesUpdate filtering

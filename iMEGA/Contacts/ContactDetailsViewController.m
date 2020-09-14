@@ -23,7 +23,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
-#import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 #import "MEGAUser+MNZCategory.h"
@@ -1042,11 +1041,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeFileInfo: {
-            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-            nodeInfoVC.node = node;
-            
+        case MegaNodeActionTypeInfo: {
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:nil];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
