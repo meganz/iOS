@@ -114,7 +114,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     private func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64] {
         guard let userHandleList =  MEGASdkManager
             .sharedMEGAChatSdk()?
-            .getReactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
+            .reactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
                 MEGALogDebug("user handle list for emoji \(emoji) is empty")
             return []
         }
