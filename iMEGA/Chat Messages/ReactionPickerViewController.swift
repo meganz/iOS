@@ -80,9 +80,3 @@ extension ReactionPickerViewController: EmojiViewDelegate {
         dismiss(animated: true, completion: nil)
       }
 }
-
-//extension ReactionPickerViewController: UIPopoverPresentationControllerDelegate {
-//    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-//        preferredContentSize = CGSize(width: 400, height: 300)
-//    }
-//}
