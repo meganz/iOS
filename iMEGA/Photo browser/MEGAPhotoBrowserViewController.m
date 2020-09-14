@@ -18,7 +18,6 @@
 #import "MEGAPhotoBrowserPickerViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartDownloadTransferDelegate.h"
-#import "NodeInfoViewController.h"
 #import "SaveToCameraRollActivity.h"
 #import "SendToViewController.h"
 
@@ -1013,12 +1012,8 @@ static const CGFloat GapBetweenPages = 10.0;
             }
             break;
             
-        case MegaNodeActionTypeFileInfo: {
-            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-            nodeInfoVC.node = [self.mediaNodes objectAtIndex:self.currentIndex];
-            nodeInfoVC.nodeInfoDelegate = self;
-
+        case MegaNodeActionTypeInfo: {
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:[self.mediaNodes objectAtIndex:self.currentIndex] delegate:self];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
@@ -1102,7 +1097,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)presentParentNode:(MEGANode *)node {
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];

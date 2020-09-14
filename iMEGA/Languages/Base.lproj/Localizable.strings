@@ -1446,8 +1446,6 @@
 "codeScanned"="Code scanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Shared with:";
-/*   */
-"details"="Details";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Sharing";
 /* Title of section to display number of all historical versions of files. */
@@ -1470,10 +1468,6 @@
 "user"="user";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versions";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="File info";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Folder info";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Do you want to delete this version?";
 /* Message to notify user the file version will be permanently removed */
@@ -1722,6 +1716,8 @@
 "There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touch to return to call %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Tap to return to call";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Save to Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2292,3 +2288,15 @@
 "Proxy server requires a password"="Proxy server requires a password";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Username:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETAILS";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Link Creation";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="SHARE WITH";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="PENDING";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSIONS";

@@ -3,7 +3,7 @@
 
 @implementation MEGATransferList (MNZCategory)
 
-- (NSArray *)mnz_transfersArrayFromTranferList {
+- (NSArray<MEGATransfer *> *)mnz_transfersArrayFromTranferList {
     NSUInteger transferListCount = self.size.unsignedIntegerValue;
     NSMutableArray *transfersMutableArray = [[NSMutableArray alloc] initWithCapacity:transferListCount];
     for (NSUInteger i = 0; i < transferListCount; i++) {
