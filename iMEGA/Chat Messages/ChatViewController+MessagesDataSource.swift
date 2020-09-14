@@ -91,7 +91,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
         guard let emojisStringList = MEGASdkManager
             .sharedMEGAChatSdk()?
-            .getMessageReactions(forChat: chatRoom.chatId,
+            .messageReactions(forChat: chatRoom.chatId,
                                  messageId: chatMessage.message.messageId) else {
                                     MEGALogDebug("Could not fetch the emoji list for a message")
                                     return
