@@ -753,9 +753,7 @@ class ChatViewController: MessagesViewController {
         if UserDefaults.standard.bool(forKey: "TransfersPaused") {
             let alertController = UIAlertController(title: AMLocalizedString("Resume Transfers?"), message: nil, preferredStyle: .alert)
             
-            let cancel = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel) { (action:UIAlertAction) in
-                print("You've pressed default");
-            }
+            let cancel = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel)
             
             let action2 = UIAlertAction(title: AMLocalizedString("resume"), style: .default) { (action:UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk()?.pauseTransfers(false)
