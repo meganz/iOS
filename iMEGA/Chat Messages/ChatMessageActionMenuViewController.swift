@@ -146,7 +146,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
     }
     
-    func configureActions() {
+    private func configureActions() {
         guard let chatMessage = chatMessage else {
             return
         }
@@ -253,7 +253,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         
     }
     
-    func configureHeaderView() {
+    private func configureHeaderView() {
         guard let chatMessage = chatMessage, chatMessage.chatRoom.canAddReactions else {
             return
         }
@@ -315,7 +315,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         let vc = ReactionPickerViewController()
         vc.message = chatMessage
         
-        if let sourceView = self.sender as? UIView, let presentingViewController = presentingViewController {
+        if let sourceView = self.sender, let presentingViewController = presentingViewController {
             dismiss(animated: true, completion: nil)
             presentingViewController.presentPanModal(vc, sourceView:sourceView , sourceRect: sourceView.bounds)
         }
