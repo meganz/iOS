@@ -689,11 +689,6 @@ class ChatViewController: MessagesViewController {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(willEnterForeground(_:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(didBecomeActive(_:)),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
@@ -742,10 +737,6 @@ class ChatViewController: MessagesViewController {
         
         additionalBottomInset = 0
         keyboardVisible = false
-    }
-    
-    @objc func willEnterForeground(_ notification: Notification) {
-        
     }
     
     @objc func didBecomeActive(_ notification: Notification) {
@@ -800,10 +791,6 @@ class ChatViewController: MessagesViewController {
             chatBottomInfoScreenBottomConstraint!,
             chatBottomInfoScreen.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
         ])
-    }
-    
-    private func scrollToFirstUnread() {
-        
     }
     
     func showOrHideJumpToBottom() {
