@@ -53,7 +53,7 @@ class AppearanceManager: NSObject {
         self.setupThirdPartyAppereance(traitCollection)
     }
     
-    class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
+    @objc class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
         SVProgressHUD.setMinimumSize(CGSize(width: 180, height: 100))
         SVProgressHUD.setRingThickness(2)
