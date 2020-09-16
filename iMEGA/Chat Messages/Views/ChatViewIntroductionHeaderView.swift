@@ -143,19 +143,25 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let confidentialityLabelSize = confidentialityTextLabel.sizeThatFits(size)
         let authenticityLabelSize = authenticityTextLabel.sizeThatFits(size)
         
-        let totalHeight = viewPadding
-            + mainStackView.spacing
-            + participantsInformationStackView.spacing
+        let participantsInformationAreaHeight =  participantsInformationStackView.spacing
             + participantsInformationHeight
-            + descriptionStackView.spacing
+        let descriptionAreaHeight = descriptionStackView.spacing
             + descriptionLabelSize.height
-            + confidentialityAndAuthenticityStackView.spacing
+        let confidentialityAreaHeight = confidentialityAndAuthenticityStackView.spacing
             + confidentialityStackView.spacing
             + confidentialityImageView.bounds.height
             + confidentialityLabelSize.height
-            + authenticityStackView.spacing
+        let authenticityAreaHeight = authenticityStackView.spacing
             + authenticityImageView.bounds.height
             + authenticityLabelSize.height
+        
+        
+        let totalHeight = viewPadding
+            + mainStackView.spacing
+            + participantsInformationAreaHeight
+            + descriptionAreaHeight
+            + confidentialityAreaHeight
+            + authenticityAreaHeight
         
         return CGSize(width: size.width, height: totalHeight)
     }
