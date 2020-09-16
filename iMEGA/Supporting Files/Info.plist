@@ -119,7 +119,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20200901126</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CHAT_SDK_GIT_COMMIT_HASH</key>
 	<string></string>
 	<key>ITSAppUsesNonExemptEncryption</key>
