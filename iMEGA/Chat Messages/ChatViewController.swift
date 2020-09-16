@@ -378,6 +378,12 @@ class ChatViewController: MessagesViewController {
             return cell
         } else if chatMessage.message.type == .normal {
             if chatMessage.message.containsMEGALink() {
+                if chatMessage.message.warningDialog.rawValue > MEGAChatMessageWarningDialog.none.rawValue {
+                    let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewDialogCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewDialogCollectionViewCell
+                    cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                    return cell
+                }
+                
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
