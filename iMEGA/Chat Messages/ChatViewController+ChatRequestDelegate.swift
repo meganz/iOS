@@ -1,3 +1,0 @@
-extension ChatViewController: MEGAChatRequestDelegate {
-
-}
