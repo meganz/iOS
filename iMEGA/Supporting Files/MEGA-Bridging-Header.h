@@ -48,6 +48,7 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "MEGAConstants.h"

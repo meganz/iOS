@@ -132,8 +132,6 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
     }
 }
 
-
-
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {
     
     override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {

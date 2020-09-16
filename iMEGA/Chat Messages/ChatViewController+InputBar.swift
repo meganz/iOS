@@ -413,12 +413,24 @@ extension ChatViewController: ChatInputBarDelegate {
                     chatRoomDelegate.chatMessages[index] = ChatMessage(message: message, chatRoom: chatRoom)
                     messagesCollectionView.reloadDataAndKeepOffset()
                 }
+                checkDialogs(message)
             }
             
             self.editMessage = nil
         } else if let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text) {
             chatRoomDelegate.insertMessage(message, scrollToBottom: true)
             chatRoomDelegate.updateUnreadMessagesLabel(unreads: 0)
+            checkDialogs(message)
+        }
+    }
+    
+    func checkDialogs(_ message: MEGAChatMessage) {
+        if MEGAChatSdk.hasUrl(message.content) {
+            MEGASdkManager.sharedMEGASdk()?.shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
+                
+            }, error: { (request, error) in
+                
+            }))
         }
     }
     
