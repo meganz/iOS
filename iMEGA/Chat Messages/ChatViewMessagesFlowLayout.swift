@@ -19,7 +19,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
     lazy var chatAttributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
     lazy var chatUnreadMessagesLabelCollectionCellSizeCalculator = ChatUnreadMessagesLabelCollectionCellSizeCalculator(layout: self)
-  
+    lazy var chatRichPreviewDialogCollectionViewSizeCalculator = ChatRichPreviewDialogCollectionViewSizeCalculator(layout:self)
     var editing = false {
         didSet {
             invalidateLayout()
@@ -134,7 +134,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 if chatMessage.message.containsMEGALink() {
                     return chatRichPreviewMediaCollectionViewSizeCalculator
                 } else {
-                    return chatAttributedTextMessageSizeCalculator
+                    return chatRichPreviewDialogCollectionViewSizeCalculator
                 }
             case .voiceClip:
                 return chatVoiceClipCollectionViewSizeCalculator
@@ -170,7 +170,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatRichPreviewMediaCollectionViewSizeCalculator,
             chatVoiceClipCollectionViewSizeCalculator,
             chatlocationCollectionViewSizeCalculator,
-            chatManagmentTypeCollectionViewSizeCalculator
+            chatManagmentTypeCollectionViewSizeCalculator,
+            chatRichPreviewDialogCollectionViewSizeCalculator
         ])
         return calculators
     }
