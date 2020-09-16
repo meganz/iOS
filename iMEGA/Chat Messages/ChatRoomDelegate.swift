@@ -151,6 +151,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     if !chatViewController.previewMode {
                         MEGASdkManager.sharedMEGAChatSdk()!.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
                     }
+                    
+                    chatViewController.messagesCollectionView.reloadData()
+                    // 1 because the "unread text" notification cell should be shown as well.
+                    let scrollingIndexPath = IndexPath(item: 0, section: chatMessages.count - chatRoom.unreadCount - 1)
+                    chatViewController.messagesCollectionView.scrollToItem(at: scrollingIndexPath,
+                                                                           at: .top,
+                                                                           animated: false)
+
+                    return
                 }
 
                 chatViewController?.messagesCollectionView.reloadData()
