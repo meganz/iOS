@@ -20,10 +20,22 @@ class RichPreviewDialogView: UIView {
         return label
     }()
     
-    let alwaysAllowButton = UIButton()
-    let notNowButton = UIButton()
+    let alwaysAllowButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.contentHorizontalAlignment = .left
+        button.setTitle(AMLocalizedString("never"), for: .normal)
+        return button
+    }()
+    
+    let notNowButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.contentHorizontalAlignment = .left
+        return button
+    }()
+    
     let neverButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
+        button.contentHorizontalAlignment = .left
         button.setTitle(AMLocalizedString("never"), for: .normal)
         return button
     }()
@@ -39,9 +51,9 @@ class RichPreviewDialogView: UIView {
     init() {
         super.init(frame: .zero)
         updateAppearance()
-        rootFlexContainer.flex.define { (flex) in
-            flex.addItem().direction(.row).paddingHorizontal(10).paddingTop(10).define { (flex) in
-                flex.addItem(warmingImageView).width(50).height(100)
+        rootFlexContainer.flex.paddingHorizontal(10).paddingTop(10).define { (flex) in
+            flex.addItem().direction(.row).define { (flex) in
+                flex.addItem(warmingImageView).width(84).height(110)
                 
                 flex.addItem().direction(.column).grow(1).shrink(1).define { (flex) in
                     flex.addItem(titleLabel).grow(1).shrink(1)
@@ -49,14 +61,19 @@ class RichPreviewDialogView: UIView {
                 }
             }
             
-            flex.addItem(alwaysAllowButton)
-            flex.addItem(notNowButton)
-            flex.addItem(neverButton)
-
+            flex.addItem(alwaysAllowButton).height(44)
+            flex.addItem().height(1).backgroundColor(.systemGray)
+            flex.addItem(notNowButton).height(44)
+            flex.addItem().height(1).backgroundColor(.systemGray)
+            flex.addItem(neverButton).height(44)
         }
         
         addSubview(rootFlexContainer)
-     
+        
+        alwaysAllowButton.addTarget(self, action: #selector(alwaysButtonClick(_:)), for: .touchUpInside)
+        notNowButton.addTarget(self, action: #selector(notNowButtonClick(_:)), for: .touchUpInside)
+        neverButton.addTarget(self, action: #selector(neverButtonClick(_:)), for: .touchUpInside)
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,6 +116,18 @@ class RichPreviewDialogView: UIView {
         descriptionLabel.flex.markDirty()
     }
     
+    @objc private func alwaysButtonClick(_ sender: UIButton) {
+        
+    }
+    
+    @objc private func notNowButtonClick(_ sender: UIButton) {
+         
+     }
+     
+    @objc private func neverButtonClick(_ sender: UIButton) {
+         
+     }
+     
     private func updateAppearance() {
         backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
         titleLabel.textColor = .mnz_label()
@@ -114,11 +143,13 @@ class RichPreviewDialogView: UIView {
     private func layout() {
         // Layout the flexbox container using PinLayout
         // NOTE: Could be also layouted by setting directly rootFlexContainer.frame
-        rootFlexContainer.pin.vertically().horizontally()
+
+        rootFlexContainer.pin.bottom().horizontally()
         
         // Then let the flexbox container layout itself
-        rootFlexContainer.flex.layout()
+        rootFlexContainer.flex.layout(mode: .adjustHeight)
         
+        pin.bottom().horizontally().height(of: rootFlexContainer)
     }
     
     
