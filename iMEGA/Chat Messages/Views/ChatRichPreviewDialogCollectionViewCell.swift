@@ -22,31 +22,17 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
             return
         }
         
-        
-        
-//        let megaLink = megaMessage.megaLink as NSURL
-        
-        
     }
+    
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(richPreviewDialogView)
-        setupConstraints()
-    }
-    
-    // MARK: - Methods
-    
-    /// Responsible for setting up the constraints of the cell's subviews.
-    open func setupConstraints() {
-        richPreviewDialogView.autoSetDimension(.height, toSize: 200)
-        richPreviewDialogView.autoPinEdge(toSuperviewEdge: .leading)
-        richPreviewDialogView.autoPinEdge(toSuperviewEdge: .trailing)
-        richPreviewDialogView.autoPinEdge(toSuperviewEdge: .bottom)
     }
 }
 
 open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCalculator {
-    
+    var richPreviewDialogView: RichPreviewDialogView = RichPreviewDialogView()
+
     override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
         return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
     }
@@ -58,17 +44,19 @@ open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCal
         
         let megaMessage = chatMessage.message
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
-
+        
         let maxWidth = messageContainerMaxWidth(for: dummyMssage)
-
+        
         let containerSize = super.messageContainerSize(for: dummyMssage)
         switch message.kind {
         case .custom:
-//            if megaMessage.richNumber == nil && megaMessage.containsMeta?.type != .richPreview {
-//                return containerSize
-//            }
-            
-            return CGSize(width: max(maxWidth, containerSize.width), height: containerSize.height + 200)
+            //            if megaMessage.richNumber == nil && megaMessage.containsMeta?.type != .richPreview {
+            //                return containerSize
+            //            }
+            let width = max(maxWidth, containerSize.width)
+            richPreviewDialogView.message = megaMessage
+            let dialogSize = richPreviewDialogView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
+            return CGSize(width: width, height: containerSize.height + dialogSize.height)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
