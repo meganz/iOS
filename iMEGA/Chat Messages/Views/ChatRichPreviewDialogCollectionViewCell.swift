@@ -3,17 +3,20 @@ import MessageKit
 
 class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
     open var richPreviewDialogView: RichPreviewDialogView = RichPreviewDialogView()
+    var megaMessage: MEGAChatMessage?
+    var indexPath:IndexPath?
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         
         guard let chatMessage = message as? ChatMessage else {
             return
         }
-        
         let megaMessage = chatMessage.message
         richPreviewDialogView.isHidden = false
         richPreviewDialogView.message = megaMessage
         
+        self.indexPath = indexPath
+        self.megaMessage = megaMessage
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
         super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
         
@@ -21,9 +24,37 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
             richPreviewDialogView.isHidden = false
             return
         }
-        
+                
     }
     
+    open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        let touchLocation = gesture.location(in: richPreviewDialogView)
+
+        guard richPreviewDialogView.frame.contains(touchLocation) else {
+            super.handleTapGesture(gesture)
+            return
+        }
+        
+        if let collectionView = self.superview as? UICollectionView, let chatVC = collectionView.delegate as? ChatViewController, let megaMessage = megaMessage {
+            // Trigger action
+            if richPreviewDialogView.alwaysAllowButton.frame.contains(touchLocation) {
+                if megaMessage.warningDialog == .confirmation {
+                    MEGASdkManager.sharedMEGASdk()?.enableRichPreviews(false)
+                } else {
+                    MEGASdkManager.sharedMEGASdk()?.enableRichPreviews(true)
+                }
+                megaMessage.warningDialog = .none
+            } else if richPreviewDialogView.notNowButton.frame.contains(touchLocation) {
+                megaMessage.warningDialog = .dismiss
+                chatVC.richLinkWarningCounterValue += 1
+                MEGASdkManager.sharedMEGASdk()?.setRichLinkWarningCounterValue(chatVC.richLinkWarningCounterValue)
+            } else if  richPreviewDialogView.neverButton.frame.contains(touchLocation) {
+                megaMessage.warningDialog = .confirmation
+            }
+            chatVC.chatRoomDelegate.updateMessage(megaMessage)
+        }
+    }
+
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(richPreviewDialogView)
@@ -50,9 +81,6 @@ open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCal
         let containerSize = super.messageContainerSize(for: dummyMssage)
         switch message.kind {
         case .custom:
-            //            if megaMessage.richNumber == nil && megaMessage.containsMeta?.type != .richPreview {
-            //                return containerSize
-            //            }
             let width = max(maxWidth, containerSize.width)
             richPreviewDialogView.message = megaMessage
             let dialogSize = richPreviewDialogView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))

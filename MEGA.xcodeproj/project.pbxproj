@@ -4202,6 +4202,8 @@
 		5D03C99D2488972400BE5EEB /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				2F496B11247B524300622DCC /* UIImageView+WMLTemplatedAnimation.h */,
+				2F496B12247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m */,
 				5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */,
 				5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */,
 				5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */,
@@ -5730,8 +5732,6 @@
 				BFB464172435831900FB90B9 /* Views */,
 				BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */,
 				2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */,
-				2F496B11247B524300622DCC /* UIImageView+WMLTemplatedAnimation.h */,
-				2F496B12247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m */,
 				BFB463E82433394500FB90B9 /* ChatMessage.swift */,
 				BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */,
 				BF33EF6F243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift */,
