@@ -56,7 +56,16 @@ open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCal
             let width = max(maxWidth, containerSize.width)
             richPreviewDialogView.message = megaMessage
             let dialogSize = richPreviewDialogView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
-            return CGSize(width: width, height: containerSize.height + dialogSize.height)
+            
+            switch chatMessage.message.warningDialog {
+            case .initial, .standard, .confirmation:
+                return CGSize(width: width, height: containerSize.height + dialogSize.height + 4)
+
+            default:
+                return CGSize(width: width, height: containerSize.height)
+
+            }
+            
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
