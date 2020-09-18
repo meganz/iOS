@@ -6,37 +6,43 @@ class RichPreviewDialogView: UIView {
     
     private let rootFlexContainer = UIView()
     private let warmingImageView = UIImageView(image: UIImage(named: "privacy_warning_ico"))
-    let titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.numberOfLines = 0
         return label
     }()
     
-    let descriptionLabel: UILabel = {
+    lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 0
         return label
     }()
     
-    let alwaysAllowButton: UIButton = {
+    lazy var alwaysAllowButton: UIButton = {
         let button = UIButton(type: .system)
         button.contentHorizontalAlignment = .left
         button.setTitle(AMLocalizedString("never"), for: .normal)
+        button.isUserInteractionEnabled = true
+
         return button
     }()
     
-    let notNowButton: UIButton = {
+    lazy var notNowButton: UIButton = {
         let button = UIButton(type: .system)
         button.contentHorizontalAlignment = .left
+        button.isUserInteractionEnabled = true
+
         return button
     }()
     
-    let neverButton: UIButton = {
+    lazy var neverButton: UIButton = {
         let button = UIButton(type: .system)
         button.contentHorizontalAlignment = .left
         button.setTitle(AMLocalizedString("never"), for: .normal)
+        button.isUserInteractionEnabled = true
+
         return button
     }()
     
@@ -52,35 +58,27 @@ class RichPreviewDialogView: UIView {
         super.init(frame: .zero)
         updateAppearance()
         rootFlexContainer.flex.define { (flex) in
-            flex.addItem().backgroundColor(.mnz_chatRichLinkContentBubble(traitCollection)).define { (flex) in
-                flex.addItem().paddingHorizontal(10).define { (flex) in
-                    flex.addItem().direction(.row).marginTop(10).define { (flex) in
-                        flex.addItem(warmingImageView).width(84).height(110)
-                        
-                        flex.addItem().direction(.column).grow(1).shrink(1).define { (flex) in
-                            flex.addItem(titleLabel).grow(1).shrink(1)
-                            flex.addItem(descriptionLabel).grow(1).shrink(1)
-                        }
+            flex.addItem().paddingHorizontal(10).define { (flex) in
+                flex.addItem().direction(.row).marginTop(10).define { (flex) in
+                    flex.addItem(warmingImageView).width(84).height(110)
+                    
+                    flex.addItem().direction(.column).grow(1).shrink(1).define { (flex) in
+                        flex.addItem(titleLabel).grow(1).shrink(1)
+                        flex.addItem(descriptionLabel).grow(1).shrink(1)
                     }
-                    
-                    flex.addItem(alwaysAllowButton).height(44)
-                    flex.addItem().height(1).backgroundColor(.systemGray)
-                    flex.addItem(notNowButton).height(44)
-                    flex.addItem().height(1).backgroundColor(.systemGray)
-                    flex.addItem(neverButton).height(44)
-                    
-                    
                 }
+                
+                flex.addItem(alwaysAllowButton).height(44)
+                flex.addItem().height(1).backgroundColor(.systemGray)
+                flex.addItem(notNowButton).height(44)
+                flex.addItem().height(1).backgroundColor(.systemGray)
+                flex.addItem(neverButton).height(44)
+                
             }
             
         }
         
         addSubview(rootFlexContainer)
-        
-        alwaysAllowButton.addTarget(self, action: #selector(alwaysButtonClick(_:)), for: .touchUpInside)
-        notNowButton.addTarget(self, action: #selector(notNowButtonClick(_:)), for: .touchUpInside)
-        neverButton.addTarget(self, action: #selector(neverButtonClick(_:)), for: .touchUpInside)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -125,20 +123,8 @@ class RichPreviewDialogView: UIView {
         rootFlexContainer.flex.markDirty()
     }
     
-    @objc private func alwaysButtonClick(_ sender: UIButton) {
-        
-    }
-    
-    @objc private func notNowButtonClick(_ sender: UIButton) {
-        
-    }
-    
-    @objc private func neverButtonClick(_ sender: UIButton) {
-        
-    }
-    
     private func updateAppearance() {
-        rootFlexContainer.backgroundColor = .clear
+        rootFlexContainer.backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
         titleLabel.textColor = .mnz_label()
         descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
     }

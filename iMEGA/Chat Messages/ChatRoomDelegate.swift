@@ -359,15 +359,13 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             oldMessage.message.warningDialog = message.warningDialog
             chatMessages[index] = oldMessage
             
-            UIView.performWithoutAnimation {
-                chatViewController?.messagesCollectionView.performBatchUpdates({
-                    chatViewController?.messagesCollectionView.reloadSections([index])
-                }, completion: { _ in
-                    if index == self.messages.count - 1 {
-                        self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
-                    }
-                })
-            }
+            chatViewController?.messagesCollectionView.performBatchUpdates({
+                chatViewController?.messagesCollectionView.reloadSections([index])
+            }, completion: { _ in
+                if index == self.messages.count - 1 {
+                    self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                }
+            })
         }
     }
     

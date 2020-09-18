@@ -127,15 +127,15 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                     }
                 }
                 return chatViewAttachmentCellCalculator
-
             case .callEnded, .callStarted:
                 return chatViewCallCollectionCellCalculator
             case .normal:
-                if chatMessage.message.containsMEGALink() {
-                    return chatRichPreviewMediaCollectionViewSizeCalculator
-                } else {
+                if chatMessage.message.warningDialog.rawValue > MEGAChatMessageWarningDialog.none.rawValue {
                     return chatRichPreviewDialogCollectionViewSizeCalculator
+                } else if chatMessage.message.containsMEGALink() {
+                    return chatRichPreviewMediaCollectionViewSizeCalculator
                 }
+                return chatAttributedTextMessageSizeCalculator
             case .voiceClip:
                 return chatVoiceClipCollectionViewSizeCalculator
             case .containsMeta:
