@@ -427,9 +427,18 @@ extension ChatViewController: ChatInputBarDelegate {
     func checkDialogs(_ message: MEGAChatMessage) {
         if MEGAChatSdk.hasUrl(message.content) {
             MEGASdkManager.sharedMEGASdk()?.shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
-                
+                if let request = request, request.flag {
+                    message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
+                    self.richLinkWarningCounterValue = request.number.uintValue
+                    self.chatRoomDelegate.updateMessage(message)
+                }
             }, error: { (request, error) in
-                
+                if let request = request, request.flag {
+                    message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
+                    self.richLinkWarningCounterValue = request.number.uintValue
+                    self.chatRoomDelegate.updateMessage(message)
+
+                }
             }))
         }
     }

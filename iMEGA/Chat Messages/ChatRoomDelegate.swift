@@ -228,12 +228,19 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     }) else {
                         return
                     }
-
+                    message.warningDialog = oldMessage.message.warningDialog
                     let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                     chatMessages[index] = receivedMessage
-                    chatViewController?.messagesCollectionView.performBatchUpdates({
-                        chatViewController?.messagesCollectionView.reloadSections([index])
-                    }, completion: nil)
+                    
+                    UIView.performWithoutAnimation {
+                        chatViewController?.messagesCollectionView.performBatchUpdates({
+                            chatViewController?.messagesCollectionView.reloadSections([index])
+                        }, completion: { _ in
+                            if index == self.messages.count - 1 {
+                                self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                            }
+                        })
+                    }
                 } else {
                     if message.type == .attachment || message.type == .voiceClip {
                         let filteredArray = transfers.filter { chatMessage in
@@ -329,6 +336,41 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     // MARK: - Interface methods
 
+    func updateMessage(_ message: MEGAChatMessage) {
+        let filteredArray = chatMessages.filter { chatMessage in
+            guard let localChatMessage = chatMessage as? ChatMessage else {
+                return false
+            }
+            
+            return localChatMessage.message.temporalId == message.temporalId
+        }
+        
+        if filteredArray.count > 0 {
+            guard let oldMessage = filteredArray.first as? ChatMessage,
+                let index = chatMessages.firstIndex(where: { message -> Bool in
+                    guard let localChatMessage = message as? ChatMessage else {
+                        return false
+                    }
+                    
+                    return localChatMessage == oldMessage
+                }) else {
+                    return
+            }
+            oldMessage.message.warningDialog = message.warningDialog
+            chatMessages[index] = oldMessage
+            
+            UIView.performWithoutAnimation {
+                chatViewController?.messagesCollectionView.performBatchUpdates({
+                    chatViewController?.messagesCollectionView.reloadSections([index])
+                }, completion: { _ in
+                    if index == self.messages.count - 1 {
+                        self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                    }
+                })
+            }
+        }
+    }
+    
     func loadMoreMessages() {
         if !isFullChatHistoryLoaded {
             loadingState = true

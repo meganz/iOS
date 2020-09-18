@@ -31,7 +31,7 @@ class ChatViewController: MessagesViewController {
     
     var sendTypingTimer: Timer?
     var keyboardVisible = false
-    
+    var richLinkWarningCounterValue: UInt = 0
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     // topbanner
