@@ -408,13 +408,13 @@ class MessageInputBar: UIView {
             guard let `self` = self else {
                 return
             }
-            
-            self.micButton.alpha = 0.0
-            self.micButton.isHidden = false
-            
+                        
             MEGALogDebug("[MessageInputBar] Keyboard will hide notification triggered")
 
             if self.messageTextView.text.count == 0 {
+                self.micButton.alpha = 0.0
+                self.micButton.isHidden = false
+
                 UIView.animate(withDuration: self.animationDuration, animations: {
                     self.backgroundViewTrailingButtonConstraint.isActive = false
                     self.backgroundViewTrailingTextViewConstraint.isActive = true
