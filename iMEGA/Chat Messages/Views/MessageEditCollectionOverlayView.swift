@@ -28,7 +28,6 @@ class MessageEditCollectionOverlayView : MessageReusableView {
     }
     
     @objc func onTapOverlayButton(sender: UITapGestureRecognizer) {
-        print("overlayViewTapped")
         isActive = !isActive
         delegate?.editOverlayView(self, activated: isActive)
     }
