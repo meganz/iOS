@@ -12,7 +12,7 @@ extension ChatViewController {
 
             barButtons.append(audioCallBarButtonItem)
         } else {
-            barButtons = [audioCallBarButtonItem, videoCallBarButtonItem]
+            barButtons = [videoCallBarButtonItem, audioCallBarButtonItem]
         }
 
         return barButtons
