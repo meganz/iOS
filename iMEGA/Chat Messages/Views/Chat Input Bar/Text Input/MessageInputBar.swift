@@ -331,6 +331,7 @@ class MessageInputBar: UIView {
     private func showSendButtonUI() {
         if !self.messageTextView.isFirstResponder
             || self.backgroundViewTrailingButtonConstraint.isActive {
+            MEGALogDebug("[MessageInputBar] textview is not the first responder or the backgroundViewTrailingButtonConstraint is active")
             return
         }
         
@@ -395,6 +396,18 @@ class MessageInputBar: UIView {
                 let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
                 messageTextViewExpanadedHeight != self.expandedHeight {
                 self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
+            }
+            
+            if self.messageTextView.isFirstResponder && !self.backgroundViewTrailingButtonConstraint.isActive {
+                
+                self.micButton.isHidden = true
+                self.micButton.alpha = 1.0
+                
+                self.sendButton.isHidden = false
+                self.sendButton.alpha = 1.0
+                
+                self.backgroundViewTrailingTextViewConstraint.isActive = false
+                self.backgroundViewTrailingButtonConstraint.isActive = true
             }
         }
     }
