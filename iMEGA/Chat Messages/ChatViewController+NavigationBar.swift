@@ -2,26 +2,25 @@
 import Foundation
 
 extension ChatViewController {
-    
     private var rightBarButtons: [UIBarButtonItem] {
         var barButtons: [UIBarButtonItem] = []
-        
+
         if chatRoom.isGroup {
             if chatRoom.ownPrivilege == .moderator {
                 barButtons.append(addParticpantBarButtonItem)
             }
-            
+
             barButtons.append(audioCallBarButtonItem)
         } else {
             barButtons = [audioCallBarButtonItem, videoCallBarButtonItem]
         }
-        
+
         return barButtons
     }
-    
+
     var shouldDisableAudioVideoCall: Bool {
         let chatConnection = MEGASdkManager.sharedMEGAChatSdk()!.chatConnectionState(chatRoom.chatId)
-        
+
         return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
             || chatConnection != .online
             || !MEGAReachabilityManager.isReachable()
@@ -29,13 +28,12 @@ extension ChatViewController {
             || MEGASdkManager.sharedMEGAChatSdk()!.hasCall(inChatRoom: chatRoom.chatId)
             || MEGASdkManager.sharedMEGAChatSdk()!.mnz_existsActiveCall
     }
-    
-    
+
     func configureNavigationBar() {
         addRightBarButtons()
         setTitleView()
     }
-    
+
     private func updateRightBarButtons() {
         guard !isEditing else {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
@@ -45,19 +43,19 @@ extension ChatViewController {
 
         audioCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
         videoCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
-        
+
         guard let addToChatViewController = addToChatViewController else {
             return
         }
-        
+
         addToChatViewController.updateAudioVideoMenu()
     }
-    
+
     private func addRightBarButtons() {
         navigationItem.rightBarButtonItems = rightBarButtons
         updateRightBarButtons()
     }
-        
+
     private func setTitleView() {
         let titleView = ChatTitleView.instanceFromNib
         titleView.chatRoom = chatRoom
@@ -66,7 +64,7 @@ extension ChatViewController {
         }
         navigationItem.titleView = titleView
     }
-    
+
     private func didTapTitle() {
         if chatRoom.isGroup {
             if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
@@ -77,29 +75,30 @@ extension ChatViewController {
             pushContactDetailsViewController(withPeerHandle: chatRoom.peerHandle(at: 0))
         }
     }
-    
+
     private func pushGroupDetailsViewController() {
         let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-        if let groupDetailsViewController = storyboard.instantiateViewController(withIdentifier:"GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController {
+        if let groupDetailsViewController = storyboard.instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController {
             groupDetailsViewController.chatRoom = chatRoom
             navigationController?.pushViewController(groupDetailsViewController, animated: true)
         } else {
             MEGALogError("ChatViewController: Could not GroupChatDetailsViewController")
         }
     }
-    
-    func pushContactDetailsViewController(withPeerHandle peerHandle: UInt64) {
-        let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
-        if let contactDetailsViewController = storyboard.instantiateViewController(withIdentifier:"ContactDetailsViewControllerID") as? ContactDetailsViewController {
-            let peerEmail = MEGASdkManager.sharedMEGAChatSdk()?.contacEmail(byHandle: peerHandle)
 
-            contactDetailsViewController.contactDetailsMode = .fromChat
-            contactDetailsViewController.userEmail = peerEmail
-            contactDetailsViewController.userHandle = peerHandle
-            navigationController?.pushViewController(contactDetailsViewController, animated: true)
-        } else {
-            MEGALogError("ChatViewController: Could not ContactDetailsViewControllerID")
+    func pushContactDetailsViewController(withPeerHandle peerHandle: UInt64) {
+        guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
+            return
         }
+
+        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: peerHandle) else {
+            return
+        }
+
+        contactDetailsVC.contactDetailsMode = chatRoom.isGroup ? .fromGroupChat : .fromChat
+        contactDetailsVC.userEmail = userEmail
+        contactDetailsVC.userHandle = peerHandle
+        contactDetailsVC.groupChatRoom = chatRoom
+        navigationController?.pushViewController(contactDetailsVC, animated: true)
     }
-    
 }
