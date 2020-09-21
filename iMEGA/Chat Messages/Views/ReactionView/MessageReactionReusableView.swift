@@ -8,7 +8,6 @@ protocol MessageReactionReusableViewDelegate: class {
 class MessageReactionReusableView: MessageReusableView {
     var emojis = [String]()
     var indexPath: IndexPath?
-    //    var reactionContainerView = ReactionContainerView()
     private lazy var reactionContainerView: ReactionContainerView = {
         let reactionContainerView = ReactionContainerView()
         reactionContainerView.delegate = self
