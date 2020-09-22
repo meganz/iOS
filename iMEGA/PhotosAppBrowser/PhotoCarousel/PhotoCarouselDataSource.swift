@@ -20,4 +20,12 @@ final class PhotoCarouselDataSource: PhotoGridViewDataSource {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCarouselCell else { return }
         cell.selectedIndex = selectedIndex
     }
+    
+    func asset(atIndexPath indexPath: IndexPath) -> PHAsset? {
+        if let cell = collectionView.cellForItem(at: indexPath) as? PhotoCarouselCell {
+            return cell.asset
+        }
+        
+        return nil
+    }
 }
