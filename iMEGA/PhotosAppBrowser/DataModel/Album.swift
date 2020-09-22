@@ -2,15 +2,33 @@
 import UIKit
 import Photos
 
-final class Album {
+protocol AlbumDelegate: AnyObject {
+    func didResetFetchResult()
+    func didChange(removedIndexPaths: [IndexPath]?,
+                   insertedIndexPaths: [IndexPath]?,
+                   changedIndexPaths: [IndexPath]?)
+}
+
+final class Album: NSObject {
     let title: String
-    private let fetchResult: PHFetchResult<PHAsset>
+    private var fetchResult: PHFetchResult<PHAsset>
+    typealias UpdatedFetchResultsHandler = ((Album) -> Void)
+    private let updatedFetchResultsHandler: UpdatedFetchResultsHandler
+
+    weak var delegate: AlbumDelegate?
     
     // MARK:- Initializer.
 
-    init(title: String, fetchResult: PHFetchResult<PHAsset>) {
+    init(title: String, fetchResult: PHFetchResult<PHAsset>, updatedFetchResultsHandler: @escaping UpdatedFetchResultsHandler) {
         self.title = title
         self.fetchResult = fetchResult
+        self.updatedFetchResultsHandler = updatedFetchResultsHandler
+        super.init()
+        PHPhotoLibrary.shared().register(self)
+    }
+    
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
     // MARK:- Interface methods.
@@ -43,5 +61,34 @@ final class Album {
     }
 }
 
+extension Album: PHPhotoLibraryChangeObserver {
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        if let changeDetails = changeInstance.changeDetails(for: fetchResult) {
+            fetchResult = changeDetails.fetchResultAfterChanges
+            updatedFetchResultsHandler(self)
+            
+            if changeDetails.hasIncrementalChanges == false
+                || changeDetails.hasMoves {
+                invokeDelegateDidResetFetchResult()
+            } else {
+                let removedIndexPaths = changeDetails.removedIndexes?.indexPaths(withSection: 0)
+                let insertedIndexPaths = changeDetails.insertedIndexes?.indexPaths(withSection: 0)
+                let changedIndexPaths = changeDetails.changedIndexes?.indexPaths(withSection: 0)
+                
+                OperationQueue.main.addOperation { [weak self] in
+                    self?.delegate?.didChange(removedIndexPaths: removedIndexPaths,
+                                              insertedIndexPaths: insertedIndexPaths,
+                                              changedIndexPaths: changedIndexPaths)
+                }
+            }
+        }
+    }
+    
+    private func invokeDelegateDidResetFetchResult() {
+        OperationQueue.main.addOperation { [weak self] in
+            self?.delegate?.didResetFetchResult()
+        }
+    }
+}
 
 
