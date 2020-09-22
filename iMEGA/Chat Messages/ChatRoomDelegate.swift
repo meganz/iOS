@@ -392,6 +392,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     func closeChatRoom() {
         if isChatRoomOpen {
+            isChatRoomOpen = false
+            chatMessages = []
+            chatViewController?.messagesCollectionView.reloadData()
             MEGASdkManager.sharedMEGAChatSdk()!.closeChatRoom(chatRoom.chatId, delegate: self)
         }
     }

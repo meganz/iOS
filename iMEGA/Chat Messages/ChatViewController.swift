@@ -629,7 +629,7 @@ class ChatViewController: MessagesViewController {
 
     }
 
-    private func update() {
+    @objc func update() {
         guard isViewLoaded, chatRoom != nil else {
             return
         }
