@@ -1071,6 +1071,7 @@
     [animator addCompletion:^{
         [self.navigationController pushViewController:previewViewController animated:NO];
         previewViewController.previewMode = NO;
+        [previewViewController update];
     }];
 }
 
