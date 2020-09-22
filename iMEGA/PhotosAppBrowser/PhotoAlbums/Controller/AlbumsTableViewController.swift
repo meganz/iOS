@@ -5,7 +5,7 @@ import Photos
 final class AlbumsTableViewController: UITableViewController {
     private var albumsDataSource: AlbumsTableViewDataSource?
     private var albumsDelegate: AlbumsTableViewDelegate?
-    private let albums = Albums()
+    private lazy var albums = Albums()
     private let selectionActionText: String
     private let selectionActionDisabledText: String
     private let completionBlock: AlbumsTableViewController.CompletionBlock
@@ -53,6 +53,17 @@ final class AlbumsTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        albums.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        albums.delegate = nil
+    }
+    
+    
     // MARK:- Orientation method.
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -81,6 +92,31 @@ final class AlbumsTableViewController: UITableViewController {
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+}
+
+extension AlbumsTableViewController: AlbumsDelegate {
+    func albumAdded(_ album: Album, atIndex index: Int) {
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: index, section: 0)],
+                             with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    func albumRemoved(_ album: Album, atIndex index: Int) {
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [IndexPath(row: index, section: 0)],
+                             with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    func albumModified(_ album: Album, atIndex index: Int) {
+        tableView.reloadRows(at: [IndexPath(row: index, section: 0)],
+                             with: .automatic)
+    }
+    
+    func albumsReplaced() {
+        tableView.reloadData()
     }
 }
 
