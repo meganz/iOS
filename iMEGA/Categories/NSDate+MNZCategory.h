@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)mnz_formattedDefaultNameForMedia;
 
-- (NSString *)mnz_formattedDefaultDateForMedia;
+- (NSString *)mnz_formattedDateMediumTimeShortStyle;
 - (NSString *)mnz_formattedHourAndMinutes;
 - (NSString *)mnz_formattedDateMediumStyle;
 - (NSString *)mnz_formattedMonthAndYear;
