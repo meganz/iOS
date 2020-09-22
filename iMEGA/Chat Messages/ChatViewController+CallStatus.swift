@@ -82,7 +82,7 @@ extension ChatViewController {
     }
 
     private func configureTopBannerButtonForActiveCall(_: MEGAChatCall) {
-        let title = chatRoom.isGroup ? AMLocalizedString("There is an active group call. Tap to join.", "Message shown in a chat room when there is an active group call") : AMLocalizedString("There is an active call. Tap to join.", "Message shown in a chat room when there is an active call")
+        let title = chatRoom.isGroup ? AMLocalizedString("There is an active group call. Tap to join.", "Message shown in a chat room when there is an active group call") : AMLocalizedString("Tap to return to call", "Message shown in a chat room for a one on one call")
         setTopBannerButton(title: title, color: UIColor.mnz_turquoise(for: traitCollection))
         showTopBannerButton()
     }
