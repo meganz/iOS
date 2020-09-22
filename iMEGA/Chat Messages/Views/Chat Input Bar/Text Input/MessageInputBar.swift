@@ -64,15 +64,14 @@ class MessageInputBar: UIView {
     
     private var expanded: Bool = false
     private var expandedHeight: CGFloat? {
-        guard let keyboardHeight = keyboardHeight,
-            let messageTextViewTopConstraintValueWhenExpanded = messageTextViewTopConstraintValueWhenExpanded else {
+        guard let messageTextViewTopConstraintValueWhenExpanded = messageTextViewTopConstraintValueWhenExpanded else {
             return nil
         }
            
         return UIScreen.main.bounds.height -
             (messageTextViewTopConstraintValueWhenExpanded
                 + messageTextViewBottomConstraintDefaultValue
-                + (messageTextView.isFirstResponder ? keyboardHeight : 0.0))
+                + (messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0))
     }
 
     private var keyboardHeight: CGFloat?
