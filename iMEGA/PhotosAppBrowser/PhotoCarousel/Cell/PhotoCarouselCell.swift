@@ -43,15 +43,31 @@ final class PhotoCarouselCell: UICollectionViewCell {
         }
     }
     
-    var didSelectMarkerHandler: (() -> Void)? {
+    var didSelectMarkerHandler: ((PhotoCarouselCell) -> Void)? {
         didSet {
-            markerView.singleTapHandler = didSelectMarkerHandler
+            guard let didSelectMarkerHandler = didSelectMarkerHandler else {
+                markerView.singleTapHandler = nil
+                return
+            }
+            
+            markerView.singleTapHandler = { [weak self] in
+                guard let `self` = self else { return }
+                didSelectMarkerHandler(self)
+            }
         }
     }
     
-    var didSelectVideoIconHandler: (() -> Void)? {
+    var didSelectVideoIconHandler: ((PhotoCarouselCell) -> Void)? {
         didSet {
-            playIconView.singleTapHandler = didSelectVideoIconHandler
+            guard let didSelectVideoIconHandler = didSelectVideoIconHandler else {
+                playIconView.singleTapHandler = nil
+                return
+            }
+            
+            playIconView.singleTapHandler = { [weak self] in
+                guard let `self` = self else { return }
+                didSelectVideoIconHandler(self)
+            }
         }
     }
     

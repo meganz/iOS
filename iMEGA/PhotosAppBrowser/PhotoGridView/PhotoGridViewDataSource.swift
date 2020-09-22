@@ -81,7 +81,11 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
         cell.selectedIndex = selectedAssets.firstIndex(of: asset)
         
         cell.tapHandler = { [weak self] instance, size, point in
-            self?.selectionHandler(asset, indexPath, size, point)
+            guard let `self` = self,
+                let selectedAsset = instance.asset else {
+                return
+            }
+            self.selectionHandler(selectedAsset, IndexPath(item: self.album.index(asset: asset), section: 0), size, point)
         }
         
         cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
