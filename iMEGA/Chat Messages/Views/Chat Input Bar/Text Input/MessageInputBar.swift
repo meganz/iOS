@@ -165,6 +165,15 @@ class MessageInputBar: UIView {
         return messageTextView.isFirstResponder
     }
     
+    func relayout() {
+        if expanded {
+            messageTextView.expandedHeight = expandedHeight
+        }
+        
+        invalidateIntrinsicContentSize()
+        messageTextView.relayout()
+    }
+    
     // MARK: - Actions
     
     @IBAction func exapandCollapseButtonTapped(_ button: UIButton) {
@@ -272,7 +281,7 @@ class MessageInputBar: UIView {
         messageTextViewCoverView.alpha = 0.0
         
         let priorValue = messageTextView.intrinsicContentSize.height
-        messageTextView.expand(false, expandedHeight: nil)
+        messageTextView.expandedHeight = nil
         let newValue = messageTextView.intrinsicContentSize.height
         let delta = priorValue - newValue
         messageTextViewBottomConstraint.constant += delta
@@ -328,7 +337,7 @@ class MessageInputBar: UIView {
     private func expandAnimationComplete(_ animationCompletion: Bool) {
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
         messageTextViewTopConstraint.constant = messageTextViewTopConstraintValueWhenExpanded ?? messageTextViewTopConstraintValueWhenCollapsed
-        messageTextView.expand(true, expandedHeight: expandedHeight)
+        messageTextView.expandedHeight = expandedHeight
         expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
@@ -399,7 +408,7 @@ class MessageInputBar: UIView {
             if self.backgroundViewTrailingButtonConstraint.isActive,
                 let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
                 messageTextViewExpanadedHeight != self.expandedHeight {
-                self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
+                self.messageTextView.expandedHeight = self.expandedHeight
             }
             
             if self.messageTextView.isFirstResponder && !self.backgroundViewTrailingButtonConstraint.isActive {
