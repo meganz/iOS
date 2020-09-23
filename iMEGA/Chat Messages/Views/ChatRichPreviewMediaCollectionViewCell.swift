@@ -133,6 +133,10 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
 }
 
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {
+    override public init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        super.init(layout: layout)
+        configureAccessoryView()
+    }
     
     override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
         return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
