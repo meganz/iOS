@@ -1067,6 +1067,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [self reloadUI];
     }]];
     
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeLabelAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites") detail:nil accessoryView:sortType == MEGASortOrderTypeFavouriteAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"favourite"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeFavouriteAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    
     ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:sortByActionSheet animated:YES completion:nil];
 }

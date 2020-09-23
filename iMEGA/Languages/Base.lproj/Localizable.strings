@@ -2292,6 +2292,8 @@
 "Favourite"="Favourite";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Remove Favourite";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Label";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="Label...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
