@@ -216,6 +216,16 @@ class ChatInputBar: UIView {
         
         messageInputBar.setTypingIndicator(text: text)
     }
+    
+    func relayout() {
+        invalidateIntrinsicContentSize()
+        guard messageInputBar.superview != nil else {
+            MEGALogInfo("message input bar was not the shown to the user")
+            return
+        }
+        
+        messageInputBar.relayout()
+    }
 
     // MARK: - Private methods.
     
