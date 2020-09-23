@@ -277,11 +277,9 @@ class ChatViewController: MessagesViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animate { [weak self] _ in
+        coordinator.animate(alongsideTransition: { [weak self] _ in
             self?.relayoutChatInputBarIfNeeded()
-        } completion: { [weak self] _ in
-            self?.relayoutChatInputBarIfNeeded()
-        }
+        })
     }
     
     override var shouldAutorotate: Bool {
