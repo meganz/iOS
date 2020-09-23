@@ -26,7 +26,6 @@
 #import "EmptyStateView.h"
 #import "SharedItemsTableViewCell.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
@@ -377,12 +376,7 @@
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-    nodeInfoVC.node = node;
-    nodeInfoVC.nodeInfoDelegate = self;
-    nodeInfoVC.incomingShareChildView = self.incomingButton.selected;
-
+    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -1386,7 +1380,7 @@
             break;
         }
             
-        case MegaNodeActionTypeFileInfo:
+        case MegaNodeActionTypeInfo:
             [self showNodeInfo:node];
             break;
             
@@ -1446,8 +1440,8 @@
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)presentParentNode:(MEGANode *)node {
-        [node navigateToParentAndPresent];
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
+    [node navigateToParentAndPresent];
 }
 
 @end

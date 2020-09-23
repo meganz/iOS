@@ -49,6 +49,15 @@ final class PhotoCarouselViewController: UIViewController {
         return label
     }()
     
+    private var currentIndexPath: IndexPath? {
+        if let visibleCell = collectionView.visibleCells.first,
+            let indexPath = collectionView.indexPath(for: visibleCell) {
+            return indexPath
+        }
+        
+        return nil
+    }
+    
     weak private var delegate: PhotoCarouselViewControllerDelegate?
     
     // MARK:- Initializers.
@@ -115,6 +124,12 @@ final class PhotoCarouselViewController: UIViewController {
         super.viewWillAppear(animated)
         updateFlowLayoutCurrentPage(withIndex: selectedPhotoIndexPath.item)
         updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: selectedPhotoIndexPath.item))
+        album.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        album.delegate = nil
     }
     
     override func viewWillLayoutSubviews() {
@@ -201,8 +216,7 @@ final class PhotoCarouselViewController: UIViewController {
     }
     
     @objc private func selectBarButtonTapped() {
-        if let visibleCell = collectionView.visibleCells.first,
-            let indexPath = collectionView.indexPath(for: visibleCell) {
+        if let indexPath = currentIndexPath {
             selectAsset(atIndexPath: indexPath)
         }
     }
@@ -248,6 +262,73 @@ final class PhotoCarouselViewController: UIViewController {
         if let flowLayout = collectionView.collectionViewLayout as? PhotoCarouselFlowLayout {
             flowLayout.currentPage = index
         }
+    }
+}
+
+extension PhotoCarouselViewController: AlbumDelegate {
+    
+    func didResetFetchResult() {
+        collectionView.reloadData()
+    }
+
+    
+    func didChange(removedIndexPaths: [IndexPath]?,
+                   insertedIndexPaths: [IndexPath]?,
+                   changedIndexPaths: [IndexPath]?) {
+        
+        var newIndexPath: IndexPath?
+        var snapshotView: UIView?
+        
+        // Plan is to get the current asset and make sure it is not being deleted
+        if let currentIndexPath = currentIndexPath,
+            let asset = collectionViewDataSource?.asset(atIndexPath: currentIndexPath) {
+            
+            let indexPath = IndexPath(item: album.index(asset: asset), section: 0)
+            if currentIndexPath != indexPath {
+                newIndexPath = indexPath
+                
+                snapshotView = view.snapshotView(afterScreenUpdates: false)
+                if let snapshotView = snapshotView  {
+                    view.addSubview(snapshotView)
+                    snapshotView.autoPinEdgesToSuperviewEdges()
+                }
+            }
+        }
+        
+        collectionView.performBatchUpdates({
+            if let removedIndexPaths = removedIndexPaths {
+                removeSelectedAssets(forIndexPaths: removedIndexPaths)
+                collectionView.deleteItems(at: removedIndexPaths)
+            }
+            
+            if let insertedIndexPaths = insertedIndexPaths {
+                collectionView.insertItems(at: insertedIndexPaths)
+            }
+            
+            if let changedIndexPaths = changedIndexPaths {
+                collectionView.reloadItems(at: changedIndexPaths)
+            }
+        }, completion: { _ in
+            if let newIndexPath = newIndexPath {
+                self.collectionView.scrollToItem(at: newIndexPath,
+                                                 at: .centeredHorizontally,
+                                                 animated: false)
+                self.didViewPage(atIndex: newIndexPath.item)
+                snapshotView?.removeFromSuperview()
+            }
+        })
+    }
+    
+    private func removeSelectedAssets(forIndexPaths indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            if let cell = collectionView.cellForItem(at: indexPath) as? PhotoCarouselCell,
+                let asset = cell.asset,
+                let index = selectedAssets.firstIndex(of: asset) {
+                selectedAssets.remove(at: index)
+            }
+        }
+        
+        delegate?.selected(assets: selectedAssets)
     }
 }
 

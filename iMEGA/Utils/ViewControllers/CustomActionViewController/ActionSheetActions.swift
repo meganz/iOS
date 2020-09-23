@@ -71,8 +71,8 @@ extension NodeAction {
         return NodeAction(title: AMLocalizedString("download", "Text to perform an action to save a file in offline section"), detail: nil, image: UIImage(named: "offline"), type: .download)
     }
     
-    class func fileInfoAction(isFile: Bool) -> NodeAction {
-        return NodeAction(title: isFile ? AMLocalizedString("fileInfo", "Label of the option menu. When clicking this button, the app shows the info of the file.") : AMLocalizedString("folderInfo", "Label of the option menu. When clicking this button, the app shows the info of the folder."), detail: nil, image: UIImage(named: "info"), type: .fileInfo)
+    class func infoAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("info", "A button label. The button allows the user to get more info of the current context."), detail: nil, image: UIImage(named: "info"), type: .info)
     }
     
     class func renameAction() -> NodeAction {

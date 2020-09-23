@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, GroupChatDetailsViewTableViewCellDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *groupInfoView;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet MegaAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 @property (weak, nonatomic) IBOutlet UIView *groupInfoBottomSeparatorView;
@@ -119,9 +119,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatRoom.chatId];
     self.nameLabel.text = self.chatRoom.chatTitle;
     
-    CGSize avatarSize = self.avatarImageView.frame.size;
-    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(avatarSize.width/2.0f)]];
-    self.avatarImageView.image = avatarImage;
+    [self.avatarView setupFor:self.chatRoom];
     
     if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
         self.participantsLabel.text = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
