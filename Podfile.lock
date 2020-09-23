@@ -26,6 +26,7 @@ DEPENDENCIES:
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
+  - YYImage (from `https://github.com/sundayfun/YYImage.git`)
   - YYWebImage
 
 SPEC REPOS:
@@ -36,7 +37,6 @@ SPEC REPOS:
     - PanModal
     - PinLayout
     - YYCache
-    - YYImage
     - YYWebImage
 
 EXTERNAL SOURCES:
@@ -48,6 +48,8 @@ EXTERNAL SOURCES:
     :tag: 0.2.6
   MessageKit:
     :git: https://github.com/lhr000lhrmega/MessageKit.git
+  YYImage:
+    :git: https://github.com/sundayfun/YYImage.git
 
 CHECKOUT OPTIONS:
   DZNEmptyDataSet:
@@ -59,6 +61,9 @@ CHECKOUT OPTIONS:
   MessageKit:
     :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
     :git: https://github.com/lhr000lhrmega/MessageKit.git
+  YYImage:
+    :commit: df226ee3e693ec216196d164966d6582490fed88
+    :git: https://github.com/sundayfun/YYImage.git
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
@@ -70,9 +75,9 @@ SPEC CHECKSUMS:
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PinLayout: 465e45d2fbed082f5a62cc2d0e14759bbc28b14b
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
-  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
+  YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 1d274b1a33c4965da2255dffb11b03d51c5b6b1a
+PODFILE CHECKSUM: 816880598b53e41dcf9604d05879f6f1ff81804d
 
 COCOAPODS: 1.8.4
