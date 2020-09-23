@@ -90,7 +90,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
         accessoryView.backgroundColor = .clear
-        guard shouldShowAccessoryView(for: message), !isEditing else {
+        guard let chatMessage = self.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage, shouldShowAccessoryView(for: chatMessage), !isEditing else {
             accessoryView.isHidden = true
             return
         }
