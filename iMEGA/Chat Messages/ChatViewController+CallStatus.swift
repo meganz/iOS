@@ -15,8 +15,10 @@ extension ChatViewController {
                     || call?.status == .requestSent
                     || call?.status == .ringIn {
                     configureTopBannerButtonForActiveCall(call!)
+                } else if call?.status == .reconnecting {
+                    setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+                    showTopBannerButton()
                 }
-                showTopBannerButton()
             } else {
                 hideTopBannerButton()
             }
@@ -79,10 +81,11 @@ extension ChatViewController {
             setTopBannerButton(title: AMLocalizedString("You are back!", "Title shown when the user reconnect in a call."), color: UIColor.mnz_turquoise(for: traitCollection))
         }
         initTimerForCall(call)
+        showTopBannerButton()
     }
 
     private func configureTopBannerButtonForActiveCall(_: MEGAChatCall) {
-        let title = chatRoom.isGroup ? AMLocalizedString("There is an active group call. Tap to join.", "Message shown in a chat room when there is an active group call") : AMLocalizedString("There is an active call. Tap to join.", "Message shown in a chat room when there is an active call")
+        let title = chatRoom.isGroup ? AMLocalizedString("There is an active group call. Tap to join.", "Message shown in a chat room when there is an active group call") : AMLocalizedString("Tap to return to call", "Message shown in a chat room for a one on one call")
         setTopBannerButton(title: title, color: UIColor.mnz_turquoise(for: traitCollection))
         showTopBannerButton()
     }
