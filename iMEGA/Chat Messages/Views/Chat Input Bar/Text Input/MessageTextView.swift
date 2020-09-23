@@ -17,6 +17,12 @@ class MessageTextView: UITextView {
         }
     }
     
+    var expandedHeight: CGFloat? {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
     //MARK: - Private properties
     
     private var textChangeNotificationToken: NSObjectProtocol?
@@ -28,7 +34,6 @@ class MessageTextView: UITextView {
         return CGFloat(numberOfLinesBeforeScroll) * font.lineHeight
     }
     
-    private(set) var expandedHeight: CGFloat?
     
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
@@ -117,11 +122,6 @@ class MessageTextView: UITextView {
     
     //MARK: - Interface methods
     
-    func expand(_ expanded: Bool, expandedHeight: CGFloat?) {
-        self.expandedHeight = expandedHeight
-        invalidateIntrinsicContentSize()
-    }
-    
     func set(text: String, showKeyboard: Bool) {
         self.text = text
         updatePlaceholder()
@@ -141,6 +141,10 @@ class MessageTextView: UITextView {
         updatePlaceholder()
     }
     
+    func relayout() {
+        invalidateIntrinsicContentSize()
+    }
+    
     //MARK: - Private methods
     
     private func updateAppearance() {
@@ -148,8 +152,8 @@ class MessageTextView: UITextView {
     }
     
     private func updatePlaceholder() {
-        self.placeholderTextView.isHidden = !self.text.isEmpty
-        self.invalidateIntrinsicContentSize()
+        placeholderTextView.isHidden = !text.isEmpty
+        invalidateIntrinsicContentSize()
     }
     
     private func addPlaceholderTextView() {

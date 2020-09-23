@@ -274,6 +274,16 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate { [weak self] _ in
+            self?.relayoutChatInputBarIfNeeded()
+        } completion: { [weak self] _ in
+            self?.relayoutChatInputBarIfNeeded()
+        }
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }
@@ -597,6 +607,12 @@ class ChatViewController: MessagesViewController {
         previewerView.autoAlignAxis(toSuperviewAxis: .vertical)
         previewerView.autoSetDimensions(to: CGSize(width: 75, height: 34))
         previewerView.isHidden = true
+    }
+    
+    private func relayoutChatInputBarIfNeeded() {
+        if let inputbar = inputAccessoryView as? ChatInputBar {
+            inputbar.relayout()
+        }
     }
     
     func configureGuesture() {
