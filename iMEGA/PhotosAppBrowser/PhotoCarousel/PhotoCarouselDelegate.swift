@@ -19,11 +19,15 @@ final class PhotoCarouselDelegate: PhotoGridViewDelegate {
                                  willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? PhotoCarouselCell {
             cell.willDisplay(size: collectionView.bounds.size)
-            cell.didSelectMarkerHandler = { [weak self] in
-                self?.viewController?.selectAsset(atIndexPath: indexPath)
+            cell.didSelectMarkerHandler = { [weak self] cell in
+                if let foundIndexPath = collectionView.indexPath(for: cell) {
+                    self?.viewController?.selectAsset(atIndexPath: foundIndexPath)
+                }
             }
-            cell.didSelectVideoIconHandler = { [weak self] in
-                self?.viewController?.didSelect(indexPath: indexPath)
+            cell.didSelectVideoIconHandler = { [weak self] cell in
+                if let foundIndexPath = collectionView.indexPath(for: cell) {
+                    self?.viewController?.didSelect(indexPath: foundIndexPath)
+                }
             }
         }
     }

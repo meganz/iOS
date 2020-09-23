@@ -139,7 +139,7 @@ final class NodeActionBuilder {
                 
             case .accessRead, .accessReadWrite:
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.infoAction())
                     nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                     nodeActions.append(NodeAction.labelAction(label: label))
                 }
@@ -156,7 +156,7 @@ final class NodeActionBuilder {
                 
             case .accessFull:
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.infoAction())
                     nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                     nodeActions.append(NodeAction.labelAction(label: label))
                 }
@@ -182,7 +182,7 @@ final class NodeActionBuilder {
             case .accessOwner:
                 if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
                     if displayMode != .nodeInfo {
-                        nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                        nodeActions.append(NodeAction.infoAction())
                         nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                         nodeActions.append(NodeAction.labelAction(label: label))
                     }
@@ -230,14 +230,14 @@ final class NodeActionBuilder {
                     }
                     nodeActions.append(NodeAction.removeAction())
                 } else if displayMode == .chatAttachment {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.infoAction())
                     if isMediaFile {
                         nodeActions.append(NodeAction.saveToPhotosAction())
                     }
                     nodeActions.append(NodeAction.downloadAction())
                     nodeActions.append(NodeAction.shareAction())
                 } else {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: isFile))
+                    nodeActions.append(NodeAction.infoAction())
                     nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                     nodeActions.append(NodeAction.labelAction(label: label))
                     if isMediaFile {

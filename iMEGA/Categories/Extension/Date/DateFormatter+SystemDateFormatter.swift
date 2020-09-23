@@ -27,6 +27,18 @@ extension DateFormatter {
                             timeZone: timeZone,
                             locale: locale)
     }
+    
+    /// `1 Jan 1970 at 15:32`, `1 ene 1970 15:32`, `1970年1月1日 15:32`
+    @objc static func dateMediumTimeShort(calendar: Calendar? = nil,
+                                 timeZone: TimeZone? = nil,
+                                 locale: Locale? = nil) -> DateFormatting {
+        systemDateFormatter(dateStyle: .medium,
+                            timeStyle: .short,
+                            isRelative: false,
+                            calendar: calendar,
+                            timeZone: timeZone,
+                            locale: locale)
+    }
 
     /// `January 1, 1970`, `1 de enero de 1970`, `1970年1月1日`
     @objc static func dateLong(calendar: Calendar? = nil,
