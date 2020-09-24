@@ -118,10 +118,10 @@ class ChatViewController: MessagesViewController {
         }
         
         super.setEditing(editing, animated: animated)
-        UIView.animate(withDuration: 0.25) {
+        UIView.performWithoutAnimation({
             self.messagesCollectionView.reloadItems(at: self.messagesCollectionView.indexPathsForVisibleItems)
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
-        }
+        })
         reloadInputViews()
         configureNavigationBar()
     }
