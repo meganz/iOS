@@ -104,6 +104,9 @@ extension ChatViewController {
 
 extension ChatViewController: MEGAChatCallDelegate {
     func onChatCallUpdate(_: MEGAChatSdk!, call: MEGAChatCall!) {
+        if call.chatId != chatRoom.chatId {
+            return
+        }
         switch call.status {
         case .userNoPresent, .requestSent:
             configureTopBannerButtonForActiveCall(call)

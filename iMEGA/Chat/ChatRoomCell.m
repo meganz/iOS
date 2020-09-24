@@ -128,7 +128,21 @@
         } else {
             self.activeCallImageView.hidden = YES;
             self.onCallInfoView.hidden = NO;
-            self.chatLastMessage.text = call.status == MEGAChatCallStatusInProgress || call.status == MEGAChatCallStatusDestroyed || call.status == MEGAChatCallStatusTerminatingUserParticipation ? AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating") : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            switch (call.status) {
+                case MEGAChatCallStatusInProgress:
+                case MEGAChatCallStatusDestroyed:
+                case MEGAChatCallStatusTerminatingUserParticipation:
+                    self.chatLastMessage.text = AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                    break;
+                    
+                case MEGAChatCallStatusRingIn:
+                    self.chatLastMessage.text = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                    break;
+                    
+                default:
+                    self.chatLastMessage.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+                    break;
+            }
             if (chatListItem.isGroup) {
                 self.onCallMicImageView.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalAudio"];
                 self.onCallVideoImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalVideo"];
