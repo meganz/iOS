@@ -14,11 +14,11 @@ class VoiceClipInputBar: UIView {
     @IBOutlet weak var sendView: UIView!
     @IBOutlet weak var sendImageView: UIImageView!
     
-    @IBOutlet weak var sendViewTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var sendViewHorizontalConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var sendViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var sendViewHorizontalConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var trashViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var trashViewHorizontalConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var trashViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var trashViewHorizontalConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var recordTimeLabel: UILabel!
     
@@ -43,6 +43,13 @@ class VoiceClipInputBar: UIView {
         if #available(iOS 13.0, *),
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
+        }
+        
+        if audioRecorder.isRecording && !sendViewTrailingConstraint.isActive {
+            self.sendViewHorizontalConstraint.isActive = false
+            self.trashViewHorizontalConstraint.isActive = false
+            self.sendViewTrailingConstraint.isActive = true
+            self.trashViewLeadingConstraint.isActive = true
         }
     }
     
