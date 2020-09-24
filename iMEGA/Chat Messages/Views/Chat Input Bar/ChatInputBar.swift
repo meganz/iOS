@@ -236,13 +236,19 @@ class ChatInputBar: UIView {
     }
     
     private func voiceInputBarToTextInputSwitch(completionBlock: (() -> Void)? = nil) {
+        if voiceToTextSwitching || audioRecordingInputBar.superview == nil {
+            return
+        }
+        
         voiceToTextSwitching = true
         
         messageInputBar.alpha = 0.0
         addMessageInputBar()
         
-        audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
-        audioRecordingInputBar.layoutIfNeeded()
+        if audioRecordingInputBar.placeholderViewTopConstraint != nil {
+            audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
+            audioRecordingInputBar.layoutIfNeeded()
+        }
                 
         UIView.animate(withDuration: 0.2, animations: {
             self.audioRecordingInputBar.alpha = 0.0
