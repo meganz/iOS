@@ -197,7 +197,7 @@ class ChatViewController: MessagesViewController {
 
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
-
+        configureNavigationBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
