@@ -56,15 +56,12 @@ class ChatInputBar: UIView {
             messageInputBar.hideRightButtonHolderView = voiceRecordingViewEnabled
             
             if voiceRecordingViewEnabled {
-                if let messageInputBarBottomConstraint = constraints
+                constraints
                     .filter({ $0.firstAttribute == .bottom && $0.firstItem === messageInputBar })
-                    .first,
-                    let messageInputBarTopConstraint = constraints
+                    .forEach { $0.isActive = false }
+                constraints
                     .filter({ $0.firstAttribute == .top && $0.firstItem === messageInputBar })
-                    .first {
-                    messageInputBarBottomConstraint.isActive = false
-                    messageInputBarTopConstraint.isActive = false
-                }
+                    .forEach { $0.isActive = false }
                 
                 messageInputBar.messageTextView.isScrollEnabled = false
                 messageInputBar.expandCollapseButton.isHidden = true
@@ -230,6 +227,10 @@ class ChatInputBar: UIView {
     // MARK: - Private methods.
     
     private func addMessageInputBar() {
+        if messageInputBar.superview != nil {
+            messageInputBar.removeFromSuperview()
+        }
+        
         messageInputBar.delegate = self
         addSubview(messageInputBar)
         messageInputBar.autoPinEdgesToSuperviewEdges()
