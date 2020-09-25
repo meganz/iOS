@@ -62,8 +62,10 @@ class AddToChatImageCell: UICollectionViewCell {
                 bottomLeftLabel.text = formatter.string(from: asset.duration)
             }
             
+            let scale = UIScreen.main.scale
+            let targetSize = CGSize(width: bounds.size.width * scale, height: bounds.size.height * scale)
             imageRequestID = PHCachingImageManager.default().requestImage(for: asset,
-                                                                          targetSize: bounds.size,
+                                                                          targetSize: targetSize,
                                                                           contentMode: .aspectFill,
                                                                           options: PHImageRequestOptions(),
                                                                           resultHandler: { [weak self] (image, _) in
