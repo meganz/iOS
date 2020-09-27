@@ -100,7 +100,6 @@ class ChatViewController: MessagesViewController {
         guard let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
             return
         }
-        chatViewMessagesFlowLayout.editing = editing
         let finishing = isEditing && !editing
         
         if finishing {
@@ -119,6 +118,7 @@ class ChatViewController: MessagesViewController {
         
         super.setEditing(editing, animated: animated)
         UIView.performWithoutAnimation({
+            chatViewMessagesFlowLayout.editing = editing
             self.messagesCollectionView.reloadItems(at: self.messagesCollectionView.indexPathsForVisibleItems)
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         })
