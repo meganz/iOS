@@ -61,10 +61,6 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     }
     
     @objc func proximityChanged() {
-       
-//            guard AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInReceiver), AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)  else {
-//                return
-//            }
             
         if UIDevice.current.proximityState {
             try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
@@ -109,8 +105,6 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         guard let chatMessage = message as? ChatMessage, let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
             return
         }
-
-        proximityChanged()
         
         switch chatMessage.message.type {
         case .voiceClip:
@@ -142,6 +136,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         default:
             MEGALogInfo("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
         }
+        proximityChanged()
     }
 
     /// Used to pause the audio sound
