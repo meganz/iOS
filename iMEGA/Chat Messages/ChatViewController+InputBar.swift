@@ -53,7 +53,15 @@ extension ChatViewController {
 
     // MARK: - Interface methods.
     
+    func dismissKeyboardIfRequired() {
+        if let input = inputAccessoryView as? ChatInputBar,
+           input.isTextViewTheFirstResponder() {
+            input.dismissKeyboard()
+        }
+    }
+    
      func present(viewController: UIViewController) {
+        dismissKeyboardIfRequired()
         if let rc = UIApplication.shared.keyWindow?.rootViewController {
             if let tabBarController = rc as? UITabBarController,
                 !tabBarController.tabBar.isHidden {
