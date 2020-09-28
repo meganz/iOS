@@ -308,6 +308,12 @@ class ChatViewController: MessagesViewController {
             }
             chatRoomDelegate.loadMoreMessages()
         }
+        
+        if let inputBar = inputAccessoryView as? ChatInputBar,
+           scrollView.isTracking || scrollView.isDragging,
+           inputBar.voiceRecordingViewCanBeDismissed {
+            inputBar.voiceRecordingViewEnabled = false
+        }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
