@@ -168,13 +168,7 @@ class ChatViewController: MessagesViewController {
                 return
             }
             let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
-            // T1022093: When the  keyboard is present and you are presenting this menu view controller. Locking and unlocking the phone makes the input bar appear over the menu view controller. Although the input bar should not appear but some reason it does. This is a workaround for this problem.
-            if let window = UIApplication.shared.windows.last {
-                window.rootViewController?.present(menu, animated: true, completion: nil)
-            } else {
-                present(viewController: menu)
-            }
-
+            present(viewController: menu)
         default:
             return
         }
@@ -198,6 +192,11 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dismissKeyboardIfRequired()
     }
     
     override func viewDidAppear(_ animated: Bool) {
