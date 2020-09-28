@@ -3,6 +3,8 @@ import UIKit
 
 protocol VoiceClipInputBarDelegate: class {
     func removeVoiceClipView(withClipPath path: String?)
+    func voiceRecordingStarted()
+    func voiceRecordingEnded()
 }
 
 class VoiceClipInputBar: UIView {
@@ -59,11 +61,13 @@ class VoiceClipInputBar: UIView {
     
     @IBAction func trashButtonTapped(_ sender: UIButton) {
         delegate?.removeVoiceClipView(withClipPath: stopRecording(true))
+        delegate?.voiceRecordingEnded()
         recordingCompletedAnimation()
     }
     
     @IBAction func sendButtonTapped(_ sender: UIButton) {
         delegate?.removeVoiceClipView(withClipPath: stopRecording())
+        delegate?.voiceRecordingEnded()
         recordingCompletedAnimation()
     }
     
@@ -74,6 +78,7 @@ class VoiceClipInputBar: UIView {
         trashView.isHidden = false
         
         startRecordingAudio()
+        delegate?.voiceRecordingStarted()
         
         UIView.animate(withDuration: 0.4, animations: {
             self.sendViewHorizontalConstraint.isActive = false
@@ -156,6 +161,7 @@ class VoiceClipInputBar: UIView {
     
     deinit {
         if audioRecorder.isRecording {
+            delegate?.voiceRecordingEnded()
             stopRecording(true)
         }
     }
