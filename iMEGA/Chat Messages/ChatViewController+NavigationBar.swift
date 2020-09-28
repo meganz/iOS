@@ -27,6 +27,7 @@ extension ChatViewController {
             || chatRoom.peerCount == 0
             || MEGASdkManager.sharedMEGAChatSdk()!.hasCall(inChatRoom: chatRoom.chatId)
             || MEGASdkManager.sharedMEGAChatSdk()!.mnz_existsActiveCall
+            || isVoiceRecordingInProgress
     }
 
     func configureNavigationBar() {
@@ -34,7 +35,7 @@ extension ChatViewController {
         setTitleView()
     }
 
-    private func updateRightBarButtons() {
+    func updateRightBarButtons() {
         guard !isEditing else {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
             return

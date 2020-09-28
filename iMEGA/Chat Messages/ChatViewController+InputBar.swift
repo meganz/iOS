@@ -396,6 +396,7 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func tappedAddButton(_ button: UIButton) {
         displayAddToChatViewController(button)
+        audioController.stopAnyOngoingPlaying()
     }
     
     func tappedSendButton(withText text: String) {
@@ -542,6 +543,16 @@ extension ChatViewController: ChatInputBarDelegate {
         
         let tapAndHoldMessageView = TapAndHoldMessageView.instanceFromNib
         tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView.frame.height)
+    }
+    
+    func voiceRecordingStarted() {
+        isVoiceRecordingInProgress = true
+        updateRightBarButtons()
+    }
+    
+    func voiceRecordingEnded() {
+        isVoiceRecordingInProgress = false
+        updateRightBarButtons()
     }
 }
 
