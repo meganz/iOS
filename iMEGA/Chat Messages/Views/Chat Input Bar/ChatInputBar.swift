@@ -372,6 +372,7 @@ class ChatInputBar: UIView {
             messageInputBar.isMicButtonPresent(atLocation: loc),
             let delegate = delegate,
             delegate.canRecordAudio() {
+            delegate.tappedVoiceButton()
             textInputToVoiceInputBarSwitch()
         }
     }
