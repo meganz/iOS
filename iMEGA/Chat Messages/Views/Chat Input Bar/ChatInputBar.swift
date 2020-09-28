@@ -52,7 +52,9 @@ class ChatInputBar: UIView {
     // MARK:- Interface properties
 
     weak var delegate: ChatInputBarDelegate?
-        
+    
+    var voiceRecordingViewCanBeDismissed = false
+
     var voiceRecordingViewEnabled: Bool = false {
         didSet {
             messageInputBar.hideRightButtonHolderView = voiceRecordingViewEnabled
@@ -85,8 +87,10 @@ class ChatInputBar: UIView {
                     self.messageInputBar.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
+                    self.voiceRecordingViewCanBeDismissed = true
                 }
             } else {
+                voiceRecordingViewCanBeDismissed = false
                 guard let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
                     .filter({ $0.firstAttribute == .height })
                     .first else {
@@ -368,7 +372,6 @@ class ChatInputBar: UIView {
             messageInputBar.isMicButtonPresent(atLocation: loc),
             let delegate = delegate,
             delegate.canRecordAudio() {
-            delegate.tappedVoiceButton()
             textInputToVoiceInputBarSwitch()
         }
     }

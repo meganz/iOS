@@ -497,7 +497,6 @@ extension ChatViewController: ChatInputBarDelegate {
             return
         }
         
-        audioController.stopAnyOngoingPlaying()
         showTapAndHoldMessage()
     }
     
@@ -546,6 +545,7 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func voiceRecordingStarted() {
+        audioController.stopAnyOngoingPlaying()
         isVoiceRecordingInProgress = true
         updateRightBarButtons()
     }
