@@ -826,6 +826,12 @@
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
+		A81DF35B2508FD6C009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0B24BFE2B100D7D13B /* DateFormatter+SystemDateFormatter.swift */; };
+		A81DF35C2508FD86009C8B60 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0A24BFE2B100D7D13B /* DateFormatting.swift */; };
+		A81DF35D2508FDAD009C8B60 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0C24BFE2B100D7D13B /* Date+Formatting.swift */; };
+		A81DF35E2508FDE3009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0B24BFE2B100D7D13B /* DateFormatter+SystemDateFormatter.swift */; };
+		A81DF35F2508FDE6009C8B60 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0A24BFE2B100D7D13B /* DateFormatting.swift */; };
+		A81DF3602508FE23009C8B60 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0C24BFE2B100D7D13B /* Date+Formatting.swift */; };
 		A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A81E86CF225B3CF900950678 /* CopyableLabel.m */; };
 		A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
@@ -7557,12 +7563,15 @@
 				7794AF1D231FDF5C0039C1D2 /* SVProgressAnimatedView.m in Sources */,
 				774941DD2410EA7F00FC5CB6 /* MOMessage+CoreDataClass.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
+				A81DF35D2508FDAD009C8B60 /* Date+Formatting.swift in Sources */,
 				7794AF1A231FDF4C0039C1D2 /* SVProgressHUD.m in Sources */,
 				77FCB86623FEA220009E8032 /* LocalizationSystem.m in Sources */,
 				77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				7794AF18231FDF180039C1D2 /* SAMKeychainQuery.m in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
+				A81DF35C2508FD86009C8B60 /* DateFormatting.swift in Sources */,
+				A81DF35B2508FD6C009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGAStoreStack.m in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
 				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
@@ -7729,6 +7738,7 @@
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
 				5B40B3AC2422ACB900B5FF13 /* SortingPreference.swift in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
+				A81DF35E2508FDE3009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */,
 				773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */,
 				777AC33F21AD420F00E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
@@ -7791,6 +7801,7 @@
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
+				A81DF3602508FE23009C8B60 /* Date+Formatting.swift in Sources */,
 				2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
 				A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */,
@@ -7799,6 +7810,7 @@
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
+				A81DF35F2508FDE6009C8B60 /* DateFormatting.swift in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */,

@@ -717,15 +717,15 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
 + (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDefaultDateForMedia];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
 + (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.publicLinkCreationTime.mnz_formattedDefaultDateForMedia];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.publicLinkCreationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
