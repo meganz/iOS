@@ -488,6 +488,7 @@ extension ChatViewController: ChatInputBarDelegate {
             return
         }
         
+        audioController.stopAnyOngoingPlaying()
         showTapAndHoldMessage()
     }
     
