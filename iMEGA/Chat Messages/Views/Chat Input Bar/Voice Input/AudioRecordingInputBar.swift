@@ -1,6 +1,12 @@
 
 import UIKit
 
+protocol AudioRecordingInputBarDelegate: class {
+    func trashButtonTapped()
+    func audioRecordingStarted()
+    func audioRecordingEnded()
+}
+
 class AudioRecordingInputBar: UIView {
     @IBOutlet weak var trashView: EnlargementView!
     @IBOutlet weak var lockView: EnlargementView!
@@ -23,7 +29,7 @@ class AudioRecordingInputBar: UIView {
     
     lazy var audioRecorder = AudioRecorder()
     var player: AVAudioPlayer?
-    var trashButtonTapHandler: (() -> Void)?
+    weak var delegate: AudioRecordingInputBarDelegate?
     
     private lazy var trashedTapGesture: UITapGestureRecognizer = {
         let recognizer = UITapGestureRecognizer(target: self, action:#selector(trashTapGesture))
@@ -41,13 +47,6 @@ class AudioRecordingInputBar: UIView {
         audioWavesView.autoPinEdgesToSuperviewEdges()
         updateAppearance()
 
-        do {
-            let success = try audioRecorder.start()
-            MEGALogDebug("Audio recorder started \(success)")
-        } catch {
-            MEGALogDebug("Audio recorder failed to start with error: \(error.localizedDescription)")
-        }
-        
         audioRecorder.updateHandler = {[weak self] timeString, level in
             guard let `self` = self else {
                 return
@@ -64,6 +63,16 @@ class AudioRecordingInputBar: UIView {
         if #available(iOS 13.0, *),
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
                 updateAppearance()
+        }
+    }
+    
+    func startRecording() {
+        do {
+            let success = try audioRecorder.start()
+            delegate?.audioRecordingStarted()
+            MEGALogDebug("Audio recorder started \(success)")
+        } catch {
+            MEGALogDebug("Audio recorder failed to start with error: \(error.localizedDescription)")
         }
     }
     
@@ -139,11 +148,11 @@ class AudioRecordingInputBar: UIView {
     }
     
     @objc func trashTapGesture(_ tapGesture: UITapGestureRecognizer) {
-        guard locked, let handler = trashButtonTapHandler else {
+        guard locked else {
             return
         }
         
-        handler()
+        delegate?.trashButtonTapped()
     }
     
     private func updateAppearance() {
@@ -153,6 +162,7 @@ class AudioRecordingInputBar: UIView {
     
     deinit {
         if audioRecorder.isRecording {
+            delegate?.audioRecordingEnded()
             cancelRecording()
         }
     }

@@ -542,6 +542,16 @@ extension ChatViewController: ChatInputBarDelegate {
         let tapAndHoldMessageView = TapAndHoldMessageView.instanceFromNib
         tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView.frame.height)
     }
+    
+    func voiceRecordingStarted() {
+        isVoiceRecordingInProgress = true
+        updateRightBarButtons()
+    }
+    
+    func voiceRecordingEnded() {
+        isVoiceRecordingInProgress = false
+        updateRightBarButtons()
+    }
 }
 
 

@@ -7,6 +7,8 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
+    func voiceRecordingStarted()
+    func voiceRecordingEnded()
 }
 
 class ChatInputBar: UIView {
@@ -271,17 +273,13 @@ class ChatInputBar: UIView {
         storedMessageInputBarHeight = messageInputBar.bounds.height
         
         audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
-        audioRecordingInputBar.trashButtonTapHandler = { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.cancelRecordingAndSwitchToTextInput()
-        }
+        audioRecordingInputBar.delegate = self
         
         audioRecordingInputBar.alpha = 0.0
         addSubview(audioRecordingInputBar)
         audioRecordingInputBar.autoPinEdgesToSuperviewEdges()
+        
+        audioRecordingInputBar.startRecording()
         
         messageInputBar.alpha = 0.5
         
@@ -295,13 +293,14 @@ class ChatInputBar: UIView {
             }
         }
     }
-    
+        
     private func stopRecordingAndSwitchToTextInput() {
         do {
             if let clipPath = try audioRecordingInputBar.stopRecording() {
                 self.delegate?.tappedSendAudio(atPath: clipPath)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
             }
+            delegate?.voiceRecordingEnded()
             voiceInputBarToTextInputSwitch()
         } catch AudioRecordingInputBar.RecordError.durationShorterThanASecond {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
@@ -317,6 +316,7 @@ class ChatInputBar: UIView {
     
     private func cancelRecordingAndSwitchToTextInput() {
         audioRecordingInputBar.cancelRecording()
+        delegate?.voiceRecordingEnded()
         voiceInputBarToTextInputSwitch()
     }
     
@@ -472,5 +472,28 @@ extension ChatInputBar: VoiceClipInputBarDelegate {
         if let clipPath = path {
             self.delegate?.tappedSendAudio(atPath: clipPath)
         }        
+    }
+    
+    func voiceRecordingStarted() {
+        delegate?.voiceRecordingStarted()
+    }
+    
+    func voiceRecordingEnded() {
+        delegate?.voiceRecordingEnded()
+    }
+}
+
+extension ChatInputBar: AudioRecordingInputBarDelegate {
+    func trashButtonTapped() {
+        delegate?.voiceRecordingEnded()
+        cancelRecordingAndSwitchToTextInput()
+    }
+    
+    func audioRecordingStarted() {
+        delegate?.voiceRecordingStarted()
+    }
+    
+    func audioRecordingEnded() {
+        delegate?.voiceRecordingEnded()
     }
 }
