@@ -396,6 +396,7 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func tappedAddButton(_ button: UIButton) {
         displayAddToChatViewController(button)
+        audioController.stopAnyOngoingPlaying()
     }
     
     func tappedSendButton(withText text: String) {
