@@ -299,12 +299,12 @@ class ChatInputBar: UIView {
     }
         
     private func stopRecordingAndSwitchToTextInput() {
+        delegate?.voiceRecordingEnded()
         do {
             if let clipPath = try audioRecordingInputBar.stopRecording() {
                 self.delegate?.tappedSendAudio(atPath: clipPath)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
             }
-            delegate?.voiceRecordingEnded()
             voiceInputBarToTextInputSwitch()
         } catch AudioRecordingInputBar.RecordError.durationShorterThanASecond {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
