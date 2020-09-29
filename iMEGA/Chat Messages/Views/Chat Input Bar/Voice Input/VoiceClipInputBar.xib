@@ -14,38 +14,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-gM-2sN">
-                    <rect key="frame" x="174" y="224" width="66" height="66"/>
-                    <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sendVoiceClipDefault-1" translatesAutoresizingMaskIntoConstraints="NO" id="fOW-sC-tzc">
-                            <rect key="frame" x="17" y="17" width="32" height="32"/>
-                        </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zf-p5-jSw">
-                            <rect key="frame" x="0.0" y="0.0" width="66" height="66"/>
-                            <connections>
-                                <action selector="recordButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="0nL-sl-eHa"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstItem="fOW-sC-tzc" firstAttribute="leading" secondItem="UbP-gM-2sN" secondAttribute="leading" constant="17" id="4oL-Q5-5Nw"/>
-                        <constraint firstAttribute="height" constant="66" id="5a9-4X-aun"/>
-                        <constraint firstAttribute="trailing" secondItem="4zf-p5-jSw" secondAttribute="trailing" id="C53-ss-2nV"/>
-                        <constraint firstItem="fOW-sC-tzc" firstAttribute="top" secondItem="UbP-gM-2sN" secondAttribute="top" constant="17" id="CU9-1w-Glf"/>
-                        <constraint firstItem="4zf-p5-jSw" firstAttribute="top" secondItem="UbP-gM-2sN" secondAttribute="top" id="D0z-vZ-n3n"/>
-                        <constraint firstAttribute="bottom" secondItem="4zf-p5-jSw" secondAttribute="bottom" id="aAi-pV-sZg"/>
-                        <constraint firstAttribute="bottom" secondItem="fOW-sC-tzc" secondAttribute="bottom" constant="17" id="htv-un-GeN"/>
-                        <constraint firstItem="4zf-p5-jSw" firstAttribute="leading" secondItem="UbP-gM-2sN" secondAttribute="leading" id="jB0-i6-tSf"/>
-                        <constraint firstAttribute="trailing" secondItem="fOW-sC-tzc" secondAttribute="trailing" constant="17" id="r9M-ou-RoF"/>
-                        <constraint firstAttribute="width" constant="66" id="sJr-3r-8xw"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="33"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </view>
                 <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFk-Da-Nor">
                     <rect key="frame" x="182" y="232" width="50" height="50"/>
                     <subviews>
@@ -116,6 +84,38 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-gM-2sN">
+                    <rect key="frame" x="174" y="224" width="66" height="66"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sendVoiceClipDefault-1" translatesAutoresizingMaskIntoConstraints="NO" id="fOW-sC-tzc">
+                            <rect key="frame" x="17" y="17" width="32" height="32"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zf-p5-jSw">
+                            <rect key="frame" x="0.0" y="0.0" width="66" height="66"/>
+                            <connections>
+                                <action selector="recordButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="0nL-sl-eHa"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="fOW-sC-tzc" firstAttribute="leading" secondItem="UbP-gM-2sN" secondAttribute="leading" constant="17" id="4oL-Q5-5Nw"/>
+                        <constraint firstAttribute="height" constant="66" id="5a9-4X-aun"/>
+                        <constraint firstAttribute="trailing" secondItem="4zf-p5-jSw" secondAttribute="trailing" id="C53-ss-2nV"/>
+                        <constraint firstItem="fOW-sC-tzc" firstAttribute="top" secondItem="UbP-gM-2sN" secondAttribute="top" constant="17" id="CU9-1w-Glf"/>
+                        <constraint firstItem="4zf-p5-jSw" firstAttribute="top" secondItem="UbP-gM-2sN" secondAttribute="top" id="D0z-vZ-n3n"/>
+                        <constraint firstAttribute="bottom" secondItem="4zf-p5-jSw" secondAttribute="bottom" id="aAi-pV-sZg"/>
+                        <constraint firstAttribute="bottom" secondItem="fOW-sC-tzc" secondAttribute="bottom" constant="17" id="htv-un-GeN"/>
+                        <constraint firstItem="4zf-p5-jSw" firstAttribute="leading" secondItem="UbP-gM-2sN" secondAttribute="leading" id="jB0-i6-tSf"/>
+                        <constraint firstAttribute="trailing" secondItem="fOW-sC-tzc" secondAttribute="trailing" constant="17" id="r9M-ou-RoF"/>
+                        <constraint firstAttribute="width" constant="66" id="sJr-3r-8xw"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="33"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i58-MY-iaE">
                     <rect key="frame" x="20" y="40" width="374" height="55"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -135,13 +135,11 @@
             <constraints>
                 <constraint firstItem="IFk-Da-Nor" firstAttribute="centerX" secondItem="UbP-gM-2sN" secondAttribute="centerX" id="01g-WJ-f8K"/>
                 <constraint firstItem="UbP-gM-2sN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="8Dj-zr-Bnm"/>
-                <constraint firstItem="ISs-56-MdU" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="IuE-x1-dKH"/>
                 <constraint firstItem="i58-MY-iaE" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-20" id="JpH-i2-zYs"/>
                 <constraint firstItem="i58-MY-iaE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="LJf-lz-TTE"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="UbP-gM-2sN" secondAttribute="bottom" constant="30" id="R9G-yq-plq"/>
                 <constraint firstItem="IFk-Da-Nor" firstAttribute="centerY" secondItem="UbP-gM-2sN" secondAttribute="centerY" id="THf-kc-hUc"/>
                 <constraint firstItem="d3i-7l-Laf" firstAttribute="top" secondItem="i58-MY-iaE" secondAttribute="bottom" constant="5" id="U0O-ui-1XI"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="IFk-Da-Nor" secondAttribute="trailing" constant="32" id="XzQ-cy-rEx"/>
                 <constraint firstItem="i58-MY-iaE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Z9T-cW-wtZ"/>
                 <constraint firstItem="ISs-56-MdU" firstAttribute="centerX" secondItem="UbP-gM-2sN" secondAttribute="centerX" id="efo-gU-cSZ"/>
                 <constraint firstItem="d3i-7l-Laf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ly7-vr-0wk"/>
@@ -150,23 +148,15 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="XzQ-cy-rEx"/>
-                    <exclude reference="IuE-x1-dKH"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="audioWavesholderView" destination="i58-MY-iaE" id="xTu-U4-L9h"/>
                 <outlet property="recordTimeLabel" destination="d3i-7l-Laf" id="9SL-GI-TCu"/>
                 <outlet property="sendImageView" destination="Of5-V2-mBG" id="VgI-57-3BU"/>
                 <outlet property="sendView" destination="IFk-Da-Nor" id="g4S-NU-3WZ"/>
                 <outlet property="sendViewHorizontalConstraint" destination="01g-WJ-f8K" id="9jC-bv-Os6"/>
-                <outlet property="sendViewTrailingConstraint" destination="XzQ-cy-rEx" id="XZV-KD-GKo"/>
                 <outlet property="startRecordingView" destination="UbP-gM-2sN" id="q7E-d3-Axu"/>
                 <outlet property="trashView" destination="ISs-56-MdU" id="Vm4-3G-0SM"/>
                 <outlet property="trashViewHorizontalConstraint" destination="efo-gU-cSZ" id="1RA-IV-MmZ"/>
-                <outlet property="trashViewLeadingConstraint" destination="IuE-x1-dKH" id="D1t-zs-ACI"/>
             </connections>
             <point key="canvasLocation" x="-246.37681159420291" y="152.67857142857142"/>
         </view>

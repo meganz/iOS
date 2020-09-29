@@ -16,10 +16,7 @@ class VoiceClipInputBar: UIView {
     @IBOutlet weak var sendView: UIView!
     @IBOutlet weak var sendImageView: UIImageView!
     
-    @IBOutlet private weak var sendViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var sendViewHorizontalConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private weak var trashViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var trashViewHorizontalConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var recordTimeLabel: UILabel!
@@ -27,6 +24,8 @@ class VoiceClipInputBar: UIView {
     var audioWavesView: AudioWavesView!
     lazy var audioRecorder = AudioRecorder()
     weak var delegate: VoiceClipInputBarDelegate?
+    
+    private var padding: CGFloat = 20.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,13 +45,6 @@ class VoiceClipInputBar: UIView {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
         }
-        
-        if audioRecorder.isRecording && !sendViewTrailingConstraint.isActive {
-            self.sendViewHorizontalConstraint.isActive = false
-            self.trashViewHorizontalConstraint.isActive = false
-            self.sendViewTrailingConstraint.isActive = true
-            self.trashViewLeadingConstraint.isActive = true
-        }
     }
     
     @IBAction func recordButtonTapped(_ sender: UIButton) {
@@ -71,7 +63,36 @@ class VoiceClipInputBar: UIView {
         recordingCompletedAnimation()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if audioRecorder.isRecording {
+            recordingUIUpdates()
+        }
+    }
+    
     // MARK:- Private methods
+    
+    private func recordingUIUpdates() {
+        trashViewHorizontalConstraint.constant = trashViewPaddingWhenRecording()
+        sendViewHorizontalConstraint.constant = sendViewPaddingWhenRecording()
+    }
+    
+    private func trashViewPaddingWhenRecording() -> CGFloat {
+        var buttonsPadding = -(bounds.width / 2.0) + (trashView.bounds.width / 2.0) + padding
+        if #available(iOS 11.0, *) {
+            buttonsPadding += safeAreaInsets.left
+        }
+        return buttonsPadding
+    }
+    
+    private func sendViewPaddingWhenRecording() -> CGFloat {
+        var sendViewPadding = (bounds.width / 2.0) - (sendView.bounds.width / 2.0) - padding
+        if #available(iOS 11.0, *) {
+            sendViewPadding -= safeAreaInsets.right
+        }
+        return sendViewPadding
+    }
     
     private func recordingStartedAnimation() {
         sendView.isHidden = false
@@ -81,10 +102,7 @@ class VoiceClipInputBar: UIView {
         delegate?.voiceRecordingStarted()
         
         UIView.animate(withDuration: 0.4, animations: {
-            self.sendViewHorizontalConstraint.isActive = false
-            self.trashViewHorizontalConstraint.isActive = false
-            self.sendViewTrailingConstraint.isActive = true
-            self.trashViewLeadingConstraint.isActive = true
+            self.recordingUIUpdates()
             self.startRecordingView.alpha = 0.0
             self.layoutIfNeeded()
         }, completion: { _ in
@@ -100,10 +118,8 @@ class VoiceClipInputBar: UIView {
         startRecordingView.isHidden = false
         
         UIView.animate(withDuration: 0.4, animations: {
-            self.sendViewTrailingConstraint.isActive = false
-            self.trashViewLeadingConstraint.isActive = false
-            self.sendViewHorizontalConstraint.isActive = true
-            self.trashViewHorizontalConstraint.isActive = true
+            self.sendViewHorizontalConstraint.constant = 0
+            self.trashViewHorizontalConstraint.constant = 0
             self.startRecordingView.alpha = 1.0
             self.layoutIfNeeded()
         }, completion: { _ in
