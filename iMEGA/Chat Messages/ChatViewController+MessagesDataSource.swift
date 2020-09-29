@@ -85,6 +85,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         let vc = ReactionPickerViewController()
         
         vc.message = chatMessage
+        dismissKeyboardIfRequired()
         presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)
     }
 
@@ -104,6 +105,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
                                                       chatRoom: chatRoom,
                                                       messageId: chatMessage.message.messageId)
         
+        dismissKeyboardIfRequired()
         presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)
     }
 }

@@ -124,7 +124,7 @@ extension ChatViewController {
             }
         }
         
-        present(sendToNC, animated: true, completion: nil)
+        present(viewController: sendToNC)
     }
     
     
