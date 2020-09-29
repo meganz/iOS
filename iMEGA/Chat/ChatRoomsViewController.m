@@ -748,6 +748,47 @@
     }
 }
 
+- (void)showOptionsForChatAtIndexPath:(NSIndexPath *)indexPath {
+
+    [self.tableView setEditing:NO animated:YES];
+    
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+    NSMutableArray *actions = NSMutableArray.new;
+  
+    if (chatListItem.unreadCount != 0) {
+        ActionSheetAction *markAsReadAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Mark as Read", @"A button label. The button allows the user to mark a conversation as read.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"markUnread_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+            [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
+        }];
+        [actions addObject:markAsReadAction];
+    }
+    
+    if ([self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId]) {
+        ActionSheetAction *unmuteAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self.chatNotificationControl turnOffDNDWithChatId:chatListItem.chatId];
+        }];
+        [actions addObject:unmuteAction];
+    } else {
+        ActionSheetAction *muteAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+        }];
+        [actions addObject:muteAction];
+    }
+    
+    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"infomation_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+    }];
+    [actions addObject:infoAction];
+
+    ActionSheetAction *archiveChatAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"archiveChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+    }];
+    [actions addObject:archiveChatAction];
+
+    ActionSheetViewController *actionSheetVC = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:nil];
+    
+    [self presentViewController:actionSheetVC animated:YES completion:nil];
+}
+
 #pragma mark - TopBannerButton
 
 - (void)showTopBannerButton:(MEGAChatCall *)call {
@@ -1141,7 +1182,7 @@
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+                [self showOptionsForChatAtIndexPath:indexPath];
             }];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
             
@@ -1179,7 +1220,7 @@
             archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             UIContextualAction *infoAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+                [self showOptionsForChatAtIndexPath:indexPath];
             }];
             infoAction.image = [UIImage imageNamed:@"moreSelected"];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
