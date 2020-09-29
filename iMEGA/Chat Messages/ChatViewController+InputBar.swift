@@ -60,21 +60,26 @@ extension ChatViewController {
         }
     }
     
-     func present(viewController: UIViewController) {
-        dismissKeyboardIfRequired()
+    func present(viewController: UIViewController, animated: Bool = true, dismissKeyboard: Bool = true) {
+        if dismissKeyboard {
+            dismissKeyboardIfRequired()
+        }
+
         if let rc = UIApplication.shared.keyWindow?.rootViewController {
             if let tabBarController = rc as? UITabBarController,
                 !tabBarController.tabBar.isHidden {
                 tabBarController.tabBar.isHidden = true
                 
-                rc.present(viewController, animated: true) {
+                rc.present(viewController, animated: animated) {
                     if let tabBarController = rc as? UITabBarController {
                         tabBarController.tabBar.isHidden = false
                     }
                 }
             } else {
-                rc.present(viewController, animated: true)
+                rc.present(viewController, animated: animated)
             }
+        } else {
+            present(viewController, animated: animated)
         }
      }
     
@@ -331,7 +336,7 @@ extension ChatViewController {
             alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel, handler: nil))
             
             DispatchQueue.main.async {
-                self.present(alertController, animated: true, completion: nil)
+                self.present(viewController: alertController)
             }
         }
         

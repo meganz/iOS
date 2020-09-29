@@ -227,7 +227,7 @@ class ChatViewController: MessagesViewController {
                         activityVC.popoverPresentationController?.sourceView = self.view
                         activityVC.popoverPresentationController?.sourceRect = self.view.frame
                     }
-                    self.present(activityVC, animated: true, completion: nil)
+                    self.present(viewController: activityVC)
                     
                 })
                 
@@ -248,7 +248,7 @@ class ChatViewController: MessagesViewController {
                 customModalAlertVC?.dismiss(animated: true, completion: nil)
             }
             
-            present(customModalAlertVC, animated: true, completion: nil)
+            present(viewController: customModalAlertVC)
         }
         
         setLastMessageAsSeen()
@@ -793,7 +793,7 @@ class ChatViewController: MessagesViewController {
             
             alertController.addAction(cancel)
             alertController.addAction(action2)
-            present(alertController, animated: true, completion: nil)
+            present(viewController: alertController)
         }
     }
     
@@ -940,7 +940,7 @@ class ChatViewController: MessagesViewController {
                 MEGASdkManager.sharedMEGAChatSdk()?.invite(toChat: self.chatRoom.chatId, user: (user as! MEGAUser).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
             })
         }
-        present(navigationController, animated: true, completion: nil)
+        present(viewController: navigationController)
     }
     
     @objc func cancelSelecting() {
