@@ -256,15 +256,15 @@
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {
         case UnavailableLinkErrorGeneric:
-            [unavailableLinkView configureInvalidFileLink];
+            [unavailableLinkView configureInvalidFolderLink];
             break;
             
         case UnavailableLinkErrorETDDown:
-            [unavailableLinkView configureInvalidLinkByETDisFile:NO];
+            [unavailableLinkView configureInvalidFolderLinkByETD];
             break;
             
         case UnavailableLinkErrorUserETDSuspension:
-            [unavailableLinkView configureInvalidLinkByUserETDSuspensionisFile:NO];
+            [unavailableLinkView configureInvalidFolderLinkByUserETDSuspension];
             break;
     }
     [self.tableView setBackgroundView:unavailableLinkView];
