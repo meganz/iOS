@@ -144,14 +144,11 @@
                     break;
                 }
                     
-                case MEGAErrorTypeApiENoent: {
+                case MEGAErrorTypeApiENoent:
+                case MEGAErrorTypeApiETooMany: {
                     [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
                     break;
                 }
-                    
-                case MEGAErrorTypeApiETooMany:
-                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                    break;
                     
                 case MEGAErrorTypeApiEIncomplete: {
                     [self showDecryptionAlert];
