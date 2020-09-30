@@ -223,11 +223,11 @@
             break;
             
         case UnavailableLinkErrorETDDown:
-            [unavailableLinkView configureInvalidLinkByETDisFile:YES];
+            [unavailableLinkView configureInvalidFileLinkByETD];
             break;
             
         case UnavailableLinkErrorUserETDSuspension:
-            [unavailableLinkView configureInvalidLinkByUserETDSuspensionisFile:YES];
+            [unavailableLinkView configureInvalidFileLinkByUserETDSuspension];
             break;
     }
     unavailableLinkView.frame = self.view.bounds;

@@ -18,7 +18,9 @@ typedef NS_ENUM(NSInteger, UnavailableLinkError) {
 - (void)configureInvalidFolderLink;
 - (void)configureInvalidFileLink;
 - (void)configureInvalidQueryLink;
-- (void)configureInvalidLinkByETDisFile:(BOOL)isFile;
-- (void)configureInvalidLinkByUserETDSuspensionisFile:(BOOL)isFile;
+- (void)configureInvalidFileLinkByETD;
+- (void)configureInvalidFolderLinkByETD;
+- (void)configureInvalidFileLinkByUserETDSuspension;
+- (void)configureInvalidFolderLinkByUserETDSuspension;
 
 @end
