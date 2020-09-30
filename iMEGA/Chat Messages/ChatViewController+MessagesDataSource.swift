@@ -90,6 +90,9 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
     }
 
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
+        guard chatRoom.canAddReactions else {
+            return
+        }
         guard let emojisStringList = MEGASdkManager
             .sharedMEGAChatSdk()?
             .messageReactions(forChat: chatRoom.chatId,
