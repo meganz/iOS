@@ -285,7 +285,9 @@ class ChatViewController: MessagesViewController {
         
         coordinator.animate(alongsideTransition: { [weak self] _ in
             self?.relayoutChatInputBarIfNeeded()
-        })
+        }) { [weak self] _ in
+            self?.relayoutChatInputBarIfNeeded()
+        }
     }
     
     override var shouldAutorotate: Bool {

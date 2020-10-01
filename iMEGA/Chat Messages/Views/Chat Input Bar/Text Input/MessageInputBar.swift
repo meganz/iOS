@@ -63,13 +63,20 @@ class MessageInputBar: UIView {
     private var keyboardHideObserver: NSObjectProtocol?
     
     private var expanded: Bool = false
+    private var minTopPaddingWhenExpanded: CGFloat = 20.0
     private var expandedHeight: CGFloat? {
         guard let messageTextViewTopConstraintValueWhenExpanded = messageTextViewTopConstraintValueWhenExpanded else {
             return nil
         }
-           
+        
+        let expandedHeight = heightWhenExpanded(topConstraintValueWhenExpanded: messageTextViewTopConstraintValueWhenExpanded)
+        let minHeightRequired = rightButtonHolderView.bounds.height + expandCollapseButton.bounds.height
+        return expandedHeight > minHeightRequired ? expandedHeight :  heightWhenExpanded(topConstraintValueWhenExpanded: minTopPaddingWhenExpanded)
+    }
+    
+    private func heightWhenExpanded(topConstraintValueWhenExpanded: CGFloat) -> CGFloat {
         return UIScreen.main.bounds.height -
-            (messageTextViewTopConstraintValueWhenExpanded
+            (topConstraintValueWhenExpanded
                 + messageTextViewBottomConstraintDefaultValue
                 + (messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0))
     }
@@ -78,13 +85,13 @@ class MessageInputBar: UIView {
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
     private let messageTextViewTopConstraintValueWhenCollapsed: CGFloat = 32.0
     private var messageTextViewTopConstraintValueWhenExpanded: CGFloat? {
-        var statusBarHeight: CGFloat = 20.0
+        var minHeight = minTopPaddingWhenExpanded
         if #available(iOS 11.0, *) {
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 20.0
+            minHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
         }
         
         // The text view should be (statusBarHeight + 67.0) from the top of the screen
-        return statusBarHeight + 67.0
+        return minHeight + 67.0
     }
     
     private let animationDuration: TimeInterval = 0.4
@@ -341,34 +348,6 @@ class MessageInputBar: UIView {
         expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
-    private func showSendButtonUI() {
-        if backgroundViewTrailingButtonConstraint.isActive {
-            MEGALogDebug("[MessageInputBar] textview is not the first responder or the backgroundViewTrailingButtonConstraint is active")
-            return
-        }
-        
-        sendButton.alpha = 0.0
-        sendButton.isHidden = false
-        MEGALogDebug("[MessageInputBar] Send Button UI triggered")
-        
-        UIView.animate(withDuration: self.animationDuration, animations: {
-            self.backgroundViewTrailingTextViewConstraint.isActive = false
-            self.backgroundViewTrailingButtonConstraint.isActive = true
-            self.micButton.alpha = 0.0
-            self.sendButton.alpha = 1.0
-            self.layoutIfNeeded()
-            MEGALogDebug("[MessageInputBar] Send Button UI animation started")
-            
-        }) { _ in
-            self.micButton.isHidden = true
-            self.micButton.alpha = 1.0
-            
-            self.sendButton.isHidden = false
-            self.sendButton.alpha = 1.0
-            MEGALogDebug("[MessageInputBar] Send Button UI animation completed")
-        }
-    }
-    
     private func keyboardWillShowNotification() -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
@@ -421,6 +400,7 @@ class MessageInputBar: UIView {
                 
                 self.backgroundViewTrailingTextViewConstraint.isActive = false
                 self.backgroundViewTrailingButtonConstraint.isActive = true
+                self.layoutIfNeeded()
             }
         }
     }
@@ -455,12 +435,46 @@ class MessageInputBar: UIView {
             self.layoutIfNeeded()
             MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation started")
         }) { _ in
-            self.sendButton.isHidden = true
-            self.sendButton.alpha = 1.0
             
-            self.micButton.isHidden = false
-            self.micButton.alpha = 1.0
-            MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation ended")
+            if self.backgroundViewTrailingTextViewConstraint.isActive  {
+                self.sendButton.isHidden = true
+                self.sendButton.alpha = 1.0
+                
+                self.micButton.isHidden = false
+                self.micButton.alpha = 1.0
+
+                MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation ended")
+            }
+        }
+    }
+    
+    private func showSendButtonUI() {
+        if backgroundViewTrailingButtonConstraint.isActive {
+            MEGALogDebug("[MessageInputBar] textview is not the first responder or the backgroundViewTrailingButtonConstraint is active")
+            return
+        }
+        
+        sendButton.alpha = 0.0
+        sendButton.isHidden = false
+        MEGALogDebug("[MessageInputBar] Send Button UI triggered")
+        
+        UIView.animate(withDuration: animationDuration, animations: {
+            self.backgroundViewTrailingTextViewConstraint.isActive = false
+            self.backgroundViewTrailingButtonConstraint.isActive = true
+            self.micButton.alpha = 0.0
+            self.sendButton.alpha = 1.0
+            self.layoutIfNeeded()
+            MEGALogDebug("[MessageInputBar] Send Button UI animation started")
+            
+        }) { _ in
+            if self.backgroundViewTrailingButtonConstraint.isActive {
+                self.micButton.isHidden = true
+                self.micButton.alpha = 1.0
+                
+                self.sendButton.isHidden = false
+                self.sendButton.alpha = 1.0
+                MEGALogDebug("[MessageInputBar] Send Button UI animation completed")
+            }
         }
     }
     
