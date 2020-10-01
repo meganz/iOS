@@ -175,13 +175,12 @@
             [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];
     } else {
-        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize) {
+        [self setNodeInfo];
+        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize && !self.node.name.mnz_isMultimediaPathExtension) {
             [self dismissViewControllerAnimated:YES completion:^{
                 NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
                 [UIApplication.mnz_presentingViewController presentViewController:[self.node mnz_viewControllerForNodeInFolderLink:YES fileLink:link] animated:YES completion:nil];
             }];
-        } else {
-            [self setNodeInfo];
         }
     }
 }
