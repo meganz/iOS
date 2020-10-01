@@ -57,7 +57,8 @@ class MessageInputBar: UIView {
     }
             
     // MARK:- Private properties
-    
+    private let kMEGAUIKeyInputCarriageReturn = "\r"
+
     private var keyboardWillShowObserver: NSObjectProtocol?
     private var keyboardShowObserver: NSObjectProtocol?
     private var keyboardHideObserver: NSObjectProtocol?
@@ -188,7 +189,7 @@ class MessageInputBar: UIView {
     
     @IBAction func sendButtonTapped(_ button: UIButton) {
         guard let delegate = delegate,
-            let text = messageTextView.text else {
+              let text = messageTextView.text, !text.isEmpty else {
             return
         }
         
@@ -234,6 +235,15 @@ class MessageInputBar: UIView {
     }
     
     // MARK: - Private methods
+    
+    override var keyCommands: [UIKeyCommand]? {
+      return [
+        UIKeyCommand(input: kMEGAUIKeyInputCarriageReturn,
+          modifierFlags: [],
+          action: #selector(MessageInputBar.sendButtonTapped),
+          discoverabilityTitle: AMLocalizedString("send"))
+      ]
+    }
     
     private func updateAppearance() {
         micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
