@@ -2300,3 +2300,5 @@
 "PENDING"="PENDING";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIONS";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
