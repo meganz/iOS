@@ -40,7 +40,7 @@
 - (void)endCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
     MEGALogDebug(@"[CallKit] End call %@", uuid);
-    if (uuid) {
+    if ([self.callsDictionary objectForKey:uuid]) {
         CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:uuid];
         CXTransaction *transaction = [[CXTransaction alloc] init];
         [transaction addAction:endCallAction];
@@ -55,7 +55,7 @@
 - (void)muteUnmuteCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId muted:(BOOL)muted {
     NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
     MEGALogDebug(@"[CallKit] %@ call %@", muted ? @"Mute" : @"Unmute", uuid);
-    if (uuid) {
+    if ([self.callsDictionary objectForKey:uuid]) {
         CXSetMutedCallAction *muteCallAction = [CXSetMutedCallAction.alloc initWithCallUUID:uuid muted:muted];
         CXTransaction *transaction = [[CXTransaction alloc] init];
         [transaction addAction:muteCallAction];
