@@ -172,7 +172,15 @@ extension ChatViewController {
             }
         } else {
             addToChatViewController.transitioningDelegate = self
-            present(viewController: addToChatViewController)
+            if UIDevice.current.iPhone5X , #available(iOS 14.0, *) {
+                // to fix https://testrail.systems.mega.nz/index.php?/tests/view/1052975
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.present(viewController: addToChatViewController)
+                }
+            } else {
+                present(viewController: addToChatViewController)
+            }
+            
         }
     }
     
