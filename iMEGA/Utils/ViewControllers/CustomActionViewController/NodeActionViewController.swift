@@ -56,6 +56,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(self.displayMode)
             .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
             .setIsPageView(isPageView)
+            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .build()
     }
     
