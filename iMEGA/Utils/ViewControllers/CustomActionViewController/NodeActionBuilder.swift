@@ -100,7 +100,9 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.importAction())
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.sendToChatAction())
-            nodeActions.append(NodeAction.shareAction())
+            if accessLevel == .accessOwner {
+                nodeActions.append(NodeAction.shareAction())
+            }
             if isPdf {
                 nodeActions.append(NodeAction.searchAction())
                 if isPageView {

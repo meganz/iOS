@@ -232,29 +232,62 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download]))
     }
     
-    func testPreviewFileLink() {
+    // MARK: - Documents
+
+    func testDocumentPreview() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewLink)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat]))
+    }
+    
+    func testDocumentPreviewOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewLink)
+            .setAccessLevel(.accessOwner)
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
     }
     
-    func testPreviewPdfPageViewFileLink() {
+    func testDocumentPreviewPdfPageView() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewLink)
             .setIsPdf(true)
             .setIsPageView(true)
             .build()
         
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfThumbnailView]))
+    }
+    
+    func testDocumentPreviewPdfPageViewOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewLink)
+            .setIsPdf(true)
+            .setIsPageView(true)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfThumbnailView]))
     }
     
-    func testPreviewPdfThumbnailFileLink() {
+    func testDocumentPreviewPdfThumbnail() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewLink)
             .setIsPdf(true)
             .setIsPageView(false)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]))
+    }
+    
+    func testDocumentPreviewPdfThumbnailOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewLink)
+            .setIsPdf(true)
+            .setIsPageView(false)
+            .setAccessLevel(.accessOwner)
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfPageView]))
