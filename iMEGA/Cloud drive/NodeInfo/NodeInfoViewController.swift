@@ -41,7 +41,8 @@ class NodeInfoViewController: UIViewController {
     private var node = MEGANode()
     private var folderInfo : MEGAFolderInfo?
     private weak var delegate: NodeInfoViewControllerDelegate?
-
+    private var nodeVersions: [MEGANode] = []
+    
     //MARK: - Lifecycle
 
     @objc class func instantiate(withNode node: MEGANode, delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
@@ -51,6 +52,7 @@ class NodeInfoViewController: UIViewController {
 
         nodeInfoVC.node = node
         nodeInfoVC.delegate = delegate
+        nodeInfoVC.nodeVersions = node.mnz_versions()
         
         return MEGANavigationController.init(rootViewController: nodeInfoVC)
     }
@@ -67,7 +69,9 @@ class NodeInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchFolderInfo()
+        if node.isFolder() {
+            fetchFolderInfo()
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -160,11 +164,22 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func currentVersionRemoved() {
-        if node.mnz_versions()?.count == 1 {
-            dismiss(animated: true, completion: nil)
-        } else {
-            node = node.mnz_versions()[1]
+        guard let firstVersion = nodeVersions.first else {
+            return
+        }
+        node = firstVersion
+        nodeVersions = node.mnz_versions()
+        tableView.reloadData()
+    }
+    
+    private func nodeVersionRemoved() {
+        nodeVersions = node.mnz_versions()
+        
+        if node.mnz_numberOfVersions() == 0 {
             tableView.reloadData()
+        } else {
+            guard let versionsSectionIndex = sections().firstIndex(of: .versions) else { return }
+            tableView.reloadSections([versionsSectionIndex], with: .automatic)
         }
     }
     
@@ -599,9 +614,8 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                     currentVersionRemoved()
                     break
                 } else {
-                    if node.mnz_numberOfVersions() > 1 {
-                        guard let versionsSectionIndex = sections().firstIndex(of: .versions) else { return }
-                        tableView.reloadSections([versionsSectionIndex], with: .automatic)
+                    if nodeVersions.filter({$0.handle == nodeUpdated.handle }).count > 0 {
+                       nodeVersionRemoved()
                     }
                     break
                 }
