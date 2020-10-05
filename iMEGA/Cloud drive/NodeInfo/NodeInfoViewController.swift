@@ -313,8 +313,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node)
-        
+        cell.configure(forNode: node, folderInfo: folderInfo)
         return cell
     }
     
@@ -356,7 +355,7 @@ class NodeInfoViewController: UIViewController {
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
         cell.avatarImageView.image = UIImage(named: "inviteToChat")
-        cell.nameLabel.text = AMLocalizedString("addContactButton", "Button title to 'Add' the contact to your contacts list")
+        cell.nameLabel.text = AMLocalizedString("addContact", "Alert title shown when you select to add a contact inserting his/her email ")
         cell.shareLabel.isHidden = true
         
         return cell
