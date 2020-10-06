@@ -33,7 +33,7 @@ class MegaAvatarView: UIView {
         
         firstPeerAvatarImageView.layer.masksToBounds = true
         firstPeerAvatarImageView.layer.borderWidth = 1
-        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background()?.cgColor
+        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background().cgColor
         firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / 2
         
         if #available(iOS 11.0, *) {
@@ -93,6 +93,6 @@ class MegaAvatarView: UIView {
     }
     
     func updateAppearance() {
-        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background()?.cgColor
+        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background().cgColor
     }
 }

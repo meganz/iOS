@@ -27,7 +27,6 @@
 #import "ContactTableViewCell.h"
 #import "ContactRequestsViewController.h"
 #import "EmptyStateView.h"
-#import "MessagesViewController.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
@@ -1064,10 +1063,10 @@
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
-    MessagesViewController *messagesVC = MessagesViewController.new;
-    messagesVC.chatRoom = chatRoom;
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = chatRoom;
     
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 - (void)setupContactsTableViewHeader {
