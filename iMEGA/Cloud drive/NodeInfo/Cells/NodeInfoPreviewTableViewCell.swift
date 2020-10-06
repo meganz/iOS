@@ -22,6 +22,8 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             playIconImage.isHidden = !node.name.mnz_isVideoPathExtension
         } else if (node.type == .folder) {
             previewImage.mnz_image(for: node)
+            let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            shareButton.isHidden = nodeAccess != .accessOwner
             sizeLabel.text = Helper.memoryStyleString(fromByteCount: (folderInfo?.currentSize ?? 0) + (folderInfo?.versionsSize ?? 0))
         }
         
