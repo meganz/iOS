@@ -2192,8 +2192,6 @@
 "Enter group name"="Enter group name";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "Message..." = "Message...";
-/* Chat: This is the placeholder text for text view when keyboard is hidden */
-"Write message to" = "Write message to";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send" = "Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
