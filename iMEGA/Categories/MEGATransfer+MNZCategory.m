@@ -55,10 +55,13 @@
             case MEGATransferStateComplete: {
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
                 NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
-                
-                [[NSFileManager defaultManager] moveItemAtPath:thumbnailPath toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                [[NSFileManager defaultManager] moveItemAtPath:previewPath toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+                NSString *previewsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"previewsV3"];
+                NSString *originalDirectory = [Helper pathForSharedSandboxCacheDirectory:@"originalV3"];
+
+                [[NSFileManager defaultManager] copyItemAtPath:thumbnailPath toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+                [[NSFileManager defaultManager] copyItemAtPath:previewPath toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+                [[NSFileManager defaultManager] copyItemAtPath:transferAbsolutePath toPath:[originalDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+
                 break;
             }
                 
@@ -76,6 +79,18 @@
 }
 
 #pragma mark - App data
+
+- (MEGAChatMessageType)transferChatMessageType {
+    if ([self.appData containsString:@"attachToChatID"]) {
+        return MEGAChatMessageTypeAttachment;
+    }
+    
+    if ([self.appData containsString:@"attachVoiceClipToChatID"]) {
+         return MEGAChatMessageTypeVoiceClip;
+    }
+    
+    return MEGAChatMessageTypeUnknown;
+}
 
 - (NSArray *)appDataComponents {
     if (!self.appData) {
