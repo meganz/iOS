@@ -536,6 +536,8 @@
 "sharesLeft"="Shares left";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remove sharing";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Remove Share";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
