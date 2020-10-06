@@ -1,18 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "playButtonLight.pdf",
-      "idiom" : "universal"
+      "filename" : "playVoiceClip.png",
+      "idiom" : "universal",
+      "scale" : "1x"
     },
     {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "playButtonDark.pdf",
-      "idiom" : "universal"
+      "filename" : "playVoiceClip@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "playVoiceClip@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

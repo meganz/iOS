@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -2029,8 +2029,8 @@
         <image name="backArrow" width="13" height="21"/>
         <image name="callVideoRound" width="37" height="37"/>
         <image name="callVideoRound, disabled" width="37" height="37"/>
-        <image name="checkBox" width="20" height="20"/>
-        <image name="checkBoxSelected" width="20" height="20"/>
+        <image name="checkBox" width="24" height="24"/>
+        <image name="checkBoxSelected" width="72" height="72"/>
         <image name="contactVerified" width="14" height="14"/>
         <image name="contact_request_accept" width="28" height="28"/>
         <image name="contact_request_deny" width="28" height="28"/>

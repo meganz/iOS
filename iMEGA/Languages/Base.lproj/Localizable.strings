@@ -1191,6 +1191,10 @@
 "more"="More";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Mute";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Unmute";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Mark as Read";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -2156,6 +2160,8 @@
 "Clear Selected"="Clear Selected";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Clear All";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Resume Transfers?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
 /* Action button text of folder selection screen for camera uploads */
@@ -2186,6 +2192,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your business account administrator for further details.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..." = "Message...";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send" = "Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Appearance";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

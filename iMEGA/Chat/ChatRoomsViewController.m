@@ -27,7 +27,7 @@
 #import "EmptyStateView.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
-#import "MessagesViewController.h"
+#import "MEGA-Swift.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol>
 
@@ -188,6 +188,8 @@
     if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
         [DevicePermissionsHelper modalNotificationsPermission];
     }
+    
+    self.navigationController.toolbarHidden = true;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -396,27 +398,28 @@
     NSArray *viewControllers = self.navigationController.viewControllers;
     if (viewControllers.count > 1) {
         UIViewController *currentVC = self.navigationController.viewControllers[1];
-        if ([currentVC isKindOfClass:MessagesViewController.class]) {
-            MessagesViewController *currentMessagesVC = (MessagesViewController *)currentVC;
-            if (currentMessagesVC.chatRoom.chatId == chatID) {
+        if ([currentVC isKindOfClass:ChatViewController.class]) {
+            ChatViewController *currentChatViewController= (ChatViewController *)currentVC;
+            if (currentChatViewController.chatRoom.chatId == chatID) {
                 if (viewControllers.count != 2) {
-                    [self.navigationController popToViewController:currentMessagesVC animated:YES];
+                    [self.navigationController popToViewController:currentChatViewController animated:YES];
                 }
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
-                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentChatViewController.chatRoom.chatId
+                                                         delegate:currentChatViewController];
                 [self.navigationController popToRootViewControllerAnimated:NO];
             }
         }
     }
     
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
     
-    [self updateBackBarButtonItem:messagesVC.chatRoom.unreadCount];
+    [self updateBackBarButtonItem:chatViewController.chatRoom.unreadCount];
     
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 - (void)internetConnectionChanged {
@@ -646,20 +649,21 @@
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom                = chatRoom;
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = chatRoom;
     
     [self updateBackBarButtonItem:chatRoom.unreadCount];
     
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 - (void)createChatRoomWithUserAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+    
     [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-        messagesVC.chatRoom = chatRoom;
-        [self.navigationController pushViewController:messagesVC animated:YES];
+        ChatViewController *chatViewController = [ChatViewController.alloc init];
+        chatViewController.chatRoom = chatRoom;
+        [self.navigationController pushViewController:chatViewController animated:YES];
     }];
     
     [self.searchUsersWithoutChatArray removeObject:user];
@@ -742,6 +746,47 @@
         self.definesPresentationContext = YES;
         self.searchController.hidesNavigationBarDuringPresentation = YES;
     }
+}
+
+- (void)showOptionsForChatAtIndexPath:(NSIndexPath *)indexPath {
+
+    [self.tableView setEditing:NO animated:YES];
+    
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+    NSMutableArray *actions = NSMutableArray.new;
+  
+    if (chatListItem.unreadCount != 0) {
+        ActionSheetAction *markAsReadAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Mark as Read", @"A button label. The button allows the user to mark a conversation as read.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"markUnread_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+            [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
+        }];
+        [actions addObject:markAsReadAction];
+    }
+    
+    if ([self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId]) {
+        ActionSheetAction *unmuteAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self.chatNotificationControl turnOffDNDWithChatId:chatListItem.chatId];
+        }];
+        [actions addObject:unmuteAction];
+    } else {
+        ActionSheetAction *muteAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+        }];
+        [actions addObject:muteAction];
+    }
+    
+    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"infomation_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+    }];
+    [actions addObject:infoAction];
+
+    ActionSheetAction *archiveChatAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"archiveChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+    }];
+    [actions addObject:archiveChatAction];
+
+    ActionSheetViewController *actionSheetVC = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:nil];
+    
+    [self presentViewController:actionSheetVC animated:YES completion:nil];
 }
 
 #pragma mark - TopBannerButton
@@ -838,53 +883,53 @@
 }
 
 - (void)blockCompletionsForCreateChatInContacts:(ContactsViewController *)contactsVC {
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
     
     contactsVC.userSelected = ^void(NSArray *users) {
         if (users.count == 1) {
             MEGAUser *user = users.firstObject;
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
             if (chatRoom) {
-                messagesVC.chatRoom = chatRoom;
+                chatViewController.chatRoom = chatRoom;
                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [self.navigationController pushViewController:messagesVC animated:YES];
+                    [self.navigationController pushViewController:chatViewController animated:YES];
                 });
             } else {
                 [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                    messagesVC.chatRoom = chatRoom;
-                    [self.navigationController pushViewController:messagesVC animated:YES];
+                    chatViewController.chatRoom = chatRoom;
+                    [self.navigationController pushViewController:chatViewController animated:YES];
                 }];
             }
         }
     };
     
     contactsVC.chatSelected = ^(uint64_t chatId) {
-        messagesVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
+        chatViewController.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self.navigationController pushViewController:messagesVC animated:YES];
+            [self.navigationController pushViewController:chatViewController animated:YES];
         });
     };
     
     contactsVC.createGroupChat = ^void(NSArray *users, NSString *groupName, BOOL keyRotation, BOOL getChatLink) {
         if (keyRotation) {
             [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUsersArray:users title:groupName completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                messagesVC.chatRoom = chatRoom;
-                [self.navigationController pushViewController:messagesVC animated:YES];
+                chatViewController.chatRoom = chatRoom;
+                [self.navigationController pushViewController:chatViewController animated:YES];
             }];
         } else {
             MEGAChatGenericRequestDelegate *createChatGroupRequestDelegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
-                messagesVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
+                chatViewController.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
                 if (getChatLink) {
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
                         if (!error.type) {
-                            messagesVC.publicChatWithLinkCreated = YES;
-                            messagesVC.publicChatLink = [NSURL URLWithString:request.text];
-                            [self.navigationController pushViewController:messagesVC animated:YES];
+                            chatViewController.publicChatWithLinkCreated = YES;
+                            chatViewController.publicChatLink = [NSURL URLWithString:request.text];
+                            [self.navigationController pushViewController:chatViewController animated:YES];
                         }
                     }];
-                    [MEGASdkManager.sharedMEGAChatSdk createChatLink:messagesVC.chatRoom.chatId delegate:delegate];
+                    [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatViewController.chatRoom.chatId delegate:delegate];
                 } else {
-                    [self.navigationController pushViewController:messagesVC animated:YES];
+                    [self.navigationController pushViewController:chatViewController animated:YES];
                 }
             }];
             [MEGASdkManager.sharedMEGAChatSdk createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users] title:groupName delegate:createChatGroupRequestDelegate];
@@ -996,6 +1041,81 @@
     }
 }
 
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
+    if (@available(iOS 13.0, *)) {
+        if (self.chatRoomsType == ChatRoomsTypeDefault && indexPath.section < 2) {
+            return nil;
+        }
+        MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        ChatViewController *chatViewController = [ChatViewController.alloc init];
+        UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+            chatViewController.previewMode = YES;
+            chatViewController.chatRoom = chatRoom;
+            
+            return chatViewController;
+            
+        } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+            NSMutableArray *menus = [NSMutableArray new];
+            
+            if (chatRoom.unreadCount != 0) {
+                UIAction *markAsReadAction = [UIAction actionWithTitle:AMLocalizedString(@"Mark as Read",@"A button label. The button allows the user to mark a conversation as read.") image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                            [chatViewController setLastMessageAsSeen];
+                        }];
+                [menus addObject:markAsReadAction];
+            }
+            
+            BOOL muted = [self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId];
+            if (muted) {
+                UIAction *unmuteAction = [UIAction actionWithTitle:AMLocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    [self.chatNotificationControl turnOffDNDWithChatId:chatListItem.chatId];
+                }];
+                [menus addObject:unmuteAction];
+            } else {
+                UIAction *muteAction = [UIAction actionWithTitle:AMLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId sender:[tableView cellForRowAtIndexPath:indexPath]];
+                }];
+                [menus addObject:muteAction];
+            }
+
+            UIAction *infoAction = [UIAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"infomation_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+            }];
+            [menus addObject:infoAction];
+            
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault: {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                        [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+                    }];
+                    [menus addObject:archiveChatAction];
+                    break;
+                }
+                case ChatRoomsTypeArchived:{
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") image:[UIImage imageNamed:@"unArchiveChat"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
+                    }];
+                    [menus addObject:archiveChatAction];
+                    break;
+                }
+            }
+            return [UIMenu menuWithTitle:@"" children:menus];
+        }];
+        return configuration;
+        
+    }
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator API_AVAILABLE(ios(13.0)){
+    ChatViewController *previewViewController = (ChatViewController *)animator.previewViewController;
+    [animator addCompletion:^{
+        [self.navigationController pushViewController:previewViewController animated:NO];
+        previewViewController.previewMode = NO;
+        [previewViewController update];
+    }];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
@@ -1062,7 +1182,7 @@
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+                [self showOptionsForChatAtIndexPath:indexPath];
             }];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
             
@@ -1100,7 +1220,7 @@
             archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             UIContextualAction *infoAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+                [self showOptionsForChatAtIndexPath:indexPath];
             }];
             infoAction.image = [UIImage imageNamed:@"moreSelected"];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
@@ -1203,14 +1323,18 @@
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom = chatRoom;
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.previewMode = YES;
+    chatViewController.chatRoom = chatRoom;
     
-    return messagesVC;
+    return chatViewController;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    ChatViewController *chatViewController = (ChatViewController *)viewControllerToCommit;
+    chatViewController.previewMode = NO;
+
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 #pragma mark - MEGAChatDelegate
