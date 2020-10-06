@@ -160,7 +160,7 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func currentVersionRemoved() {
-        if node.mnz_versions()?.count == 1 {
+        if node.mnz_versions().count == 1 {
             dismiss(animated: true, completion: nil)
         } else {
             node = node.mnz_versions()[1]
