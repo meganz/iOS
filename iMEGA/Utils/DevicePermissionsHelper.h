@@ -1,5 +1,7 @@
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 @interface DevicePermissionsHelper : NSObject
 
@@ -22,6 +24,8 @@
 + (BOOL)shouldAskForContactsPermissions;
 + (BOOL)shouldSetupPermissions;
 + (BOOL)isAudioPermissionAuthorizedOrNotDetermined;
++ (AVAuthorizationStatus )audioPermissionAuthorizationStatus;
 + (BOOL)isVideoPermissionAuthorizedOrNotDetermined;
++ (BOOL)isVideoPermissionAuthorized;
 
 @end
