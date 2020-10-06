@@ -254,7 +254,9 @@ class NodeInfoViewController: UIViewController {
         var sections = [NodeInfoTableViewSection]()
         sections.append(.info)
         sections.append(.details)
-        sections.append(.link)
+        if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+            sections.append(.link)
+        }
         if MEGASdkManager.sharedMEGASdk().hasVersions(for: node) {
             sections.append(.versions)
         }
@@ -410,7 +412,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get RemoveLabel")
         }
 
-        removeLabel.text = AMLocalizedString("removeSharing", "Alert title shown on the Shared Items section when you want to remove 1 share")
+        removeLabel.text = AMLocalizedString("Remove Share", "The text in the button to remove all contacts to a shared folder on one click")
         
         return cell
     }
