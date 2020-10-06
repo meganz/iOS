@@ -4,19 +4,13 @@
 #import <objc/runtime.h>
 
 #import "Helper.h"
-#import "MEGAAttachmentMediaItem.h"
-#import "MEGACallManagementMediaItem.h"
-#import "MEGADialogMediaItem.h"
+
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
-#import "MEGALocationMediaItem.h"
 #import "MEGAGenericRequestDelegate.h"
-#import "MEGAPhotoMediaItem.h"
-#import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-#import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
@@ -89,46 +83,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
         URLType type = [match.URL mnz_type];
         if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink) {
             self.MEGALink = match.URL;
-            switch (type) {
-                case URLTypeFileLink: {
-                    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        self.richNumber = request.publicNode.size;
-                        self.node = request.publicNode;
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
-                    
-                    break;
-                }
-                    
-                case URLTypeFolderLink: {
-                    MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        if (!error.type) {
-                            self.richString = [NSString mnz_stringByFiles:request.megaFolderInfo.files andFolders:request.megaFolderInfo.folders];
-                            self.richNumber = @(request.megaFolderInfo.currentSize ?: -1);
-                            self.richTitle = request.text;
-                        }
-
-                    }];
-                    [MEGASdkManager.sharedMEGASdk getPublicLinkInformationWithFolderLink:self.MEGALink.mnz_MEGAURL delegate:delegate];
-                    
-                    break;
-                }
-                    
-                case URLTypePublicChatLink: {
-                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
-                            self.richString = request.text;
-                            self.richNumber = @(request.number);
-                        }
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:self.MEGALink delegate:delegate];
-                    
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
 
             return YES;
         }
@@ -140,7 +94,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
 - (BOOL)shouldShowForwardAccessory {
     BOOL shouldShowForwardAccessory = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeVoiceClip && !self.richNumber) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeVoiceClip && !self.richNumber) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || (self.type == MEGAChatMessageTypeNormal && self.containsMEGALink))) {
         shouldShowForwardAccessory = YES;
     }
     
@@ -159,7 +113,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     return NO;
 }
 
-- (NSString *)text {
+- (NSString *)generateAttributedString {
     NSString *text;
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
     
@@ -184,8 +138,8 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             text = wasRemovedFromTheGroupChatBy;
                             
                             NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:wasRemovedFromTheGroupChatBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
                             NSString *leftTheGroupChat = AMLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
@@ -193,7 +147,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             text = leftTheGroupChat;
                             
                             NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:leftTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
                             self.attributedText = mutableAttributedString;
                         }
                         break;
@@ -207,15 +161,15 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             text = joinedTheGroupChatByInvitationFrom;
                             
                             NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
                             NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
                             text = joinedTheGroupChat;
                             
                             NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:joinedTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
                             self.attributedText = mutableAttributedString;
                         }
                         break;
@@ -232,7 +186,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = clearedTheChatHistory;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:clearedTheChatHistory attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[clearedTheChatHistory rangeOfString:fullNameDidAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[clearedTheChatHistory rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -262,9 +216,9 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = wasChangedToBy;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:wasChangedToBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:privilige]];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasChangedToBy rangeOfString:fullNameDidAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasChangedToBy rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -276,7 +230,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = changedGroupChatNameTo;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:changedGroupChatNameTo attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
                 if (self.content) [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[changedGroupChatNameTo rangeOfString:self.content]];
                 self.attributedText = mutableAttributedString;
                 break;
@@ -287,7 +241,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = publicHandleCreated;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:publicHandleCreated attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
@@ -298,7 +252,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = publicHandleRemoved;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
@@ -310,7 +264,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = [NSString stringWithFormat:@"%@\n\n%@", setPrivateMode, keyRotationExplanation];
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[text rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[text rangeOfString:fullNameReceiveAction]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:AMLocalizedString(@"Encrypted Key Rotation", nil)]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_secondaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection] range:[text rangeOfString:keyRotationExplanation]];
@@ -335,9 +289,13 @@ static const void *richTitleTagKey = &richTitleTagKey;
         text = @"Message contains invalid meta";
     } else {
         UIColor *textColor = self.userHandle == myHandle ? UIColor.whiteColor : UIColor.mnz_label;
-        
+        UIFont *textFont = textFontRegular;
+        if (self.content.mnz_isPureEmojiString) {
+            textFont = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[self.content mnz_emojiCount]];
+            textColor = UIColor.mnz_label;
+        }
         self.attributedText = [NSAttributedString mnz_attributedStringFromMessage:self.content
-                                                                             font:textFontRegular
+                                                                             font:textFont
                                                                             color:textColor];
         
         if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
@@ -350,73 +308,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
         text = self.attributedText.string;
     }
     return text;
-}
-
-- (id<JSQMessageMediaData>)media {
-    static NSCache *cache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [NSCache new];
-        cache.countLimit = 200;
-    });
-    
-    id<JSQMessageMediaData> media = [cache objectForKey:@(self.messageHash)];
-    if (media) {
-        return media;
-    }
-    
-    switch (self.type) {
-        case MEGAChatMessageTypeContact:
-            media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
-        case MEGAChatMessageTypeAttachment: {
-            MEGANode *node = [self.nodeList nodeAtIndex:0];
-            if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
-                media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-            } else {
-                media = [[MEGAPhotoMediaItem alloc] initWithMEGAChatMessage:self];
-            }
-            
-            break;
-        }
-            
-        case MEGAChatMessageTypeVoiceClip:
-            media = [[MEGAVoiceClipMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
-        case MEGAChatMessageTypeContainsMeta: {
-            if (self.containsMeta.type == MEGAChatContainsMetaTypeRichPreview) {
-                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
-            } else if (self.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                media = [[MEGALocationMediaItem alloc] initWithMEGAChatMessage:self];
-            }
-            break;
-        }
-            
-        case MEGAChatMessageTypeNormal: {
-            if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
-                media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
-            } else if (self.richNumber) {
-                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
-            }
-            
-            break;
-        }
-            
-        case MEGAChatMessageTypeCallStarted:
-        case MEGAChatMessageTypeCallEnded:
-            media = [[MEGACallManagementMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
-        default:
-            break;
-    }
-    
-    if (media && self.type != MEGAChatMessageTypeContact) {
-        [cache setObject:media forKey:@(self.messageHash)];
-    }
-    return media;
 }
 
 - (NSUInteger)messageHash {
@@ -478,10 +369,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
     } else {
         return messageHash;
     }
-}
-
-- (id)debugQuickLookObject {
-    return [self.media mediaView] ?: [self.media mediaPlaceholderView];
 }
 
 #pragma mark - Properties
