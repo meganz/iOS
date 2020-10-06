@@ -269,7 +269,9 @@ class NodeInfoViewController: UIViewController {
         var sections = [NodeInfoTableViewSection]()
         sections.append(.info)
         sections.append(.details)
-        sections.append(.link)
+        if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+            sections.append(.link)
+        }
         if MEGASdkManager.sharedMEGASdk().hasVersions(for: node) {
             sections.append(.versions)
         }
@@ -328,8 +330,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node)
-        
+        cell.configure(forNode: node, folderInfo: folderInfo)
         return cell
     }
     
@@ -371,7 +372,7 @@ class NodeInfoViewController: UIViewController {
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
         cell.avatarImageView.image = UIImage(named: "inviteToChat")
-        cell.nameLabel.text = AMLocalizedString("addContactButton", "Button title to 'Add' the contact to your contacts list")
+        cell.nameLabel.text = AMLocalizedString("addContact", "Alert title shown when you select to add a contact inserting his/her email ")
         cell.shareLabel.isHidden = true
         
         return cell
@@ -426,7 +427,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get RemoveLabel")
         }
 
-        removeLabel.text = AMLocalizedString("removeSharing", "Alert title shown on the Shared Items section when you want to remove 1 share")
+        removeLabel.text = AMLocalizedString("Remove Share", "The text in the button to remove all contacts to a shared folder on one click")
         
         return cell
     }
