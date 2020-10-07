@@ -179,3 +179,4 @@ extension ChatUploader: MEGATransferDelegate {
     }
     
 }
+

@@ -176,6 +176,69 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_chatRichLinkContentBubble(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor.white
+            case .dark:
+                return mnz_black1C1C1E()
+            @unknown default:
+                return UIColor.white
+            }
+        } else {
+            return UIColor.white
+        }
+    }
+    
+    @objc class func mnz_reactionBubbleBoarder(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+            case .dark:
+                return UIColor.mnz_(fromHexString: "38383A")
+            @unknown default:
+                return UIColor.white
+            }
+        } else {
+            return UIColor.white
+        }
+    }
+    
+    @objc class func mnz_reactionBubbleBackgroundColor(_ traitCollection: UITraitCollection, selected: Bool) -> UIColor {
+         if #available(iOS 13.0, *) {
+             switch traitCollection.userInterfaceStyle {
+             case .unspecified, .light:
+                if selected {
+                    return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+                } else {
+                    return  UIColor.mnz_secondaryBackground(for: traitCollection)
+                }
+                
+             case .dark:
+                if selected {
+                    return UIColor(red: 0, green: 163.0/255.0, blue: 130.0/255.0, alpha: 0.3)
+                } else {
+                    return  UIColor.mnz_secondaryBackground(for: traitCollection)
+                }
+                
+             @unknown default:
+                if selected {
+                    return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+                } else {
+                    return  UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+                }
+            }
+         } else {
+            if selected {
+                return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+            } else {
+                return  UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+            }
+        }
+    }
+    
     // MARK: - Objects
     @objc class func mnz_chatIncomingBubble(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {
@@ -224,6 +287,79 @@ extension UIColor {
             }
         } else {
             return UIColor.mnz_green009476()
+        }
+    }
+    
+    @objc class func mnz_Elevated(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_grayE6E6E6()
+                } else {
+                    return UIColor.mnz_grayF7F7F7()
+                }
+                
+            case .dark:
+                return UIColor.mnz_black2C2C2E()
+                
+            @unknown default:
+                return UIColor.mnz_grayF7F7F7()
+            }
+        } else {
+            return UIColor.mnz_grayF7F7F7()
+        }
+    }
+    
+    // MARK: - Chat Reactions
+    
+    class func mnz_emojiLabelSelectedState(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_green007B62()
+                } else {
+                    return UIColor.mnz_green00A886()
+                }
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_green00C29A()
+                } else {
+                    return UIColor.mnz_green00A382()
+                }
+                
+            @unknown default:
+                return UIColor.mnz_green00A886()
+            }
+        } else {
+            return UIColor.mnz_green00A886()
+        }
+    }
+    
+    class func mnz_emoji(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_whiteF2F2F2()
+                } else {
+                    return UIColor.mnz_whiteF7F7F7()
+                }
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_gray3F3F42()
+                } else {
+                    return UIColor.mnz_black2C2C2E()
+                }
+                
+            @unknown default:
+                return UIColor.mnz_whiteF7F7F7()
+            }
+        } else {
+            return UIColor.mnz_whiteF7F7F7()
         }
     }
     
@@ -319,6 +455,144 @@ extension UIColor {
         return proLevelColor
     }
     
+    // MARK: - Input bar
+    class func mnz_inputbarButtonBackground(_ traitCollection: UITraitCollection) -> UIColor? {
+        let primaryGray = mnz_primaryGray(for: traitCollection)
+        if #available(iOS 12.0, *) {
+            return (traitCollection.userInterfaceStyle == .dark)
+                ? primaryGray.withAlphaComponent(0.2)
+                : primaryGray.withAlphaComponent(0.04)
+        } else {
+            return primaryGray.withAlphaComponent(0.04)
+        }
+    }
+    
+    class func mnz_inputbarButtonImageTint(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return white
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_grayD1D1D1()
+                }
+                
+            @unknown default:
+                return white
+            }
+        } else {
+            return white
+        }
+    }
+    
+    // MARK: - Toolbar
+    
+    class func mnz_toolbarButtonBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return white
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            @unknown default:
+                return white
+            }
+        } else {
+            return white
+        }
+    }
+    
+    class func mnz_toolbarTextColor(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_gray3D3D3D();
+                } else {
+                    return mnz_gray515151();
+                }
+                
+            case .dark:
+                return white
+                
+            @unknown default:
+                return mnz_gray515151()
+            }
+        } else {
+            return mnz_gray515151()
+        }
+    }
+    
+    // MARK: - Voice recording view
+    
+    class func mnz_voiceRecordingViewBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return mnz_whiteFCFCFC()
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            @unknown default:
+                return mnz_whiteFCFCFC()
+            }
+        } else {
+            return mnz_whiteFCFCFC()
+        }
+    }
+    
+    class func mnz_voiceRecordingViewButtonBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return mnz_gray515151()
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            @unknown default:
+                return mnz_gray515151()
+            }
+        } else {
+            return mnz_gray515151()
+        }
+    }
+    
+    class func emojiDescriptionTextColor(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return mnz_gray3C3C43().withAlphaComponent(0.6)
+
+            case .dark:
+                return white.withAlphaComponent(0.6)
+                
+            @unknown default:
+                return mnz_gray3C3C43().withAlphaComponent(0.6)
+            }
+        } else {
+            return mnz_gray3C3C43().withAlphaComponent(0.6)
+        }
+    }
+
     // MARK: - Tints
     
     // MARK: Black
@@ -491,6 +765,10 @@ extension UIColor {
         return UIColor.init(red: 249.0/255.0, green: 92.0/255.0, blue: 97.0/255.0, alpha: 1.0)
     }
     
+    @objc class func mnz_redFF453A() -> UIColor {
+        return UIColor.init(red: 1.0, green: 69.0/255.0, blue: 58.0/255.0, alpha: 1.0)
+    }
+    
     // MARK: White
     
     @objc class func mnz_whiteEEEEEE() -> UIColor {
@@ -499,6 +777,14 @@ extension UIColor {
     
     @objc class func mnz_whiteF2F2F2() -> UIColor {
         return UIColor.init(red: 242.0/255.0, green: 242.0/255.0, blue: 242.0/255.0, alpha: 1.0)
+    }
+    
+    @objc class func mnz_whiteFCFCFC() -> UIColor {
+        return UIColor.init(red: 252.0/255.0, green: 252.0/255.0, blue: 252.0/255.0, alpha: 1.0)
+    }
+    
+    @objc class func mnz_whiteF7F7F7() -> UIColor {
+        return UIColor.init(red: 247.0/255.0, green:  247.0/255.0, blue:  247.0/255.0, alpha: 1.0)
     }
 }
 

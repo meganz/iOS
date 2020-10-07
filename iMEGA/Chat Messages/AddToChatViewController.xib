@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddToChatViewController" customModule="MEGA" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="eSF-QW-qPH" id="ylu-Em-phh"/>
+                <outlet property="contentView" destination="hwb-7m-LMj" id="qaE-tq-ECQ"/>
+                <outlet property="contentViewBottomConstraint" destination="6uI-ZA-cpI" id="Gam-tS-vvy"/>
+                <outlet property="contentViewHeightConstraint" destination="wl7-ZE-7X9" id="JQ3-GK-7TW"/>
+                <outlet property="contentViewLeadingConstraint" destination="PKo-4r-vzh" id="lXy-aw-AKp"/>
+                <outlet property="contentViewTrailingConstraint" destination="Pn1-Dl-3hC" id="ViB-Vv-mJl"/>
+                <outlet property="mediaCollectionView" destination="Zxb-mH-hnV" id="VNj-pc-nzB"/>
+                <outlet property="mediaCollectionViewBottomConstraint" destination="TKr-3S-IxU" id="vQu-ZD-0ZU"/>
+                <outlet property="mediaCollectionViewTopConstraint" destination="KcC-JS-iDO" id="XFU-eT-lXE"/>
+                <outlet property="menuView" destination="32M-MS-rdd" id="8CU-AU-cHZ"/>
+                <outlet property="menuViewBottomConstraint" destination="WDx-Fa-1Jp" id="dzI-YF-76A"/>
+                <outlet property="menuViewLeadingConstraint" destination="DV7-tm-CbF" id="jc5-l4-5KI"/>
+                <outlet property="menuViewTrailingConstraint" destination="g43-HZ-aZa" id="igp-nS-O6w"/>
+                <outlet property="patchView" destination="n3y-LT-kDz" id="gw3-ri-2cg"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eSF-QW-qPH" userLabel="BackgroundView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" red="0.015686274509803921" green="0.015686274509803921" blue="0.058823529411764705" alpha="0.3984642551369863" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Eqa-6t-YDm" appends="YES" id="SKA-Pi-n2O"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3y-LT-kDz" userLabel="PatchView">
+                    <rect key="frame" x="0.0" y="812" width="414" height="128"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="128" id="75D-Cb-yhk"/>
+                    </constraints>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwb-7m-LMj" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="467" width="414" height="395"/>
+                    <subviews>
+                        <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zxb-mH-hnV">
+                            <rect key="frame" x="6" y="5" width="402" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="1tq-lA-fNN"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="2" minimumInteritemSpacing="0.0" id="Ayc-GC-lSh">
+                                <size key="itemSize" width="100" height="100"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
+                            <rect key="frame" x="16" y="129" width="382" height="261"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="16" id="DV7-tm-CbF"/>
+                        <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="6" id="JKd-ZH-8de"/>
+                        <constraint firstItem="Zxb-mH-hnV" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="top" constant="5" id="KcC-JS-iDO"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" constant="24" id="TKr-3S-IxU"/>
+                        <constraint firstAttribute="bottom" secondItem="32M-MS-rdd" secondAttribute="bottom" constant="5" id="WDx-Fa-1Jp"/>
+                        <constraint firstAttribute="trailing" secondItem="Zxb-mH-hnV" secondAttribute="trailing" constant="6" id="a4R-NR-tKw"/>
+                        <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" constant="16" id="g43-HZ-aZa"/>
+                        <constraint firstAttribute="height" constant="395" id="wl7-ZE-7X9"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hwb-7m-LMj" secondAttribute="bottom" id="6uI-ZA-cpI"/>
+                <constraint firstItem="eSF-QW-qPH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MJE-Ez-Hyl"/>
+                <constraint firstItem="hwb-7m-LMj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="PKo-4r-vzh"/>
+                <constraint firstItem="hwb-7m-LMj" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Pn1-Dl-3hC"/>
+                <constraint firstItem="n3y-LT-kDz" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" id="Q1W-pv-2mF"/>
+                <constraint firstAttribute="trailing" secondItem="eSF-QW-qPH" secondAttribute="trailing" id="U7x-ef-VoN"/>
+                <constraint firstItem="n3y-LT-kDz" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="bottom" constant="-50" id="Zd0-fP-6XW"/>
+                <constraint firstItem="n3y-LT-kDz" firstAttribute="trailing" secondItem="hwb-7m-LMj" secondAttribute="trailing" id="chs-Xe-ENy"/>
+                <constraint firstAttribute="bottom" secondItem="eSF-QW-qPH" secondAttribute="bottom" id="k2d-9T-6p2"/>
+                <constraint firstItem="eSF-QW-qPH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="m5T-uP-0Mb"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="-3993" y="257"/>
+        </view>
+        <tapGestureRecognizer id="Eqa-6t-YDm">
+            <connections>
+                <action selector="backgroundViewTapped:" destination="-1" id="nxQ-6p-HaO"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>
