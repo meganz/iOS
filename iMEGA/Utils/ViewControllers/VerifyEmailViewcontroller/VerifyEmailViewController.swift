@@ -138,7 +138,7 @@ class VerifyEmailViewController: UIViewController {
                 if error.type == .apiOk || error.type == .apiEArgs {
                     self.hintLabel.isHidden = false
                 } else {
-                    SVProgressHUD.showError(withStatus: AMLocalizedString(error.name, ""))
+                    SVProgressHUD.showError(withStatus: AMLocalizedString("Email already sent. Please wait a few minutes before trying again.", "Error text shown when requesting email for email verification within 10 minutes"))
                 }
             }
             MEGASdkManager.sharedMEGASdk().resendVerificationEmail(with: resendVerificationEmailDelegate)

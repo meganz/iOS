@@ -763,7 +763,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="这是删除您账户的最后一步。您将永久失去储存在云端空间中的所有资料。请在下方输入您的密码。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="您的账号已被成功取消。";
+"accountCanceledSuccessfully"="您的帐户已成功取消";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="注销账户";
 /* Title for the action that allows to remove a file or folder */
@@ -1085,6 +1085,12 @@
 "removeItemFromOffline"="您确定要从离线部份中删除这个项目？";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="您确定要从离线模式中删除这些项目？";
+/* Giphy section header */
+"Send GIF"="Send GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Search GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="No GIFs found";
 /* Chat section header */
 "chat"="聊天";
 /* Empty Conversations section */
@@ -1189,6 +1195,10 @@
 "more"="更多";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="静音";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="取消静音";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="标记为已读";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="信息";
 /* A button label. The button allows the user to close the conversation. */
@@ -1442,8 +1452,6 @@
 "codeScanned"="二维码扫描成功";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="共享者：";
-/*   */
-"details"="内容";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="分享";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1474,6 @@
 "user"="用户";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X]个版本";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="文件信息";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="文件夹信息";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="是否删除这个版本？";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1722,8 @@
 "There is an active call. Tap to join."="您有一个通话。点击加入。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="触摸即可返回通话%@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="点击返回通话";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="保存至照片";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1929,7 +1935,7 @@
 /* Multiple images and 1 video */
 "%1 Images and 1 Video"="%1张照片和1个视频";
 /* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1张图片和%2个视频";
+"%1 Images and %2 Videos"="%1张照片和%2个视频";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1由%3修改";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -1965,7 +1971,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="更改为测试服务器？";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？ 您的帐户可能会遇到无法解决的问题";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？您的帐户可能会遇到一些问题。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="开启允许访问通讯录";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2164,8 @@
 "Clear Selected"="清除已选项目";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Resume Transfers?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2196,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="您的帐户已被管理员移除。请联系您的企业帐户管理员了解详情。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="外观";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2275,8 +2287,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="服务器:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="端口";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="Proxy代理服务器需输入密码";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="使用者名称:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="详细信息";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="链接";
+/* Text referencing the date of creation of a link */
+"Link Creation"="链接创建时间";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="分享给";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="待接收";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="历史版本";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="邮件已发送。请等待几分钟后再试。";
