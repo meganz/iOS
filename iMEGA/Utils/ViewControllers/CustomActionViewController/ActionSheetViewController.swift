@@ -118,6 +118,36 @@ class ActionSheetViewController: UIViewController {
         dismissCompletion?()
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+        view.layoutIfNeeded()
+        
+        layoutViews(to: view.frame.size)
+        backgroundView.alpha = 0
+        
+        UIView.animate(withDuration: animationDuration,
+                       animations: { [weak self] in
+                        self?.backgroundView.alpha = 1.0
+                        self?.view.layoutIfNeeded()
+                        
+            },
+                       completion: { finished in
+                        completion?(finished)
+        })
+    }
+    
+    func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+        top?.constant = CGFloat(view.bounds.height)
+        UIView.animate(withDuration: animationDuration,
+                       animations: { [weak self] in
+                        self?.backgroundView.alpha = 0
+                        self?.view.layoutIfNeeded()
+                        
+            },
+                       completion: { _ in
+                        completion?(true)
+        })
+    }
 }
 
 // MARK: PureLayout Implementation
@@ -236,36 +266,6 @@ extension ActionSheetViewController: UITableViewDelegate {
         }
 
     }
-
-    func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
-        view.layoutIfNeeded()
-
-        layoutViews(to: view.frame.size)
-        backgroundView.alpha = 0
-
-        UIView.animate(withDuration: animationDuration,
-                       animations: { [weak self] in
-                        self?.backgroundView.alpha = 1.0
-                        self?.view.layoutIfNeeded()
-
-            },
-                       completion: { finished in
-                        completion?(finished)
-        })
-    }
-
-    func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
-        top?.constant = CGFloat(view.bounds.height)
-        UIView.animate(withDuration: animationDuration,
-                       animations: { [weak self] in
-                        self?.backgroundView.alpha = 0
-                        self?.view.layoutIfNeeded()
-
-            },
-                       completion: { _ in
-                        completion?(true)
-        })
-    }
 }
 
 extension ActionSheetViewController: UITableViewDataSource {
@@ -314,9 +314,9 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
             containerView.addSubview(toView)
 
             transitionContext.completeTransition(true)
-            presentView(toView, presentingView: fromView, animationDuration: TimeInterval(0.3), completion: nil)
+            presentView(toView, presentingView: fromView, animationDuration: TimeInterval(0.2), completion: nil)
         } else {
-            dismissView(fromView, presentingView: toView, animationDuration: TimeInterval(0.3)) { completed in
+            dismissView(fromView, presentingView: toView, animationDuration: TimeInterval(0.2)) { completed in
                 if completed {
                     fromView.removeFromSuperview()
                 }
@@ -326,7 +326,7 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
     }
 
     open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return isPresenting ? 0 : TimeInterval(0.3)
+        return isPresenting ? 0 : TimeInterval(0.2)
     }
 
     open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="要存取此資料夾/檔案，您需要它的解密密鑰。如果您沒有密鑰，請聯絡此連結的建立者。";
+"decryptionKeyAlertMessage"="要存取此資料夾/檔案，您需要解密密鑰。如果您沒有密鑰，請聯絡此連結的建立者。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密鑰";
 /* Button title to try to decrypt the link */
@@ -201,7 +201,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="空的垃圾桶";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="離線模式中沒有儲存檔案";
+"offlineEmptyState_title"="沒有任何可離線存取檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="沒有聯繫人";
 /* Title shown when there's no incoming Shared Items */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="新增聯絡人";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="邀請聯絡人";
+"inviteContact"="邀請加入MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="邀請已發送";
 /* Button title to allow the user postpone an action */
@@ -309,7 +309,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您沒有訪問該資料夾的權限";
 /* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="離線儲存";
+"saveForOffline"="儲存為可離線存取";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="這個收件夾標籤僅供Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -503,7 +503,7 @@
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="已選擇%d個";
 /* Title of the Offline section */
-"offline"="離線";
+"offline"="離線存取";
 /* Title of the Contacts section */
 "contactsTitle"="聯絡人";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
@@ -731,11 +731,11 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="還原金鑰已以RecoveryKey.txt(還原金鑰文字檔)匯出至離線模式中。注意：您登出後它將會被刪除，請將其存放於安全之處。";
+"masterKeyExported_alertMessage"="還原金鑰已以RecoveryKey.txt（還原金鑰文字檔）匯出至離線存取區裡。注意：您登出後它將會被刪除，請將其存放於安全之處。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="於您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="清除離線檔案";
+"clearOfflineFiles"="清除可離線存取檔案";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除快取";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -763,7 +763,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="您的帳號已被成功取消。";
+"accountCanceledSuccessfully"="您的帳號已成功註銷。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="註銷帳戶";
 /* Title for the action that allows to remove a file or folder */
@@ -1052,7 +1052,7 @@
 /* Button title to restore failed purchases */
 "restore"="恢復";
 /* "Monthly" subscriptions */
-"monthly"="月付費";
+"monthly"="一個月";
 /* "Yearly" subscriptions */
 "yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
@@ -1076,15 +1076,21 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="開啟調試模式";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="將在離線頁面（MEGAiOS.log）中創建一個日誌。日誌可包含與您的帳戶相關的資訊。";
+"enableDebugMode_message"="將在離線存取區（MEGAiOS.log）創建一個日誌。日誌可包含與您的帳戶相關的資訊。";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="關閉調試模式";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="系統日誌檔 (MEGAiOS.log) 將從離線部分被刪除。";
+"disableDebugMode_message"="系統日誌檔 (MEGAiOS.log) 將從離線存取區刪除。";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="您確定要從離線部份中刪除這個項目？";
+"removeItemFromOffline"="您確定要從離線存取中刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="您確定要從離線模式中刪除這些項目？";
+"removeItemsFromOffline"="您確定要從離線存取中刪除這些項目？";
+/* Giphy section header */
+"Send GIF"="發送GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="搜尋GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="找不到GIF";
 /* Chat section header */
 "chat"="交談";
 /* Empty Conversations section */
@@ -1189,6 +1195,10 @@
 "more"="更多";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="靜音";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="取消靜音";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="標記為已讀";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="資訊";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1298,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新訊息";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu未讀訊息";
+"unreadMessage"="%lu則未讀訊息";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu未讀訊息";
+"unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1452,6 @@
 "codeScanned"="條碼掃描";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="共享者：";
-/*   */
-"details"="內容";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="分享";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1474,6 @@
 "user"="用戶";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X]種版本";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="檔案資訊";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="資料夾資訊";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="要刪除這個版本嗎？";
 /* Message to notify user the file version will be permanently removed */
@@ -1569,7 +1573,7 @@
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="不支援的檔案";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="您可以將其保存為離線儲存並在相容的應用程式中開啟它。";
+"message_fileNotSupported"="您可以將其儲存為可離線存取並在相容的應用程式中開啟它。";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="轉寄";
 /* Success message shown after forwarding messages to other chats */
@@ -1623,7 +1627,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="儲存影片至照片中";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="您下載的圖像和/或影片將儲存在設備的媒體庫中，而不是離線儲存的部分。";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="您下載的圖像和/或影片將儲存在設備的媒體庫中，不是在離線存取區。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相機";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1718,6 +1722,8 @@
 "There is an active call. Tap to join."="有一個通話進行中。點觸可加入。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="觸踫可返回撥給%@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="點擊即可返回通話";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="儲存至照片中";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2158,6 +2164,8 @@
 "Clear Selected"="清除選取";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="恢復傳輸？";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2196,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="您的帳戶已被管理員刪除。有關更多資訊，請與您的商業帳戶管理員聯繫。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="外觀";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2221,7 +2233,7 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="當您登出時，正在進行中的傳輸將取消。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="當您登出時，您離線下載到裝置中的檔案將會被刪除。";
+"When you logout, files from your Offline section will be deleted from your device."="當您登出時，裝置中可離線存取的檔案將會被刪除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您裝置上可離線存取的檔案將會被刪除，而且正在進行中的傳輸將被取消。";
 /* Default title of an empty chat. */
@@ -2275,8 +2287,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="伺服器:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="連接埠";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="Proxy代理伺服器需輸入密碼";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="使用者名稱:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="細節";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="連結";
+/* Text referencing the date of creation of a link */
+"Link Creation"="連結建立";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="與誰分享";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="等待中";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="版本";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="電子郵件已發送。請等待幾分鐘，然後再重試。";
