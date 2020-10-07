@@ -10,9 +10,6 @@
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 url=https://github.com/meganz/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/DZNEmptyDataSet"]
-	path = iMEGA/Vendor/DZNEmptyDataSet
-	url = https://github.com/dzenbot/DZNEmptyDataSet.git
 [submodule "iMEGA/Vendor/AMLocalizedString"]
 	path = iMEGA/Vendor/AMLocalizedString
 	url = https://github.com/tagyro/AMLocalizedString.git
@@ -28,9 +25,6 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/SAMKeychain"]
 	path = iMEGA/Vendor/SAMKeychain
 	url = https://github.com/soffes/SAMKeychain.git
-[submodule "iMEGA/Vendor/JSQMessagesViewController"]
-	path = iMEGA/Vendor/JSQMessagesViewController
-	url = https://github.com/meganz/JSQMessagesViewController.git
 [submodule "iMEGA/Vendor/Karere"]
 	path = iMEGA/Vendor/Karere
 	url = https://github.com/meganz/MEGAchat.git

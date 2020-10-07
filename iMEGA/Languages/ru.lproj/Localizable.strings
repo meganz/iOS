@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Добавить контакты";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Пригласите контакт";
+"inviteContact"="Пригласить в MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Приглашение отправлено";
 /* Button title to allow the user postpone an action */
@@ -763,7 +763,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением учётной записи. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Ваша учётная запись успешно удалена.";
+"accountCanceledSuccessfully"="Ваш аккаунт успешно удалён";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закрыть учётную запись";
 /* Title for the action that allows to remove a file or folder */
@@ -1085,6 +1085,12 @@
 "removeItemFromOffline"="Действительно удалить этот элемент локально?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Действительно удалить эти элементы локально?";
+/* Giphy section header */
+"Send GIF"="Send GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Search GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="No GIFs found";
 /* Chat section header */
 "chat"="Чат";
 /* Empty Conversations section */
@@ -1189,6 +1195,10 @@
 "more"="Больше";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Приглушить";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Включить звук";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Пометить как прочитанное";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Информация";
 /* A button label. The button allows the user to close the conversation. */
@@ -1442,8 +1452,6 @@
 "codeScanned"="Просканировано";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Общий с:";
-/*   */
-"details"="Детали";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Общий доступ";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1474,6 @@
 "user"="пользователь";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="Версий: [X]";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="О файле";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="О папке";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Удалить эту версию?";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1722,8 @@
 "There is an active call. Tap to join."="Есть активный звонок. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Коснитесь для возврата к вызову %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Коснитесь, чтобы вернуться";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Сохранять в фото";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1965,7 +1971,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Перейти на тестовый сервер?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Откройте доступ к вашей адресной книге";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2164,8 @@
 "Clear Selected"="Очистить выбранное";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Очистить все";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Resume Transfers?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="ПАПКА ЗАГРУЗОК ИЗ КАМЕРЫ MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2196,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Ваш аккаунт был удалён администратором. Пожалуйста, свяжитесь с администратором вашего бизнес-аккаунта для получения более подробной информации.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Введите имя группы";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Отображение";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2275,8 +2287,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="Сервер:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="Порт";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="Требуется пароль к прокси-серверу";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Имя пользователя:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="ПОДРОБНОСТИ";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="ССЫЛКА";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Ссылка создана";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="ПОДЕЛИЛИСЬ С";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="В ОЖИДАНИИ";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="ВЕРСИИ";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Письмо уже отправлено. Пожалуйста, подождите несколько минут, прежде чем попробовать снова.";

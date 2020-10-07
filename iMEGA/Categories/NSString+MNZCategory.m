@@ -154,6 +154,10 @@ static NSString* const B = @"[B]";
     return (localIdentifier ? [self stringByAppendingString:[NSString stringWithFormat:@">localIdentifier=%@", localIdentifier]] : self);
 }
 
+- (NSString *)mnz_appDataToPath:(NSString *)path {
+    return (path ? [self stringByAppendingString:[NSString stringWithFormat:@">path=%@", path]] : self);
+}
+
 #pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {

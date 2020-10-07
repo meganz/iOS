@@ -28,4 +28,8 @@ extension String {
     var mnz_isDecimalNumber: Bool {
         return CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: self))
     }
+    
+    func append(pathComponent: String) -> String {
+        return URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
+    }
 }

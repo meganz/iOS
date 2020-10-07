@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Enter decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contacts";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invite Contact";
+"inviteContact"="Invite to MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invite Sent";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="Shares left";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remove sharing";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Remove Share";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -763,7 +765,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="This is the last step to cancel your account. You will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Your account has been canceled successfully.";
+"accountCanceledSuccessfully"="Your account has been cancelled successfully.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Close account";
 /* Title for the action that allows to remove a file or folder */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Giphy section header */
+"Send GIF"="Send GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Search GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="No GIFs found";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="More";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Mute";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Unmute";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Mark as Read";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu UNREAD MESSAGE";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu UNREAD MESSAGES";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1961,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Change to a test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2154,6 +2166,8 @@
 "Clear Selected"="Clear Selected";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Clear All";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Resume Transfers?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
 /* Action button text of folder selection screen for camera uploads */
@@ -2184,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your business account administrator for further details.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Appearance";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2215,9 +2233,9 @@
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
-"When you logout, ongoing transfers will be cancelled."="When you logout, ongoing transfers will be cancelled.";
+"When you logout, ongoing transfers will be cancelled."="When you log out, ongoing transfers will be cancelled.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="When you logout, files from your Offline section will be deleted from your device.";
+"When you logout, files from your Offline section will be deleted from your device."="When you log out, files from your Offline section will be deleted from your device.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you log out, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
 /* Default title of an empty chat. */
@@ -2312,3 +2330,5 @@
 "Purple"="Purple";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
 "Grey"="Grey";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
