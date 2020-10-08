@@ -1,0 +1,6 @@
+framework module ISEmojiView {
+  umbrella header "ISEmojiView-umbrella.h"
+
+  export *
+  module * { export * }
+}
