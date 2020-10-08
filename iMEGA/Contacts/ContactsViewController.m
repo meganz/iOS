@@ -27,7 +27,6 @@
 #import "ContactTableViewCell.h"
 #import "ContactRequestsViewController.h"
 #import "EmptyStateView.h"
-#import "MessagesViewController.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
@@ -1064,10 +1063,10 @@
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
-    MessagesViewController *messagesVC = MessagesViewController.new;
-    messagesVC.chatRoom = chatRoom;
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = chatRoom;
     
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 - (void)setupContactsTableViewHeader {
@@ -1527,10 +1526,12 @@
     
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {
-            headerView.titleLabel.font = [UIFont systemFontOfSize:13.f];
-            headerView.titleLabel.text = AMLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").uppercaseString;
-            
-            return headerView;
+            if (self.recentlyAddedUsersArray.count > 0) {
+                headerView.titleLabel.font = [UIFont systemFontOfSize:13.f];
+                headerView.titleLabel.text = AMLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").uppercaseString;
+                
+                return headerView;
+            }
         } else {
             headerView.titleLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightSemibold];
             headerView.titleLabel.textColor = UIColor.mnz_label;
@@ -1575,8 +1576,10 @@
     CGFloat heightForHeader = 0.0f;
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            if (section == 0 && self.recentlyAddedUsersArray.count > 0) {
-                heightForHeader = 35.0f;
+            if (section == 0) {
+                if (self.recentlyAddedUsersArray.count > 0) {
+                    heightForHeader = 35.0f;
+                }
             } else {
                 if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
                     heightForHeader = 28.0f;

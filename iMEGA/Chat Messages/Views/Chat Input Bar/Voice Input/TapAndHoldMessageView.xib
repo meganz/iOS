@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TapAndHoldMessageView" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="576"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r1h-Tw-IsR">
+                    <rect key="frame" x="259" y="512" width="135" height="44"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="h9x-uC-7OU">
+                        <rect key="frame" x="0.0" y="0.0" width="135" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap and hold" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z3I-g7-AYT">
+                                <rect key="frame" x="12" y="15" width="73" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6w-8a-ABD">
+                                <rect key="frame" x="88" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="gwm-Rc-Pwp"/>
+                                    <constraint firstAttribute="height" constant="44" id="w5d-EN-KUX"/>
+                                </constraints>
+                                <state key="normal" image="closeTip"/>
+                                <connections>
+                                    <action selector="didTapClose:" destination="iN0-l3-epB" eventType="touchUpInside" id="5yQ-w2-bhT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="c6w-8a-ABD" firstAttribute="centerY" secondItem="h9x-uC-7OU" secondAttribute="centerY" id="0nX-48-Fow"/>
+                            <constraint firstItem="Z3I-g7-AYT" firstAttribute="leading" secondItem="h9x-uC-7OU" secondAttribute="leading" constant="12" id="3e2-l9-Sof"/>
+                            <constraint firstAttribute="trailing" secondItem="c6w-8a-ABD" secondAttribute="trailing" constant="3" id="5JL-85-6Pe"/>
+                            <constraint firstItem="Z3I-g7-AYT" firstAttribute="centerY" secondItem="h9x-uC-7OU" secondAttribute="centerY" id="ES6-6A-Fdf"/>
+                            <constraint firstItem="c6w-8a-ABD" firstAttribute="leading" secondItem="Z3I-g7-AYT" secondAttribute="trailing" constant="3" id="HA1-TC-cZW"/>
+                        </constraints>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Las-kT-gDz"/>
+                    </constraints>
+                    <blurEffect style="dark"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="22"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </visualEffectView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="r1h-Tw-IsR" secondAttribute="trailing" constant="20" id="Su4-5B-DwB"/>
+                <constraint firstAttribute="bottom" secondItem="r1h-Tw-IsR" secondAttribute="bottom" constant="20" id="uh8-hL-d4o"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="label" destination="Z3I-g7-AYT" id="0QE-T2-Bq3"/>
+                <outletCollection property="gestureRecognizers" destination="8OW-a7-lpn" appends="YES" id="snZ-F0-T6x"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="45.535714285714285"/>
+        </view>
+        <tapGestureRecognizer id="8OW-a7-lpn">
+            <connections>
+                <action selector="didTapWithTapGesture:" destination="iN0-l3-epB" id="Jrz-Wi-hLb"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="closeTip" width="30" height="30"/>
+    </resources>
+</document>
