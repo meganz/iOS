@@ -114,7 +114,7 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.publicLinkString delegate:self];
+        [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:self.publicLinkString];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
@@ -335,7 +335,7 @@
         
         self.validatingDecryptionKey = YES;
         
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
+        [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:linkString];
     }]];
     
     decryptionAlertController.actions.lastObject.enabled = NO;
