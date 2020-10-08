@@ -706,7 +706,7 @@
         if (node.isFile) {
             [self setNodeTableViewCell:cell enabled:NO];
         } else {
-            (shareType == MEGAShareTypeAccessRead) ? [self setNodeTableViewCell:cell enabled:NO] : [self setNodeTableViewCell:cell enabled:YES];
+            [self setNodeTableViewCell:cell enabled:YES];
         }
     }
     

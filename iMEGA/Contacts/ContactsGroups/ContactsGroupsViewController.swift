@@ -88,7 +88,7 @@ class ContactsGroupsViewController: UIViewController {
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
-        let messagesVC = MessagesViewController()
+        let messagesVC = ChatViewController()
         messagesVC.chatRoom = chatRoom;
         navigationController?.pushViewController(messagesVC, animated: true)
     }
@@ -104,7 +104,7 @@ class ContactsGroupsViewController: UIViewController {
                 return
             }
 
-            let messagesVC = MessagesViewController()
+            let messagesVC = ChatViewController()
 
             if keyRotation {
                 MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(usersArray: users, title: groupName, completion: { chatRoom in
@@ -122,7 +122,7 @@ class ContactsGroupsViewController: UIViewController {
                     if getChatlink {
                         MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(messagesVC.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
                             if error.type == .MEGAChatErrorTypeOk {
-                                messagesVC.isPublicChatWithLinkCreated = true
+                                messagesVC.publicChatWithLinkCreated = true
                                 messagesVC.publicChatLink = URL(string: request.text)
                                 self?.navigationController?.pushViewController(messagesVC, animated: true)
                             }
