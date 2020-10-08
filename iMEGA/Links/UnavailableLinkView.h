@@ -1,5 +1,11 @@
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, UnavailableLinkError) {
+    UnavailableLinkErrorGeneric = 0,
+    UnavailableLinkErrorETDDown,
+    UnavailableLinkErrorUserETDSuspension,
+};
+
 @interface UnavailableLinkView : UIView
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -12,5 +18,9 @@
 - (void)configureInvalidFolderLink;
 - (void)configureInvalidFileLink;
 - (void)configureInvalidQueryLink;
+- (void)configureInvalidFileLinkByETD;
+- (void)configureInvalidFolderLinkByETD;
+- (void)configureInvalidFileLinkByUserETDSuspension;
+- (void)configureInvalidFolderLinkByUserETDSuspension;
 
 @end
