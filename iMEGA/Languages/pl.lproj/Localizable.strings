@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego folderu / pliku, będziesz potrzebować jego klucza deszyfrowania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
+"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego folderu/pliku, będziesz potrzebować jego klucza odszyfrowywania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Klucz deszyfrowania";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Dodaj kontakty";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Zaproś kontakt";
+"inviteContact"="Zaproś do MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Zaproszenie wysłane";
 /* Button title to allow the user postpone an action */
@@ -763,7 +763,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="To jest ostatni krok w procesie usuwania konta. Twoje dane zostaną usunięte. Wprowadź swoje hasło.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Twoje konto zostało anulowane.";
+"accountCanceledSuccessfully"="Twoje konto zostało pomyślnie anulowane.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zamknij konto";
 /* Title for the action that allows to remove a file or folder */
@@ -1085,6 +1085,12 @@
 "removeItemFromOffline"="Czy na pewno chcesz usunąć ten plik z trybu Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Czy na pewno chcesz usunąć te pliki z trybu Offline?";
+/* Giphy section header */
+"Send GIF"="Wyślij GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Szukaj GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Nie znaleziono plików GIF";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1189,6 +1195,10 @@
 "more"="Więcej";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Wycisz";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Wyłącz wyciszenie";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Oznacz jako przeczytane";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1298,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nowe wiadomości";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu nieprzeczytana wiadomość";
+"unreadMessage"="%lu NIEODCZYTANA WIADOMOŚĆ";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu nieprzeczytanych wiadomości";
+"unreadMessages"="%lu NIEODCZYTANE WIADOMOŚCI";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Sukskrypcja odnawiania jest automatycznie po upływie terminu ważności konta, z zachowaniem identycznego okresu trwania oraz ceny. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA PRO nie poźniej niż 24 godziny przed terminem wygaśnięcia konta. Datę wygaśnięcia możesz znaleźć na stronach iTunes. Aby zmienić ustawienia subskrypcji, kliknij w App Store a następnie na dole ekranu kliknij \"Zobacz ID\". Zostaniesz przekierowany do strony gdzie na dole znajdziesz link \"Zarządzaj subskrypcjami\". Na tej stronie wybierz MEGA PRO a następnie zmień ustawienia.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1452,6 @@
 "codeScanned"="Kod został zeskanowany";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Udostępnij do:";
-/*   */
-"details"="Szczegóły";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Udostępnij";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1474,6 @@
 "user"="użytkownik";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] wersji";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Informacje";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Informacje";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Czy chcesz usunąć tą wersję?";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1722,8 @@
 "There is an active call. Tap to join."="Jest aktywne połączenie. Kliknij, aby dołączyć.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Dotknij, aby wrócić do połączenia %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Kliknij, aby powrócić do połączenia";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Zapisz w Zdjęciach";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1965,7 +1971,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Przejdź na serwer testowy?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Na Twoim koncie mogą wystąpić nieodwracalne problemy";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Twoje konto może mieć nieodwracalne problemy.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Włącz dostęp do swojej książki adresowej";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2164,8 @@
 "Clear Selected"="Odznacz";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Wyczyść wszystko";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Wznowić transfery?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER DO PRZESYŁANIA ZDJĘĆ";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2196,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Twoje konto zostało usunięte przez administratora. Aby uzyskać więcej informacji, skontaktuj się z administratorem konta biznesowego.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Wprowadź nazwę grupy";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Wygląd";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2219,9 +2231,9 @@
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Wybierz tryb widoku (Lista lub Miniatura) dla poszczególnych folderów lub użyj tego samego trybu widoku dla wszystkich folderów.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
-"When you logout, ongoing transfers will be cancelled."="Po wylogowaniu bieżące transfery zostaną anulowane.";
+"When you logout, ongoing transfers will be cancelled."="Po wylogowaniu trwające przelewy zostaną anulowane.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Po wylogowaniu pliki z sekcji Offline zostaną usunięte z urządzenia.";
+"When you logout, files from your Offline section will be deleted from your device."="Kiedy się wylogujesz, pliki z sekcji Offline zostaną usunięte z Twojego urządzenia.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Po wylogowaniu pliki z sekcji Offline zostaną usunięte z Twojego urządzenia, a trwające transfery zostaną anulowane.";
 /* Default title of an empty chat. */
@@ -2280,3 +2292,17 @@
 "Proxy server requires a password"="Serwer proxy wymaga hasła";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Nazwa użytkownika:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="SZCZEGÓŁY";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Tworzenie linków";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="UDOSTĘPNIJ Z";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="W OCZEKIWANIU";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="WERSJE";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Email już wysłany. Poczekaj kilka minut, zanim spróbujesz ponownie.";

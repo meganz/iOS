@@ -24,7 +24,7 @@ extension UIButton {
                 darkMode = true
             }
         }
-        backgroundColor = UIColor.mnz_turquoise(for: traitCollection)?.withAlphaComponent(darkMode ? 0.2 : 0.3)
+        backgroundColor = UIColor.mnz_turquoise(for: traitCollection).withAlphaComponent(darkMode ? 0.2 : 0.3)
         setTitleColor(UIColor.white.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)
         
         setupLayer()
