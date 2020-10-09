@@ -297,7 +297,7 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isPageView:self.collectionView.hidden sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isLink:self.isLink isPageView:self.collectionView.hidden sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 

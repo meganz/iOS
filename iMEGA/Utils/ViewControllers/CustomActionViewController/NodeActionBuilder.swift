@@ -7,6 +7,7 @@ final class NodeActionBuilder {
     private var isFile: Bool = false
     private var isRestorable: Bool = false
     private var isPdf: Bool = false
+    private var isLink: Bool = false
     private var isPageView: Bool = true
     private var isIncomingShareChildView: Bool = false
     private var isExported: Bool = false
@@ -40,6 +41,11 @@ final class NodeActionBuilder {
     
     func setIsPdf(_ isPdf: Bool) -> NodeActionBuilder {
         self.isPdf = isPdf
+        return self
+    }
+    
+    func setIsLink(_ isLink: Bool) -> NodeActionBuilder {
+        self.isLink = isLink
         return self
     }
     
@@ -96,9 +102,12 @@ final class NodeActionBuilder {
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
-        } else if displayMode == .previewLink {
-            nodeActions.append(NodeAction.importAction())
-            nodeActions.append(NodeAction.downloadAction())
+        } else if displayMode == .previewDocument {
+            if isLink {
+                nodeActions.append(NodeAction.importAction())
+                nodeActions.append(NodeAction.downloadAction())
+            }
+            
             nodeActions.append(NodeAction.sendToChatAction())
             nodeActions.append(NodeAction.shareAction())
             if isPdf {
