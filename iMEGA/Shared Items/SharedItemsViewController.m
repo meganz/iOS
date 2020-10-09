@@ -1281,14 +1281,19 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     NSInteger itemSelected;
+    NSArray *nodesToCheckArray;
     if (self.incomingButton.selected) {
         itemSelected = 0;
+        nodesToCheckArray = self.incomingNodesMutableArray;
     } else if (self.outgoingButton.selected) {
         itemSelected = 1;
+        nodesToCheckArray = self.outgoingNodesMutableArray;
     } else {
         itemSelected = 2;
+        nodesToCheckArray = self.publicLinksArray;
     }
-    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray itemSelected:itemSelected]) {
+    
+    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:nodesToCheckArray itemSelected:itemSelected]) {
         [self reloadUI];
     }
 }
