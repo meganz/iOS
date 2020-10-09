@@ -1233,7 +1233,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
-    NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
+    NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
     NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
     for (MEGANode *n in nodesArray) {
         if (n.name.mnz_isImagePathExtension || n.name.mnz_isVideoPathExtension) {
