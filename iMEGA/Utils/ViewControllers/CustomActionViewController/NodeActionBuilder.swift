@@ -140,8 +140,6 @@ final class NodeActionBuilder {
             case .accessRead, .accessReadWrite:
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
                     nodeActions.append(NodeAction.infoAction())
-                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
-                    nodeActions.append(NodeAction.labelAction(label: label))
                 }
                 if isMediaFile {
                     nodeActions.append(NodeAction.saveToPhotosAction())
