@@ -244,6 +244,7 @@ class NodeActionsTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewLink)
             .setIsPdf(true)
+            .setIsLink(true)
             .setIsPageView(true)
             .build()
         
@@ -254,6 +255,7 @@ class NodeActionsTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewLink)
             .setIsPdf(true)
+            .setIsLink(true)
             .setIsPageView(false)
             .build()
         
