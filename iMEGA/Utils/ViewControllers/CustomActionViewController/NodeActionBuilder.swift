@@ -160,9 +160,9 @@ final class NodeActionBuilder {
                         nodeActions.append(NodeAction.leaveSharingAction())
                     } else {
                         nodeActions.append(NodeAction.moveToRubbishBinAction())
+                        nodeActions.append(NodeAction.moveAction())
                     }
                 }
-                nodeActions.append(NodeAction.moveAction())
                 
             case .accessOwner:
                 if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
