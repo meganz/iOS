@@ -20,7 +20,7 @@ class AddPhoneNumberViewController: UIViewController {
         if !MEGASdkManager.sharedMEGASdk().isAchievementsEnabled {
             descriptionLabel.text = AMLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
         } else {
-            MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate { [weak self] request, error in
+            MEGASdkManager.sharedMEGASdk().getAccountAchievements(with: MEGAGenericRequestDelegate { [weak self] request, error in
                 guard error.type == .apiOk else { return }
                 guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
                 self?.descriptionLabel.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))

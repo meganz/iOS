@@ -39,15 +39,15 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
             // Trigger action
             if richPreviewDialogView.alwaysAllowButton.frame.contains(touchLocation) {
                 if megaMessage.warningDialog == .confirmation {
-                    MEGASdkManager.sharedMEGASdk()?.enableRichPreviews(false)
+                    MEGASdkManager.sharedMEGASdk().enableRichPreviews(false)
                 } else {
-                    MEGASdkManager.sharedMEGASdk()?.enableRichPreviews(true)
+                    MEGASdkManager.sharedMEGASdk().enableRichPreviews(true)
                 }
                 megaMessage.warningDialog = .none
             } else if richPreviewDialogView.notNowButton.frame.contains(touchLocation) {
                 megaMessage.warningDialog = .dismiss
                 chatVC.richLinkWarningCounterValue += 1
-                MEGASdkManager.sharedMEGASdk()?.setRichLinkWarningCounterValue(chatVC.richLinkWarningCounterValue)
+                MEGASdkManager.sharedMEGASdk().setRichLinkWarningCounterValue(chatVC.richLinkWarningCounterValue)
             } else if  richPreviewDialogView.neverButton.frame.contains(touchLocation) {
                 megaMessage.warningDialog = .confirmation
             }

@@ -81,7 +81,7 @@ extension ChatViewController {
         for index in 0...megaMessage.nodeList.size.intValue - 1 {
             var node = megaMessage.nodeList.node(at: index)
             if chatRoom.isPreview {
-                node = MEGASdkManager.sharedMEGASdk()?.authorizeNode(node!) ?? nil
+                node = MEGASdkManager.sharedMEGASdk().authorizeNode(node!) ?? nil
             }
             
             if node != nil {
@@ -101,7 +101,7 @@ extension ChatViewController {
         for index in 0...megaMessage.nodeList.size.intValue - 1 {
             var node = megaMessage.nodeList.node(at: index)
             if chatRoom.isPreview {
-                node = MEGASdkManager.sharedMEGASdk()?.authorizeNode(node!) ?? nil
+                node = MEGASdkManager.sharedMEGASdk().authorizeNode(node!) ?? nil
             }
             if node != nil {
                 nodes.append(node!)
@@ -125,7 +125,7 @@ extension ChatViewController {
         let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate(numberOfRequests: usersCount)
         for index in 0...usersCount - 1 {
             let email = megaMessage.userEmail(at: index)
-            MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: email!, message: "", action: .add, delegate: inviteContactRequestDelegate)
+            MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email!, message: "", action: .add, delegate: inviteContactRequestDelegate)
         }
         
     }
@@ -135,8 +135,7 @@ extension ChatViewController {
             var node = chatMessage.message.nodeList.node(at: 0),
             (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
             if chatRoom.isPreview,
-                let sdk = MEGASdkManager.sharedMEGASdk(),
-                let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
+                let authorizedNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
                 node = authorizedNode
             }
             
