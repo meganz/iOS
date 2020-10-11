@@ -45,7 +45,7 @@ open class ChatlocationCollectionViewSizeCalculator: MessageSizeCalculator {
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:
-            return CGSize(width: 260, height: 190)
+            return CGSize(width: min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), 260), height: 190)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
