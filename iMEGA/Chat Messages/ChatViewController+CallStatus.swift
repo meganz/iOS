@@ -9,15 +9,19 @@ extension ChatViewController {
                 if !chatRoom.isGroup && call?.status == .destroyed {
                     return
                 }
-                if call?.status == .inProgress {
-                    configureTopBannerButtonForInProgressCall(call!)
-                } else if call?.status == .userNoPresent
-                    || call?.status == .requestSent
-                    || call?.status == .ringIn {
-                    configureTopBannerButtonForActiveCall(call!)
-                } else if call?.status == .reconnecting {
-                    setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
-                    showTopBannerButton()
+                if MEGASdkManager.sharedMEGAChatSdk()?.chatCalls(withState: .inProgress)?.size == 1 && call?.status != .inProgress {
+                    self.hideTopBannerButton()
+                } else {
+                    if call?.status == .inProgress {
+                        configureTopBannerButtonForInProgressCall(call!)
+                    } else if call?.status == .userNoPresent
+                                || call?.status == .requestSent
+                                || call?.status == .ringIn {
+                        configureTopBannerButtonForActiveCall(call!)
+                    } else if call?.status == .reconnecting {
+                        setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+                        showTopBannerButton()
+                    }
                 }
             } else {
                 hideTopBannerButton()
