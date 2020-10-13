@@ -11,11 +11,11 @@ extension MEGAUser {
             return UIImage(contentsOfFile: filePath)
         } else {
             if let `delegate` = delegate {
-                MEGASdkManager.sharedMEGASdk()?.getAvatarUser(self,
-                                                              destinationFilePath: filePath,
-                                                              delegate: delegate)
+                MEGASdkManager.sharedMEGASdk().getAvatarUser(self,
+                                                             destinationFilePath: filePath,
+                                                             delegate: delegate)
             } else {
-                MEGASdkManager.sharedMEGASdk()?.getAvatarUser(self, destinationFilePath: filePath)
+                MEGASdkManager.sharedMEGASdk().getAvatarUser(self, destinationFilePath: filePath)
             }
         }
         

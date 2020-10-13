@@ -15,7 +15,7 @@ extension CustomModalAlertViewController {
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true) {
                 SVProgressHUD.show()
-                MEGASdkManager.sharedMEGASdk()?.multiFactorAuthGetCode(with: MEGAGenericRequestDelegate.init(completion: { (request, error) in
+                MEGASdkManager.sharedMEGASdk().multiFactorAuthGetCode(with: MEGAGenericRequestDelegate.init(completion: { (request, error) in
                     if error.type != .apiOk {
                         SVProgressHUD.showError(withStatus: AMLocalizedString(error.name, nil))
                         return

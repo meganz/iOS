@@ -68,12 +68,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        MEGASdkManager.sharedMEGASdk()?.add(self)
+        MEGASdkManager.sharedMEGASdk().add(self)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MEGASdkManager.sharedMEGASdk()?.add(self)
+        MEGASdkManager.sharedMEGASdk().add(self)
     }
 
     // MARK: - Methods
@@ -171,7 +171,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 imageView.yy_imageURL = URL(fileURLWithPath: originalImagePath)
                 downloadGifIcon.isHidden = true
             } else if node.size.doubleValue < autoDownloadThresholdSize {
-                MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
+                MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
                 downloadGifIcon.isHidden = true
             } else {
                 downloadGifIcon.isHidden = !loadingIndicator.isHidden
