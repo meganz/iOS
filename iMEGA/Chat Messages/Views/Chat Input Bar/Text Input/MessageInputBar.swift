@@ -196,7 +196,7 @@ class MessageInputBar: UIView {
     
     @IBAction func sendButtonTapped(_ button: UIButton) {
         guard let delegate = delegate,
-              let text = messageTextView.text, !text.isEmpty else {
+              let text = messageTextView.text, !text.mnz_isEmpty() else {
             return
         }
         
