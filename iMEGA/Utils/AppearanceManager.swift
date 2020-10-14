@@ -81,8 +81,8 @@ class AppearanceManager: NSObject {
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
         navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
-        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
+        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         
         navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
     }
@@ -96,7 +96,7 @@ class AppearanceManager: NSObject {
     @available(iOS 13.0, *)
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
         toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+        toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
@@ -126,7 +126,7 @@ class AppearanceManager: NSObject {
             navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
             
             let barButtonItemAppearance = UIBarButtonItemAppearance()
-            barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+            barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
             navigationBarAppearance.buttonAppearance = barButtonItemAppearance
             navigationBarAppearance.doneButtonAppearance = barButtonItemAppearance
             

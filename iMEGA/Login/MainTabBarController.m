@@ -7,7 +7,6 @@
 #import "MyAccountHallViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAUserAlertList+MNZCategory.h"
-#import "MessagesViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
 #import "MEGA-Swift.h"
@@ -254,10 +253,10 @@
     MEGALogInfo(@"onChatListItemUpdate %@", item);
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self debounce:@selector(setBadgeValueForChats) delay:0.1];
-        if ([[self.selectedViewController visibleViewController] isKindOfClass:[MessagesViewController class]]) {
-            MessagesViewController *messagesViewController = (MessagesViewController *)[self.selectedViewController visibleViewController];
-            [messagesViewController updateUnreadLabel];
-        }
+        if ([[self.selectedViewController visibleViewController] isKindOfClass:[ChatViewController class]]) {
+            ChatViewController *chatViewController = (ChatViewController *)[self.selectedViewController visibleViewController];
+            [chatViewController updateUnreadLabel];
+        }        
     }
 }
 

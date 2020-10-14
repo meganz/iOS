@@ -14,7 +14,7 @@
     
     @objc func setup() {
         isDatabaseCleanupTaskCompleted = false
-        MEGASdkManager.sharedMEGASdk()?.add(self)
+        MEGASdkManager.sharedMEGASdk().add(self)
     }
     
     @objc func upload(filepath: String,
@@ -38,7 +38,7 @@
                                                context: context)
                 
                 MEGALogInfo("[ChatUploader] SDK upload started for File path \(filepath)")
-                MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: filepath,
+                MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: filepath,
                                                                    parent: parentNode,
                                                                    appData: appData,
                                                                    isSourceTemporary: isSourceTemporary,
@@ -56,14 +56,13 @@
     }
     
     private func cleanupDatabase() {
-        guard let sdk = MEGASdkManager.sharedMEGASdk(),
-            let store = store,
+        guard let store = store,
             let context = context else  {
             return
         }
         
         context.perform {
-            let transferList = sdk.transfers
+            let transferList = MEGASdkManager.sharedMEGASdk().transfers
             MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
             let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
             store.fetchAllChatUploadTransfer(context: context)?.forEach { transfer in
@@ -179,3 +178,4 @@ extension ChatUploader: MEGATransferDelegate {
     }
     
 }
+
