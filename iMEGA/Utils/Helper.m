@@ -348,9 +348,12 @@ static MEGAIndexer *indexer;
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
         return NO;
     }
-    
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+    NSError *error;
+    uint64_t freeSpace = [NSFileManager.defaultManager mnz_fileSystemFreeSizeWithError:error];
+    if (error) {
+        return YES;
+    }
+    if (freeSpace < [nodeSizeNumber longLongValue]) {
         StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
         [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
         return NO;

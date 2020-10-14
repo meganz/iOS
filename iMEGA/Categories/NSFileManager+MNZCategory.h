@@ -6,7 +6,7 @@
 /**
  amount of free space on the file system in bytes
  */
-@property (readonly) unsigned long long mnz_fileSystemFreeSize;
+@property (readonly) uint64_t mnz_fileSystemFreeSize;
 
 #pragma mark - Paths
 
@@ -33,5 +33,5 @@
  * NOTE: temporal files (.mega) and Inbox are not having into account
  */
 - (BOOL)mnz_existsOfflineFiles;
-
+- (uint64_t)mnz_fileSystemFreeSizeWithError:(NSError *)error;
 @end
