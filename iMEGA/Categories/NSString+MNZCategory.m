@@ -342,6 +342,12 @@ static NSString* const B = @"[B]";
         case MEGASortOrderTypeModificationAsc:
             return AMLocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first");
             
+        case MEGASortOrderTypeLabelAsc:
+            return AMLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.");
+            
+        case MEGASortOrderTypeFavouriteAsc:
+            return AMLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites");
+            
         default:
             return AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically");
     }

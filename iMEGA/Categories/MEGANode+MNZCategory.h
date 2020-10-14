@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Actions
 
+- (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite;
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
