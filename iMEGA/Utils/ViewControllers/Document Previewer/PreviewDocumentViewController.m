@@ -397,7 +397,15 @@
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
+        
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
             
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
+            break;
+        
         case MegaNodeActionTypeCopy:
             [node mnz_copyInViewController:self];
             break;

@@ -166,7 +166,7 @@ struct ContactOnMega: Codable {
         }
         contactsOnMegaDictionary.forEach { (contactOnMega) in
             let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, _) in
-                if request.text != MEGASdkManager.sharedMEGASdk()?.myEmail {
+                if request.text != MEGASdkManager.sharedMEGASdk().myEmail {
                     self.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: request.text, name: contactOnMega.value))
                 }
                 contactsCount -= 1

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -60,23 +60,20 @@
                                 </constraints>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="P3g-UA-WH7">
-                                <rect key="frame" x="0.0" y="443" width="375" height="188"/>
+                                <rect key="frame" x="0.0" y="492.5" width="375" height="138.5"/>
                                 <subviews>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Jxv-iR-b0m">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="ZLV-8U-Lef"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                         <color key="pageIndicatorTintColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                                     </pageControl>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nwo-Tw-k6R">
-                                        <rect key="frame" x="0.0" y="66" width="375" height="122"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nwo-Tw-k6R">
+                                        <rect key="frame" x="0.0" y="22" width="375" height="116.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd">
-                                                <rect key="frame" x="43.5" y="0.0" width="288" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd">
+                                                <rect key="frame" x="43.5" y="0.0" width="288" height="47"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="288" id="e85-hf-Nd0"/>
-                                                    <constraint firstAttribute="height" constant="50" id="tDo-eG-YEq"/>
+                                                    <constraint firstAttribute="height" priority="999" constant="50" id="tDo-eG-YEq"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <state key="normal" title="Button"/>
@@ -84,10 +81,10 @@
                                                     <action selector="primaryButtonTapped:" destination="ULD-EF-zT0" eventType="touchUpInside" id="hVl-sQ-pIp"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZS-mp-L0Q">
-                                                <rect key="frame" x="43.5" y="72" width="288" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZS-mp-L0Q">
+                                                <rect key="frame" x="43.5" y="69" width="288" height="47.5"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="aMp-Cn-KsK"/>
+                                                    <constraint firstAttribute="height" priority="999" constant="50" id="aMp-Cn-KsK"/>
                                                     <constraint firstAttribute="width" constant="288" id="cZQ-kw-e7P"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -104,16 +101,17 @@
                                 </constraints>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="BUQ-n8-sSm"/>
                         <constraints>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="topMargin" secondItem="BUQ-n8-sSm" secondAttribute="top" id="24n-j8-7Qe"/>
                             <constraint firstItem="P3g-UA-WH7" firstAttribute="bottom" secondItem="BUQ-n8-sSm" secondAttribute="bottom" constant="-36" id="55l-1F-0It"/>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="trailing" secondItem="BUQ-n8-sSm" secondAttribute="trailing" id="6ww-eK-O82"/>
+                            <constraint firstItem="P3g-UA-WH7" firstAttribute="top" secondItem="xBY-vN-fzC" secondAttribute="bottom" priority="999" id="7Os-Id-972"/>
                             <constraint firstItem="P3g-UA-WH7" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" id="Ujs-6d-6Kl"/>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" id="b6p-Ie-7F3"/>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="height" secondItem="gew-dm-7J5" secondAttribute="height" multiplier="0.75" id="qgT-Mg-sFq"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="P3g-UA-WH7" secondAttribute="trailing" id="tkU-Ok-YZH"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="BUQ-n8-sSm"/>
                     </view>
                     <connections>
                         <outlet property="pageControl" destination="Jxv-iR-b0m" id="fXb-Mn-suf"/>

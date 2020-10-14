@@ -125,32 +125,39 @@
     [SVProgressHUD dismiss];
     
     if (self.error.type) {
-        switch (self.error.type) {
-            case MEGAErrorTypeApiEArgs: {
-                if (self.decryptionAlertControllerHasBeenPresented) {
-                    [self showDecryptionKeyNotValidAlert];
-                } else {
-                    [self showUnavailableLinkView];
+        if (self.error.hasExtraInfo) {
+            if (self.error.linkStatus == MEGALinkErrorCodeDownETD) {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorETDDown];
+            } else if (self.error.userStatus == MEGAUserErrorCodeETDSuspension) {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserETDSuspension];
+            } else {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+            }
+        } else {
+            switch (self.error.type) {
+                case MEGAErrorTypeApiEArgs: {
+                    if (self.decryptionAlertControllerHasBeenPresented) {
+                        [self showDecryptionKeyNotValidAlert];
+                    } else {
+                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    }
+                    break;
                 }
-                break;
+                    
+                case MEGAErrorTypeApiENoent:
+                case MEGAErrorTypeApiETooMany: {
+                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    break;
+                }
+                    
+                case MEGAErrorTypeApiEIncomplete: {
+                    [self showDecryptionAlert];
+                    break;
+                }
+                    
+                default:
+                    break;
             }
-                
-            case MEGAErrorTypeApiENoent: {
-                [self showUnavailableLinkView];
-                break;
-            }
-                
-            case MEGAErrorTypeApiETooMany:
-                [self showUnavailableLinkView];
-                break;
-                
-            case MEGAErrorTypeApiEIncomplete: {
-                [self showDecryptionAlert];
-                break;
-            }
-                
-            default:
-                break;
         }
         
         return;
@@ -160,7 +167,7 @@
         if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
             [self showDecryptionKeyNotValidAlert];
         } else { //Link with invalid key
-            [self showUnavailableLinkView];
+            [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
         }
         return;
     }
@@ -175,13 +182,12 @@
             [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];
     } else {
-        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize) {
+        [self setNodeInfo];
+        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize && !self.node.name.mnz_isMultimediaPathExtension) {
             [self dismissViewControllerAnimated:YES completion:^{
                 NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
                 [UIApplication.mnz_presentingViewController presentViewController:[self.node mnz_viewControllerForNodeInFolderLink:YES fileLink:link] animated:YES completion:nil];
             }];
-        } else {
-            [self setNodeInfo];
         }
     }
 }
@@ -202,10 +208,24 @@
     self.openButton.hidden = boolValue;
 }
 
-- (void)showUnavailableLinkView {
+- (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     self.moreBarButtonItem.enabled = self.shareBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
+    self.navigationBarLabel = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"fileLink", nil) subtitle:AMLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
+    self.navigationItem.titleView = self.navigationBarLabel;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView configureInvalidFileLink];
+    switch (error) {
+        case UnavailableLinkErrorGeneric:
+            [unavailableLinkView configureInvalidFileLink];
+            break;
+            
+        case UnavailableLinkErrorETDDown:
+            [unavailableLinkView configureInvalidFileLinkByETD];
+            break;
+            
+        case UnavailableLinkErrorUserETDSuspension:
+            [unavailableLinkView configureInvalidFileLinkByUserETDSuspension];
+            break;
+    }
     unavailableLinkView.frame = self.view.bounds;
     [self.view addSubview:unavailableLinkView];
 }

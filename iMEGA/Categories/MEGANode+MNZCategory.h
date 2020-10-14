@@ -1,14 +1,17 @@
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
 - (void)navigateToParentAndPresent;
-- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;
+- (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;
 
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
 
 #pragma mark - Actions
 
+- (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite;
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
@@ -52,3 +55,5 @@
 - (long long)mnz_versionsSize;
 
 @end
+
+NS_ASSUME_NONNULL_END

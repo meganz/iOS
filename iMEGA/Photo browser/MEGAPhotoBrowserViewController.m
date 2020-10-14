@@ -1,7 +1,7 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
-#import "FLAnimatedImage.h"
+#import "UIImage+YYWebImage.h"
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
 
@@ -438,7 +438,7 @@ static const CGFloat GapBetweenPages = 10.0;
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(FLAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:(YYAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
             if (!self.interfaceHidden) {
                 [self singleTapGesture:nil];
@@ -470,19 +470,15 @@ static const CGFloat GapBetweenPages = 10.0;
                 continue;
             }
             
-            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+            YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
             NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                if ([node.name.pathExtension isEqualToString:@"gif"]) {
-                    imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:temporaryImagePath]]];
-                } else {
-                    imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
-                }
+                    imageView.yy_imageURL = [NSURL fileURLWithPath:temporaryImagePath];
             } else {
-                NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+                NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else if (node.hasPreview) {
@@ -535,7 +531,7 @@ static const CGFloat GapBetweenPages = 10.0;
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(FLAnimatedImageView *)imageView withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(YYAnimatedImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -555,16 +551,18 @@ static const CGFloat GapBetweenPages = 10.0;
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            if ([node.name.pathExtension isEqualToString:@"gif"]) {
-                                imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:transfer.path]]];
-                            } else {
-                                imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
-                            }
-                            [self resizeImageView:imageView];
-                            if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
-                                self.pieChartView.alpha = 0.0f;
-                            }
-                        }
+            [imageView yy_setImageWithURL:[NSURL fileURLWithPath:transfer.path]
+                              placeholder:imageView.image
+                                  options:YYWebImageOptionProgressiveBlur
+                               completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
+                [self resizeImageView:imageView];
+                }
+             ];
+            
+            if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
+                self.pieChartView.alpha = 0.0f;
+            }
+        }
                         completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
     };
@@ -596,7 +594,7 @@ static const CGFloat GapBetweenPages = 10.0;
         case MEGAPhotoModePreview:
             if (node.hasPreview) {
                 MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:requestCompletion];
-                NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+                NSString *path = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
             } else if (node.name.mnz_isImagePathExtension) {
@@ -607,7 +605,8 @@ static const CGFloat GapBetweenPages = 10.0;
             
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion onError:nil];
-            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            
             [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
@@ -1019,6 +1018,14 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
         }
             
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
+            
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
+            break;
+            
         case MegaNodeActionTypeCopy:
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -1148,7 +1155,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (UIImageView *)placeholderCurrentImageView {
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
-    FLAnimatedImageView *animatedImageView  = zoomableView.subviews.firstObject;
+    YYAnimatedImageView *animatedImageView  = zoomableView.subviews.firstObject;
     
     UIImageView *imageview = UIImageView.new;
     imageview.backgroundColor = self.view.backgroundColor;

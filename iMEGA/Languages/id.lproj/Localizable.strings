@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Tambah kontak";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Undang kontak";
+"inviteContact"="Invite to MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Undangan terkirim";
 /* Button title to allow the user postpone an action */
@@ -1085,6 +1085,12 @@
 "removeItemFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
+/* Giphy section header */
+"Send GIF"="Send GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Search GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="No GIFs found";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1189,6 +1195,10 @@
 "more"="Selebihnya";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Matikan Suara";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Nyalakan suara";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Mark as Read";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1442,8 +1452,6 @@
 "codeScanned"="Kode dipindai";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Berbagi dengan:";
-/*   */
-"details"="Detil";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Berbagi";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1474,6 @@
 "user"="Pengguna";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="Versi [X]";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Info file";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Info folder";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Apakah Anda ingin menghapus versi ini?";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1722,8 @@
 "There is an active call. Tap to join."="Ada panggilan aktif. Ketuk untuk bergabung.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Sentuh untuk kembali ke panggilan %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Ketuk untuk kembali ke panggilan";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Simpan ke Foto";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2158,6 +2164,8 @@
 "Clear Selected"="Hapus Dipilih";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Hapus semua";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Resume Transfers?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER UPLOAD KAMERA MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2196,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dihapus oleh administrator Anda. Silakan hubungi administrator akun bisnis Anda untuk rincian lebih lanjut.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Penampilan";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2280,3 +2292,17 @@
 "Proxy server requires a password"="Proxy server membutuhkan password";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Nama pengguna:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETAILS";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Link Creation";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="SHARE WITH";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="PENDING";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSIONS";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Email sudah terkirim. Harap tunggu beberapa menit sebelum mencoba lagi.";

@@ -30,12 +30,12 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     @objc init(delegate: PushNotificationControlProtocol) {
         self.delegate = delegate
         super.init()
-        MEGASdkManager.sharedMEGASdk()?.add(self as MEGARequestDelegate)
-        MEGASdkManager.sharedMEGASdk()?.getPushNotificationSettings()
+        MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().getPushNotificationSettings()
     }
     
     deinit {
-        MEGASdkManager.sharedMEGASdk()?.remove(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().remove(self as MEGARequestDelegate)
     }
     
     //MARK:- Interface.
@@ -88,7 +88,7 @@ extension PushNotificationControl {
         
         showProgress()
         block()
-        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings)
+        MEGASdkManager.sharedMEGASdk().setPushNotificationSettings(pushNotificationSettings)
     }
     
     func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64? {

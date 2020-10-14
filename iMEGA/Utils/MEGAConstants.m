@@ -21,6 +21,8 @@ NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalData
 
 uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
 
+NSString * const MEGAVoiceMessagesFolderName = @"My voice messages";
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";

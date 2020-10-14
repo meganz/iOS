@@ -32,6 +32,8 @@ class NodeActionViewController: ActionSheetViewController {
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .setIsMediaFile(node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable()))
             .setIsFile(node.isFile())
+            .setIsFavourite(node.isFavourite)
+            .setLabel(node.label)
             .setIsRestorable(node.mnz_isRestorable())
             .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
             .setisIncomingShareChildView(isIncoming)
@@ -126,9 +128,7 @@ class NodeActionViewController: ActionSheetViewController {
         subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
         subtitleLabel.font = .systemFont(ofSize: 12)
-        guard let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk() else {
-            return
-        }
+        let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
         if node.isFile() {
             subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {

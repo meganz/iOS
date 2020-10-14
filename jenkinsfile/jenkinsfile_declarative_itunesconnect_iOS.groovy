@@ -40,7 +40,7 @@ pipeline {
                 injectEnvironments({
                     sh "sh $WORKSPACE/download_3rdparty.sh"
                     sh "bundle install"
-
+                    sh "bundle exec pod install"
                 })
             }
         }
