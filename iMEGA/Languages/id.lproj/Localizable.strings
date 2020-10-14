@@ -536,6 +536,8 @@
 "sharesLeft"="Berbagi ditinggalkan";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Hapus berbagi";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Hapus Bagikan";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Anda yakin ingin menghapus berbagi ini? (Dibagikan dengan 1 kontak)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */

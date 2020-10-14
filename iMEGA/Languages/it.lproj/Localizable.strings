@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Inserisci la chiave di decrittazione";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Per accedere, avrai bisogno della Chiave di Decriptazione. Se non la hai, contatta il creatore del link.";
+"decryptionKeyAlertMessage"="Per accedere, avrai bisogno della Chiave di Decriptazione. Se non la hai, per favore contatta il creatore del link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chiave di decrittazione";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Aggiungi contatto";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invita contatto";
+"inviteContact"="Invita contatto a MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invito spedito";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="Condivisioni abbandonate";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Rimuovi condivisione";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Rimuovi condivisione";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Sei sicuro di voler rimuovere questa condivisione? (condivisa con 1 contatto)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1086,11 +1088,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sei sicuro di voler rimuovere questi elementi da Offline?";
 /* Giphy section header */
-"Send GIF"="Send GIF";
+"Send GIF"="Invia GIF";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="Search GIPHY";
+"Search GIPHY"="Cerca su GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No GIFs found";
+"No GIFs found"="Nessuna GIF trovata";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1298,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nuovi messaggi";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu messaggio non letto";
+"unreadMessage"="%lu MESSAGGIO NON LETTO";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu messaggi non letti";
+"unreadMessages"="%lu MESSAGGI NON LETTI";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, ACCEDERE con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su \"Visualizza ID Apple.\" Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2165,7 +2167,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Pulisci Tutto";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Resume Transfers?";
+"Resume Transfers?"="Riprendere i trasferimenti?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="CARTELLA MEGA PER CARICAMENTI DA FOTOCAMERA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Inserisci nome gruppo";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="Scrivi un messaggio...";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="Trascina a sinistra per annullare, lascia per inviare";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Apparenza";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
