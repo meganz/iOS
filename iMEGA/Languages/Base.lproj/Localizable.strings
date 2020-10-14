@@ -2306,6 +2306,30 @@
 "PENDING"="PENDING";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIONS";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Favourite";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Remove Favourite";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Label";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Label...";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Remove Label";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Red";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Orange";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Yellow";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Green";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Blue";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Purple";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Grey";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */

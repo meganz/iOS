@@ -32,6 +32,8 @@ class NodeActionViewController: ActionSheetViewController {
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .setIsMediaFile(node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable()))
             .setIsFile(node.isFile())
+            .setIsFavourite(node.isFavourite)
+            .setLabel(node.label)
             .setIsRestorable(node.mnz_isRestorable())
             .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
             .setisIncomingShareChildView(isIncoming)
