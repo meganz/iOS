@@ -127,9 +127,7 @@ class NodeActionViewController: ActionSheetViewController {
         subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
         subtitleLabel.font = .systemFont(ofSize: 12)
-        guard let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk() else {
-            return
-        }
+        let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
         if node.isFile() {
             subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {

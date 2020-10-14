@@ -173,6 +173,7 @@ final class NodeActionBuilder {
                     if isIncomingShareChildView {
                         nodeActions.append(NodeAction.leaveSharingAction())
                     } else {
+                        nodeActions.append(NodeAction.moveAction())
                         nodeActions.append(NodeAction.moveToRubbishBinAction())
                     }
                 }

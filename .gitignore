@@ -22,5 +22,4 @@ xcuserdata/
 /*.gcno
 
 ## Fastlane
-Gemfile.lock
 fastlane/report.xml

@@ -68,7 +68,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 postNotification(withError: error ? "No chat room for message" : nil, message: message)
             }
         } else {
-            MEGASdkManager.sharedMEGASdk()?.sendEvent(99303, message: "NSE will expire and message not found")
+            MEGASdkManager.sharedMEGASdk().sendEvent(99303, message: "NSE will expire and message not found")
             postNotification(withError: "Service Extension time will expire and message not found")
         }
     }
@@ -136,7 +136,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 return readyToPost
             }
 
-            MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
+            MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
                 if let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: node.base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
                     self?.waitingForThumbnail = false
@@ -247,7 +247,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private func restartExtensionProcess(with session: String) {
         NotificationService.session = nil
-        MEGASdkManager.sharedMEGASdk()?.localLogout(with: MEGAGenericRequestDelegate {
+        MEGASdkManager.sharedMEGASdk().localLogout(with: MEGAGenericRequestDelegate {
             request, error in
             if error.type != .apiOk {
                 self.postNotification(withError: "SDK error in localLogout \(error)")
@@ -311,7 +311,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             let msgTime = message?.timestamp.timeIntervalSince1970 {
             if (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
-                MEGASdkManager.sharedMEGASdk()?.sendEvent(99300, message: "Delay between chatd and api")
+                MEGASdkManager.sharedMEGASdk().sendEvent(99300, message: "Delay between chatd and api")
                 #endif
                 MEGALogWarning("Delay between chatd and api")
             }
@@ -322,7 +322,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             let megatime2 = megatime2 {
             if (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
-                MEGASdkManager.sharedMEGASdk()?.sendEvent(99301, message: "Delay between api and pushserver")
+                MEGASdkManager.sharedMEGASdk().sendEvent(99301, message: "Delay between api and pushserver")
                 #endif
                 MEGALogWarning("Delay between api and pushserver")
             }
@@ -332,7 +332,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         if let megatime2 = megatime2 {
             if (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
-                MEGASdkManager.sharedMEGASdk()?.sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
+                MEGASdkManager.sharedMEGASdk().sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
                 #endif
                 MEGALogWarning("Delay between pushserver and Apple/device/NSE")
             }
@@ -476,7 +476,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private static func loginToMEGA(with session: String) {
         MEGALogDebug("Login to MEGA")
-        MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
+        MEGASdkManager.sharedMEGASdk().fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
             if error.type != .apiOk {
                 MEGALogError("Login error \(error)")
                 return

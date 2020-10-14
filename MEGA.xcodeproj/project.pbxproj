@@ -8064,7 +8064,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 047F848DA3E2F1D6DF207EDB /* Pods-iMEGA-MEGA.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
@@ -8125,7 +8125,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB9EA675FDB11CCCA1D3C8C4 /* Pods-iMEGA-MEGA.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
