@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contatos";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Adicionar contato";
+"inviteContact"="Adicionar contato ao MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Solicitação de contato enviada";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="ações esquerda";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remover compartilhamento";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Deixar de compartilhar";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Tem certeza de que deseja remover esta parte? (Compartilhado com 1 contato)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1086,11 +1088,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Tem certeza de que deseja excluir esses itens de Offline?";
 /* Giphy section header */
-"Send GIF"="Send GIF";
+"Send GIF"="Enviar um GIF";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="Search GIPHY";
+"Search GIPHY"="Pesquisar em GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No GIFs found";
+"No GIFs found"="Nenhum GIF encontrado";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1298,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Novas mensagens";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu mensagem não lida";
+"unreadMessage"="%lu MENSAGEM NÃO LIDA";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu mensagens não lidas";
+"unreadMessages"="%lu MENSAGENS NÃO LIDAS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura no MEGA até 24 horas antes do próximo pagamento através da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta clicar no ícone da App Store no seu dispositivo, fazer login com o seu ID Apple na parte inferior da página (se você ainda tiver feito isso) e então clicar em Ver ID. Você será levado à página da sua conta, na qual deve ir até a opção Assinaturas. A partir daqui, você pode selecionar a sua assinatura PRO do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão on-off para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2165,7 +2167,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Limpar tudo";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Resume Transfers?";
+"Resume Transfers?"="Retomar as transferências?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="PASTA DOS UPLOADS DA CÂMERA NO MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Digite o nome do grupo";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="Mensagem...";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="Arraste para a esquerda para cancelar, solte para enviar";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Aparência";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

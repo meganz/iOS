@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Nhập chìa khóa mã";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Mã. Nếu bạn không có, hãy hỏi tới người tạo ra đường liên kết này để giải quyết.";
+"decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Mã. Nếu bạn không có, hãy hỏi tới người chủ của đường liên kết này để giải quyết.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chìa khóa mã";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Thêm tên liên lạc";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Mời Liên Lạc";
+"inviteContact"="Mời Vào MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Lời Mời Đã Gửi";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="Đã rời khỏi chia sẻ";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Ngừng chia sẻ";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Chấm Dứt Chia Sẻ";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Bạn có chắc muốn chấm dứt chia sẻ cái này? (Hiện đang chia sẻ cho 1 tên liên lạc)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1086,11 +1088,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
 /* Giphy section header */
-"Send GIF"="Send GIF";
+"Send GIF"="Gửi Ảnh GIF";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="Search GIPHY";
+"Search GIPHY"="Tìm trong GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No GIFs found";
+"No GIFs found"="Không có GIF phù hợp";
 /* Chat section header */
 "chat"="Chát";
 /* Empty Conversations section */
@@ -1298,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Có tin nhắn mới";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu tin nhắn chưa đọc";
+"unreadMessage"="%lu TIN NHẮN CHƯA ĐỌC";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu tin nhắn chưa đọc";
+"unreadMessages"="%lu TIN NHẮN CHƯA ĐỌC";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA PRO ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA PRO của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2165,7 +2167,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Resume Transfers?";
+"Resume Transfers?"="Tiếp Tục Phiên Truyền Tải?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Điền tên nhóm";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="Viết tin nhắn…";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="Kéo vào bên trái để hủy tin, thả ra để gửi tin";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Giao Diện";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
