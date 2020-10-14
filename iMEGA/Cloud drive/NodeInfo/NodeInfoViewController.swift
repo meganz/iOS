@@ -41,7 +41,8 @@ class NodeInfoViewController: UIViewController {
     private var node = MEGANode()
     private var folderInfo : MEGAFolderInfo?
     private weak var delegate: NodeInfoViewControllerDelegate?
-
+    private var nodeVersions: [MEGANode] = []
+    
     //MARK: - Lifecycle
 
     @objc class func instantiate(withNode node: MEGANode, delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
@@ -51,6 +52,7 @@ class NodeInfoViewController: UIViewController {
 
         nodeInfoVC.node = node
         nodeInfoVC.delegate = delegate
+        nodeInfoVC.nodeVersions = node.mnz_versions()
         
         return MEGANavigationController.init(rootViewController: nodeInfoVC)
     }
@@ -67,7 +69,9 @@ class NodeInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchFolderInfo()
+        if node.isFolder() {
+            fetchFolderInfo()
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -160,11 +164,22 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func currentVersionRemoved() {
-        if node.mnz_versions()?.count == 1 {
-            dismiss(animated: true, completion: nil)
-        } else {
-            node = node.mnz_versions()[1]
+        guard let firstVersion = nodeVersions.first else {
+            return
+        }
+        node = firstVersion
+        nodeVersions = node.mnz_versions()
+        tableView.reloadData()
+    }
+    
+    private func nodeVersionRemoved() {
+        nodeVersions = node.mnz_versions()
+        
+        if node.mnz_numberOfVersions() == 0 {
             tableView.reloadData()
+        } else {
+            guard let versionsSectionIndex = sections().firstIndex(of: .versions) else { return }
+            tableView.reloadSections([versionsSectionIndex], with: .automatic)
         }
     }
     
@@ -254,7 +269,9 @@ class NodeInfoViewController: UIViewController {
         var sections = [NodeInfoTableViewSection]()
         sections.append(.info)
         sections.append(.details)
-        sections.append(.link)
+        if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+            sections.append(.link)
+        }
         if MEGASdkManager.sharedMEGASdk().hasVersions(for: node) {
             sections.append(.versions)
         }
@@ -313,8 +330,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node)
-        
+        cell.configure(forNode: node, folderInfo: folderInfo)
         return cell
     }
     
@@ -356,7 +372,7 @@ class NodeInfoViewController: UIViewController {
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
         cell.avatarImageView.image = UIImage(named: "inviteToChat")
-        cell.nameLabel.text = AMLocalizedString("addContactButton", "Button title to 'Add' the contact to your contacts list")
+        cell.nameLabel.text = AMLocalizedString("addContact", "Alert title shown when you select to add a contact inserting his/her email ")
         cell.shareLabel.isHidden = true
         
         return cell
@@ -411,7 +427,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get RemoveLabel")
         }
 
-        removeLabel.text = AMLocalizedString("removeSharing", "Alert title shown on the Shared Items section when you want to remove 1 share")
+        removeLabel.text = AMLocalizedString("Remove Share", "The text in the button to remove all contacts to a shared folder on one click")
         
         return cell
     }
@@ -599,9 +615,8 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                     currentVersionRemoved()
                     break
                 } else {
-                    if node.mnz_numberOfVersions() > 1 {
-                        guard let versionsSectionIndex = sections().firstIndex(of: .versions) else { return }
-                        tableView.reloadSections([versionsSectionIndex], with: .automatic)
+                    if nodeVersions.filter({$0.handle == nodeUpdated.handle }).count > 0 {
+                       nodeVersionRemoved()
                     }
                     break
                 }

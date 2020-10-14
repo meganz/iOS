@@ -1,0 +1,83 @@
+PODS:
+  - DZNEmptyDataSet (1.8.1)
+  - FlexLayout (1.3.20)
+  - Haptica (3.0.2)
+  - InputBarAccessoryView (4.3.2):
+    - InputBarAccessoryView/Core (= 4.3.2)
+  - InputBarAccessoryView/Core (4.3.2)
+  - ISEmojiView (0.2.6)
+  - MessageKit (3.1.0):
+    - InputBarAccessoryView (~> 4.3.0)
+  - PanModal (1.2.7)
+  - PinLayout (1.9.0)
+  - YYCache (1.0.4)
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
+  - YYWebImage (1.0.5):
+    - YYCache
+    - YYImage
+
+DEPENDENCIES:
+  - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
+  - FlexLayout
+  - Haptica
+  - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
+  - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
+  - PanModal
+  - PinLayout
+  - YYImage (from `https://github.com/sundayfun/YYImage.git`)
+  - YYWebImage
+
+SPEC REPOS:
+  trunk:
+    - FlexLayout
+    - Haptica
+    - InputBarAccessoryView
+    - PanModal
+    - PinLayout
+    - YYCache
+    - YYWebImage
+
+EXTERNAL SOURCES:
+  DZNEmptyDataSet:
+    :commit: 3db6295
+    :git: https://github.com/meganz/DZNEmptyDataSet.git
+  ISEmojiView:
+    :git: https://github.com/isaced/ISEmojiView.git
+    :tag: 0.2.6
+  MessageKit:
+    :git: https://github.com/lhr000lhrmega/MessageKit.git
+  YYImage:
+    :git: https://github.com/sundayfun/YYImage.git
+
+CHECKOUT OPTIONS:
+  DZNEmptyDataSet:
+    :commit: 3db6295
+    :git: https://github.com/meganz/DZNEmptyDataSet.git
+  ISEmojiView:
+    :git: https://github.com/isaced/ISEmojiView.git
+    :tag: 0.2.6
+  MessageKit:
+    :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
+    :git: https://github.com/lhr000lhrmega/MessageKit.git
+  YYImage:
+    :commit: df226ee3e693ec216196d164966d6582490fed88
+    :git: https://github.com/sundayfun/YYImage.git
+
+SPEC CHECKSUMS:
+  DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
+  FlexLayout: 025dd153bd5618dcc9f93ef914106d7dc2a86fdc
+  Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
+  InputBarAccessoryView: 7985d418040a05fe894bd4b8328dd43ab35517c3
+  ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
+  MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  PinLayout: 465e45d2fbed082f5a62cc2d0e14759bbc28b14b
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
+  YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
+
+PODFILE CHECKSUM: 816880598b53e41dcf9604d05879f6f1ff81804d
+
+COCOAPODS: 1.9.3
