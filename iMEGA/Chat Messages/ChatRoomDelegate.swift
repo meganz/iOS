@@ -426,6 +426,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             guard let historyMessage = historyMessage as? ChatMessage else {
                 return false
             }
+            if message.status == .sending || message.status == .sendingManual {
+                return historyMessage.message.temporalId == message.temporalId
+            }
             return historyMessage.message.messageId == message.messageId
         }) {
             chatMessages[historyMessageIndex] = ChatMessage(message: message, chatRoom: chatRoom)
