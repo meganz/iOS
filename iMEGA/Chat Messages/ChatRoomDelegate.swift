@@ -384,6 +384,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
         isChatRoomOpen = MEGASdkManager.sharedMEGAChatSdk()!.openChatRoom(chatRoom.chatId, delegate: self)
         if isChatRoomOpen {
+            loadingState = true
+            chatViewController?.messagesCollectionView.reloadEmptyDataSet()
             loadMessages()
         } else {
             MEGALogError("OpenChatRoom: Cannot open chat room with id \(chatRoom.chatId)")
@@ -530,7 +532,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
 
     private func loadMessages(count: Int = 32) {
-        if awaitingLoad {
+        if !isChatRoomOpen || awaitingLoad {
             MEGALogWarning("[Chat Links Scalability] avoid loadMessages because of an ongoing load")
             return
         }
