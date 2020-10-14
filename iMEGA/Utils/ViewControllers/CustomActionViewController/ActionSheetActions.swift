@@ -41,6 +41,15 @@ class NodeAction: BaseAction {
         self.detail = detail
         self.image = image
     }
+    
+    private init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage?, type: MegaNodeActionType) {
+        self.type = type
+        super.init()
+        self.title = title
+        self.detail = detail
+        self.accessoryView = accessoryView
+        self.image = image
+    }
 }
 
 // MARK: - Node Actions Factory
@@ -148,5 +157,17 @@ extension NodeAction {
     
     class func searchAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("Search", "Title of the Spotlight Search section"), detail: nil, image: UIImage(named: "search"), type: .search)
+    }
+    
+    class func favouriteAction(isFavourite: Bool) -> NodeAction {
+        return NodeAction(title: isFavourite ? AMLocalizedString("Remove Favourite", "Context menu item. Allows user to delete file/folder from favourites") : AMLocalizedString("Favourite", "Context menu item. Allows user to add file/folder to favourites"), detail: nil, image: isFavourite ? UIImage(named: "removeFavourite") : UIImage(named: "favourite"), type: .favourite)
+    }
+    
+    class func labelAction(label: MEGANodeLabel) -> NodeAction {
+        let labelString = MEGANode.string(for: label)
+        let detailText = AMLocalizedString(labelString!)
+        let image = UIImage(named: labelString!)
+        
+        return NodeAction(title: AMLocalizedString("Label...", "Context menu item which allows to mark folders with own color label"), detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: UIImage(named: "label"), type: .label)
     }
 }

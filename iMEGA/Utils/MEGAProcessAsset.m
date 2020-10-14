@@ -483,19 +483,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 #pragma mark - Private
 
 - (BOOL)hasFreeSpaceOnDiskForWriteFile:(long long)fileSize {
-    uint64_t freeSpace = 0;
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:paths.lastObject error:&error];
-
-    if (dictionary) {
-        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        freeSpace = freeFileSystemSizeInBytes.unsignedLongLongValue;
-    } else {
-        MEGALogError(@"[PA] Obtaining device storage info failed with error: %@", error);
-    }
-    
-    MEGALogDebug(@"[PA] File size: %lld - Free size: %lld", fileSize, freeSpace);
+    uint64_t freeSpace = NSFileManager.defaultManager.mnz_fileSystemFreeSize;
+     
     if (fileSize > freeSpace) {
         NSDictionary *dict = @{NSLocalizedDescriptionKey:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
         NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-2 userInfo:dict];

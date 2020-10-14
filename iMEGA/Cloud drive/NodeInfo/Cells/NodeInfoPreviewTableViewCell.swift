@@ -8,10 +8,12 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var previewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var versionedImage: UIImageView!
     @IBOutlet weak var playIconImage: UIImageView!
+    @IBOutlet weak var linkedImage: UIImageView!
 
-    func configure(forNode node: MEGANode) {
+    func configure(forNode node: MEGANode, folderInfo: MEGAFolderInfo?) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         nameLabel.text = node.name
+        linkedImage.isHidden = !node.isExported()
         if (node.type == .file) {
             previewImage.mnz_setThumbnail(by: node)
             sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
@@ -20,7 +22,9 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             playIconImage.isHidden = !node.name.mnz_isVideoPathExtension
         } else if (node.type == .folder) {
             previewImage.mnz_image(for: node)
-            sizeLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
+            let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            shareButton.isHidden = nodeAccess != .accessOwner
+            sizeLabel.text = Helper.memoryStyleString(fromByteCount: (folderInfo?.currentSize ?? 0) + (folderInfo?.versionsSize ?? 0))
         }
         
         previewHeightConstraint.constant = node.hasThumbnail() ? 160 : 80

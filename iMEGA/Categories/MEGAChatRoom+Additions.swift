@@ -2,6 +2,41 @@
 import Foundation
 
 extension MEGAChatRoom {
+    var onlineStatus: MEGAChatStatus? {
+        guard !isGroup else {
+            return nil
+        }
+        
+        return MEGASdkManager.sharedMEGAChatSdk()?.userOnlineStatus(peerHandle(at: 0))
+    }
+    
+    var participantNames: String {
+        return (0..<peerCount).reduce("") { (result, index) in
+            let userHandle = peerHandle(at: index)
+
+            if let name = participantName(forUserHandle: userHandle) {
+                if index < (peerCount - 1) {
+                    return result + name + ", "
+                } else {
+                    return result + name
+                }
+            }
+            
+            return ""
+        }
+    }
+    
+    var canAddReactions: Bool {
+        if isPublicChat,
+        isPreview {
+            return false
+        } else if ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     @objc func userNickname(atIndex index: UInt) -> String? {
         let userHandle = peerHandle(at: index)
         return userNickname(forUserHandle: userHandle)
@@ -22,7 +57,6 @@ extension MEGAChatRoom {
 
         return MEGASdkManager.sharedMEGAChatSdk()?.userFullnameFromCache(byUserHandle: userHandle)
     }
-
     @objc func chatTitle() -> String {
         if isGroup && !hasCustomTitle && peerCount == 0  {
             let date = Date(timeIntervalSince1970: TimeInterval(creationTimeStamp))

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
 - (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier;
+- (NSString *)mnz_appDataToPath:(NSString *)path;
 
 #pragma mark - Utils
 
