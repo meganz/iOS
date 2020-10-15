@@ -44,9 +44,9 @@ class NodeActionViewController: ActionSheetViewController {
 
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isPageView: Bool = true, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, sender: Any) {
         self.node = node
-        self.displayMode = .previewLink
+        self.displayMode = .previewDocument
         self.delegate = delegate
         self.sender = sender
         
@@ -57,6 +57,7 @@ class NodeActionViewController: ActionSheetViewController {
         self.actions = NodeActionBuilder()
             .setDisplayMode(self.displayMode)
             .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
+            .setIsLink(isLink)
             .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .build()
