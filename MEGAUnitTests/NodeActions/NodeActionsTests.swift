@@ -234,7 +234,8 @@ class NodeActionsTests: XCTestCase {
     
     func testPreviewFileLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewLink)
+            .setDisplayMode(.previewDocument)
+            .setIsLink(true)
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
@@ -242,7 +243,7 @@ class NodeActionsTests: XCTestCase {
     
     func testPreviewPdfPageViewFileLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewLink)
+            .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsLink(true)
             .setIsPageView(true)
@@ -253,13 +254,43 @@ class NodeActionsTests: XCTestCase {
     
     func testPreviewPdfThumbnailFileLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewLink)
+            .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsLink(true)
             .setIsPageView(false)
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfPageView]))
+    }
+    
+    //MARK: - Preview document
+    
+    func testPreviewDocument() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .share]))
+    }
+    
+    func testPreviewPdfPageViewDocument() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsPageView(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .share, .search, .pdfThumbnailView]))
+    }
+    
+    func testPreviewPdfThumbnailDocument() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsPageView(false)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .share, .search, .pdfPageView]))
     }
     
     // MARK: - Chat tests
