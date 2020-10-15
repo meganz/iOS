@@ -9,10 +9,13 @@ protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
     func startVideoCall()
     func showVoiceClip()
     func showContacts()
+    func showScanDoc()
     func startGroupChat()
     func showLocation()
     func shouldDisableAudioMenu() -> Bool
     func shouldDisableVideoMenu() -> Bool
+    func numberOfPages(_ pages: Int)
+    func currentSelectedPageIndex(_ pageIndex: Int)
 }
 
 class AddToChatMenuPageViewController: UIPageViewController {
@@ -27,9 +30,21 @@ class AddToChatMenuPageViewController: UIPageViewController {
 
     private var numberOfRowsForMenu = 2
     private var menuPerRow = 4
+    private var currentPage = 0
     
-    private lazy var menus = {
-        return AddToChatMenu.menus()
+    private lazy var menus: [AddToChatMenu]? = {
+        let menus = AddToChatMenu.menus()?.filter({ (menu) -> Bool in
+            if menu.menuNameKey == .scanDoc {
+                if #available(iOS 13, *) {
+                    return true
+                } else {
+                  return false
+                }
+            }
+            return true
+            
+        })
+        return menus
     }()
     
     private var numberOfPagesRequired: Int {
@@ -74,12 +89,26 @@ class AddToChatMenuPageViewController: UIPageViewController {
             
             return menuViewController
         }
+        
+        menuDelegate?.numberOfPages(menuPages.count)
     }
     
     func updateAudioVideoMenu() {
         menuPages.forEach { menuViewController in
             menuViewController.updateMenus()
         }
+    }
+    
+    func moveToPageAtIndex(_ pageIndex: Int) {
+        guard pageIndex < menuPages.count, currentPage != pageIndex else { return }
+        
+        let direction: UIPageViewController.NavigationDirection = currentPage < pageIndex ? .forward : .reverse
+        currentPage = pageIndex
+        setViewControllers([menuPages[pageIndex]],
+                           direction: direction,
+                           animated: true,
+                           completion: nil)
+
     }
     
     func totalRequiredHeight(forWidth width: CGFloat,
@@ -112,6 +141,19 @@ extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPag
         
         return menuPages[index + 1]
     }
+    
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+        if completed {
+            if let currentViewController = pageViewController.viewControllers?.first as? AddToChatMenuViewController,
+               let index = menuPages.firstIndex(of: currentViewController) {
+                currentPage = index
+                menuDelegate?.currentSelectedPageIndex(index)
+            }
+        }
+    }
 }
 
 extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
@@ -138,6 +180,8 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
             menuDelegate?.startVideoCall()
         case .contact:
             menuDelegate?.showContacts()
+        case .scanDoc:
+            menuDelegate?.showScanDoc()
         case .startGroup:
             menuDelegate?.startGroupChat()
         case .location:

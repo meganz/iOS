@@ -10,6 +10,7 @@ protocol AddToChatViewControllerDelegate: AnyObject {
     func startVideoCall()
     func showVoiceClip()
     func showContacts()
+    func showScanDoc()
     func startGroupChat()
     func showLocation()
     func shouldDisableAudioMenu() -> Bool
@@ -36,6 +37,9 @@ class AddToChatViewController: UIViewController {
     @IBOutlet private weak var menuViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var menuViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var menuViewTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private weak var pageControl: UIPageControl!
+    @IBOutlet private weak var pageControlBottomConstraint: NSLayoutConstraint!
 
     var dismissHandler: (() -> Void)?
     private var presentAndDismissAnimationDuration: TimeInterval = 0.4
@@ -108,11 +112,17 @@ class AddToChatViewController: UIViewController {
         let menuPageViewControllerHeight = menuPageViewController.totalRequiredHeight(forWidth: width,
                                                                                       horizontalPaddding: menuPageViewControllerHorizontalPadding)
 
-        let height = menuPageViewControllerHeight
-            + mediaCollectionView.bounds.height
+        let pageControlHeight = pageControl.bounds.height
+            + pageControlBottomConstraint.constant
+        
+        let mediaCollectionViewHeight = mediaCollectionView.bounds.height
             + mediaCollectionViewBottomConstraint.constant
             + mediaCollectionViewTopConstraint.constant
+        
+        let height = menuPageViewControllerHeight
+            + mediaCollectionViewHeight
             + menuViewBottomConstraint.constant
+            + pageControlHeight
 
         return CGSize(width: width, height: height)
     }
@@ -179,12 +189,18 @@ class AddToChatViewController: UIViewController {
     private func updateAppearance() {
         contentView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
         patchView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        pageControl.pageIndicatorTintColor = .mnz_tertiaryGray(for: traitCollection)
+        pageControl.currentPageIndicatorTintColor = .mnz_primaryGray(for: traitCollection)
     }
     
     // MARK:- Actions.
 
     @IBAction func backgroundViewTapped(_ tapGesture: UITapGestureRecognizer) {
         dismiss()
+    }
+    
+    @IBAction func pageControlValueChanged(_ sender: UIPageControl) {
+        menuPageViewController?.moveToPageAtIndex(sender.currentPage)
     }
     
     private func loadPhotosViewAndDismiss() {
@@ -237,6 +253,12 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
         }
     }
     
+    func showScanDoc() {
+        dismiss() {
+            self.addToChatDelegate?.showScanDoc()
+        }
+    }
+    
     func showVoiceClip() {
         if let delegate = addToChatDelegate,
             delegate.canRecordAudio() {
@@ -270,6 +292,14 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     
     func shouldDisableVideoMenu() -> Bool {
         return addToChatDelegate?.shouldDisableVideoMenu() ?? false
+    }
+    
+    func numberOfPages(_ pages: Int) {
+        pageControl.numberOfPages = pages
+    }
+    
+    func currentSelectedPageIndex(_ pageIndex: Int) {
+        pageControl.currentPage = pageIndex
     }
 }
 
