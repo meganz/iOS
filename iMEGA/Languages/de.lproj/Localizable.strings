@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Ihre SSL-Verbindung zu den MEGA-Servern wurde manipuliert. Bitte prüfen Sie, ob Ihr WLAN-Hotspot einen Login erfordert.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Dieser Account kann auf die gewünschte Datei nicht zugreifen. Bitte nutzen Sie denselben Account wie im Browser.";
+"theContentIsNotAvailableForThisAccount"="Dieser Account kann auf die gewünschte Datei nicht zugreifen. Bitte nutzen Sie denselben Account wie im Mobilbrowser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Der Vorgang dauert ungewöhnlich lange. Bitte haben Sie Geduld...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kontakte hinzufügen";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Kontakt einladen";
+"inviteContact"="Invite to MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Einladung versandt";
 /* Button title to allow the user postpone an action */
@@ -317,11 +317,11 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Link exportieren";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Linkexport";
+"getLinks"="Get Links";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Link bearbeiten";
+"manageLink"="Manage Link";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Links verwalten";
+"manageLinks"="Manage Links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link generieren...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Zum Umbenennen antippen";
 /* */
-"sendToContact"="An Kontakt schicken";
+"sendToContact"="Send to Contact";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Meine Chats";
 /* Toast text upon sending a single file to chat */
@@ -381,9 +381,9 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d Dateien gesendet.";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Link entfernen";
+"removeLink"="Remove Link";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Links löschen";
+"removeLinks"="Remove Links";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Der Link wurde gelöscht";
 /* Message shown when the links to files and/or folders have been removed */
@@ -536,6 +536,8 @@
 "sharesLeft"="Ordnerfreigaben verlassen";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Freigabe stornieren";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Orderfreigabe stornieren";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Diese Freigabe stornieren? (Betroffene Kontakte: 1)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -585,7 +587,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] Kontakte";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Ordner freigeben";
+"shareFolder"="Share Folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Ordner freigeben";
 /* Button that allows you to select something (a folder, a message...) */
@@ -683,9 +685,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Live-Fotos als Video hochladen";
+"Upload Videos for Live Photos"="Upload Videos for Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload All Burst Photos"="Alle Burst-Sequenzen hochladen";
+"Upload All Burst Photos"="Upload All Burst Photos";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Versteckte Alben hochladen";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -705,7 +707,7 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Durch die Photos-App freigegebene Alben werden nicht hochgeladen.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload Albums Synced from iTunes"="Alben hochladen, die von iTunes synchronisiert wurden";
+"Upload Albums Synced from iTunes"="Upload Albums Synced from iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Sychronisierte Alben sind Fotos und Videos, die von iTunes an Ihre Photos-App synchronisiert werden.";
 /* App means “Application” */
@@ -753,7 +755,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="%s belegt";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Account stornieren";
+"cancelYourAccount"="Cancel Your Account";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Sie werden alle gespeicherten Daten dieses Accounts verlieren. Wirklich löschen?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Diese Offline-Datei wirklich löschen?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Wollen Sie diese Offline-Dateien löschen?";
+/* Giphy section header */
+"Send GIF"="Send GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Search GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="No GIFs found";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="Weitere";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Stummschalten";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Stummschaltung deaktivieren";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Mark as Read";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1398,7 +1410,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA bietet großzügige 50 GB kostenlosen Speicherplatz für erfolgreiche Bonus-Teilnehmer und PRO-Abonnements mit erheblich höheren Limits:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE-Abonnement: €4.99 (US$4.99) monatlich oder €49.99 (US$49.99) jährlich für 200 GB Speicherplatz und 1 TB Transfervolumen pro Monat. \nPRO I-Abonnement: €9.99 (US$9.99) monatlich oder €99.99 (US$99.99) jährlich für 1 TB Speicherplatz und 2 TB Transfervolumen pro Monat.\nPRO II-Abonnement: €19.99 (US$19.99) monatlich oder €199.99 (US$199.99) jährlich für 4 TB Speicherplatz und 8 TB Transfervolumen pro Monat.\nPRO III-Abonnement: €29.99 (US$29.99) monatlich oder €299.99 (US$299.99) jährlich für 8 TB Speicherplatz und 16 TB Transfervolumen pro Monat.";
+"generalDescriptionParagraph5"="PRO LITE-Abonnement: €4.99 (US$4.99) monatlich oder €49.99 (US$49.99) jährlich für 400 GB Speicherplatz und 1 TB Transfervolumen pro Monat. \nPRO I-Abonnement: €9.99 (US$9.99) monatlich oder €99.99 (US$99.99) jährlich für 3 TB Speicherplatz und 2 TB Transfervolumen pro Monat.\nPRO II-Abonnement: €19.99 (US$19.99) monatlich oder €199.99 (US$199.99) jährlich für 8 TB Speicherplatz und 8 TB Transfervolumen pro Monat.\nPRO III-Abonnement: €29.99 (US$29.99) monatlich oder €299.99 (US$299.99) jährlich für 16 TB Speicherplatz und 16 TB Transfervolumen pro Monat.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Mehr Informationen auf unserer Website: https://mega.nz/\nBenutzungsbedingungen: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
@@ -1442,8 +1454,6 @@
 "codeScanned"="Code gescannt";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Freigegeben an:";
-/*   */
-"details"="Details";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Freigabe";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="Benutzer";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] Versionen";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Informationen zur Datei";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Ordnerinformationen";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Diese Version löschen?";
 /* Message to notify user the file version will be permanently removed */
@@ -1683,7 +1689,7 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Bei deaktivierter Dateiversionierung wird die bestehende Datei beim Überschreiben gelöscht (der Änderungsverlauf bleibt dadurch nicht erhalten). Wollen Sie die Dateiversionierung wirklich abschalten?";
 /* Settings preference title to show file versions info of the account */
-"File Versions"="Dateiversionen";
+"File Versions"="File Versions";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Platzverbrauch älterer Dateiversionen:";
 /* The title of the section about deleting file versions in the settings. */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Konferenzgespräch läuft. Teilnehmen...";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Zurück zur Konferenz %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Zum Gespräch zurückkehren";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="In Photos speichern";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1765,9 +1773,9 @@
 /* Label shown while leaving a public chat */
 "Leaving..."="Leaving…";
 /* Text shown for switching from thumbnail view to list view. */
-"List View"="Listenansicht";
+"List View"="List View";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Thumbnail-Ansicht";
+"Thumbnail View"="Thumbnail View";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Page View";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
@@ -1913,9 +1921,9 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Aktiv";
 /* Text button for init a group chat with link. */
-"New Chat Link"="Neuer Chatlink";
+"New Chat Link"="New Chat Link";
 /* Text button for init a group chat */
-"New Group Chat"="Neuer Gruppenchat";
+"New Group Chat"="New Group Chat";
 /* Title for the recents section. */
 "Recents"="Neue/Geänderte Dateien";
 /* Multiple Images title shown in recents section of webclient */
@@ -1941,7 +1949,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="Elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat Link Unavailable"="Ungültiger Chatlink";
+"Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Dieser Chatlink ist nicht mehr verfügbar";
 /* Text explaining users how the chat links work. */
@@ -2011,7 +2019,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Passcodeschutz";
+"Require Passcode"="Require Passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Sofort";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2057,7 +2065,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 Stunde";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="Sechs Stunden";
+"6 hours"="6 Stunden";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 Stunden";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
@@ -2067,7 +2075,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chatbenachrichtigungen";
+"Chat Notifications"="Chat Notifications";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Bitte nicht stören";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2095,7 +2103,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rolle";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include Location Tags"="Ortsinformationen";
+"Include Location Tags"="Include Location Tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Clear Selected";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Alle entfernen";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Resume Transfers?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA KAMERAUPLOADS";
 /* Action button text of folder selection screen for camera uploads */
@@ -2165,7 +2175,7 @@
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Ordner auswählen";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image Quality"="Bildkompression";
+"Image Quality"="Image Quality";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator entfernt. Bitte setzen Sie sich mit ihm in Verbindung.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Benennen Sie den Gruppenchat";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Appearance";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2280,3 +2294,17 @@
 "Proxy server requires a password"="Proxy-Server erfordert ein Passwort";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Benutzername:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETAILS";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Link Creation";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="SHARE WITH";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="PENDING";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSIONS";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";

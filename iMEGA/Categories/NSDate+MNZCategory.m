@@ -17,12 +17,13 @@
     return [defaultNameForMediaDateFormatter stringFromDate:self];
 }
 
-- (NSString *)mnz_formattedDefaultDateForMedia {
+- (NSString *)mnz_formattedDateMediumTimeShortStyle {
     static NSDateFormatter *defaultNameForMediaDateFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultNameForMediaDateFormatter = NSDateFormatter.alloc.init;
-        [defaultNameForMediaDateFormatter setLocalizedDateFormatFromTemplate:@"dMMMyyyyHHmm"];
+        defaultNameForMediaDateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        defaultNameForMediaDateFormatter.timeStyle = NSDateFormatterShortStyle;
         defaultNameForMediaDateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     });
     

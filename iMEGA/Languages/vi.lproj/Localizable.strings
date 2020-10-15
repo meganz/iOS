@@ -49,9 +49,9 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Nhập chìa khóa mã";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Mã. Nếu bạn không có, hãy hỏi tới người tạo ra đường liên kết này để giải quyết.";
+"decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Mã. Nếu bạn không có, hãy hỏi tới người chủ của đường liên kết này để giải quyết.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Chìa Khóa Mã";
+"decryptionKey"="Chìa khóa mã";
 /* Button title to try to decrypt the link */
 "decrypt"="Giải khóa mã";
 /* Alert title shown when you have written a decryption key not valid */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Thêm tên liên lạc";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Mời vào Sổ Liên Lạc";
+"inviteContact"="Mời Vào MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Lời Mời Đã Gửi";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="Đã rời khỏi chia sẻ";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Ngừng chia sẻ";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Chấm Dứt Chia Sẻ";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Bạn có chắc muốn chấm dứt chia sẻ cái này? (Hiện đang chia sẻ cho 1 tên liên lạc)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -569,7 +571,7 @@
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Đã xóa tên %@ khỏi sổ liên lạc";
 /* Label shown when a contact request is pending */
-"pending"="Đang chờ";
+"pending"="Chờ hồi âm";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Rời khỏi";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Bạn có chắc muốn xóa mục này khỏi mục lưu Ngoại Tuyến?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
+/* Giphy section header */
+"Send GIF"="Gửi Ảnh GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Tìm trong GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Không có GIF phù hợp";
 /* Chat section header */
 "chat"="Chát";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="Thêm nữa";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Tắt tiếng";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Bỏ tắt tiếng";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Đánh dấu Đã Đọc";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Thông tin";
 /* A button label. The button allows the user to close the conversation. */
@@ -1232,7 +1244,7 @@
 /*  */
 "fromCloudDrive"="Lấy từ Ổ Mây";
 /* referring to a contact in the contact list of the user */
-"contact"="Danh bạ";
+"contact"="Tên liên lạc";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Gửi tên liên lạc";
 /* */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Có tin nhắn mới";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu tin nhắn chưa đọc";
+"unreadMessage"="%lu TIN NHẮN CHƯA ĐỌC";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu tin nhắn chưa đọc";
+"unreadMessages"="%lu TIN NHẮN CHƯA ĐỌC";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA PRO ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA PRO của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1454,6 @@
 "codeScanned"="Quét mã hoàn thành";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Đã chia sẻ cho:";
-/*   */
-"details"="Chi tiết";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Chia sẻ";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="người";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="Có [X] bản được bảo lưu";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Thông tin tệp tin";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Thông tin thư mục";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Bạn có chắc muốn xóa phiên bản này?";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Có một cuộc gọi đang diễn ra. Chạm vào để tham gia.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Chạm để quay trở lại cuộc gọi %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Chạm vào để quay trở lại cuộc gọi";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Lưu vào Ảnh";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Đổi sang máy chủ thử nghiệm?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi được.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Cần Quyền Cho Phép Truy Cập vào Danh Bạ";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Dọn Mục Đã Chọn";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Tiếp Tục Phiên Truyền Tải?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Tài khoản này đã bị xóa bởi ban quản lý. Xin liên hệ trực tiếp với người quản lý tài khoản trong công ty để biết thêm chi tiết.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Điền tên nhóm";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Viết tin nhắn…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Kéo vào bên trái để hủy tin, thả ra để gửi tin";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Giao Diện";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2247,7 +2261,7 @@
 /* Over Disk Quota of number of days*/
 "%d days"="%d ngày";
 /* Over Disk Quota of must act immediately to save your data*/
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Quý khách cần hành động ngay để giữ dữ liệu của mình.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Bạn cần hành động ngay để giữ dữ liệu của mình.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Quý khách còn lại <warn>%@</warn> để nâng cấp.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2280,3 +2294,17 @@
 "Proxy server requires a password"="Máy chủ proxy yêu cầu mật khẩu";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Username:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="CHI TIẾT";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="ĐƯỜNG LIÊN KẾT";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Ngày Tạo Liên Kết";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="CHIA SẺ VỚI";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="CHỜ HỒI ÂM";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="LỊCH SỬ PHIÊN BẢN";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Email đã được gửi đi rồi. Xin chờ vài phút trước khi gửi lại cái mới.";

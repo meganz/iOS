@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Добавить контакты";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Пригласите контакт";
+"inviteContact"="Пригласить в MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Приглашение отправлено";
 /* Button title to allow the user postpone an action */
@@ -321,7 +321,7 @@
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="Управление ссылкой";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Ссылки";
+"manageLinks"="Управление ссылками";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Создание ссылки…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Коснитесь файла для переименования";
 /* */
-"sendToContact"="Послать контакту";
+"sendToContact"="Отправить контакту";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Мои чаты";
 /* Toast text upon sending a single file to chat */
@@ -536,6 +536,8 @@
 "sharesLeft"="Остались общие элементы";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Убрать из общих";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Закрыть доступ";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Убрать из общего? (Общее с 1 контактом)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -585,7 +587,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] контакта/ов:";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Открыть общий доступ к папке";
+"shareFolder"="Поделиться папкой";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Поделиться папками";
 /* Button that allows you to select something (a folder, a message...) */
@@ -683,7 +685,7 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Настройки > Обшие > Хранилище %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Загрузить видео для «живых фото»";
+"Upload Videos for Live Photos"="Загружать видео для живых фото";
 /* Title of the switch to config whether to upload all burst photos */
 "Upload All Burst Photos"="Загружать серийную съёмку";
 /* Title of the switch to config whether to upload Hidden Album */
@@ -753,7 +755,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Удалить учётную запись";
+"cancelYourAccount"="Удалить аккаунт";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Вы потеряете все связанные данные. Действительно  хотите продолжить?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -763,7 +765,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением учётной записи. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Ваша учётная запись успешно удалена.";
+"accountCanceledSuccessfully"="Ваш аккаунт успешно удалён";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закрыть учётную запись";
 /* Title for the action that allows to remove a file or folder */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Действительно удалить этот элемент локально?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Действительно удалить эти элементы локально?";
+/* Giphy section header */
+"Send GIF"="Отправить GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Искать GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Изображения GIF не найдены";
 /* Chat section header */
 "chat"="Чат";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="Больше";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Приглушить";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Включить звук";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Пометить как прочитанное";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Информация";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Новые сообщения";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="Не прочитано: %lu";
+"unreadMessage"="НЕ ПРОЧИТАНО: %lu";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="Не прочитано: %lu";
+"unreadMessages"="НЕ ПРОЧИТАНО: %lu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1454,6 @@
 "codeScanned"="Просканировано";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Общий с:";
-/*   */
-"details"="Детали";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Общий доступ";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="пользователь";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="Версий: [X]";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="О файле";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="О папке";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Удалить эту версию?";
 /* Message to notify user the file version will be permanently removed */
@@ -1635,7 +1641,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Поиск";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Позволит искать файлы/папки MEGA в поиске Spotlight вашего устройства";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Если включено, позволяет искать файлы и папки MEGA в поиске Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ключи хранятся у вас";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Есть активный звонок. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Коснитесь для возврата к вызову %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Коснитесь, чтобы вернуться";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Сохранять в фото";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1735,7 +1743,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Чередование ключей отключено для разговоров с более чем 100 участниками.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Для создания ссылки на чат нужно назвать группу.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,7 +1767,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Вы не можете включить видео, так в этом вызове уже максимальное количество участников, использующих видео.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Невозможно начать вызов из-за превышения лимита участников.";
 /* Label shown while joining a public chat */
 "Joining..."="Присоединение…";
 /* Label shown while leaving a public chat */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Перейти на тестовый сервер?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Откройте доступ к вашей адресной книге";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Очистить выбранное";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Очистить все";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Возобновить передачи?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="ПАПКА ЗАГРУЗОК ИЗ КАМЕРЫ MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Ваш аккаунт был удалён администратором. Пожалуйста, свяжитесь с администратором вашего бизнес-аккаунта для получения более подробной информации.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Введите имя группы";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Сообщение…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Передвиньте влево для отмены, отпустите для отправки";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Отображение";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2275,8 +2289,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="Сервер:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="Порт";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="Требуется пароль к прокси-серверу";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Имя пользователя:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="ПОДРОБНОСТИ";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="ССЫЛКА";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Ссылка создана";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="ПОДЕЛИЛИСЬ С";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="В ОЖИДАНИИ";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="ВЕРСИИ";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Письмо уже отправлено. Пожалуйста, подождите несколько минут, прежде чем попробовать снова.";

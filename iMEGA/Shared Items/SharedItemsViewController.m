@@ -26,7 +26,6 @@
 #import "EmptyStateView.h"
 #import "SharedItemsTableViewCell.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
@@ -377,12 +376,7 @@
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-    nodeInfoVC.node = node;
-    nodeInfoVC.nodeInfoDelegate = self;
-    nodeInfoVC.incomingShareChildView = self.incomingButton.selected;
-
+    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -545,16 +539,17 @@
         [self setEditing:NO animated:YES];
     } else {
         __weak __typeof__(self) weakSelf = self;
-        
+        UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
         [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
             NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
                 weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
                 weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
@@ -1374,7 +1369,7 @@
             break;
         }
             
-        case MegaNodeActionTypeFileInfo:
+        case MegaNodeActionTypeInfo:
             [self showNodeInfo:node];
             break;
             
@@ -1426,8 +1421,8 @@
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)presentParentNode:(MEGANode *)node {
-        [node navigateToParentAndPresent];
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
+    [node navigateToParentAndPresent];
 }
 
 @end

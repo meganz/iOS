@@ -8,7 +8,6 @@
 
 #import "Helper.h"
 #import "CopyrightWarningViewController.h"
-#import "NodeInfoViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
@@ -391,12 +390,8 @@
             [self download];
             break;
             
-        case MegaNodeActionTypeFileInfo: {
-            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-            nodeInfoVC.node = node;
-            nodeInfoVC.nodeInfoDelegate = self;
-            
+        case MegaNodeActionTypeInfo: {
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
@@ -457,7 +452,7 @@
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)presentParentNode:(MEGANode *)node {
+- (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
         [node navigateToParentAndPresent];
     }];

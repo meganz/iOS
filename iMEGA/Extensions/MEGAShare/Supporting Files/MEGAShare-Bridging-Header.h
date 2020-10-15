@@ -6,6 +6,7 @@
 
 #import "LocalizationSystem.h"
 #import "SVProgressHUD.h"
+#import "UIImage+GKContact.h"
 #import <PureLayout/PureLayout.h>
 
 #import "NSDate+DateTools.h"
@@ -16,6 +17,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"

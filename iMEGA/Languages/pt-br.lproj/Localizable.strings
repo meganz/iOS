@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contatos";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Convidar contato";
+"inviteContact"="Adicionar contato ao MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Solicitação de contato enviada";
 /* Button title to allow the user postpone an action */
@@ -333,7 +333,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiado ao bloco de notas";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Aviso de copyright";
+"copyrightWarning"="Aviso de direitos autorais";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Aviso de direitos autorais a todos os usuários";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -536,6 +536,8 @@
 "sharesLeft"="ações esquerda";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remover compartilhamento";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Deixar de compartilhar";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Tem certeza de que deseja remover esta parte? (Compartilhado com 1 contato)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Tem certeza que deseja excluir este item de Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Tem certeza de que deseja excluir esses itens de Offline?";
+/* Giphy section header */
+"Send GIF"="Enviar um GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Pesquisar em GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Nenhum GIF encontrado";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="Mais";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Silenciar";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Não silenciar";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Marcar como lido";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Novas mensagens";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu mensagem não lida";
+"unreadMessage"="%lu MENSAGEM NÃO LIDA";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu mensagens não lidas";
+"unreadMessages"="%lu MENSAGENS NÃO LIDAS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura no MEGA até 24 horas antes do próximo pagamento através da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta clicar no ícone da App Store no seu dispositivo, fazer login com o seu ID Apple na parte inferior da página (se você ainda tiver feito isso) e então clicar em Ver ID. Você será levado à página da sua conta, na qual deve ir até a opção Assinaturas. A partir daqui, você pode selecionar a sua assinatura PRO do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão on-off para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1454,6 @@
 "codeScanned"="Código escaneado";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Compartilhado com:";
-/*   */
-"details"="Detalhes";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Compartilhar";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="usuário";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versões";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Informações do arquivo";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Informações da pasta";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Você quer deletar esta versão?";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Há uma chamada ativa. Toque para participar.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Toque para voltar à chamada %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Pressione para voltar à chamada";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salvar no Fotos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Alterar para um servidor de teste?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Você tem certeza de que quer alterar para um servidor de teste? A sua conta pode sofrer danos irreparáveis";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Você tem certeza de que quer alterar para um servidor de teste? A sua conta pode sofrer danos irreparáveis.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Permitir o acesso ao seu catálogo de endereços";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -1981,7 +1989,7 @@
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Acessar as configurações";
 /* Text encouraging the user to invite contacts to MEGA */
-"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Convide contatos e comece a conversar com segurança com o chat criptografado do MEGA.";
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Adicione contatos e converse com segurança no chat criptografado do MEGA.";
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Adicionar [X] contatos";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Eliminar a seleção";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Limpar tudo";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Retomar as transferências?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="PASTA DOS UPLOADS DA CÂMERA NO MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="A sua conta foi eliminada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Digite o nome do grupo";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Mensagem...";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Arraste para a esquerda para cancelar, solte para enviar";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Aparência";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2275,8 +2289,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="Servidor:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="Porta";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="O proxy solicita uma senha";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Usuário";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETALHES";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Criação do link";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="COMPARTILHAR COM";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="PENDENTE";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSÕES";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="O email já foi enviado. Espere alguns minutos antes de tentar novamente.";

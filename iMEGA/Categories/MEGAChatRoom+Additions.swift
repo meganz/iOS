@@ -2,6 +2,41 @@
 import Foundation
 
 extension MEGAChatRoom {
+    var onlineStatus: MEGAChatStatus? {
+        guard !isGroup else {
+            return nil
+        }
+        
+        return MEGASdkManager.sharedMEGAChatSdk()?.userOnlineStatus(peerHandle(at: 0))
+    }
+    
+    var participantNames: String {
+        return (0..<peerCount).reduce("") { (result, index) in
+            let userHandle = peerHandle(at: index)
+
+            if let name = participantName(forUserHandle: userHandle) {
+                if index < (peerCount - 1) {
+                    return result + name + ", "
+                } else {
+                    return result + name
+                }
+            }
+            
+            return ""
+        }
+    }
+    
+    var canAddReactions: Bool {
+        if isPublicChat,
+        isPreview {
+            return false
+        } else if ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     @objc func userNickname(atIndex index: UInt) -> String? {
         let userHandle = peerHandle(at: index)
         return userNickname(forUserHandle: userHandle)
@@ -22,10 +57,11 @@ extension MEGAChatRoom {
 
         return MEGASdkManager.sharedMEGAChatSdk()?.userFullnameFromCache(byUserHandle: userHandle)
     }
-
     @objc func chatTitle() -> String {
         if isGroup && !hasCustomTitle && peerCount == 0  {
-            return AMLocalizedString("Chat created on %s1", "Default title of an empty chat.").replacingOccurrences(of: "%s1", with: NSDate(timeIntervalSince1970: TimeInterval(creationTimeStamp)).mnz_formattedDefaultDateForMedia())
+            let date = Date(timeIntervalSince1970: TimeInterval(creationTimeStamp))
+            let dateString = DateFormatter.dateMediumTimeShort().localisedString(from: date)
+            return AMLocalizedString("Chat created on %s1", "Default title of an empty chat.").replacingOccurrences(of: "%s1", with: dateString)
         } else {
             return title ?? ""
         }

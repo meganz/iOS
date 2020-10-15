@@ -21,6 +21,8 @@ NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalData
 
 uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
 
+NSString * const MEGAVoiceMessagesFolderName = @"My voice messages";
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";
@@ -133,3 +135,7 @@ const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount = 10;
 #pragma mark - MEGAApplicationIconBadgeNumber
 
 NSString * const MEGAApplicationIconBadgeNumber = @"MEGAApplicationIconBadgeNumber";
+
+#pragma mark - Delay events
+
+const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;

@@ -23,8 +23,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
-#import "MessagesViewController.h"
-#import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 #import "MEGAUser+MNZCategory.h"
@@ -179,7 +177,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
     
@@ -196,12 +193,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     if (self.isMovingFromParentViewController) {
         [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
-    }
-    
-    // Creates a glitch in the animation when the view controller is presented.
-    // So do not remove it if the view controller is presented
-    if (self.presentedViewController == nil) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
@@ -414,7 +405,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             if (chatRoom.isArchived) {
-                [self.navigationController setNavigationBarHidden:NO animated:NO];
                 if (self.navigationController.childViewControllers.count >= 3) {
                     NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
                     [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
@@ -443,15 +433,16 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     __weak __typeof__(self) weakSelf = self;
     
     MEGAChatRoomPrivilege privilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
+    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:privilege == MEGAChatRoomPrivilegeModerator ? @"✓" : @"" image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:privilege == MEGAChatRoomPrivilegeStandard ? @"✓" : @"" image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:privilege == MEGAChatRoomPrivilegeRo ? @"✓" : @"" image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
     }]];
     
@@ -505,10 +496,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom = chatRoom;
-    
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = chatRoom;
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 - (void)sendMessageToContact {
@@ -524,7 +514,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     } else {
         NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
         UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
-        if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
+        if (previousViewController && [previousViewController isKindOfClass:ChatViewController.class]) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [self openChatRoom:self.chatRoom];
@@ -1051,11 +1041,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeFileInfo: {
-            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
-            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
-            nodeInfoVC.node = node;
-            
+        case MegaNodeActionTypeInfo: {
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:nil];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }

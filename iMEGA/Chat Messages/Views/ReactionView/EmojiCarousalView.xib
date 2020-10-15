@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="EmojiCarousalView" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="578" height="98"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CpA-uK-cdK">
+                    <rect key="frame" x="0.0" y="60" width="578" height="38"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="90 reacted with :camera:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q87-Mb-nam">
+                            <rect key="frame" x="16" y="16" width="546" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="Q87-Mb-nam" firstAttribute="leading" secondItem="CpA-uK-cdK" secondAttribute="leading" constant="16" id="E5p-qd-DWK"/>
+                        <constraint firstAttribute="trailing" secondItem="Q87-Mb-nam" secondAttribute="trailing" constant="16" id="Enb-1b-fht"/>
+                        <constraint firstAttribute="height" constant="38" id="dEs-3Q-7hY"/>
+                        <constraint firstAttribute="bottom" secondItem="Q87-Mb-nam" secondAttribute="bottom" constant="6" id="k3T-PY-Mn8"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ka-nl-kHw">
+                    <rect key="frame" x="0.0" y="0.0" width="578" height="60"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DLa-JL-b2e">
+                            <rect key="frame" x="0.0" y="16" width="578" height="44"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="12" minimumInteritemSpacing="0.0" id="lAc-c3-8JT">
+                                <size key="itemSize" width="60" height="44"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="KSZ-tt-ryZ"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="vTb-44-tDZ"/>
+                            </connections>
+                        </collectionView>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcc-vs-KhG">
+                            <rect key="frame" x="271" y="6" width="36" height="5"/>
+                            <color key="backgroundColor" red="0.015686274509803921" green="0.015686274509803921" blue="0.058823529411764705" alpha="0.1485445205479452" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="36" id="dK6-eE-SwL"/>
+                                <constraint firstAttribute="height" constant="5" id="j0p-Fv-3BD"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <real key="value" value="2.5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="DLa-JL-b2e" secondAttribute="bottom" id="5wb-7Z-Om1"/>
+                        <constraint firstAttribute="trailing" secondItem="DLa-JL-b2e" secondAttribute="trailing" id="Eyi-V0-EXy"/>
+                        <constraint firstItem="DLa-JL-b2e" firstAttribute="top" secondItem="6Ka-nl-kHw" secondAttribute="top" constant="16" id="XGA-p8-kmX"/>
+                        <constraint firstItem="kcc-vs-KhG" firstAttribute="centerX" secondItem="6Ka-nl-kHw" secondAttribute="centerX" id="etQ-R8-QTJ"/>
+                        <constraint firstItem="kcc-vs-KhG" firstAttribute="top" secondItem="6Ka-nl-kHw" secondAttribute="top" constant="6" id="o8r-I3-8VY"/>
+                        <constraint firstItem="DLa-JL-b2e" firstAttribute="leading" secondItem="6Ka-nl-kHw" secondAttribute="leading" id="pef-8s-jHk"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="6Ka-nl-kHw" firstAttribute="trailing" secondItem="6Qq-bH-adw" secondAttribute="trailing" id="0TK-qN-vG3"/>
+                <constraint firstItem="CpA-uK-cdK" firstAttribute="trailing" secondItem="6Qq-bH-adw" secondAttribute="trailing" id="0hy-2I-AtP"/>
+                <constraint firstAttribute="bottom" secondItem="CpA-uK-cdK" secondAttribute="bottom" id="1rm-4o-QKq"/>
+                <constraint firstItem="6Ka-nl-kHw" firstAttribute="leading" secondItem="6Qq-bH-adw" secondAttribute="leading" id="7cP-cb-FfO"/>
+                <constraint firstItem="6Ka-nl-kHw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="D3X-VK-F8U"/>
+                <constraint firstItem="CpA-uK-cdK" firstAttribute="leading" secondItem="6Qq-bH-adw" secondAttribute="leading" id="i24-vC-Jzk"/>
+                <constraint firstItem="CpA-uK-cdK" firstAttribute="top" secondItem="6Ka-nl-kHw" secondAttribute="bottom" id="qaK-l5-PYE"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="6Qq-bH-adw"/>
+            <connections>
+                <outlet property="collectionView" destination="DLa-JL-b2e" id="yqr-4m-XCe"/>
+                <outlet property="descriptionLabel" destination="Q87-Mb-nam" id="A8K-Rj-9tZ"/>
+                <outlet property="descriptionLabelBackgroundView" destination="CpA-uK-cdK" id="x8i-oN-zef"/>
+                <outlet property="handlebarView" destination="kcc-vs-KhG" id="tSE-R6-POp"/>
+            </connections>
+            <point key="canvasLocation" x="-301.44927536231887" y="110.49107142857143"/>
+        </view>
+    </objects>
+</document>

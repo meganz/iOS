@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map/dit bestand, hebt u de decoderingssleutel nodig. Neem contact op met de maker van de link als u de sleutel niet hebt.";
+"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map/dit bestand heeft u de Decoderingssleutel nodig. Als u de sleutel niet heeft, neem dan contact op met de maker van de link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decoderingssleutel";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Contacten toevoegen";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Contact Uitnodigen";
+"inviteContact"="Uitnodigen bij MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Verzend Uitnodiging";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="Gedeelde documenten verlaten";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Verwijder gedeeld bestand";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Deling Verwijderen";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Weet u zeker dat u dit gedeelde bestand wilt verwijderen? (Gedeeld met 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Weet u zeker dat u dit item wilt verwijderen uit Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Weet u zeker dat u deze items wilt verwijderen van Offline?";
+/* Giphy section header */
+"Send GIF"="Verstuur GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Zoek GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Geen GIFs gevonden";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="Meer";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Dempen";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Dempen uitzetten";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Markeer als gelezen";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nieuwe berichten";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu ongelezen bericht";
+"unreadMessage"="%lu ONGELEZEN BERICHT";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu ongelezen berichten";
+"unreadMessages"="%lu ONGELEZEN BERICHTEN";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer Applicatie Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1454,6 @@
 "codeScanned"="Code gescanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Gedeeld met:";
-/*   */
-"details"="Details";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Delen";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="gebruiker";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versies";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="File info";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Folder info";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Wilt u deze versie verwijderen?";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Er is een active oproep, tik om mee te doen.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Tik om %@ terug te bellen";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Tik om terug te bellen";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Opslaan naar Foto's";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1735,7 +1743,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Sleutel rotatie is iets veiliger, maar u kunt geen koppeling naar het gesprek creëren en nieuwe deelnemers kunnen geen berichten uit het verleden zien.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Sleutel rotatie is uitgeschakeld voor gesprekken met meer dan 100 deelnemers.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Om een gespreklink te creëren moet u de groep een naam geven.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,11 +1767,11 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="U mag geen video inschakelen omdat deze oproep het maximale aantal deelnemers heeft bereikt dat video gebruikt.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Kan geen gesprek starten omdat de deelnemerslimiet is overschreden.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Deelnemen...";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Verlaten...";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Lijstweergave";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="naar een test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen krijgen";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server?Uw account kan onherstelbare problemen ondervinden.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Schakel Toegang tot Uw Adresboek in";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Geselecteerd Wissen";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Wis alles";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Overdrachten Hervatten?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Uw account is verwijderd door uw administratie. Neem contact op met uw zakelijke account administratie voor meer informatie.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Voer groep naam in";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Bericht..";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Sleep naar links om te annuleren, laat los om te verzenden";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Verschijning";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2219,9 +2233,9 @@
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Selecteer de weergavemodus (Lijst of Miniatuur) per map of gebruik dezelfde weergavemodus voor alle mappen.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
-"When you logout, ongoing transfers will be cancelled."="Wanneer u uitlogt, worden voortgaande overdrachten geannuleerd.";
+"When you logout, ongoing transfers will be cancelled."="Wanneer u zich afmeldt, worden bestanden uit uw offline-gedeelte van uw apparaat verwijderd.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Wanneer u uitlogt, worden bestanden van uw Offline sectie verwijderd van uw apparaat.";
+"When you logout, files from your Offline section will be deleted from your device."="Wanneer u zich afmeldt, worden bestanden uit uw offline-gedeelte van uw apparaat verwijderd.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Wanneer u uitlogt, worden bestanden vanuit uw Offline sectie verwijderd van uw apparaat en voortgaande overdrachten worden geannuleerd.";
 /* Default title of an empty chat. */
@@ -2275,8 +2289,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="Server:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="Portaal";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="Proxy server vereist een wachtwoord";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Gebruikersnaam:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETAILS";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Link Creatie";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="DELEN MET";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="IN AFWACHTING";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSIES";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="E-mail al verzonden. Wacht een paar minuten voordat u het opnieuw probeert.";

@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="知り合いを追加";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="連絡先を招待";
+"inviteContact"="MEGAに招待";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="招待状が送信されました";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="残り共有";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="共有を削除";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="共有を削除";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="この共有を削除してもよろしいですか？（1件の連絡先と共有済み）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -763,7 +765,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントをキャンセルする最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="あなたのアカウントはキャンセルされました。";
+"accountCanceledSuccessfully"="アカウントは正常に削除されました。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="アカウントを閉じる";
 /* Title for the action that allows to remove a file or folder */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="オフラインからこのアイテムを削除してもよろしいですか";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="オフラインからこのアイテムを削除してもよろしいですか";
+/* Giphy section header */
+"Send GIF"="GIFを送信";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="GIPHYを検索";
+/* Empty Gifs section */
+"No GIFs found"="GIFが見つかりません";
 /* Chat section header */
 "chat"="チャット";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="もっと";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="ミュート";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="ミュートを解除";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="既読にする";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="インフォ";
 /* A button label. The button allows the user to close the conversation. */
@@ -1442,8 +1454,6 @@
 "codeScanned"="コードがスキャンされました";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="共有相手:";
-/*   */
-"details"="詳細";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="共有する";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="ユーザー";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X]バージョン";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="ファイル情報";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="フォルダ情報";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="このバージョンを削除しますか？　";
 /* Message to notify user the file version will be permanently removed */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="有効な通話があります。参加するにはタップします。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="タッチして通話に戻る %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="通話に戻るにはタップします";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="写真に保存";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="テストサーバーに変更しますか？　";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="アドレス帳へのアクセスを有効にする";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="選択をクリア";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部をクリア";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="転送を再開しますか？";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGAカメラアップロードフォルダ";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="あなたのアカウントはあなたの管理者によって削除されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="グループ名を入力";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="メッセージ…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="左にドラッグしてキャンセルし、離して送信します";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="外観";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2275,8 +2289,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="サーバー";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="ポート";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="プロキシ・サーバーにはパスワードが必要です。";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="ユーザー名";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="詳細";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="リンク";
+/* Text referencing the date of creation of a link */
+"Link Creation"="リンク作成";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="共有先";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="保留中";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="バージョン";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="メールは既に送信されています。数分待ってから再試行してください。";

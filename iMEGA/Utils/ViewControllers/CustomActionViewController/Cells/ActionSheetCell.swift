@@ -6,9 +6,6 @@ final class ActionSheetCell: UITableViewCell {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
         accessoryView = action.accessoryView
-        if detailTextLabel?.text == "✓" {
-            detailTextLabel?.textColor =  .mnz_turquoise(for: traitCollection)
-        }
         imageView?.image = action.image
         switch action.style {
         case .cancel, .destructive:
