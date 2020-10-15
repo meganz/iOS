@@ -717,15 +717,15 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
 + (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDefaultDateForMedia];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
 + (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.publicLinkCreationTime.mnz_formattedDefaultDateForMedia];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.publicLinkCreationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -764,7 +764,7 @@ static MEGAIndexer *indexer;
     }
 }
 
-+ (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender {
++ (UIActivityViewController *_Nullable)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id _Nullable)sender {
     NSUInteger stringCount = 0, fileCount = 0;
 
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
@@ -879,7 +879,7 @@ static MEGAIndexer *indexer;
     
     if ([[sender class] isEqual:UIBarButtonItem.class]) {
         activityVC.popoverPresentationController.barButtonItem = sender;
-    } else {
+    } else if (sender != nil) {
         UIView *presentationView = (UIView *)sender;
         activityVC.popoverPresentationController.sourceView = presentationView;
         activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);

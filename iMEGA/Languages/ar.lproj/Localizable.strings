@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="للدخول إلى هذا المجلد/الملف، أنت بحاجة لمفتاح فك التشفير الخاص به. إذا كنت لا تملك هذا المفتاح، تواصل مع منشئ الرابط.";
+"decryptionKeyAlertMessage"="للوصول إلى هذا المجلد / الملف، ستحتاج إلى مفتاح فك التشفير الخاص به. إذا لم يكن لديك المفتاح، فيرجى الاتصال بمنشئ الرابط.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="مفتاح التشفير";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="أضف جهات اتصال";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="دعوة جهة الاتصال";
+"inviteContact"="دعوة إلى ميغا MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="تم إرسال الدعوة";
 /* Button title to allow the user postpone an action */
@@ -315,9 +315,9 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="‏احفظ الصورة";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="الحصول على الرّابط";
+"getLink"="احصل على الرّابط";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="احصل على رابط";
+"getLinks"="احصل على الروابط";
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="إدارة الرابط";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
@@ -369,7 +369,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="اضغط على الملف لاعادة التسمية";
 /* */
-"sendToContact"="ارسل الى جهة الاتصال";
+"sendToContact"="إرسال إلى جهة الاتصال";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="محادثاتي";
 /* Toast text upon sending a single file to chat */
@@ -536,6 +536,8 @@
 "sharesLeft"="مشاركات متبقية";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="حذف المشاركة";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="إزالة المشاركة";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="هل أنت متأكد من إزالة المشاركة؟ (مشارك مع 1 جهة اتصال)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -549,7 +551,7 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="مشاركة مع";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="إضافة من جهة الاتصالات";
+"addFromContacts"="إضافة من جهات الاتصال";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="إضافة متصّل";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
@@ -585,7 +587,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] جهات الاتصال";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="مجلد المشاركة";
+"shareFolder"="مشاركة المجلد";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="المجلدات المشاركة";
 /* Button that allows you to select something (a folder, a message...) */
@@ -683,15 +685,15 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="الإعدادات > عام > %@ مساحة التخزين";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="ترفيع فيديوهات من أجل Live Photos";
+"Upload Videos for Live Photos"="تحميل مقاطع الفيديو للصور ا";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload All Burst Photos"="ترفيع كل الصور المتتابعة";
+"Upload All Burst Photos"="تحميل جميع صور Burst";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="ترفيع ألبوم مخفي";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="سيتم تحميل إصدارات الصور والفيديو لكل صورة حية.";
+"The video and the photo in each Live Photo will be uploaded."="سيتم تحميل إصدارات الصور والفيديو لكل Live Photo سيتم ترفيعها.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="سيتم تحميل إصدار الصورة فقط من كل صورة مباشرة.";
+"Only the photo in each Live Photo will be uploaded."="سيتم تحميل إصدار الصورة فقط من كل Live Photo سيتم ترفيعها.";
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="سيتم تحميل جميع الصور من تسلسل صور المتتابعة الخاص بك.";
 /* Footer description when upload all burst photos is disabled */
@@ -705,15 +707,15 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="لن يتم ترفيع الألبومات المشاركة من تطبيق الصور بجهازك.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload Albums Synced from iTunes"="يمكنك ترفيع ألبومات تمت مزامنتها من iTunes";
+"Upload Albums Synced from iTunes"="تحميل ألبومات متزامنة من iTunes";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="الألبومات التي تمت مزامنتها هي المكان الذي تقوم فيه بمزامنة الصور أو مقاطع الفيديو مع تطبيق الصور بجهازك من iTunes.";
 /* App means “Application” */
-"App Version"="نسخة التطبيق";
+"App Version"="إصدار التطبيق";
 /* Title of the label where the SDK version is shown */
-"sdkVersion"="نسخة MEGA SDK";
+"sdkVersion"="نسخة MEGA ميغا SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="نسخة حزمة أدوات تطوير البرمجيات لMEGAchat";
+"megachatSdkVersion"="نسخة حزمة أدوات تطوير البرمجيات لمحادثة ميغا MEGAchat";
 /* Link to the public code of the app */
 "View Source Code"="الاطلاع على الرماز المصدري";
 /* Title for the section "Acknowledgements" of the app */
@@ -864,7 +866,7 @@
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="رمز بسيط";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="مسح البيانت";
+"eraseAllLocalDataLabel"="محو البيانات المحلية";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
 /* Menu item */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="هل أنت متأكد من حذف الملفات من دون اتصال؟";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="هل أنت متأكد من حذف العناصر من دون اتصال؟";
+/* Giphy section header */
+"Send GIF"="أرسل GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="بحث GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="لم يتم العثور على أي GIF";
 /* Chat section header */
 "chat"="المحادثة";
 /* Empty Conversations section */
@@ -1189,6 +1197,10 @@
 "more"="المزيد";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="كتم";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="إلغاء وضع الكتم";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="أجعله مقروء";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="معلومات";
 /* A button label. The button allows the user to close the conversation. */
@@ -1442,8 +1454,6 @@
 "codeScanned"="تم مسح الرمز";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="المشاركة مع:";
-/*   */
-"details"="تفاصيل";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="المشاركة";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="عضو";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] نسخ";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="معلومات الملف";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="معلومات المجلد";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="هل تود حذف هذه النسخة؟";
 /* Message to notify user the file version will be permanently removed */
@@ -1635,7 +1641,7 @@
 /* Title of the Spotlight Search section */
 "Search"="البحث";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="سيسمح بالبحث عن ملفات/مجلدات ميغا MEGA في بحث Spotlight الخاص بجهازك";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="عند التمكين، يسمح بالبحث عن ملفات ومجلدات ميغا MEGA في بحث Spotlight .";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1683,13 +1689,13 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="عند تعطيل نسخ الملف، سيتم استبدال الإصدار الحالي بالإصدار الجديد بمجرد تحديث الملف (ولن يتم تسجيل التغييرات التي أجريتها على الملف). هل تريد بالتأكيد تعطيل نسخ الملفات؟";
 /* Settings preference title to show file versions info of the account */
-"File Versions"="النسخ المعدلة للملف";
+"File Versions"="إصدارات الملف";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="الحجم الكامل لجميع نسخ الملف:";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="حذف جميع النسخ القديمة لملفاتي";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete Previous Versions"="حذف النسخ القديمة";
+"Delete Previous Versions"="حذف الإصدارات السابقة";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="توجد مكالمة فعالة. انقر للانضمام";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="انقر للعودة الى المكالمة %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="انقر للعودة الى المكالمة";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="احفظ مع الصور";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1735,7 +1743,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="تعد ميزة تدوير المفاتيح أكثر أماناً بقليل، لكنها لا تسمح لك بإنشاء رابط محادثة ولن يرى المشاركون الجدد الرسائل السابقة.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="تم تعطيل خاصية تدوير مفتاح المحادثات مع أكثر من 100 مشارك.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="لإنشاء رابط محادثة، يجب عليك تسمية المجموعة.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,17 +1767,17 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="لا يمكنك القيام بمكالمة الفيديو لأن هذه المكالمة بلغت الحد الأقصى لعدد المشاركين الذين يستخدمون الفيديو.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="تعذر بدء مكالمة بسبب تجاوز حد عدد المشتركين.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="انضمام…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="مغادرة…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="طريقة عرض القائمة";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="عرض الصور مصغرة";
+"Thumbnail View"="عرض كصور مصغرة";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Page View";
+"Page View"="عرض الصفحة";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="اتصال ضعيف.";
 /* There are no notifications to display. */
@@ -1941,7 +1949,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="عناصر";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat Link Unavailable"="رابط المحادثة غير موجود";
+"Chat Link Unavailable"="رابط الدردشة غير متوفر";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="لم يعد رابط المحادثة هذا متاحاً";
 /* Text explaining users how the chat links work. */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="التغيير الى مخدم الاختبارات؟";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد أنك تريد التغيير إلى المخدم التجريبي؟ من الممكن ان يتعرض حسابك  لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="تمكين الوصول إلى دفتر العناوين الخاص بك";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2011,7 +2019,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="لا يمكنك إزالة %1$s كجهة اتصال لأنها جزء من حساب الأعمال الخاص بك.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="يتطلب رمز المرور";
+"Require Passcode"="تتطلب رمز المرور";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="فوراً";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2051,7 +2059,7 @@
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="حتى صباح الغد";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="حتى أعيد تشغيله";
+"Until I turn it back on"="حتى أقوم بإعادة تشغيلهم";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 دقيقة";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2067,7 +2075,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="الإشعارات ستكون صامتة حتى %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="تنبيهات المحادثة";
+"Chat Notifications"="إشعارات المحادثة";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="عدم الإزعاج";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2095,7 +2103,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="الدور:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include Location Tags"="تشمل علامات الموقع";
+"Include Location Tags"="إدراج إشارات للمواقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="في حالة التمكين، ستقوم بتحميل معلومات حول مكان التقاط الصور ومقاطع الفيديو الخاصة بك، لذا كن حذراً عند مشاركتها.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="إلغاء التحديد";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="مسح الكل";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="استئناف عمليات النقل؟";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="مجلد ميغا MEGA لترفيعات الكاميرا";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="تمت إزالة حسابك من قبل مشرف الحساب الخاص بك. يرجى الاتصال بمشرف حساب الأعمال لمزيد من التفاصيل.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="رسالة…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="اسحب لليسار للإلغاء، حرر للإرسال";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="المظهر";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2219,11 +2233,11 @@
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="اختر شكل العرض (قائمة أو صور مصغرة) على أساس كل مجلد، أو استخدم نفس شكل العرض لجميع المجلدات.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
-"When you logout, ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم إلغاء التحويلات الجارية.";
+"When you logout, ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم إلغاء عمليات النقل الجارية.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="عند الخروج ، سيتم حذف الملفات من قسم غير متصل إلى الانترنت من جهازك.";
+"When you logout, files from your Offline section will be deleted from your device."="عند تسجيل الخروج، سيتم حذف الملفات من قسم غير متصل إلى الانترنت من جهازك.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم حذف الملفات من قسم غير متصل على الانترنت من جهازك وسيتم إلغاء عمليات التراسل الجارية.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم حذف الملفات من قسم ”غير متصل” من جهازك وسيتم إلغاء عمليات النقل الجارية.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="تم انشاء المحادثة في %s1";
 /* Title shown when there are no shared files */
@@ -2275,8 +2289,22 @@
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="الخادم:";
 /* Label to indicate a server port to be used. String as short as possible. */
-"Port"="Port";
+"Port"="منفذ";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="خادم البروكسي يتطلب كلمة مرور";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="اسم المستخدم:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="تفاصيل";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="رابط";
+/* Text referencing the date of creation of a link */
+"Link Creation"="إنشاء رابط";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="مشارك مع";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="قيد الانتظار";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="الإصدارات";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="تم إرسال البريد الإلكتروني بالفعل. يرجى الانتظار بضع دقائق قبل المحاولة مرة أخرى.";

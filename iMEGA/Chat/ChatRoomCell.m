@@ -128,7 +128,21 @@
         } else {
             self.activeCallImageView.hidden = YES;
             self.onCallInfoView.hidden = NO;
-            self.chatLastMessage.text = call.status == MEGAChatCallStatusInProgress || call.status == MEGAChatCallStatusDestroyed ? AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating") : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            switch (call.status) {
+                case MEGAChatCallStatusInProgress:
+                case MEGAChatCallStatusDestroyed:
+                case MEGAChatCallStatusTerminatingUserParticipation:
+                    self.chatLastMessage.text = AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                    break;
+                    
+                case MEGAChatCallStatusRingIn:
+                    self.chatLastMessage.text = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                    break;
+                    
+                default:
+                    self.chatLastMessage.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+                    break;
+            }
             if (chatListItem.isGroup) {
                 self.onCallMicImageView.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalAudio"];
                 self.onCallVideoImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalVideo"];
@@ -182,23 +196,7 @@
 - (void)configureAvatar:(MEGAChatListItem *)chatListItem {
     if (chatListItem.isGroup) {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
-        if (chatRoom.peerCount == 0) {
-            self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
-            [self.avatarView configureWithMode:MegaAvatarViewModeSingle];
-        } else {
-            uint64_t firstPeerHandle = [chatRoom peerHandleAtIndex:0];
-            NSString *firstPeerName = [chatRoom userDisplayNameForUserHandle:firstPeerHandle];
-            if (chatRoom.peerCount == 1) {
-                [self.avatarView.avatarImageView mnz_setImageForUserHandle:firstPeerHandle name:firstPeerName];
-                [self.avatarView configureWithMode:MegaAvatarViewModeSingle];
-            } else {
-                uint64_t secondPeerHandle = [chatRoom peerHandleAtIndex:1];
-                NSString *secondPeerName = [chatRoom userDisplayNameForUserHandle:secondPeerHandle];
-                [self.avatarView.firstPeerAvatarImageView mnz_setImageForUserHandle:firstPeerHandle name:firstPeerName];
-                [self.avatarView.secondPeerAvatarImageView mnz_setImageForUserHandle:secondPeerHandle name:secondPeerName];
-                [self.avatarView configureWithMode:MegaAvatarViewModeMultiple];
-            }
-        }
+        [self.avatarView setupFor:chatRoom];
     } else {
         [self.avatarView.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
         [self.avatarView configureWithMode:MegaAvatarViewModeSingle];

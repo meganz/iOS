@@ -159,6 +159,10 @@ typedef NS_ENUM(NSInteger, QRSection) {
             } else {
                 self.segmentedControl.tintColor = UIColor.whiteColor;
             }
+            
+            //The SVProgressHUD appearance is not updated when enabling/disabling dark mode. By updating the appearance and dismissing the HUD, it will have the correct configuration the next time is shown.
+            [AppearanceManager setupThirdPartyAppereance:self.traitCollection];
+            [SVProgressHUD dismiss];
             break;
         }
         

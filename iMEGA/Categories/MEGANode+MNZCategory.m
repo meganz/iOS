@@ -90,7 +90,7 @@
     }
 }
 
-- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
+- (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink {
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
@@ -824,7 +824,7 @@
 
 #pragma mark - Shares
 
-- (NSMutableArray <MEGAShare *> *)outShares {
+- (nonnull NSMutableArray <MEGAShare *> *)outShares {
     NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.new;
     
     MEGAShareList *outSharesForNodeShareList = [MEGASdkManager.sharedMEGASdk outSharesForNode:self];
@@ -846,7 +846,7 @@
 }
 
 
-- (NSArray *)mnz_versions {
+- (NSArray<MEGANode *> *)mnz_versions {
     return [[[MEGASdkManager sharedMEGASdk] versionsForNode:self] mnz_nodesArrayFromNodeList];
 }
 

@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.";
+"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, te rugăm să contactezi creatorul linkului.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Adaugă contacte";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invită contactul";
+"inviteContact"="Invită pe MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invitație trimisă";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="Partajări părăsite";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Elimină partajarea";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Elimină partajarea";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Sigur vrei să elimini această partajare? (Partajat cu 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1085,6 +1087,12 @@
 "removeItemFromOffline"="Sigur vrei să ștergi acest element din Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sigur vrei să ștergi aceste elemente din Offline?";
+/* Giphy section header */
+"Send GIF"="Trimite GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Caută pe GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Niciun GIF găsit";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1154,7 +1162,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Trimite mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verifică credențialele";
+"verifyCredentials"="Verifică acreditările";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Verifică";
 /* Button title */
@@ -1168,11 +1176,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Foldere partajate";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Credențialele contactului";
+"contactCredentials"="Acreditările contactului";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă față în față. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi și pe acela.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"My credentials"="Credențialele mele";
+"My credentials"="Acreditările mele";
 /* Button to reset the password */
 "reset"="Resetează";
 /* Button title */
@@ -1189,6 +1197,10 @@
 "more"="Mai multe";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Pune pe mut";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Scoate de pe mut";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Marchează ca citit(ă)";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Informații";
 /* A button label. The button allows the user to close the conversation. */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu mesaj necitit";
+"unreadMessage"="%lu MESAJ NECITIT";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu mesaje necitite";
+"unreadMessages"="%lu MESAJE NECITITE";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge la pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți selecta abonamentul MEGA PRO și să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1454,6 @@
 "codeScanned"="Cod scanat";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Partajat cu:";
-/*   */
-"details"="Detalii";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Partajare";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,10 +1476,6 @@
 "user"="utilizator";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versiuni";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Informații despre fișier";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Informații despre folder";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Vrei să ștergi această versiune?";
 /* Message to notify user the file version will be permanently removed */
@@ -1635,7 +1641,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Caută";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Îți va permite să cauți fișierele/folderele MEGA în căutarea cu Spotlight a dispozitivului";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Când este activat, permite căutarea fișierelor și folderelor MEGA în căutarea Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu deții cheile";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1683,7 +1689,7 @@
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fișierelor?";
 /* Settings preference title to show file versions info of the account */
-"File Versions"="Versiunile fișierelor";
+"File Versions"="Versiuni ale fișierelor";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Dimensiunea totală ocupată de versiunile fișierelor:";
 /* The title of the section about deleting file versions in the settings. */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Există un apel activ. Atinge pentru a te alătura.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Atinge pentru a reveni la apel";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salvează în Poze";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1735,7 +1743,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotația cheii este puțin mai sigură, dar nu îți permite să creezi un link al chatului, iar noii participanți nu vor vedea mesajele din trecut.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Rotația cheii este dezactivată pentru conversațiile cu mai mult de 100 de participanți.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Pentru a creat un link de chat trebuie să denumești grupul.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1759,17 +1767,17 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Nu ți se permite să activezi funcția video deoarece acest apel a atins numărul maxim de participanți care folosesc funcția video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Nu se poate porni un apel din cauza depășirii limitei de participanți.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Se alătură…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Se părăsește…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Vizualizare tip listă";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Vizualizare tip miniaturi";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Page View";
+"Page View"="Vizualizare tip pagini";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
 /* There are no notifications to display. */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Schimbi pe un server de test?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Activează accesul la agenda de adrese";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2047,11 +2055,11 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Contact your business account administrator to resolve the issue and activate your account."="Contactează administratorul contului business pentru a rezolva problema și pentru a-ți activa contul.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
-"Until this morning"="Until this morning";
+"Until this morning"="Până în această dimineață";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
-"Until tomorrow morning"="Until tomorrow morning";
+"Until tomorrow morning"="Până mâine dimineață";
 /*Chat Notifications DND: Option to turn the DND on forever */
-"Until I turn it back on"="Until I turn them back on";
+"Until I turn it back on"="Până când le pornesc înapoi";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 de minute";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -2063,7 +2071,7 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Amuțește notificările de chat timp de";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
+"Notifications will be silenced until tomorrow, %@"="Notificările vor fi amuțite până mâine, %@";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notificările vor fi silențioase până la %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2071,7 +2079,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Nu deranja";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notifications muted";
+"Notifications muted"="Notificări amuțite";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Se reconectează…";
 /* Title shown when the user reconnect in a call. */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Șterge elementele selectate";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Șterge toate";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Reiei transferurile?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Contul tău a fost eliminat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Înfățișare";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2265,7 +2279,7 @@
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu,";
 /* Text used to notify the user that some action would discard a non ended action */
-"Discard Changes"="Discard Changes";
+"Discard Changes"="Renunță la modificări";
 /* Title of the Proxy section under Settings */
 "Proxy"="Proxy";
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
@@ -2280,3 +2294,17 @@
 "Proxy server requires a password"="Serverul de proxy necesită o parolă";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Nume de utilizator:";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="DETALII";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="LINK";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Data creării linkului";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="PARTAJEAZĂ CU";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="ÎN CURS";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="VERSIUNI";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="E-mail trimis deja. Te rugăm să aștepți câteva minute înainte de a încerca din nou.";

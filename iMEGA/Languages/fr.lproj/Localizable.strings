@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Ajouter des contacts";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Inviter le contact";
+"inviteContact"="Inviter à MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="L’invitation a été envoyée";
 /* Button title to allow the user postpone an action */
@@ -536,12 +536,14 @@
 "sharesLeft"="Les partages ont été quittés";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Suppression du partage";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Supprimer le partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec 1 contact)";
+"removeOneShareOneContactMessage"="Souhaitez-vous vraiment supprimer ce partage ? (Partagé avec 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
+"removeOneShareMultipleContactsMessage"="Souhaitez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Souhaitez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Le partage a été retiré";
 /* Message shown when some shares have been removed */
@@ -559,7 +561,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Vous n'avez pas à ajouter votre propre adresse courriel";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s’il accepte.";
+"theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts si l’invitation est acceptée.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s'ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -573,9 +575,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Quitter";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage ?";
+"leaveShareAlertMessage"="Souhaitez-vous vraiment quitter ce partage ?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages ?";
+"leaveSharesAlertMessage"="Souhaitez-vous vraiment quitter ces partages ?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partager";
 /* Select all items/elements on the list */
@@ -892,7 +894,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Annuler les transferts";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Voulez-vous annuler %@ ?";
+"cancelTransfersText"="Souhaitez-vous annuler %@ ?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOUS les transferts";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1082,9 +1084,15 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément Hors ligne ?";
+"removeItemFromOffline"="Souhaitez-vous vraiment supprimer cet élément Hors ligne ?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments Hors ligne ?";
+"removeItemsFromOffline"="Souhaitez-vous vraiment supprimer ces éléments Hors ligne ?";
+/* Giphy section header */
+"Send GIF"="Envoyer un GIF";
+/* This is the placeholder text for GIPHY search */
+"Search GIPHY"="Chercher dans GIPHY";
+/* Empty Gifs section */
+"No GIFs found"="Aucun GIF n’a été trouvé";
 /* Chat section header */
 "chat"="Dialogue en ligne";
 /* Empty Conversations section */
@@ -1162,7 +1170,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Voulez-vous vraiment effacer l’historique entier de cette conversation ?";
+"clearTheFullMessageHistory"="Souhaitez-vous vraiment effacer l’historique entier de cette conversation ?";
 /* 'Next' button in a dialog */
 "continue"="Continuer";
 /* Title of the incoming shared folders of a user. */
@@ -1189,6 +1197,10 @@
 "more"="Plus";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Sourdine";
+/* A button label. The button allows the user to unmute a conversation. */
+"unmute"="Désactiver la sourdine";
+/* A button label. The button allows the user to mark a conversation as read. */
+"Mark as Read"="Marquer comme lue";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Renseignements";
 /* A button label. The button allows the user to close the conversation. */
@@ -1268,7 +1280,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nouveau dossier partagé";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment annuler l’inscription ?";
+"areYouSureYouWantToAbortTheRegistration"="Souhaitez-vous vraiment abandonner l’inscription ?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
 /* A button to resend the email confirmation. */
@@ -1288,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nouveaux messages";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu message non lu";
+"unreadMessage"="%lu MESSAGE NON LU";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu messages non lus";
+"unreadMessages"="%lu MESSAGES NON LUS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/ désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1442,8 +1454,6 @@
 "codeScanned"="Code balayé";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Partagé avec :";
-/*   */
-"details"="Détails";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Partage";
 /* Title of section to display number of all historical versions of files. */
@@ -1466,12 +1476,8 @@
 "user"="utilisateur";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versions";
-/* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Renseignements sur le fichier";
-/* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Renseignements sur le dossier";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Voulez-vous supprimer cette version ?";
+"deleteVersion"="Souhaitez-vous supprimer cette version ?";
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="Elle sera supprimée définitivement";
 /*  */
@@ -1577,9 +1583,9 @@
 /* Title of archived chats button */
 "archivedChats"="Conversations archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Voulez-vous vraiment archiver cette conversation ?";
+"archiveChatMessage"="Souhaitez-vous vraiment archiver cette conversation ?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Voulez-vous vraiment désarchiver cette conversation ?";
+"unarchiveChatMessage"="Souhaitez-vous vraiment désarchiver cette conversation ?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Désarchiver la conversation";
 /* Title of button to archive chats. */
@@ -1659,7 +1665,7 @@
 /* Message warning the user about the risk of not setting up permissions */
 "The MEGA app may not work as expected without the required permissions. Are you sure?"="L’appli MEGA pourrait ne pas fonctionner comme prévu sans les autorisations nécessaires. Êtes-vous certain ?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
-"%1 of %2"="%1 de %2";
+"%1 of %2"="%1 sur %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Autoriser l’accès à Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
@@ -1707,7 +1713,7 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la corbeille ou pour définir une période de conservation plus longue, vous devez détenir un abonnement PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Souhaitez-vous fermer toutes les autres sessions ? Cela vous déconnectera de toutes les autres sessions, sauf la session actuelle.";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Souhaitez-vous fermer toutes les autres sessions ? Vous serez déconnecté de toutes les autres sessions, sauf de la session actuelle.";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ s’est joint à l’appel.";
 /* Message to inform the local user that someone has left the current group call */
@@ -1718,6 +1724,8 @@
 "There is an active call. Tap to join."="Un appel est en cours. Touchez pour y participer.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touchez pour revenir à l’appel %@";
+/* Message shown in a chat room for a one on one call */
+"Tap to return to call"="Touchez pour reprendre l’appel";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Enregistrer dans Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1965,7 +1973,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Changer pour un serveur de test ?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Voulez-vous vraiment changer pour un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Souhaitez-vous vraiment changer vers un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Donner accès à votre carnet d’adresses";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -1981,7 +1989,7 @@
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Ouvrir les réglages";
 /* Text encouraging the user to invite contacts to MEGA */
-"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invitez des contacts et commencez à dialoguer en toute sécurité avec le dialogue en ligne chiffré de MEGA.";
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invitez des contacts et commencez à dialoguer en toute sécurité grâce au dialogue en ligne chiffré de MEGA.";
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Inviter [X] contacts";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
@@ -2067,7 +2075,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Les notifications seront en sourdine jusqu’à %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Notifications de dialogue en ligne";
+"Chat Notifications"="Notifications de conversation";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Ne pas déranger";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2158,6 +2166,8 @@
 "Clear Selected"="Effacer la sélection";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Tout effacer";
+/* Alert header for asking permission to resume transfers*/
+"Resume Transfers?"="Reprendre les transferts ?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
 /* Action button text of folder selection screen for camera uploads */
@@ -2188,6 +2198,10 @@
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour plus de précisions.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
+/* Chat: This is the placeholder text for text view when keyboard is shown */
+"Message..."="Écrivez un message…";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer.";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Apparence";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2280,3 +2294,17 @@
 "Proxy server requires a password"="Le mandataire exige un mot de passe";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Nom d’utilisateur :";
+/* Text used for a title or header listing the details of something. */
+"DETAILS"="Détails";
+/* Text used as title or header for reference an url, for instance, a node link. */
+"LINK"="Lien";
+/* Text referencing the date of creation of a link */
+"Link Creation"="Création du lien";
+/* Text used for a title or header to list users whom you are sharing something. */
+"SHARE WITH"="Partager avec";
+/* Text used for a title or header to list pending users whom you are sharing something. */
+"PENDING"="En attente";
+/* Text used as title or header to display number of all historical versions of files. */
+"VERSIONS"="Versions";
+/* Error text shown when requesting email for email verification within 10 minutes */
+"Email already sent. Please wait a few minutes before trying again."="Le courriel a déjà été envoyé. Veuillez patienter quelques minutes avant de ressayer.";

@@ -221,6 +221,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     if (sender.state == UIGestureRecognizerStateEnded) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
+        contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }
 }

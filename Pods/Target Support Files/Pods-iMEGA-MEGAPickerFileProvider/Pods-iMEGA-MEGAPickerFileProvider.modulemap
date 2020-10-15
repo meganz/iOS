@@ -1,0 +1,6 @@
+framework module Pods_iMEGA_MEGAPickerFileProvider {
+  umbrella header "Pods-iMEGA-MEGAPickerFileProvider-umbrella.h"
+
+  export *
+  module * { export * }
+}
