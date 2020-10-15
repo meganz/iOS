@@ -536,6 +536,8 @@
 "sharesLeft"="残り共有";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="共有を削除";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="共有を削除";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="この共有を削除してもよろしいですか？（1件の連絡先と共有済み）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="グループ名を入力";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="メッセージ…";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="左にドラッグしてキャンセルし、離して送信します";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="外観";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

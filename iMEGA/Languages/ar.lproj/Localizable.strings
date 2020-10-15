@@ -536,6 +536,8 @@
 "sharesLeft"="مشاركات متبقية";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="حذف المشاركة";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="إزالة المشاركة";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="هل أنت متأكد من إزالة المشاركة؟ (مشارك مع 1 جهة اتصال)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="رسالة…";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="اسحب لليسار للإلغاء، حرر للإرسال";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="المظهر";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

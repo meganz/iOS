@@ -29,7 +29,7 @@ class ReactionEmojiButton: UIButton {
     
     private func configure() {
         
-        let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)])
+        let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 22) as Any])
         let attributedCount = NSAttributedString(string: " \(count)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .medium),
                                                                                    NSAttributedString.Key.baselineOffset:3,
                                                                                   

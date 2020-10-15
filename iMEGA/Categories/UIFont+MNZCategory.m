@@ -13,8 +13,7 @@
     } else if (emojiCount == 3) {
         size = 25.0f;
     }
-    
-    return [UIFont systemFontOfSize:size];
+    return [UIFont fontWithName:@"Apple color emoji" size:size];
 }
 
 - (UIFont *)bold {

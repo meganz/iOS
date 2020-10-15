@@ -536,6 +536,8 @@
 "sharesLeft"="已離開共享";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="取消分享";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="移除分享";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="您確定要刪除這個分享嗎？（已與 1 個聯絡人分享）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="輸入訊息…";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="向左拖曳即可取消，放開即可發送";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="外觀";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

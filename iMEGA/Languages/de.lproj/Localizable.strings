@@ -536,6 +536,8 @@
 "sharesLeft"="Ordnerfreigaben verlassen";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Freigabe stornieren";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="Orderfreigabe stornieren";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Diese Freigabe stornieren? (Betroffene Kontakte: 1)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */

@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="需要解密密钥才能访问该文件夹/文件。如果您没有密钥，需联系链接创建者。";
+"decryptionKeyAlertMessage"="此文件夹/文件需要解密密钥才可访问，若没有密钥，请与链接创建者联系。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密钥";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="新增联系人";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="邀请联系人";
+"inviteContact"="邀请至MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="已邀请";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="已离开共享";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="取消分享";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="移除共享";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="您确定要删除这个分享吗？ （已与1 个联系人分享）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1086,11 +1088,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="您确定要从离线模式中删除这些项目？";
 /* Giphy section header */
-"Send GIF"="Send GIF";
+"Send GIF"="发送GIF动图";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="Search GIPHY";
+"Search GIPHY"="搜索GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No GIFs found";
+"No GIFs found"="无GIF动图";
 /* Chat section header */
 "chat"="聊天";
 /* Empty Conversations section */
@@ -1298,9 +1300,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新消息";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu 未读信息";
+"unreadMessage"="%lu条未读消息";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu 未读信息";
+"unreadMessages"="%lu未读消息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes账户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple账号登入（如果您还没有这样做），然后点击查看账号。您会被带到您的账户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2165,7 +2167,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Resume Transfers?";
+"Resume Transfers?"="恢复传输？";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
 /* Action button text of folder selection screen for camera uploads */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="输入文字……";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="向左拖动即可取消，松手发送";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="外观";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2233,7 +2235,7 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="登出帐户后，正在进行的传输将被取消。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="登出帐户后，“离线”中的文件将从您的设备中删除。";
+"When you logout, files from your Offline section will be deleted from your device."="登出帐户后，保存在“离线”中的文件将从您的设备中删除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="登出帐户后，离线中的文件将从您的设备中删除，传输中的文件将取消。";
 /* Default title of an empty chat. */
