@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มีให้ติดต่อผู้ที่สร้างลิงก์นี้";
+"decryptionKeyAlertMessage"="เพื่อเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์ถอดรหัสลับ หากไม่ กรุณาติดต่อผู้สร้างลิงก์";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="เพิ่มผู้ติดต่อ";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="เชิญผู้ติดต่อ";
+"inviteContact"="เชิญเข้าร่วม MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="ส่งคำเชิญแล้ว";
 /* Button title to allow the user postpone an action */
@@ -536,6 +536,8 @@
 "sharesLeft"="แชร์ที่เหลือ";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="เอาการแชร์ออก";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="ลบแชร์ออก";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย 1 ผู้ติดต่อ)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -1086,11 +1088,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="คุณแน่ใจหรือไม่ว่าจะลบรายการเหล่านี้ออกจากออฟไลน์";
 /* Giphy section header */
-"Send GIF"="Send GIF";
+"Send GIF"="ส่ง GIF";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="Search GIPHY";
+"Search GIPHY"="ค้นหาใน GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No GIFs found";
+"No GIFs found"="ไม่พบ GIFs";
 /* Chat section header */
 "chat"="แชท";
 /* Empty Conversations section */
@@ -2165,7 +2167,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="ลบทั้งหมด";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Resume Transfers?";
+"Resume Transfers?"="ดำเนินการถ่ายโอนต่อหรือไม่";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2197,9 +2199,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="กรอกชื่อกลุ่ม";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="พิมพ์ข้อความ…";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="ลากไปทางซ้ายเพื่อยกเลิก หรือปล่อยเพื่อส่ง";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="การแสดงผล";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2231,7 +2233,7 @@
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="เลือกโหมดมุมมอง (รายการหรือรูปขนาดย่อ) ในแต่ละโฟลเดอร์หรือใช้โหมดมุมมองเดียวกันสำหรับทุกโฟลเดอร์";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
-"When you logout, ongoing transfers will be cancelled."="เมื่อคุณออกจากระบบ การถ่ายโอนที่กำลังดำเนินการอยู่จะถูกยกเลิกด้วย";
+"When you logout, ongoing transfers will be cancelled."="เมื่อคุณออกจากระบบ การถ่ายโอนที่กำลังดำเนินการอยู่จะถูกยกเลิก";
 /* Warning message to alert user about logout in My Account section if has offline files. */
 "When you logout, files from your Offline section will be deleted from your device."="เมื่อคุณออกจากระบบ ไฟล์จากส่วนออฟไลน์ของคุณจะถูกลบออกจากอุปกรณ์";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */

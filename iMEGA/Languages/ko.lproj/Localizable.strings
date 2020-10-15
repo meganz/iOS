@@ -536,6 +536,8 @@
 "sharesLeft"="공유 떠남";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="공유 제거";
+/* The text in the button to remove all contacts to a shared folder on one click */
+"Remove Share"="공유 제거";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="이 공유를 삭제하시겠습니까? (1개의 연락처와 공유됨)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */

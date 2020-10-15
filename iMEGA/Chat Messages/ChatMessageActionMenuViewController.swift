@@ -263,11 +263,11 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         emojiHeader.distribution = .equalSpacing
         emojiHeader.alignment = .fill
 
-        let emojis = ["😀", "☹️", "🤣", "👍", "👎"]
+        let emojis = ["😀", "☹", "🤣", "👍", "👎"]
         emojis.forEach { (emoji) in
             let emojiView = UIButton()
             emojiView.addHaptic(.selection, forControlEvents: .touchDown)
-            let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)])
+            let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 30) as Any])
             emojiView.setAttributedTitle(attributedEmoji, for: .normal)
             emojiView.layer.cornerRadius = 22
             emojiView.backgroundColor = UIColor.mnz_whiteF2F2F2()

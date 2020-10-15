@@ -35,9 +35,6 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
 
     func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        if messages[section] is ChatNotificationMessage {
-            return .zero
-        }
         
         if section == 0 {
             if chatRoomDelegate.isFullChatHistoryLoaded {
