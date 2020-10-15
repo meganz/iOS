@@ -105,9 +105,8 @@ final class NodeActionBuilder {
         } else if displayMode == .previewDocument {
             if isLink {
                 nodeActions.append(NodeAction.importAction())
-                nodeActions.append(NodeAction.downloadAction())
             }
-            
+            nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.sendToChatAction())
             nodeActions.append(NodeAction.shareAction())
             if isPdf {
