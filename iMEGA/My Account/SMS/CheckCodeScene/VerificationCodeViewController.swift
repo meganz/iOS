@@ -1,7 +1,7 @@
 import UIKit
 
-class VerificationCodeViewController: UIViewController {
-
+final class VerificationCodeViewController: UIViewController, ViewType {
+    // MARK: - Private properties
     private let verificationCodeCount = 6
     private let resendCheckTimeInterval = 30.0
     private var verificationCodeFields = [UITextField]()
@@ -16,32 +16,25 @@ class VerificationCodeViewController: UIViewController {
     @IBOutlet private weak var errorMessageLabel: UILabel!
     @IBOutlet private weak var errorView: UIStackView!
     @IBOutlet private weak var resendStackView: UIStackView!
-
-    private var phoneNumber: PhoneNumber!
-    private var verificationType: SMSVerificationType = .UnblockAccount
-
+    
     private var verificationCode: String {
         return verificationCodeFields.compactMap { $0.text }.joined()
     }
-
-    class func instantiate(with phoneNumber: PhoneNumber, verificationType: SMSVerificationType) -> VerificationCodeViewController {
-        let controller = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "VerificationCodeViewControllerID") as! VerificationCodeViewController
-        controller.phoneNumber = phoneNumber
-        controller.verificationType = verificationType
-        return controller
-    }
-
+    
+    // MARK: - Internal properties
+    var viewModel: VerificationCodeViewModel!
+    
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configViewContents()
-        configResendView()
-        updateAppearance()
-
-        verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
-        verificationCodeFields.first?.becomeFirstResponder()
-
-        phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .international)
+        
+        viewModel.invokeCommand = { [weak self] command in
+            DispatchQueue.main.async { self?.executeCommand(command) }
+        }
+        
+        viewModel.dispatch(.onViewReady)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +65,36 @@ class VerificationCodeViewController: UIViewController {
         }
     }
     
-    // MARK: - Private
+    // MARK: - Config views
+    private func configViewContents() {
+        verificationCodeSentToLabel.text = AMLocalizedString("Please type the verification code sent to")
+        errorView.isHidden = true
+        didnotReceiveCodeLabel.text = AMLocalizedString("You didn't receive a code?")
+        resendButton.setTitle(AMLocalizedString("resend"), for: .normal)
+        confirmButton.setTitle(AMLocalizedString("confirm"), for: .normal)
+        
+        resendStackView.isHidden = true
+        showResendView()
+
+        verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
+        verificationCodeFields.first?.becomeFirstResponder()
+        
+        updateAppearance()
+    }
+
+    private func showResendView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
+            UIView.animate(withDuration: 0.75, animations: {
+                self.resendStackView.isHidden = false
+            })
+        }
+    }
+    
+    private func showCheckCodeErrorMessage(_ message: String) {
+        errorMessageLabel.text = message
+        errorMessageLabel.textColor = UIColor.mnz_redError()
+        errorView.isHidden = false
+    }
     
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
@@ -96,82 +118,34 @@ class VerificationCodeViewController: UIViewController {
             $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator(for: traitCollection).cgColor : UIColor.mnz_redError().cgColor
         }
     }
+
+    // MARK: - Execute command
+    func executeCommand(_ command: VerificationCodeViewModel.Command) {
+        switch command {
+        case .startLoading:
+            SVProgressHUD.show()
+        case .finishLoading:
+            SVProgressHUD.dismiss()
+        case let .configView(phoneNumber, screenTitle):
+            phoneNumberLabel.text = phoneNumber
+            title = screenTitle
+        case .checkCodeSucceeded:
+            checkSMSVerificationCodeSucceeded()
+        case .checkCodeError(let message):
+            showCheckCodeErrorMessage(message)
+            showResendView()
+        }
+    }
     
-    // MARK: - Config views
-
-    private func configViewContents() {
-        verificationCodeSentToLabel.text = AMLocalizedString("Please type the verification code sent to")
-        errorView.isHidden = true
-        didnotReceiveCodeLabel.text = AMLocalizedString("You didn't receive a code?")
-        resendButton.setTitle(AMLocalizedString("resend"), for: .normal)
-        confirmButton.setTitle(AMLocalizedString("confirm"), for: .normal)
-        switch verificationType {
-        case .AddPhoneNumber:
-            title = AMLocalizedString("Add Phone Number")
-        case .UnblockAccount:
-            title = AMLocalizedString("Verify Your Account")
-        }
-    }
-
-    private func configResendView() {
-        resendStackView.isHidden = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
-            guard self.verificationCode.count == 0 else { return }
-
-            UIView.animate(withDuration: 0.75, animations: {
-                self.resendStackView.isHidden = false
-            })
-        }
-    }
-
-    private func configCodeFieldsAppearance(with error: MEGAError? = nil) {
-        if let error = error {
-            DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
-                UIView.animate(withDuration: 0.75, animations: {
-                    self.resendStackView.isHidden = false
-                })
-            }
-            errorView.isHidden = false
-            
-            var errorMessage: String?
-            switch error.type {
-            case .apiEAccess: // you have reached the verification limits.
-                errorMessage = AMLocalizedString("You have reached the daily limit")
-            case .apiEFailed: // the verification code does not match.
-                errorMessage = AMLocalizedString("The verification code doesn't match.")
-            case .apiEExpired: // the phone number was verified on a different account.
-                errorMessage = AMLocalizedString("Your account is already verified")
-            default: break
-            }
-            errorMessageLabel.text = errorMessage
-            errorMessageLabel.textColor = UIColor.mnz_redError()
-        } else {
-            errorView.isHidden = true
-        }
-        
-        updateCodeFieldsAppearance()
-    }
-
     // MARK: - UI Actions
-
     @IBAction private func didTapResendButton() {
-        navigationController?.popViewController(animated: true)
+        viewModel.dispatch(.resendCode)
     }
 
     @IBAction private func didTapConfirmButton() {
         let code = verificationCode
         guard code.count == verificationCodeCount else { return }
-
-        SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk().checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate {
-            [weak self] _, error in
-            SVProgressHUD.dismiss()
-            if error.type == .apiOk {
-                self?.checkSMSVerificationCodeSucceeded()
-            } else {
-                self?.configCodeFieldsAppearance(with: error)
-            }
-        })
+        viewModel.dispatch(.checkVerificationCode(code))
     }
 
     @IBAction private func didEditingChangeInTextField(_ textField: UITextField) {
@@ -179,18 +153,11 @@ class VerificationCodeViewController: UIViewController {
     }
 
     private func checkSMSVerificationCodeSucceeded() {
+        errorView.isHidden = true
+        updateCodeFieldsAppearance()
         SVProgressHUD.showInfo(withStatus: AMLocalizedString("Your phone number has been verified successfully"))
         setEditing(false, animated: true)
-        configCodeFieldsAppearance(with: nil)
-        dismiss(animated: true, completion: nil)
-
-        if verificationType == .UnblockAccount {
-            if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName) {
-                MEGASdkManager.sharedMEGASdk().fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
-            } else {
-                (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
-            }
-        }
+        viewModel.dispatch(.didCheckCodeSucceeded)
     }
 }
 

@@ -73,9 +73,7 @@ class PhoneNumberViewController: UITableViewController {
             MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (request, error) in
                 if error.type == .apiOk {
                     self.dismiss(animated: true, completion: {
-                        let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
-                        addPhoneNumberController.modalPresentationStyle = .fullScreen
-                        UIApplication.mnz_presentingViewController().present(addPhoneNumberController, animated: true, completion: nil)
+                        AddPhoneNumberRouter(hideDontShowAgain: true, presenter: self).start()
                     })
                 } else {
                     SVProgressHUD.showError(withStatus: AMLocalizedString("Failed to remove your phone number, please try again later.", "A message shown to users when phone number removal fails."))

@@ -279,9 +279,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (IBAction)didTapAddPhoneNumberView {
-    SMSNavigationViewController *smsNavigationController = [[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeAddPhoneNumber]];
-    smsNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:smsNavigationController animated:YES completion:nil];
+    [[[SMSVerificationViewRouter alloc] initWithVerificationType:SMSVerificationTypeAddPhoneNumber presenter:self] start];
 }
 
 #pragma mark - UITableViewDataSource
