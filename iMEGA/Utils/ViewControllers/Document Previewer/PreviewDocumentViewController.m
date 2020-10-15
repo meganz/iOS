@@ -189,10 +189,12 @@
     
     UIBarButtonItem *flexibleItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     NSMutableArray *toolbarItems = NSMutableArray.new;
-    if (self.isLink) {
-        [toolbarItems addObjectsFromArray:@[self.importBarButtonItem, flexibleItem]];
+    [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem]];
+    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+        [toolbarItems addObject:self.openInBarButtonItem];
+    } else {
+        [toolbarItems addObject:self.importBarButtonItem];
     }
-    [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem, self.openInBarButtonItem]];
     self.toolbarItems = toolbarItems.copy;
     [self.navigationController setToolbarHidden:NO animated:YES];
     
@@ -395,7 +397,15 @@
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
+        
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
             
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
+            break;
+        
         case MegaNodeActionTypeCopy:
             [node mnz_copyInViewController:self];
             break;
@@ -478,7 +488,7 @@
         self.imageView.hidden = YES;
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        [self setToolbarItems:@[self.isLink ? self.importBarButtonItem : self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
+        [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];

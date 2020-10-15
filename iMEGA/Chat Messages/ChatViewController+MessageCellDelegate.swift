@@ -31,11 +31,11 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
         actions.append(infoAction)
         
-        let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: userEmail)
+        let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail)
         if user == nil || user?.visibility != MEGAUserVisibility.visible {
             let addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: nil, style: .default) {
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
-                    MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
+                    MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
                 }
                 
                 
@@ -118,7 +118,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
             if megaMessage.nodeList.size.uintValue == 1 {
                 var node = megaMessage.nodeList.node(at: 0)
                 if chatRoom.isPreview {
-                    node = MEGASdkManager.sharedMEGASdk()?.authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
+                    node = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
 
                 }
                 
@@ -141,7 +141,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                         
                         var tempNode = localChatMessage.message.nodeList.node(at: 0)
                         if chatRoom.isPreview {
-                            tempNode = MEGASdkManager.sharedMEGASdk()?.authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
+                            tempNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
                         }
                         if tempNode != nil {
                             mediaNodesArray.append(tempNode!)

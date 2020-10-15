@@ -5,6 +5,8 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeCopy,
     MegaNodeActionTypeMove,
     MegaNodeActionTypeInfo,
+    MegaNodeActionTypeFavourite,
+    MegaNodeActionTypeLabel,
     MegaNodeActionTypeLeaveSharing,
     MegaNodeActionTypeRename,
     MegaNodeActionTypeRemoveLink,

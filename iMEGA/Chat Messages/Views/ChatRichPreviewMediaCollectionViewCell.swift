@@ -16,12 +16,12 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        MEGASdkManager.sharedMEGASdk()?.add(self)
+        MEGASdkManager.sharedMEGASdk().add(self)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MEGASdkManager.sharedMEGASdk()?.add(self)
+        MEGASdkManager.sharedMEGASdk().add(self)
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -49,7 +49,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         case .fileLink:
             if megaMessage.richNumber == nil {
                 
-                MEGASdkManager.sharedMEGASdk()?.publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
+                MEGASdkManager.sharedMEGASdk().publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
                     guard visibleIndexPaths.contains(indexPath), error?.type == .apiOk else {
                         return
@@ -70,7 +70,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         case .folderLink:
             if megaMessage.richNumber == nil {
                 
-                MEGASdkManager.sharedMEGASdk()?.getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                MEGASdkManager.sharedMEGASdk().getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
                     guard visibleIndexPaths.contains(indexPath), error.type == .apiOk else {
                         return

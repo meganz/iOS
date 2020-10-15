@@ -163,7 +163,7 @@ class VerificationCodeViewController: UIViewController {
         guard code.count == verificationCodeCount else { return }
 
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk()?.checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate {
+        MEGASdkManager.sharedMEGASdk().checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate {
             [weak self] _, error in
             SVProgressHUD.dismiss()
             if error.type == .apiOk {
@@ -186,7 +186,7 @@ class VerificationCodeViewController: UIViewController {
 
         if verificationType == .UnblockAccount {
             if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName) {
-                MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
+                MEGASdkManager.sharedMEGASdk().fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
             } else {
                 (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
             }

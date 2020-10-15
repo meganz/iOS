@@ -229,11 +229,11 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [forwardAction, shareAction, selectAction]
          
             if chatMessage.message.usersCount == 1 {
-                if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
+                if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
                     actions.append(contentsOf: [addContactAction])
                 } else {
                     for index in 0..<chatMessage.message.usersCount {
-                        if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
+                        if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
                             return
                         }
                     }

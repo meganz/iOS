@@ -130,7 +130,7 @@ class SMSVerificationViewController: UIViewController {
 
     private func loadCountryCallingCodes() {
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk()?.getCountryCallingCodes(with: MEGAGenericRequestDelegate {
+        MEGASdkManager.sharedMEGASdk().getCountryCallingCodes(with: MEGAGenericRequestDelegate {
             [weak self] request, error in
             SVProgressHUD.dismiss()
             if error.type == .apiOk {
@@ -156,7 +156,7 @@ class SMSVerificationViewController: UIViewController {
     @IBAction private func didTapCancelButton() {
         switch verificationType {
         case .UnblockAccount:
-            MEGASdkManager.sharedMEGASdk()?.logout()
+            MEGASdkManager.sharedMEGASdk().logout()
             phoneNumberTextField.resignFirstResponder()
 
         case .AddPhoneNumber:
@@ -185,7 +185,7 @@ class SMSVerificationViewController: UIViewController {
         do {
             let phoneNumber = try numberKit.parse("\(country.displayCallingCode)\(localNumber)")
             SVProgressHUD.show()
-            MEGASdkManager.sharedMEGASdk()?.sendSMSVerificationCode(toPhoneNumber: numberKit.format(phoneNumber, toType: .e164), delegate: MEGAGenericRequestDelegate {
+            MEGASdkManager.sharedMEGASdk().sendSMSVerificationCode(toPhoneNumber: numberKit.format(phoneNumber, toType: .e164), delegate: MEGAGenericRequestDelegate {
                 [weak self] _, error in
                 SVProgressHUD.dismiss()
                 if error.type == .apiOk {
@@ -280,7 +280,7 @@ class SMSVerificationViewController: UIViewController {
             if !MEGASdkManager.sharedMEGASdk().isAchievementsEnabled {
                 descriptionTextView.text = AMLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
             } else {
-                MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate { [weak self] request, error in
+                MEGASdkManager.sharedMEGASdk().getAccountAchievements(with: MEGAGenericRequestDelegate { [weak self] request, error in
                     guard error.type == .apiOk else { return }
                     guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
                     UIView.animate(withDuration: 0.5) {

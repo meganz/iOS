@@ -789,7 +789,7 @@ class ChatViewController: MessagesViewController {
             let cancel = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel)
             
             let action2 = UIAlertAction(title: AMLocalizedString("resume"), style: .default) { (action:UIAlertAction) in
-                MEGASdkManager.sharedMEGASdk()?.pauseTransfers(false)
+                MEGASdkManager.sharedMEGASdk().pauseTransfers(false)
                 UserDefaults.standard.set(false, forKey: "TransfersPaused")
             }
             
