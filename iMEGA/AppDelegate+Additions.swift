@@ -35,17 +35,13 @@ extension AppDelegate {
         }
 
         UserDefaults.standard.set(Date(), forKey: "lastDateAddPhoneNumberShowed")
-
-        guard let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID") as? AddPhoneNumberViewController else {
-            fatalError("Could not instantiate AddPhoneNumberViewController")
-        }
+        var hideDontShowAgain = true
         let timesAddPhoneNumberShowed = UserDefaults.standard.integer(forKey: "timesAddPhoneNumberShowed")
         if timesAddPhoneNumberShowed >= MEGAOptOutOfAddYourPhoneNumberMinCount {
-            addPhoneNumberController.shouldHideDontShowAgainButton = false
+            hideDontShowAgain = false
         }
         UserDefaults.standard.set(timesAddPhoneNumberShowed + 1, forKey: "timesAddPhoneNumberShowed")
-        addPhoneNumberController.modalPresentationStyle = .fullScreen
-        UIApplication.mnz_presentingViewController().present(addPhoneNumberController, animated: true, completion: nil)
+        AddPhoneNumberRouter(hideDontShowAgain: hideDontShowAgain, presenter: UIApplication.mnz_presentingViewController()).start()
     }
 
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
@@ -117,9 +113,7 @@ extension AppDelegate {
                 return
             }
 
-            let smsNavigationController = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .UnblockAccount))
-            smsNavigationController.modalPresentationStyle = .fullScreen
-            UIApplication.mnz_presentingViewController().present(smsNavigationController, animated: true, completion: nil)
+            SMSVerificationViewRouter(verificationType: .unblockAccount, presenter: UIApplication.mnz_presentingViewController()).start()
         } else if suspensionType == .emailVerification {
             if UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController {
                 return
