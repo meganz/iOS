@@ -120,7 +120,7 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.sendToChatAction())
-            if accessLevel == .accessOwner {
+            if accessLevel == .accessOwner || isLink {
                 nodeActions.append(NodeAction.shareAction())
             }
             if isPdf {
