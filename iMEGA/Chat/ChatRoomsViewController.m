@@ -1352,6 +1352,10 @@
             [self insertRowByChatListItem:item];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
             if (self.isArchivedChatsRowVisible) {
+                
+                if ([self.archivedChatListItemList size] == 0) {
+                    self.isArchivedChatsRowVisible = NO;
+                }
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
             }
             return;
