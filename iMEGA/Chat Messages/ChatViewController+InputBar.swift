@@ -1,6 +1,7 @@
 import Foundation
 import MessageKit
 import ISEmojiView
+import VisionKit
 
 extension ChatViewController {
     
@@ -592,6 +593,14 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
 
 
 extension ChatViewController: AddToChatViewControllerDelegate {
+    func showScanDoc() {
+        if #available(iOS 13.0, *) {
+            let vc = VNDocumentCameraViewController()
+            vc.delegate = self
+            present(viewController: vc)
+        }
+    }
+    
     func send(asset: PHAsset) {
         startUpload(assets: [asset])
     }

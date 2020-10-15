@@ -35,6 +35,7 @@
 		2F528CAE24739053006DE5C2 /* LoadingMessageReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */; };
 		2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */; };
 		2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */; };
+		2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */; };
 		2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
 		2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */; };
@@ -1407,6 +1408,7 @@
 		2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingMessageReusableView.xib; sourceTree = "<group>"; };
 		2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
 		2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEmojiButton.swift; sourceTree = "<group>"; };
+		2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Docscan.swift"; sourceTree = "<group>"; };
 		2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewController.swift; sourceTree = "<group>"; };
 		2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+CallStatus.swift"; sourceTree = "<group>"; };
 		2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetViewController.swift; sourceTree = "<group>"; };
@@ -5757,6 +5759,7 @@
 				2F18DEF4245BD07E00E7EE27 /* ChatViewController+MessageCellDelegate.swift */,
 				BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */,
 				BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */,
+				2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */,
 				2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */,
 				BF7EBD2C244E916F0015255F /* AddToChatViewController.swift */,
 				BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */,
@@ -6825,6 +6828,7 @@
 				2F04634024BFF13900A47A81 /* ChatMessageActionMenuViewController.swift in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
+				2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */,
 				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,
 				B6B73E6E22C5713700ACAD48 /* SMSCountriesTableViewController.swift in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
