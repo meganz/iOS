@@ -101,7 +101,7 @@ class ChatViewController: MessagesViewController {
         guard let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
             return
         }
-        let finishing = isEditing && !editing
+        let finishing = !editing
         
         if finishing {
             selectedMessages.removeAll()
