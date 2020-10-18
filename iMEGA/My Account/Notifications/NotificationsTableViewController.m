@@ -473,6 +473,13 @@
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
         case MEGAUserAlertTypePaymentReminder:
+            if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+                UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
+                
+                [self.navigationController pushViewController:upgradeTVC animated:YES];
+            } else {
+                [MEGAReachabilityManager isReachableHUDIfNot];
+            }
             break;
             
         default:
