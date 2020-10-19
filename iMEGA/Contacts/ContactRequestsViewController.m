@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, Segment) {
 
 @property (nonatomic, getter=isAcceptingOrDecliningLastRequest) BOOL acceptingOrDecliningLastRequest;
 @property (nonatomic, getter=isDeletingLastRequest) BOOL deletingLastRequest;
+@property (nonatomic, getter=isPerformingRequest) BOOL performingRequest;
 
 @end
 
@@ -121,6 +122,8 @@ typedef NS_ENUM(NSInteger, Segment) {
     }
     
     [self.tableView reloadData];
+    
+    self.performingRequest = NO;
 }
 
 - (void)reloadOutgoingContactsRequestsView {
@@ -179,6 +182,9 @@ typedef NS_ENUM(NSInteger, Segment) {
 }
 
 - (void)acceptTouchUpInside:(UIButton *)sender {
+    if (self.isPerformingRequest) {
+        return;
+    }
     if (sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [MEGASdkManager.sharedMEGASdk replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
@@ -190,6 +196,9 @@ typedef NS_ENUM(NSInteger, Segment) {
 }
 
 - (void)declineOrDeleteTouchUpInside:(UIButton *)sender {
+    if (self.isPerformingRequest) {
+        return;
+    }
     if (self.contactRequestsSegmentedControl.selectedSegmentIndex == SegmentReceived && sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] replyContactRequest:contactSelected action:MEGAReplyActionDeny delegate:self];
@@ -337,11 +346,19 @@ typedef NS_ENUM(NSInteger, Segment) {
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    if (request.type == MEGARequestTypeInviteContact || request.type == MEGARequestTypeReplyContactRequest) {
+        [SVProgressHUD show];
+        self.performingRequest = YES;
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeInviteContact) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         }
+        self.performingRequest = NO;
         return;
     }
     
