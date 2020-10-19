@@ -20,6 +20,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -263,7 +264,7 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         if (self.node) {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
             [self presentViewController:activityVC animated:YES completion:nil];
         } else {
             if (self.filesPathsArray.count > 0 && self.nodeFileIndex < self.filesPathsArray.count) {

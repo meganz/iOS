@@ -25,6 +25,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "MEGA-Swift.h"
@@ -718,7 +719,7 @@ static const CGFloat GapBetweenPages = 10.0;
         default: {
             UIActivityViewController *activityViewController;
             if (node.name.mnz_isVideoPathExtension) {
-                activityViewController = [Helper activityViewControllerForNodes:@[node] sender:sender];
+                activityViewController = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
             } else {
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
@@ -988,7 +989,7 @@ static const CGFloat GapBetweenPages = 10.0;
                     break;
                     
                 default: {
-                    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+                    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
                     activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
                         [self reloadUI];
                     };

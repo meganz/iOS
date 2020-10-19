@@ -1,26 +1,56 @@
 {
   "images" : [
     {
+      "filename" : "profileCreateAccount.png",
       "idiom" : "universal",
-      "filename" : "profile.png",
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "profileCreateAccountDark.png",
       "idiom" : "universal",
-      "filename" : "profile@2x.png",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "profileCreateAccount@2x.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "profileCreateAccountDark@2x.png",
       "idiom" : "universal",
-      "filename" : "profile@3x.png",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "profileCreateAccount@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "profileCreateAccountDark@3x.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -12,6 +12,7 @@
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -551,7 +552,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                       style:UIPreviewActionStyleDefault
                                                                     handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                         CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveVC.parentNode] sender:nil];
+                                                                        UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[cloudDriveVC.parentNode] sender:nil];
                                                                         [rootViewController presentViewController:activityVC animated:YES completion:nil];
                                                                     }];
             
@@ -1707,7 +1708,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
     __weak __typeof__(self) weakSelf = self;
     activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         if (completed && !activityError) {
@@ -2037,7 +2038,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             break;
             
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
             [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;

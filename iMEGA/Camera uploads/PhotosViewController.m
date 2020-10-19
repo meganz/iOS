@@ -24,6 +24,7 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 
 @import StoreKit;
 @import Photos;
@@ -541,7 +542,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues sender:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selectedItemsDictionary.allValues sender:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 

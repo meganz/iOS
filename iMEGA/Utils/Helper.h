@@ -1,15 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGAChatMessage.h"
 #import "MEGAIndexer.h"
-
-typedef NS_OPTIONS(NSUInteger, NodesAre) {
-    NodesAreFiles    = 1 << 0,
-    NodesAreFolders  = 1 << 1,
-    NodesAreExported = 1 << 2,
-    NodesAreOutShares = 1 << 3
-};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -79,8 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
-+ (UIActivityViewController * _Nullable)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id _Nullable)sender;
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
