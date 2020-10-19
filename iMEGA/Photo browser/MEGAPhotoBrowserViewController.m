@@ -594,7 +594,7 @@ static const CGFloat GapBetweenPages = 10.0;
         case MEGAPhotoModePreview:
             if (node.hasPreview) {
                 MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:requestCompletion];
-                NSString *path = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+                NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
             } else if (node.name.mnz_isImagePathExtension) {
