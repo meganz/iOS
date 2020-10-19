@@ -463,8 +463,6 @@
 		77AEB94523CDBC560047CEBF /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
 		77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
 		77AEB94723CDBC560047CEBF /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
-		77B3227B20A343A30037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
-		77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */; };
 		77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */; };
 		77B3AE212163BD2B008E889A /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
@@ -592,6 +590,7 @@
 		836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDE42018AD1F00868FC7 /* PasswordView.m */; };
 		836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B956E2063EADE003E279B /* SearchInPdfViewController.m */; };
 		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
+		8371320624E695A400149059 /* UIActivityViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8371320524E695A400149059 /* UIActivityViewController+MNZCategory.m */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
@@ -602,6 +601,10 @@
 		837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9C0924781B1600D409B4 /* NodeActionsTests.swift */; };
 		837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */; };
 		837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */; };
+		837EE205253DB8540083D927 /* GetLink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837EE204253DB8540083D927 /* GetLink.storyboard */; };
+		837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */; };
+		837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */; };
+		837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20E253DBABD0083D927 /* GetLinkViewController.swift */; };
 		838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
 		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
@@ -610,6 +613,9 @@
 		8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8395FE3224E2C6BD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8395FE3324E2C6EC00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
+		8395FE4724E594EF00B1C952 /* GetLinkInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3924E58D6F00B1C952 /* GetLinkInfoTableViewCell.swift */; };
+		8395FE4824E594EF00B1C952 /* GetLinkSwitchOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3B24E58F6B00B1C952 /* GetLinkSwitchOptionTableViewCell.swift */; };
+		8395FE4924E594EF00B1C952 /* GetLinkStringTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3D24E5900E00B1C952 /* GetLinkStringTableViewCell.swift */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
@@ -646,6 +652,9 @@
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
+		83E8329624EA88A500F532B8 /* GetLinkDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8329524EA88A500F532B8 /* GetLinkDetailTableViewCell.swift */; };
+		83E8329824EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8329724EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift */; };
+		83E8329C24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8329B24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift */; };
 		83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */; };
 		83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */; };
 		83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */; };
@@ -667,7 +676,6 @@
 		941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */; };
 		941135551F01002E00D33428 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791791BC5754A00C58676 /* OpenInActivity.m */; };
 		941135561F01004000D33428 /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
-		941135571F01004300D33428 /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
 		941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
 		9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
@@ -770,14 +778,12 @@
 		9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
 		945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */; };
 		945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
-		945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFE1F50518400D52504 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
 		94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
-		946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D151F46E235009ED32C /* GetLinkTableViewController.m */; };
 		946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
@@ -1477,7 +1483,6 @@
 		2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextMessageViewCell.swift; sourceTree = "<group>"; };
 		2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditCollectionOverlayView.swift; sourceTree = "<group>"; };
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
-		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionCollectionViewCell.xib; sourceTree = "<group>"; };
 		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
@@ -2063,6 +2068,8 @@
 		836B956E2063EADE003E279B /* SearchInPdfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInPdfViewController.m; sourceTree = "<group>"; };
 		836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatChangeGroupNameRequestDelegate.h; sourceTree = "<group>"; };
 		836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatChangeGroupNameRequestDelegate.m; sourceTree = "<group>"; };
+		8371320424E695A400149059 /* UIActivityViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+MNZCategory.h"; sourceTree = "<group>"; };
+		8371320524E695A400149059 /* UIActivityViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
 		83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
 		837A88BD20B42290007B55D1 /* CloudDriveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveViewController.h; sourceTree = "<group>"; };
@@ -2078,6 +2085,10 @@
 		837B9C0924781B1600D409B4 /* NodeActionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionsTests.swift; sourceTree = "<group>"; };
 		837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VerifyEmail.storyboard; sourceTree = "<group>"; };
 		837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		837EE204253DB8540083D927 /* GetLink.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GetLink.storyboard; sourceTree = "<group>"; };
+		837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecryptionKeysViewController.swift; sourceTree = "<group>"; };
+		837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLinkPasswordViewController.swift; sourceTree = "<group>"; };
+		837EE20E253DBABD0083D927 /* GetLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkViewController.swift; sourceTree = "<group>"; };
 		838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+TwoFactorAuthentication.swift"; sourceTree = "<group>"; };
 		8394CFA1211AE24100A1634A /* GroupCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupCallViewController.h; path = Chat/GroupCallViewController.h; sourceTree = "<group>"; };
 		8394CFA2211AE24100A1634A /* GroupCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GroupCallViewController.m; path = Chat/GroupCallViewController.m; sourceTree = "<group>"; };
@@ -2085,6 +2096,9 @@
 		8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCallCollectionViewCell.h; sourceTree = "<group>"; };
 		8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCallCollectionViewCell.m; sourceTree = "<group>"; };
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
+		8395FE3924E58D6F00B1C952 /* GetLinkInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkInfoTableViewCell.swift; sourceTree = "<group>"; };
+		8395FE3B24E58F6B00B1C952 /* GetLinkSwitchOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionTableViewCell.swift; sourceTree = "<group>"; };
+		8395FE3D24E5900E00B1C952 /* GetLinkStringTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCell.swift; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
 		83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerVideo.h; sourceTree = "<group>"; };
@@ -2119,6 +2133,9 @@
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
+		83E8329524EA88A500F532B8 /* GetLinkDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkDetailTableViewCell.swift; sourceTree = "<group>"; };
+		83E8329724EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkDatePickerTableViewCell.swift; sourceTree = "<group>"; };
+		83E8329B24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupsViewController.swift; sourceTree = "<group>"; };
 		83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsGroups.storyboard; sourceTree = "<group>"; };
 		83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupTableViewCell.swift; sourceTree = "<group>"; };
@@ -2176,8 +2193,6 @@
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAExportRequestDelegate.h; path = API/Requests/MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAExportRequestDelegate.m; path = API/Requests/MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
-		946B2D141F46E235009ED32C /* GetLinkTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetLinkTableViewController.h; sourceTree = "<group>"; };
-		946B2D151F46E235009ED32C /* GetLinkTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLinkTableViewController.m; sourceTree = "<group>"; };
 		946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyrightWarningViewController.h; sourceTree = "<group>"; };
 		946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyrightWarningViewController.m; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
@@ -2844,7 +2859,6 @@
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaDataFormatter.swift; sourceTree = "<group>"; };
 		BFB463EC2433FD9C00FB90B9 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
-		BFB463EE2434290300FB90B9 /* UIView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexPath+Additions.swift"; sourceTree = "<group>"; };
 		BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Additions.swift"; sourceTree = "<group>"; };
 		BFB463F9243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewIntroductionHeaderView.swift; sourceTree = "<group>"; };
@@ -3400,6 +3414,7 @@
 		415226681A692ECC00EC7BB6 /* Cloud drive */ = {
 			isa = PBXGroup;
 			children = (
+				837EE1F3253DB7E50083D927 /* GetLink */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
 				A811CE2922EAFB1700B24E76 /* Operations */,
 				E8F791731BC5754A00C58676 /* Activities */,
@@ -3416,8 +3431,6 @@
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
 				946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */,
 				946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */,
-				946B2D141F46E235009ED32C /* GetLinkTableViewController.h */,
-				946B2D151F46E235009ED32C /* GetLinkTableViewController.m */,
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
 				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
 				83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */,
@@ -3829,15 +3842,15 @@
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
 				83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */,
 				BFB463EC2433FD9C00FB90B9 /* Date+Additions.swift */,
-				BFB463EE2434290300FB90B9 /* UIView+Additions.swift */,
 				BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */,
-				2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */,
 				BF7EBD23244E8AFC0015255F /* UIImageView+Additions.swift */,
 				BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */,
 				BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */,
 				2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */,
 				2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */,
 				8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */,
+				8371320424E695A400149059 /* UIActivityViewController+MNZCategory.h */,
+				8371320524E695A400149059 /* UIActivityViewController+MNZCategory.m */,
 				BFCEE8B325102D9600D43448 /* IndexSet+Additions.swift */,
 			);
 			path = Categories;
@@ -4850,6 +4863,17 @@
 			path = VerifyEmailViewcontroller;
 			sourceTree = "<group>";
 		};
+		837EE1F3253DB7E50083D927 /* GetLink */ = {
+			isa = PBXGroup;
+			children = (
+				837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */,
+				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
+				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
+				837EE204253DB8540083D927 /* GetLink.storyboard */,
+			);
+			path = GetLink;
+			sourceTree = "<group>";
+		};
 		8394CFB2211B1ADF00A1634A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -4858,6 +4882,19 @@
 			);
 			name = Cells;
 			path = Chat/Cells;
+			sourceTree = "<group>";
+		};
+		8395FE3624E58D4100B1C952 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8395FE3924E58D6F00B1C952 /* GetLinkInfoTableViewCell.swift */,
+				8395FE3B24E58F6B00B1C952 /* GetLinkSwitchOptionTableViewCell.swift */,
+				8395FE3D24E5900E00B1C952 /* GetLinkStringTableViewCell.swift */,
+				83E8329524EA88A500F532B8 /* GetLinkDetailTableViewCell.swift */,
+				83E8329724EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift */,
+				83E8329B24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		83B0B45B242CC1B300468191 /* ChatSharedItems */ = {
@@ -6447,6 +6484,7 @@
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
+				8395FE3624E58D4100B1C952 /* Cells */,
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
@@ -6865,6 +6903,7 @@
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */,
 				2F528CAE24739053006DE5C2 /* LoadingMessageReusableView.xib in Resources */,
+				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
 				2F3083BC2428169F0058DF91 /* Chat.storyboard in Resources */,
 				BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
@@ -7322,6 +7361,7 @@
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				A86B9F2B2316D6AB00F35E7A /* FLEXImageExplorerViewController.m in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
+				8371320624E695A400149059 /* UIActivityViewController+MNZCategory.m in Sources */,
 				2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */,
@@ -7347,9 +7387,11 @@
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
+				83E8329824EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				A86B9F5C2316D6AB00F35E7A /* FLEXWindow.m in Sources */,
+				83E8329C24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */,
@@ -7372,6 +7414,7 @@
 				A86B9F6D2316D6AB00F35E7A /* FLEXSystemLogTableViewCell.m in Sources */,
 				A86B9F302316D6AB00F35E7A /* FLEXViewControllerExplorerViewController.m in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
+				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
 				B662B85924ECB3500089376A /* AddPhoneNumberViewModel.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
@@ -7418,6 +7461,7 @@
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
 				BFAB114D23CEA5C300BCE72D /* Albums.swift in Sources */,
+				8395FE4824E594EF00B1C952 /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				A86B9F612316D6AB00F35E7A /* FLEXInstancesTableViewController.m in Sources */,
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
@@ -7482,7 +7526,9 @@
 				BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				5D9D0C5C24E163E600519D4E /* TraitEnviromentAware.swift in Sources */,
+				8395FE4724E594EF00B1C952 /* GetLinkInfoTableViewCell.swift in Sources */,
 				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
+				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
 				5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
@@ -7669,6 +7715,7 @@
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
 				A86B9F792316D6AB00F35E7A /* FLEXLibrariesTableViewController.m in Sources */,
 				5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */,
+				8395FE4924E594EF00B1C952 /* GetLinkStringTableViewCell.swift in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
@@ -7678,7 +7725,6 @@
 				A86B9F2F2316D6AB00F35E7A /* FLEXDefaultsExplorerViewController.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
-				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
@@ -7750,6 +7796,8 @@
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
+				837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */,
+				83E8329624EA88A500F532B8 /* GetLinkDetailTableViewCell.swift in Sources */,
 				8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				A86B9F6A2316D6AB00F35E7A /* FLEXASLLogController.m in Sources */,
 				B6E7A8D72500D74600CD6AC2 /* NSLayoutConstraint+Layout.swift in Sources */,
@@ -8103,7 +8151,6 @@
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
 				839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
-				945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */,
 				5BE689872417C91500462134 /* MEGAFunctions.swift in Sources */,
 				77B3AE212163BD2B008E889A /* DevicePermissionsHelper.m in Sources */,
 				945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */,
@@ -8121,7 +8168,6 @@
 				8310488B21AECDBA0057400D /* DTConstants.m in Sources */,
 				832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				834AD6092024697600D2527F /* MGSwipeTableCell.m in Sources */,
-				77B3227B20A343A30037FA89 /* CopyrightWarningViewController.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
@@ -8171,7 +8217,6 @@
 				B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				BF943E9623554054001C18E0 /* String+Additions.swift in Sources */,
 				5B205D1A2449AD1A00EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
-				941135571F01004300D33428 /* GetLinkActivity.m in Sources */,
 				94892C951EFBF02D00AEAC25 /* SVIndefiniteAnimatedView.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
@@ -8268,7 +8313,6 @@
 				BFC470A424C66E4F00A23820 /* Date+Manipulation.swift in Sources */,
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
-				77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */,
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */,

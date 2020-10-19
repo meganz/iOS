@@ -526,7 +526,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             self.passwordStrengthIndicatorContainerView.hidden = NO;
             self.passwordStrengthIndicatorView.customView.hidden = NO;
             [self.scrollView scrollRectToVisible:self.passwordStrengthIndicatorView.frame animated:YES];
-            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text] updateDescription:YES];
         }
     }
     
