@@ -44,7 +44,7 @@
 	</dict>
 	<dict>
 		<key>imageKey</key>
-		<string>scanDocument</string>
+		<string>chatScanDocument</string>
 		<key>nameKey</key>
 		<string>Scan Document</string>
 		<key>dynamicKey</key>
