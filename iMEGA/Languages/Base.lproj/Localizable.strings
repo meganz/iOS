@@ -995,8 +995,6 @@
 "lastName"="Last Name";
 /* Title for "Local" used space. */
 "localLabel"="Local";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Used";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Available";
 /* title of the My Account screen */
