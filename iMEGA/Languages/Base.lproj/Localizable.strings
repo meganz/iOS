@@ -2328,8 +2328,6 @@
 "Purple"="Purple";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
 "Grey"="Grey";
-/* Text presenting a link as header usually */
-"LINK"="LINK";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="KEY";
 /* Text for options in Get Link View to separate the key from the link */
