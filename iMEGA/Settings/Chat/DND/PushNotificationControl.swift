@@ -71,11 +71,15 @@ extension PushNotificationControl {
         }
     }
     
-    func show(alertController: UIAlertController, sender: UIView) {
+    func show(alertController: UIAlertController, sender: Any) {
         if UIDevice.current.iPad {
             alertController.modalPresentationStyle = .popover
-            alertController.popoverPresentationController?.sourceView = sender
-            alertController.popoverPresentationController?.sourceRect = sender.bounds
+            if let barButtonSender = sender as? UIBarButtonItem {
+                alertController.popoverPresentationController?.barButtonItem = barButtonSender
+            } else if let viewSender = sender as? UIView {
+                alertController.popoverPresentationController?.sourceView = viewSender
+                alertController.popoverPresentationController?.sourceRect = viewSender.bounds
+            }
         }
         
         delegate?.present(alertController, animated: true, completion: nil)

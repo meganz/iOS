@@ -47,6 +47,8 @@ class ActionSheetViewController: UIViewController {
         // background view
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
         backgroundView.addGestureRecognizer(tapRecognizer)
+        
+        configureActionTableView()
     }
     
     func configurePresentationStyle(from sender: Any) {
@@ -147,6 +149,23 @@ class ActionSheetViewController: UIViewController {
                        completion: { _ in
                         completion?(true)
         })
+    }
+    
+    @objc func update(actions: [BaseAction], sender: Any?) {
+        guard let sender = sender else { return }
+        
+        self.actions = actions
+        
+        UIView.performWithoutAnimation { [weak self] in
+            self?.configurePresentationStyle(from: sender)
+            self?.tableView.reloadData()
+        }
+    }
+    
+    // MARK: - Private functions
+    
+    private func configureActionTableView() {
+        tableView.register(UINib(nibName: String(describing: ActionSheetSwitchCell.self), bundle: nil), forCellReuseIdentifier: String(describing: ActionSheetSwitchCell.self))
     }
 }
 
@@ -274,10 +293,23 @@ extension ActionSheetViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ActionSheetCell = tableView.dequeueReusableCell(withIdentifier:"ActionSheetCell") as? ActionSheetCell ?? ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
-        cell.configureCell(action: actions[indexPath.row])
+        
+        if let action = actions[indexPath.row] as? ActionSheetSwitchAction {
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ActionSheetSwitchCell.self),
+                                                           for: indexPath) as? ActionSheetSwitchCell else {
+                fatalError("could not dequeue the ActionSheetSwitchCell cell")
+            }
+            
+            cell.configureCell(action: action)
+            
+            return cell
+        } else {
+            let cell: ActionSheetCell = tableView.dequeueReusableCell(withIdentifier:"ActionSheetCell") as? ActionSheetCell ?? ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
+            cell.configureCell(action: actions[indexPath.row] )
 
-        return cell
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -286,13 +318,18 @@ extension ActionSheetViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         guard let action = actions[indexPath.row] as? ActionSheetAction else {
             return
         }
-        dismiss(animated: true, completion: {
+        
+        if action.isKind(of: ActionSheetSwitchAction.self) {
             action.actionHandler()
-        })
-
+        } else {
+            dismiss(animated: true, completion: {
+                action.actionHandler()
+            })
+        }
     }
 
 }

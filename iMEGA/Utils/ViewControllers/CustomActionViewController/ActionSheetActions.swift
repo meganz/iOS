@@ -31,6 +31,23 @@ class ActionSheetAction: BaseAction {
     }
 }
 
+class ActionSheetSwitchAction: ActionSheetAction {
+    var switchView: UISwitch?
+    
+    @objc init(title: String?, detail: String?, switchView: UISwitch, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+        super.init(title: title, detail: detail, image: image, style: style, actionHandler: actionHandler)
+        self.switchView = switchView
+    }
+    
+    @objc func change(state: Bool) {
+        switchView?.isOn = state
+    }
+    
+    @objc func switchStatus() -> Bool {
+        return switchView?.isOn ?? false
+    }
+}
+
 class NodeAction: BaseAction {
     var type: MegaNodeActionType
 
