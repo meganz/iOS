@@ -995,8 +995,6 @@
 "lastName"="สกุล";
 /* Title for "Local" used space. */
 "localLabel"="ในเครื่อง";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="ใช้แล้ว";
 /* Title for MEGA "Available" space. */
 "availableLabel"="ใช้ได้";
 /* title of the My Account screen */
@@ -1030,7 +1028,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="การสมัครรับข้อมูลรายปีคือ 17% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
+"twoMonthsFree"="การสมัครสมาชิกรายปีคือ 17% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="แผนปัจจุบัน:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -2306,5 +2304,75 @@
 "PENDING"="กำลังรอ";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="เวอร์ชัน";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Favourite";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Remove Favourite";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Label";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Label…";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Remove Label";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Red";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Orange";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Yellow";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Green";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Blue";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Purple";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Grey";
+/* Text presenting a key (for a LINK or similar) as header usually */
+"KEY"="คีย์";
+/* Text for options in Get Link View to separate the key from the link */
+"Send Decryption Key Separately"="Send Decryption Key Separately";
+/* Text for options in Get Link View to activate expiry date */
+"Expiry Date"="วันหมดอายุ";
+/* Text for options in Get Link View to set expiry date */
+"Set Expiry Date"="กำหนดวันหมดอายุ";
+/* Text for options in Get Link View to activate password protection */
+"Password Protection"="ป้องกันด้วยรหัสผ่าน";
+/* Text for options in Get Link View to set password protection */
+"Set Password"="ตั้งรหัสผ่าน";
+/* Hint text for option separate the key from the link in Get Link View */
+"Export the link and decryption key separately."="ส่งออกลิงก์และคีย์ถอดรหัสแบบแยกต่างหาก";
+/* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
+"Learn more"="Learn more";
+/* Text indicating the date until a link will be valid */
+"Link expires %@"="Link expires %@";
+/* Text hint to let the user know that tapping something will be copied into the pasteboard */
+"Tap to Copy"="แตะเพื่อคัดลอก";
+/* Caption of the button that will copy multiple files or folders export links to his clipboard */
+"Copy All"="คัดลอกทั้งหมด";
+/* Description text about options when exporting links for several nodes */
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="ตัวเลือกเช่น ส่งคีย์ถอดรหัสแบบแยกต่างหาก ตั้งค่าวันหมดอายุหรือรหัสผ่าน มีให้สำหรับรายการเดียวเท่านั้น";
+/* Message shown when the link has been copied to the Clipboard */
+"Link Copied to Clipboard"="คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว";
+/* Message shown when some links have been copied to the Clipboard */
+"Links Copied to Clipboard"="คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว";
+/* Message shown when the key has been copied to the Clipboard */
+"Key Copied to Clipboard"="คัดลอกคีย์ไปยังคลิปบอร์ดแล้ว";
+/* Message shown when the password has been copied to the Clipboard */
+"Password Copied to Clipboard"="คัดลอกรหัสผ่านไปยังคลิปบอร์ดแล้ว";
+/* Export links dialog -> Keys tip about links and keys. */
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+/* Text related to the decryption key of a public link */
+"Decryption Key"="คีย์การถอดรหัสลับ";
+/* Text to indicate the user to remove the password of a link */
+"Remove Password"="ลบรหัสผ่าน";
+/* Text to indicate the user to reset/change the password of a link */
+"Reset Password"="รีเซ็ตรหัสผ่าน";
+/* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+/* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+/* Text used to show the user that some resource is not available */
+"Unavailable"="ไม่พร้อมใช้งาน";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="อีเมลได้ส่งอีเมลแล้ว กรุณารอสักครู่ก่อนที่จะลองใหม่อีกครั้ง";

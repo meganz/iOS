@@ -49,7 +49,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Masukkan decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Untuk mengakses folder/file ini, anda membutuhkan kunci dekripsi. Jika anda tidak memiliki kunci, hubungi pembuat link.";
+"decryptionKeyAlertMessage"="Untuk mengakses folder / file ini, anda memerlukan kunci Dekripsi. Jika Anda tidak memiliki kuncinya, silakan hubungi pembuat tautan.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -213,7 +213,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Tambah kontak";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invite to MEGA";
+"inviteContact"="Undang ke MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Undangan terkirim";
 /* Button title to allow the user postpone an action */
@@ -765,7 +765,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk membatalkan akun anda. Anda akan selamanya kehilangan data yang anda simpan di cloud. Harap masukan password anda di bawah ini.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Akun anda telah berhasil dihapus.";
+"accountCanceledSuccessfully"="Akun anda berhasil dibatalkan.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Tutup akun";
 /* Title for the action that allows to remove a file or folder */
@@ -995,8 +995,6 @@
 "lastName"="Nama Belakang";
 /* Title for "Local" used space. */
 "localLabel"="Lokal";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Terpakai";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Tersedia";
 /* title of the My Account screen */
@@ -1088,11 +1086,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
 /* Giphy section header */
-"Send GIF"="Send GIF";
+"Send GIF"="Kirim GIF";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="Search GIPHY";
+"Search GIPHY"="Telusuri GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No GIFs found";
+"No GIFs found"="GIF tidak ditemukan";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1200,7 +1198,7 @@
 /* A button label. The button allows the user to unmute a conversation. */
 "unmute"="Nyalakan suara";
 /* A button label. The button allows the user to mark a conversation as read. */
-"Mark as Read"="Mark as Read";
+"Mark as Read"="Tandai sebagai terbaca";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1300,9 +1298,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Pesan baru";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu pesan yang belum dibaca";
+"unreadMessage"="%lu PESAN BELUM TERBACA";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu pesan yang belum dibaca";
+"unreadMessages"="%lu PESAN BELUM TERBACA";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA PRO anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (Jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA PRO anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1973,7 +1971,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Ubah ke server uji?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Anda yakin ingin berganti ke server uji? Akun Anda mungkin mengalami masalah yang tidak dapat diperbaiki";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Anda yakin ingin mengubah ke server pengujian? Akun anda mungkin mengalami masalah yang tidak dapat dipulihkan.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Aktifkan Akses ke Buku Alamat Anda";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2167,7 +2165,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Hapus semua";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Resume Transfers?";
+"Resume Transfers?"="Lanjutkan Transfer?";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER UPLOAD KAMERA MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2199,9 +2197,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="Pesan…";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="Tarik ke kiri untuk membatalkan, lepaskan untuk mengirim";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="Penampilan";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2233,9 +2231,9 @@
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Pilih mode tampilan (Daftar atau Gambar Kecil) berdasarkan per-folder, atau gunakan mode tampilan yang sama untuk semua folder.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
-"When you logout, ongoing transfers will be cancelled."="Saat Anda keluar, transfer yang sedang berlangsung akan dibatalkan.";
+"When you logout, ongoing transfers will be cancelled."="Saat anda keluar, transfer yang sedang berlangsung akan dibatalkan.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Saat Anda keluar, file dari bagian Offline Anda akan dihapus dari perangkat Anda.";
+"When you logout, files from your Offline section will be deleted from your device."="Saat anda keluar, file dari bagian Offline anda akan dihapus dari perangkat anda.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Saat Anda keluar, file dari bagian Offline Anda akan dihapus dari perangkat Anda dan transfer yang sedang berlangsung akan dibatalkan.";
 /* Default title of an empty chat. */
@@ -2295,16 +2293,86 @@
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Nama pengguna:";
 /* Text used for a title or header listing the details of something. */
-"DETAILS"="DETAILS";
+"DETAILS"="DETAIL";
 /* Text used as title or header for reference an url, for instance, a node link. */
-"LINK"="LINK";
+"LINK"="TAUTAN";
 /* Text referencing the date of creation of a link */
-"Link Creation"="Link Creation";
+"Link Creation"="Pembuatan Tautan";
 /* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="SHARE WITH";
+"SHARE WITH"="BERBAGI DENGAN";
 /* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="PENDING";
+"PENDING"="TERTUNDA";
 /* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="VERSIONS";
+"VERSIONS"="VERSI";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Favourite";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Remove Favourite";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Label";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Label…";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Remove Label";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Red";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Orange";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Yellow";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Green";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Blue";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Purple";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Grey";
+/* Text presenting a key (for a LINK or similar) as header usually */
+"KEY"="KUNCI";
+/* Text for options in Get Link View to separate the key from the link */
+"Send Decryption Key Separately"="Send Decryption Key Separately";
+/* Text for options in Get Link View to activate expiry date */
+"Expiry Date"="Tanggal Kadaluarsa";
+/* Text for options in Get Link View to set expiry date */
+"Set Expiry Date"="Tetapkan Tanggal Kedaluwarsa";
+/* Text for options in Get Link View to activate password protection */
+"Password Protection"="Proteksi Kata Sandi";
+/* Text for options in Get Link View to set password protection */
+"Set Password"="Setel Kata Sandi";
+/* Hint text for option separate the key from the link in Get Link View */
+"Export the link and decryption key separately."="Ekspor tautan dan kunci dekripsi secara terpisah.";
+/* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
+"Learn more"="Learn more";
+/* Text indicating the date until a link will be valid */
+"Link expires %@"="Link expires %@";
+/* Text hint to let the user know that tapping something will be copied into the pasteboard */
+"Tap to Copy"="Ketuk untuk Menyalin";
+/* Caption of the button that will copy multiple files or folders export links to his clipboard */
+"Copy All"="Salin Semua";
+/* Description text about options when exporting links for several nodes */
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opsi seperti Kirim Kunci Dekripsi Secara Terpisah, Tetapkan Tanggal Kedaluwarsa atau Kata Sandi hanya tersedia untuk satu item.";
+/* Message shown when the link has been copied to the Clipboard */
+"Link Copied to Clipboard"="Tautan Disalin ke Papan Klip";
+/* Message shown when some links have been copied to the Clipboard */
+"Links Copied to Clipboard"="Tautan Disalin ke Papan Klip";
+/* Message shown when the key has been copied to the Clipboard */
+"Key Copied to Clipboard"="Kunci Disalin ke Papan Klip";
+/* Message shown when the password has been copied to the Clipboard */
+"Password Copied to Clipboard"="Sandi Disalin ke Papan Klip";
+/* Export links dialog -> Keys tip about links and keys. */
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+/* Text related to the decryption key of a public link */
+"Decryption Key"="Kunci Dekripsi";
+/* Text to indicate the user to remove the password of a link */
+"Remove Password"="Hapus Kata Sandi";
+/* Text to indicate the user to reset/change the password of a link */
+"Reset Password"="Atur Ulang Kata Sandi";
+/* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+/* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+/* Text used to show the user that some resource is not available */
+"Unavailable"="Tidak tersedia";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email sudah terkirim. Harap tunggu beberapa menit sebelum mencoba lagi.";
