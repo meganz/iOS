@@ -995,8 +995,6 @@
 "lastName"="성";
 /* Title for "Local" used space. */
 "localLabel"="로컬";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="사용됨";
 /* Title for MEGA "Available" space. */
 "availableLabel"="이용가능";
 /* title of the My Account screen */
@@ -2199,9 +2197,9 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"Message..."="메시지...";
 /* Action suggestion text to the user in voice recording view */
-"Drag left to cancel, release to send"="Drag left to cancel, release to send";
+"Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
 "Appearance"="외관";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2306,5 +2304,75 @@
 "PENDING"="보류중";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="버전";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Favourite";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Remove Favourite";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Label";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Label…";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Remove Label";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Red";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Orange";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Yellow";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Green";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Blue";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Purple";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Grey";
+/* Text presenting a key (for a LINK or similar) as header usually */
+"KEY"="키";
+/* Text for options in Get Link View to separate the key from the link */
+"Send Decryption Key Separately"="Send Decryption Key Separately";
+/* Text for options in Get Link View to activate expiry date */
+"Expiry Date"="만료일";
+/* Text for options in Get Link View to set expiry date */
+"Set Expiry Date"="만료일 설정";
+/* Text for options in Get Link View to activate password protection */
+"Password Protection"="비밀번호 보호";
+/* Text for options in Get Link View to set password protection */
+"Set Password"="비밀번호 설정";
+/* Hint text for option separate the key from the link in Get Link View */
+"Export the link and decryption key separately."="링크와 해독 키를 따로 내보냅니다.";
+/* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
+"Learn more"="Learn more";
+/* Text indicating the date until a link will be valid */
+"Link expires %@"="Link expires %@";
+/* Text hint to let the user know that tapping something will be copied into the pasteboard */
+"Tap to Copy"="복사하려면 탭하세요";
+/* Caption of the button that will copy multiple files or folders export links to his clipboard */
+"Copy All"="모두 복사";
+/* Description text about options when exporting links for several nodes */
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="해독 키 따로 보내기, 만료일 또는 비밀번호 설정 등의 옵션은 단일 항목에만 설정 가능합니다.";
+/* Message shown when the link has been copied to the Clipboard */
+"Link Copied to Clipboard"="링크가 클립보드에 복사되었습니다";
+/* Message shown when some links have been copied to the Clipboard */
+"Links Copied to Clipboard"="링크가 클립보드에 복사되었습니다";
+/* Message shown when the key has been copied to the Clipboard */
+"Key Copied to Clipboard"="키가 클립보드에 복사되었습니다";
+/* Message shown when the password has been copied to the Clipboard */
+"Password Copied to Clipboard"="비밀번호가 클립보드에 복사되었습니다";
+/* Export links dialog -> Keys tip about links and keys. */
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+/* Text related to the decryption key of a public link */
+"Decryption Key"="해독 키";
+/* Text to indicate the user to remove the password of a link */
+"Remove Password"="비밀번호 제거";
+/* Text to indicate the user to reset/change the password of a link */
+"Reset Password"="비밀번호 재설정";
+/* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+/* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+/* Text used to show the user that some resource is not available */
+"Unavailable"="이용 불가";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="이메일이 이미 발송되었습니다. 몇 분 기다린 후 다시 시도하세요.";

@@ -2311,7 +2311,7 @@
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Label";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label...";
+"Label..."="Label…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Remove Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2345,7 +2345,7 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Export the link and decryption key separately.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more" = "Learn more";
+"Learn more"="Learn more";
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Link expires %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
