@@ -152,7 +152,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>NSLocalNetworkUsageDescription</string>
+	<string>This will let you use MEGA to place and receive calls through devices that are on the same Wi-Fi or local access network</string>
 	<key>SDK_GIT_COMMIT_HASH</key>
 	<string></string>
 	<key>UIApplicationShortcutItems</key>
