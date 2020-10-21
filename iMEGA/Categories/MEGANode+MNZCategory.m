@@ -232,7 +232,7 @@
     }]];
     
     if (self.label != MEGANodeLabelUnknown) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
             [MEGASdkManager.sharedMEGASdk resetNodeLabel:self];
         }]];
     }
