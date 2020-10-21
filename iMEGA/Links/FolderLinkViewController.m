@@ -67,6 +67,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MEGASdkManager.sharedMEGASdkFolder addMEGAGlobalDelegate:self];
+    [MEGASdkManager.sharedMEGASdkFolder addMEGARequestDelegate:self];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -136,18 +138,11 @@
     self.navigationController.toolbarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -1028,6 +1023,8 @@
         case MEGARequestTypeLogout: {
             self.loginDone = NO;
             self.fetchNodesDone = NO;
+            [api removeMEGAGlobalDelegate:self];
+            [api removeMEGARequestDelegate:self];
             break;
         }
             
