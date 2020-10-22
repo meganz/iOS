@@ -61,6 +61,11 @@ platform :ios do
   desc "Build App using development certificate for Appcenter"
   lane :build_using_development do |options|
 
+    increment_build_number(
+      build_number: Time.new.strftime("%Y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
+      xcodeproj: PROJECT
+    )
+    
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
