@@ -388,13 +388,23 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     
     UIAlertAction *continueAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [MEGASdkManager.sharedMEGAChatSdk clearChatHistory:self.chatRoom.chatId];
+        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            if (request.type == MEGAChatRequestTypeTruncateHistory && error.type == MEGAChatErrorTypeOk) {
+                [self showClearChatHistoryConfirmationAlert];
+            }
+        }];
+        
+        [MEGASdkManager.sharedMEGAChatSdk clearChatHistory:self.chatRoom.chatId delegate:delegate];
     }];
     
     [clearChatHistoryAlertController addAction:cancelAction];
     [clearChatHistoryAlertController addAction:continueAction];
     
     [self presentViewController:clearChatHistoryAlertController animated:YES completion:nil];
+}
+
+- (void)showClearChatHistoryConfirmationAlert {
+    [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:AMLocalizedString(@"clearChatHistoryConfirmation", @"Message show when the history of a chat has been successfully deleted")];
 }
 
 - (void)showArchiveChatAlertAtIndexPath {

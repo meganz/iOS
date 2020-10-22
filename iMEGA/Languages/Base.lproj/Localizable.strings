@@ -1169,6 +1169,8 @@
 "clearChatHistory"="Clear Chat History";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat History has Been Cleared";
 /* 'Next' button in a dialog */
 "continue"="Continue";
 /* Title of the incoming shared folders of a user. */
