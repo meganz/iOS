@@ -133,8 +133,8 @@ class GetLinkViewController: UIViewController {
         multilinkDescriptionStackView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
     
-    private func configureDecryptKeySeparateChanged() {
-        getLinkVM.separateKey = !getLinkVM.separateKey
+    private func configureDecryptKeySeparate(isOn: Bool) {
+        getLinkVM.separateKey = isOn
         tableView.reloadData()
         if getLinkVM.separateKey {
             setToolbarItems([shareBarButton, flexibleBarButton, copyKeyBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
@@ -143,8 +143,8 @@ class GetLinkViewController: UIViewController {
         }
     }
     
-    private func configureExpiryDateChanged() {
-        getLinkVM.expiryDate = !getLinkVM.expiryDate
+    private func configureExpiryDate(isOn: Bool) {
+        getLinkVM.expiryDate = isOn
         if !getLinkVM.expiryDate && getLinkVM.date != nil {
             nodesToExportCount = 1
             exportNode(node: nodes[0])
@@ -296,9 +296,9 @@ class GetLinkViewController: UIViewController {
         
         switch sections()[indexPath.section] {
         case .decryptKeySeparate:
-            configureDecryptKeySeparateChanged()
+            configureDecryptKeySeparate(isOn: sender.isOn)
         case .expiryDate:
-            configureExpiryDateChanged()
+            configureExpiryDate(isOn: sender.isOn)
         default:
             break
         }
@@ -311,7 +311,8 @@ class GetLinkViewController: UIViewController {
     }
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
-        let shareActivity = UIActivityViewController(activityItems: [getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link as Any], applicationActivities: nil)
+        let linksToShare = getLinkVM.multilink ? nodes.map { $0.publicLink } : [getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link as Any]
+        let shareActivity = UIActivityViewController(activityItems: linksToShare, applicationActivities: nil)
         shareActivity.excludedActivityTypes = [.print, .assignToContact, .saveToCameraRoll, .addToReadingList, .airDrop]
         shareActivity.popoverPresentationController?.barButtonItem = sender
         present(shareActivity, animated: true, completion: nil)
@@ -711,8 +712,7 @@ extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
         getLinkVM.link = link
         getLinkVM.password = password
         getLinkVM.passwordProtect = true
-        getLinkVM.separateKey = false
-        tableView.reloadData()
+        configureDecryptKeySeparate(isOn: false)
     }
     
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController) {
