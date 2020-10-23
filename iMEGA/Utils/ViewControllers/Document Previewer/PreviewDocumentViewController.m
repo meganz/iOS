@@ -543,18 +543,26 @@
 }
 
 - (void)singleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
-    if (self.navigationController.isToolbarHidden) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [self.navigationController setToolbarHidden:NO animated:YES];
+    if (self.pdfView.currentSelection) {
+        [self.pdfView clearSelection];
     } else {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        [self.navigationController setToolbarHidden:YES animated:YES];
+        if (self.navigationController.isToolbarHidden) {
+            [self.navigationController setNavigationBarHidden:NO animated:YES];
+            [self.navigationController setToolbarHidden:NO animated:YES];
+        } else {
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+            [self.navigationController setToolbarHidden:YES animated:YES];
+        }
     }
 }
 
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+        [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return NO;
+    }
     return YES;
 }
 
