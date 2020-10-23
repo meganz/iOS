@@ -30,9 +30,11 @@ class ReactionContainerView: UIView {
             emojis.removeAll()
             rootFlexContainer.subviews.forEach { $0.removeFromSuperview() }
             let megaMessage = chatMessage?.message
-            let list = MEGASdkManager.sharedMEGAChatSdk()?.messageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0)
-            for index in 0 ..< list!.size {
-                emojis.append((list?.string(at: index))!)
+            guard let list = MEGASdkManager.sharedMEGAChatSdk()?.messageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0) else {
+                return
+            }
+            for index in 0 ..< list.size {
+                emojis.append(list.string(at: index))
             }
             rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(10).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in
