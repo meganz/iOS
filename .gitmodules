@@ -44,9 +44,6 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 	path = iMEGA/Vendor/PWProgressView
 	url = https://github.com/pwillsey/PWProgressView.git
 	url = https://github.com/pwillsey/PWProgressView
-[submodule "iMEGA/Vendor/FLAnimatedImage"]
-	path = iMEGA/Vendor/FLAnimatedImage
-	url = https://github.com/Flipboard/FLAnimatedImage
 [submodule "iMEGA/Vendor/FLEX"]
 	path = iMEGA/Vendor/FLEX
 	url = https://github.com/flipboard/FLEX
