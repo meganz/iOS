@@ -1,7 +1,7 @@
 import UIKit
 
 protocol SetLinkPasswordViewControllerDelegate {
-    func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, encryptedLink link: String, withPassword password: String)
+    func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String)
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController)
 }
 
@@ -9,6 +9,7 @@ class SetLinkPasswordViewController: UIViewController {
 
     @IBOutlet weak var passwordView: PasswordView!
     @IBOutlet weak var passwordStrenghtIndicatorView: PasswordStrengthIndicatorView!
+    @IBOutlet weak var passwordStrenghtIndicatorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var confirmPasswordView: PasswordView!
     @IBOutlet weak var encryptButton: UIButton!
     @IBOutlet var separators: [UIView]!
@@ -76,12 +77,7 @@ class SetLinkPasswordViewController: UIViewController {
     @IBAction func encyptButtonTapped(_ sender: UIButton) {
         if validatePassword() && validateConfirmPassword() {
             guard let password = passwordView.passwordTextField.text else { return }
-            MEGASdkManager.sharedMEGASdk().encryptLink(withPassword: link, password: password, delegate: MEGAPasswordLinkRequestDelegate.init(completion: {(request) in
-                guard let encryptedLink = request?.text else {
-                    return
-                }
-                self.delegate?.setLinkPassword(self, encryptedLink: encryptedLink, withPassword: password)
-            }, multipleLinks: false))
+            self.delegate?.setLinkPassword(self, password: password)
         }
     }
     
@@ -133,9 +129,14 @@ extension SetLinkPasswordViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == passwordView.passwordTextField {
-            passwordView.setErrorState(false, withText: AMLocalizedString("passwordPlaceholder", "Hint text to suggest that the user has to write his password"))
             let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
-            passwordStrenghtIndicatorView.update(with: MEGASdkManager.sharedMEGASdk().passwordStrength(text), updateDescription: false)
+            if text.isEmpty {
+                passwordStrenghtIndicatorHeightConstraint.constant = 0
+            } else {
+                passwordStrenghtIndicatorHeightConstraint.constant = 44.5
+                passwordView.setErrorState(false, withText: AMLocalizedString("passwordPlaceholder", "Hint text to suggest that the user has to write his password"))
+                passwordStrenghtIndicatorView.update(with: MEGASdkManager.sharedMEGASdk().passwordStrength(text), updateDescription: false)
+            }
         } else if textField == confirmPasswordView.passwordTextField {
             confirmPasswordView.setErrorState(false, withText: AMLocalizedString("confirmPassword", "Hint text where the user have to re-write the new password to confirm it"))
         }

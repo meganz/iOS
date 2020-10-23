@@ -365,110 +365,98 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aN-4O-go7" userLabel="PasswordView">
-                                <rect key="frame" x="0.0" y="122" width="414" height="164"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IO0-3o-NpQ" userLabel="Separator View">
+                                <rect key="frame" x="0.0" y="122" width="414" height="0.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="vub-7b-fr3"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lCs-aW-ho5" customClass="PasswordView">
+                                <rect key="frame" x="0.0" y="122.5" width="414" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="7jc-5Y-1Ad"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="B3k-mH-0z6"/>
+                                    <constraint firstAttribute="width" constant="622" id="aL6-8T-CEQ"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="oCf-bz-2M4"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-key-only"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="newPassword"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="aL6-8T-CEQ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="aL6-8T-CEQ"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ha-My-TYX">
+                                <rect key="frame" x="0.0" y="182.5" width="414" height="0.0"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IO0-3o-NpQ" userLabel="Separator View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="0.5" id="vub-7b-fr3"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lCs-aW-ho5" customClass="PasswordView">
-                                        <rect key="frame" x="0.0" y="0.5" width="414" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="7jc-5Y-1Ad"/>
-                                            <constraint firstAttribute="width" constant="622" id="aL6-8T-CEQ"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="oCf-bz-2M4"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-key-only"/>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="newPassword"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="aL6-8T-CEQ"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="aL6-8T-CEQ"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="egl-Wo-zqw" userLabel="Separator View">
-                                        <rect key="frame" x="16" y="60.5" width="398" height="0.5"/>
+                                        <rect key="frame" x="16" y="0.0" width="398" height="0.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="JV8-Ag-iOg"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksz-rg-EFW" customClass="PasswordStrengthIndicatorView">
-                                        <rect key="frame" x="58" y="60.5" width="339" height="44"/>
+                                        <rect key="frame" x="44" y="0.5" width="338" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="R6T-bG-PTz"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUC-tX-eaD" userLabel="Separator View">
-                                        <rect key="frame" x="16" y="104.5" width="398" height="0.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="0.5" id="8gS-gc-sdy"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cEn-kL-AFi" customClass="PasswordView">
-                                        <rect key="frame" x="0.0" y="103.5" width="414" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="a3b-Dd-UY9"/>
-                                            <constraint firstAttribute="width" constant="622" id="btT-pQ-BCr"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="confirmPassword"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-w-key"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="btT-pQ-BCr"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="btT-pQ-BCr"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axH-4X-UMh" userLabel="Separator View">
-                                        <rect key="frame" x="0.0" y="163.5" width="414" height="0.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="0.5" id="za3-rQ-Ehf"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="lCs-aW-ho5" firstAttribute="trailing" secondItem="ksz-rg-EFW" secondAttribute="trailing" constant="17" id="2p0-ek-otk"/>
-                                    <constraint firstItem="ksz-rg-EFW" firstAttribute="leading" secondItem="lCs-aW-ho5" secondAttribute="leading" constant="58" id="3mA-Mc-uz0"/>
-                                    <constraint firstItem="lCs-aW-ho5" firstAttribute="leading" secondItem="3aN-4O-go7" secondAttribute="leading" id="B33-Yr-zeP"/>
-                                    <constraint firstItem="egl-Wo-zqw" firstAttribute="top" secondItem="lCs-aW-ho5" secondAttribute="bottom" id="C45-va-c58"/>
-                                    <constraint firstItem="vUC-tX-eaD" firstAttribute="top" secondItem="ksz-rg-EFW" secondAttribute="bottom" id="CgJ-CF-hFq"/>
-                                    <constraint firstAttribute="trailing" secondItem="IO0-3o-NpQ" secondAttribute="trailing" id="DkY-zk-Uhq"/>
-                                    <constraint firstItem="egl-Wo-zqw" firstAttribute="leading" secondItem="3aN-4O-go7" secondAttribute="leading" constant="16" id="OfO-me-zvL"/>
-                                    <constraint firstItem="cEn-kL-AFi" firstAttribute="leading" secondItem="3aN-4O-go7" secondAttribute="leading" id="WKL-ff-LtB"/>
-                                    <constraint firstAttribute="trailing" secondItem="axH-4X-UMh" secondAttribute="trailing" id="X5t-A2-dK4"/>
-                                    <constraint firstAttribute="trailing" secondItem="lCs-aW-ho5" secondAttribute="trailing" id="aRe-gF-lEd"/>
-                                    <constraint firstItem="ksz-rg-EFW" firstAttribute="top" secondItem="lCs-aW-ho5" secondAttribute="bottom" id="ciG-8Q-teo"/>
-                                    <constraint firstItem="axH-4X-UMh" firstAttribute="top" secondItem="cEn-kL-AFi" secondAttribute="bottom" id="fOf-6V-wjJ"/>
-                                    <constraint firstItem="lCs-aW-ho5" firstAttribute="top" secondItem="IO0-3o-NpQ" secondAttribute="bottom" id="fbm-st-cEd"/>
-                                    <constraint firstAttribute="height" constant="164" id="fu9-XB-HqG"/>
-                                    <constraint firstItem="IO0-3o-NpQ" firstAttribute="leading" secondItem="3aN-4O-go7" secondAttribute="leading" id="gsv-S0-ogV"/>
-                                    <constraint firstAttribute="trailing" secondItem="vUC-tX-eaD" secondAttribute="trailing" id="msI-9R-t0f"/>
-                                    <constraint firstItem="axH-4X-UMh" firstAttribute="leading" secondItem="3aN-4O-go7" secondAttribute="leading" id="nqf-wf-2L7"/>
-                                    <constraint firstAttribute="trailing" secondItem="egl-Wo-zqw" secondAttribute="trailing" id="oqC-WL-2Db"/>
-                                    <constraint firstItem="IO0-3o-NpQ" firstAttribute="top" secondItem="3aN-4O-go7" secondAttribute="top" id="ozN-q6-t7c"/>
-                                    <constraint firstItem="vUC-tX-eaD" firstAttribute="leading" secondItem="3aN-4O-go7" secondAttribute="leading" constant="16" id="v8T-6i-lov"/>
-                                    <constraint firstItem="cEn-kL-AFi" firstAttribute="top" secondItem="ksz-rg-EFW" secondAttribute="bottom" constant="-1" id="vl5-ac-4hV"/>
-                                    <constraint firstAttribute="trailing" secondItem="cEn-kL-AFi" secondAttribute="trailing" id="yKC-VF-KN8"/>
+                                    <constraint firstItem="ksz-rg-EFW" firstAttribute="top" secondItem="egl-Wo-zqw" secondAttribute="bottom" id="1eH-1u-UTd"/>
+                                    <constraint firstAttribute="trailing" secondItem="ksz-rg-EFW" secondAttribute="trailing" constant="32" id="8KE-QQ-hQH"/>
+                                    <constraint firstItem="egl-Wo-zqw" firstAttribute="leading" secondItem="3ha-My-TYX" secondAttribute="leading" constant="16" id="COV-kZ-JPV"/>
+                                    <constraint firstItem="ksz-rg-EFW" firstAttribute="leading" secondItem="3ha-My-TYX" secondAttribute="leading" constant="44" id="NcH-BQ-eci"/>
+                                    <constraint firstAttribute="trailing" secondItem="egl-Wo-zqw" secondAttribute="trailing" id="YSU-7s-F7f"/>
+                                    <constraint firstAttribute="height" id="vhf-0g-rnN"/>
+                                    <constraint firstItem="egl-Wo-zqw" firstAttribute="top" secondItem="3ha-My-TYX" secondAttribute="top" id="xCN-rp-V2V"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUC-tX-eaD" userLabel="Separator View">
+                                <rect key="frame" x="16" y="182.5" width="398" height="0.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="8gS-gc-sdy"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cEn-kL-AFi" customClass="PasswordView">
+                                <rect key="frame" x="0.0" y="183" width="414" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="M4o-fm-yMS"/>
+                                    <constraint firstAttribute="height" constant="60" id="a3b-Dd-UY9"/>
+                                    <constraint firstAttribute="width" constant="622" id="btT-pQ-BCr"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="confirmPassword"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-w-key"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="btT-pQ-BCr"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="btT-pQ-BCr"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axH-4X-UMh" userLabel="Separator View">
+                                <rect key="frame" x="0.0" y="243" width="414" height="0.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="za3-rQ-Ehf"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k2b-al-JvY" userLabel="EncryptView">
-                                <rect key="frame" x="0.0" y="314" width="414" height="45"/>
+                                <rect key="frame" x="0.0" y="269.5" width="414" height="45"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kJ2-8W-KB4" userLabel="Separator View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
@@ -511,28 +499,46 @@
                         <viewLayoutGuide key="safeArea" id="5wb-UZ-Y8K"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="3aN-4O-go7" firstAttribute="top" secondItem="5wb-UZ-Y8K" secondAttribute="top" constant="34" id="RNq-fW-bsA"/>
+                            <constraint firstItem="cEn-kL-AFi" firstAttribute="top" secondItem="vUC-tX-eaD" secondAttribute="bottom" id="3Ez-eT-ebl"/>
+                            <constraint firstItem="IO0-3o-NpQ" firstAttribute="leading" secondItem="hFt-mU-JzI" secondAttribute="leading" id="3w7-5V-aOj"/>
+                            <constraint firstItem="axH-4X-UMh" firstAttribute="leading" secondItem="hFt-mU-JzI" secondAttribute="leading" id="7b7-T9-1oa"/>
+                            <constraint firstItem="cEn-kL-AFi" firstAttribute="trailing" secondItem="5wb-UZ-Y8K" secondAttribute="trailing" id="9Gl-Xu-DXJ"/>
+                            <constraint firstItem="lCs-aW-ho5" firstAttribute="trailing" secondItem="5wb-UZ-Y8K" secondAttribute="trailing" id="Fdg-7P-Em5"/>
+                            <constraint firstItem="3ha-My-TYX" firstAttribute="top" secondItem="lCs-aW-ho5" secondAttribute="bottom" id="IfS-Xy-gVM"/>
+                            <constraint firstItem="lCs-aW-ho5" firstAttribute="leading" secondItem="5wb-UZ-Y8K" secondAttribute="leading" id="Ir9-iX-76L"/>
+                            <constraint firstItem="axH-4X-UMh" firstAttribute="top" secondItem="cEn-kL-AFi" secondAttribute="bottom" id="Kt4-eN-oqy"/>
+                            <constraint firstItem="vUC-tX-eaD" firstAttribute="top" secondItem="3ha-My-TYX" secondAttribute="bottom" id="OyU-iD-eP0"/>
                             <constraint firstItem="k2b-al-JvY" firstAttribute="trailing" secondItem="5wb-UZ-Y8K" secondAttribute="trailing" id="SGw-E6-si5"/>
                             <constraint firstItem="k2b-al-JvY" firstAttribute="leading" secondItem="5wb-UZ-Y8K" secondAttribute="leading" id="aEw-QK-mox"/>
-                            <constraint firstItem="3aN-4O-go7" firstAttribute="trailing" secondItem="5wb-UZ-Y8K" secondAttribute="trailing" id="aMx-oT-X4r"/>
-                            <constraint firstItem="k2b-al-JvY" firstAttribute="top" secondItem="3aN-4O-go7" secondAttribute="bottom" constant="28" id="qPY-Jn-nXe"/>
-                            <constraint firstItem="3aN-4O-go7" firstAttribute="leading" secondItem="5wb-UZ-Y8K" secondAttribute="leading" id="sOr-AM-6cX"/>
+                            <constraint firstItem="IO0-3o-NpQ" firstAttribute="top" secondItem="5wb-UZ-Y8K" secondAttribute="top" constant="34" id="aJY-2n-as3"/>
+                            <constraint firstItem="cEn-kL-AFi" firstAttribute="leading" secondItem="5wb-UZ-Y8K" secondAttribute="leading" id="bhF-A3-3ux"/>
+                            <constraint firstAttribute="trailing" secondItem="vUC-tX-eaD" secondAttribute="trailing" id="fTC-NJ-t7G"/>
+                            <constraint firstAttribute="trailing" secondItem="IO0-3o-NpQ" secondAttribute="trailing" id="hws-LR-6KS"/>
+                            <constraint firstItem="vUC-tX-eaD" firstAttribute="leading" secondItem="hFt-mU-JzI" secondAttribute="leading" constant="16" id="iSc-To-EWE"/>
+                            <constraint firstAttribute="trailing" secondItem="axH-4X-UMh" secondAttribute="trailing" id="n8L-Tq-kih"/>
+                            <constraint firstItem="3ha-My-TYX" firstAttribute="trailing" secondItem="5wb-UZ-Y8K" secondAttribute="trailing" id="rI6-Oe-bTl"/>
+                            <constraint firstItem="lCs-aW-ho5" firstAttribute="top" secondItem="IO0-3o-NpQ" secondAttribute="bottom" id="sWr-C2-Twh"/>
+                            <constraint firstItem="3ha-My-TYX" firstAttribute="leading" secondItem="5wb-UZ-Y8K" secondAttribute="leading" id="yEq-qy-zh5"/>
+                            <constraint firstItem="k2b-al-JvY" firstAttribute="top" secondItem="axH-4X-UMh" secondAttribute="bottom" constant="26" id="z48-5h-7eU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PBt-ks-CjO"/>
                     <connections>
                         <outlet property="confirmPasswordView" destination="cEn-kL-AFi" id="yn5-5X-14W"/>
                         <outlet property="encryptButton" destination="3pC-tO-Gp4" id="aMX-Us-Cvw"/>
+                        <outlet property="passwordStrenghtIndicatorHeightConstraint" destination="vhf-0g-rnN" id="4r7-2u-G3L"/>
                         <outlet property="passwordStrenghtIndicatorView" destination="ksz-rg-EFW" id="jA5-2d-J6l"/>
                         <outlet property="passwordView" destination="lCs-aW-ho5" id="a34-e3-LrW"/>
                         <outletCollection property="separators" destination="kJ2-8W-KB4" collectionClass="NSMutableArray" id="kIx-L2-uLY"/>
                         <outletCollection property="separators" destination="x7N-Kv-ZeP" collectionClass="NSMutableArray" id="day-UZ-ylp"/>
+                        <outletCollection property="backgrounds" destination="k2b-al-JvY" collectionClass="NSMutableArray" id="gIM-8F-6uj"/>
                         <outletCollection property="separators" destination="IO0-3o-NpQ" collectionClass="NSMutableArray" id="nmU-IP-Uao"/>
-                        <outletCollection property="separators" destination="egl-Wo-zqw" collectionClass="NSMutableArray" id="PDq-LR-FxZ"/>
                         <outletCollection property="separators" destination="vUC-tX-eaD" collectionClass="NSMutableArray" id="fiS-06-Du4"/>
                         <outletCollection property="separators" destination="axH-4X-UMh" collectionClass="NSMutableArray" id="Txo-l7-6vL"/>
-                        <outletCollection property="backgrounds" destination="3aN-4O-go7" collectionClass="NSMutableArray" id="InD-fp-oI8"/>
-                        <outletCollection property="backgrounds" destination="k2b-al-JvY" collectionClass="NSMutableArray" id="gIM-8F-6uj"/>
+                        <outletCollection property="backgrounds" destination="lCs-aW-ho5" collectionClass="NSMutableArray" id="pFV-gH-lDf"/>
+                        <outletCollection property="backgrounds" destination="cEn-kL-AFi" collectionClass="NSMutableArray" id="j7T-w9-5tg"/>
+                        <outletCollection property="separators" destination="egl-Wo-zqw" collectionClass="NSMutableArray" id="PDq-LR-FxZ"/>
+                        <outletCollection property="backgrounds" destination="3ha-My-TYX" collectionClass="NSMutableArray" id="pdp-Bq-lqu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gdz-D3-iIE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
