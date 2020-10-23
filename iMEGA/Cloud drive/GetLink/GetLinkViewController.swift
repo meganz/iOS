@@ -121,7 +121,11 @@ class GetLinkViewController: UIViewController {
     private func configureNavigation() {
         navigationController?.setToolbarHidden(false, animated: true)
         
-        title = getLinkVM.multilink ? AMLocalizedString("getLinks", " Title shown under the action that allows you to get several links to files and/or folders") : AMLocalizedString("getLink", "Title shown under the action that allows you to get a link to file or folder")
+        if getLinkVM.multilink {
+            title = nodes.filter { !$0.isExported() }.count == 0 ? AMLocalizedString("manageLinks", "A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : AMLocalizedString("getLinks", "Title shown under the action that allows you to get several links to files and/or folders")
+        } else {
+            title = nodes[0].isExported() ? AMLocalizedString("manageLink", "A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : AMLocalizedString("getLink", "Title shown under the action that allows you to get a link to file or folder")
+        }
         
         setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
         let doneBarButtonItem = UIBarButtonItem(title: AMLocalizedString("done"), style: .done, target: self, action: #selector(doneBarButtonTapped))
@@ -193,16 +197,27 @@ class GetLinkViewController: UIViewController {
         if getLinkVM.multilink {
             tableView.reloadSections([index], with: .automatic)
         } else {
-            getLinkVM.link = node.publicLink
+            var sectionsToReload = IndexSet()
+            
+            if getLinkVM.link.isEmpty {
+                getLinkVM.link = node.publicLink
+                guard let linkSection = sections().firstIndex(of: .link) else {
+                    return
+                }
+                sectionsToReload.insert(linkSection)
+            }
+            
             if node.expirationTime > 0 {
                 getLinkVM.expiryDate = true
                 getLinkVM.date = Date(timeIntervalSince1970: TimeInterval(node.expirationTime))
             }
             
-            guard let linkSection = sections().firstIndex(of: .link), let expiryDateSection = sections().firstIndex(of: .expiryDate) else {
+            guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else {
                 return
             }
-            tableView.reloadSections([linkSection, expiryDateSection], with: .automatic)
+            sectionsToReload.insert(expiryDateSection)
+            
+            tableView.reloadSections(sectionsToReload, with: .automatic)
         }
     }
     
@@ -287,6 +302,39 @@ class GetLinkViewController: UIViewController {
         var keyRows = [KeySectionRow]()
         keyRows.append(.key)
         return keyRows
+    }
+    
+    private func encrypt(link: String, with password: String) {
+        MEGASdkManager.sharedMEGASdk().encryptLink(withPassword: link, password: password, delegate: MEGAPasswordLinkRequestDelegate.init(completion: {(request) in
+            SVProgressHUD.dismiss()
+            guard let encryptedLink = request?.text else {
+                return
+            }
+            self.getLinkVM.link = encryptedLink
+            self.getLinkVM.password = password
+            self.getLinkVM.passwordProtect = true
+            self.configureDecryptKeySeparate(isOn: false)
+            
+            guard let linkSection = self.sections().firstIndex(of: .link), let expiryDateSection = self.sections().firstIndex(of: .expiryDate) else {
+                return
+            }
+            self.tableView.reloadSections([linkSection, expiryDateSection], with: .automatic)
+        }, multipleLinks: false))
+    }
+    
+    private func setExpiryDate() {
+        MEGASdkManager.sharedMEGASdk().export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] (request) in
+            guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: self?.nodes[0].handle ?? MEGAInvalidHandle) else {
+                return
+            }
+            
+            if self?.getLinkVM.passwordProtect ?? false, let password = self?.getLinkVM.password {
+                self?.encrypt(link: nodeUpdated.publicLink, with: password)
+            } else {
+                SVProgressHUD.dismiss()
+                self?.updateModel(forNode: nodeUpdated)
+            }
+        }, multipleLinks: false))
     }
     
     //MARK: - IBActions
@@ -662,13 +710,7 @@ extension GetLinkViewController: UITableViewDelegate {
                     break
                 case .configureExpiryDate:
                     if getLinkVM.selectDate {
-                        MEGASdkManager.sharedMEGASdk().export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] (request) in
-                            SVProgressHUD.dismiss()
-                            guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: self?.nodes[0].handle ?? MEGAInvalidHandle) else {
-                                return
-                            }
-                            self?.updateModel(forNode: nodeUpdated)
-                            }, multipleLinks: false))
+                        setExpiryDate()
                     }
                     getLinkVM.selectDate = !getLinkVM.selectDate
                     guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else { return }
@@ -706,13 +748,9 @@ extension GetLinkViewController: UITableViewDelegate {
 //MARK: - SetLinkPasswordViewControllerDelegate
 
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
-    func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, encryptedLink link: String, withPassword password: String) {
-        SVProgressHUD.dismiss()
+    func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
         setLinkPassword.dismissView()
-        getLinkVM.link = link
-        getLinkVM.password = password
-        getLinkVM.passwordProtect = true
-        configureDecryptKeySeparate(isOn: false)
+        encrypt(link: getLinkVM.link, with: password)
     }
     
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController) {
