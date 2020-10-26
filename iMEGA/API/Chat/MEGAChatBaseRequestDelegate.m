@@ -14,6 +14,7 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
     if (error.type) {
+#ifndef MNZ_NOTIFICATION_EXTENSION
         if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAErrorTypeApiENoent) {
             return;
         }
@@ -30,6 +31,7 @@
 
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+#endif
     }
 }
 
