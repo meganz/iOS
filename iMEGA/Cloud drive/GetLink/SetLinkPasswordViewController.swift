@@ -16,14 +16,12 @@ class SetLinkPasswordViewController: UIViewController {
     @IBOutlet var backgrounds: [UIView]!
 
     private var delegate: SetLinkPasswordViewControllerDelegate?
-    private var link = String()
     
-    class func instantiate(withLink link: String, delegate: SetLinkPasswordViewControllerDelegate?) -> MEGANavigationController {
+    class func instantiate(withDelegate delegate: SetLinkPasswordViewControllerDelegate?) -> MEGANavigationController {
         guard let setLinkPasswordVC = UIStoryboard(name: "GetLink", bundle: nil).instantiateViewController(withIdentifier: "SetLinkPasswordViewControllerID") as? SetLinkPasswordViewController else {
             fatalError("Could not instantiate SetLinkPasswordViewController")
         }
 
-        setLinkPasswordVC.link = link
         setLinkPasswordVC.delegate = delegate
         
         return MEGANavigationController.init(rootViewController: setLinkPasswordVC)
