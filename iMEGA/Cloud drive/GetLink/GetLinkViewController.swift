@@ -359,8 +359,8 @@ class GetLinkViewController: UIViewController {
     }
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
-        let linksToShare = getLinkVM.multilink ? nodes.map { $0.publicLink } : [getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link as Any]
-        let shareActivity = UIActivityViewController(activityItems: linksToShare, applicationActivities: nil)
+        let textToShare = getLinkVM.multilink ? nodes.map { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
+        let shareActivity = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
         shareActivity.excludedActivityTypes = [.print, .assignToContact, .saveToCameraRoll, .addToReadingList, .airDrop]
         shareActivity.popoverPresentationController?.barButtonItem = sender
         present(shareActivity, animated: true, completion: nil)
@@ -720,7 +720,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 switch passwordProtectionRows()[indexPath.row] {
                 case .configurePasword:
                     if MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
-                        present(SetLinkPasswordViewController.instantiate(withLink: nodes[0].publicLink, delegate: self), animated: true, completion: nil)
+                        present(SetLinkPasswordViewController.instantiate(withDelegate: self), animated: true, completion: nil)
                     }
                 }
             case .link:
@@ -750,7 +750,7 @@ extension GetLinkViewController: UITableViewDelegate {
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
         setLinkPassword.dismissView()
-        encrypt(link: getLinkVM.link, with: password)
+        encrypt(link: nodes[0].publicLink, with: password)
     }
     
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController) {
