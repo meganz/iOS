@@ -1712,7 +1712,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     __weak __typeof__(self) weakSelf = self;
     activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         if (completed && !activityError) {
-            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink] || [activityType isEqualToString:MEGAUIActivityTypeShareExtension]) {
                 [weakSelf setEditMode:NO];
             }
         }

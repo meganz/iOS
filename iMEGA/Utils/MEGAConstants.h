@@ -97,6 +97,7 @@ extern NSString * const MEGAUIActivityTypeRemoveSharing;
 extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
+extern NSString * const MEGAUIActivityTypeShareExtension;
 
 #pragma mark - Background Task completion.
 
