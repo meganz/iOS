@@ -1018,7 +1018,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     };
 
     UINavigationController *navigationController = [UINavigationController.alloc initWithRootViewController:overDiskQuotaViewController];
-    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    navigationController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:^{
         weakSelf.overDiskQuotaPresented = YES;
     }];
