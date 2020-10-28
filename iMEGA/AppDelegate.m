@@ -776,7 +776,7 @@
     }
 }
 
-- (void)showOnboarding {
+- (void)showOnboardingWithCompletion:(void (^)(void))completion {
     OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
     UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
     [onboardingVC.view addSubview:overlayView];
@@ -787,6 +787,8 @@
     } completion:^(BOOL finished) {
         [overlayView removeFromSuperview];
         [SVProgressHUD dismiss];
+        
+        if (completion) completion();
     }];
 }
 
@@ -1498,7 +1500,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeLogin) {
                     [Helper logout];
-                    [self showOnboarding];
+                    [self showOnboardingWithCompletion:nil];
                 }
                 break;
             }
@@ -1506,12 +1508,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiESid: {                                
                 if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                     [Helper logout];
-                    [self showOnboarding];
                     
-                    UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                    [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_presentingViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
-                        [MEGALinkManager resetLinkAndURLType];
+                    [self showOnboardingWithCompletion:^{
+                        if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
+                            UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                            [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
+                            [UIApplication.mnz_presentingViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
+                                [MEGALinkManager resetLinkAndURLType];
+                            }];
+                        }
                     }];
                     return;
                 }
@@ -1519,7 +1524,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
                         [Helper logout];
-                        [self showOnboarding];
+                        [self showOnboardingWithCompletion:nil];
                         
                         self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -1669,7 +1674,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case MEGARequestTypeLogout: {            
             [Helper logout];
-            [self showOnboarding];
+            [self showOnboardingWithCompletion:nil];
             
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
             break;

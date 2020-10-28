@@ -6,6 +6,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) MEGACallManager *megaCallManager;
 
-- (void)showOnboarding;
+- (void)showOnboardingWithCompletion:(void (^)(void))completion;
 
 @end
