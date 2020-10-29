@@ -33,6 +33,12 @@ class ChatViewController: MessagesViewController {
     var keyboardVisible = false
     var richLinkWarningCounterValue: UInt = 0
     var isVoiceRecordingInProgress = false
+    var unreadNewMessagesCount = 0 {
+        didSet {
+            chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
+        }
+    }
+    
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     // topbanner
@@ -86,10 +92,9 @@ class ChatViewController: MessagesViewController {
         return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSelecting))
      }()
     
-    private lazy var chatBottomInfoScreen: ChatBottomInfoScreen? = {
-        let chatBottomInfoScreen = ChatBottomInfoScreen.instanceFromNib
-        chatBottomInfoScreen.isHidden = true
-        return chatBottomInfoScreen
+    private lazy var chatBottomInfoScreen: ChatBottomNewMessageIndicatorView = {
+        let chatBottomNewMessageIndicatorView = ChatBottomNewMessageIndicatorView()
+        return chatBottomNewMessageIndicatorView
     }()
     
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
@@ -465,8 +470,28 @@ class ChatViewController: MessagesViewController {
         chatRoomDelegate.closeChatRoom()
     }
     
-    func showNewMessagesToJumpToBottomIfRequired() {
-        showJumpToBottom(viewType: .newMessages)
+    func showJumpToBottom() {
+        
+        chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
+        
+        var contentInset = messagesCollectionView.contentInset.bottom
+        if #available(iOS 11.0, *) {
+            contentInset = messagesCollectionView.adjustedContentInset.bottom
+        }
+        
+        chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
+        view.layoutIfNeeded()
+        
+        guard chatBottomInfoScreen.isHidden == true else {
+            return
+        }
+        
+        chatBottomInfoScreen.alpha = 0.0
+        chatBottomInfoScreen.isHidden = false
+        
+        UIView.animate(withDuration: 0.2, delay: 0.3, options: .curveEaseInOut, animations: {
+            self.chatBottomInfoScreen.alpha = 1.0
+        }, completion: nil)
     }
 
     // MARK: - Internal methods used by the extension of this class
@@ -800,28 +825,20 @@ class ChatViewController: MessagesViewController {
     }
     
     private func addChatBottomInfoScreenToView() {
-        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
-            return
-        }
-        
         chatBottomInfoScreen.tapHandler = { [weak self] in
             guard let `self` = self else {
                 return
             }
-            
+            self.unreadNewMessagesCount = 0
             self.messagesCollectionView.scrollToBottom(animated: true)
             self.hideJumpToBottomIfRequired()
         }
-        
         view.addSubview(chatBottomInfoScreen)
         chatBottomInfoScreen.translatesAutoresizingMaskIntoConstraints = false
         
-        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -chatBottomInfoScreenBottomPadding)
-        NSLayoutConstraint.activate([
-            chatBottomInfoScreen.heightAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.height),
-            chatBottomInfoScreenBottomConstraint!,
-            chatBottomInfoScreen.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
-        ])
+        chatBottomInfoScreen.autoSetDimensions(to: CGSize(width: chatBottomInfoScreen.bounds.width, height: chatBottomInfoScreen.bounds.height))
+        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.autoPinEdge(toSuperviewEdge: .bottom, withInset: -chatBottomInfoScreenBottomPadding)
+        chatBottomInfoScreen.autoPinEdge(toSuperviewSafeArea: .right, withInset: 20)
     }
     
     func showOrHideJumpToBottom() {
@@ -829,48 +846,22 @@ class ChatViewController: MessagesViewController {
         let bottomContentOffsetValue = messagesCollectionView.contentSize.height - messagesCollectionView.contentOffset.y
         if bottomContentOffsetValue < verticalIncrementToShow {
             hideJumpToBottomIfRequired()
+            unreadNewMessagesCount = 0
         } else {
             showJumpToBottom()
         }
     }
     
-    private func showJumpToBottom(viewType: ChatBottomInfoScreen.ViewType = .jumpToLatest) {
-        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
-            return
-        }
-        
-        chatBottomInfoScreen.viewType = viewType
-        
-        var contentInset = messagesCollectionView.contentInset.bottom
-        if #available(iOS 11.0, *) {
-            contentInset = messagesCollectionView.adjustedContentInset.bottom
-        }
-        
-        chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
-        view.layoutIfNeeded()
-        
-        guard chatBottomInfoScreen.isHidden == true else {
-            return
-        }
-        
-        chatBottomInfoScreen.alpha = 0.0
-        chatBottomInfoScreen.isHidden = false
-        
-        UIView.animate(withDuration: 0.2, delay: 0.3, options: .curveEaseInOut, animations: {
-            chatBottomInfoScreen.alpha = 1.0
-        }, completion: nil)
-    }
-    
     private func hideJumpToBottomIfRequired() {
-        guard let chatBottomInfoScreen = chatBottomInfoScreen, !chatBottomInfoScreen.isHidden else {
+        guard !chatBottomInfoScreen.isHidden else {
             return
         }
         
         UIView.animate(withDuration: 0.2, animations: {
-            chatBottomInfoScreen.alpha = 0.0
+            self.chatBottomInfoScreen.alpha = 0.0
         }) { _ in
-            chatBottomInfoScreen.isHidden = true
-            chatBottomInfoScreen.alpha = 1.0
+            self.chatBottomInfoScreen.isHidden = true
+            self.chatBottomInfoScreen.alpha = 1.0
         }
     }
 
