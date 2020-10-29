@@ -476,7 +476,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         if lastSectionVisible || scrollToBottom {
             chatViewController?.messagesCollectionView.scrollToItem(at: IndexPath(item: 0, section: self.chatMessages.count - 1), at: .bottom, animated: true)
         } else {
-            chatViewController?.showNewMessagesToJumpToBottomIfRequired()
+            self.chatViewController?.unreadNewMessagesCount += 1
+            chatViewController?.showJumpToBottom()
         }
     }
     
