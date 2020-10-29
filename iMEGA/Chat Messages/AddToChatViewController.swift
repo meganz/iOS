@@ -48,7 +48,7 @@ class AddToChatViewController: UIViewController {
 
     weak var addToChatDelegate: AddToChatViewControllerDelegate?
     
-    private let iPadPopoverWidth: CGFloat = 440.0
+    private let iPadPopoverWidth: CGFloat = 340.0
     
     // MARK:- View lifecycle methods.
     
@@ -81,9 +81,10 @@ class AddToChatViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        preferredContentSize = requiredSize(forWidth: min((view.bounds.width-20), iPadPopoverWidth))
+        preferredContentSize = requiredSize(forWidth: min((UIScreen.main.bounds.width-20), iPadPopoverWidth))
         
         updateContentViewConstraints()
+        mediaCollectionView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
