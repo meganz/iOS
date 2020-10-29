@@ -3,6 +3,7 @@ protocol AddToChatMediaCollectionSourceDelegate: AnyObject {
     func moreButtonTapped()
     func sendAsset(asset: PHAsset)
     func showCamera()
+    func dismissView()
 }
 
 class AddToChatMediaCollectionSource: NSObject {
@@ -177,6 +178,7 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 if granted {
                     self.collectionView.reloadData()
                 } else {
+                    if UIDevice.current.iPad { self.delegate?.dismissView() }
                     DevicePermissionsHelper.alertPhotosPermission()
                 }
             }
@@ -187,10 +189,12 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                         if photosPermissionGranted {
                             self.delegate?.showCamera()
                         } else {
+                            if UIDevice.current.iPad { self.delegate?.dismissView() }
                             DevicePermissionsHelper.alertPhotosPermission()
                         }
                     }
                 } else {
+                    if UIDevice.current.iPad { self.delegate?.dismissView() }
                     DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
                 }
             }
