@@ -79,7 +79,14 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.share(chatMessage)
+        guard let activityViewController = UIActivityViewController(for: [chatMessage.message], sender: self.sender) else {
+            SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
+            return
+        }
+        
+        if let sourceView = self.sender {
+            self.chatViewController?.present(viewController: activityViewController)
+        }
     }
     
     lazy var selectAction = ActionSheetAction(title: AMLocalizedString("select"), detail: nil, image: UIImage(named: "select"), style: .default) {

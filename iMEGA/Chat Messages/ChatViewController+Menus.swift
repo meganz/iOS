@@ -145,21 +145,6 @@ extension ChatViewController {
         }
     }
     
-    func share(_ chatMessage: ChatMessage) {
-        SVProgressHUD.show()
-        DispatchQueue.global(qos: .default).async {
-            guard let activityViewController = UIActivityViewController(for: [chatMessage.message], sender: nil) else {
-                SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
-                return
-            }
-            
-            DispatchQueue.main.async {
-                SVProgressHUD.dismiss()
-                self.present(viewController: activityViewController)
-            }
-        }
-    }
-    
     func select(_ chatMessage: ChatMessage) {
         forwardMessage(chatMessage)
     }
