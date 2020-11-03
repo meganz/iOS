@@ -838,6 +838,7 @@ class ChatViewController: MessagesViewController {
             self.hideJumpToBottomIfRequired()
         }
         view.addSubview(chatBottomInfoScreen)
+        chatBottomInfoScreen.isHidden = true
         chatBottomInfoScreen.translatesAutoresizingMaskIntoConstraints = false
         
         chatBottomInfoScreen.autoSetDimensions(to: CGSize(width: chatBottomInfoScreen.bounds.width, height: chatBottomInfoScreen.bounds.height))
