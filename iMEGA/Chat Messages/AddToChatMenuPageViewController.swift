@@ -117,6 +117,13 @@ class AddToChatMenuPageViewController: UIPageViewController {
         let rowSpacing = AddToChatMenuViewController().rowSpacing
         return (eachMenuWidth * CGFloat(numberOfRowsForMenu)) + rowSpacing
     }
+    
+    func totalRequiredWidth(forAvailableHeight height: CGFloat,
+                            horizontalPaddding: CGFloat) -> CGFloat {
+        let rowSpacing = AddToChatMenuViewController().rowSpacing
+        let eachMenuWidth = (height - rowSpacing) / CGFloat(numberOfRowsForMenu)
+        return eachMenuWidth * CGFloat(menuPerRow) 
+    }
 }
 
 extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
