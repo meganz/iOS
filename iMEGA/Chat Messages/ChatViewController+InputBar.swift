@@ -413,6 +413,10 @@ extension ChatViewController: ChatInputBarDelegate {
         audioController.stopAnyOngoingPlaying()
     }
     
+    func clearEditMessage() {
+        editMessage = nil
+    }
+    
     func tappedSendButton(withText text: String) {
         MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
         
