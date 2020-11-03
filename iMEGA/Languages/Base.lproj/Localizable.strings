@@ -286,6 +286,18 @@
 "capturePhotoVideo"="Capture";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Photos";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Voice";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contact";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Start Group";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Location";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="New Folder";
 /* Hint text shown on the create folder alert. */
