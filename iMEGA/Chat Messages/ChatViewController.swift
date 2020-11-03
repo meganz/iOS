@@ -15,7 +15,11 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var chatInputBar: ChatInputBar?
-    var editMessage: ChatMessage?
+    var editMessage: ChatMessage? {
+        didSet {
+            chatInputBar?.editMessage = editMessage
+        }
+    }
     var addToChatViewController: AddToChatViewController?
     var selectedMessages = Set<ChatMessage>()
     var lastGreenString: String?

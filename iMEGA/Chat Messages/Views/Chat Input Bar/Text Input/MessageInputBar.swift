@@ -8,6 +8,7 @@ protocol MessageInputBarDelegate: class {
     func tappedVoiceButton()
     func typing(withText text: String)
     func textDidEndEditing()
+    func clearEditMessage()
 }
 
 class MessageInputBar: UIView {
@@ -24,7 +25,7 @@ class MessageInputBar: UIView {
     @IBOutlet weak var semiTransparentView: UIView!
 
     @IBOutlet weak var messageTextViewCoverView: MessageInputTextBackgroundView!
-    @IBOutlet weak var messageTextViewCoverViewBottomContraint: NSLayoutConstraint!
+    @IBOutlet weak var messageTextViewCoverViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageTextViewCoverViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var backgroundViewTrailingTextViewConstraint: NSLayoutConstraint!
@@ -40,7 +41,16 @@ class MessageInputBar: UIView {
     
     @IBOutlet weak var typingIndicatorLabel: UILabel!
 
-    
+    @IBOutlet weak var editView: UIView!
+    @IBOutlet weak var editViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editMessageLabel: UILabel!
+    var editMessage: ChatMessage? {
+        didSet {
+            configureEditField()
+        }
+    }
+
     // MARK:- Interface properties
 
     weak var delegate: MessageInputBarDelegate?
@@ -66,26 +76,19 @@ class MessageInputBar: UIView {
     private var expanded: Bool = false
     private var minTopPaddingWhenExpanded: CGFloat = 20.0
     private var expandedHeight: CGFloat? {
-        guard let messageTextViewTopConstraintValueWhenExpanded = messageTextViewTopConstraintValueWhenExpanded else {
+        guard let editViewTopConstraintValueWhenExpanded = editViewTopConstraintValueWhenExpanded else {
             return nil
         }
         
-        let expandedHeight = heightWhenExpanded(topConstraintValueWhenExpanded: messageTextViewTopConstraintValueWhenExpanded)
+        let expandedHeight = heightWhenExpanded(topConstraintValueWhenExpanded: editViewTopConstraintValueWhenExpanded)
         let minHeightRequired = rightButtonHolderView.bounds.height + expandCollapseButton.bounds.height
         return expandedHeight > minHeightRequired ? expandedHeight :  heightWhenExpanded(topConstraintValueWhenExpanded: minTopPaddingWhenExpanded)
-    }
-    
-    private func heightWhenExpanded(topConstraintValueWhenExpanded: CGFloat) -> CGFloat {
-        return UIScreen.main.bounds.height -
-            (topConstraintValueWhenExpanded
-                + messageTextViewBottomConstraintDefaultValue
-                + (messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0))
     }
 
     private var keyboardHeight: CGFloat?
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
-    private let messageTextViewTopConstraintValueWhenCollapsed: CGFloat = 32.0
-    private var messageTextViewTopConstraintValueWhenExpanded: CGFloat? {
+    private let editViewTopConstraintValueWhenCollapsed: CGFloat = 38.0
+    private var editViewTopConstraintValueWhenExpanded: CGFloat? {
         var minHeight = minTopPaddingWhenExpanded
         if #available(iOS 11.0, *) {
             minHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
@@ -116,9 +119,11 @@ class MessageInputBar: UIView {
             fatalError("text view font does not exsists")
         }
         
+        editViewHeightConstraint.constant = 0
+        
         messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight
             + messageTextViewCoverViewTopConstraint.constant
-            + messageTextViewCoverViewBottomContraint.constant
+            + messageTextViewCoverViewBottomConstraint.constant
             + messageTextView.textContainerInset.top
             + messageTextView.textContainerInset.bottom
         
@@ -226,6 +231,16 @@ class MessageInputBar: UIView {
         delegate.tappedVoiceButton()
     }
     
+    @IBAction func clearEditMessage(_ sender: Any) {
+        guard let delegate = delegate else {
+            return
+        }
+        
+        messageTextView.reset()
+        sendButton.isEnabled = false
+        delegate.clearEditMessage()
+    }
+    
     @IBAction func addButtonTapped(_ button: UIButton) {
         guard let delegate = delegate else {
             return
@@ -242,6 +257,25 @@ class MessageInputBar: UIView {
     }
     
     // MARK: - Private methods
+    
+    private func heightWhenExpanded(topConstraintValueWhenExpanded: CGFloat) -> CGFloat {
+        return UIScreen.main.bounds.height -
+            (topConstraintValueWhenExpanded
+                + messageTextViewBottomConstraintDefaultValue
+                + (messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0)
+                + editViewHeightConstraint.constant)
+    }
+    
+    private func configureEditField() {
+        guard let editMessage = editMessage else {
+            editViewHeightConstraint.constant = 0
+            sendButton.setImage(UIImage(named: "sendButton"), for: .normal)
+            return
+        }
+        editViewHeightConstraint.constant = 40
+        editMessageLabel.text = editMessage.message.content
+        sendButton.setImage(UIImage(named: "confirmEdit"), for: .normal)
+    }
     
     override var keyCommands: [UIKeyCommand]? {
       return [
@@ -306,7 +340,7 @@ class MessageInputBar: UIView {
         
         UIView.animate(withDuration: animationDuration, animations: {
             self.messageTextViewBottomConstraint.constant = self.messageTextViewBottomConstraintDefaultValue
-            self.messageTextViewTopConstraint.constant += delta
+            self.editViewTopConstraint.constant += delta
             self.messageTextViewCoverView.alpha = 1.0
             self.semiTransparentView.alpha = 0.0
             self.layoutIfNeeded()
@@ -320,7 +354,7 @@ class MessageInputBar: UIView {
         semiTransparentView.isHidden = true
         semiTransparentView.alpha = 1.0
         
-        messageTextViewTopConstraint.constant = messageTextViewTopConstraintValueWhenCollapsed
+        editViewTopConstraint.constant = editViewTopConstraintValueWhenCollapsed
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
         expandCollapseButton.setImage(#imageLiteral(resourceName: "expand"), for: .normal)
     }
@@ -335,25 +369,26 @@ class MessageInputBar: UIView {
         let topConstraintValue: CGFloat = UIScreen.main.bounds.height
             - ((messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0)
                 + messageTextViewBottomConstraint.constant
-                + messageTextView.intrinsicContentSize.height)
+                + messageTextView.intrinsicContentSize.height
+                + editViewHeightConstraint.constant)
 
-        messageTextViewTopConstraint.constant = topConstraintValue
+        editViewTopConstraint.constant = topConstraintValue
         layoutIfNeeded()
         
         let bottomAnimatableConstraint = topConstraintValue
-            - (messageTextViewTopConstraintValueWhenExpanded ?? 0.0)
+            - (editViewTopConstraintValueWhenExpanded ?? 0.0)
 
         UIView.animate(withDuration: animationDuration, animations: {
             self.semiTransparentView.alpha = 1.0
             self.messageTextViewBottomConstraint.constant += bottomAnimatableConstraint
-            self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? 0.0
+            self.editViewTopConstraint.constant = self.editViewTopConstraintValueWhenExpanded ?? 0.0
             self.layoutIfNeeded()
         }, completion: completionHandler)
     }
     
     private func expandAnimationComplete(_ animationCompletion: Bool) {
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
-        messageTextViewTopConstraint.constant = messageTextViewTopConstraintValueWhenExpanded ?? messageTextViewTopConstraintValueWhenCollapsed
+        editViewTopConstraint.constant = editViewTopConstraintValueWhenExpanded ?? editViewTopConstraintValueWhenCollapsed
         messageTextView.expandedHeight = expandedHeight
         expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
@@ -388,12 +423,13 @@ class MessageInputBar: UIView {
             }
             
             MEGALogDebug("[MessageInputBar] Keyboard did show notification triggered")
-
+            
             let inputBarHeight: CGFloat = self.messageTextView.intrinsicContentSize.height
                 + self.messageTextViewBottomConstraint.constant
-                + self.messageTextViewTopConstraint.constant
+                + self.editViewTopConstraint.constant
+                + self.editViewHeightConstraint.constant
             self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
-            
+                        
             if self.backgroundViewTrailingButtonConstraint.isActive,
                 let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
                 messageTextViewExpanadedHeight != self.expandedHeight {
@@ -494,7 +530,7 @@ class MessageInputBar: UIView {
             return
         }
         
-        sendButton.isEnabled = !(text as NSString).mnz_isEmpty()
+        sendButton.isEnabled = !text.mnz_isEmpty()
         delegate.typing(withText: text)
     }
     

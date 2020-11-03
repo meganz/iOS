@@ -9,6 +9,7 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func showTapAndHoldMessage()
     func voiceRecordingStarted()
     func voiceRecordingEnded()
+    func clearEditMessage()
 }
 
 class ChatInputBar: UIView {
@@ -52,7 +53,11 @@ class ChatInputBar: UIView {
     // MARK:- Interface properties
 
     weak var delegate: ChatInputBarDelegate?
-    
+    var editMessage: ChatMessage? {
+        didSet {
+            messageInputBar.editMessage = editMessage
+        }
+    }
     var voiceRecordingViewCanBeDismissed = false
 
     var voiceRecordingViewEnabled: Bool = false {
@@ -442,6 +447,10 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 
 
 extension ChatInputBar: MessageInputBarDelegate {
+    func clearEditMessage() {
+        delegate?.clearEditMessage()
+    }
+    
     func tappedAddButton(_ button: UIButton) {
         if voiceRecordingViewEnabled {
             voiceRecordingViewEnabled = false
