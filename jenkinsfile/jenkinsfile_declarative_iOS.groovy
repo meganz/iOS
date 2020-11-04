@@ -9,7 +9,7 @@ def callSlack(String buildResult) {
         slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
     }
     else {
-        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"	
+        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"    
     }
 }
 
@@ -27,13 +27,13 @@ pipeline {
    agent any
 
    stages {
-      stage('Submodule update') {
-         steps {
-            injectEnvironments({
-              sh "git submodule update --init --recursive"
-            })
+        stage('Submodule update') {
+            steps {
+                injectEnvironments({
+                sh "git submodule update --init --recursive"
+                })
+            }
         }
-      }
 
         stage('Downloading dependencies') {
             steps {
@@ -62,14 +62,28 @@ pipeline {
                 })
             }
         }
-        
-        stage('Deploying executable (IPA) to Appcenter') {
-            steps {
-                injectEnvironments({
-                    retry(3) {
-                        sh "bundle exec fastlane upload_to_appcenter ENV:DEV"
+
+        stage('Upload and Deploy') {
+            parallel {
+                stage('Deploying executable (IPA) to Appcenter') {
+                    steps {
+                        injectEnvironments({
+                            retry(3) {
+                                sh "bundle exec fastlane upload_to_appcenter ENV:DEV"
+                            }
+                        })
                     }
-                })
+                }
+
+                stage('Upload (dSYMs) to Firebase') {
+                    steps {
+                        injectEnvironments({
+                            retry(3) {
+                                sh "bundle exec fastlane upload_symbols ENV:DEV"
+                            }
+                        })
+                    }
+                }
             }
         }
    }
