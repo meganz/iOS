@@ -716,6 +716,10 @@
         [cell.thumbnailImageView mnz_imageForNode:node];
     }
     
+    if (!node.name.mnz_isVideoPathExtension) {
+        cell.thumbnailPlayImageView.hidden = YES;
+    }
+    
     cell.nameLabel.text = node.name;
     cell.favouriteView.hidden = !node.isFavourite;
     cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
