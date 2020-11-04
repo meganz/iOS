@@ -1,13 +1,13 @@
 
 #import "PreviewDocumentViewController.h"
 
-#import <QuickLook/QuickLook.h>
 #import <PDFKit/PDFKit.h>
 
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
 #import "CopyrightWarningViewController.h"
+#import "MEGAQLPreviewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
@@ -50,6 +50,8 @@
 @property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
+
+@property (nonatomic) UIButton *openZipButton;
 
 @end
 
@@ -129,6 +131,8 @@
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
             [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
         }
     }
 }
@@ -200,6 +204,10 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     [self.view addSubview:self.previewController.view];
+    
+    if ([self.filesPathsArray.firstObject.pathExtension.lowercaseString isEqual: @"zip"] || [self.nodeFilePath.pathExtension.lowercaseString isEqual: @"zip"]) {
+        [self createOpenZipButton];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -253,6 +261,26 @@
     } else {
         [self.node mnz_downloadNodeOverwriting:NO];
     }
+}
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    [self.openZipButton mnz_setupBasic:self.traitCollection];
+}
+
+- (void)createOpenZipButton {
+    UIButton *openZipButton = [UIButton newAutoLayoutView];
+    [openZipButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [openZipButton mnz_setupBasic:self.traitCollection];
+    [self.view addSubview:openZipButton];
+    [openZipButton autoSetDimension:ALDimensionWidth toSize:300];
+    [openZipButton autoSetDimension:ALDimensionHeight toSize:60];
+    [openZipButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [openZipButton autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:UIDevice.currentDevice.iPad ? 32 : 16];
+    [openZipButton addTarget:self action:@selector(openZipInQLViewController) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.openZipButton = openZipButton;
 }
 
 #pragma mark - IBActions
@@ -312,8 +340,12 @@
     [self download];
 }
 
-- (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+- (void)openZipInQLViewController {
+    NSString *filePath = self.nodeFilePath ? self.nodeFilePath : self.filesPathsArray.firstObject;
+    MEGAQLPreviewController *previewController = [MEGAQLPreviewController.alloc initWithFilePath:filePath];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - QLPreviewControllerDataSource
