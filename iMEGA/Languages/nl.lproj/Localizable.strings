@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA kan geen veilige verbinding maken via SSL. Mogelijk gebruikt u openbare wifi met aanvullende vereisten.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="De inhoud die u wilt bereiken is niet beschikbaar op dit account. Probeer in te loggen met hetzelfde account als in de mobiele web programma.";
+"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te openen, is niet beschikbaar voor dit account. Probeer in te loggen met hetzelfde account als in de mobiele webclient.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Het proces duurt langer dan verwacht. Wacht a.u.b....";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -127,7 +127,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href=\"terms\">Algemene Overeenkomst</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S] als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s eind-tot-eind codering</a>.";
+"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S] als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s end-to-end encryptie</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Vul uw naam in";
 /* Error text shown when you have not written the same password */
@@ -193,7 +193,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Lege map";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Geen bestanden in uw Cloud schijf";
+"cloudDriveEmptyState_title"="Geen bestanden in uw Cloud Schijf";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Bestanden toevoegen";
 /* Title shown when you make a search and there is 'No Results' */
@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Vastleggen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Document Scannen";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Foto's";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Spraak";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Groep Starten";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Lokatie";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nieuwe map";
 /* Hint text shown on the create folder alert. */
@@ -868,7 +878,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen";
+"failedAttempstSectionTitle"="Log uit en wis lokale gegevens na 10 mislukte pogingen tot toegangscode";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -1020,7 +1030,7 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Beperkt";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Afhankelijk aan uw participatie in ons beloningsprogramma.";
+"subjectToYourParticipationInOurAchievementsProgram"="Afhankelijk van uw deelname in ons beloningsprogramma.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ per maand";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1096,7 +1106,7 @@
 /* Empty Conversations section */
 "noConversations"="Geen Gesprekken";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Begin met veilig chatten met uw contacten door gebruik van eind-tot-eind codering";
+"Start chatting securely with your contacts using end-to-end encryption"="Begin met veilig chatten met uw contacten door gebruik van end-to-end encryptie";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Inschakelen";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1126,9 +1136,9 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rijke URL Weergave";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Verbeter de MEGAchat ervaring. URL inhoud wordt binnengehaald zonder eind-tot-eind codering.";
+"richPreviewsFooter"="Verbeter de MEGAchat ervaring. URL inhoud wordt binnengehaald zonder end-to-end encryptie.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Spraak en Video oproepen";
+"voiceAndVideoCalls"="Spraak en Video Oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Gebruik Mobiele Data";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1218,7 +1228,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="In gesprek met";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA beschermt uw chat met eind-tot-eind codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
+"chatIntroductionMessage"="MEGA beschermt uw chat met end-to-end encryptie (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S] Vertrouwelijk.[/S] Alleen de auteur en de beoogde ontvangers zijn in staat om te ontcijferen en de inhoud te lezen.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1240,9 +1250,9 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Verwijder bericht";
 /*  */
-"fromCloudDrive"="Van Cloud schijf";
-/* referring to a contact in the contact list of the user */
-"contact"="Contact";
+"fromCloudDrive"="Van Cloud Schijf";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Zend contactgegevens";
 /* */
@@ -1411,7 +1421,7 @@
 "generalDescriptionParagraph5"="PRO LITE-abonnement: €4,99(US$4,99) per maand of €49,99 (US$49,99) per jaar biedt 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \n PRO I-abonnement: € 9,99 (US$9,99) per maand of € 99,99 (US $99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n PRO II-abonnement: € 19,99 (US$19,99) per maand of € 199,99 (US$199,99) per maand geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n PRO III-abonnement: € 29,99 (US$29,99) per maand of € 299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nGeheimhouding Beleid: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nPrivacy Beleid: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Bellen...";
 /* notification subtitle of incoming calls */
@@ -1507,7 +1517,7 @@
 /* Label for recovery key button */
 "backupRecoveryKey"="Reservekopie Herstelsleutel";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="Test uw wachtwoord hieronder om ervoor te zorgen dat u die onthoud. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens. [A]Leer meer[/A]";
+"testPasswordText"="Test uw wachtwoord hieronder om ervoor te zorgen dat u die onthoud. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens. [A]Meer informatie[/A]";
 /* Title text for the account confirmation. */
 "confirm"="Bevestigen";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -1517,7 +1527,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Doorgaan met uitloggen";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens.";
+"testPasswordLogoutText"="U staat op het punt om uit te loggen. Test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u de toegang tot uw MEGA-gegevens.";
 /* state previous to import a file */
 "loading"="Laden...";
 /*   */
@@ -1595,7 +1605,7 @@
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Twee-Stap Authenticatie";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
-"beginSetup"="Begin Instellingen";
+"beginSetup"="Begin de Installatie";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
 "pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code gegenereerd door uw Authenticatie Applicatie in.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
@@ -1651,7 +1661,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Creëer uw Netwerk";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Contacten toevoegen, netwerk creëren, samenwerken, en spraak en video oproepen maken zonder MEGA ooit  te verlaten";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Contacten toevoegen, netwerk creëren, samenwerken, en spraak en video oproepen maken zonder MEGA ooit te verlaten";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Uw Foto's in de Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1887,7 +1897,7 @@
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "Send Location"="Stuur locatie";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Deze locatie wordt geopend met behulp van een externe kaartenleverancier buiten het eind-tot-eind gecodeerde MEGA-platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Deze locatie wordt geopend met behulp van een externe kaartenleverancier buiten het end-to-end gecodeerde MEGA-platform.";
 /* Text shown in location-type messages */
 "Pinned Location"="Vastgezette locatie";
 /* Plural of participant. 2 participants */
@@ -2305,33 +2315,33 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIES";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Favoriet";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Verwijder Favoriet";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Label";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"Label..."="Label...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Verwijder Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
-"Red"="Red";
+"Red"="Rood";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="Orange";
+"Orange"="Oranje";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="Yellow";
+"Yellow"="Geel";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="Green";
+"Green"="Groen";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="Blue";
+"Blue"="Blauw";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="Purple";
+"Purple"="Paars";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="Grey";
+"Grey"="Grijs";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="SLEUTEL";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Send Decryption Key Separately";
+"Send Decryption Key Separately"="Verstuur Decoderingssleutel Apart";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Verloop Datum";
 /* Text for options in Get Link View to set expiry date */
@@ -2343,9 +2353,9 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exporteer de link en de decoderingssleutel afzonderlijk.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Learn more";
+"Learn more"="Meer informatie";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="Link verloopt %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Tik om te kopiëren";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2361,7 +2371,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Wachtwoord gekopieerd naar klembord";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Onze end-to-end encryptiesysteem vereist een unieke sleutel die automatisch wordt gegenereerd voor dit bestand. Er wordt standaard een koppeling met deze sleutel gemaakt, maar u kunt de decoderingssleutel afzonderlijk exporteren voor een extra beveiligingslaag.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Decoderingssleutel";
 /* Text to indicate the user to remove the password of a link */
@@ -2369,9 +2379,9 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Wachtwoord opnieuw instellen";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Deze koppeling is niet beschikbaar doordat de account van de gebruiker voor grove schending van de MEGA's [A]Servicevoorwaarden[/A] is gesloten.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Er werd gerapporteerd dat deze map/dit bestand aanstootgevende inhoud bevat, zoals uitbuitingsmateriaal voor kinderen, gewelddadig extremisme of bestialiteit. Het account van de link maker is gesloten en de volledige details, inclusief het IP-adres, zijn aan de autoriteiten verstrekt.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Onbeschikbaar";
 /* Error text shown when requesting email for email verification within 10 minutes */

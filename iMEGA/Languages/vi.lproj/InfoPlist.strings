@@ -19,4 +19,4 @@
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA truy cập vào dịch vụ dịnh vị khi người dùng chia sẻ địa điểm của mình tới các người khác trong khi chát hoặc có tùy chọn ”Tải Lên trong Nền” cho Camera Uploads để thực hiện việc tải lên hình ảnh và videos dựa vào các thay đổi vị trí của người dùng.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
-"NSLocalNetworkUsageDescription"="This will let you use MEGA to place and receive calls through devices that are on the same Wi-Fi or local access network";
+"NSLocalNetworkUsageDescription"="Quyền này sẽ cho phép bạn sử dụng MEGA để thực hiện và nhận cuộc gọi giữa các thiết bị được kết nối cùng một mạng Wi-Fi hay mạng nội bộ";
