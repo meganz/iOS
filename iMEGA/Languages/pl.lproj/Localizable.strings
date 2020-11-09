@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nie może połączyć się bezpiecznie przez SSL. Być może korzystasz z publicznej sieci Wi-Fi z dodatkowymi wymaganiami.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Treść, do której próbujesz uzyskać dostęp, nie jest dostępna dla tego konta. Spróbuj zalogować się przy użyciu tego samego konta, co w kliencie mobilnym.";
+"theContentIsNotAvailableForThisAccount"="Treść, do której próbujesz uzyskać dostęp, nie jest dostępna na tym koncie. Spróbuj zalogować się na to samo konto, co w mobilnym kliencie internetowym.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Operacja zajmuję więcej czasu niż zwykle. Proszę czekać...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Zrób zdjęcie";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Zeskanuj dokument";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Zdjęcia";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Głos";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Utwórz grupę";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Lokalizacja";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Klip głosowy";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nowy folder";
 /* Hint text shown on the create folder alert. */
@@ -868,7 +878,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Usuń dane lokalne";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Wyloguj i usuń lokalne dane po 10 nieudanych próbach logowania";
+"failedAttempstSectionTitle"="Wyloguj się i usuń dane lokalne po 10 nieudanych próbach podania hasła";
 /* Menu item */
 "help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
@@ -1241,8 +1251,8 @@
 "deleteMessage"="Usuń wiadomość";
 /*  */
 "fromCloudDrive"="Z dysku";
-/* referring to a contact in the contact list of the user */
-"contact"="Kontakt";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Wyślij kontakt";
 /* */
@@ -1517,7 +1527,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Wyloguj się";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Zanim się wylogujesz, upewnij się, że pamiętasz swoje hasło. Jeżeli zapomnisz swojego utracisz kontakt do swoich danych na MEGA.";
+"testPasswordLogoutText"="Za chwilę się wylogujesz. Przetestuj swoje hasło, aby upewnić się, że je pamiętasz. Jeśli zgubisz hasło, utracisz dostęp do swoich danych MEGA.";
 /* state previous to import a file */
 "loading"="Pobieranie danych...";
 /*   */
@@ -2305,33 +2315,33 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="WERSJE";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Ulubione";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Usuń ulubione";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Label";
+"Label"="Etykieta";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"Label..."="Etykieta...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Usuń etykietę";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
-"Red"="Red";
+"Red"="Czerwony";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="Orange";
+"Orange"="Pomarańczowy";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="Yellow";
+"Yellow"="Żółty";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="Green";
+"Green"="Zielony";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="Blue";
+"Blue"="Niebieski";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="Purple";
+"Purple"="Purpurowy";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="Grey";
+"Grey"="Szary";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="KLUCZ";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Send Decryption Key Separately";
+"Send Decryption Key Separately"="Wyślij klucz odszyfrowywania oddzielnie";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Data ważności";
 /* Text for options in Get Link View to set expiry date */
@@ -2343,9 +2353,9 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Wyeksportuj link i klucz odszyfrowywania osobno.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Learn more";
+"Learn more"="Dowiedz się więcej";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="Link wygasa %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Stuknij, aby skopiować";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2361,7 +2371,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Hasło zostało skopiowane do schowka";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nasz kompleksowy system szyfrowania wymaga unikatowego klucza generowanego automatycznie dla tego pliku. Łącze z tym kluczem jest tworzone domyślnie, ale można wyeksportować klucz odszyfrowywania osobno dla dodatkowej warstwy bezpieczeństwa.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Klucz deszyfrujący";
 /* Text to indicate the user to remove the password of a link */
@@ -2369,9 +2379,9 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Zresetuj hasło";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ten link jest niedostępny, ponieważ konto użytkownika zostało zamknięte z powodu rażącego naruszenia MEGA [A]Warunków świadczenia usług[/A].";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Zgłoszono, że ten folder / plik zawiera treści budzące zastrzeżenia, takie jak Materiał do wykorzystywania dzieci, Gwałtowny ekstremizm lub Bestiality. Konto twórcy linku zostało zamknięte, a jego pełne dane, w tym adres IP, zostały przekazane władzom.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Niedostępne";
 /* Error text shown when requesting email for email verification within 10 minutes */

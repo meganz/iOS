@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Escanear documento";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Fotos";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Llamada";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Crear grupo";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Ubicación";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Mensaje de audio";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nueva carpeta";
 /* Hint text shown on the create folder alert. */
@@ -1241,8 +1251,8 @@
 "deleteMessage"="Eliminar mensaje";
 /*  */
 "fromCloudDrive"="Desde Mi nube";
-/* referring to a contact in the contact list of the user */
-"contact"="Contacto";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contacto";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contacto";
 /* */
@@ -2309,29 +2319,29 @@
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Remove Favourite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Label";
+"Label"="Etiqueta";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"Label..."="Etiqueta...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Remove Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
-"Red"="Red";
+"Red"="Rojo";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="Orange";
+"Orange"="Naranja";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="Yellow";
+"Yellow"="Amarillo";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="Green";
+"Green"="Verde";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="Blue";
+"Blue"="Azul";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="Purple";
+"Purple"="Púrpura";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="Grey";
+"Grey"="Gris";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="CLAVE";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Send Decryption Key Separately";
+"Send Decryption Key Separately"="Enviar clave de cifrado por separado";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Fecha de caducidad";
 /* Text for options in Get Link View to set expiry date */
@@ -2343,9 +2353,9 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exportar el enlace y la clave de descifrado por separado.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Learn more";
+"Learn more"="Más información";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="Los enlaces caducan el %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Toca para copiar";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2361,7 +2371,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Contraseña copiada al portapapeles";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nuestro sistema de cifrado punto a punto requiere una clave única generada automáticamente para este archivo. El enlace se crea por defecto con esta clave pero puedes exportala por separado para más seguridad.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Clave de cifrado";
 /* Text to indicate the user to remove the password of a link */
@@ -2369,9 +2379,9 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Restablecer contraseña";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Este enlace no está disponible ya que la cuenta del usuario se ha cerrado por una violación grave de los  [A]Términos de servicio[/A] de MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Este archivo/carpeta ha sido reportado por contenido censurable, como material de explotación infantil, extremismo violento o bestialismo. La cuenta del usuario que ha creado el enlace se ha cerrado y la información de dicha cuenta, incluida la dirección IP, ha sido facilitada a las autoridades.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="No disponible";
 /* Error text shown when requesting email for email verification within 10 minutes */

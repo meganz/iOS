@@ -19,4 +19,4 @@
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationAlwaysAndWhenInUseUsageDescription"="當您分享位置給聊天中的聯絡人或啟用「相機上傳」的「在背景中上傳」功能時，MEGA會存取您的位置，以便在位置變更時上傳照片和影片。";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
-"NSLocalNetworkUsageDescription"="This will let you use MEGA to place and receive calls through devices that are on the same Wi-Fi or local access network";
+"NSLocalNetworkUsageDescription"="這樣一來您可以透過在同一個Wi-Fi或區域網路上的裝置使用MEGA撥打和接聽電話";

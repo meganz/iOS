@@ -286,6 +286,16 @@
 "capturePhotoVideo"="キャプチャ";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="ドキュメントをスキャン";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="写真";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="ボイス";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="グループを開始";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="場所";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="ボイスクリップ";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新しいフォルダ";
 /* Hint text shown on the create folder alert. */
@@ -868,7 +878,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを消去";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
+"failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去します";
 /* Menu item */
 "help"="ヘルプ";
 /* Title of the section to access MEGA's help centre */
@@ -1241,8 +1251,8 @@
 "deleteMessage"="メッセージを削除";
 /*  */
 "fromCloudDrive"="クラウドドライブから";
-/* referring to a contact in the contact list of the user */
-"contact"="知り合い";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="知り合い";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="知り合いを送信";
 /* */
@@ -2305,33 +2315,33 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="バージョン";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="お気に入り";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="お気に入りを削除";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Label";
+"Label"="ラベル";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"Label..."="色を選択…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="ラベルを削除";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
-"Red"="Red";
+"Red"="赤い";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="Orange";
+"Orange"="オレンジ色の";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="Yellow";
+"Yellow"="黄色の";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="Green";
+"Green"="緑の";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="Blue";
+"Blue"="青い";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="Purple";
+"Purple"="紫の";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="Grey";
+"Grey"="グレーの";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="キー";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Send Decryption Key Separately";
+"Send Decryption Key Separately"="復号キーを個別に送信";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="有効期限";
 /* Text for options in Get Link View to set expiry date */
@@ -2343,9 +2353,9 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="リンクと復号キーを個別にエクスポート。";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Learn more";
+"Learn more"="もっと読む";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="リンクの有効期限は%@です";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="タップしてコピー";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2361,7 +2371,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="パスワードがクリップボードにコピーされました";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="当社のエンドツーエンドの暗号化システムでは、このファイルに対して自動的に生成される一意のキーが必要です。このキーを有するリンクはデフォルトで作成されますが、セキュリティの層を追加するために、復号キーを個別にエクスポートできます。";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="復号化鍵";
 /* Text to indicate the user to remove the password of a link */
@@ -2369,9 +2379,9 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="パスワードをリセット";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="このリンクは使用できません。当該ユーザーのアカウントが、MEGAの[A]ご利用規約[/A]への重大な違反により閉鎖されました。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="このフォルダ/ファイルには、児童搾取資料、暴力的過激主義、獣姦などの好ましくないコンテンツが含まれていると報告されました。当該リンク作成者のアカウントが閉鎖され、IPアドレスを含む当該ユーザーの詳細が関係当局に提供されました。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="利用できません";
 /* Error text shown when requesting email for email verification within 10 minutes */

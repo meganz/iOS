@@ -72,8 +72,11 @@ class PhoneNumberViewController: UITableViewController {
         modifyPhoneNumberAlert.addAction(UIAlertAction(title: AMLocalizedString("ok", "Button title to accept something"), style: .default, handler: { (action) in
             MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (request, error) in
                 if error.type == .apiOk {
+                    let presenter = self.presentingViewController
                     self.dismiss(animated: true, completion: {
-                        AddPhoneNumberRouter(hideDontShowAgain: true, presenter: self).start()
+                        if let presenter = presenter {
+                            AddPhoneNumberRouter(hideDontShowAgain: true, presenter: presenter).start()
+                        }
                     })
                 } else {
                     SVProgressHUD.showError(withStatus: AMLocalizedString("Failed to remove your phone number, please try again later.", "A message shown to users when phone number removal fails."))
