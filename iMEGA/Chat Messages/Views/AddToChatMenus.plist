@@ -44,6 +44,14 @@
 	</dict>
 	<dict>
 		<key>imageKey</key>
+		<string>chatScanDocument</string>
+		<key>nameKey</key>
+		<string>Scan Document</string>
+		<key>dynamicKey</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>imageKey</key>
 		<string>attachGroup</string>
 		<key>nameKey</key>
 		<string>Start Group</string>

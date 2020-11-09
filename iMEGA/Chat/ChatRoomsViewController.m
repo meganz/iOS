@@ -58,6 +58,7 @@
 @property (strong, nonatomic) NSDate *baseDate;
 @property (assign, nonatomic) NSInteger initDuration;
 @property (strong, nonatomic) MEGAChatRoom *chatRoomOnGoingCall;
+@property (strong, nonatomic) ActionSheetViewController *optionsActionSheetVC;
 
 @property (nonatomic, getter=isReconnecting) BOOL reconnecting;
 
@@ -961,6 +962,16 @@
         return;
     }
     
+    if (self.optionsActionSheetVC == nil) {
+        self.optionsActionSheetVC = [ActionSheetViewController.alloc initWithActions:[self setOptionsActionSheetActions] headerTitle:nil dismissCompletion:nil sender:sender];
+    } else {
+        [self.optionsActionSheetVC updateWithActions:[self setOptionsActionSheetActions] sender:sender];
+    }
+
+    [self presentViewController:self.optionsActionSheetVC animated:YES completion:nil];
+}
+
+- (NSArray<BaseAction *> *)setOptionsActionSheetActions {
     MEGAChatStatus myStatus = MEGASdkManager.sharedMEGAChatSdk.onlineStatus;
     NSString *chatStatusString = [NSString chatStatusString:myStatus];
     UIView *accessoryView = [UIView.alloc initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 6.0f)];
@@ -977,24 +988,36 @@
     }];
     
     BOOL isGlobalDNDEnabled = self.globalDNDNotificationControl.isGlobalDNDEnabled;
-    NSString *dndString = isGlobalDNDEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
     
-    ActionSheetAction *dndAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Do Not Disturb", @"Chat settings: This text appears with the Do Not Disturb switch")
-                                                                      detail:dndString
-                                                                       image:nil
-                                                                       style:UIAlertActionStyleDefault
-                                                               actionHandler:^{
-        if (isGlobalDNDEnabled) {
-            ChatSettingsTableViewController *chatSettingsVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
-            [self presentViewController:chatSettingsVC animated:YES completion:nil];
-        } else {
-            [self.globalDNDNotificationControl turnOnDND:sender];
-        }
+    UISwitch *dndSwitch = [[UISwitch alloc] initWithFrame: CGRectZero];
+    [dndSwitch addTarget:self action:@selector(changeDNDStatus:) forControlEvents:UIControlEventValueChanged];
+    [dndSwitch setOn:isGlobalDNDEnabled animated:NO];
+    
+    ActionSheetSwitchAction *dndAction = [ActionSheetSwitchAction.alloc initWithTitle:AMLocalizedString(@"Do Not Disturb", @"Chat settings: This text appears with the Do Not Disturb switch")
+                                                                               detail:self.globalDNDNotificationControl.timeRemainingToDeactiveDND
+                                                                           switchView:dndSwitch image:nil style:UIAlertActionStyleDefault
+                                                                        actionHandler:^{
+        
+        [dndSwitch setOn:!dndSwitch.isOn];
+        
+        [self changeDNDStatus:dndSwitch];
     }];
     
-    ActionSheetViewController *actionSheetVC = [ActionSheetViewController.alloc initWithActions:@[statusAction, dndAction] headerTitle:nil dismissCompletion:nil sender:sender];
-    
-    [self presentViewController:actionSheetVC animated:YES completion:nil];
+    return @[statusAction, dndAction];
+}
+
+-(void)changeDNDStatus:(id)sender {
+    UISwitch *dndSwitch = (UISwitch *)sender;
+
+    if (dndSwitch.isOn) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.globalDNDNotificationControl turnOnDND:self.navigationItem.rightBarButtonItem];
+    } else {
+        __weak typeof(self) weakSelf = self;
+        [self.globalDNDNotificationControl turnOffDNDWithCompletion:^{
+            [weakSelf.optionsActionSheetVC updateWithActions:[weakSelf setOptionsActionSheetActions] sender:weakSelf.navigationItem.rightBarButtonItem];
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -1352,6 +1375,10 @@
             [self insertRowByChatListItem:item];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
             if (self.isArchivedChatsRowVisible) {
+                
+                if ([self.archivedChatListItemList size] == 0) {
+                    self.isArchivedChatsRowVisible = NO;
+                }
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
             }
             return;

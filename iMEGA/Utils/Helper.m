@@ -11,7 +11,6 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAGenericRequestDelegate.h"
@@ -32,14 +31,8 @@
 #import "MEGA-Swift.h"
 #endif
 
-#import "GetLinkActivity.h"
 #import "NodeTableViewCell.h"
-#import "OpenInActivity.h"
 #import "PhotoCollectionViewCell.h"
-#import "RemoveLinkActivity.h"
-#import "RemoveSharingActivity.h"
-#import "ShareFolderActivity.h"
-#import "SendToChatActivity.h"
 
 static MEGAIndexer *indexer;
 
@@ -348,9 +341,12 @@ static MEGAIndexer *indexer;
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
         return NO;
     }
-    
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+    NSError *error;
+    uint64_t freeSpace = [NSFileManager.defaultManager mnz_fileSystemFreeSizeWithError:error];
+    if (error) {
+        return YES;
+    }
+    if (freeSpace < [nodeSizeNumber longLongValue]) {
         StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
         [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
         return NO;
@@ -762,266 +758,6 @@ static MEGAIndexer *indexer;
             }];
         }
     }
-}
-
-+ (UIActivityViewController *_Nullable)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id _Nullable)sender {
-    NSUInteger stringCount = 0, fileCount = 0;
-
-    NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
-    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-    
-    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-    
-    NSMutableArray<MEGANode *> *nodes = [[NSMutableArray<MEGANode *> alloc] init];
-    
-    for (MEGAChatMessage *message in messages) {
-        switch (message.type) {
-            case MEGAChatMessageTypeNormal:
-            case MEGAChatMessageTypeContainsMeta:
-                [activityItemsMutableArray addObject:message.content];
-                stringCount++;
-                
-                break;
-                
-            case MEGAChatMessageTypeContact: {
-                for (NSUInteger i = 0; i < message.usersCount; i++) {
-                    CNMutableContact *cnMutableContact = [[CNMutableContact alloc] init];
-                    
-                    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[message userHandleAtIndex:i]];
-                    
-                    if (moUser.firstName) {
-                        cnMutableContact.givenName = moUser.firstname;
-                    }
-                    
-                    if (moUser.lastname) {
-                        cnMutableContact.familyName = moUser.lastname;
-                    }
-                    
-                    if (!moUser.firstName && !moUser.lastname) {
-                        cnMutableContact.givenName = [message userNameAtIndex:i];
-                    }
-                    
-                    cnMutableContact.emailAddresses = @[[CNLabeledValue labeledValueWithLabel:CNLabelHome value:[message userEmailAtIndex:i]]];
-                    
-                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:[message userHandleAtIndex:i]]];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
-                        UIImage *avatarImage = [UIImage imageWithContentsOfFile:avatarFilePath];
-                        cnMutableContact.imageData = UIImageJPEGRepresentation(avatarImage, 1.0f);
-                    }
-                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnMutableContact] error:nil];
-                    NSString* vcString = [[NSString alloc] initWithData:vCardData encoding:NSUTF8StringEncoding];
-                    NSString* base64Image = [cnMutableContact.imageData base64EncodedStringWithOptions:0];
-                    if (base64Image) {
-                        NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
-                        vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
-                    }
-                    vCardData = [vcString dataUsingEncoding:NSUTF8StringEncoding];
-                    
-                    NSString *fullName = [message userNameAtIndex:i];
-                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[fullName stringByAppendingString:@".vcf"]];
-                    if ([vCardData writeToFile:tempPath atomically:YES]) {
-                        [activityItemsMutableArray addObject:[NSURL fileURLWithPath:tempPath]];
-                        fileCount++;
-                    }
-                }
-                
-                break;
-            }
-                
-            case MEGAChatMessageTypeAttachment:
-            case MEGAChatMessageTypeVoiceClip: {
-                MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
-                if (offlineNodeExist) {
-                    NSURL *offlineURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath]];
-                    [activityItemsMutableArray addObject:offlineURL];
-                    fileCount++;
-                } else {
-                    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-                    double delayInSeconds = 10.0;
-                    dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                    
-                    [self importNode:node toShareWithCompletion:^(MEGANode *node) {
-                        [nodes addObject:node];
-                        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-                        [activityItemsMutableArray addObject:activityItemProvider];
-                        dispatch_semaphore_signal(semaphore);
-                    }];
-                    if (dispatch_semaphore_wait(semaphore, waitTime)) {
-                        MEGALogError(@"Semaphore timeout importing message attachment to share");
-                        return nil;
-                    }
-                }
-
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
-    
-    if (stringCount == 0 && fileCount < 5 && nodes.count == 0) {
-        [excludedActivityTypesMutableArray removeObject:UIActivityTypeSaveToCameraRoll];
-    }
-    
-    if (stringCount == 0 && fileCount == 0 && nodes.count == 1) {
-        [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
-    }
-    
-    if (stringCount == 0 && fileCount == 0 && nodes.count > 0) {
-        GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodes];
-        [activitiesMutableArray addObject:getLinkActivity];
-    }
-    
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
-    [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    
-    if ([[sender class] isEqual:UIBarButtonItem.class]) {
-        activityVC.popoverPresentationController.barButtonItem = sender;
-    } else if (sender != nil) {
-        UIView *presentationView = (UIView *)sender;
-        activityVC.popoverPresentationController.sourceView = presentationView;
-        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
-    }
-    
-    return activityVC;
-}
-
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender {
-    NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
-    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-    
-    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-    
-    GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
-    [activitiesMutableArray addObject:getLinkActivity];
-    
-    NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
-    
-    BOOL allNodesExistInOffline = NO;
-    NSMutableArray *filesURLMutableArray;
-    if (NodesAreFolders == (nodesAre & NodesAreFolders)) {
-        ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:shareFolderActivity];
-    } else if (NodesAreFiles == (nodesAre & NodesAreFiles)) {
-        filesURLMutableArray = [[NSMutableArray alloc] initWithArray:[Helper checkIfAllOfTheseNodesExistInOffline:nodesArray]];
-        if ([filesURLMutableArray count]) {
-            allNodesExistInOffline = YES;
-        }
-        
-        SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:sendToChatActivity];
-    }
-    
-    if (allNodesExistInOffline) {
-        for (NSURL *fileURL in filesURLMutableArray) {
-            [activityItemsMutableArray addObject:fileURL];
-        }
-        
-        [excludedActivityTypesMutableArray removeObjectsInArray:@[UIActivityTypePrint, UIActivityTypeAirDrop]];
-        
-        if (nodesArray.count < 5) {
-            [excludedActivityTypesMutableArray removeObject:UIActivityTypeSaveToCameraRoll];
-        }
-        
-        if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity;
-            if ([sender isKindOfClass:[UIBarButtonItem class]]) {
-                openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:sender];
-            } else {
-                openInActivity = [[OpenInActivity alloc] initOnView:sender];
-            }
-            
-            [activitiesMutableArray addObject:openInActivity];
-        }
-    } else {
-        for (MEGANode *node in nodesArray) {
-            MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-            [activityItemsMutableArray addObject:activityItemProvider];
-        }
-        
-        if (nodesArray.count == 1) {
-            [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
-        }
-    }
-    
-    if (NodesAreExported == (nodesAre & NodesAreExported)) {
-        RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:removeLinkActivity];
-    }
-    
-    if (NodesAreOutShares == (nodesAre & NodesAreOutShares)) {
-        RemoveSharingActivity *removeSharingActivity = [[RemoveSharingActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:removeSharingActivity];
-    }
-    
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
-    [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    
-    if ([[sender class] isEqual:UIBarButtonItem.class]) {
-        activityVC.popoverPresentationController.barButtonItem = sender;
-    } else {
-        UIView *presentationView = (UIView *)sender;
-        activityVC.popoverPresentationController.sourceView = presentationView;
-        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
-    }
-    
-    return activityVC;
-}
-
-+ (NodesAre)checkPropertiesForSharingNodes:(NSArray *)nodesArray {
-    NSInteger numberOfFolders = 0;
-    NSInteger numberOfFiles = 0;
-    NSInteger numberOfNodesExported = 0;
-    NSInteger numberOfNodesOutShares = 0;
-    for (MEGANode *node in nodesArray) {
-        if ([node type] == MEGANodeTypeFolder) {
-            numberOfFolders += 1;
-        } else if ([node type] == MEGANodeTypeFile) {
-            numberOfFiles += 1;
-        }
-        
-        if ([node isExported]) {
-            numberOfNodesExported += 1;
-        }
-        
-        if (node.isOutShare) {
-            numberOfNodesOutShares += 1;
-        }
-    }
-    
-    NodesAre nodesAre = 0;
-    if (numberOfFolders  == nodesArray.count) {
-        nodesAre = NodesAreFolders;
-    } else if (numberOfFiles  == nodesArray.count) {
-        nodesAre = NodesAreFiles;
-    }
-    
-    if (numberOfNodesExported == nodesArray.count) {
-        nodesAre = nodesAre | NodesAreExported;
-    }
-    
-    if (numberOfNodesOutShares == nodesArray.count) {
-        nodesAre = nodesAre | NodesAreOutShares;
-    }
-    
-    return nodesAre;
-}
-
-+ (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray {
-    NSMutableArray *filesURLMutableArray = [[NSMutableArray alloc] init];
-    for (MEGANode *node in nodesArray) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
-        if (offlineNodeExist) {
-            [filesURLMutableArray addObject:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
-        } else {
-            [filesURLMutableArray removeAllObjects];
-            break;
-        }
-    }
-    
-    return [filesURLMutableArray copy];
 }
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer {

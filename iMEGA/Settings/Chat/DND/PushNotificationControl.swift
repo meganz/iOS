@@ -30,12 +30,12 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     @objc init(delegate: PushNotificationControlProtocol) {
         self.delegate = delegate
         super.init()
-        MEGASdkManager.sharedMEGASdk()?.add(self as MEGARequestDelegate)
-        MEGASdkManager.sharedMEGASdk()?.getPushNotificationSettings()
+        MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().getPushNotificationSettings()
     }
     
     deinit {
-        MEGASdkManager.sharedMEGASdk()?.remove(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().remove(self as MEGARequestDelegate)
     }
     
     //MARK:- Interface.
@@ -71,11 +71,15 @@ extension PushNotificationControl {
         }
     }
     
-    func show(alertController: UIAlertController, sender: UIView) {
+    func show(alertController: UIAlertController, sender: Any) {
         if UIDevice.current.iPad {
             alertController.modalPresentationStyle = .popover
-            alertController.popoverPresentationController?.sourceView = sender
-            alertController.popoverPresentationController?.sourceRect = sender.bounds
+            if let barButtonSender = sender as? UIBarButtonItem {
+                alertController.popoverPresentationController?.barButtonItem = barButtonSender
+            } else if let viewSender = sender as? UIView {
+                alertController.popoverPresentationController?.sourceView = viewSender
+                alertController.popoverPresentationController?.sourceRect = viewSender.bounds
+            }
         }
         
         delegate?.present(alertController, animated: true, completion: nil)
@@ -88,7 +92,7 @@ extension PushNotificationControl {
         
         showProgress()
         block()
-        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings)
+        MEGASdkManager.sharedMEGASdk().setPushNotificationSettings(pushNotificationSettings)
     }
     
     func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64? {

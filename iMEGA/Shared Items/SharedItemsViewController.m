@@ -16,6 +16,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -417,6 +418,7 @@
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
     cell.nameLabel.text = node.name;
+    [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
 
@@ -456,6 +458,7 @@
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
     
     cell.nameLabel.text = node.name;
+    [self setupLabelAndFavouriteForNode:node cell:cell];
     
     NSString *userName;
     NSMutableArray *outSharesMutableArray = node.outShares;
@@ -490,6 +493,15 @@
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     
     return cell;
+}
+
+- (void)setupLabelAndFavouriteForNode:(MEGANode *)node cell:(SharedItemsTableViewCell *)cell {
+    cell.favouriteView.hidden = !node.isFavourite;
+    cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        cell.labelImageView.image = [UIImage imageNamed:labelString];
+    }
 }
 
 - (void)updateSelector {
@@ -754,7 +766,7 @@
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray sender:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selectedNodesMutableArray sender:self.shareBarButtonItem];
     __weak __typeof__(self) weakSelf = self;
     activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         if (completed && !activityError) {
@@ -1270,14 +1282,19 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     NSInteger itemSelected;
+    NSArray *nodesToCheckArray;
     if (self.incomingButton.selected) {
         itemSelected = 0;
+        nodesToCheckArray = self.incomingNodesMutableArray;
     } else if (self.outgoingButton.selected) {
         itemSelected = 1;
+        nodesToCheckArray = self.outgoingNodesMutableArray;
     } else {
         itemSelected = 2;
+        nodesToCheckArray = self.publicLinksArray;
     }
-    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray itemSelected:itemSelected]) {
+    
+    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:nodesToCheckArray itemSelected:itemSelected]) {
         [self reloadUI];
     }
 }
@@ -1356,7 +1373,7 @@
             break;
             
         case MegaNodeActionTypeShare:{
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
             [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;
@@ -1371,6 +1388,14 @@
             
         case MegaNodeActionTypeInfo:
             [self showNodeInfo:node];
+            break;
+            
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
+            
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
             break;
             
         case MegaNodeActionTypeLeaveSharing:

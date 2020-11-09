@@ -40,7 +40,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .saveToPhotos, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .saveToPhotos, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeMediaFileExported() {
@@ -62,7 +62,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .getLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .getLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderExported() {
@@ -73,7 +73,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .manageLink, .removeLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .share, . rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderShared() {
@@ -84,7 +84,7 @@ class NodeActionsTests: XCTestCase {
             .setIsOutshare(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download,  .getLink, .manageShare, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .getLink, .manageShare, .share, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderSharedExported() {
@@ -96,7 +96,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download,  .manageLink, .removeLink, .manageShare, .share, . rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .share, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFile() {
@@ -106,7 +106,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeExportedFile() {
@@ -117,7 +117,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .manageLink, .removeLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testRubbishBinNodeFolder() {
@@ -128,7 +128,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.restore, .info, .rename, .move, .copy, .remove]))
+        XCTAssertTrue(contains(nodeActionTypes: [.restore, .info, .favourite, .label, .rename, .move, .copy, .remove]))
     }
     
     func testRubbishBinNodeFile() {
@@ -139,7 +139,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.restore, .info, .sendToChat, .rename, .move, .copy, .remove]))
+        XCTAssertTrue(contains(nodeActionTypes: [.restore, .info, .favourite, .label, .sendToChat, .rename, .move, .copy, .remove]))
     }
     
     func testFileFolderNodeDoNotShowInfoAction() {
@@ -159,7 +159,7 @@ class NodeActionsTests: XCTestCase {
             .setisIncomingShareChildView(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .rename, .copy, .leaveSharing]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .rename, .copy, .leaveSharing]))
     }
     
     func testIncomingReadAndReadWriteSharedFolder() {
@@ -180,7 +180,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .manageShare, .share, .rename, .copy, .removeSharing]))
+        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageShare, .share, .rename, .copy, .removeSharing]))
     }
     
     // MARK: - Links tests
@@ -232,32 +232,96 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download]))
     }
     
-    func testPreviewFileLink() {
+    // MARK: - Preview Documents
+    
+    func testDocumentPreviewFileLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewLink)
+            .setDisplayMode(.previewDocument)
+            .setIsLink(true)
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
     }
     
-    func testPreviewPdfPageViewFileLink() {
+    func testDocumentPreviewPdfPageViewLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewLink)
+            .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsPageView(true)
+            .setIsLink(true)
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfThumbnailView]))
     }
     
-    func testPreviewPdfThumbnailFileLink() {
+    func testDocumentPreviewPdfThumbnailLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewLink)
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsLink(true)
+            .setIsPageView(false)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]))
+    }
+        
+    func testPreviewDocument() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat]))
+    }
+    
+    func testPreviewDocumentOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .share]))
+    }
+    
+    func testPreviewPdfPageViewDocument() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsPageView(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .search, .pdfThumbnailView]))
+    }
+    
+    func testPreviewPdfPageViewDocumentOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsPageView(true)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .share, .search, .pdfThumbnailView]))
+    }
+    
+    func testPreviewPdfThumbnailDocument() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsPageView(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share, .search, .pdfPageView]))
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView]))
+    }
+    
+    func testPreviewPdfThumbnailDocumentOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsPageView(false)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .share, .search, .pdfPageView]))
     }
     
     // MARK: - Chat tests

@@ -139,7 +139,7 @@ extension ChatViewController {
         })
         
         DispatchQueue.global(qos: .default).async {
-            guard let activityViewController = Helper.activityViewController(for: megaMessages, sender: sender) else {
+            guard let activityViewController = UIActivityViewController(for: megaMessages, sender: sender) else {
                 SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
                 return
             }

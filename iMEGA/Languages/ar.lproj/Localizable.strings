@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="ميغا Mega غير قابل على الإتصال بشكل آمن عبر التراسل المشفر SSL. ربما تقوم باستخدام شبكة إتصال بالانترنت Wi-Fi عامة مع متطلبات إضافية.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي كنت فيه في موقع الويب للجوال.";
+"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي استخدمته على  الويب كلاينت web client على الهاتف المحمول.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -286,6 +286,16 @@
 "capturePhotoVideo"="التقاط";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="مسح ضوئي للمستند";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="صور";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="صوت";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="بدء المجموعة";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="الموقع";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="مقطع صوتي";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="مجلّد جديد";
 /* Hint text shown on the create folder alert. */
@@ -995,8 +1005,6 @@
 "lastName"="اسم العائلة";
 /* Title for "Local" used space. */
 "localLabel"="المحلي";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="المستخدمة";
 /* Title for MEGA "Available" space. */
 "availableLabel"="متواجد";
 /* title of the My Account screen */
@@ -1243,8 +1251,8 @@
 "deleteMessage"="مسح الرسالة";
 /*  */
 "fromCloudDrive"="من سحابة التخزين";
-/* referring to a contact in the contact list of the user */
-"contact"="جهة اتصال";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="جهة اتصال";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="أرسل لجهة الاتصال";
 /* */
@@ -1519,7 +1527,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="متابعة تسجيل الخروج";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="انت في صدد تسجيل الخروج، من فضلك تأكد وتحقق من تذكرك لكلمة المرور الخاصة بك. ضياع كلمة المرور سيؤدي الى فقدان الولوج للبيانات المخزنة لدى MEGA.";
+"testPasswordLogoutText"="أنت على وشك تسجيل الخروج ، يرجى اختبار كلمة المرور الخاصة بك للتأكد من أنك تتذكرها. إذا فقدت كلمة المرور الخاصة بك، فستفقد الوصول إلى بيانات ميغا MEGA الخاصة بك.";
 /* state previous to import a file */
 "loading"="جاري التحميل";
 /*   */
@@ -2306,5 +2314,75 @@
 "PENDING"="قيد الانتظار";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="الإصدارات";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="مفضلة";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="إزالة من المفضلة";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="صنف";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="تمييز لوني...";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="إزالة العلامة المميزة";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="أحمر";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="برتقالي";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="أصفر";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="أخضر";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="أزرق";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="بنفسجي";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="رصاصي";
+/* Text presenting a key (for a LINK or similar) as header usually */
+"KEY"="مفتاح";
+/* Text for options in Get Link View to separate the key from the link */
+"Send Decryption Key Separately"="إرسال مفتاح فك التشفير بشكل منفصل";
+/* Text for options in Get Link View to activate expiry date */
+"Expiry Date"="تاريخ انتهاء الصلاحية";
+/* Text for options in Get Link View to set expiry date */
+"Set Expiry Date"="حدد تاريخ انتهاء الصلاحية";
+/* Text for options in Get Link View to activate password protection */
+"Password Protection"="حماية كلمة المرور";
+/* Text for options in Get Link View to set password protection */
+"Set Password"="ضبط كلمة السر";
+/* Hint text for option separate the key from the link in Get Link View */
+"Export the link and decryption key separately."="قم بتصدير الرابط ومفتاح فك التشفير بشكل منفصل.";
+/* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
+"Learn more"="للمزيد من المعلومات";
+/* Text indicating the date until a link will be valid */
+"Link expires %@"="تنتهي صلاحية الرابط %@";
+/* Text hint to let the user know that tapping something will be copied into the pasteboard */
+"Tap to Copy"="انقر للنسخ";
+/* Caption of the button that will copy multiple files or folders export links to his clipboard */
+"Copy All"="نسخ الكل";
+/* Description text about options when exporting links for several nodes */
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="خيارات مثل إرسال مفتاح فك التشفير بشكل منفصل أو تعيين تاريخ انتهاء الصلاحية أو كلمات مرور متاحة  لعنصر واحد فقط.";
+/* Message shown when the link has been copied to the Clipboard */
+"Link Copied to Clipboard"="تم نسخ الرابط إلى الحافظة";
+/* Message shown when some links have been copied to the Clipboard */
+"Links Copied to Clipboard"="تم نسخ الروابط إلى الحافظة";
+/* Message shown when the key has been copied to the Clipboard */
+"Key Copied to Clipboard"="تم نسخ المفتاح إلى الحافظة";
+/* Message shown when the password has been copied to the Clipboard */
+"Password Copied to Clipboard"="تم نسخ كلمة المرور إلى الحافظة";
+/* Export links dialog -> Keys tip about links and keys. */
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="يتطلب نظام التشفير من طرف إلى طرف الخاص بنا مفتاحاً فريداً يتم إنشاؤه تلقائياً لهذا الملف. يتم إنشاء رابط لهذا المفتاح بشكل تلقائي، ولكن يمكنك تصدير مفتاح فك التشفير بشكل منفصل لإضافة طبقة أمان آخرى.";
+/* Text related to the decryption key of a public link */
+"Decryption Key"="مفتاح فك التشفير";
+/* Text to indicate the user to remove the password of a link */
+"Remove Password"="إزالة كلمة المرور";
+/* Text to indicate the user to reset/change the password of a link */
+"Reset Password"="إعادة تعيين كلمة المرور";
+/* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="هذا الرابط غير متاح حيث تم إغلاق حساب المستخدم بسبب انتهاك جسيم [A]لبنود الخدمة[/A] الخاصة بميغا MEGA.";
+/* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="تم الإبلاغ عن احتواء هذا المجلد/الملف على محتوى غير مرغوب فيه، مثل مواد استغلال الأطفال أو التطرف العنيف أو اتيان البهايم. تم إغلاق حساب منشئ الرابط وتم تقديم تفاصيل الكاملة، بما في ذلك عنوان الشبكي IP، إلى الجهات المعنية.";
+/* Text used to show the user that some resource is not available */
+"Unavailable"="غير متاحة";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="تم إرسال البريد الإلكتروني بالفعل. يرجى الانتظار بضع دقائق قبل المحاولة مرة أخرى.";
