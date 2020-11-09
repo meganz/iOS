@@ -1,7 +1,6 @@
 
 #import "CopyrightWarningViewController.h"
 
-#import "GetLinkTableViewController.h"
 #import "MEGASdkManager.h"
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
@@ -74,9 +73,7 @@
             }
         }
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
-            UINavigationController *getLinkNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
-            GetLinkTableViewController *getLinkTVC = getLinkNC.childViewControllers.firstObject;
-            getLinkTVC.nodesToExport = nodes;
+            MEGANavigationController *getLinkNC = [GetLinkViewController instantiateWithNodes:nodes];
             [viewController presentViewController:getLinkNC animated:YES completion:nil];
         } else {
             UINavigationController *copyrightWarningNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
@@ -96,10 +93,8 @@
 - (IBAction)agreeTapped:(UIBarButtonItem *)sender {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"agreedCopywriteWarning"];
     [self dismissViewControllerAnimated:YES completion:^{
-        UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
-        GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers.firstObject;
-        getLinkTVC.nodesToExport = self.nodesToExport;
-        [UIApplication.mnz_presentingViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
+        MEGANavigationController *getLinkNC = [GetLinkViewController instantiateWithNodes:self.nodesToExport];
+        [UIApplication.mnz_presentingViewController presentViewController:getLinkNC animated:YES completion:nil];
     }];
 }
 

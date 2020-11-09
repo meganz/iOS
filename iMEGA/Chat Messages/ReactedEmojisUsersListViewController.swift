@@ -154,7 +154,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
     }
     
     func didSelectUserhandle(_ userhandle: UInt64) {
-        guard let myHandle = MEGASdkManager.sharedMEGASdk()?.myUser?.handle,
+        guard let myHandle = MEGASdkManager.sharedMEGASdk().myUser?.handle,
             myHandle != userhandle else {
                 MEGALogDebug("My user handle tapped on chat reactions screen")
                 return
@@ -165,7 +165,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
     }
     
     func userName(forHandle handle: UInt64) -> String? {
-        guard let myHandle = MEGASdkManager.sharedMEGASdk()?.myUser?.handle, myHandle != handle else {
+        guard let myHandle = MEGASdkManager.sharedMEGASdk().myUser?.handle, myHandle != handle else {
             if let myFullName = MEGASdkManager.sharedMEGAChatSdk()?.myFullname {
                 return String(format: "%@ (%@)", myFullName, AMLocalizedString("me", "The title for my message in a chat. The message was sent from yourself."))
             }

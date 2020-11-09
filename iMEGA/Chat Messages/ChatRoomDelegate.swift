@@ -33,7 +33,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
         self.chatRoom = chatRoom
         super.init()
-        MEGASdkManager.sharedMEGASdk()?.add(self)
+        MEGASdkManager.sharedMEGASdk().add(self)
 
         reloadTransferData()
     }
@@ -258,7 +258,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 self?.chatMessages.append(receivedMessage)
                                 self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
                             })
-                            if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk()?.node(forHandle: transfer.nodeHandle) {
+                            if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer.nodeHandle) {
                                 let path = NSHomeDirectory().append(pathComponent: transfer.path)
                                 let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
                                 try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
@@ -527,7 +527,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
 
     private func reloadTransferData() {
-        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList(), allTransfers.count > 0 else {
+        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk().transfers.mnz_transfersArrayFromTranferList(), allTransfers.count > 0 else {
             return
         }
         chatViewController?.checkTransferPauseStatus()

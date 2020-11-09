@@ -58,8 +58,14 @@
         self.moreButton.hidden = NO;
     }
     
+    self.favouriteView.hidden = !node.isFavourite;
+    self.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        self.labelImageView.image = [UIImage imageNamed:labelString];
+    }
     self.middleImageView.hidden = !isDownloaded;
-    self.linkImageView.hidden = !node.isExported;
+    self.linkView.hidden = !node.isExported;
     
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];

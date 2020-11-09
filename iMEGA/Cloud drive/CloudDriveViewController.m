@@ -12,6 +12,7 @@
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -551,7 +552,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                       style:UIPreviewActionStyleDefault
                                                                     handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                         CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveVC.parentNode] sender:nil];
+                                                                        UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[cloudDriveVC.parentNode] sender:nil];
                                                                         [rootViewController presentViewController:activityVC animated:YES completion:nil];
                                                                     }];
             
@@ -1067,6 +1068,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [self reloadUI];
     }]];
     
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeLabelAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites") detail:nil accessoryView:sortType == MEGASortOrderTypeFavouriteAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"favourite"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeFavouriteAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    
     ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:sortByActionSheet animated:YES completion:nil];
 }
@@ -1233,7 +1244,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
-    NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
+    NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
     NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
     for (MEGANode *n in nodesArray) {
         if (n.name.mnz_isImagePathExtension || n.name.mnz_isVideoPathExtension) {
@@ -1697,7 +1708,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
     __weak __typeof__(self) weakSelf = self;
     activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         if (completed && !activityError) {
@@ -2027,7 +2038,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             break;
             
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
             [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;
@@ -2051,6 +2062,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
         case MegaNodeActionTypeInfo:
             [self showNodeInfo:node];
+            break;
+            
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
+            
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
             break;
             
         case MegaNodeActionTypeLeaveSharing:

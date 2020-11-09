@@ -5,8 +5,11 @@ final class NodeActionBuilder {
     private var accessLevel: MEGAShareType = .accessUnknown
     private var isMediaFile: Bool = false
     private var isFile: Bool = false
+    private var isFavourite: Bool = false
+    private var label: MEGANodeLabel = .unknown
     private var isRestorable: Bool = false
     private var isPdf: Bool = false
+    private var isLink: Bool = false
     private var isPageView: Bool = true
     private var isIncomingShareChildView: Bool = false
     private var isExported: Bool = false
@@ -33,6 +36,16 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setIsFavourite(_ isFavourite: Bool) -> NodeActionBuilder {
+        self.isFavourite = isFavourite
+        return self
+    }
+    
+    func setLabel(_ label: MEGANodeLabel) -> NodeActionBuilder {
+        self.label = label
+        return self
+    }
+    
     func setIsRestorable(_ isRestorable: Bool) -> NodeActionBuilder {
         self.isRestorable = isRestorable
         return self
@@ -40,6 +53,11 @@ final class NodeActionBuilder {
     
     func setIsPdf(_ isPdf: Bool) -> NodeActionBuilder {
         self.isPdf = isPdf
+        return self
+    }
+    
+    func setIsLink(_ isLink: Bool) -> NodeActionBuilder {
+        self.isLink = isLink
         return self
     }
     
@@ -96,11 +114,15 @@ final class NodeActionBuilder {
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
-        } else if displayMode == .previewLink {
-            nodeActions.append(NodeAction.importAction())
+        } else if displayMode == .previewDocument {
+            if isLink {
+                nodeActions.append(NodeAction.importAction())
+            }
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.sendToChatAction())
-            nodeActions.append(NodeAction.shareAction())
+            if accessLevel == .accessOwner || isLink {
+                nodeActions.append(NodeAction.shareAction())
+            }
             if isPdf {
                 nodeActions.append(NodeAction.searchAction())
                 if isPageView {
@@ -143,6 +165,8 @@ final class NodeActionBuilder {
             case .accessFull:
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
                     nodeActions.append(NodeAction.infoAction())
+                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                    nodeActions.append(NodeAction.labelAction(label: label))
                 }
                 if isMediaFile {
                     nodeActions.append(NodeAction.saveToPhotosAction())
@@ -159,6 +183,7 @@ final class NodeActionBuilder {
                     if isIncomingShareChildView {
                         nodeActions.append(NodeAction.leaveSharingAction())
                     } else {
+                        nodeActions.append(NodeAction.moveAction())
                         nodeActions.append(NodeAction.moveToRubbishBinAction())
                     }
                 }
@@ -167,6 +192,8 @@ final class NodeActionBuilder {
                 if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
                     if displayMode != .nodeInfo {
                         nodeActions.append(NodeAction.infoAction())
+                        nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                        nodeActions.append(NodeAction.labelAction(label: label))
                     }
                     if displayMode != .rubbishBin {
                         if isMediaFile {
@@ -220,6 +247,8 @@ final class NodeActionBuilder {
                     nodeActions.append(NodeAction.shareAction())
                 } else {
                     nodeActions.append(NodeAction.infoAction())
+                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                    nodeActions.append(NodeAction.labelAction(label: label))
                     if isMediaFile {
                         nodeActions.append(NodeAction.saveToPhotosAction())
                     }

@@ -79,7 +79,14 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.share(chatMessage)
+        guard let activityViewController = UIActivityViewController(for: [chatMessage.message], sender: self.sender) else {
+            SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
+            return
+        }
+        
+        if let sourceView = self.sender {
+            self.chatViewController?.present(viewController: activityViewController)
+        }
     }
     
     lazy var selectAction = ActionSheetAction(title: AMLocalizedString("select"), detail: nil, image: UIImage(named: "select"), style: .default) {
@@ -229,11 +236,11 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [forwardAction, shareAction, selectAction]
          
             if chatMessage.message.usersCount == 1 {
-                if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
+                if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
                     actions.append(contentsOf: [addContactAction])
                 } else {
                     for index in 0..<chatMessage.message.usersCount {
-                        if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email), user.visibility != .visible {
+                        if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
                             return
                         }
                     }

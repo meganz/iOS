@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA non riesce a connettersi in sicurezza tramite SSL. Potresti essere collegato ad un WiFi pubblico che richiede requisiti addizionali.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Il contenuto a cui stai provando ad accedere non è disponibile per questo account. Per favore, prova ad effettuare l'accesso con lo stesso account come nel client web mobile.";
+"theContentIsNotAvailableForThisAccount"="Il contenuto a cui stai provando ad accedere non è disponibile per questo account. Per favore, prova ad effettuare il login con lo stesso account come nel client web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Il processo sta prendendo più tempo di quanto previsto. Per favore, aspetta.";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Scatta";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scansiona documento";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Foto";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Voce";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Inizia gruppo";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Posizione";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Nota vocale";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nuova Cartella";
 /* Hint text shown on the create folder alert. */
@@ -995,8 +1005,6 @@
 "lastName"="Cognome";
 /* Title for "Local" used space. */
 "localLabel"="Localmente";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Usato";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponibile";
 /* title of the My Account screen */
@@ -1243,8 +1251,8 @@
 "deleteMessage"="Cancella messaggio";
 /*  */
 "fromCloudDrive"="Dal Cloud Drive";
-/* referring to a contact in the contact list of the user */
-"contact"="Contatto";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contatto";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Invia contatto";
 /* */
@@ -2306,5 +2314,75 @@
 "PENDING"="IN ATTESA";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIONI";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Preferito";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Rimuovi preferito";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Etichetta";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Categoria...";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Rimuovi etichetta";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Rosso";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Arancio";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Giallo";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Verde";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Blu";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Viola";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Grigio";
+/* Text presenting a key (for a LINK or similar) as header usually */
+"KEY"="CHIAVE";
+/* Text for options in Get Link View to separate the key from the link */
+"Send Decryption Key Separately"="Invia la Chiave di Decriptazione separatamente";
+/* Text for options in Get Link View to activate expiry date */
+"Expiry Date"="Data di scadenza";
+/* Text for options in Get Link View to set expiry date */
+"Set Expiry Date"="Imposta data di scadenza";
+/* Text for options in Get Link View to activate password protection */
+"Password Protection"="Protezione password";
+/* Text for options in Get Link View to set password protection */
+"Set Password"="Imposta password";
+/* Hint text for option separate the key from the link in Get Link View */
+"Export the link and decryption key separately."="Esporta il link e la chiave di decriptazione separatamente";
+/* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
+"Learn more"="Di più";
+/* Text indicating the date until a link will be valid */
+"Link expires %@"="Il link scade il %@";
+/* Text hint to let the user know that tapping something will be copied into the pasteboard */
+"Tap to Copy"="Clicca per copiare";
+/* Caption of the button that will copy multiple files or folders export links to his clipboard */
+"Copy All"="Copia tutto";
+/* Description text about options when exporting links for several nodes */
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opzioni come Invia la chiave di decriptazione separatamente, Imposta data di scadenza o le Password sono disponibili solamente per i singoli oggetti.";
+/* Message shown when the link has been copied to the Clipboard */
+"Link Copied to Clipboard"="Link copiato negli appunti";
+/* Message shown when some links have been copied to the Clipboard */
+"Links Copied to Clipboard"="Link copiati negli appunti";
+/* Message shown when the key has been copied to the Clipboard */
+"Key Copied to Clipboard"="Chiave copiata negli appunti";
+/* Message shown when the password has been copied to the Clipboard */
+"Password Copied to Clipboard"="Password copiata negli appunti";
+/* Export links dialog -> Keys tip about links and keys. */
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Il nostro sistema di criptazione richiede una chiave unica generata automaticamente per questo file. Un link con questa chiave viene creato di default, ma puoi esportare la chiave di decriptazione separatamente per aggiungere uno strato di sicurezza.";
+/* Text related to the decryption key of a public link */
+"Decryption Key"="Chiave di decrittazione";
+/* Text to indicate the user to remove the password of a link */
+"Remove Password"="Rimuovi password";
+/* Text to indicate the user to reset/change the password of a link */
+"Reset Password"="Resetta password";
+/* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Il link non è disponibile, in quanto l'account del proprietario è stato chiuso a causa di ripetute violazioni dei [A]Termini di Servizio[/A] di MEGA.";
+/* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Questo oggetto è stato segnalato in quanto contiene materiale obiettabile, come sfruttamento di minori, estremismo violento, o bestialità. L'account del creatore del link è stato chiuso e tutti i suoi dettagli, incluso l'indirizzo IP, sono stati dati alle autorità.";
+/* Text used to show the user that some resource is not available */
+"Unavailable"="Non disponibile";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email già inviata. Per favore, attendi un po' di minuti prima di riprovare nuovamente.";

@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Escanear documento";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Fotos";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Áudio";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Criar grupo";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Localização";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Clipe de áudio";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nova Pasta";
 /* Hint text shown on the create folder alert. */
@@ -995,8 +1005,6 @@
 "lastName"="Sobrenome";
 /* Title for "Local" used space. */
 "localLabel"="Local";
-/* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Usado";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponível";
 /* title of the My Account screen */
@@ -1243,8 +1251,8 @@
 "deleteMessage"="Excluir mensagem";
 /*  */
 "fromCloudDrive"="Da Nuvem de arquivos";
-/* referring to a contact in the contact list of the user */
-"contact"="Contato";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contato";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contato";
 /* */
@@ -2306,5 +2314,75 @@
 "PENDING"="PENDENTE";
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSÕES";
+/* Context menu item. Allows user to add file/folder to favourites */
+"Favourite"="Favourite";
+/* Context menu item. Allows user to delete file/folder from favourites */
+"Remove Favourite"="Remove Favourite";
+/* A menu item in the left panel drop down menu to allow sorting by label. */
+"Label"="Etiqueta";
+/* Context menu item which allows to mark folders with own color label */
+"Label..."="Etiqueta...";
+/* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
+"Remove Label"="Remove Label";
+/* A user can mark a folder or file with its own colour, in this case “Red”. */
+"Red"="Vermelha";
+/* A user can mark a folder or file with its own colour, in this case "Orange */
+"Orange"="Laranja";
+/* A user can mark a folder or file with its own colour, in this case “Yellow”. */
+"Yellow"="Amarela";
+/* A user can mark a folder or file with its own colour, in this case “Green”. */
+"Green"="Verde";
+/* A user can mark a folder or file with its own colour, in this case “Blue”. */
+"Blue"="Azul";
+/* A user can mark a folder or file with its own colour, in this case “Purple”. */
+"Purple"="Roxa";
+/* A user can mark a folder or file with its own colour, in this case “Grey”. */
+"Grey"="Cinza";
+/* Text presenting a key (for a LINK or similar) as header usually */
+"KEY"="CHAVE";
+/* Text for options in Get Link View to separate the key from the link */
+"Send Decryption Key Separately"="Enviar a chave de decodificação separadamente";
+/* Text for options in Get Link View to activate expiry date */
+"Expiry Date"="Data de validade";
+/* Text for options in Get Link View to set expiry date */
+"Set Expiry Date"="Definir uma data de validade";
+/* Text for options in Get Link View to activate password protection */
+"Password Protection"="Senha de acesso";
+/* Text for options in Get Link View to set password protection */
+"Set Password"="Definir uma senha";
+/* Hint text for option separate the key from the link in Get Link View */
+"Export the link and decryption key separately."="Exportar a chave de decodificação do link separadamente.";
+/* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
+"Learn more"="Mais informações";
+/* Text indicating the date until a link will be valid */
+"Link expires %@"="Data de validade do link: %@";
+/* Text hint to let the user know that tapping something will be copied into the pasteboard */
+"Tap to Copy"="Toque para copiar";
+/* Caption of the button that will copy multiple files or folders export links to his clipboard */
+"Copy All"="Copiar todos";
+/* Description text about options when exporting links for several nodes */
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opções como “Exportar a chave de decodificação do link separadamente”, “Definir data de validade” ou “Definir senha” somente estão disponíveis ao selecionar um único item.";
+/* Message shown when the link has been copied to the Clipboard */
+"Link Copied to Clipboard"="Link copiado para a área de transferência";
+/* Message shown when some links have been copied to the Clipboard */
+"Links Copied to Clipboard"="Links copiados para a área de transferência";
+/* Message shown when the key has been copied to the Clipboard */
+"Key Copied to Clipboard"="Chave copiada para a área de transferência";
+/* Message shown when the password has been copied to the Clipboard */
+"Password Copied to Clipboard"="Senha copiada para a área de transferência";
+/* Export links dialog -> Keys tip about links and keys. */
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="O nosso sistema de criptografia de ponta a ponta requer uma chave exclusiva, que é gerada automaticamente para este arquivo. O link é criado de forma predeterminada com essa chave, mas você pode exportar a chave de decodificação separadamente, para que o compartilhamento seja mais seguro.";
+/* Text related to the decryption key of a public link */
+"Decryption Key"="Chave de decodificação";
+/* Text to indicate the user to remove the password of a link */
+"Remove Password"="Remover senha";
+/* Text to indicate the user to reset/change the password of a link */
+"Reset Password"="Resetar senha";
+/* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Este link não está disponível porque a conta do usuário que o criou foi encerrada devido a uma grave violação dos [A]Termos de serviço[/A] do MEGA.";
+/* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Este arquivo/pasta foi denunciado por armazenar conteúdo censurável, como material relacionado à exploração infantil, extremismo violento ou bestialidade. A conta do usuário que criou este link foi encerrada e as informações desta conta, incluindo o endereço IP, foram proporcionadas às autoridades competentes.";
+/* Text used to show the user that some resource is not available */
+"Unavailable"="Não disponível";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="O email já foi enviado. Espere alguns minutos antes de tentar novamente.";

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,9 +21,11 @@
                 <outlet property="mediaCollectionViewBottomConstraint" destination="TKr-3S-IxU" id="vQu-ZD-0ZU"/>
                 <outlet property="mediaCollectionViewTopConstraint" destination="KcC-JS-iDO" id="XFU-eT-lXE"/>
                 <outlet property="menuView" destination="32M-MS-rdd" id="8CU-AU-cHZ"/>
-                <outlet property="menuViewBottomConstraint" destination="WDx-Fa-1Jp" id="dzI-YF-76A"/>
+                <outlet property="menuViewBottomConstraint" destination="yZH-OE-Kse" id="R7a-rE-kr4"/>
                 <outlet property="menuViewLeadingConstraint" destination="DV7-tm-CbF" id="jc5-l4-5KI"/>
                 <outlet property="menuViewTrailingConstraint" destination="g43-HZ-aZa" id="igp-nS-O6w"/>
+                <outlet property="pageControl" destination="cyu-Pt-zCi" id="FLV-TE-UrT"/>
+                <outlet property="pageControlBottomConstraint" destination="zdP-ZB-6lA" id="Jso-Ss-XSE"/>
                 <outlet property="patchView" destination="n3y-LT-kDz" id="gw3-ri-2cg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -42,7 +45,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3y-LT-kDz" userLabel="PatchView">
                     <rect key="frame" x="0.0" y="812" width="414" height="128"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="128" id="75D-Cb-yhk"/>
                     </constraints>
@@ -64,23 +67,32 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
-                            <rect key="frame" x="16" y="129" width="382" height="261"/>
+                            <rect key="frame" x="16" y="129" width="382" height="218"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
+                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cyu-Pt-zCi">
+                            <rect key="frame" x="145.5" y="357" width="123" height="28"/>
+                            <connections>
+                                <action selector="pageControlValueChanged:" destination="-1" eventType="valueChanged" id="pq2-W1-xNT"/>
+                            </connections>
+                        </pageControl>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="cyu-Pt-zCi" firstAttribute="centerX" secondItem="hwb-7m-LMj" secondAttribute="centerX" id="C9T-PZ-zSs"/>
                         <constraint firstItem="32M-MS-rdd" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="16" id="DV7-tm-CbF"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="6" id="JKd-ZH-8de"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="top" constant="5" id="KcC-JS-iDO"/>
                         <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" constant="24" id="TKr-3S-IxU"/>
-                        <constraint firstAttribute="bottom" secondItem="32M-MS-rdd" secondAttribute="bottom" constant="5" id="WDx-Fa-1Jp"/>
                         <constraint firstAttribute="trailing" secondItem="Zxb-mH-hnV" secondAttribute="trailing" constant="6" id="a4R-NR-tKw"/>
                         <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" constant="16" id="g43-HZ-aZa"/>
                         <constraint firstAttribute="height" constant="395" id="wl7-ZE-7X9"/>
+                        <constraint firstItem="cyu-Pt-zCi" firstAttribute="top" secondItem="32M-MS-rdd" secondAttribute="bottom" constant="10" id="yZH-OE-Kse"/>
+                        <constraint firstAttribute="bottom" secondItem="cyu-Pt-zCi" secondAttribute="bottom" constant="10" id="zdP-ZB-6lA"/>
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hwb-7m-LMj" secondAttribute="bottom" id="6uI-ZA-cpI"/>
@@ -94,8 +106,7 @@
                 <constraint firstAttribute="bottom" secondItem="eSF-QW-qPH" secondAttribute="bottom" id="k2d-9T-6p2"/>
                 <constraint firstItem="eSF-QW-qPH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="m5T-uP-0Mb"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="-3993" y="257"/>
+            <point key="canvasLocation" x="-3994.202898550725" y="256.47321428571428"/>
         </view>
         <tapGestureRecognizer id="Eqa-6t-YDm">
             <connections>
@@ -103,4 +114,9 @@
             </connections>
         </tapGestureRecognizer>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -706,7 +706,7 @@
         if (node.isFile) {
             [self setNodeTableViewCell:cell enabled:NO];
         } else {
-            (shareType == MEGAShareTypeAccessRead) ? [self setNodeTableViewCell:cell enabled:NO] : [self setNodeTableViewCell:cell enabled:YES];
+            [self setNodeTableViewCell:cell enabled:YES];
         }
     }
     
@@ -716,7 +716,17 @@
         [cell.thumbnailImageView mnz_imageForNode:node];
     }
     
+    if (!node.name.mnz_isVideoPathExtension) {
+        cell.thumbnailPlayImageView.hidden = YES;
+    }
+    
     cell.nameLabel.text = node.name;
+    cell.favouriteView.hidden = !node.isFavourite;
+    cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        cell.labelImageView.image = [UIImage imageNamed:labelString];
+    }
     
     cell.node = node;
     

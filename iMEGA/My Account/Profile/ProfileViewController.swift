@@ -330,9 +330,7 @@ enum SessionSectionRow: Int {
     }
     
     func showAddPhoneNumber() {
-        let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
-        addPhoneNumberController.modalPresentationStyle = .fullScreen
-        present(addPhoneNumberController, animated: true, completion: nil)
+        AddPhoneNumberRouter(hideDontShowAgain: true, presenter: self).start()
     }
     
     private func showPhoneNumberView() {

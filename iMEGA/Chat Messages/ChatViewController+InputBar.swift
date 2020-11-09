@@ -1,6 +1,7 @@
 import Foundation
 import MessageKit
 import ISEmojiView
+import VisionKit
 
 extension ChatViewController {
     
@@ -352,7 +353,7 @@ extension ChatViewController {
     }
     
     private func startUpload(assets: [PHAsset]) {
-        MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] resultNode in
+        MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder {[weak self] resultNode in
             guard let `self` = self else {
                 return
             }
@@ -448,7 +449,7 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func checkDialogs(_ message: MEGAChatMessage) {
         if MEGAChatSdk.hasUrl(message.content) {
-            MEGASdkManager.sharedMEGASdk()?.shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
+            MEGASdkManager.sharedMEGASdk().shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
                 if let request = request, request.flag {
                     message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
                     self.richLinkWarningCounterValue = request.number.uintValue
@@ -466,14 +467,14 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedSendAudio(atPath path: String) {
-        MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] result in
+        MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder {[weak self] result in
             guard let `self` = self else {
                 return
             }
                         
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
             
-            if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: MEGAVoiceMessagesFolderName, node: result) {
+            if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk().node(forPath: MEGAVoiceMessagesFolderName, node: result) {
                 ChatUploader.sharedInstance.upload(filepath: path,
                                                    appData: appData,
                                                    chatRoomId: self.chatRoom.chatId,
@@ -486,7 +487,7 @@ extension ChatViewController: ChatInputBarDelegate {
                         fatalError("request object should not be nil")
                     }
                     
-                    if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forHandle: request.nodeHandle) {
+                    if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk().node(forHandle: request.nodeHandle) {
                         ChatUploader.sharedInstance.upload(filepath: path,
                                                            appData: appData,
                                                            chatRoomId: self.chatRoom.chatId,
@@ -498,7 +499,7 @@ extension ChatViewController: ChatInputBarDelegate {
                     }
                 }
                 
-                MEGASdkManager.sharedMEGASdk()!.createFolder(withName: MEGAVoiceMessagesFolderName,
+                MEGASdkManager.sharedMEGASdk().createFolder(withName: MEGAVoiceMessagesFolderName,
                                                              parent: result,
                                                              delegate: requestDelegate)
             }
@@ -592,6 +593,14 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
 
 
 extension ChatViewController: AddToChatViewControllerDelegate {
+    func showScanDoc() {
+        if #available(iOS 13.0, *) {
+            let vc = VNDocumentCameraViewController()
+            vc.delegate = self
+            present(viewController: vc)
+        }
+    }
+    
     func send(asset: PHAsset) {
         startUpload(assets: [asset])
     }
@@ -723,7 +732,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                             self.presentShareLocation()
                         }
                     }
-                    MEGASdkManager.sharedMEGASdk()?.enableGeolocation(with: enableGeolocationDelegate)
+                    MEGASdkManager.sharedMEGASdk().enableGeolocation(with: enableGeolocationDelegate)
                 }
                 
                 let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -734,7 +743,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 self.presentShareLocation()
             }
         }
-        MEGASdkManager.sharedMEGASdk()?.isGeolocationEnabled(with: genericRequestDelegate)
+        MEGASdkManager.sharedMEGASdk().isGeolocationEnabled(with: genericRequestDelegate)
     }
     
     func shouldDisableAudioMenu() -> Bool {

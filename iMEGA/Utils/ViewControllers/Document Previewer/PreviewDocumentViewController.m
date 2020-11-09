@@ -20,6 +20,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -189,10 +190,12 @@
     
     UIBarButtonItem *flexibleItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     NSMutableArray *toolbarItems = NSMutableArray.new;
-    if (self.isLink) {
-        [toolbarItems addObjectsFromArray:@[self.importBarButtonItem, flexibleItem]];
+    [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem]];
+    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+        [toolbarItems addObject:self.openInBarButtonItem];
+    } else {
+        [toolbarItems addObject:self.importBarButtonItem];
     }
-    [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem, self.openInBarButtonItem]];
     self.toolbarItems = toolbarItems.copy;
     [self.navigationController setToolbarHidden:NO animated:YES];
     
@@ -261,7 +264,7 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         if (self.node) {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
             [self presentViewController:activityVC animated:YES completion:nil];
         } else {
             if (self.filesPathsArray.count > 0 && self.nodeFileIndex < self.filesPathsArray.count) {
@@ -297,7 +300,7 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isPageView:self.collectionView.hidden sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isLink:self.isLink isPageView:self.collectionView.hidden sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -395,7 +398,15 @@
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
+        
+        case MegaNodeActionTypeFavourite:
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            break;
             
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
+            break;
+        
         case MegaNodeActionTypeCopy:
             [node mnz_copyInViewController:self];
             break;
@@ -478,7 +489,7 @@
         self.imageView.hidden = YES;
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        [self setToolbarItems:@[self.isLink ? self.importBarButtonItem : self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
+        [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];

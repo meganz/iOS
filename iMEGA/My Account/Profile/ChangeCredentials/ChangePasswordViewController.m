@@ -510,7 +510,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             } else {
                 self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
                 self.passwordStrengthIndicatorView.customView.hidden = NO;
-                [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+                [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text] updateDescription:YES];
             }
         }
     }

@@ -6,6 +6,7 @@ struct AddToChatMenu: Codable {
         case voice = "Voice"
         case video = "Video"
         case contact = "Contact"
+        case scanDoc = "Scan Document"
         case startGroup = "Start Group"
         case location = "Location"
         case voiceClip = "Voice Clip"
@@ -41,6 +42,8 @@ struct AddToChatMenu: Codable {
             return .video
         case MenuNameKey.contact.rawValue:
             return .contact
+        case MenuNameKey.scanDoc.rawValue:
+            return .scanDoc
         case MenuNameKey.startGroup.rawValue:
             return .startGroup
         case MenuNameKey.location.rawValue:

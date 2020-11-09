@@ -25,6 +25,8 @@ pipeline {
             steps {
                 injectEnvironments({
                     sh "sh $WORKSPACE/download_3rdparty.sh"
+                    sh "bundle install"
+                    sh "bundle exec pod install"
                 })
             }
         }
@@ -42,7 +44,7 @@ pipeline {
         stage('Generating Executable (IPA)') {
             steps {
                 injectEnvironments({
-                    sh "fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER"
+                    sh "bundle exec fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER"
                 })
             }
         }

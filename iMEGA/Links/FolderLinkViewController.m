@@ -67,6 +67,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MEGASdkManager.sharedMEGASdkFolder addMEGAGlobalDelegate:self];
+    [MEGASdkManager.sharedMEGASdkFolder addMEGARequestDelegate:self];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -114,7 +116,7 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.publicLinkString delegate:self];
+        [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:self.publicLinkString];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
@@ -136,18 +138,11 @@
     self.navigationController.toolbarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -246,18 +241,33 @@
     }
 }
 
-- (void)showUnavailableLinkView {
+- (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     [SVProgressHUD dismiss];
+    
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"folderLink", nil) subtitle:AMLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
     
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView configureInvalidFolderLink];
-    
+    switch (error) {
+        case UnavailableLinkErrorGeneric:
+            [unavailableLinkView configureInvalidFolderLink];
+            break;
+            
+        case UnavailableLinkErrorETDDown:
+            [unavailableLinkView configureInvalidFolderLinkByETD];
+            break;
+            
+        case UnavailableLinkErrorUserETDSuspension:
+            [unavailableLinkView configureInvalidFolderLinkByUserETDSuspension];
+            break;
+    }
     [self.tableView setBackgroundView:unavailableLinkView];
 }
 
 - (void)disableUIItems {
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
     [self.tableView setSeparatorColor:[UIColor clearColor]];
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
@@ -320,7 +330,7 @@
         
         self.validatingDecryptionKey = YES;
         
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
+        [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:linkString];
     }]];
     
     decryptionAlertController.actions.lastObject.enabled = NO;
@@ -914,40 +924,50 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
-        switch (error.type) {
-            case MEGAErrorTypeApiEArgs: {
-                if (request.type == MEGARequestTypeLogin) {
-                    if (self.isValidatingDecryptionKey) { //If the user have written the key
-                        [self showDecryptionKeyNotValidAlert];
-                    } else {
-                        [self showUnavailableLinkView];
+        if (error.hasExtraInfo) {
+            if (error.linkStatus == MEGALinkErrorCodeDownETD) {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorETDDown];
+            } else if (error.userStatus == MEGAUserErrorCodeETDSuspension) {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserETDSuspension];
+            } else {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+            }
+        } else {
+            switch (error.type) {
+                case MEGAErrorTypeApiEArgs: {
+                    if (request.type == MEGARequestTypeLogin) {
+                        if (self.isValidatingDecryptionKey) { //If the user have written the key
+                            [self showDecryptionKeyNotValidAlert];
+                        } else {
+                            [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                        }
+                    } else if (request.type == MEGARequestTypeFetchNodes) {
+                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
                     }
-                } else if (request.type == MEGARequestTypeFetchNodes) {
-                    [self showUnavailableLinkView];
+                    break;
                 }
-                break;
-            }
-                
-            case MEGAErrorTypeApiENoent: {
-                if (request.type == MEGARequestTypeFetchNodes) {
-                    [self showUnavailableLinkView];
+                    
+                case MEGAErrorTypeApiENoent: {
+                    if (request.type == MEGARequestTypeFetchNodes) {
+                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case MEGAErrorTypeApiEIncomplete: {
-                [self showDecryptionAlert];
-                break;
-            }
-                
-            default: {
-                if (request.type == MEGARequestTypeLogin) {
-                    [self showUnavailableLinkView];
-                } else if (request.type == MEGARequestTypeFetchNodes) {
-                    [api logout];
-                    [self showUnavailableLinkView];
+                    
+                case MEGAErrorTypeApiEIncomplete: {
+                    [self showDecryptionAlert];
+                    break;
                 }
-                break;
+                    
+                default: {
+                    if (request.type == MEGARequestTypeLogin) {
+                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    } else if (request.type == MEGARequestTypeFetchNodes) {
+                        [api logout];
+                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    }
+                    break;
+                }
             }
         }
         
@@ -972,7 +992,7 @@
                 if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
-                    [self showUnavailableLinkView];
+                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
                 }
                 return;
             }
@@ -1003,6 +1023,8 @@
         case MEGARequestTypeLogout: {
             self.loginDone = NO;
             self.fetchNodesDone = NO;
+            [api removeMEGAGlobalDelegate:self];
+            [api removeMEGARequestDelegate:self];
             break;
         }
             

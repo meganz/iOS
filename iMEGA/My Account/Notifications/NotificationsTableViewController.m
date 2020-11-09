@@ -340,7 +340,7 @@
             } else if (node.type == MEGANodeTypeFolder) {
                 nodeType = AMLocalizedString(@"folder", nil);
             }
-            NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your publicly shared %1 (%2) has been taken down.", @"The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
             text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
             NSRange range = [text rangeOfString:@"%2"];
@@ -358,7 +358,7 @@
             } else if (node.type == MEGANodeTypeFolder) {
                 nodeType = AMLocalizedString(@"folder", nil);
             }
-            NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your taken down %1 (%2) has been reinstated.", @"The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
             text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
             NSRange range = [text rangeOfString:@"%2"];
@@ -473,6 +473,13 @@
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
         case MEGAUserAlertTypePaymentReminder:
+            if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+                UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
+                
+                [self.navigationController pushViewController:upgradeTVC animated:YES];
+            } else {
+                [MEGAReachabilityManager isReachableHUDIfNot];
+            }
             break;
             
         default:
