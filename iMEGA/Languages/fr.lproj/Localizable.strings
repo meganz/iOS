@@ -75,7 +75,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Les serveurs sont trop occupés. Veuillez patienter…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer ultérieurement.";
+"unableToReachMega"="Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou réessayer ultérieurement.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Trop de requêtes. Veuillez patienter.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -87,9 +87,9 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un compte";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Veuillez ressayer";
+"invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Veuillez réessayer";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="Vous avez tenté de vous connecter trop de fois. Veuillez attendre jusqu'à %@ et ressayer.";
+"tooManyAttemptsLogin"="Vous avez tenté de vous connecter trop de fois. Veuillez attendre jusqu’à %@ et réessayer.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Veuillez vérifier votre courriel et suivre le lien pour confirmer votre compte.";
 /* Error message when trying to login and the account is blocked */
@@ -115,7 +115,7 @@
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Moyen";
 /*  */
-"passwordMedium"="Votre mot de passe est assez bon pour continuer, mais il est recommandé de le renforcer.";
+"passwordMedium"="Votre mot de passe est assez bon pour poursuivre, mais il est recommandé de le renforcer.";
 /*  */
 "good"="Bon";
 /*  */
@@ -149,7 +149,7 @@
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Erreur. Cette adresse courriel est déjà utilisée.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Vous devez libérer de l'espace sur votre appareil";
+"nodeTooBig"="Vous devez libérer de l’espace sur votre appareil";
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA a besoin d’au moins %@. Libérez de l’espace en supprimant les applis que vous n’utilisez plus ou les fichiers vidéo volumineux dans votre galerie. Vous pouvez aussi gérer ce que MEGA enregistre sur votre appareil.";
 /* Title for the file link view */
@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Prendre une photo";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Numériser un document";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Photos";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Appel vocal";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Commencer un groupe";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Emplacement";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nouveau dossier";
 /* Hint text shown on the create folder alert. */
@@ -313,7 +323,7 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="« Boîte de réception » est réservé à l’usage d’Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="Enregistrer l'image";
+"saveImage"="Enregistrer l’image";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Obtenir le lien";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -559,7 +569,7 @@
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Ajouter";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="Vous n'avez pas à ajouter votre propre adresse courriel";
+"noNeedToAddYourOwnEmailAddress"="Il est inutile d’ajouter votre propre adresse courriel";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts si l’invitation est acceptée.";
 /* Success message shown when some contacts have been invited */
@@ -619,7 +629,7 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Veuillez rédiger votre commentaire ici :";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Aucun compte courriel n'est défini sur votre appareil";
+"noEmailAccountConfigured"="Aucun compte courriel n’est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -689,7 +699,7 @@
 /* Title of the switch to config whether to upload all burst photos */
 "Upload All Burst Photos"="Téléverser toutes les photos en rafale";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Téléverser l'album Masqués";
+"Upload Hidden Album"="Téléverser l’album Masqués";
 /* Footer description when upload videos for Live Photos is enabled */
 "The video and the photo in each Live Photo will be uploaded."="Les versions photo et vidéo de chaque Live Photo seront téléversées.";
 /* Footer description when upload videos for Live Photos is disabled */
@@ -773,21 +783,21 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmer la suppression";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFileToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d fichiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFilesToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d fichiers. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 dossier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 dossier. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d dossiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d dossiers. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier et 1 dossier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFileFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier et 1 dossier. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier et %d dossiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFileFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier et %d dossiers. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d fichiers et 1 dossier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d fichiers et 1 dossier. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement [A] fichiers et [B] dossiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
+"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement [A] fichiers et [B] dossiers. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 fichier a été supprimé de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -813,7 +823,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Mot de passe oublié ?";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="Le lien de récupération est expiré. Veuillez ressayer.";
+"recoveryLinkHasExpired"="Le lien de récupération est expiré. Veuillez réessayer.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Réinitialisation du mot de passe";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -846,7 +856,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Changer l’adresse courriel";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="La nouvelle adresse courriel et l'ancienne ne doivent pas correspondre";
+"oldAndNewEmailMatch"="La nouvelle adresse courriel et l’ancienne ne doivent pas correspondre";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Les adresses courriels ne correspondent pas";
 /* Error message when a use wants to validate the same email twice */
@@ -1056,7 +1066,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuel";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans le magasin App Store pour l’instant. Veuillez ressayer ultérieurement.";
+"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans le magasin App Store pour l’instant. Veuillez réessayer ultérieurement.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Merci";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1064,15 +1074,15 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="L'achat est interrompu";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez ressayer ultérieurement ou contacter ios@mega.nz.";
+"failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problème de restauration";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="L'achat précédent n'a pas été trouvé. Veuillez sélectionner le produit acheté précédemment afin de le rétablir. Vous ne serez PAS facturé de nouveau.";
+"incompleteRestore_message"="L’achat précédent n’a pas été trouvé. Veuillez sélectionner le produit acheté auparavant afin de le rétablir. Un achat ne vous sera PAS facturé de nouveau.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="La restauration est interrompue";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez ressayer ultérieurement ou contacter ios@mega.nz.";
+"failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1170,13 +1180,13 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Souhaitez-vous vraiment effacer l’historique entier de cette conversation ?";
 /* 'Next' button in a dialog */
-"continue"="Continuer";
+"continue"="Poursuivre";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Dossiers partagés";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Numéro d’identification du contact";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="La meilleure façon de le faire est de se rencontrer physiquement. Si vous avez un autre moyen de communication vérifiée, tel qu'OTR ou PGP, vous pouvez aussi l'utiliser.";
+"thisIsBestDoneInRealLife"="La meilleure façon de le faire est de vous rencontrer physiquement. Si vous avez un autre moyen de communication vérifiée, tel qu’OTR ou PGP, vous pouvez aussi l’utiliser.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Mon numéro d’identification";
 /* Button to reset the password */
@@ -1218,11 +1228,11 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Conversation avec";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protège votre conversaton grâce au chiffrement de bout en bout (contrôlé par l'utilisateur) apportant ainsi une garantie de sécurité essentielle.";
+"chatIntroductionMessage"="MEGA protège votre conversation grâce au chiffrement de bout en bout (contrôlé par l’utilisateur) apportant ainsi une garantie de sécurité essentielle.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Confidentialité.[/S] Seuls l'auteur et les destinataires visés peuvent déchiffrer et lire le contenu.";
+"confidentialityExplanation"="[S]Confidentialité.[/S] Seuls l’auteur et les destinataires visés peuvent déchiffrer et lire le contenu.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Authenticité.[/S] Le système garantit que les données reçues proviennent de l'expéditeur affiché et que leur contenu n'a pas été manipulé pendant le transfert.";
+"authenticityExplanation"="[S]Authenticité.[/S] Le système garantit que les données reçues proviennent de l’expéditeur affiché et que leur contenu n’a pas été manipulé pendant le transfert.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="La conversation est introuvable";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1236,13 +1246,13 @@
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Il n’y a aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
-"retry"="Ressayer";
+"retry"="Réessayer";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Supprimer le message";
 /*  */
 "fromCloudDrive"="Du disque nuagique";
-/* referring to a contact in the contact list of the user */
-"contact"="Contact";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Envoyer un contact";
 /* */
@@ -1304,7 +1314,7 @@
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/ désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous pour continuer";
+"openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous afin de poursuivre";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Connexion…";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1503,11 +1513,11 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Ne plus afficher";
 /* Label for test password button and titles */
-"testPassword"="Tester le mot de passe";
+"testPassword"="Confirmer le mot de passe";
 /* Label for recovery key button */
 "backupRecoveryKey"="Sauvegarder la clé de récupération";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="Veuillez tester votre mot de passe ci-dessous pour vous assurer de vous en souvenir. Si vous perdez votre mot de passe, vous perdrez l'accès à vos données MEGA. [A]En apprendre davantage[/A]";
+"testPasswordText"="Veuillez confirmer votre mot de passe ci-dessous pour vous assurer de vous en souvenir. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA. [A]En apprendre davantage[/A]";
 /* Title text for the account confirmation. */
 "confirm"="Confirmer";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -1517,7 +1527,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Poursuivre la déconnexion";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Vous êtes sur le point de vous déconnecter. Veuillez tester votre mot de passe pour vous assurer que vous en souvenez. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA.";
+"testPasswordLogoutText"="Vous êtes sur le point de vous déconnecter. Veuillez essayer votre mot de passe pour vous assurer que vous en souvenez. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA.";
 /* state previous to import a file */
 "loading"="Chargement…";
 /*   */
@@ -2275,7 +2285,7 @@
 /* Information message shown to users when the operation of removing phone number succeed. */
 "Your phone number has been removed successfully."="Votre numéro de téléphone a été supprimé avec succès.";
 /* A message shown to users when phone number removal fails. */
-"Failed to remove your phone number, please try again later."="Échec de suppression de votre numéro de téléphone, veuillez ressayer ultérieurement.";
+"Failed to remove your phone number, please try again later."="Échec de suppression de votre numéro de téléphone, veuillez réessayer ultérieurement.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Abandonner les changements";
 /* Title of the Proxy section under Settings */
@@ -2305,33 +2315,33 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="Versions";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Favori";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Supprimer le favori";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Label";
+"Label"="Étiquette";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"Label..."="Étiquette…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Supprimer l’étiquette";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
-"Red"="Red";
+"Red"="rouge";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="Orange";
+"Orange"="orange";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="Yellow";
+"Yellow"="jaune";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="Green";
+"Green"="verte";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="Blue";
+"Blue"="bleue";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="Purple";
+"Purple"="violette";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="Grey";
+"Grey"="grise";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="Clé";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Send Decryption Key Separately";
+"Send Decryption Key Separately"="Envoyer la clé de déchiffrement séparément";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Date d’expiration";
 /* Text for options in Get Link View to set expiry date */
@@ -2343,9 +2353,9 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exporter séparément le lien et la clé de déchiffrement.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Learn more";
+"Learn more"="En apprendre davantage";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="Le lien expire le %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Touchez pour copier";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2361,7 +2371,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Le mot de passe a été copié dans le presse-papiers";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Notre système de chiffrement de bout en bout exige une clé unique générée automatiquement pour ce fichier. Un lien qui comprend cette clé est créé par défaut, mais vous pouvez exporter séparément la clé de chiffrement par mesure supplémentaire de sécurité.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Clé de déchiffrement";
 /* Text to indicate the user to remove the password of a link */
@@ -2369,10 +2379,10 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Réinitialiser le mot de passe";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ce lien n’est pas accessible, car le compte de l’utilisateur a été fermé en raison d’une violation flagrante des [A]Conditions générales d’utilisation[/A] de MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Ce dossier ou fichier a été signalé comme source de contenu répréhensible tel qu’exploitation d’enfants, extrémisme violent ou bestialité. Le compte du créateur du lien a été fermé et ses renseignements complets, dont l’adresse IP, ont été remis aux autorités.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Non disponible";
 /* Error text shown when requesting email for email verification within 10 minutes */
-"Email already sent. Please wait a few minutes before trying again."="Le courriel a déjà été envoyé. Veuillez patienter quelques minutes avant de ressayer.";
+"Email already sent. Please wait a few minutes before trying again."="Le courriel a déjà été envoyé. Veuillez patienter quelques minutes avant de réessayer.";

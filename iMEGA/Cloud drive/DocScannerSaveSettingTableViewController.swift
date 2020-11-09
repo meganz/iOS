@@ -54,17 +54,17 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             UserDefaults.standard.set(DocScanQuality.best.rawValue, forKey: keys.docScanQualityKey)
         }
         
-        if chatRoom != nil {
-            navigationController?.setToolbarHidden(false, animated: false)
-        } else {
-            navigationController?.setToolbarHidden(true, animated: false)
-        }
-        
         sendButton.title = AMLocalizedString("send")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if chatRoom != nil {
+            navigationController?.setToolbarHidden(false, animated: false)
+        } else {
+            navigationController?.setToolbarHidden(true, animated: false)
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

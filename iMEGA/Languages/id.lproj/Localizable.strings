@@ -286,6 +286,16 @@
 "capturePhotoVideo"="Ambil foto";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
+/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
+"Photos"="Foto";
+/* Menu option from the `Add` section that allows the user to make voice call. */
+"Voice"="Voice";
+/* Menu option from the `Add` section that allows the user to Start Group. */
+"Start Group"="Start Group";
+/* Menu option from the `Add` section that allows the user to share Location */
+"Location"="Lokasi";
+/* Menu option from the `Add` section that allows the user to share voice clip */
+"Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
@@ -1241,8 +1251,8 @@
 "deleteMessage"="Hapus pesan";
 /*  */
 "fromCloudDrive"="Dari Cloud drive";
-/* referring to a contact in the contact list of the user */
-"contact"="Kontak";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Kontak";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kirim kontak";
 /* */
@@ -2311,27 +2321,27 @@
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Label";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"Label..."="Label...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Remove Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
-"Red"="Red";
+"Red"="Merah";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="Orange";
+"Orange"="Oranye";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="Yellow";
+"Yellow"="Kuning";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="Green";
+"Green"="Hijau";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="Blue";
+"Blue"="Biru";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="Purple";
+"Purple"="Ungu";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="Grey";
+"Grey"="Abu";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="KUNCI";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Send Decryption Key Separately";
+"Send Decryption Key Separately"="Kirim Kunci Dekripsi Secara Terpisah";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Tanggal Kadaluarsa";
 /* Text for options in Get Link View to set expiry date */
@@ -2343,9 +2353,9 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Ekspor tautan dan kunci dekripsi secara terpisah.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Learn more";
+"Learn more"="Belajar Lebih";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="Tautan kedaluwarsa %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Ketuk untuk Menyalin";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2361,7 +2371,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Sandi Disalin ke Papan Klip";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistem enkripsi ujung-ke-ujung kami memerlukan kunci unik yang dibuat secara otomatis untuk file ini. Tautan dengan kunci ini dibuat secara default, tetapi Anda dapat mengekspor kunci dekripsi secara terpisah untuk lapisan keamanan tambahan.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Kunci Dekripsi";
 /* Text to indicate the user to remove the password of a link */
@@ -2369,9 +2379,9 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Atur Ulang Kata Sandi";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Tautan ini tidak tersedia karena akun pengguna telah ditutup karena pelanggaran berat terhadap [A]Ketentuan Layanan[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="[$24148]";
+"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Folder/file ini dilaporkan mengandung konten yang tidak menyenangkan, seperti Materi Eksploitasi Anak, Ekstremisme Kekerasan, atau Bestialitas. Akun pembuat tautan telah ditutup dan detail lengkapnya, termasuk alamat IP, telah diberikan kepada pihak berwenang.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Tidak tersedia";
 /* Error text shown when requesting email for email verification within 10 minutes */
