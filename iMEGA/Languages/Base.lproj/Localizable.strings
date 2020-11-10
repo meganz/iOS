@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Invalid link";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="The account that created this link has been terminated due to multiple violations of our Terms of Service.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Enter decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
