@@ -112,6 +112,24 @@ extension ChatViewController {
         MEGAStore.shareInstance()?.insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : chatInputBar.text)
     }
     
+    func presentShareLocation(editing:Bool = false) {
+        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+        guard let shareLocationViewController = storyboard.instantiateViewController(withIdentifier: "ShareLocationViewControllerID") as? ShareLocationViewController else {
+            fatalError("ChatViewController: could not create an instance of ShareLocationViewController")
+        }
+        
+        shareLocationViewController.chatRoom = chatRoom
+        
+        if editing, let editMessage = self.editMessage {
+            shareLocationViewController.editMessage = editMessage.message
+            self.editMessage = nil
+        }
+            
+        let navController = MEGANavigationController(rootViewController: shareLocationViewController)
+        navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+        present(viewController: navController)
+    }
+    
     // MARK: - Private methods.
     private func join(button: UIButton) {
         if MEGASdkManager.sharedMEGAChatSdk()!.initState() == .anonymous {
@@ -212,19 +230,6 @@ extension ChatViewController {
             contentOffset.y += (messagesCollectionView.contentInset.bottom + oldInset)
             messagesCollectionView.contentOffset = contentOffset
         }
-    }
-        
-    private func presentShareLocation() {
-        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-        guard let shareLocationViewController = storyboard.instantiateViewController(withIdentifier: "ShareLocationViewControllerID") as? ShareLocationViewController else {
-            fatalError("ChatViewController: could not create an instance of ShareLocationViewController")
-        }
-        
-        shareLocationViewController.chatRoom = chatRoom
-            
-        let navController = MEGANavigationController(rootViewController: shareLocationViewController)
-        navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
-        present(viewController: navController)
     }
     
     private func createGroupChat(selectedObjects: [Any]?,
