@@ -165,6 +165,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         durationLabel.isHidden = true
         playIconView.isHidden = true
+        downloadGifIcon.isHidden = true
+
         if name.pathExtension == "gif" {
             let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
