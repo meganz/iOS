@@ -1,6 +1,0 @@
-framework module Pods_iMEGA_MEGANotifications {
-  umbrella header "Pods-iMEGA-MEGANotifications-umbrella.h"
-
-  export *
-  module * { export * }
-}
