@@ -893,6 +893,8 @@
 "transfers"="Transfers";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="All";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Completed";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -2176,6 +2178,10 @@
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Clear All";
 /* Alert header for asking permission to resume transfers*/

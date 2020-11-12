@@ -1,6 +1,6 @@
 
 typedef NS_ENUM(NSInteger, TransfersSelected) {
-    AllTransfersSelected = 0,
-    DownloadsTransfersSelected = 1,
-    UploadsTransfersSelected = 2,
+    TransfersSelectedAll = 0,
+    TransfersSelectedDownloads = 1,
+    TransfersSelectedUploads = 2,
 };

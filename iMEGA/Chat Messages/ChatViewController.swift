@@ -202,6 +202,8 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
+        TransfersWidgetViewController.sharedTransfer().progressView.isHidden = true
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -11,7 +11,7 @@
 
 @interface TransferTableViewCell : UITableViewCell
 
-@property (assign, nonatomic) id<TransferTableViewCellDelegate> delegate;
+@property (weak, nonatomic) id<TransferTableViewCellDelegate> delegate;
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer;
@@ -21,5 +21,5 @@
 - (void)reloadThumbnailImage;
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer;
 - (void)updateTransferIfNewState:(MEGATransfer *)transfer;
-
+- (IBAction)cancelTransfer:(id)sender;
 @end
