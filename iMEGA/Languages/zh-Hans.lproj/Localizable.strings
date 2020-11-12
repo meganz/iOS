@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="由于严重违反MEGA[A]服务条款[/A]，该用户的帐户已关闭，因此该链接不可用。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="该文件夹/文件已被举报其含有敏感内容，例如儿童色情，暴力极端主义或兽交。该链接创建者的帐户已关闭，其完整详细信息（包括IP地址）已提交至监管部门。";
+"Taken down due to severe violation of our terms of service"="该文件夹/文件已被举报其含有敏感内容，例如儿童色情，暴力极端主义或兽交。该链接创建者的帐户已关闭，其完整详细信息（包括IP地址）已提交至监管部门。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="不可用";
 /* Error text shown when requesting email for email verification within 10 minutes */

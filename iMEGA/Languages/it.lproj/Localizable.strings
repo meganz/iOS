@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Il link non è disponibile, in quanto l'account del proprietario è stato chiuso a causa di ripetute violazioni dei [A]Termini di Servizio[/A] di MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Questo oggetto è stato segnalato in quanto contiene materiale obiettabile, come sfruttamento di minori, estremismo violento, o bestialità. L'account del creatore del link è stato chiuso e tutti i suoi dettagli, incluso l'indirizzo IP, sono stati dati alle autorità.";
+"Taken down due to severe violation of our terms of service"="Questo oggetto è stato segnalato in quanto contiene materiale obiettabile, come sfruttamento di minori, estremismo violento, o bestialità. L'account del creatore del link è stato chiuso e tutti i suoi dettagli, incluso l'indirizzo IP, sono stati dati alle autorità.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Non disponibile";
 /* Error text shown when requesting email for email verification within 10 minutes */

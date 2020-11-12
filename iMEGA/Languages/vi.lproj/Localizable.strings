@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Đường liên kết này không còn tồn tại vì tài khoản đã bị đóng do vi phạm lớn tới [A]Điều Khoản Sử Dụng[/A] của MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Thư mục hoặc tệp tin này đã được báo cáo là chứa nội dung phản cảm, chẳng hạn như tài liệu bóc lột trẻ em, bạo hành cực đoan, thú tính hay động vật luyến ái, phi nhân tính. Tài khoản của người tạo liên kết đã bị đóng và chi tiết đầy đủ của chủ tài khoản (bao gồm cả địa chỉ IP) đã được gửi cho chính quyền.";
+"Taken down due to severe violation of our terms of service"="Thư mục hoặc tệp tin này đã được báo cáo là chứa nội dung phản cảm, chẳng hạn như tài liệu bóc lột trẻ em, bạo hành cực đoan, thú tính hay động vật luyến ái, phi nhân tính. Tài khoản của người tạo liên kết đã bị đóng và chi tiết đầy đủ của chủ tài khoản (bao gồm cả địa chỉ IP) đã được gửi cho chính quyền.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Không Khả Dụng";
 /* Error text shown when requesting email for email verification within 10 minutes */

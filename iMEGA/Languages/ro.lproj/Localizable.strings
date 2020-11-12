@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Acest link este indisponibil deoarece contul utilizatorului a fost închis pentru încălcarea gravă a [A]Termenilor de utilizare a serviciului[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Acest folder/link a fost raportat că include conținut inacceptabil, precum materiale cu exploatare infantilă, extremism violent sau bestialitate. Contul creatorului linkului a fost închis și detaliile complete ale acestuia, inclusiv adresa IP, au fost furnizate autorităților.";
+"Taken down due to severe violation of our terms of service"="Acest folder/link a fost raportat că include conținut inacceptabil, precum materiale cu exploatare infantilă, extremism violent sau bestialitate. Contul creatorului linkului a fost închis și detaliile complete ale acestuia, inclusiv adresa IP, au fost furnizate autorităților.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Indisponibil";
 /* Error text shown when requesting email for email verification within 10 minutes */
