@@ -129,3 +129,4 @@
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "JoinViewState.h"
+#import "NSObject+Debounce.h"

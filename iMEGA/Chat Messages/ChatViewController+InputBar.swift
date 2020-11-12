@@ -654,6 +654,13 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         present(viewController: pickerController)
     }
     
+    func showGiphy() {
+        let vc = GiphySelectionViewController(chatRoom: chatRoom)
+        let nav = MEGANavigationController(rootViewController: vc)
+        nav.addRightCancelButton()
+        present(nav, animated: true, completion: nil)
+    }
+    
     func showCloudDrive() {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         let cloudDriveNavController = storyboard.instantiateViewController(withIdentifier: "BrowserNavigationControllerID")

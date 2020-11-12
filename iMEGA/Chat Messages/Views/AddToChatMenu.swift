@@ -10,6 +10,7 @@ struct AddToChatMenu: Codable {
         case startGroup = "Start Group"
         case location = "Location"
         case voiceClip = "Voice Clip"
+        case giphy = "GIF"
     }
     
     let nameKey: String
@@ -50,6 +51,8 @@ struct AddToChatMenu: Codable {
             return .location
         case MenuNameKey.voiceClip.rawValue:
             return .voiceClip
+        case MenuNameKey.giphy.rawValue:
+            return .giphy
         default:
             return nil
         }

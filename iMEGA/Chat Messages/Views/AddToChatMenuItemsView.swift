@@ -58,6 +58,7 @@ class AddToChatMenuItemsView: UIView {
     @IBAction func buttonTapped(_ button: UIButton) {
         guard let tappedIndex = buttons.firstIndex(of: button),
             let menus = menus,
+            tappedIndex < menus.count,
             let delegate = delegate else {
                 return
         }

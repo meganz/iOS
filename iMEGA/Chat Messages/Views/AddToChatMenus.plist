@@ -36,14 +36,6 @@
 	</dict>
 	<dict>
 		<key>imageKey</key>
-		<string>attachContact</string>
-		<key>nameKey</key>
-		<string>Contact</string>
-		<key>dynamicKey</key>
-		<false/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
 		<string>chatScanDocument</string>
 		<key>nameKey</key>
 		<string>Scan Document</string>
@@ -52,9 +44,9 @@
 	</dict>
 	<dict>
 		<key>imageKey</key>
-		<string>attachGroup</string>
+		<string>attachGIF</string>
 		<key>nameKey</key>
-		<string>Start Group</string>
+		<string>GIF</string>
 		<key>dynamicKey</key>
 		<false/>
 	</dict>
@@ -63,6 +55,22 @@
 		<string>attachLocation</string>
 		<key>nameKey</key>
 		<string>Location</string>
+		<key>dynamicKey</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>attachContact</string>
+		<key>nameKey</key>
+		<string>Contact</string>
+		<key>dynamicKey</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>attachGroup</string>
+		<key>nameKey</key>
+		<string>Start Group</string>
 		<key>dynamicKey</key>
 		<false/>
 	</dict>

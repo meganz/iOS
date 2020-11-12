@@ -67,6 +67,9 @@ static const void *richTitleTagKey = &richTitleTagKey;
     if (self.containsMeta.geolocation.image) {
         return YES;
     }
+    if (self.containsMeta.giphy.webpSrc) {
+        return YES;
+    }
     return NO;
 }
 

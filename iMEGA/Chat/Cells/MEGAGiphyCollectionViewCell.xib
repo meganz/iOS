@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="gTV-IL-0wX" customClass="MEGAGiphyCollectionViewCell" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="236" height="231"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="236" height="231"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="juk-qb-PWh" customClass="YYAnimatedImageView">
+                        <rect key="frame" x="0.0" y="0.0" width="236" height="231"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="juk-qb-PWh" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="G6v-VM-UjN"/>
+                <constraint firstItem="juk-qb-PWh" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="jwX-wC-J3n"/>
+                <constraint firstItem="juk-qb-PWh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="uN1-GK-exw"/>
+                <constraint firstItem="juk-qb-PWh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="xdu-wt-Lse"/>
+            </constraints>
+            <connections>
+                <outlet property="image" destination="juk-qb-PWh" id="snl-w3-6qb"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="139"/>
+        </collectionViewCell>
+    </objects>
+</document>

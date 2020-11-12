@@ -4,10 +4,9 @@ workspace 'iMEGA'
 
 abstract_target 'iMEGA' do
   use_frameworks!
-
   pod 'YYWebImage'
   # In iOS 14 there is this issue of image not being displayed 'YYAnimatedImageView'. The below repo fixes this issue. Please delete the below line of code once the issue is fixed in the main repository.
-  pod 'YYImage', :git => 'https://github.com/sundayfun/YYImage.git'
+  pod 'YYImage/WebP', :git => 'https://github.com/sundayfun/YYImage.git'
 
   target 'MEGA' do
     # Pods for MEGA
@@ -18,6 +17,9 @@ abstract_target 'iMEGA' do
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
     pod 'Haptica'
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
+    pod 'CHTCollectionViewWaterfallLayout/Swift'
+
+    # Pods for MEGA
     pod 'Firebase/Crashlytics'
 
     target 'MEGAUnitTests' do

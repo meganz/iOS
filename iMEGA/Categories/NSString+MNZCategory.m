@@ -47,6 +47,7 @@ static NSString* const B = @"[B]";
                                                  @"rwl",
                                                  @"tga",
                                                  @"tif",
+                                                 @"webp",
                                                  @"tiff"];
     
     return [supportedExtensions containsObject:self.pathExtension.lowercaseString];

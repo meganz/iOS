@@ -13,6 +13,7 @@ protocol AddToChatViewControllerDelegate: AnyObject {
     func showScanDoc()
     func startGroupChat()
     func showLocation()
+    func showGiphy()
     func shouldDisableAudioMenu() -> Bool
     func shouldDisableVideoMenu() -> Bool
     func canRecordAudio() -> Bool
@@ -284,6 +285,12 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
 }
 
 extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
+    func showGiphy() {
+        dismiss() {
+            self.addToChatDelegate?.showGiphy()
+        }
+    }
+    
     func loadPhotosView() {
         loadPhotosViewAndDismiss()
     }
