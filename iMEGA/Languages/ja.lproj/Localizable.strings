@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="このリンクは使用できません。当該ユーザーのアカウントが、MEGAの[A]ご利用規約[/A]への重大な違反により閉鎖されました。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="このフォルダ/ファイルには、児童搾取資料、暴力的過激主義、獣姦などの好ましくないコンテンツが含まれていると報告されました。当該リンク作成者のアカウントが閉鎖され、IPアドレスを含む当該ユーザーの詳細が関係当局に提供されました。";
+"Taken down due to severe violation of our terms of service"="このフォルダ/ファイルには、児童搾取資料、暴力的過激主義、獣姦などの好ましくないコンテンツが含まれていると報告されました。当該リンク作成者のアカウントが閉鎖され、IPアドレスを含む当該ユーザーの詳細が関係当局に提供されました。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="利用できません";
 /* Error text shown when requesting email for email verification within 10 minutes */

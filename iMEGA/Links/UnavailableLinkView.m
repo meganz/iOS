@@ -74,7 +74,7 @@
 }
 
 - (void)configureDescriptionByLinkETDSuspension {
-    self.descriptionLabel.text = AMLocalizedString(@"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities.", @"Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service.");;
+    self.descriptionLabel.text = AMLocalizedString(@"Taken down due to severe violation of our terms of service", @"Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service.");;
     [self resetLabels];
 }
 

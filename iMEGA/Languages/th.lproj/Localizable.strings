@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="ลิงก์นี้ไม่สามารถใช้งานได้เนื่องจากบัญชีของผู้ใช้ถูกปิดเพราะละเมิดมาตรฐานขั้นต้นใน[A]เงื่อนไขการให้บริการ[/A]ของ MEGA";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="โฟลเดอร์/ไฟล์นี้มีการรายงานว่ามีเนื้อหาที่ไม่เหมาะสม เช่น สื่อข้อมูลที่แสวงหาประโยชน์จากเด็ก กลุ่มคนหัวรุนแรงหรือการชำเราสัตว์ บัญชีผู้สร้างลิงก์ได้ถูกปิดและรายละเอียดทั้งหมดรวมถึงที่อยู่ IP ได้ถูกมอบให้กับเจ้าหน้าที่เรียบร้อยแล้ว";
+"Taken down due to severe violation of our terms of service"="โฟลเดอร์/ไฟล์นี้มีการรายงานว่ามีเนื้อหาที่ไม่เหมาะสม เช่น สื่อข้อมูลที่แสวงหาประโยชน์จากเด็ก กลุ่มคนหัวรุนแรงหรือการชำเราสัตว์ บัญชีผู้สร้างลิงก์ได้ถูกปิดและรายละเอียดทั้งหมดรวมถึงที่อยู่ IP ได้ถูกมอบให้กับเจ้าหน้าที่เรียบร้อยแล้ว";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="ไม่พร้อมใช้งาน";
 /* Error text shown when requesting email for email verification within 10 minutes */

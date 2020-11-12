@@ -2381,7 +2381,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="이 링크는 링크 소유주의 계정이 MEGA [A]이용 약관[/A]의 중대한 위반으로 인하여 폐쇄되었기 때문에 사용할 수 없습니다.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="이 폴더/파일은 아동 착취물, 극단적인 폭력물, 또는 수간물 같은 불쾌한 항목이 포함된 것으로 신고되었습니다. 이 파일을 등록한 링크 생성자의 계정은 폐쇄되었으며, 링크 생성자의 IP 주소를 포함한 자세한 정보가 사법 기관에 제공되었습니다.";
+"Taken down due to severe violation of our terms of service"="이 폴더/파일은 아동 착취물, 극단적인 폭력물, 또는 수간물 같은 불쾌한 항목이 포함된 것으로 신고되었습니다. 이 파일을 등록한 링크 생성자의 계정은 폐쇄되었으며, 링크 생성자의 IP 주소를 포함한 자세한 정보가 사법 기관에 제공되었습니다.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="이용 불가";
 /* Error text shown when requesting email for email verification within 10 minutes */
