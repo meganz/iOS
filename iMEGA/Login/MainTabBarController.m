@@ -9,12 +9,15 @@
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
+#import <PureLayout/PureLayout.h>
+#import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
 
 #import "NSObject+Debounce.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
+@property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
 @end
@@ -69,9 +72,32 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
+    self.progressView = ({
+        ProgressIndicatorView *view = [ProgressIndicatorView.alloc initWithFrame:CGRectMake(0, 0, 70, 70)];
+        view.userInteractionEnabled = YES;
+        [self.view addSubview:view];
+    
+        [view addGestureRecognizer:({
+            [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProgressView)];
+        })];
+        [view autoSetDimensionsToSize:CGSizeMake(70, 70)];
+        [view autoPinEdgeToSuperviewSafeArea:ALEdgeRight withInset:8];
+        [view autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:60];
+        [TransfersWidgetViewController sharedTransferViewController].progressView = view;
+        view.hidden = YES;
+        view;
+        
+    });
+    
     [self setBadgeValueForChats];
     [self setBadgeValueForMyAccount];
     [self configurePhoneImageBadge];
+}
+
+- (void)tapProgressView {
+    TransfersWidgetViewController *transferVC = [TransfersWidgetViewController sharedTransferViewController];
+    MEGANavigationController *nav = [[MEGANavigationController alloc] initWithRootViewController:transferVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)viewDidLayoutSubviews {

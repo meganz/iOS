@@ -119,7 +119,7 @@
 - (void)actionForImagePath:(NSString *)imagePath {
     if (self.toUploadSomething) {
         self.filePath = imagePath.mnz_relativeLocalPath;
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toChangeAvatar) {
         NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
@@ -136,7 +136,7 @@
 
 - (void)actionForVideo {
     if (self.toUploadSomething) {
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
         [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {

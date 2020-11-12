@@ -66,6 +66,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAShareRequestDelegate.h"
+#import "FolderLinkViewController.h"
 #import "MEGAStore.h"
 
 #import "MEGALinkManager.h"
@@ -96,7 +97,10 @@
 #import "MEGANode.h"
 #import "PasswordView.h"
 #import "PasswordStrengthIndicatorView.h"
-
+#import "ChatRoomsViewController.h"
+#import "TransfersViewController.h"
+#import "TransfersWidgetViewController.h"
+#import "PreviewDocumentViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAChatPeerList.h"
 #import "MEGAChatRoom.h"

@@ -37,6 +37,13 @@
 		2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */; };
 		2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */; };
 		2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
+		2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F0881253E387500C5B5D7 /* Transfers.storyboard */; };
+		2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */; };
+		2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */; };
+		2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */; };
+		2F6F0892253E387600C5B5D7 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F088A253E387600C5B5D7 /* TransfersViewController.m */; };
+		2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */; };
+		2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
 		2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */; };
 		2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F85306E24885F9100064E83 /* PreviewersView.swift */; };
@@ -1348,8 +1355,6 @@
 		E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E81B566EC400ECEFDF /* UsageViewController.m */; };
 		E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */; };
-		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
-		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
 		E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */; };
 		E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
@@ -1357,7 +1362,6 @@
 		E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */; };
 		E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */; };
 		E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */; };
-		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */; };
@@ -1482,6 +1486,17 @@
 		2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEmojiButton.swift; sourceTree = "<group>"; };
 		2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Docscan.swift"; sourceTree = "<group>"; };
 		2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewController.swift; sourceTree = "<group>"; };
+		2F6F0881253E387500C5B5D7 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
+		2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersWidgetViewController.m; sourceTree = "<group>"; };
+		2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
+		2F6F0886253E387600C5B5D7 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
+		2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
+		2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
+		2F6F088A253E387600C5B5D7 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
+		2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressIndicatorView.xib; sourceTree = "<group>"; };
+		2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetViewController.h; sourceTree = "<group>"; };
+		2F6F08CD253E3D1F00C5B5D7 /* TransfersWidgetSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetSelected.h; sourceTree = "<group>"; };
+		2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferActionViewController.swift; sourceTree = "<group>"; };
 		2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+CallStatus.swift"; sourceTree = "<group>"; };
 		2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetViewController.swift; sourceTree = "<group>"; };
 		2F85306E24885F9100064E83 /* PreviewersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewersView.swift; sourceTree = "<group>"; };
@@ -2931,10 +2946,6 @@
 		E894271F1CCF8411008D470D /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewController.h; path = Chat/GroupChatDetailsViewController.h; sourceTree = "<group>"; };
 		E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = GroupChatDetailsViewController.m; path = Chat/GroupChatDetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E8B519211AC9CD8000BB7324 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
-		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TransfersViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
-		E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
 		E8B64EFB1BC6E48C005C726E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E8BB73651D77398A0067D89C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73661D7739960067D89C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2963,7 +2974,6 @@
 		E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnavailableLinkView.h; sourceTree = "<group>"; };
 		E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnavailableLinkView.m; sourceTree = "<group>"; };
 		E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnavailableLinkView.xib; sourceTree = "<group>"; };
-		E8D36F781AD677C6006D4D40 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
 		E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConfirmAccountViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
@@ -4098,6 +4108,7 @@
 				2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				2F6F08CD253E3D1F00C5B5D7 /* TransfersWidgetSelected.h */,
 				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
 				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
 				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
@@ -4748,6 +4759,7 @@
 				837B9C06247817F000D409B4 /* NodeActionBuilder.swift */,
 				832E1021202B099800BDD30F /* Cells */,
 				837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */,
+				2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */,
 				2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */,
 				2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */,
 			);
@@ -6538,11 +6550,15 @@
 		E8B5191F1AC9C43B00BB7324 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
-				E8D36F781AD677C6006D4D40 /* Transfers.storyboard */,
-				E8B519211AC9CD8000BB7324 /* TransfersViewController.h */,
-				E8B519221AC9CD8000BB7324 /* TransfersViewController.m */,
-				E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */,
-				E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */,
+				2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */,
+				2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */,
+				2F6F0881253E387500C5B5D7 /* Transfers.storyboard */,
+				2F6F0886253E387600C5B5D7 /* TransfersViewController.h */,
+				2F6F088A253E387600C5B5D7 /* TransfersViewController.m */,
+				2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */,
+				2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */,
+				2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */,
+				2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */,
 			);
 			path = Transfers;
 			sourceTree = "<group>";
@@ -6916,7 +6932,6 @@
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */,
-				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
 				BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
@@ -6968,6 +6983,7 @@
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */,
+				2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */,
@@ -6976,6 +6992,7 @@
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */,
 				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
+				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
 				834AFD232498E925005DF37C /* ContactsPicker.storyboard in Resources */,
@@ -7331,6 +7348,7 @@
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,
+				2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
@@ -7442,6 +7460,7 @@
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
+				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				B662B85924ECB3500089376A /* AddPhoneNumberViewModel.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
@@ -7583,7 +7602,6 @@
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				B662B86524ED0D800089376A /* VerificationCodeViewModel.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
-				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
@@ -7662,6 +7680,7 @@
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
 				A86B9F382316D6AB00F35E7A /* FLEXMultilineTableViewCell.m in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
+				2F6F0892253E387600C5B5D7 /* TransfersViewController.m in Sources */,
 				A86B9F322316D6AB00F35E7A /* FLEXSetExplorerViewController.m in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */,
@@ -7670,6 +7689,7 @@
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				BF7EBD34244FA92B0015255F /* AddToChatCameraCollectionCell.swift in Sources */,
 				BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */,
+				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
 				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
 				A86B9F4D2316D6AB00F35E7A /* FLEXArgumentInputStringView.m in Sources */,
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
@@ -7905,7 +7925,6 @@
 				BF943E9523554054001C18E0 /* String+Additions.swift in Sources */,
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */,
-				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */,
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
@@ -7939,6 +7958,7 @@
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,
 				5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */,
 				5D92DD1224BFE2B200D7D13B /* DateFormatter+SystemDateFormatter.swift in Sources */,
+				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				A86B9F802316D6AB00F35E7A /* FLEXUtility.m in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,

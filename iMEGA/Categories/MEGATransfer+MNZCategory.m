@@ -230,6 +230,16 @@
     return orderByState;
 }
 
+- (MEGANode *)node {
+    MEGANode *node;
+    if (self.publicNode) {
+        node = self.publicNode;
+    } else {
+        node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+    }
+    return node;
+}
+
 #pragma mark - Private
 
 - (void)mnz_setCoordinates:(NSString *)coordinates {
