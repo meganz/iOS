@@ -14,6 +14,7 @@ extension ChatViewController {
         case .delete:
             setToolbarItems([deleteBarButtonItem], animated: true)
         }
+        updateToolbarState()
     }
     
     
