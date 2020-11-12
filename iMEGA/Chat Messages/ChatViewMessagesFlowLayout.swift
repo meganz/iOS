@@ -15,7 +15,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatMediaCollectionViewSizeCalculator = ChatMediaCollectionViewSizeCalculator(layout: self)
     lazy var chatRichPreviewMediaCollectionViewSizeCalculator = ChatRichPreviewMediaCollectionViewSizeCalculator(layout: self)
     lazy var chatVoiceClipCollectionViewSizeCalculator = ChatVoiceClipCollectionViewSizeCalculator(layout: self)
-    lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
+    lazy var chatLocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
+    lazy var chatGiphyCollectionViewSizeCalculator = ChatGiphyCollectionViewSizeCalculator(layout: self)
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
     lazy var chatAttributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
     lazy var chatUnreadMessagesLabelCollectionCellSizeCalculator = ChatUnreadMessagesLabelCollectionCellSizeCalculator(layout: self)
@@ -140,7 +141,9 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 return chatVoiceClipCollectionViewSizeCalculator
             case .containsMeta:
                 if chatMessage.message.containsMeta.type == .geolocation {
-                    return chatlocationCollectionViewSizeCalculator
+                    return chatLocationCollectionViewSizeCalculator
+                } else if chatMessage.message.containsMeta.type == .giphy {
+                   return chatGiphyCollectionViewSizeCalculator
                 } else {
                     return chatRichPreviewMediaCollectionViewSizeCalculator
                 }
@@ -169,7 +172,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatMediaCollectionViewSizeCalculator,
             chatRichPreviewMediaCollectionViewSizeCalculator,
             chatVoiceClipCollectionViewSizeCalculator,
-            chatlocationCollectionViewSizeCalculator,
+            chatLocationCollectionViewSizeCalculator,
+            chatGiphyCollectionViewSizeCalculator,
             chatManagmentTypeCollectionViewSizeCalculator,
             chatRichPreviewDialogCollectionViewSizeCalculator
         ])

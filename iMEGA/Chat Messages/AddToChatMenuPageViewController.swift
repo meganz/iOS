@@ -12,6 +12,7 @@ protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
     func showScanDoc()
     func startGroupChat()
     func showLocation()
+    func showGiphy()
     func shouldDisableAudioMenu() -> Bool
     func shouldDisableVideoMenu() -> Bool
     func numberOfPages(_ pages: Int)
@@ -195,6 +196,8 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
             menuDelegate?.showLocation()
         case .voiceClip:
             menuDelegate?.showVoiceClip()
+        case .giphy:
+            menuDelegate?.showGiphy()
         }
     }
     

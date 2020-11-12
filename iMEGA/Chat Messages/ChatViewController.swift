@@ -134,6 +134,7 @@ class ChatViewController: MessagesViewController {
         })
         reloadInputViews()
         configureNavigationBar()
+        updateToolbarState()
     }
     
     override func viewDidLoad() {
@@ -153,7 +154,7 @@ class ChatViewController: MessagesViewController {
         addObservers()
         addChatBottomInfoScreenToView()
         configureGuesture()
-      
+        
     }
     
     
@@ -434,6 +435,10 @@ class ChatViewController: MessagesViewController {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
+            } else if chatMessage.message.containsMeta.type == .giphy {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatGiphyCollectionViewCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
             } else {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -679,6 +684,8 @@ class ChatViewController: MessagesViewController {
                                                      forCellWithReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatLocationCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatGiphyCollectionViewCell.self,
+                                              forCellWithReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatManagmentTypeCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatUnreadMessagesLabelCollectionCell.nib,

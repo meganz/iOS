@@ -1,4 +1,5 @@
 PODS:
+  - CHTCollectionViewWaterfallLayout/Swift (0.9.8)
   - DZNEmptyDataSet (1.8.1)
   - Firebase/CoreOnly (6.34.0):
     - FirebaseCore (= 6.10.4)
@@ -53,11 +54,14 @@ PODS:
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
+  - YYImage/WebP (1.0.4):
+    - YYImage/Core
   - YYWebImage (1.0.5):
     - YYCache
     - YYImage
 
 DEPENDENCIES:
+  - CHTCollectionViewWaterfallLayout/Swift
   - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
   - Firebase/Crashlytics
   - FlexLayout
@@ -66,11 +70,12 @@ DEPENDENCIES:
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
-  - YYImage (from `https://github.com/sundayfun/YYImage.git`)
+  - YYImage/WebP (from `https://github.com/sundayfun/YYImage.git`)
   - YYWebImage
 
 SPEC REPOS:
   trunk:
+    - CHTCollectionViewWaterfallLayout
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -115,6 +120,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/sundayfun/YYImage.git
 
 SPEC CHECKSUMS:
+  CHTCollectionViewWaterfallLayout: 5f241d2480ab4939aa0d1ad4981de9eef1fbe60d
   DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
   FirebaseCore: d3a978a3cfa3240bf7e4ba7d137fdf5b22b628ec
@@ -136,6 +142,6 @@ SPEC CHECKSUMS:
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 9e4620bc2e9fb3a9ce2f218c7a894be5e52ca9cb
+PODFILE CHECKSUM: af8d194d9ddd3030657a086f4dea6c0f688fd532
 
 COCOAPODS: 1.9.3

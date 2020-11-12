@@ -5,7 +5,9 @@ extension ChatViewController {
     
     func copyMessage(_ message: ChatMessage) {
         let megaMessage = message.message
-        UIPasteboard.general.string = megaMessage.content
+        if let content = megaMessage.content {
+            UIPasteboard.general.string = content
+        }        
     }
     
     func forwardMessage(_ message: ChatMessage) {

@@ -178,17 +178,24 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             
         case .containsMeta:
             //All messages
-            actions = [forwardAction, shareAction, selectAction]
-            if chatMessage.message.containsMeta.type != .geolocation {
+            actions = [forwardAction, selectAction]
+            if chatMessage.message.containsMeta.type != .geolocation && chatMessage.message.containsMeta.type != .giphy {
                 actions.append(contentsOf: [copyAction])
+            }
+            
+            if chatMessage.message.containsMeta.type != .giphy {
+                actions.append(contentsOf: [shareAction])
             }
             
             //Your messages
             if isFromCurrentSender(message: chatMessage) {
                
                 if chatMessage.message.isEditable {
-                    actions.append(contentsOf: [editAction])
-                    if chatMessage.message.containsMeta.type != .geolocation {
+                    if chatMessage.message.containsMeta.type != .giphy {
+                        actions.append(contentsOf: [editAction])
+                    }
+                    
+                    if chatMessage.message.containsMeta.type != .geolocation, chatMessage.message.containsMeta.type != .giphy {
                         actions.append(contentsOf: [removeRichLinkAction])
                     }
                 }

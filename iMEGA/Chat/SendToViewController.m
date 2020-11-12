@@ -364,6 +364,8 @@
                     MEGAChatMessage *newMessage;
                     if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
                         newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:chatId longitude:message.containsMeta.geolocation.longitude latitude:message.containsMeta.geolocation.latitude image:message.containsMeta.geolocation.image];
+                    } else if (message.containsMeta.type == MEGAChatContainsMetaTypeGiphy) {
+                        newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendGiphyToChat:chatId srcMp4:message.containsMeta.giphy.mp4Src srcWebp:message.containsMeta.giphy.webpSrc sizeMp4:message.containsMeta.giphy.mp4Size sizeWebp:message.containsMeta.giphy.webpSize width:message.containsMeta.giphy.width height:message.containsMeta.giphy.height title:message.containsMeta.giphy.title];
                     } else {
                         newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
                     }
