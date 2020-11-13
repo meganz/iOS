@@ -261,6 +261,8 @@
     self.infoLabel.text = AMLocalizedString(@"pending", @"Label shown when a contact request is pending");
     self.pauseButton.hidden = YES;
     self.cancelButton.hidden = NO;
+    self.progressView.progress = 0;
+
 }
 
 #pragma mark - IBActions
