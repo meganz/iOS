@@ -164,7 +164,10 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             self.alpha = 1
             stateBadge.image = transfersPaused ? #imageLiteral(resourceName: "Combined Shape") : nil
             self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
-
+            let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
+                return transfer.type == .download
+            }
+            arrowImageView.image = hasDownloadTransfer ? #imageLiteral(resourceName: "transfersDownload") : #imageLiteral(resourceName: "transfersUpload")
         } else {
             if (MEGASdkManager.sharedMEGASdk().completedTransfers.count) > 0 {
                 progress = 1

@@ -352,19 +352,21 @@ static TransfersWidgetViewController* instance = nil;
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.completedButton.selected) {
         return NO;
+    } else if (indexPath.section == 1) {
+        return NO;
     } else {
         return YES;
     }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    if (fromIndexPath.section != toIndexPath.section || fromIndexPath == toIndexPath) {
+        return;
+    }
+    
     MEGATransfer *selectedTransfer = [self.transfers objectAtIndex:fromIndexPath.row];
     
     BOOL isDemoted = fromIndexPath.row < toIndexPath.row;
-    
-    if (fromIndexPath == toIndexPath) {
-        return;
-    }
     
     if (isDemoted) {
         if (toIndexPath.row + 1 < self.transfers.count) {
@@ -843,29 +845,9 @@ static TransfersWidgetViewController* instance = nil;
             
     }
     [self.transfers addObject:transfer];
-    
 
-    
     if (transfer.type == MEGATransferTypeUpload) {
-        if ([transfer.appData containsString:@">localIdentifier"]) {
-            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
-            NSIndexPath *oldIndexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
-            if (oldIndexPath) {
-                [self.tableView mnz_performBatchUpdates:^{
-                    NSInteger newTransferIndex = [self numberOfActiveTransfers];
-                    [self.transfers insertObject:transfer atIndex:newTransferIndex];
-                    
-                    TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:oldIndexPath];
-                    [cell reconfigureCellWithTransfer:transfer];
-                    
-                    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
-                    [self.uploadTransfersQueued removeObjectAtIndex:oldIndexPath.row];
-                    [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
-                } completion:nil];
-            }
-        } else {
-            [self reloadView];
-        }
+        [self reloadView];
     } else if (transfer.type == MEGATransferTypeDownload) {
         NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
         if (indexPath) {
