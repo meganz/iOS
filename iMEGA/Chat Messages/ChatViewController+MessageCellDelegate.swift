@@ -110,6 +110,10 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
             let messagesDataSource = messagesCollectionView.messagesDataSource,
             let chatMessage = messagesDataSource.messageForItem(at: indexPath,
                                                                 in: messagesCollectionView) as? ChatMessage else { return }
+        if chatMessage.transfer != nil {
+            checkTransferPauseStatus()
+            return
+        }
         
         let megaMessage = chatMessage.message
         
