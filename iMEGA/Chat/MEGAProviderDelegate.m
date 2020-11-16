@@ -4,10 +4,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UserNotifications/UserNotifications.h>
 
-#import <WebRTC/RTCDispatcher.h>
-#import <WebRTC/RTCAudioSession.h>
-#import <WebRTC/RTCAudioSessionConfiguration.h>
-
 #import "LTHPasscodeViewController.h"
 
 #import "CallViewController.h"
@@ -275,15 +271,6 @@
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
-    
-    [RTCDispatcher dispatchAsyncOnType:RTCDispatcherTypeAudioSession block:^{
-        RTCAudioSession *audioSession = RTCAudioSession.sharedInstance;
-        [audioSession lockForConfiguration];
-        RTCAudioSessionConfiguration *configuration = [RTCAudioSessionConfiguration webRTCConfiguration];
-        configuration.categoryOptions = AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDuckOthers | AVAudioSessionCategoryOptionAllowBluetooth;
-        [audioSession setConfiguration:configuration error:nil];
-        [audioSession unlockForConfiguration];
-    }];
     
     if (action.callUUID) {
         uint64_t chatid = [self.megaCallManager chatIdForUUID:action.callUUID];
