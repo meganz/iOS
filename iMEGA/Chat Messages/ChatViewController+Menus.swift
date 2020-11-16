@@ -28,7 +28,7 @@ extension ChatViewController {
     
     func editMessage(_ message: ChatMessage) {
         editMessage = message
-        if message.message.containsMeta.type == MEGAChatContainsMetaType.geolocation {
+        if message.message.containsMeta?.type == MEGAChatContainsMetaType.geolocation {
             self.presentShareLocation(editing: true)
         } else {
             chatInputBar?.set(text: editMessage!.message.content)
