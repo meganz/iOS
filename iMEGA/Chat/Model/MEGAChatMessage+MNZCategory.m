@@ -288,8 +288,6 @@ static const void *richTitleTagKey = &richTitleTagKey;
         text = @"MEGAChatMessageTypeRevokeAttachment";
     } else if (self.type == MEGAChatMessageTypeVoiceClip) {
         text = @"MEGAChatMessageTypeVoiceClip";
-    } else if (self.type == MEGAChatMessageTypeContainsMeta && self.containsMeta.type == MEGAChatContainsMetaTypeInvalid) {
-        text = @"Message contains invalid meta";
     } else {
         UIColor *textColor = self.userHandle == myHandle ? UIColor.whiteColor : UIColor.mnz_label;
         UIFont *textFont = textFontRegular;
