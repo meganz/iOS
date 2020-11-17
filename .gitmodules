@@ -27,7 +27,7 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 	url = https://github.com/soffes/SAMKeychain.git
 [submodule "iMEGA/Vendor/Karere"]
 	path = iMEGA/Vendor/Karere
-	url = https://github.com/meganz/MEGAchat.git
+	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
 [submodule "iMEGA/Vendor/VENTokenField"]
 	path = iMEGA/Vendor/VENTokenField
 	url = https://github.com/meganz/VENTokenField.git
