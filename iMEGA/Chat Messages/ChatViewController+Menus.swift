@@ -31,7 +31,10 @@ extension ChatViewController {
         if message.message.containsMeta?.type == MEGAChatContainsMetaType.geolocation {
             self.presentShareLocation(editing: true)
         } else {
-            chatInputBar?.set(text: editMessage!.message.content)
+            guard let content = editMessage?.message.content else {
+                return
+            }
+            chatInputBar?.set(text: content)
         }
     }
     

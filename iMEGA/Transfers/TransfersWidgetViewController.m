@@ -89,13 +89,15 @@ static TransfersWidgetViewController* instance = nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
-    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     [self reloadView];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -167,7 +169,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)dealloc {
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
-    
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGATransferOverQuotaNotification object:nil];
+
     [MEGASdkManager.sharedMEGASdk removeMEGATransferDelegate:self];
     [MEGASdkManager.sharedMEGASdkFolder removeMEGATransferDelegate:self];
 }
@@ -242,7 +245,7 @@ static TransfersWidgetViewController* instance = nil;
         switch (indexPath.section) {
             case 0: {
                 MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
-                [cell configureCellForTransfer:transfer delegate:self];
+                [cell configureCellForTransfer:transfer overquota:[TransfersWidgetViewController sharedTransferViewController].progressView.overquota delegate:self];
                 break;
             }
                 
@@ -646,6 +649,11 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     return numberOfPausedTransfers;
+}
+
+- (void)didReceiveTransferOverQuotaNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Transfer Widget] transfer over quota notification %@", notification.userInfo);
+    [self reloadView];
 }
 
 #pragma mark - IBActions

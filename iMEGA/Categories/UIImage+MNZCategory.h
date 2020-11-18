@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (UIImage *)mnz_folderMyChatFilesImage;
 + (UIImage *)mnz_defaultPhotoImage;
 
++ (UIImage *)mnz_downloadingOverquotaTransferImage;
++ (UIImage *)mnz_uploadingOverquotaTransferImage;
 + (UIImage *)mnz_downloadingTransferImage;
 + (UIImage *)mnz_uploadingTransferImage;
 + (UIImage *)mnz_downloadQueuedTransferImage;
