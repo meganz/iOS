@@ -14,6 +14,11 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             UserDefaults.standard.bool(forKey: "TransfersPaused")
         }
     }
+    @objc var overquota = false {
+        didSet {
+            configureData()
+        }
+    }
     
     @objc var progress: CGFloat = 0 {
         didSet {
@@ -144,7 +149,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     @objc func configureData() {
-        if UIApplication.mnz_visibleViewController() is ChatViewController || UIApplication.mnz_visibleViewController() is ChatRoomsViewController || UIApplication.mnz_visibleViewController() is TransfersViewController || UIApplication.mnz_visibleViewController() is PreviewDocumentViewController || UIApplication.mnz_visibleViewController() is FolderLinkViewController {
+        if UIApplication.mnz_visibleViewController() is ChatViewController || UIApplication.mnz_visibleViewController() is ChatRoomsViewController || UIApplication.mnz_visibleViewController() is TransfersViewController || UIApplication.mnz_visibleViewController() is PreviewDocumentViewController || UIApplication.mnz_visibleViewController() is FolderLinkViewController ||
+            UIApplication.mnz_visibleViewController() is FileLinkViewController ||
+            UIApplication.mnz_visibleViewController() is MEGAAVViewController  || UIApplication.mnz_visibleViewController() is MEGAPhotoBrowserViewController {
             self.isHidden = true
             return
         }
@@ -168,6 +175,10 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
                 return transfer.type == .download
             }
             arrowImageView.image = hasDownloadTransfer ? #imageLiteral(resourceName: "transfersDownload") : #imageLiteral(resourceName: "transfersUpload")
+            if overquota {
+                stateBadge.image = #imageLiteral(resourceName: "overquota")
+                self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+            }
         } else {
             if (MEGASdkManager.sharedMEGASdk().completedTransfers.count) > 0 {
                 progress = 1
@@ -261,6 +272,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
+        overquota = false
         configureData()
     }
     
@@ -275,13 +287,25 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             MEGASdkManager.sharedMEGASdk().resetTotalUploads()
             MEGASdkManager.sharedMEGASdk().resetTotalDownloads()
             configureData()
-
         }
-
+    }
+    
+    func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        if error.type == .apiEOverQuota || error.type == .apiEgoingOverquota {
+            overquota = true
+        }
     }
 
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         if error.type != .apiOk {
+            switch error.type {
+            case .apiEgoingOverquota, .apiEOverQuota:
+                overquota = true
+                break
+            default:
+                break
+            }
+            
             return
         }
         if request.type == .MEGARequestTypePauseTransfers {

@@ -85,6 +85,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -97,6 +98,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEGATransferOverQuotaNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
@@ -137,7 +139,7 @@
     switch (indexPath.section) {
         case 0: {
             MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
-            [cell configureCellForTransfer:transfer delegate:self];
+            [cell configureCellForTransfer:transfer overquota:[TransfersWidgetViewController sharedTransferViewController].progressView.overquota delegate:self];
             break;
         }
             
@@ -448,6 +450,11 @@
     [self.uploadsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.uploadsButton setTitleColor:[UIColor mnz_redForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
     self.uploadsLineView.backgroundColor = self.uploadsButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+}
+
+- (void)didReceiveTransferOverQuotaNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Transfer Widget] transfer over quota notification %@", notification.userInfo);
+    [self reloadView];
 }
 
 #pragma mark - IBActions
