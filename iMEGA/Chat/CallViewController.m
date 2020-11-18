@@ -88,11 +88,16 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-                self.callId = self.call.callId;
-
-                self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
-                [self.megaCallManager addCall:self.call];
-                [self.megaCallManager startCall:self.call];
+                if (self.call) {
+                    self.callId = self.call.callId;
+                    
+                    self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+                    [self.megaCallManager addCall:self.call];
+                    [self.megaCallManager startCall:self.call];
+                } else {
+                    MEGALogWarning(@"There is no a call associated with chatroom %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]);
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
             }
         }];
         
