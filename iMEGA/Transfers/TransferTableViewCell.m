@@ -89,16 +89,6 @@
     
 }
 
-- (void)setOverquota:(BOOL)overquota {
-    _overquota = overquota;
-    if (overquota) {
-        self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingOverquotaTransferImage : UIImage.mnz_uploadingOverquotaTransferImage;
-        self.infoLabel.text = AMLocalizedString(@"Transfer over quota", @"Label indicating transfer over quota");
-        self.infoLabel.textColor = [UIColor mnz_fromHexString:@"FFCC00"];
-        self.pauseButton.hidden = self.cancelButton.hidden = NO;
-    }
-}
-
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
     self.uploadTransferLocalIdentifier = nil;
     self.transfer = transfer;
@@ -202,7 +192,11 @@
 #pragma mark - Private
 
 - (void)configureCellWithTransferState:(MEGATransferState)transferState {
-    if (self.overquota) {
+    if (self.overquota && self.transfer.type == MEGATransferTypeDownload) {
+        self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingOverquotaTransferImage : UIImage.mnz_uploadingOverquotaTransferImage;
+        self.infoLabel.text = AMLocalizedString(@"Transfer over quota", @"Label indicating transfer over quota");
+        self.infoLabel.textColor = [UIColor mnz_fromHexString:@"FFCC00"];
+        self.pauseButton.hidden = self.cancelButton.hidden = NO;
         return;
     }
     switch (transferState) {

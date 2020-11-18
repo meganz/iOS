@@ -149,9 +149,16 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     @objc func configureData() {
-        if UIApplication.mnz_visibleViewController() is ChatViewController || UIApplication.mnz_visibleViewController() is ChatRoomsViewController || UIApplication.mnz_visibleViewController() is TransfersViewController || UIApplication.mnz_visibleViewController() is PreviewDocumentViewController || UIApplication.mnz_visibleViewController() is FolderLinkViewController ||
-            UIApplication.mnz_visibleViewController() is FileLinkViewController ||
-            UIApplication.mnz_visibleViewController() is MEGAAVViewController  || UIApplication.mnz_visibleViewController() is MEGAPhotoBrowserViewController {
+        if UIApplication.mnz_visibleViewController() is ChatViewController
+            || UIApplication.mnz_visibleViewController() is ChatRoomsViewController
+            || UIApplication.mnz_visibleViewController() is TransfersViewController
+            || UIApplication.mnz_visibleViewController() is PreviewDocumentViewController
+            || UIApplication.mnz_visibleViewController() is FolderLinkViewController
+            || UIApplication.mnz_visibleViewController() is FileLinkViewController
+            || UIApplication.mnz_visibleViewController() is MEGAAVViewController
+            || UIApplication.mnz_visibleViewController() is MEGAPhotoBrowserViewController
+            || UIApplication.mnz_visibleViewController() is UIAlertController
+            || UIApplication.mnz_visibleViewController() is AddToChatMenuViewController {
             self.isHidden = true
             return
         }
@@ -272,7 +279,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        overquota = false
+        if transfer.type == .download {
+            overquota = false
+        }
         configureData()
     }
     
