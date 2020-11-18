@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ungültiger Link";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Der zugrundeliegende Account wurde wegen wiederholter Verletzung unserer Nutzungsrichtlinien gesperrt.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Entschlüsselungs-Code eingeben";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="Fotos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Voice";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Kontakt";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Start Group";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -891,6 +893,8 @@
 "transfers"="Transfers";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Abgeschlossen";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Chatverlauf löschen";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Der Chatverlauf wird komplett gelöscht. Sind Sie sicher?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat History has Been Cleared";
 /* 'Next' button in a dialog */
 "continue"="Fortfahren";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Nachricht löschen";
 /*  */
 "fromCloudDrive"="Aus dem Cloud Drive";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kontakt senden";
 /* */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Wir vermuten, dass Sie das Passwort für Ihren MEGA-Account auch anderswo verwenden, und dass einer dieser Dienste kompromittiert wurde.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Ihr Passwort ist so in Umlauf geraten, und dubiose Personen loggen sich in sämtliche Ihrer Accounts ein, bei denen Sie das Passwort verwenden.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Alle entfernen";
 /* Alert header for asking permission to resume transfers*/
