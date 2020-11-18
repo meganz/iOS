@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Enlace no válido";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="La cuenta que creó este enlace ha sido cerrada debido a múltiples infracciones de nuestros Términos de Servicio.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introducir la clave de cifrado";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="Fotos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Llamada";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contacto";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Crear grupo";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -891,6 +893,8 @@
 "transfers"="Transferencias";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Completado";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -986,7 +990,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="Caducado";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Desconectar";
+"logoutLabel"="Cerrar la sesión";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Cerrando sesión";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Limpiar historial del chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat History has Been Cleared";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Eliminar mensaje";
 /*  */
 "fromCloudDrive"="Desde Mi nube";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contacto";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contacto";
 /* */
@@ -2083,7 +2087,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Las notificaciones estarán silenciadas hasta las %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Notificaciones del Chat";
+"Chat Notifications"="Notificaciones del chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="No molestar";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Es posible que estés utilizando la misma contraseña para tu cuenta de MEGA y para otros servicios, y que al menos uno de estos otros servicios haya sufrido una violación de datos.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Tu contraseña se ha filtrado y está siendo utilizada por terceros para iniciar sesión en tus cuentas, incluida, entre otras, tu cuenta de MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Borrar seleccionados";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Limpiar Todo";
 /* Alert header for asking permission to resume transfers*/
@@ -2315,15 +2325,15 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIONES";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Favoritos";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Eliminar favoritos";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Etiqueta";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="Etiqueta...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Eliminar etiqueta";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="Rojo";
 /* A user can mark a folder or file with its own colour, in this case "Orange */

@@ -1257,8 +1257,6 @@
 "deleteMessage"="Delete message";
 /*  */
 "fromCloudDrive"="From Cloud Drive";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Send contact";
 /* */

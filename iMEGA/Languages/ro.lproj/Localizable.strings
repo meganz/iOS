@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Contul care a creat acest link a fost desființat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului nostru.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="Fotografii";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Apel vocal";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contact";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Inițiază grup";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -891,6 +893,8 @@
 "transfers"="Transferuri";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Toate";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Terminat";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Golește istoricul chatului";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sigur vrei să golești istoricul complet al mesajelor din această conversație?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat History has Been Cleared";
 /* 'Next' button in a dialog */
 "continue"="Continuă";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Șterge mesajul";
 /*  */
 "fromCloudDrive"="Din unitatea cloud";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Trimite un contact";
 /* */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Șterge elementele selectate";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Șterge toate";
 /* Alert header for asking permission to resume transfers*/
@@ -2317,13 +2327,13 @@
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favourite";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Etichetă";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="Etichetă...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Elimină eticheta";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="Roșu";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
