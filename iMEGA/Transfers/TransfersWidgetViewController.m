@@ -156,12 +156,12 @@ static TransfersWidgetViewController* instance = nil;
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
             [self.clearAllButton setTitle:self.areTransfersPaused ? AMLocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : AMLocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
-            
+            self.clearAllButton.enabled = true;
             break;
             
         case TransfersWidgetSelectedCompleted:
             [self.clearAllButton setTitle:self.tableView.isEditing ? AMLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : AMLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
-            
+            self.clearAllButton.enabled = !self.tableView.isEditing || self.selectedTransfers.count > 0;
             break;
             
     }
@@ -316,6 +316,9 @@ static TransfersWidgetViewController* instance = nil;
     if (self.completedButton.selected) {
         MEGATransfer *transfer = [self.completedTransfers objectAtIndex:indexPath.row];
         [self.selectedTransfers removeObject:transfer];
+        if (self.selectedTransfers.count == 0) {
+            self.clearAllButton.enabled = false;
+        }
     }
 }
 
@@ -326,6 +329,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (tableView.isEditing) {
             [self.selectedTransfers addObject:transfer];
+            self.clearAllButton.enabled = true;
             return;
         }
         
@@ -614,7 +618,7 @@ static TransfersWidgetViewController* instance = nil;
             
         }
     } else {
-        [self.tableView reloadData];
+        [self.tableView debounce:@selector(reloadData) delay:0.1];
     }
     
 }
@@ -678,6 +682,7 @@ static TransfersWidgetViewController* instance = nil;
             self.inProgressButton.selected = NO;
             self.completedButton.selected = YES;
             [self.clearAllButton setTitle:self.tableView.isEditing ? AMLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : AMLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
+            self.clearAllButton.enabled = !self.tableView.isEditing || self.selectedTransfers.count > 0;
             break;
             
     }
