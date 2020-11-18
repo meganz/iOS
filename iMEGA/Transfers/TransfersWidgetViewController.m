@@ -93,6 +93,7 @@ static TransfersWidgetViewController* instance = nil;
 
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
