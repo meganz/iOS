@@ -367,11 +367,16 @@ static TransfersWidgetViewController* instance = nil;
     }
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    if (fromIndexPath.section != toIndexPath.section || fromIndexPath == toIndexPath) {
-        return;
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    
+    if (sourceIndexPath.section != proposedDestinationIndexPath.section) {
+        return sourceIndexPath;
     }
     
+    return proposedDestinationIndexPath;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     MEGATransfer *selectedTransfer = [self.transfers objectAtIndex:fromIndexPath.row];
     
     BOOL isDemoted = fromIndexPath.row < toIndexPath.row;
@@ -413,10 +418,8 @@ static TransfersWidgetViewController* instance = nil;
             TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             [cell cancelTransfer:nil];
         } else {
-            [self.tableView mnz_performBatchUpdates:^{
-                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                [self.completedTransfers removeObject:self.completedTransfers[indexPath.row]];
-            } completion:nil];
+            [self.completedTransfers removeObject:self.completedTransfers[indexPath.row]];
+            [self.tableView reloadData];
         }
     }
 }
@@ -597,10 +600,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)deleteUploadQueuedTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (indexPath) {
-        [self.tableView mnz_performBatchUpdates:^{
-            [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        } completion:nil];
+        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [self.tableView reloadData];
     }
 }
 
@@ -912,11 +913,9 @@ static TransfersWidgetViewController* instance = nil;
     if (localIdentifier && indexPath) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
         
-        [self.tableView mnz_performBatchUpdates:^{
-            [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-            [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        } completion:nil];
+        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
+        [self.tableView reloadData];
     }
 }
 
