@@ -172,11 +172,27 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
         if ((transferList.size.intValue) != 0) {
             transfers.append(contentsOf: transferList.mnz_transfersArrayFromTranferList())
         }
-
+        
+        let failedTransfer = MEGASdkManager.sharedMEGASdk().completedTransfers.first(where: { (transfer) -> Bool in
+            guard let transfer = transfer as? MEGATransfer else {
+                return false
+            }
+            return transfer.state != .complete && transfer.state != .cancelled
+        })
+        
+        if let failedTransfer = failedTransfer as? MEGATransfer {
+            if failedTransfer.lastErrorExtended.type == .apiEOverQuota {
+                stateBadge.image = #imageLiteral(resourceName: "overquota")
+            } else if failedTransfer.lastErrorExtended.type != .apiOk {
+                stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+            }
+        } else {
+            stateBadge.image = nil
+        }
+        
         if transfers.count > 0 {
             self.isHidden = false
             self.alpha = 1
-            stateBadge.image = transfersPaused ? #imageLiteral(resourceName: "Combined Shape") : nil
             self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
             let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
                 return transfer.type == .download
@@ -185,24 +201,19 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             if overquota {
                 stateBadge.image = #imageLiteral(resourceName: "overquota")
                 self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+            } else if transfersPaused {
+                stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
             }
         } else {
             if (MEGASdkManager.sharedMEGASdk().completedTransfers.count) > 0 {
                 progress = 1
                 self.isHidden = false
-
-                let failedTransfers = MEGASdkManager.sharedMEGASdk().completedTransfers.filter({ (transfer) -> Bool in
-                    guard let transfer = transfer as? MEGATransfer else {
-                        return false
-                    }
-                    return transfer.state != .complete && transfer.state != .cancelled
-                })
                 
-                if let transfer = failedTransfers.first as? MEGATransfer {
-                    if transfer.lastErrorExtended.type == .apiEOverQuota {
+                if let failedTransfer = failedTransfer as? MEGATransfer {
+                    if failedTransfer.lastErrorExtended.type == .apiEOverQuota {
                         stateBadge.image = #imageLiteral(resourceName: "overquota")
                         self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
-                    } else if transfer.lastErrorExtended.type != .apiOk {
+                    } else if failedTransfer.lastErrorExtended.type != .apiOk {
                         stateBadge.image = #imageLiteral(resourceName: "errorBadge")
                         self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
                     }
