@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link salah";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Akun yang membuat link ini telah dimatikan karena beberapa pelanggaran pada [A]Kebijakan Pelayanan[/A] kami.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Masukkan decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -289,15 +289,15 @@
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
 "Photos"="Foto";
 /* Menu option from the `Add` section that allows the user to make voice call. */
-"Voice"="Voice";
+"Voice"="Suara";
 /* Menu option from the `Add` section that allows the user to share contact. */
 "Contact"="Kontak";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="Start Group";
+"Start Group"="Mulai Grup";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Lokasi";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Voice Clip";
+"Voice Clip"="Klip Suara";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Anda yakin ingin menghapus seluruh riwayat pesan dari percakapan ini?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat History has Been Cleared";
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Lanjutkan";
 /* Title of the incoming shared folders of a user. */
