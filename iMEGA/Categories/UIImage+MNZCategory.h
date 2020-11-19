@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (UIImage *)mnz_uploadingTransferImage;
 + (UIImage *)mnz_downloadQueuedTransferImage;
 + (UIImage *)mnz_uploadQueuedTransferImage;
++ (UIImage *)mnz_errorTransferImage;
 
 + (UIImage * _Nullable)mnz_permissionsButtonImageForShareType:(MEGAShareType)shareType;
 

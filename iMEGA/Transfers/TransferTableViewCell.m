@@ -270,7 +270,7 @@
         }
             break;
         case MEGATransferStateFailed: {
-            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
+            self.arrowImageView.image = UIImage.mnz_errorTransferImage;
             self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
             MEGAError *error = self.transfer.lastErrorExtended;

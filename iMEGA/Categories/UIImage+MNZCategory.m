@@ -249,6 +249,10 @@
     return [UIImage imageNamed:@"uploadQueued"];
 }
 
++ (UIImage *)mnz_errorTransferImage {
+    return [UIImage imageNamed:@"downloadError"];
+}
+
 + (UIImage * _Nullable)mnz_permissionsButtonImageForShareType:(MEGAShareType)shareType {
     UIImage *image;
     switch (shareType) {
