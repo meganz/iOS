@@ -34,7 +34,7 @@ class TransferActionViewController: NodeActionViewController {
             subtitleLabel.text = "\(transferFailed) \(AMLocalizedString(errorString))"
 
         default:
-            subtitleLabel.text = ""
+            break
         }
     }
     
