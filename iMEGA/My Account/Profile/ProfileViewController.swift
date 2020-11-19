@@ -507,7 +507,7 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.detailLabel.text = "Pro III"
                     cell.detailLabel.textColor = UIColor.mnz_redProIII()
                 case .lite:
-                    cell.detailLabel.text = "Lite"
+                    cell.detailLabel.text = "Pro Lite"
                     cell.detailLabel.textColor = UIColor.systemOrange
                 case .business:
                     if MEGASdkManager.sharedMEGASdk().businessStatus == .active {

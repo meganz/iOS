@@ -38,26 +38,26 @@
         case MEGAAccountTypeLite:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
             self.headerView.backgroundColor = UIColor.mnz_proLITE;
-            [self setTitle:@"LITE"];
+            [self setTitle:@"Pro Lite"];
             self.selectMembershiptLabel.textColor = UIColor.mnz_proLITE;
             break;
             
         case MEGAAccountTypeProI:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProI];
-            [self setTitle:@"PRO I"];
+            [self setTitle:@"Pro I"];
             break;
             
         case MEGAAccountTypeProII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProII];
-            [self setTitle:@"PRO II"];
+            [self setTitle:@"Pro II"];
             break;
             
         case MEGAAccountTypeProIII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProIII];
-            [self setTitle:@"PRO III"];
+            [self setTitle:@"Pro III"];
             break;
             
         default:
