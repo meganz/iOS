@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此創建此連結的帳戶已被停權。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您確定要清除此對話的全部歷史記錄嗎？";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat History has Been Cleared";
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="繼續";
 /* Title of the incoming shared folders of a user. */
