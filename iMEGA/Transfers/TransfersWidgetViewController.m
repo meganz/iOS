@@ -808,6 +808,12 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     switch ([request type]) {
+        case MEGARequestTypeLogout: {
+            [self.completedTransfers removeAllObjects];
+            [self reloadView];
+            break;
+        }
+            
         case MEGARequestTypePauseTransfers: {
             [[NSUserDefaults standardUserDefaults] setBool:request.flag forKey:@"TransfersPaused"];
             self.transfersPaused = request.flag;
