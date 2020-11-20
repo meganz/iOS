@@ -14,6 +14,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             UserDefaults.standard.bool(forKey: "TransfersPaused")
         }
     }
+    
+    private var isWidgetForbidden = false
     @objc var overquota = false {
         didSet {
             configureData()
@@ -145,20 +147,17 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     @objc func showWidgetIfNeeded() {
+        isWidgetForbidden = false
         configureData()
     }
     
+    @objc func hideWidget() {
+        isWidgetForbidden = true
+        self.isHidden = true
+    }
+    
     @objc func configureData() {
-        if UIApplication.mnz_visibleViewController() is ChatViewController
-            || UIApplication.mnz_visibleViewController() is ChatRoomsViewController
-            || UIApplication.mnz_visibleViewController() is TransfersViewController
-            || UIApplication.mnz_visibleViewController() is PreviewDocumentViewController
-            || UIApplication.mnz_visibleViewController() is FolderLinkViewController
-            || UIApplication.mnz_visibleViewController() is FileLinkViewController
-            || UIApplication.mnz_visibleViewController() is MEGAAVViewController
-            || UIApplication.mnz_visibleViewController() is MEGAPhotoBrowserViewController
-            || UIApplication.mnz_visibleViewController() is UIAlertController
-            || UIApplication.mnz_visibleViewController() is AddToChatMenuViewController {
+        if isWidgetForbidden {
             self.isHidden = true
             return
         }

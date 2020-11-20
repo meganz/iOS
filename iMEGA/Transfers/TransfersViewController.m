@@ -69,7 +69,7 @@
     [super viewWillAppear:animated];
     
     self.navigationItem.title = AMLocalizedString(@"transfers", @"Transfers");
-    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = YES;
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     

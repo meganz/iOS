@@ -79,12 +79,12 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = NO;
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = YES;
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

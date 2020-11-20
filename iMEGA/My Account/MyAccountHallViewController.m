@@ -127,7 +127,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = YES;
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
