@@ -196,10 +196,13 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
                 return transfer.type == .download
             }
+            let hasUploadTransfer = transfers.contains { (transfer) -> Bool in
+                return transfer.type == .upload
+            }
             arrowImageView.image = hasDownloadTransfer ? #imageLiteral(resourceName: "transfersDownload") : #imageLiteral(resourceName: "transfersUpload")
             if overquota {
                 stateBadge.image = #imageLiteral(resourceName: "overquota")
-                self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+                self.progressLayer?.strokeColor = hasUploadTransfer ? #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1) : #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
             } else if transfersPaused {
                 stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
             }
@@ -305,8 +308,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
         if MEGASdkManager.sharedMEGASdk().transfers.size.intValue == 0 {
             MEGASdkManager.sharedMEGASdk().resetTotalUploads()
             MEGASdkManager.sharedMEGASdk().resetTotalDownloads()
-            configureData()
         }
+        configureData()
     }
     
     func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
