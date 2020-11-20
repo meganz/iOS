@@ -486,9 +486,7 @@
     
     [self updateSelector];
     
-    if (!self.areTransfersPaused) {
-        [self reloadView];
-    }
+    [self reloadView];
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {

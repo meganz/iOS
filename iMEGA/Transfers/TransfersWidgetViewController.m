@@ -923,6 +923,10 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)transferAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGATransfer *)transfer from:(id)sender {
     MEGANode *node = transfer.node;
+    if (!node) {
+        return;
+    }
+    
     switch (action) {
 
         case MegaNodeActionTypeGetLink:
