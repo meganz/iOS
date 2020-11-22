@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="En curso";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Completado";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="Se ha limpiado el historial del chat";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Title of the incoming shared folders of a user. */
@@ -2175,13 +2175,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Tu contraseña se ha filtrado y está siendo utilizada por terceros para iniciar sesión en tus cuentas, incluida, entre otras, tu cuenta de MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Cuota de transferencia agotada";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Borrar seleccionados";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Pausar todo";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Reanudar todo";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Limpiar Todo";
 /* Alert header for asking permission to resume transfers*/

@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA kan geen veilige verbinding maken via SSL. Mogelijk gebruikt u openbare wifi met aanvullende vereisten.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te bereiken is niet beschikbaar voor dit account. Probeer in te loggen met hetzelfde account als in de mobiele webclient.";
+"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te openen, is niet beschikbaar voor dit account. Probeer in te loggen met hetzelfde account als in de mobiele webclient.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Het proces duurt langer dan verwacht. Wacht a.u.b....";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -880,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Uitloggen en alle lokale gegevens wissen na 10 mislukte passcode pogingen";
+"failedAttempstSectionTitle"="Uitloggen en lokale gegevens wissen na 10 mislukte passcode pogingen";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="In Behandeling";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Voltooid";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="Chatgeschiedenis is gewist";
 /* 'Next' button in a dialog */
 "continue"="Vervolgen";
 /* Title of the incoming shared folders of a user. */
@@ -1531,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Doorgaan met uitloggen";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om zeker te zijn dat u het herinnerd. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens.";
+"testPasswordLogoutText"="U staat op het punt om uit te loggen. Test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u de toegang tot uw MEGA-gegevens.";
 /* state previous to import a file */
 "loading"="Laden...";
 /*   */
@@ -2175,13 +2175,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Overdracht van quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Geselecteerd Wissen";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Alles pauzeren";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Alles hervatten";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Wis alles";
 /* Alert header for asking permission to resume transfers*/

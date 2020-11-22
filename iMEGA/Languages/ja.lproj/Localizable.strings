@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="進行中";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="完了";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="この会話の完全なメッセージ履歴をクリアしてもよろしいですか？　";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="チャット履歴がクリアされました";
 /* 'Next' button in a dialog */
 "continue"="続ける";
 /* Title of the incoming shared folders of a user. */
@@ -2175,13 +2175,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="あなたのパスワードが漏えいし、悪意のあるアクターがあなたのアカウント（あなたのMEGAアカウントを含むがこれに限定されない）にログインするために使用されています。";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="容量を超えた転送";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="選択をクリア";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="すべて一時停止";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="すべて再開";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部をクリア";
 /* Alert header for asking permission to resume transfers*/
