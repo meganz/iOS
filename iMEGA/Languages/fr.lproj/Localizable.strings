@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tous";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="En cours";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Terminés";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Souhaitez-vous vraiment effacer l’historique entier de cette conversation ?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="L’historique de la conversation a été effacé";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
 /* Title of the incoming shared folders of a user. */
@@ -2175,13 +2175,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Le quota de transfert est dépassé";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Effacer la sélection";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Tout mettre en pause";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Tout reprendre";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Tout effacer";
 /* Alert header for asking permission to resume transfers*/

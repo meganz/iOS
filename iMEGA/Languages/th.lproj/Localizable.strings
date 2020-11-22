@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="ทั้งหมด";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="กำลังดำเนินการ";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="เรียบร้อยแล้ว";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="คุณแน่ใจหรือไม่ว่าจะเคลียร์ประวัติข้อความเต็มรูปแบบของการสนทนานี้";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="เคลียร์ประวัติแชทเรียบร้อยแล้ว";
 /* 'Next' button in a dialog */
 "continue"="ดำเนินการต่อ";
 /* Title of the incoming shared folders of a user. */
@@ -2175,13 +2175,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="เกินโควต้าการถ่ายโอนแล้ว";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="ล้างรายการที่เลือก";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="หยุดชั่วคราวทั้งหมด";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="ดำเนินการต่อทั้งหมด";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="ลบทั้งหมด";
 /* Alert header for asking permission to resume transfers*/

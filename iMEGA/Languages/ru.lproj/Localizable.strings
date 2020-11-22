@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Все";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="В процессе";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Готово";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -918,7 +918,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Мой аккаунт";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Повысить";
+"upgrade"="Улучшить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Посмотреть и изменить профиль.";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1022,7 +1022,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящие общие папки";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Повысить учётную запись";
+"upgradeAccount"="Улучшить аккаунт";
 /*  */
 "chooseYourAccountType"="Выберите тип учётной записи";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1184,7 +1184,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Действительно удалить всю историю этого разговора?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="История чата очищена";
 /* 'Next' button in a dialog */
 "continue"="Продолжить";
 /* Title of the incoming shared folders of a user. */
@@ -2175,13 +2175,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Превышена квота передач";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Очистить выбранное";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Приостановить все";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Возобновить все";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Очистить все";
 /* Alert header for asking permission to resume transfers*/
