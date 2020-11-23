@@ -173,6 +173,9 @@ class ChatViewController: MessagesViewController {
         
         switch chatMessage.kind {
         case .custom:
+            if self.isEditing {
+                return
+            }
             
             let megaMessage = chatMessage.message
             if megaMessage.isManagementMessage || chatMessage.transfer != nil {
