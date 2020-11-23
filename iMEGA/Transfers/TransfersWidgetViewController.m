@@ -89,13 +89,16 @@ static TransfersWidgetViewController* instance = nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
-    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     [self reloadView];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -153,12 +156,12 @@ static TransfersWidgetViewController* instance = nil;
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
             [self.clearAllButton setTitle:self.areTransfersPaused ? AMLocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : AMLocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
-            
+            self.clearAllButton.enabled = true;
             break;
             
         case TransfersWidgetSelectedCompleted:
             [self.clearAllButton setTitle:self.tableView.isEditing ? AMLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : AMLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
-            
+            self.clearAllButton.enabled = !self.tableView.isEditing || self.selectedTransfers.count > 0;
             break;
             
     }
@@ -167,7 +170,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)dealloc {
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
-    
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGATransferOverQuotaNotification object:nil];
+
     [MEGASdkManager.sharedMEGASdk removeMEGATransferDelegate:self];
     [MEGASdkManager.sharedMEGASdkFolder removeMEGATransferDelegate:self];
 }
@@ -242,7 +246,7 @@ static TransfersWidgetViewController* instance = nil;
         switch (indexPath.section) {
             case 0: {
                 MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
-                [cell configureCellForTransfer:transfer delegate:self];
+                [cell configureCellForTransfer:transfer overquota:[TransfersWidgetViewController sharedTransferViewController].progressView.overquota delegate:self];
                 break;
             }
                 
@@ -312,6 +316,9 @@ static TransfersWidgetViewController* instance = nil;
     if (self.completedButton.selected) {
         MEGATransfer *transfer = [self.completedTransfers objectAtIndex:indexPath.row];
         [self.selectedTransfers removeObject:transfer];
+        if (self.selectedTransfers.count == 0) {
+            self.clearAllButton.enabled = false;
+        }
     }
 }
 
@@ -322,6 +329,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (tableView.isEditing) {
             [self.selectedTransfers addObject:transfer];
+            self.clearAllButton.enabled = true;
             return;
         }
         
@@ -359,11 +367,16 @@ static TransfersWidgetViewController* instance = nil;
     }
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    if (fromIndexPath.section != toIndexPath.section || fromIndexPath == toIndexPath) {
-        return;
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    
+    if (sourceIndexPath.section != proposedDestinationIndexPath.section) {
+        return sourceIndexPath;
     }
     
+    return proposedDestinationIndexPath;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     MEGATransfer *selectedTransfer = [self.transfers objectAtIndex:fromIndexPath.row];
     
     BOOL isDemoted = fromIndexPath.row < toIndexPath.row;
@@ -405,10 +418,8 @@ static TransfersWidgetViewController* instance = nil;
             TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             [cell cancelTransfer:nil];
         } else {
-            [self.tableView mnz_performBatchUpdates:^{
-                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                [self.completedTransfers removeObject:self.completedTransfers[indexPath.row]];
-            } completion:nil];
+            [self.completedTransfers removeObject:self.completedTransfers[indexPath.row]];
+            [self.tableView reloadData];
         }
     }
 }
@@ -589,10 +600,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)deleteUploadQueuedTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (indexPath) {
-        [self.tableView mnz_performBatchUpdates:^{
-            [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        } completion:nil];
+        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [self.tableView reloadData];
     }
 }
 
@@ -610,7 +619,7 @@ static TransfersWidgetViewController* instance = nil;
             
         }
     } else {
-        [self.tableView reloadData];
+        [self.tableView debounce:@selector(reloadData) delay:0.1];
     }
     
 }
@@ -648,6 +657,11 @@ static TransfersWidgetViewController* instance = nil;
     return numberOfPausedTransfers;
 }
 
+- (void)didReceiveTransferOverQuotaNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Transfer Widget] transfer over quota notification %@", notification.userInfo);
+    [self reloadView];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectTransfersTouchUpInside:(UIButton *)sender {
@@ -669,6 +683,7 @@ static TransfersWidgetViewController* instance = nil;
             self.inProgressButton.selected = NO;
             self.completedButton.selected = YES;
             [self.clearAllButton setTitle:self.tableView.isEditing ? AMLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : AMLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
+            self.clearAllButton.enabled = !self.tableView.isEditing || self.selectedTransfers.count > 0;
             break;
             
     }
@@ -793,6 +808,12 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     switch ([request type]) {
+        case MEGARequestTypeLogout: {
+            [self.completedTransfers removeAllObjects];
+            [self reloadView];
+            break;
+        }
+            
         case MEGARequestTypePauseTransfers: {
             [[NSUserDefaults standardUserDefaults] setBool:request.flag forKey:@"TransfersPaused"];
             self.transfersPaused = request.flag;
@@ -898,11 +919,9 @@ static TransfersWidgetViewController* instance = nil;
     if (localIdentifier && indexPath) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
         
-        [self.tableView mnz_performBatchUpdates:^{
-            [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-            [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        } completion:nil];
+        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
+        [self.tableView reloadData];
     }
 }
 
@@ -910,6 +929,10 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)transferAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGATransfer *)transfer from:(id)sender {
     MEGANode *node = transfer.node;
+    if (!node) {
+        return;
+    }
+    
     switch (action) {
 
         case MegaNodeActionTypeGetLink:

@@ -129,7 +129,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
+
     if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
     } else if (CameraUploadManager.shared.isDiskStorageFull) {

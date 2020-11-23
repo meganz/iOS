@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Неправильная ссылка";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Учётная запись владельца этой ссылки была заблокирована за многочисленные нарушения условий предоставления услуг.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Учётная запись владельца этой ссылки была заблокирована за многочисленные нарушения [A]условий предоставления услуг[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введите ключ дешифрирования";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -235,9 +235,9 @@
 /* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="Нет передач";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Нет загрузок с сервера";
+"transfersEmptyState_titleDownload"="Нет скачиваний";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Нет загрузок на сервер";
+"transfersEmptyState_titleUpload"="Нет загрузок в облако";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Облачный диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -290,6 +290,8 @@
 "Photos"="Фотографии";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Голос";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Контакт";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Создать группу";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля.";
+"failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля";
 /* Menu item */
 "help"="Помощь";
 /* Title of the section to access MEGA's help centre */
@@ -891,12 +893,14 @@
 "transfers"="Передачи";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Все";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="В процессе";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Готово";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Загрузки с сервера";
+"downloads"="Скачивания";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Загрузки на сервер";
+"uploads"="Загрузки в облако";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Передача отменена";
 /* Success message shown when all the transfers have been cancelled */
@@ -908,13 +912,13 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="ВСЕ передачи";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="ЗАГРУЗКИ на сервер";
+"uploadInUppercaseTransfers"="ЗАГРУЗКИ в облако";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Мой аккаунт";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Повысить";
+"upgrade"="Улучшить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Посмотреть и изменить профиль.";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1018,7 +1022,7 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящие общие папки";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Повысить учётную запись";
+"upgradeAccount"="Улучшить аккаунт";
 /*  */
 "chooseYourAccountType"="Выберите тип учётной записи";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Очистить историю";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Действительно удалить всю историю этого разговора?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="История чата очищена";
 /* 'Next' button in a dialog */
 "continue"="Продолжить";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Удалить сообщение";
 /*  */
 "fromCloudDrive"="Из облачного диска";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Контакт";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Отправить контакт";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Выйти";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Перед выходом из системы, пожалуйста, проверьте пароль, чтобы убедиться, что вы его помните. Потеряв пароль, вы утратите доступ ко всем своим MEGA-данным.";
+"testPasswordLogoutText"="Перед выходом из системы, пожалуйста, проверьте пароль, чтобы убедиться, что вы его помните. Без пароля вы утратите доступ ко всем своим MEGA-данным.";
 /* state previous to import a file */
 "loading"="Загрузка…";
 /*   */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Возможно, вы используете тот же пароль для своего аккаунта MEGA, что и для других служб, и что по крайней мере одна из этих других служб пострадала от утечки данных.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Превышена квота передач";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Очистить выбранное";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Приостановить все";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Возобновить все";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Очистить все";
 /* Alert header for asking permission to resume transfers*/

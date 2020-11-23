@@ -28,6 +28,7 @@ NSString * const MEGAVoiceMessagesFolderName = @"My voice messages";
 NSString * const MEGALogoutNotification = @"nz.mega.logout";
 NSString * const MEGANodesCurrentNotification = @"nz.mega.nodesCurrent";
 NSString * const MEGAStorageOverQuotaNotification = @"nz.mega.storageOverQuota";
+NSString * const MEGATransferOverQuotaNotification = @"nz.mega.transferOverQuota";
 NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
 NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";

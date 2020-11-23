@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link inválido";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="A conta que criou este link foi encerrada devido a várias infrações dos nossos Termos de serviço.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="A conta que criou este link foi encerrada devido a várias infrações dos nossos [A]Termos de serviço[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Digite a chave de decodificação";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="Fotos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Áudio";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contato";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Criar grupo";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -891,6 +893,8 @@
 "transfers"="Transferências";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Concluído";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Deletar o histórico do chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens deste chat?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Excluir mensagem";
 /*  */
 "fromCloudDrive"="Da Nuvem de arquivos";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contato";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contato";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Fazer logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Você está prestes a sair. Por favor, confirme a sua senha para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA.";
+"testPasswordLogoutText"="Você está prestes a fazer logout. Por favor, confirme a sua senha para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA.";
 /* state previous to import a file */
 "loading"="Carregando...";
 /*   */
@@ -2079,9 +2083,9 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Silenciar as notificações de chat por";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="As notificações estarão silenciadas até as %@ de amanhã";
+"Notifications will be silenced until tomorrow, %@"="As notificações permanecerão silenciadas até as %@ de amanhã";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="As notificações serão silenciadas até às %@";
+"Notifications will be silenced until %@"="As notificações permanecerão silenciadas até as %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificações de chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="É possível que você esteja usando no MEGA a mesma senha que usa em outros serviços, e que pelo menos um desses outros serviços tenha sofrido uma filtração de dados.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Eliminar a seleção";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Limpar tudo";
 /* Alert header for asking permission to resume transfers*/
@@ -2315,15 +2325,15 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSÕES";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Favorito";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Remover dos favorito";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Etiqueta";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="Etiqueta...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Remover etiqueta";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="Vermelha";
 /* A user can mark a folder or file with its own colour, in this case "Orange */

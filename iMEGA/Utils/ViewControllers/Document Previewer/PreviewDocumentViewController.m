@@ -288,7 +288,7 @@
 - (IBAction)shareAction:(id)sender {
     if (self.isLink && self.fileLink) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLink] applicationActivities:nil];
-        activityVC.popoverPresentationController.barButtonItem = self.self.moreBarButtonItem;
+        activityVC.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         if (self.node) {
@@ -297,7 +297,7 @@
         } else {
             if (self.filesPathsArray.count > 0 && self.nodeFileIndex < self.filesPathsArray.count) {
                 NSString *filePath = self.filesPathsArray[self.nodeFileIndex];
-                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[filePath.lastPathComponent, [NSURL fileURLWithPath:filePath]] applicationActivities:nil];
+                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:filePath]] applicationActivities:nil];
                 activityVC.popoverPresentationController.barButtonItem = sender;
                 [self presentViewController:activityVC animated:YES completion:nil];
             }
@@ -521,7 +521,11 @@
         self.imageView.hidden = YES;
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+        if (self.node) {
+            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+        } else {
+            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
+        }
         [self.navigationController setToolbarHidden:NO animated:YES];
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];

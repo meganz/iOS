@@ -125,6 +125,11 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

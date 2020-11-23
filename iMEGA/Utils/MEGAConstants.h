@@ -28,6 +28,7 @@ extern NSString * const MEGAVoiceMessagesFolderName;
 extern NSString * const MEGALogoutNotification;
 extern NSString * const MEGANodesCurrentNotification;
 extern NSString * const MEGAStorageOverQuotaNotification;
+extern NSString * const MEGATransferOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
 extern NSString * const MEGAOpenChatRoomFromPushNotification;

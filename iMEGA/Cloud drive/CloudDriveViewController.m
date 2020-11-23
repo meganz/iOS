@@ -192,7 +192,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
+
     [self encourageToUpgrade];
     
     if (self.homeQuickActionSearch) {

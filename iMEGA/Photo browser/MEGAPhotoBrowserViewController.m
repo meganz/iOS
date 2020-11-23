@@ -394,11 +394,7 @@ static const CGFloat GapBetweenPages = 10.0;
 - (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
     CGFloat maximumZoomScale;
     if (node.name.mnz_isImagePathExtension) {
-        if (imageView.frame.size.width < zoomableView.frame.size.width) {
-            maximumZoomScale = zoomableView.frame.size.width / imageView.frame.size.width;
-        } else {
-            maximumZoomScale = 5.0;
-        }
+        maximumZoomScale = FLT_MAX;
     } else {
         maximumZoomScale = 1.0f;
     }
@@ -832,7 +828,6 @@ static const CGFloat GapBetweenPages = 10.0;
     UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
         CGFloat newScale;
-        zoomableView.maximumZoomScale = [self maximumZoomScaleWith:node zoomableView:zoomableView imageView:imageView];
         if (imageView.frame.size.width < zoomableView.frame.size.width) {
             newScale = zoomableView.zoomScale > 1.0f ? 1.0f : zoomableView.frame.size.width / imageView.frame.size.width;
         } else {

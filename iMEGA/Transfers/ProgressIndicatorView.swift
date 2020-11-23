@@ -15,6 +15,13 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
         }
     }
     
+    private var isWidgetForbidden = false
+    @objc var overquota = false {
+        didSet {
+            configureData()
+        }
+    }
+    
     @objc var progress: CGFloat = 0 {
         didSet {
             guard let progressLayer = progressLayer else {
@@ -140,11 +147,17 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     @objc func showWidgetIfNeeded() {
+        isWidgetForbidden = false
         configureData()
     }
     
+    @objc func hideWidget() {
+        isWidgetForbidden = true
+        self.isHidden = true
+    }
+    
     @objc func configureData() {
-        if UIApplication.mnz_visibleViewController() is ChatViewController || UIApplication.mnz_visibleViewController() is ChatRoomsViewController || UIApplication.mnz_visibleViewController() is TransfersViewController || UIApplication.mnz_visibleViewController() is PreviewDocumentViewController || UIApplication.mnz_visibleViewController() is FolderLinkViewController {
+        if isWidgetForbidden {
             self.isHidden = true
             return
         }
@@ -158,33 +171,51 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
         if ((transferList.size.intValue) != 0) {
             transfers.append(contentsOf: transferList.mnz_transfersArrayFromTranferList())
         }
-
+        
+        let failedTransfer = MEGASdkManager.sharedMEGASdk().completedTransfers.first(where: { (transfer) -> Bool in
+            guard let transfer = transfer as? MEGATransfer else {
+                return false
+            }
+            return transfer.state != .complete && transfer.state != .cancelled
+        })
+        
+        if let failedTransfer = failedTransfer as? MEGATransfer {
+            if failedTransfer.lastErrorExtended.type == .apiEOverQuota {
+                stateBadge.image = #imageLiteral(resourceName: "overquota")
+            } else if failedTransfer.lastErrorExtended.type != .apiOk {
+                stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+            }
+        } else {
+            stateBadge.image = nil
+        }
+        
         if transfers.count > 0 {
             self.isHidden = false
             self.alpha = 1
-            stateBadge.image = transfersPaused ? #imageLiteral(resourceName: "Combined Shape") : nil
             self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
             let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
                 return transfer.type == .download
             }
+            let hasUploadTransfer = transfers.contains { (transfer) -> Bool in
+                return transfer.type == .upload
+            }
             arrowImageView.image = hasDownloadTransfer ? #imageLiteral(resourceName: "transfersDownload") : #imageLiteral(resourceName: "transfersUpload")
+            if overquota {
+                stateBadge.image = #imageLiteral(resourceName: "overquota")
+                self.progressLayer?.strokeColor = hasUploadTransfer ? #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1) : #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+            } else if transfersPaused {
+                stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
+            }
         } else {
             if (MEGASdkManager.sharedMEGASdk().completedTransfers.count) > 0 {
                 progress = 1
                 self.isHidden = false
-
-                let failedTransfers = MEGASdkManager.sharedMEGASdk().completedTransfers.filter({ (transfer) -> Bool in
-                    guard let transfer = transfer as? MEGATransfer else {
-                        return false
-                    }
-                    return transfer.state != .complete && transfer.state != .cancelled
-                })
                 
-                if let transfer = failedTransfers.first as? MEGATransfer {
-                    if transfer.lastErrorExtended.type == .apiEOverQuota {
+                if let failedTransfer = failedTransfer as? MEGATransfer {
+                    if failedTransfer.lastErrorExtended.type == .apiEOverQuota {
                         stateBadge.image = #imageLiteral(resourceName: "overquota")
                         self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
-                    } else if transfer.lastErrorExtended.type != .apiOk {
+                    } else if failedTransfer.lastErrorExtended.type != .apiOk {
                         stateBadge.image = #imageLiteral(resourceName: "errorBadge")
                         self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
                     }
@@ -261,6 +292,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
+        if transfer.type == .download {
+            overquota = false
+        }
         configureData()
     }
     
@@ -274,14 +308,26 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
         if MEGASdkManager.sharedMEGASdk().transfers.size.intValue == 0 {
             MEGASdkManager.sharedMEGASdk().resetTotalUploads()
             MEGASdkManager.sharedMEGASdk().resetTotalDownloads()
-            configureData()
-
         }
-
+        configureData()
+    }
+    
+    func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        if error.type == .apiEOverQuota || error.type == .apiEgoingOverquota {
+            overquota = true
+        }
     }
 
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         if error.type != .apiOk {
+            switch error.type {
+            case .apiEgoingOverquota, .apiEOverQuota:
+                overquota = true
+                break
+            default:
+                break
+            }
+            
             return
         }
         if request.type == .MEGARequestTypePauseTransfers {

@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige koppeling";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="De account die deze koppeling gecreëerd heeft is beëindigd door meerdere overtredingen van onze Algemene Voorwaarden.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="De account die deze koppeling gecreëerd heeft is beëindigd door meerdere overtredingen van onze [A]Algemene Voorwaarden[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="Foto's";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Spraak";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contact";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Groep Starten";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log uit en wis lokale gegevens na 10 mislukte pogingen tot toegangscode";
+"failedAttempstSectionTitle"="Uitloggen en lokale gegevens wissen na 10 mislukte passcode pogingen";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="Overdrachten";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Behandeling";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Voltooid";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Verwijder Chatgeschiedenis";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chatgeschiedenis is gewist";
 /* 'Next' button in a dialog */
 "continue"="Vervolgen";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Verwijder bericht";
 /*  */
 "fromCloudDrive"="Van Cloud Schijf";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Zend contactgegevens";
 /* */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere services en dat ten minste een van deze andere services een gegevenslek heeft geleden.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Overdracht van quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Geselecteerd Wissen";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Alles pauzeren";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Alles hervatten";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Wis alles";
 /* Alert header for asking permission to resume transfers*/
