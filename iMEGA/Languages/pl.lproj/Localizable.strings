@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Nieprawidłowy link";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="To konto zostało zablokowane z powodu naruszeń regulaminu serwisu.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Konto użytkownika zostało usunięte z powodu wielokrotnych naruszeń naszego [A]regulaminu[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nie może połączyć się bezpiecznie przez SSL. Być może korzystasz z publicznej sieci Wi-Fi z dodatkowymi wymaganiami.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Treść, do której próbujesz uzyskać dostęp, nie jest dostępna na tym koncie. Spróbuj zalogować się na to samo konto, co w mobilnym kliencie internetowym.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Operacja zajmuję więcej czasu niż zwykle. Proszę czekać...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -290,6 +290,8 @@
 "Photos"="Zdjęcia";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Głos";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Kontakt";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Utwórz grupę";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Usuń dane lokalne";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Wyloguj się i usuń dane lokalne po 10 nieudanych próbach podania hasła";
+"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
 /* Menu item */
 "help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="Ruch";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Wszystko";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Zakończone";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Wyczyść historię czatu.";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Czy na pewno chcesz usunąć pełną historię tej rozmowy?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Kontynuuj";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Usuń wiadomość";
 /*  */
 "fromCloudDrive"="Z dysku";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Wyślij kontakt";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Wyloguj się";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Za chwilę się wylogujesz. Przetestuj swoje hasło, aby upewnić się, że je pamiętasz. Jeśli zgubisz hasło, utracisz dostęp do swoich danych MEGA.";
+"testPasswordLogoutText"="You are about to log out, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Pobieranie danych...";
 /*   */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Możliwe, że używasz tego samego hasła do konta MEGA co do innych usług i że co najmniej jedna z tych innych usług doznała naruszenia danych.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Twoje hasło wyciekło i jest obecnie wykorzystywane przez złych aktorów do logowania się na twoje konta, w tym między innymi na twoje konto MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Odznacz";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Wyczyść wszystko";
 /* Alert header for asking permission to resume transfers*/
@@ -2381,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ten link jest niedostępny, ponieważ konto użytkownika zostało zamknięte z powodu rażącego naruszenia MEGA [A]Warunków świadczenia usług[/A].";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Zgłoszono, że ten folder / plik zawiera treści budzące zastrzeżenia, takie jak Materiał do wykorzystywania dzieci, Gwałtowny ekstremizm lub Bestiality. Konto twórcy linku zostało zamknięte, a jego pełne dane, w tym adres IP, zostały przekazane władzom.";
+"Taken down due to severe violation of our terms of service"="Zgłoszono, że ten folder / plik zawiera treści budzące zastrzeżenia, takie jak Materiał do wykorzystywania dzieci, Gwałtowny ekstremizm lub Bestiality. Konto twórcy linku zostało zamknięte, a jego pełne dane, w tym adres IP, zostały przekazane władzom.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Niedostępne";
 /* Error text shown when requesting email for email verification within 10 minutes */

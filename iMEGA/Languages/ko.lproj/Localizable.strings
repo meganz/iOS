@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="이 링크를 생성한 계정은 다수의 이용 약관 위반으로 삭제되었습니다.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="이 링크를 만든 계정은 다수의 [A]이용 약관[/A] 위반으로 인하여 삭제되었습니다.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="해독 키를 입력하세요";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="사진";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="음성";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="연락처";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="그룹 시작";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -891,6 +893,8 @@
 "transfers"="전송";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="모두";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="완료";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="대화 기록 삭제";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="이 대화의 모든 메시지 기록을 삭제하시겠습니까?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="계속";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="메시지 삭제";
 /*  */
 "fromCloudDrive"="클라우드 드라이브에서";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="연락처";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="연락처 보내기";
 /* */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="선택 초기화";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="모두 삭제";
 /* Alert header for asking permission to resume transfers*/
@@ -2381,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="이 링크는 링크 소유주의 계정이 MEGA [A]이용 약관[/A]의 중대한 위반으로 인하여 폐쇄되었기 때문에 사용할 수 없습니다.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="이 폴더/파일은 아동 착취물, 극단적인 폭력물, 또는 수간물 같은 불쾌한 항목이 포함된 것으로 신고되었습니다. 이 파일을 등록한 링크 생성자의 계정은 폐쇄되었으며, 링크 생성자의 IP 주소를 포함한 자세한 정보가 사법 기관에 제공되었습니다.";
+"Taken down due to severe violation of our terms of service"="이 폴더/파일은 아동 착취물, 극단적인 폭력물, 또는 수간물 같은 불쾌한 항목이 포함된 것으로 신고되었습니다. 이 파일을 등록한 링크 생성자의 계정은 폐쇄되었으며, 링크 생성자의 IP 주소를 포함한 자세한 정보가 사법 기관에 제공되었습니다.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="이용 불가";
 /* Error text shown when requesting email for email verification within 10 minutes */

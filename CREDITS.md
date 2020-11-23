@@ -38,18 +38,6 @@ https://github.com/dzenbot/DZNEmptyDataSet/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
-#### FLAnimatedImage
-https://github.com/Flipboard/FLAnimatedImage
-
-Copyright (c) 2014-2016 Flipboard
-
-###### License:
-The MIT License (MIT)
-
-https://github.com/Flipboard/FLAnimatedImage/blob/master/LICENSE
-
---------------------------------------------------------------------
-
 #### FLEX
 https://github.com/Flipboard/FLEX/
 

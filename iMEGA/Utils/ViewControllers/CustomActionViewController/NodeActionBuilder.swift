@@ -138,6 +138,15 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.importAction())
+        } else if displayMode == .transfers {
+            nodeActions.append(NodeAction.viewInFolderAction())
+            nodeActions.append(NodeAction.getLinkAction())
+            nodeActions.append(NodeAction.clearAction())
+        } else if displayMode == .publicLinkTransfers {
+            nodeActions.append(NodeAction.clearAction())
+        } else if displayMode == .transfersFailed {
+            nodeActions.append(NodeAction.retryAction())
+            nodeActions.append(NodeAction.clearAction())
         } else {
             switch accessLevel {
             case .accessUnknown:

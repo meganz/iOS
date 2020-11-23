@@ -13,6 +13,7 @@ protocol AddToChatViewControllerDelegate: AnyObject {
     func showScanDoc()
     func startGroupChat()
     func showLocation()
+    func showGiphy()
     func shouldDisableAudioMenu() -> Bool
     func shouldDisableVideoMenu() -> Bool
     func canRecordAudio() -> Bool
@@ -48,7 +49,7 @@ class AddToChatViewController: UIViewController {
 
     weak var addToChatDelegate: AddToChatViewControllerDelegate?
     
-    private let iPadPopoverWidth: CGFloat = 440.0
+    private let iPadPopoverWidth: CGFloat = 340.0
     
     // MARK:- View lifecycle methods.
     
@@ -74,6 +75,8 @@ class AddToChatViewController: UIViewController {
         
         if UIDevice.current.iPadDevice == false {
             contentView.layer.cornerRadius = 13.0
+        } else {
+            backgroundView.isHidden = true
         }
         
         updateAppearance()
@@ -81,9 +84,14 @@ class AddToChatViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        preferredContentSize = requiredSize(forWidth: min((view.bounds.width-20), iPadPopoverWidth))
+        
+        if UIDevice.current.iPadDevice {
+            let maxWidth = UIApplication.shared.keyWindow?.bounds.width ?? UIScreen.main.bounds.width
+            preferredContentSize = requiredSize(forWidth: min((maxWidth-20), iPadPopoverWidth))
+        }
         
         updateContentViewConstraints()
+        mediaCollectionView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -97,6 +105,24 @@ class AddToChatViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         contentViewHeightConstraint.constant = requiredSize(forWidth: contentView.bounds.width).height
+        
+        // The content view height is adjusted to maintain the aspect ratio of the each menu size.
+        // If the height of the view does not match that of the content then need to center the content
+        if preferredContentSize.height != 0 &&
+            contentViewHeightConstraint.constant != preferredContentSize.height {
+            contentViewBottomConstraint.constant = (view.bounds.height - contentViewHeightConstraint.constant) / 2.0
+        } else if contentViewBottomConstraint.constant != 0.0 {
+            contentViewBottomConstraint.constant = 0.0
+        }
+        
+        // If the photo collection is not shown the authorization text message cell should fill the collectionView.
+        if PHPhotoLibrary.authorizationStatus() != .authorized {
+            debounce(#selector(reloadMediaCollectionView), delay: 0.3)
+        }
+    }
+    
+    @objc func reloadMediaCollectionView() {
+        mediaCollectionView.reloadData()
     }
     
     func presentationAnimationComplete() {
@@ -127,6 +153,31 @@ class AddToChatViewController: UIViewController {
         return CGSize(width: width, height: height)
     }
     
+    func suitableWidth(forHeight height: CGFloat) -> CGFloat {
+        guard let menuPageViewController = menuPageViewController else {
+            return 0.0
+        }
+        
+        let menuPageViewControllerHorizontalPadding = menuViewLeadingConstraint.constant + menuViewTrailingConstraint.constant
+
+        let pageControlHeight = pageControl.bounds.height
+            + pageControlBottomConstraint.constant
+        
+        let mediaCollectionViewHeight = mediaCollectionView.bounds.height
+            + mediaCollectionViewBottomConstraint.constant
+            + mediaCollectionViewTopConstraint.constant
+        
+        let menuPageViewHeight = SafeArea().height
+            - mediaCollectionViewHeight
+            - menuViewBottomConstraint.constant
+            - pageControlHeight
+
+        let menusWidth = menuPageViewController.totalRequiredWidth(forAvailableHeight: menuPageViewHeight,
+                                                                   horizontalPaddding: menuPageViewControllerHorizontalPadding)
+        
+        return menusWidth + menuViewLeadingConstraint.constant + menuViewTrailingConstraint.constant
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -143,6 +194,7 @@ class AddToChatViewController: UIViewController {
             UIView.animate(withDuration: context.transitionDuration) {
                 self.updateContentViewConstraints()
                 self.view.layoutIfNeeded()
+                self.mediaCollectionView.reloadData()
             }
         })
     }
@@ -170,7 +222,8 @@ class AddToChatViewController: UIViewController {
     
     private func updateContentViewConstraints() {
         if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width > UIScreen.main.bounds.height) {
-            let contentViewPadding = (UIScreen.main.bounds.width - UIScreen.main.bounds.height) / 2.0
+            let safeArea = SafeArea()
+            let contentViewPadding = (safeArea.width - suitableWidth(forHeight: safeArea.height)) / 2.0
             self.contentViewLeadingConstraint.constant = contentViewPadding
             self.contentViewTrailingConstraint.constant = -contentViewPadding
         } else if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width < UIScreen.main.bounds.height)  {
@@ -188,6 +241,7 @@ class AddToChatViewController: UIViewController {
     
     private func updateAppearance() {
         contentView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = UIDevice.current.iPadDevice ? contentView.backgroundColor : .clear
         patchView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
         pageControl.pageIndicatorTintColor = .mnz_tertiaryGray(for: traitCollection)
         pageControl.currentPageIndicatorTintColor = .mnz_primaryGray(for: traitCollection)
@@ -231,6 +285,12 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
 }
 
 extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
+    func showGiphy() {
+        dismiss() {
+            self.addToChatDelegate?.showGiphy()
+        }
+    }
+    
     func loadPhotosView() {
         loadPhotosViewAndDismiss()
     }
@@ -303,3 +363,16 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
 }
 
+fileprivate struct SafeArea {
+    let width: CGFloat
+    let height: CGFloat
+    
+    init() {
+        var safeAreaInsets: UIEdgeInsets = .zero
+        if #available(iOS 11.0, *) {
+            safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
+        }
+        self.width = UIScreen.main.bounds.width - (safeAreaInsets.left + safeAreaInsets.right)
+        self.height = UIScreen.main.bounds.height - (safeAreaInsets.top + safeAreaInsets.bottom)
+    }
+}

@@ -27,6 +27,7 @@
 #import "EmptyStateView.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
+#import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol>
@@ -185,7 +186,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
+
     if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
         [DevicePermissionsHelper modalNotificationsPermission];
     }
@@ -200,6 +202,10 @@
         [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
         [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

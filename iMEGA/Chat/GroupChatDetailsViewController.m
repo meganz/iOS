@@ -350,6 +350,18 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     return (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && !self.chatRoom.isPreview  ? YES : NO;
 }
 
+- (void)openContactDetailsWithEmail:(NSString *)email userHandle:(uint64_t)userHandle {
+    if (email) {
+        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+        contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
+        contactDetailsVC.userEmail = email;
+        contactDetailsVC.userHandle = userHandle;
+        contactDetailsVC.groupChatRoom = self.chatRoom;
+        
+        [self.navigationController pushViewController:contactDetailsVC animated:YES];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
@@ -397,17 +409,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 [MEGASdkManager.sharedMEGAChatSdk removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
             }]];
         } else {
-            if (peerEmail) {
-                MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
-                if (!user || user.visibility != MEGAUserVisibilityVisible) {
-                    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
-                        if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                        }
-                    }]];
-                }
-            }
+            [self openContactDetailsWithEmail:peerEmail userHandle:userHandle];
         }
         
         if (actions.count > 0) {
@@ -969,15 +971,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
                 if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
                     NSString *userEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
-                    if (userEmail) {
-                        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-                        contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
-                        contactDetailsVC.userEmail = userEmail;
-                        contactDetailsVC.userHandle = userHandle;
-                        contactDetailsVC.groupChatRoom = self.chatRoom;
-
-                        [self.navigationController pushViewController:contactDetailsVC animated:YES];
-                    }
+                    [self openContactDetailsWithEmail:userEmail userHandle:userHandle];
                 }
                 break;
                 
@@ -1028,6 +1022,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             }
             [self.tableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationNone];
             
+            break;
+        }
+            
+        case MEGAChatRequestTypeTruncateHistory: {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:AMLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted")];
             break;
         }
             

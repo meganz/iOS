@@ -48,8 +48,7 @@
     self.thirdTextLabel.text = @"";
 }
 
-- (void)configureDescriptionByUserETDSuspension {
-    NSString *text = AMLocalizedString(@"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].", @"Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service.");
+- (NSAttributedString *)linkAttributedString:(NSString *)text {
     NSRange r1 = [text rangeOfString:@"[A]"];
     NSRange r2 = [text rangeOfString:@"[/A]"];
     NSRange range = NSMakeRange(r1.location + r1.length, r2.location - r1.location - r1.length);
@@ -57,14 +56,25 @@
     text = text.mnz_removeWebclientFormatters;
     NSMutableAttributedString *attributedText = [NSMutableAttributedString.alloc initWithString:text];
     [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_redForTraitCollection:self.traitCollection] range:[text rangeOfString:termsString]];
+    return attributedText;
+}
+
+- (void)configureDescriptionByUserETDSuspension {
     [self.descriptionLabel addGestureRecognizer:[UITapGestureRecognizer.alloc initWithTarget:self action:@selector(showTerms)]];
     self.descriptionLabel.userInteractionEnabled = YES;
-    self.descriptionLabel.attributedText = attributedText;
+    self.descriptionLabel.attributedText = [self linkAttributedString:AMLocalizedString(@"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].", @"Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service.")];
+    [self resetLabels];
+}
+
+- (void)configureDescriptionByUserCopyrightSuspension {
+    [self.descriptionLabel addGestureRecognizer:[UITapGestureRecognizer.alloc initWithTarget:self action:@selector(showTerms)]];
+    self.descriptionLabel.userInteractionEnabled = YES;
+    self.descriptionLabel.attributedText = [self linkAttributedString:AMLocalizedString(@"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A].", @"An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service.")];
     [self resetLabels];
 }
 
 - (void)configureDescriptionByLinkETDSuspension {
-    self.descriptionLabel.text = AMLocalizedString(@"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities.", @"Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service.");;
+    self.descriptionLabel.text = AMLocalizedString(@"Taken down due to severe violation of our terms of service", @"Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service.");;
     [self resetLabels];
 }
 
@@ -114,6 +124,16 @@
 - (void)configureInvalidFolderLinkByUserETDSuspension {
     [self configureHeaderInvalidFolderLink];
     [self configureDescriptionByUserETDSuspension];
+}
+
+- (void)configureInvalidFileLinkByUserCopyrightSuspension {
+    [self configureHeaderInvalidFileLink];
+    [self configureDescriptionByUserCopyrightSuspension];
+}
+
+- (void)configureInvalidFolderLinkByUserCopyrightSuspension {
+    [self configureHeaderInvalidFolderLink];
+    [self configureDescriptionByUserCopyrightSuspension];
 }
 
 - (void)configureInvalidQueryLink {

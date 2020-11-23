@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="由於多次違反我們的服務條款，因此創建此連結的帳戶已被停權。";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此創建此連結的帳戶已被停權。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA無法透過SSL安全地連線，您可能在使用有額外要求的公共Wi-Fi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著使用與在手機瀏覽器中同樣的帳戶登入。";
+"theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著以在手機瀏覽器中所登入的相同帳戶進行登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="此處理過程比預期的長些。請稍候...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -290,6 +290,8 @@
 "Photos"="照片";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="語音";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="聯絡人";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="群組聊天";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -891,6 +893,8 @@
 "transfers"="傳輸";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="進行中";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="完成";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="清空對話記錄";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您確定要清除此對話的全部歷史記錄嗎？";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="聊天紀錄已清空";
 /* 'Next' button in a dialog */
 "continue"="繼續";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="刪除訊息";
 /*  */
 "fromCloudDrive"="從雲端空間";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="聯絡人";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="傳送聯絡資訊";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="執行登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="您即將登出，請測試您的密碼以確保您有記住它。如果您遺失密碼，您將無法存取MEGA資料。";
+"testPasswordLogoutText"="您即將登出，請測試您的密碼以確保您有記住它。如果您遺失密碼，您將無法存取您在MEGA的資料。";
 /* state previous to import a file */
 "loading"="讀取中";
 /*   */
@@ -2077,7 +2081,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24小時";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="的聊天通知轉成靜音";
+"Mute chat Notifications for"="將所有聊天通知靜音";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="通知保持靜音直到明天，%@";
 /* Chat Notifications DND: Remaining time left if until today */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="這有可能是您MEGA帳戶所使用的密碼與在其它網站上所使用的密碼相同，而且這些網站當中至少有一個遭遇資料外洩。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密碼已洩漏並且現在被不肖人士拿來登入您的帳戶，包括但不限於您的MEGA帳戶。";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="超出傳輸配額";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="清除選取";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="全部暫停";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="全部恢復";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
 /* Alert header for asking permission to resume transfers*/
@@ -2381,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="由於嚴重違反MEGA的[A]服務條款[/A]，該用戶的帳戶已被關閉，所以此連結無法使用。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="據報告此資料夾/檔案包含令人反感的內容，例如兒童色情、暴力極端主義、或獸交。建立此連結的帳戶已經被關閉，帳戶的細節（包括IP位置）已提交給相關部門。";
+"Taken down due to severe violation of our terms of service"="據報告此資料夾/檔案包含令人反感的內容，例如兒童色情、暴力極端主義、或獸交。建立此連結的帳戶已經被關閉，帳戶的細節（包括IP位置）已提交給相關部門。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="無用的";
 /* Error text shown when requesting email for email verification within 10 minutes */

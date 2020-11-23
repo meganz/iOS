@@ -20,4 +20,6 @@
 - (void)mnz_moveFileToDestinationIfVoiceClipData;
 - (NSUInteger)mnz_orderByState;
 
+- (MEGANode *)node;
+
 @end

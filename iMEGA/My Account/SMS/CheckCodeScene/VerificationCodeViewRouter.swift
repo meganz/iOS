@@ -43,6 +43,6 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     
     func goToOnboarding() {
         dismiss()
-        (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
+        (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding(completion: nil)
     }
 }

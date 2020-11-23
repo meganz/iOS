@@ -4,6 +4,7 @@ typedef NS_ENUM(NSInteger, UnavailableLinkError) {
     UnavailableLinkErrorGeneric = 0,
     UnavailableLinkErrorETDDown,
     UnavailableLinkErrorUserETDSuspension,
+    UnavailableLinkErrorUserCopyrightSuspension,
 };
 
 @interface UnavailableLinkView : UIView
@@ -22,5 +23,7 @@ typedef NS_ENUM(NSInteger, UnavailableLinkError) {
 - (void)configureInvalidFolderLinkByETD;
 - (void)configureInvalidFileLinkByUserETDSuspension;
 - (void)configureInvalidFolderLinkByUserETDSuspension;
+- (void)configureInvalidFileLinkByUserCopyrightSuspension;
+- (void)configureInvalidFolderLinkByUserCopyrightSuspension;
 
 @end

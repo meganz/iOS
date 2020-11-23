@@ -62,14 +62,28 @@ pipeline {
                 })
             }
         }
-        
-        stage('Deploying executable (IPA) to iTunes Connect') {
-            steps {
-                injectEnvironments({
-                    retry(3) {
-                        sh "bundle exec fastlane upload_to_itunesconnect ENV:DEV"
+
+        stage('Upload and Deploy') {
+            parallel {
+                stage('Deploying executable (IPA) to iTunes Connect') {
+                    steps {
+                        injectEnvironments({
+                            retry(3) {
+                                sh "bundle exec fastlane upload_to_itunesconnect ENV:DEV"
+                            }
+                        })
                     }
-                })
+                }
+
+                stage('Upload (dSYMs) to Firebase') {
+                    steps {
+                        injectEnvironments({
+                            retry(3) {
+                                sh "bundle exec fastlane upload_symbols ENV:DEV"
+                            }
+                        })
+                    }
+                }
             }
         }
    }

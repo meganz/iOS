@@ -55,6 +55,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
+@import Firebase;
 
 #import "MEGA-Swift.h"
 
@@ -132,6 +133,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [FIRApp configure];
+    
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
@@ -776,7 +779,7 @@
     }
 }
 
-- (void)showOnboarding {
+- (void)showOnboardingWithCompletion:(void (^)(void))completion {
     OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
     UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
     [onboardingVC.view addSubview:overlayView];
@@ -787,6 +790,8 @@
     } completion:^(BOOL finished) {
         [overlayView removeFromSuperview];
         [SVProgressHUD dismiss];
+        
+        if (completion) completion();
     }];
 }
 
@@ -1016,7 +1021,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     };
 
     UINavigationController *navigationController = [UINavigationController.alloc initWithRootViewController:overDiskQuotaViewController];
-    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    navigationController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:^{
         weakSelf.overDiskQuotaPresented = YES;
     }];
@@ -1498,7 +1503,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeLogin) {
                     [Helper logout];
-                    [self showOnboarding];
+                    [self showOnboardingWithCompletion:nil];
                 }
                 break;
             }
@@ -1506,12 +1511,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiESid: {                                
                 if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                     [Helper logout];
-                    [self showOnboarding];
                     
-                    UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                    [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_presentingViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
-                        [MEGALinkManager resetLinkAndURLType];
+                    [self showOnboardingWithCompletion:^{
+                        if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
+                            UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                            [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
+                            [UIApplication.mnz_presentingViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
+                                [MEGALinkManager resetLinkAndURLType];
+                            }];
+                        }
                     }];
                     return;
                 }
@@ -1519,7 +1527,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
                         [Helper logout];
-                        [self showOnboarding];
+                        [self showOnboardingWithCompletion:nil];
                         
                         self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -1669,7 +1677,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case MEGARequestTypeLogout: {            
             [Helper logout];
-            [self showOnboarding];
+            [self showOnboardingWithCompletion:nil];
             
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
             break;
@@ -1869,6 +1877,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             NSString *detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
             UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
             [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         } else { // Storage overquota error
             NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
@@ -1935,7 +1944,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
                     NSString *errorString = [MEGAError errorStringWithErrorCode:error.type context:(transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
-                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(errorString, nil)]];
+                    MEGALogError(@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(errorString, nil));
                 }
                 break;
             }

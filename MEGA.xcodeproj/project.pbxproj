@@ -37,7 +37,15 @@
 		2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */; };
 		2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */; };
 		2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
+		2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F0881253E387500C5B5D7 /* Transfers.storyboard */; };
+		2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */; };
+		2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */; };
+		2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */; };
+		2F6F0892253E387600C5B5D7 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F088A253E387600C5B5D7 /* TransfersViewController.m */; };
+		2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */; };
+		2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
+		2F7E7064251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */; };
 		2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */; };
 		2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F85306E24885F9100064E83 /* PreviewersView.swift */; };
 		2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F85307224885FAB00064E83 /* PreviewersView.xib */; };
@@ -49,6 +57,18 @@
 		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
 		2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */; };
 		2F9E1E2C24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */; };
+		2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F110F2508A3E700896DFF /* ServiceManager.swift */; };
+		2F9F11162508A3E800896DFF /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11102508A3E700896DFF /* LogManager.swift */; };
+		2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11122508A3E800896DFF /* ResponseModel.swift */; };
+		2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11132508A3E800896DFF /* ErrorModel.swift */; };
+		2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11142508A3E800896DFF /* RequestModel.swift */; };
+		2F9F111F2508A3F400896DFF /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F111B2508A3F400896DFF /* Services.swift */; };
+		2F9F11292508A43300896DFF /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11242508A43300896DFF /* Constant.swift */; };
+		2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11252508A43300896DFF /* ServiceConstant.swift */; };
+		2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11262508A43300896DFF /* ErrorKey.swift */; };
+		2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */; };
+		2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */; };
+		2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */; };
 		2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */; };
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
 		2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */; };
@@ -613,9 +633,6 @@
 		8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8395FE3224E2C6BD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8395FE3324E2C6EC00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
-		8395FE4724E594EF00B1C952 /* GetLinkInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3924E58D6F00B1C952 /* GetLinkInfoTableViewCell.swift */; };
-		8395FE4824E594EF00B1C952 /* GetLinkSwitchOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3B24E58F6B00B1C952 /* GetLinkSwitchOptionTableViewCell.swift */; };
-		8395FE4924E594EF00B1C952 /* GetLinkStringTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3D24E5900E00B1C952 /* GetLinkStringTableViewCell.swift */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
@@ -652,9 +669,6 @@
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
-		83E8329624EA88A500F532B8 /* GetLinkDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8329524EA88A500F532B8 /* GetLinkDetailTableViewCell.swift */; };
-		83E8329824EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8329724EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift */; };
-		83E8329C24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8329B24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift */; };
 		83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */; };
 		83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */; };
 		83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */; };
@@ -811,8 +825,6 @@
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
-		A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */; };
-		A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */; };
 		A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2B22EAFB1700B24E76 /* SearchOperation.m */; };
 		A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
 		A811DCB92476C472002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
@@ -833,6 +845,12 @@
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
+		A81C6588254B2D3000105BF4 /* GiphySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */; };
+		A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */; };
+		A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6587254B2D3000105BF4 /* GiphyCategoryView.swift */; };
+		A81C6593254B2EC900105BF4 /* GiphyPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6592254B2EC900105BF4 /* GiphyPreviewViewController.swift */; };
+		A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C659A254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift */; };
+		A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A81C659B254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib */; };
 		A81DF35B2508FD6C009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0B24BFE2B100D7D13B /* DateFormatter+SystemDateFormatter.swift */; };
 		A81DF35C2508FD86009C8B60 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0A24BFE2B100D7D13B /* DateFormatting.swift */; };
 		A81DF35D2508FDAD009C8B60 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0C24BFE2B100D7D13B /* Date+Formatting.swift */; };
@@ -968,6 +986,12 @@
 		A86B9F882316D6AB00F35E7A /* FLEXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9F1F2316D6AB00F35E7A /* FLEXColor.m */; };
 		A86B9F8A2316D6AB00F35E7A /* FLEXObjcInternal.mm in Sources */ = {isa = PBXBuildFile; fileRef = A86B9F232316D6AB00F35E7A /* FLEXObjcInternal.mm */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
+		A86F05792567E65500437985 /* GetLinkDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05732567E65500437985 /* GetLinkDetailTableViewCell.swift */; };
+		A86F057A2567E65500437985 /* GetLinkDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05742567E65500437985 /* GetLinkDatePickerTableViewCell.swift */; };
+		A86F057B2567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05752567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift */; };
+		A86F057C2567E65500437985 /* GetLinkInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05762567E65500437985 /* GetLinkInfoTableViewCell.swift */; };
+		A86F057D2567E65500437985 /* GetLinkStringTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05772567E65500437985 /* GetLinkStringTableViewCell.swift */; };
+		A86F057E2567E65500437985 /* GetLinkPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05782567E65500437985 /* GetLinkPasswordTableViewCell.swift */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1159,6 +1183,12 @@
 		B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */; };
 		B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */; };
 		B6C524EC21E59DC700AE3575 /* BackgroundUploadMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */; };
+		B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
+		B6CB4E3B253EF8F30009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
+		B6CB4E42253EF8F30009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
+		B6CB4E43253EF8F40009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
+		B6CB4E44253EF8F40009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
+		B6CB4E45253EF8F50009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
 		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
 		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
@@ -1263,8 +1293,6 @@
 		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
 		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
-		BFA75396248855070001E231 /* ChatBottomInfoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA75395248855070001E231 /* ChatBottomInfoScreen.swift */; };
-		BFA7539A248855240001E231 /* ChatBottomInfoScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFA75399248855240001E231 /* ChatBottomInfoScreen.xib */; };
 		BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */; };
 		BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */; };
 		BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */; };
@@ -1345,8 +1373,6 @@
 		E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E81B566EC400ECEFDF /* UsageViewController.m */; };
 		E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */; };
-		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
-		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
 		E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */; };
 		E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
@@ -1354,7 +1380,6 @@
 		E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */; };
 		E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */; };
 		E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */; };
-		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */; };
@@ -1479,7 +1504,19 @@
 		2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEmojiButton.swift; sourceTree = "<group>"; };
 		2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Docscan.swift"; sourceTree = "<group>"; };
 		2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewController.swift; sourceTree = "<group>"; };
+		2F6F0881253E387500C5B5D7 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
+		2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersWidgetViewController.m; sourceTree = "<group>"; };
+		2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
+		2F6F0886253E387600C5B5D7 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
+		2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
+		2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
+		2F6F088A253E387600C5B5D7 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
+		2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressIndicatorView.xib; sourceTree = "<group>"; };
+		2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetViewController.h; sourceTree = "<group>"; };
+		2F6F08CD253E3D1F00C5B5D7 /* TransfersWidgetSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetSelected.h; sourceTree = "<group>"; };
+		2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferActionViewController.swift; sourceTree = "<group>"; };
 		2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+CallStatus.swift"; sourceTree = "<group>"; };
+		2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGiphyCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetViewController.swift; sourceTree = "<group>"; };
 		2F85306E24885F9100064E83 /* PreviewersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewersView.swift; sourceTree = "<group>"; };
 		2F85307224885FAB00064E83 /* PreviewersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewersView.xib; sourceTree = "<group>"; };
@@ -1488,6 +1525,18 @@
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
 		2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionCollectionViewCell.xib; sourceTree = "<group>"; };
+		2F9F110F2508A3E700896DFF /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		2F9F11102508A3E700896DFF /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		2F9F11122508A3E800896DFF /* ResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		2F9F11132508A3E800896DFF /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		2F9F11142508A3E800896DFF /* RequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
+		2F9F111B2508A3F400896DFF /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		2F9F11242508A43300896DFF /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		2F9F11252508A43300896DFF /* ServiceConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceConstant.swift; sourceTree = "<group>"; };
+		2F9F11262508A43300896DFF /* ErrorKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorKey.swift; sourceTree = "<group>"; };
+		2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyGifsRequestModel.swift; sourceTree = "<group>"; };
+		2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyResponseModel.swift; sourceTree = "<group>"; };
+		2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomNewMessageIndicatorView.swift; sourceTree = "<group>"; };
 		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewAttachmentCell.swift; sourceTree = "<group>"; };
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2099,9 +2148,6 @@
 		8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCallCollectionViewCell.h; sourceTree = "<group>"; };
 		8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCallCollectionViewCell.m; sourceTree = "<group>"; };
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
-		8395FE3924E58D6F00B1C952 /* GetLinkInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkInfoTableViewCell.swift; sourceTree = "<group>"; };
-		8395FE3B24E58F6B00B1C952 /* GetLinkSwitchOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionTableViewCell.swift; sourceTree = "<group>"; };
-		8395FE3D24E5900E00B1C952 /* GetLinkStringTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCell.swift; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
 		83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerVideo.h; sourceTree = "<group>"; };
@@ -2136,9 +2182,6 @@
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
-		83E8329524EA88A500F532B8 /* GetLinkDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkDetailTableViewCell.swift; sourceTree = "<group>"; };
-		83E8329724EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkDatePickerTableViewCell.swift; sourceTree = "<group>"; };
-		83E8329B24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupsViewController.swift; sourceTree = "<group>"; };
 		83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsGroups.storyboard; sourceTree = "<group>"; };
 		83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupTableViewCell.swift; sourceTree = "<group>"; };
@@ -2214,10 +2257,6 @@
 		A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatStartCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A802B1FF1FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatAnswerCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatAnswerCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
-		A810CF2B20C157BB00A6C6C5 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
-		A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
-		A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
-		A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
 		A811CE2A22EAFB1700B24E76 /* SearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOperation.h; sourceTree = "<group>"; };
 		A811CE2B22EAFB1700B24E76 /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
 		A811DCB72476C460002FCD98 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -2233,6 +2272,12 @@
 		A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomModalAlertViewController.xib; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
 		A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAProcessAsset.m; sourceTree = "<group>"; };
+		A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySelectionViewController.swift; sourceTree = "<group>"; };
+		A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySelectionView.swift; sourceTree = "<group>"; };
+		A81C6587254B2D3000105BF4 /* GiphyCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyCategoryView.swift; sourceTree = "<group>"; };
+		A81C6592254B2EC900105BF4 /* GiphyPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyPreviewViewController.swift; sourceTree = "<group>"; };
+		A81C659A254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAGiphyCollectionViewCell.swift; sourceTree = "<group>"; };
+		A81C659B254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAGiphyCollectionViewCell.xib; sourceTree = "<group>"; };
 		A81E86CE225B3CF900950678 /* CopyableLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyableLabel.h; sourceTree = "<group>"; };
 		A81E86CF225B3CF900950678 /* CopyableLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyableLabel.m; sourceTree = "<group>"; };
 		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
@@ -2459,6 +2504,12 @@
 		A86B9F242316D6AB00F35E7A /* FLEXAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXAlert.h; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
+		A86F05732567E65500437985 /* GetLinkDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkDetailTableViewCell.swift; sourceTree = "<group>"; };
+		A86F05742567E65500437985 /* GetLinkDatePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkDatePickerTableViewCell.swift; sourceTree = "<group>"; };
+		A86F05752567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionTableViewCell.swift; sourceTree = "<group>"; };
+		A86F05762567E65500437985 /* GetLinkInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkInfoTableViewCell.swift; sourceTree = "<group>"; };
+		A86F05772567E65500437985 /* GetLinkStringTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCell.swift; sourceTree = "<group>"; };
+		A86F05782567E65500437985 /* GetLinkPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTimeDurationTableViewController.swift; sourceTree = "<group>"; };
 		A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeDurationInfo.swift; sourceTree = "<group>"; };
@@ -2701,6 +2752,7 @@
 		B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVURLAsset+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C524EA21E59DC700AE3575 /* BackgroundUploadMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadMonitor.h; sourceTree = "<group>"; };
 		B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundUploadMonitor.m; sourceTree = "<group>"; };
+		B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsTableViewController.h; sourceTree = "<group>"; };
 		B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoUploadsTableViewController.m; sourceTree = "<group>"; };
 		B6CCC36721E800E400B68E2C /* VideoUploadsQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsQualityTableViewController.h; sourceTree = "<group>"; };
@@ -2828,8 +2880,6 @@
 		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
 		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
-		BFA75395248855070001E231 /* ChatBottomInfoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomInfoScreen.swift; sourceTree = "<group>"; };
-		BFA75399248855240001E231 /* ChatBottomInfoScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatBottomInfoScreen.xib; sourceTree = "<group>"; };
 		BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDelegate.swift; sourceTree = "<group>"; };
 		BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewFlowLayout.swift; sourceTree = "<group>"; };
 		BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDataSource.swift; sourceTree = "<group>"; };
@@ -2932,10 +2982,6 @@
 		E894271F1CCF8411008D470D /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewController.h; path = Chat/GroupChatDetailsViewController.h; sourceTree = "<group>"; };
 		E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = GroupChatDetailsViewController.m; path = Chat/GroupChatDetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E8B519211AC9CD8000BB7324 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
-		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TransfersViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
-		E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
 		E8B64EFB1BC6E48C005C726E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E8BB73651D77398A0067D89C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73661D7739960067D89C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2964,7 +3010,6 @@
 		E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnavailableLinkView.h; sourceTree = "<group>"; };
 		E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnavailableLinkView.m; sourceTree = "<group>"; };
 		E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnavailableLinkView.xib; sourceTree = "<group>"; };
-		E8D36F781AD677C6006D4D40 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
 		E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConfirmAccountViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
@@ -3273,6 +3318,7 @@
 		1373618D1A6664C300B740E8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */,
 				5B72738F240D32EA005816AB /* App Icons */,
 				415227411A692F8D00EC7BB6 /* Localizable.strings */,
 				1373618E1A6664C300B740E8 /* Info.plist */,
@@ -3320,6 +3366,61 @@
 				2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */,
 			);
 			path = ReactionView;
+			sourceTree = "<group>";
+		};
+		2F9F110E2508A3E700896DFF /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2F9F110F2508A3E700896DFF /* ServiceManager.swift */,
+				2F9F11102508A3E700896DFF /* LogManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		2F9F11112508A3E800896DFF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F9F11122508A3E800896DFF /* ResponseModel.swift */,
+				2F9F11132508A3E800896DFF /* ErrorModel.swift */,
+				2F9F11142508A3E800896DFF /* RequestModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2F9F111A2508A3F400896DFF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2F9F111B2508A3F400896DFF /* Services.swift */,
+				2F9F11312509E93600896DFF /* Giphy */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2F9F11222508A43300896DFF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2F9F11232508A43300896DFF /* Constants */,
+				2F9F11262508A43300896DFF /* ErrorKey.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		2F9F11232508A43300896DFF /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				2F9F11242508A43300896DFF /* Constant.swift */,
+				2F9F11252508A43300896DFF /* ServiceConstant.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		2F9F11312509E93600896DFF /* Giphy */ = {
+			isa = PBXGroup;
+			children = (
+				2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */,
+				2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */,
+			);
+			path = Giphy;
 			sourceTree = "<group>";
 		};
 		2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */ = {
@@ -3399,7 +3500,6 @@
 				A85A01D2228B0DA100C6ADBB /* FLEX */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
 				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
-				A810CF2420C1577900A6C6C5 /* FLAnimatedImage */,
 				834AD6002024692200D2527F /* MGSwipeTableCell */,
 				5BD4A01B1F8385EC000E24E6 /* FrameAccessor */,
 				5B22F9721F8373EC00D2B156 /* VENTokenField */,
@@ -3952,6 +4052,7 @@
 		41EABF181DA7C53A0087271C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				A81C6583254B2D3000105BF4 /* Giphy */,
 				83B0B45B242CC1B300468191 /* ChatSharedItems */,
 				8394CFB2211B1ADF00A1634A /* Cells */,
 				A8BB54191FB9ABBD004FD03B /* Audios */,
@@ -4099,6 +4200,7 @@
 				2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				2F6F08CD253E3D1F00C5B5D7 /* TransfersWidgetSelected.h */,
 				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
 				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
 				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
@@ -4638,6 +4740,10 @@
 		7747B2D5208623550011814E /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2F9F11222508A43300896DFF /* Utilities */,
+				2F9F111A2508A3F400896DFF /* Services */,
+				2F9F110E2508A3E700896DFF /* Managers */,
+				2F9F11112508A3E800896DFF /* Models */,
 				7747B2D7208623660011814E /* Reachability.h */,
 				7747B2D6208623660011814E /* Reachability.m */,
 			);
@@ -4749,6 +4855,7 @@
 				837B9C06247817F000D409B4 /* NodeActionBuilder.swift */,
 				832E1021202B099800BDD30F /* Cells */,
 				837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */,
+				2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */,
 				2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */,
 				2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */,
 			);
@@ -4873,6 +4980,7 @@
 		837EE1F3253DB7E50083D927 /* GetLink */ = {
 			isa = PBXGroup;
 			children = (
+				A86F05722567E65500437985 /* Cells */,
 				837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */,
 				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
 				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
@@ -4884,24 +4992,13 @@
 		8394CFB2211B1ADF00A1634A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				A81C659A254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift */,
+				A81C659B254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib */,
 				8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */,
 				8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */,
 			);
 			name = Cells;
 			path = Chat/Cells;
-			sourceTree = "<group>";
-		};
-		8395FE3624E58D4100B1C952 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				8395FE3924E58D6F00B1C952 /* GetLinkInfoTableViewCell.swift */,
-				8395FE3B24E58F6B00B1C952 /* GetLinkSwitchOptionTableViewCell.swift */,
-				8395FE3D24E5900E00B1C952 /* GetLinkStringTableViewCell.swift */,
-				83E8329524EA88A500F532B8 /* GetLinkDetailTableViewCell.swift */,
-				83E8329724EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift */,
-				83E8329B24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		83B0B45B242CC1B300468191 /* ChatSharedItems */ = {
@@ -5108,18 +5205,6 @@
 			path = API/Chat;
 			sourceTree = "<group>";
 		};
-		A810CF2420C1577900A6C6C5 /* FLAnimatedImage */ = {
-			isa = PBXGroup;
-			children = (
-				A810CF2B20C157BB00A6C6C5 /* FLAnimatedImage.h */,
-				A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */,
-				A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */,
-				A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */,
-			);
-			name = FLAnimatedImage;
-			path = Vendor/FLAnimatedImage/FLAnimatedImage;
-			sourceTree = "<group>";
-		};
 		A811CE2922EAFB1700B24E76 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
@@ -5155,6 +5240,18 @@
 				838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A81C6583254B2D3000105BF4 /* Giphy */ = {
+			isa = PBXGroup;
+			children = (
+				A81C6592254B2EC900105BF4 /* GiphyPreviewViewController.swift */,
+				A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */,
+				A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */,
+				A81C6587254B2D3000105BF4 /* GiphyCategoryView.swift */,
+			);
+			name = Giphy;
+			path = Chat/Giphy;
 			sourceTree = "<group>";
 		};
 		A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */ = {
@@ -5555,6 +5652,19 @@
 				771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		A86F05722567E65500437985 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A86F05732567E65500437985 /* GetLinkDetailTableViewCell.swift */,
+				A86F05742567E65500437985 /* GetLinkDatePickerTableViewCell.swift */,
+				A86F05752567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift */,
+				A86F05762567E65500437985 /* GetLinkInfoTableViewCell.swift */,
+				A86F05772567E65500437985 /* GetLinkStringTableViewCell.swift */,
+				A86F05782567E65500437985 /* GetLinkPasswordTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		A8AA4F6D1ED4295800E7BA23 /* API */ = {
@@ -6444,6 +6554,7 @@
 				2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */,
 				2F18DEE82458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift */,
 				2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */,
+				2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */,
 				2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */,
 				2F147789244D2E2A0069B264 /* GeoLocationView.swift */,
 				2F147787244D2DF30069B264 /* GeoLocationView.xib */,
@@ -6479,8 +6590,7 @@
 				2F528CAB24739053006DE5C2 /* LoadingMessageReusableView.swift */,
 				2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */,
 				2F7B67DA24AEDD6B008291D7 /* ReactionView */,
-				BFA75395248855070001E231 /* ChatBottomInfoScreen.swift */,
-				BFA75399248855240001E231 /* ChatBottomInfoScreen.xib */,
+				2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */,
 				2F85306E24885F9100064E83 /* PreviewersView.swift */,
 				2F85307224885FAB00064E83 /* PreviewersView.xib */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
@@ -6491,7 +6601,6 @@
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
-				8395FE3624E58D4100B1C952 /* Cells */,
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
@@ -6552,11 +6661,15 @@
 		E8B5191F1AC9C43B00BB7324 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
-				E8D36F781AD677C6006D4D40 /* Transfers.storyboard */,
-				E8B519211AC9CD8000BB7324 /* TransfersViewController.h */,
-				E8B519221AC9CD8000BB7324 /* TransfersViewController.m */,
-				E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */,
-				E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */,
+				2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */,
+				2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */,
+				2F6F0881253E387500C5B5D7 /* Transfers.storyboard */,
+				2F6F0886253E387600C5B5D7 /* TransfersViewController.h */,
+				2F6F088A253E387600C5B5D7 /* TransfersViewController.m */,
+				2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */,
+				2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */,
+				2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */,
+				2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */,
 			);
 			path = Transfers;
 			sourceTree = "<group>";
@@ -6623,6 +6736,7 @@
 				942254FF1EDC03150074C51A /* Embed App Extensions */,
 				3B5BDD6648A4870895C036D3 /* [CP] Embed Pods Frameworks */,
 				2FCB996A24CA8CA10040E825 /* Run Script */,
+				B6CB4E4C253EFA8A0009E87F /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -6929,7 +7043,6 @@
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */,
-				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
 				BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
@@ -6957,6 +7070,7 @@
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
 				83B0B461242CC24E00468191 /* ChatSharedItems.storyboard in Resources */,
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
+				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
 				B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				BFAB114923CEA5C300BCE72D /* PhotoCarouselCell.xib in Resources */,
@@ -6981,13 +7095,16 @@
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */,
+				2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */,
 				BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */,
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
+				B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */,
 				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
+				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
 				834AFD232498E925005DF37C /* ContactsPicker.storyboard in Resources */,
@@ -6996,7 +7113,6 @@
 				2F9E1E2C24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
 				2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */,
-				BFA7539A248855240001E231 /* ChatBottomInfoScreen.xib in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				5B727394240D32F9005816AB /* altIconNight@2x.png in Resources */,
@@ -7025,6 +7141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77BE2FEF24000CB600514DB8 /* Localizable.strings in Resources */,
+				B6CB4E44253EF8F40009E87F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7034,6 +7151,7 @@
 			files = (
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
 				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
+				B6CB4E3B253EF8F30009E87F /* GoogleService-Info.plist in Resources */,
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
@@ -7047,6 +7165,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CB4E42253EF8F30009E87F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7054,6 +7173,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CB4E43253EF8F40009E87F /* GoogleService-Info.plist in Resources */,
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				77E70DB82475760F00E74806 /* MegaAvatarView.xib in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
@@ -7073,6 +7193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CB4E45253EF8F50009E87F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7107,28 +7228,46 @@
 				"${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework",
 				"${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYWebImage/YYWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/CHTCollectionViewWaterfallLayout/CHTCollectionViewWaterfallLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework",
 				"${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework",
 				"${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PanModal/PanModal.framework",
 				"${BUILT_PRODUCTS_DIR}/PinLayout/PinLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHTCollectionViewWaterfallLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haptica.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISEmojiView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InputBarAccessoryView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PanModal.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PinLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -7223,6 +7362,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B6CB4E4C253EFA8A0009E87F /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		B7EC8A8629A71B62066DAA1C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -7286,6 +7445,7 @@
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
+				A86F057C2567E65500437985 /* GetLinkInfoTableViewCell.swift in Sources */,
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
 				A86B9F662316D6AB00F35E7A /* FLEXFileBrowserSearchOperation.m in Sources */,
 				A86B9F722316D6AB00F35E7A /* FLEXTableListViewController.m in Sources */,
@@ -7313,6 +7473,7 @@
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,
+				2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
@@ -7395,11 +7556,9 @@
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
-				83E8329824EA8CFF00F532B8 /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				A86B9F5C2316D6AB00F35E7A /* FLEXWindow.m in Sources */,
-				83E8329C24EBE01300F532B8 /* GetLinkPasswordTableViewCell.swift in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */,
@@ -7419,11 +7578,14 @@
 				5D8DC6A9248CB0390067A4F9 /* BackgroundStyle.swift in Sources */,
 				A86B9F462316D6AB00F35E7A /* FLEXManager.m in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
+				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				A86B9F6D2316D6AB00F35E7A /* FLEXSystemLogTableViewCell.m in Sources */,
+				2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */,
 				A86B9F302316D6AB00F35E7A /* FLEXViewControllerExplorerViewController.m in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
+				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				B662B85924ECB3500089376A /* AddPhoneNumberViewModel.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
@@ -7469,12 +7631,12 @@
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
 				BFAB114D23CEA5C300BCE72D /* Albums.swift in Sources */,
-				8395FE4824E594EF00B1C952 /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				A86B9F612316D6AB00F35E7A /* FLEXInstancesTableViewController.m in Sources */,
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
 				2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */,
 				A86B9F862316D6AB00F35E7A /* FLEXKeyboardHelpViewController.m in Sources */,
+				2F9F11292508A43300896DFF /* Constant.swift in Sources */,
 				5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */,
 				5D92DD1624BFE2B200D7D13B /* DateFormatter+TemplateFormatter.swift in Sources */,
 				A86B9F2E2316D6AB00F35E7A /* FLEXDictionaryExplorerViewController.m in Sources */,
@@ -7501,7 +7663,7 @@
 				B6E6EF9422485A0300653311 /* CameraUploadNodeLoadOperation.m in Sources */,
 				A86B9F782316D6AB00F35E7A /* FLEXCookiesTableViewController.m in Sources */,
 				B654BF3924FF123700A3CBC8 /* MVVM-R.swift in Sources */,
-				A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */,
+				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
 				B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
@@ -7509,6 +7671,7 @@
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
+				2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
 				BF33EF70243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift in Sources */,
@@ -7534,7 +7697,6 @@
 				BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				5D9D0C5C24E163E600519D4E /* TraitEnviromentAware.swift in Sources */,
-				8395FE4724E594EF00B1C952 /* GetLinkInfoTableViewCell.swift in Sources */,
 				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
 				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
 				5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */,
@@ -7566,8 +7728,8 @@
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				B662B86524ED0D800089376A /* VerificationCodeViewModel.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
-				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
+				A86F057B2567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
 				B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */,
@@ -7576,6 +7738,7 @@
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
 				A86B9F562316D6AB00F35E7A /* FLEXArgumentInputFontsPickerView.m in Sources */,
+				A86F057E2567E65500437985 /* GetLinkPasswordTableViewCell.swift in Sources */,
 				B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */,
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
 				A86B9F732316D6AB00F35E7A /* FLEXTableColumnHeader.m in Sources */,
@@ -7625,11 +7788,14 @@
 				5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */,
 				5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
+				2F9F111F2508A3F400896DFF /* Services.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
 				B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */,
+				2F7E7064251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift in Sources */,
 				A86B9F2C2316D6AB00F35E7A /* FLEXClassExplorerViewController.m in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
+				A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */,
 				A86B9F7C2316D6AB00F35E7A /* FLEXHierarchyTableViewCell.m in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
 				BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */,
@@ -7641,11 +7807,11 @@
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
 				A86B9F812316D6AB00F35E7A /* FLEXHeapEnumerator.m in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
-				BFA75396248855070001E231 /* ChatBottomInfoScreen.swift in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
 				A86B9F382316D6AB00F35E7A /* FLEXMultilineTableViewCell.m in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
+				2F6F0892253E387600C5B5D7 /* TransfersViewController.m in Sources */,
 				A86B9F322316D6AB00F35E7A /* FLEXSetExplorerViewController.m in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */,
@@ -7654,6 +7820,7 @@
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				BF7EBD34244FA92B0015255F /* AddToChatCameraCollectionCell.swift in Sources */,
 				BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */,
+				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
 				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
 				A86B9F4D2316D6AB00F35E7A /* FLEXArgumentInputStringView.m in Sources */,
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
@@ -7667,11 +7834,11 @@
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */,
+				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
 				B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */,
 				A86B9F742316D6AB00F35E7A /* FLEXMultiColumnTableView.m in Sources */,
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */,
-				A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */,
 				BFAB115023CEA5C300BCE72D /* AlbumsTableViewDelegate.swift in Sources */,
@@ -7688,6 +7855,7 @@
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
+				A81C6588254B2D3000105BF4 /* GiphySelectionViewController.swift in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
@@ -7716,6 +7884,7 @@
 				2F18DEE92458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift in Sources */,
 				2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
+				A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				A86B9F5B2316D6AB00F35E7A /* FLEXExplorerViewController.m in Sources */,
@@ -7723,7 +7892,6 @@
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
 				A86B9F792316D6AB00F35E7A /* FLEXLibrariesTableViewController.m in Sources */,
 				5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */,
-				8395FE4924E594EF00B1C952 /* GetLinkStringTableViewCell.swift in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
@@ -7760,6 +7928,7 @@
 				A86B9F512316D6AB00F35E7A /* FLEXArgumentInputStructView.m in Sources */,
 				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
 				83C570E222E5BFCF00216896 /* MetadataTypes.swift in Sources */,
+				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				BF7EBD3F24526A140015255F /* AddToChatMediaCollectionSource.swift in Sources */,
 				77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */,
@@ -7775,6 +7944,7 @@
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
 				A86B9F392316D6AB00F35E7A /* FLEXTableViewCell.m in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
+				A86F057A2567E65500437985 /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */,
@@ -7806,7 +7976,6 @@
 				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */,
-				83E8329624EA88A500F532B8 /* GetLinkDetailTableViewCell.swift in Sources */,
 				8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				A86B9F6A2316D6AB00F35E7A /* FLEXASLLogController.m in Sources */,
 				B6E7A8D72500D74600CD6AC2 /* NSLayoutConstraint+Layout.swift in Sources */,
@@ -7886,15 +8055,16 @@
 				B6E7A8D92500D7A800CD6AC2 /* UIView+Layout.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
+				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				BF943E9523554054001C18E0 /* String+Additions.swift in Sources */,
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */,
-				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */,
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
+				2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
@@ -7908,6 +8078,7 @@
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */,
 				838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
+				2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */,
 				BF99A3F524AC445C0035A183 /* Emoji.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				A86B9F5E2316D6AB00F35E7A /* FLEXGlobalsTableViewController.m in Sources */,
@@ -7923,6 +8094,7 @@
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,
 				5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */,
 				5D92DD1224BFE2B200D7D13B /* DateFormatter+SystemDateFormatter.swift in Sources */,
+				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				A86B9F802316D6AB00F35E7A /* FLEXUtility.m in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,
@@ -7957,6 +8129,7 @@
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */,
+				2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
 				A86B9F652316D6AB00F35E7A /* FLEXKeychainTableViewController.m in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
@@ -7990,6 +8163,7 @@
 				A86B9F4A2316D6AB00F35E7A /* FLEXMethodCallingViewController.m in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
+				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				2F528CAD24739053006DE5C2 /* LoadingMessageReusableView.swift in Sources */,
@@ -8007,6 +8181,7 @@
 				83C570EB22E5BFCF00216896 /* MetadataManager.swift in Sources */,
 				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
 				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
+				A81C6593254B2EC900105BF4 /* GiphyPreviewViewController.swift in Sources */,
 				B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */,
@@ -8038,6 +8213,8 @@
 				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,
 				5D1B240924AF61F000ACE1C5 /* AttributedTextStyleFactory.swift in Sources */,
+				A86F05792567E65500437985 /* GetLinkDetailTableViewCell.swift in Sources */,
+				A86F057D2567E65500437985 /* GetLinkStringTableViewCell.swift in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
 				A86B9F6F2316D6AB00F35E7A /* FLEXTableLeftCell.m in Sources */,
@@ -8587,13 +8764,15 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/iMEGA",
+					"$(PROJECT_DIR)/iMEGA/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/Supporting Files/MEGA-PrefixHeader.pch";
@@ -8620,7 +8799,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -8648,12 +8827,14 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/iMEGA",
+					"$(PROJECT_DIR)/iMEGA/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/Supporting Files/MEGA-PrefixHeader.pch";
@@ -8679,7 +8860,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -8711,7 +8892,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8734,7 +8915,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -8769,7 +8950,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8791,7 +8972,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -8819,7 +9000,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -8838,7 +9019,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8858,7 +9039,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -8877,7 +9058,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8897,7 +9078,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8927,7 +9108,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8952,7 +9133,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8981,7 +9162,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -9005,7 +9186,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9035,7 +9216,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -9061,7 +9242,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2010201;
+				CURRENT_PROJECT_VERSION = 20111353;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9090,7 +9271,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.2.1;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

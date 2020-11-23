@@ -391,6 +391,16 @@ static const CGFloat GapBetweenPages = 10.0;
     self.view.backgroundColor = UIColor.mnz_background;
 }
 
+- (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
+    CGFloat maximumZoomScale;
+    if (node.name.mnz_isImagePathExtension) {
+        maximumZoomScale = FLT_MAX;
+    } else {
+        maximumZoomScale = 1.0f;
+    }
+    return maximumZoomScale;
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -502,7 +512,7 @@ static const CGFloat GapBetweenPages = 10.0;
             
             UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
-            zoomableView.maximumZoomScale = node.name.mnz_isImagePathExtension ? 5.0f : 1.0f;
+            zoomableView.maximumZoomScale = [self maximumZoomScaleWith:node zoomableView:zoomableView imageView:imageView];
             zoomableView.zoomScale = 1.0f;
             zoomableView.contentSize = imageView.bounds.size;
             zoomableView.delegate = self;
@@ -817,7 +827,12 @@ static const CGFloat GapBetweenPages = 10.0;
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
-        CGFloat newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
+        CGFloat newScale;
+        if (imageView.frame.size.width < zoomableView.frame.size.width) {
+            newScale = zoomableView.zoomScale > 1.0f ? 1.0f : zoomableView.frame.size.width / imageView.frame.size.width;
+        } else {
+            newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
+        }
         [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
         [UIView animateWithDuration:0.3 animations:^{
             if (newScale > 1.0f) {
