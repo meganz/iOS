@@ -77,10 +77,6 @@ static TransfersWidgetViewController* instance = nil;
     self.completedTransfers = [MEGASdkManager.sharedMEGASdk completedTransfers];
 
     self.editBarButtonItem = [UIBarButtonItem.alloc initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") style:UIBarButtonItemStylePlain target:self action:@selector(switchEdit)];
-    self.navigationItem.leftBarButtonItem = ({
-        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissVC)];
-        chatBackBarButtonItem;
-    });
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
 
     [self.inProgressButton setTitle:AMLocalizedString(@"In Progress", @"Title of one of the filters in the Transfers section. In this case In Progress transfers") forState:UIControlStateNormal];
@@ -982,9 +978,6 @@ static TransfersWidgetViewController* instance = nil;
 
 #pragma mark - Private
 
-- (void)dismissVC {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (void)switchEdit {
     [self.tableView setEditing:!self.tableView.editing animated:YES];

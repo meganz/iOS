@@ -97,6 +97,7 @@
 - (void)tapProgressView {
     TransfersWidgetViewController *transferVC = [TransfersWidgetViewController sharedTransferViewController];
     MEGANavigationController *nav = [[MEGANavigationController alloc] initWithRootViewController:transferVC];
+    [nav addLeftDismissButtonWithText:AMLocalizedString(@"close", @"A button label.")];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

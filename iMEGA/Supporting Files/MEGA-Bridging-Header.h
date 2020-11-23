@@ -100,7 +100,6 @@
 #import "PasswordView.h"
 #import "PasswordStrengthIndicatorView.h"
 #import "ChatRoomsViewController.h"
-#import "TransfersViewController.h"
 #import "TransfersWidgetViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
