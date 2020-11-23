@@ -55,6 +55,13 @@
         [self.locationManager startUpdatingLocation];
     }
     
+    if (self.editMessage) {
+        MEGAChatGeolocation *geoLocation = self.editMessage.containsMeta.geolocation;
+        CLLocationCoordinate2D center = CLLocationCoordinate2DMake(geoLocation.latitude, geoLocation.longitude);
+        MKCoordinateRegion region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01));
+        [self.mapView setRegion:region animated:YES];
+    }
+    
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendGeolocation:)];
     gesture.numberOfTapsRequired = 1;
     [self.sendLocationView addGestureRecognizer:gesture];
@@ -116,6 +123,7 @@
 }
 
 - (void)sendGeolocationWithCoordinate2d:(CLLocationCoordinate2D)coordinate {
+    [self dismissViewControllerAnimated:YES completion:nil];
     MKMapSnapshotOptions *mapSnapshotOptions = [[MKMapSnapshotOptions alloc] init];
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000);
@@ -150,21 +158,18 @@
         
         NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
         NSString *imageB64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-            MEGAChatMessage *message;
-        
-            if (self.editMessage) {
-                uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
-                message = [[MEGASdkManager sharedMEGAChatSdk] editGeolocationForChat:self.chatRoom.chatId messageId:messageId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
-            } else {
-                message = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:self.chatRoom.chatId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
-            }
-            MEGALogDebug(@"[Share Location] Send message %@", message);
-            if (!message) {
-                [SVProgressHUD showErrorWithStatus:@"Share location is not possible"];
-            }
-        }];
+        MEGAChatMessage *message;
+                
+        if (self.editMessage) {
+            uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
+            message = [[MEGASdkManager sharedMEGAChatSdk] editGeolocationForChat:self.chatRoom.chatId messageId:messageId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
+        } else {
+            message = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:self.chatRoom.chatId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
+        }
+        MEGALogDebug(@"[Share Location] Send message %@", message);
+        if (!message) {
+            [SVProgressHUD showErrorWithStatus:@"Share location is not possible"];
+        }
     }];
 }
 
@@ -217,14 +222,16 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    MEGALogDebug(@"[Share Location] Did update locations %@", locations);
-    self.locationManager.delegate = nil;
-    
-    CLLocation *location = locations.lastObject;
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
-    MKCoordinateRegion region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01));
-    
-    [self.mapView setRegion:region animated:YES];
+    if (!self.editMessage) {
+        MEGALogDebug(@"[Share Location] Did update locations %@", locations);
+        self.locationManager.delegate = nil;
+        
+        CLLocation *location = locations.lastObject;
+        CLLocationCoordinate2D center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
+        MKCoordinateRegion region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01));
+        
+        [self.mapView setRegion:region animated:YES];
+    }
 }
 
 #pragma mark - MKMapViewDelegate
