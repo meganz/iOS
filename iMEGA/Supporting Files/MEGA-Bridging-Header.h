@@ -67,6 +67,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "FolderLinkViewController.h"
+#import "FileLinkViewController.h"
 #import "MEGAStore.h"
 
 #import "MEGALinkManager.h"
@@ -75,6 +76,7 @@
 #import "MEGAPurchase.h"
 
 #import "AppDelegate.h"
+#import "MEGAAVViewController.h"
 #import "BrowserViewController.h"
 #import "ChangePasswordViewController.h"
 #import "ContactLinkQRViewController.h"

@@ -95,6 +95,8 @@ class GetLinkViewController: UIViewController {
         if getLinkVM.multilink {
             multilinkDescriptionLabel.text = AMLocalizedString("Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.", "Description text about options when exporting links for several nodes")
             multilinkDescriptionView.isHidden = false
+        } else {
+            tableView.isUserInteractionEnabled = false
         }
         
         processNodes()
@@ -104,6 +106,11 @@ class GetLinkViewController: UIViewController {
         copyKeyBarButton.title = AMLocalizedString("copyKey")
         
         updateAppearance()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        SVProgressHUD.dismiss()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -210,6 +217,10 @@ class GetLinkViewController: UIViewController {
             if node.expirationTime > 0 {
                 getLinkVM.expiryDate = true
                 getLinkVM.date = Date(timeIntervalSince1970: TimeInterval(node.expirationTime))
+            }
+            
+            if !getLinkVM.link.isEmpty {
+                tableView.isUserInteractionEnabled = true
             }
             
             guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else {

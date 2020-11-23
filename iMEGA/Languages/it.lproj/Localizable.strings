@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link non valido";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="L'account che ha creato questo link è stato chiuso a causa di violazioni multiple dei nostri Termini di Servizio.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="L'account che ha creato questo link è stato chiuso a causa di violazioni multiple dei nostri [A]Termini di Servizio[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Inserisci la chiave di decrittazione";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="Foto";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Voce";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contatto";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Inizia gruppo";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Cancella dati locali";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Esci e cancella i dati locali dopo 10 tentativi falliti";
+"failedAttempstSectionTitle"="Effettua il logout e cancella i dati locali dopo 10 tentativi falliti";
 /* Menu item */
 "help"="Aiuto";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="Trasferimenti";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tutti";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Completato";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Pulisci la chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sei sicuro di voler cancellare tutta la chat?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Continua";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Cancella messaggio";
 /*  */
 "fromCloudDrive"="Dal Cloud Drive";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contatto";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Invia contatto";
 /* */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="È possibile che tu stia utilizzando la stessa password per il tuo account MEGA e per altri servizi, e che almeno uno di questi altri servizi è stato oggetto di un furto di dati.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="La tua password è stata rubata e adesso viene usata da persone non identificate per entrare nei tuoi account, incluso, ma non limitato, il tuo account MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Pulisci selezionati";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Pulisci Tutto";
 /* Alert header for asking permission to resume transfers*/

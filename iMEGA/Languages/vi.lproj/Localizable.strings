@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường dẫn liên kết không hợp lệ";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Tài khoản của chủ sở hữu mục này đã bị ngưng hoạt động do vi phạm Điều Khoản Dịch Vụ.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Tài khoản người dùng sở hữu đường liên kết này đã bị chấm dứt do vi phạm nhiều [A] Điều khoản Dịch vụ [/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Nhập chìa khóa mã";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA không tạo được liên kết an ninh tới SSL. Thiết bị bạn đang sử dụng có thể đang dùng mạng WiFi công cộng có yêu cầu một số điều kiện khi kết nối.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Nội dung bạn đang muốn truy cập không có nằm trong tài khoản này. Xin đăng nhập vào tài khoản trùng khớp như cái có trên trình duyệt web của điện thoại.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin kiên nhẫn chờ...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -289,13 +289,15 @@
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
 "Photos"="Hình ảnh";
 /* Menu option from the `Add` section that allows the user to make voice call. */
-"Voice"="Voice";
+"Voice"="Gọi thoại";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Tên liên lạc";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="Start Group";
+"Start Group"="Tạo nhóm chat";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Vị trí";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Voice Clip";
+"Voice Clip"="Tin nhắn thoại";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư Mục Mới";
 /* Hint text shown on the create folder alert. */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Xóa Dữ Liệu Được Lưu";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Sau 10 lần nhập sai mã, ứng dụng sẽ tự động thoát tài khoản và xóa các dữ liệu có liên quan đến MEGA trong iPhone";
+"failedAttempstSectionTitle"="Tự động đăng xuất và dọn sạch dữ liệu có liên quan đến MEGA trong điện thoại sau 10 lần nhập sai mã";
 /* Menu item */
 "help"="Thắc Mắc Cần Trợ Giúp";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="Các Phiên Truyền Tải";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tất Cả";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="Đang Truyền";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Hoàn thành";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Dọn Lịch Sử Tin Nhắn";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Tiếp tục";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Xóa tin nhắn";
 /*  */
 "fromCloudDrive"="Lấy từ Ổ Mây";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Tên liên lạc";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Gửi tên liên lạc";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Tiến hành đăng xuất";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Trước khi tiến hành việc đăng xuất, xin thử điền mật khẩu để kiểm tra rằng mình còn nhớ chính xác. Quên mất mật khẩu và không có mã phục hồi sẽ không lấy lại được tài khoản.";
+"testPasswordLogoutText"="You are about to log out, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Đang tải...";
 /*   */
@@ -2077,7 +2081,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 giờ";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Im lặng tất cả các thông báo chát trong";
+"Mute chat Notifications for"="Im lặng tất cả các âm báo chát trong";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
 /* Chat Notifications DND: Remaining time left if until today */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Quý khách hiện tại có thể đang dùng một mật khẩu duy nhất cho tất cả các dịch vụ khác bao gồm cả MEGA, một trong các dịch vụ đó đã bị tấn công và để lộ thông tin gần đây.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Mật khẩu có nguy cơ đã bị tiết lộ và hacker sử dụng để thử truy cập vào các dịch vụ khác nhau, có thể bao gồm cả MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Dọn Mục Đã Chọn";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
 /* Alert header for asking permission to resume transfers*/

@@ -36,9 +36,9 @@ PODS:
   - GoogleUtilities/UserDefaults (7.1.0):
     - GoogleUtilities/Logger
   - Haptica (3.0.2)
-  - InputBarAccessoryView (4.3.2):
-    - InputBarAccessoryView/Core (= 4.3.2)
-  - InputBarAccessoryView/Core (4.3.2)
+  - InputBarAccessoryView (4.3.3):
+    - InputBarAccessoryView/Core (= 4.3.3)
+  - InputBarAccessoryView/Core (4.3.3)
   - ISEmojiView (0.2.6)
   - MessageKit (3.1.0):
     - InputBarAccessoryView (~> 4.3.0)
@@ -48,7 +48,7 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - PanModal (1.2.7)
-  - PinLayout (1.9.0)
+  - PinLayout (1.9.2)
   - PromisesObjC (1.2.11)
   - YYCache (1.0.4)
   - YYImage (1.0.4):
@@ -131,12 +131,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
   GoogleUtilities: f734da554aade8cc7928a31c2f3311897933a1bd
   Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
-  InputBarAccessoryView: 7985d418040a05fe894bd4b8328dd43ab35517c3
+  InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
-  PinLayout: 465e45d2fbed082f5a62cc2d0e14759bbc28b14b
+  PinLayout: 0d96022e46e8b80468d819f182a393b97ca038da
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665

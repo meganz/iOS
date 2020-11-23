@@ -186,7 +186,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = YES;
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 
     if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
         [DevicePermissionsHelper modalNotificationsPermission];
@@ -206,7 +206,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

@@ -1025,6 +1025,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             break;
         }
             
+        case MEGAChatRequestTypeTruncateHistory: {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:AMLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted")];
+            break;
+        }
+            
         default:
             break;
     }

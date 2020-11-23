@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="无效的链接";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="由于多次违反我们的服务条款，因此创建此链接的账户已被停权。";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由于多次违反我们的[A]服务条款[/A]，因此创建此链接的账户已被停权。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您的访问内容不可用于此帐户。请在手机客户端登录与之相同的MEGA帐户。";
+"theContentIsNotAvailableForThisAccount"="您尝试访问的内容对该帐户不可用。请使用与手机客户端相同的帐户登录。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -290,6 +290,8 @@
 "Photos"="照片";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="语音通话";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="联系人";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="开启群聊";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地数据";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
+"failedAttempstSectionTitle"="输入10次密码失败后登出并清除本地数据";
 /* Menu item */
 "help"="帮助";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="传输";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="完成";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -956,7 +960,7 @@
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
 "installMEGASyncCompletedExplanation"="由于您安装了MEGAsync，您已获得%1储存空间以及%2流量。";
 /*  */
-"installOurMobileApp"="安装我们的手机应用程序";
+"installOurMobileApp"="安装手机App";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
 "installOurMobileAppCompletedExplanation"="由于您安装了我们的应用程序上的应用程序，您已获得%1储存空间以及%2流量。";
 /*  */
@@ -1048,7 +1052,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="选择会员资格:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="省下17%";
+"save17"="节省17%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="选购出错%@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="清空对话记录";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您确定要清除此对话的全部历史记录吗？";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="继续";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="删除信息";
 /*  */
 "fromCloudDrive"="从云盘";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="联系人";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="发送联系资讯";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="您即将登出，请确认您的密码并确保您记住它。如果您忘记了密码，您将无法使用MEGA数据。";
+"testPasswordLogoutText"="登出帐户前，请确认您是否记住了您的密码。 如果您忘记了密码，则无法访问存储在MEGA中的数据。";
 /* state previous to import a file */
 "loading"="加载中";
 /*   */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="您的MEGA帐户使用的密码可能与其他服务使用的密码相同，并且这些其他服务中至少有一项服务的数据已遭泄露。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密码遭到泄露（包括且不限于MEGA帐户），您的帐户正在被他人登录和使用。";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="清除已选项目";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
 /* Alert header for asking permission to resume transfers*/

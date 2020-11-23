@@ -1877,6 +1877,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             NSString *detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
             UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
             [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         } else { // Storage overquota error
             NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
