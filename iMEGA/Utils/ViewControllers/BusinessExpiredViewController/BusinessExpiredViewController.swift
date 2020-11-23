@@ -10,6 +10,8 @@ class BusinessExpiredViewController: UIViewController {
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var dismissButton: UIButton!
     
+    //MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +24,8 @@ class BusinessExpiredViewController: UIViewController {
             imageView.image = UIImage(named: "accountExpiredUser")
             detailLabel.text = AMLocalizedString("Your account is currently [B]suspended[/B]. You can only browse your data.", "A dialog message which is shown to sub-users of expired business accounts.").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + AMLocalizedString("Contact your business account administrator to resolve the issue and activate your account.", "A dialog message which is shown to sub-users of expired business accounts.");
         }
+        
+        updateAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,7 +39,29 @@ class BusinessExpiredViewController: UIViewController {
         
         MEGASdkManager.sharedMEGASdk().remove(self)
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
+    //MARK: - Private
+    
+    private func updateAppearance() {
+        view.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        
+        detailLabel.textColor = .mnz_subtitles(for: traitCollection)
+        
+        dismissButton.mnz_setupCancel(traitCollection)
+    }
+    
+    //MARK: - IBActions
+    
     @IBAction func dismissTouchUpInside(_ sender: UIButton) {
         self.dismiss(animated: true) {
             if self.isFetchNodesDone {
