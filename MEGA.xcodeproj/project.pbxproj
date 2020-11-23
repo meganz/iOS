@@ -41,7 +41,6 @@
 		2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */; };
 		2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */; };
 		2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */; };
-		2F6F0892253E387600C5B5D7 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F088A253E387600C5B5D7 /* TransfersViewController.m */; };
 		2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */; };
 		2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
@@ -1507,10 +1506,8 @@
 		2F6F0881253E387500C5B5D7 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
 		2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersWidgetViewController.m; sourceTree = "<group>"; };
 		2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
-		2F6F0886253E387600C5B5D7 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
 		2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
 		2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
-		2F6F088A253E387600C5B5D7 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
 		2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressIndicatorView.xib; sourceTree = "<group>"; };
 		2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetViewController.h; sourceTree = "<group>"; };
 		2F6F08CD253E3D1F00C5B5D7 /* TransfersWidgetSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetSelected.h; sourceTree = "<group>"; };
@@ -6664,8 +6661,6 @@
 				2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */,
 				2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */,
 				2F6F0881253E387500C5B5D7 /* Transfers.storyboard */,
-				2F6F0886253E387600C5B5D7 /* TransfersViewController.h */,
-				2F6F088A253E387600C5B5D7 /* TransfersViewController.m */,
 				2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */,
 				2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */,
 				2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */,
@@ -7811,7 +7806,6 @@
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
 				A86B9F382316D6AB00F35E7A /* FLEXMultilineTableViewCell.m in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
-				2F6F0892253E387600C5B5D7 /* TransfersViewController.m in Sources */,
 				A86B9F322316D6AB00F35E7A /* FLEXSetExplorerViewController.m in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */,

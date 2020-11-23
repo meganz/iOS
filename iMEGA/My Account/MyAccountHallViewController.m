@@ -15,7 +15,7 @@
 #import "NotificationsTableViewController.h"
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
-#import "TransfersViewController.h"
+#import "TransfersWidgetViewController.h"
 #import "TransfersWidgetViewController.h"
 #import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
@@ -474,7 +474,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         }
             
         case MyAccountTransfers: {
-            TransfersViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersViewControllerID"];
+            TransfersWidgetViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersWidgetViewControllerID"];
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
