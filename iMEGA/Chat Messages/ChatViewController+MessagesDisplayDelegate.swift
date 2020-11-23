@@ -81,6 +81,10 @@ extension ChatViewController: MessagesDisplayDelegate {
                 
             }
             
+            if chatMessage.message.type == .containsMeta,
+                chatMessage.message.containsMeta.type == .giphy {
+                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+            }
             
         }
     }

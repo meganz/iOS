@@ -61,6 +61,11 @@ platform :ios do
   desc "Build App using development certificate for Appcenter"
   lane :build_using_development do |options|
 
+    increment_build_number(
+      build_number: Time.new.strftime("%y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
+      xcodeproj: PROJECT
+    )
+    
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
@@ -113,6 +118,15 @@ platform :ios do
       },
       slack_url: APPCENTER_SLACK_URL
     )
+  end
+
+  desc "build a app store release version"
+  lane :upload_symbols do |options|
+    upload_symbols_to_crashlytics(
+      dsym_path: lane_context[SharedValues::DSYM_OUTPUT_PATH],
+      gsp_path:"./iMEGA/Supporting Files/GoogleService-Info.plist"    
+    )
+
   end
 
   desc "build a app store release version"

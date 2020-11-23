@@ -26,5 +26,8 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypePdfPageView,
     MegaNodeActionTypePdfThumbnailView,
     MegaNodeActionTypeForward,
-    MegaNodeActionTypeSearch,
+    MegaNodeActionTypeViewInFolder,
+    MegaNodeActionTypeClear,
+    MegaNodeActionTypeRetry,
+    MegaNodeActionTypeSearch
 };

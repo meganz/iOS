@@ -12,7 +12,7 @@ Install _fastlane_ using
 ```
 [sudo] gem install fastlane -NV
 ```
-or alternatively using `brew cask install fastlane`
+or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
@@ -31,6 +31,11 @@ Build App using development certificate for Appcenter
 fastlane ios upload_to_appcenter
 ```
 Upload to Appcenter
+### ios upload_symbols
+```
+fastlane ios upload_symbols
+```
+build a app store release version
 ### ios build_release
 ```
 fastlane ios build_release

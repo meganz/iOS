@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link salah";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Akun yang membuat link ini telah dimatikan karena beberapa pelanggaran Kebijakan Pelayanan kami.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Akun yang membuat link ini telah dimatikan karena beberapa pelanggaran pada [A]Kebijakan Pelayanan[/A] kami.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Masukkan decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan Wi-Fi publik dengan persyaratan tambahan.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Konten yang ingin Anda akses tidak tersedia untuk akun ini. Coba masuk dengan akun yang sama seperti di klien web seluler.";
+"theContentIsNotAvailableForThisAccount"="Konten yang anda coba akses tidak tersedia untuk akun ini. Silakan coba masuk dengan akun yang sama seperti di klien web seluler.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Prosesnya memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -289,13 +289,15 @@
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
 "Photos"="Foto";
 /* Menu option from the `Add` section that allows the user to make voice call. */
-"Voice"="Voice";
+"Voice"="Suara";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Kontak";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="Start Group";
+"Start Group"="Mulai Grup";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Lokasi";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Voice Clip";
+"Voice Clip"="Klip Suara";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Hapus Data Lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal mencoba passcode";
+"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal memasukkan kode sandi";
 /* Menu item */
 "help"="Bantuan";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="Pemindahan";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Semua";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="In Progress";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Selesai";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Hapus Riwayat Chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Anda yakin ingin menghapus seluruh riwayat pesan dari percakapan ini?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Lanjutkan";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Hapus pesan";
 /*  */
 "fromCloudDrive"="Dari Cloud drive";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Kontak";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kirim kontak";
 /* */
@@ -1527,7 +1531,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Lanjutkan untuk keluar";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="Anda akan keluar, silakan uji kata sandi Anda untuk memastikan Anda mengingatnya. Jika Anda kehilangan kata sandi, Anda akan kehilangan akses ke data MEGA Anda.";
+"testPasswordLogoutText"="Anda akan keluar, silakan uji kata sandi anda untuk memastikan anda mengingatnya. Jika anda kehilangan kata sandi, anda akan kehilangan akses ke data MEGA Anda.";
 /* state previous to import a file */
 "loading"="Memuat...";
 /*   */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Ada kemungkinan bahwa Anda menggunakan kata sandi yang sama untuk akun MEGA Anda seperti untuk layanan lain, dan bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Kata sandi Anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun Anda, termasuk, namun tidak terbatas pada, akun MEGA Anda.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Hapus Dipilih";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Pause All";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Resume All";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Hapus semua";
 /* Alert header for asking permission to resume transfers*/
@@ -2315,15 +2325,15 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSI";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Favorit";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remove Favourite";
+"Remove Favourite"="Hapus Favorit";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="Label";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="Label...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Remove Label";
+"Remove Label"="Hapus Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="Merah";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
@@ -2381,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Tautan ini tidak tersedia karena akun pengguna telah ditutup karena pelanggaran berat terhadap [A]Ketentuan Layanan[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Folder/file ini dilaporkan mengandung konten yang tidak menyenangkan, seperti Materi Eksploitasi Anak, Ekstremisme Kekerasan, atau Bestialitas. Akun pembuat tautan telah ditutup dan detail lengkapnya, termasuk alamat IP, telah diberikan kepada pihak berwenang.";
+"Taken down due to severe violation of our terms of service"="Folder/file ini dilaporkan mengandung konten yang tidak menyenangkan, seperti Materi Eksploitasi Anak, Ekstremisme Kekerasan, atau Bestialitas. Akun pembuat tautan telah ditutup dan detail lengkapnya, termasuk alamat IP, telah diberikan kepada pihak berwenang.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Tidak tersedia";
 /* Error text shown when requesting email for email verification within 10 minutes */

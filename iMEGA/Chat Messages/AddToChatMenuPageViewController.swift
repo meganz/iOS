@@ -12,6 +12,7 @@ protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
     func showScanDoc()
     func startGroupChat()
     func showLocation()
+    func showGiphy()
     func shouldDisableAudioMenu() -> Bool
     func shouldDisableVideoMenu() -> Bool
     func numberOfPages(_ pages: Int)
@@ -117,6 +118,13 @@ class AddToChatMenuPageViewController: UIPageViewController {
         let rowSpacing = AddToChatMenuViewController().rowSpacing
         return (eachMenuWidth * CGFloat(numberOfRowsForMenu)) + rowSpacing
     }
+    
+    func totalRequiredWidth(forAvailableHeight height: CGFloat,
+                            horizontalPaddding: CGFloat) -> CGFloat {
+        let rowSpacing = AddToChatMenuViewController().rowSpacing
+        let eachMenuWidth = (height - rowSpacing) / CGFloat(numberOfRowsForMenu)
+        return eachMenuWidth * CGFloat(menuPerRow) 
+    }
 }
 
 extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -188,6 +196,8 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
             menuDelegate?.showLocation()
         case .voiceClip:
             menuDelegate?.showVoiceClip()
+        case .giphy:
+            menuDelegate?.showGiphy()
         }
     }
     

@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Lien invalide";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Le compte qui a créé ce lien a été annulé en raison du non-respect répété de nos Conditions générales d’utilisation.";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Le compte qui a créé ce lien a été annulé en raison du non-respect répété de nos [A]Conditions générales d’utilisation[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Saisir la clé de déchiffrement";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,12 +290,14 @@
 "Photos"="Photos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Appel vocal";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="Contact";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Commencer un groupe";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Emplacement";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Voice Clip";
+"Voice Clip"="Insert parlé";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nouveau dossier";
 /* Hint text shown on the create folder alert. */
@@ -395,7 +397,7 @@
 /* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Supprimer des liens";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Le lien a été retiré";
+"linkRemoved"="Le lien a été supprimé";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Les liens ont été supprimés";
 /* Title show when a file is being downloaded */
@@ -483,7 +485,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Sauvegardez automatiquement vos photos et vos vidéos dans votre disque nuagique.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activer les téléversements de l’appareil photo";
+"enableCameraUploadsButton"="Activer Téléversements de l’appareil photo";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Les téléversements de l’appareil photo sont activés";
 /* Message shown when the camera uploads have been completed */
@@ -553,11 +555,11 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Souhaitez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Souhaitez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Souhaitez-vous vraiment supprimer ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
-"shareRemoved"="Le partage a été retiré";
+"shareRemoved"="Le partage a été supprimé";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Les partages ont été retirés";
+"sharesRemoved"="Les partages ont été supprimés";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Partagé avec";
 /* Item menu option to add a contact through your device app Contacts */
@@ -577,7 +579,7 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Supprimer le contact";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts ?";
+"removeMultipleUsersMessage"="Voulez-vraiment supprimer %d utilisateurs de votre liste de contacts ?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Le contact %@ a été supprimé";
 /* Label shown when a contact request is pending */
@@ -679,7 +681,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Si cette option est activée, les vidéos seront téléversées.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nouvelles options des Téléversements de l’appareil photo !";
+"New Camera Upload!"="Nouvelles options des Téléversements de l’appareil photo";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Vous pouvez maintenant choisir de convertir les photos et les vidéos HEIC/HEVC vers les formats plus largement compatibles JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d’accès.";
+"failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d’accès.";
 /* Menu item */
 "help"="Aide";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="Transferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tous";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="En cours";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Terminés";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Souhaitez-vous vraiment effacer l’historique entier de cette conversation ?";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="L’historique de la conversation a été effacé";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="Supprimer le message";
 /*  */
 "fromCloudDrive"="Du disque nuagique";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Envoyer un contact";
 /* */
@@ -1827,7 +1831,7 @@
 /* notification text */
 "A user has left the shared folder {0}"="Un utilisateur a quitté le dossier partagé {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
-"Access to folders was removed."="L’accès aux dossiers a été retiré.";
+"Access to folders was removed."="L’accès aux dossiers a été supprimé.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added 1 file"="1 fichier a été ajouté";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1845,9 +1849,9 @@
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="[A] fichiers [B] dossiers ont été ajoutés";
 /* Notification when on client side when owner of a shared folder removes folder/file from it. */
-"Removed item from shared folder"="Un élément a été retiré d’un dossier partagé";
+"Removed item from shared folder"="Un élément a été supprimé d’un dossier partagé";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
-"Removed [X] items from a share"="[X] éléments ont été retirés d’un partage";
+"Removed [X] items from a share"="[X] éléments ont été supprimés d’un partage";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Votre paiement pour l’abonnement %1 a été reçu.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
@@ -1897,7 +1901,7 @@
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "Send Location"="Envoyer la position";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Cette position sera ouverte en utilisant un fournisseur de cartes tiers en dehors de la plateforme chiffrée de bout en bout de MEGA.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Cette position géographique sera ouverte en utilisant un fournisseur de cartes tiers en dehors de la plateforme chiffrée de bout en bout de MEGA.";
 /* Text shown in location-type messages */
 "Pinned Location"="Position épinglée";
 /* Plural of participant. 2 participants */
@@ -2057,7 +2061,7 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Il n’y a aucun lien public";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Gérer le lien";
+"Manage Share"="Gérer le partage";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partager avec";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Il est possible que vous utilisiez le même mot de passe pour votre compte MEGA que pour d’autres services et qu’au moins l’un de ses services ait souffert d’une atteinte à la protection des données.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="Le quota de transfert est dépassé";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Effacer la sélection";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="Tout mettre en pause";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="Tout reprendre";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Tout effacer";
 /* Alert header for asking permission to resume transfers*/
@@ -2381,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ce lien n’est pas accessible, car le compte de l’utilisateur a été fermé en raison d’une violation flagrante des [A]Conditions générales d’utilisation[/A] de MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="Ce dossier ou fichier a été signalé comme source de contenu répréhensible tel qu’exploitation d’enfants, extrémisme violent ou bestialité. Le compte du créateur du lien a été fermé et ses renseignements complets, dont l’adresse IP, ont été remis aux autorités.";
+"Taken down due to severe violation of our terms of service"="Ce dossier ou fichier a été signalé comme source de contenu répréhensible tel qu’exploitation d’enfants, extrémisme violent ou bestialité. Le compte du créateur du lien a été fermé et ses renseignements complets, dont l’adresse IP, ont été remis aux autorités.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Non disponible";
 /* Error text shown when requesting email for email verification within 10 minutes */

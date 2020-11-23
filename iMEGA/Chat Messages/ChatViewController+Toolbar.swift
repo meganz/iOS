@@ -14,6 +14,7 @@ extension ChatViewController {
         case .delete:
             setToolbarItems([deleteBarButtonItem], animated: true)
         }
+        updateToolbarState()
     }
     
     
@@ -153,8 +154,11 @@ extension ChatViewController {
     
     func updateToolbarState() {
         let isEnabled = selectedMessages.count > 0
+        let hasGiphy = selectedMessages.contains {
+            $0.message.type == .containsMeta && $0.message.containsMeta.type == .giphy
+        }
         forwardBarButtonItem.isEnabled = isEnabled
-        shareBarButtonItem.isEnabled = isEnabled
+        shareBarButtonItem.isEnabled = isEnabled && !hasGiphy
         deleteBarButtonItem.isEnabled = isEnabled
     }
 }

@@ -1,13 +1,13 @@
 
 #import "PreviewDocumentViewController.h"
 
-#import <QuickLook/QuickLook.h>
 #import <PDFKit/PDFKit.h>
 
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
 #import "CopyrightWarningViewController.h"
+#import "MEGAQLPreviewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
@@ -50,6 +50,8 @@
 @property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
+
+@property (nonatomic) UIButton *openZipButton;
 
 @end
 
@@ -129,6 +131,8 @@
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
             [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
         }
     }
 }
@@ -200,6 +204,10 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     [self.view addSubview:self.previewController.view];
+    
+    if ([self.filesPathsArray.firstObject.pathExtension.lowercaseString isEqual: @"zip"] || [self.nodeFilePath.pathExtension.lowercaseString isEqual: @"zip"]) {
+        [self createOpenZipButton];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -255,12 +263,32 @@
     }
 }
 
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    [self.openZipButton mnz_setupBasic:self.traitCollection];
+}
+
+- (void)createOpenZipButton {
+    UIButton *openZipButton = [UIButton newAutoLayoutView];
+    [openZipButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [openZipButton mnz_setupBasic:self.traitCollection];
+    [self.view addSubview:openZipButton];
+    [openZipButton autoSetDimension:ALDimensionWidth toSize:300];
+    [openZipButton autoSetDimension:ALDimensionHeight toSize:60];
+    [openZipButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [openZipButton autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:UIDevice.currentDevice.iPad ? 32 : 16];
+    [openZipButton addTarget:self action:@selector(openZipInQLViewController) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.openZipButton = openZipButton;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)shareAction:(id)sender {
     if (self.isLink && self.fileLink) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLink] applicationActivities:nil];
-        activityVC.popoverPresentationController.barButtonItem = self.self.moreBarButtonItem;
+        activityVC.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         if (self.node) {
@@ -269,7 +297,7 @@
         } else {
             if (self.filesPathsArray.count > 0 && self.nodeFileIndex < self.filesPathsArray.count) {
                 NSString *filePath = self.filesPathsArray[self.nodeFileIndex];
-                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[filePath.lastPathComponent, [NSURL fileURLWithPath:filePath]] applicationActivities:nil];
+                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:filePath]] applicationActivities:nil];
                 activityVC.popoverPresentationController.barButtonItem = sender;
                 [self presentViewController:activityVC animated:YES completion:nil];
             }
@@ -312,8 +340,12 @@
     [self download];
 }
 
-- (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+- (void)openZipInQLViewController {
+    NSString *filePath = self.nodeFilePath ? self.nodeFilePath : self.filesPathsArray.firstObject;
+    MEGAQLPreviewController *previewController = [MEGAQLPreviewController.alloc initWithFilePath:filePath];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - QLPreviewControllerDataSource
@@ -489,7 +521,11 @@
         self.imageView.hidden = YES;
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+        if (self.node) {
+            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+        } else {
+            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
+        }
         [self.navigationController setToolbarHidden:NO animated:YES];
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
@@ -543,18 +579,26 @@
 }
 
 - (void)singleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
-    if (self.navigationController.isToolbarHidden) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [self.navigationController setToolbarHidden:NO animated:YES];
+    if (self.pdfView.currentSelection) {
+        [self.pdfView clearSelection];
     } else {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        [self.navigationController setToolbarHidden:YES animated:YES];
+        if (self.navigationController.isToolbarHidden) {
+            [self.navigationController setNavigationBarHidden:NO animated:YES];
+            [self.navigationController setToolbarHidden:NO animated:YES];
+        } else {
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+            [self.navigationController setToolbarHidden:YES animated:YES];
+        }
     }
 }
 
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+        [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return NO;
+    }
     return YES;
 }
 

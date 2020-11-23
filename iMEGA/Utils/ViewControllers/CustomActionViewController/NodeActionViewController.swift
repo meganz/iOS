@@ -1,19 +1,20 @@
 import UIKit
 
 @objc protocol NodeActionViewControllerDelegate {
-    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) ->  ()
+    @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) ->  ()
 }
 
 class NodeActionViewController: ActionSheetViewController {
     
     private var node: MEGANode
     private var displayMode: DisplayMode
-    private var delegate: NodeActionViewControllerDelegate
-    private var sender: Any
+    var delegate: NodeActionViewControllerDelegate
+    var sender: Any
     
-    private let titleLabel = UILabel.newAutoLayout()
-    private let subtitleLabel = UILabel.newAutoLayout()
-    private let separatorLineView = UIView.newAutoLayout()
+    let nodeImageView = UIImageView.newAutoLayout()
+    let titleLabel = UILabel.newAutoLayout()
+    let subtitleLabel = UILabel.newAutoLayout()
+    let separatorLineView = UIView.newAutoLayout()
 
     // MARK: - NodeActionViewController initializers
 
@@ -35,7 +36,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)
             .setIsRestorable(node.mnz_isRestorable())
-            .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
+            .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
             .setisIncomingShareChildView(isIncoming)
             .setIsExported(node.isExported())
             .setIsOutshare(node.isOutShare())
@@ -100,7 +101,7 @@ class NodeActionViewController: ActionSheetViewController {
             return
         }
         dismiss(animated: true, completion: {
-            self.delegate.nodeAction(self, didSelect: action.type, for: self.node, from: self.sender)
+            self.delegate.nodeAction?(self, didSelect: action.type, for: self.node, from: self.sender)
         })
     }
     
@@ -110,7 +111,6 @@ class NodeActionViewController: ActionSheetViewController {
         
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
 
-        let nodeImageView = UIImageView.newAutoLayout()
         headerView?.addSubview(nodeImageView)
         nodeImageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
         nodeImageView.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 8)
@@ -141,5 +141,6 @@ class NodeActionViewController: ActionSheetViewController {
         separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
         separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
+        separatorLineView.backgroundColor = tableView.separatorColor
     }
 }

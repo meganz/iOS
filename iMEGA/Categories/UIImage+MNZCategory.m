@@ -198,102 +198,59 @@
 #pragma mark - Extensions
 
 + (UIImage *)mnz_genericImage {
-    static UIImage *genericImage = nil;
-    if (genericImage == nil) {
-        genericImage = [UIImage imageNamed:@"generic"];
-    }
-    
-    return genericImage;
+    return [UIImage imageNamed:@"generic"];
 }
 
 + (UIImage *)mnz_folderImage {
-    static UIImage *folderImage = nil;
-    if (folderImage == nil) {
-        folderImage = [UIImage imageNamed:@"folder"];
-    }
-    
-    return folderImage;
+    return [UIImage imageNamed:@"folder"];
 }
 
 + (UIImage *)mnz_incomingFolderImage {
-    static UIImage *incomingFolderImage = nil;
-    if (incomingFolderImage == nil) {
-        incomingFolderImage = [UIImage imageNamed:@"folder_incoming"];
-    }
-    
-    return incomingFolderImage;
+    return [UIImage imageNamed:@"folder_incoming"];
 }
 
 + (UIImage *)mnz_outgoingFolderImage {
-    static UIImage *outgoingFolderImage = nil;
-    if (outgoingFolderImage == nil) {
-        outgoingFolderImage = [UIImage imageNamed:@"folder_outgoing"];
-    }
-    
-    return outgoingFolderImage;
+    return [UIImage imageNamed:@"folder_outgoing"];
 }
 
 + (UIImage *)mnz_folderCameraUploadsImage {
-    static UIImage *folderCameraUploadsImage = nil;
-    if (folderCameraUploadsImage == nil) {
-        folderCameraUploadsImage = [UIImage imageNamed:@"folder_image"];
-    }
-    
-    return folderCameraUploadsImage;
+    return [UIImage imageNamed:@"folder_image"];
 }
 
 + (UIImage *)mnz_folderMyChatFilesImage {
-    static UIImage *folderCameraUploadsImage = nil;
-    if (folderCameraUploadsImage == nil) {
-        folderCameraUploadsImage = [UIImage imageNamed:@"folder_chat"];
-    }
-    
-    return folderCameraUploadsImage;
+    return [UIImage imageNamed:@"folder_chat"];
 }
 
 + (UIImage *)mnz_defaultPhotoImage {
-    static UIImage *defaultPhotoImage = nil;
-    if (defaultPhotoImage == nil) {
-        defaultPhotoImage = [UIImage imageNamed:@"image"];
-    }
-    
-    return defaultPhotoImage;
+    return [UIImage imageNamed:@"image"];
+}
+
++ (UIImage *)mnz_downloadingOverquotaTransferImage {
+    return [UIImage imageNamed:@"downloadingOverquota"];
+}
+
++ (UIImage *)mnz_uploadingOverquotaTransferImage {
+    return [UIImage imageNamed:@"uploadingOverquota"];
 }
 
 + (UIImage *)mnz_downloadingTransferImage {
-    static UIImage *downloadingTransferImage = nil;
-    if (downloadingTransferImage == nil) {
-        downloadingTransferImage = [UIImage imageNamed:@"downloading"];
-    }
-    
-    return downloadingTransferImage;
+    return [UIImage imageNamed:@"downloading"];
 }
 
 + (UIImage *)mnz_uploadingTransferImage {
-    static UIImage *uploadingTransferImage = nil;
-    if (uploadingTransferImage == nil) {
-        uploadingTransferImage = [UIImage imageNamed:@"uploading"];
-    }
-    
-    return uploadingTransferImage;
+    return [UIImage imageNamed:@"uploading"];
 }
 
 + (UIImage *)mnz_downloadQueuedTransferImage {
-    static UIImage *downloadQueuedTransferImage = nil;
-    if (downloadQueuedTransferImage == nil) {
-        downloadQueuedTransferImage = [UIImage imageNamed:@"downloadQueued"];
-    }
-    
-    return downloadQueuedTransferImage;
+    return [UIImage imageNamed:@"downloadQueued"];
 }
 
-+ (UIImage *)mnz_uploadQueuedTransferImage {
-    static UIImage *uploadQueuedTransferImage = nil;
-    if (uploadQueuedTransferImage == nil) {
-        uploadQueuedTransferImage = [UIImage imageNamed:@"uploadQueued"];
-    }
-    
-    return uploadQueuedTransferImage;
++ (UIImage *)mnz_uploadQueuedTransferImage {    
+    return [UIImage imageNamed:@"uploadQueued"];
+}
+
++ (UIImage *)mnz_errorTransferImage {
+    return [UIImage imageNamed:@"downloadError"];
 }
 
 + (UIImage * _Nullable)mnz_permissionsButtonImageForShareType:(MEGAShareType)shareType {

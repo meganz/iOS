@@ -16,6 +16,8 @@
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
+#import "TransfersWidgetViewController.h"
+#import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
@@ -121,6 +123,11 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

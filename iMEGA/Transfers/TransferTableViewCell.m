@@ -19,10 +19,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
+@property (strong, nonatomic) IBOutlet UIButton *pauseButton;
 
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
+@property (strong, nonatomic) IBOutlet UIProgressView *progressView;
 
 @property (strong, nonatomic) MEGATransfer *transfer;
 @property (strong, nonatomic) NSString *uploadTransferLocalIdentifier;
@@ -34,13 +35,19 @@
 #pragma mark - Public
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+    [self configureCellForTransfer:transfer overquota:false delegate:delegate];
+}
+
+- (void)configureCellForTransfer:(MEGATransfer *)transfer overquota:(BOOL)overquota delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
+    self.overquota = overquota;
     self.transfer = transfer;
     self.uploadTransferLocalIdentifier = nil;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
-
+    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+    self.progressView.progress = percentage;
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
@@ -79,6 +86,7 @@
     
     self.separatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     self.separatorView.layer.borderWidth = 0.5;
+    
 }
 
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
@@ -146,27 +154,51 @@
 }
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
+    self.transfer = transfer;
+    [self configureCellWithTransferState:self.transfer.state];
+}
+
+- (NSMutableAttributedString *)transferInfoAttributedString {
+    MEGATransfer *transfer = self.transfer;
+    if (transfer.state == MEGATransferStateCancelled || transfer.state == MEGATransferStateFailed) {
+        return NSMutableAttributedString.new;
+    }
     UIColor *percentageColor = (transfer.type == MEGATransferTypeDownload) ? UIColor.systemGreenColor : [UIColor mnz_blueForTraitCollection:self.traitCollection];
-    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
-    NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
+    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+    self.progressView.progress = percentage;
+    NSString *fileSize = [Helper memoryStyleStringFromByteCount:transfer.totalBytes.longLongValue];
+    NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %% of %@ ", percentage  * 100, fileSize];
     NSMutableAttributedString *percentageAttributedString = [NSMutableAttributedString.alloc initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
     
-    NSString *speed = [NSString stringWithFormat:@" %@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
-    NSAttributedString *speedAttributedString = [NSAttributedString.alloc initWithString:speed attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
-    [percentageAttributedString appendAttributedString:speedAttributedString];
-    self.infoLabel.attributedText = percentageAttributedString;
+    if (transfer.state == MEGATransferStateActive && ![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+        NSString *speed = [NSString stringWithFormat:@"%@/s ", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
+        NSAttributedString *speedAttributedString = [NSAttributedString.alloc initWithString:speed attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+        [percentageAttributedString appendAttributedString:speedAttributedString];
+    }
+    return percentageAttributedString;
 }
 
 - (void)updateTransferIfNewState:(MEGATransfer *)transfer {
-    if (self.transfer.state != transfer.state) {
-        self.transfer = transfer;
-        [self configureCellWithTransferState:self.transfer.state];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+        if (self.transfer.state != transfer.state) {
+            self.transfer = transfer;
+            float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+            self.progressView.progress = percentage;
+            [self configureCellWithTransferState:self.transfer.state];
+        }
     }
 }
 
 #pragma mark - Private
 
 - (void)configureCellWithTransferState:(MEGATransferState)transferState {
+    if (self.overquota && self.transfer.type == MEGATransferTypeDownload) {
+        self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingOverquotaTransferImage : UIImage.mnz_uploadingOverquotaTransferImage;
+        self.infoLabel.text = AMLocalizedString(@"Transfer over quota", @"Label indicating transfer over quota");
+        self.infoLabel.textColor = [UIColor mnz_fromHexString:@"FFCC00"];
+        self.pauseButton.hidden = self.cancelButton.hidden = NO;
+        return;
+    }
     switch (transferState) {
         case MEGATransferStateQueued: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
@@ -182,13 +214,26 @@
             [self.arrowImageView setNeedsDisplay];
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+                self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
+                NSAttributedString *status = [NSAttributedString.alloc initWithString:AMLocalizedString(@"paused", @"Paused") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+                NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+                [infoLabel appendAttributedString:status];
+                self.infoLabel.attributedText = infoLabel;
+            } else {
+                self.infoLabel.attributedText = [self transferInfoAttributedString];
+            }
+
             break;
         }
             
         case MEGATransferStatePaused: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
-            self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            self.infoLabel.text = AMLocalizedString(@"paused", @"Paused");
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:AMLocalizedString(@"paused", @"Paused") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+            [infoLabel appendAttributedString:status];
+            
+            self.infoLabel.attributedText = infoLabel;
             [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
@@ -196,21 +241,61 @@
             
         case MEGATransferStateRetrying: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingTransferImage : UIImage.mnz_uploadingTransferImage;
-            self.infoLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+            [infoLabel appendAttributedString:status];
+            self.infoLabel.attributedText = infoLabel;
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
         }
             
-        case MEGATransferStateCompleting:
-            self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.systemGreenColor : [UIColor mnz_blueForTraitCollection:self.traitCollection];
-            self.infoLabel.text = AMLocalizedString(@"Completing...", @"Label for the state of a transfer when is being completing - (String as short as possible).");
+        case MEGATransferStateCompleting: {
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:AMLocalizedString(@"Completing...", @"Label for the state of a transfer when is being completing - (String as short as possible).")
+                                                                       attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:(self.transfer.type == MEGATransferTypeDownload) ? UIColor.systemGreenColor : [UIColor mnz_blueForTraitCollection:self.traitCollection]}];
+            NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+            [infoLabel appendAttributedString:status];
+            self.infoLabel.attributedText = infoLabel;
             self.pauseButton.hidden = self.cancelButton.hidden = YES;
+            }
             break;
             
+        case MEGATransferStateCancelled: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:AMLocalizedString(@"Cancelled", @"Cancelled") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+            [infoLabel appendAttributedString:status];
+            self.infoLabel.attributedText = infoLabel;
+            self.progressView.progress = 0;
+            self.pauseButton.hidden = self.cancelButton.hidden = YES;
+        }
+            break;
+        case MEGATransferStateFailed: {
+            self.arrowImageView.image = UIImage.mnz_errorTransferImage;
+            self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+            NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
+            MEGAError *error = self.transfer.lastErrorExtended;
+
+            NSString *errorString = [MEGAError errorStringWithErrorCode:error.type context:(self.transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
+            
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ %@", transferFailed, AMLocalizedString(errorString, nil)] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+            [infoLabel appendAttributedString:status];
+            self.infoLabel.attributedText = infoLabel;
+            
+            self.progressView.progress = 0;
+            
+            self.pauseButton.hidden = self.cancelButton.hidden = YES;
+
+        }
+            
+            break;
         default: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
-            self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:AMLocalizedString(@"queued", @"Queued") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
+            [infoLabel appendAttributedString:status];
+            self.infoLabel.attributedText = infoLabel;
+            
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
@@ -224,6 +309,8 @@
     self.infoLabel.text = AMLocalizedString(@"pending", @"Label shown when a contact request is pending");
     self.pauseButton.hidden = YES;
     self.cancelButton.hidden = NO;
+    self.progressView.progress = 0;
+
 }
 
 #pragma mark - IBActions

@@ -261,6 +261,10 @@
         case UnavailableLinkErrorUserETDSuspension:
             [unavailableLinkView configureInvalidFolderLinkByUserETDSuspension];
             break;
+            
+        case UnavailableLinkErrorUserCopyrightSuspension:
+            [unavailableLinkView configureInvalidFolderLinkByUserCopyrightSuspension];
+            break;
     }
     [self.tableView setBackgroundView:unavailableLinkView];
 }
@@ -929,6 +933,8 @@
                 [self showUnavailableLinkViewWithError:UnavailableLinkErrorETDDown];
             } else if (error.userStatus == MEGAUserErrorCodeETDSuspension) {
                 [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserETDSuspension];
+            } else if (error.userStatus == MEGAUserErrorCodeCopyrightSuspension) {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserCopyrightSuspension];
             } else {
                 [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
             }

@@ -192,7 +192,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
+
     [self encourageToUpgrade];
     
     if (self.homeQuickActionSearch) {
@@ -1712,9 +1713,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     __weak __typeof__(self) weakSelf = self;
     activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         if (completed && !activityError) {
-            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
-                [weakSelf setEditMode:NO];
-            }
+            [weakSelf setEditMode:NO];
         }
     };
     [self presentViewController:activityVC animated:YES completion:nil];
@@ -1848,7 +1847,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:NO];
         } else {
             if (node.parentHandle == self.parentNode.handle) {
                 [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];

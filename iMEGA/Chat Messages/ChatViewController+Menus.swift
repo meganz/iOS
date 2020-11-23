@@ -5,7 +5,9 @@ extension ChatViewController {
     
     func copyMessage(_ message: ChatMessage) {
         let megaMessage = message.message
-        UIPasteboard.general.string = megaMessage.content
+        if let content = megaMessage.content {
+            UIPasteboard.general.string = content
+        }        
     }
     
     func forwardMessage(_ message: ChatMessage) {
@@ -26,7 +28,14 @@ extension ChatViewController {
     
     func editMessage(_ message: ChatMessage) {
         editMessage = message
-        chatInputBar?.set(text: editMessage!.message.content)
+        if message.message.containsMeta?.type == MEGAChatContainsMetaType.geolocation {
+            self.presentShareLocation(editing: true)
+        } else {
+            guard let content = editMessage?.message.content else {
+                return
+            }
+            chatInputBar?.set(text: content)
+        }
     }
     
     func deleteMessage(_ chatMessage: ChatMessage) {

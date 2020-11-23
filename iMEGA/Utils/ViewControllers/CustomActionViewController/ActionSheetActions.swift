@@ -120,6 +120,10 @@ extension NodeAction {
         return NodeAction(title: AMLocalizedString("getLink", "Title shown under the action that allows you to get a link to file or folder"), detail: nil, image: UIImage(named: "link"), type: .getLink)
     }
     
+    class func retryAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("retry"), detail: nil, image: UIImage(named: "link"), type: .retry)
+    }
+    
     class func manageLinkAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("manageLink", "Item menu option upon right click on one or multiple files"), detail: nil, image: UIImage(named: "link"), type: .manageLink)
     }
@@ -130,6 +134,16 @@ extension NodeAction {
     
     class func removeSharingAction() -> NodeAction {
         return NodeAction(title: AMLocalizedString("removeSharing", "Alert title shown on the Shared Items section when you want to remove 1 share"), detail: nil, image: UIImage(named: "removeShare"), type: .removeSharing)
+    }
+    
+    class func viewInFolderAction() -> NodeAction {
+        return NodeAction(title: AMLocalizedString("View in Folder", "Button title which, if tapped, will trigger the action of opening a folder containg this file"), detail: nil, image: UIImage(named: "searchThin"), type: .viewInFolder)
+    }
+    
+    class func clearAction() -> NodeAction {
+        let action = NodeAction(title: AMLocalizedString("clear", "Button title to clear something"), detail: nil, image: UIImage(named: "cancelTransfers"), type: .clear)
+        action.style = .destructive
+        return action
     }
     
     class func importAction() -> NodeAction {

@@ -109,8 +109,6 @@
             break;
     }
     self.label.text = message;
-    
-    MEGALogDebug(@"The SDK is waiting to complete a request, reason: %lu", (unsigned long)MEGASdkManager.sharedMEGASdk.waiting);
 }
 
 #pragma mark - MEGARequestDelegate

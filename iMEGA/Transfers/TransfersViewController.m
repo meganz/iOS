@@ -19,6 +19,8 @@
 #import "UITableView+MNZCategory.h"
 
 #import "TransferTableViewCell.h"
+#import "TransfersWidgetViewController.h"
+#import "MEGA-Swift.h"
 
 @interface TransfersViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate>
 
@@ -67,7 +69,8 @@
     [super viewWillAppear:animated];
     
     self.navigationItem.title = AMLocalizedString(@"transfers", @"Transfers");
-    
+    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
+
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -78,12 +81,11 @@
         self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.pauseBarButtonItem];
     }
     
-    if (!self.areTransfersPaused) {
-        [self reloadView];
-    }
+    [self reloadView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -96,9 +98,15 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEGATransferOverQuotaNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -131,7 +139,7 @@
     switch (indexPath.section) {
         case 0: {
             MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
-            [cell configureCellForTransfer:transfer delegate:self];
+            [cell configureCellForTransfer:transfer overquota:[TransfersWidgetViewController sharedTransferViewController].progressView.overquota delegate:self];
             break;
         }
             
@@ -169,12 +177,12 @@
     NSInteger numberOfSections = 0;
     if (MEGAReachabilityManager.isReachable) {
         switch (self.transfersSelected) {
-            case AllTransfersSelected:
-            case UploadsTransfersSelected:
+            case TransfersSelectedAll:
+            case TransfersSelectedUploads:
                 numberOfSections = 2;
                 break;
                 
-            case DownloadsTransfersSelected:
+            case TransfersSelectedDownloads:
                 numberOfSections = 1;
                 break;
         }
@@ -186,25 +194,21 @@
 #pragma mark - Private
 
 - (void)reloadView {
-    if (self.areTransfersPaused) {
-        [self cleanTransfersList];
-    } else {
         switch (self.transfersSelected) {
-            case AllTransfersSelected:
+            case TransfersSelectedAll:
                 [self getAllTransfers];
                 break;
                 
-            case DownloadsTransfersSelected:
+            case TransfersSelectedDownloads:
                 [self getDownloadTransfers];
                 break;
                 
-            case UploadsTransfersSelected:
+            case TransfersSelectedUploads:
                 [self getUploadTransfers];
                 break;
         }
         
         [self sortTransfers];
-    }
     [self.tableView reloadData];
 }
 
@@ -448,6 +452,11 @@
     self.uploadsLineView.backgroundColor = self.uploadsButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
+- (void)didReceiveTransferOverQuotaNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Transfer Widget] transfer over quota notification %@", notification.userInfo);
+    [self reloadView];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectTransfersTouchUpInside:(UIButton *)sender {
@@ -459,17 +468,17 @@
     
     switch (self.transfersSelected) {
         default:
-        case AllTransfersSelected:
+        case TransfersSelectedAll:
             self.downloadsButton.selected = self.uploadsButton.selected = NO;
             self.allButton.selected = YES;
             break;
            
-        case DownloadsTransfersSelected:
+        case TransfersSelectedDownloads:
             self.allButton.selected = self.uploadsButton.selected = NO;
             self.downloadsButton.selected = YES;
             break;
             
-        case UploadsTransfersSelected:
+        case TransfersSelectedUploads:
             self.allButton.selected = self.downloadsButton.selected = NO;
             self.uploadsButton.selected = YES;
             break;
@@ -477,9 +486,7 @@
     
     [self updateSelector];
     
-    if (!self.areTransfersPaused) {
-        [self reloadView];
-    }
+    [self reloadView];
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
@@ -501,15 +508,15 @@
     
     NSString *transfersTypeString;
     switch (self.transfersSelected) {
-        case AllTransfersSelected:
+        case TransfersSelectedAll:
             transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
             break;
             
-        case DownloadsTransfersSelected:
+        case TransfersSelectedDownloads:
             transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
             break;
             
-        case UploadsTransfersSelected:
+        case TransfersSelectedUploads:
             transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
             break;
     }
@@ -519,17 +526,17 @@
     
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         switch (self.transfersSelected) {
-            case AllTransfersSelected: {
+            case TransfersSelectedAll: {
                 [self cancelTransfersForDirection:0];
                 [self cancelTransfersForDirection:1];
                 break;
             }
                 
-            case DownloadsTransfersSelected:
+            case TransfersSelectedDownloads:
                 [self cancelTransfersForDirection:0];
                 break;
                 
-            case UploadsTransfersSelected:
+            case TransfersSelectedUploads:
                 [self cancelTransfersForDirection:1];
                 break;
         }
@@ -558,15 +565,15 @@
             text = AMLocalizedString(@"transfersEmptyState_titlePaused", nil);
         } else {
             switch (self.transfersSelected) {
-                case AllTransfersSelected:
+                case TransfersSelectedAll:
                     text = AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
                     break;
                     
-                case DownloadsTransfersSelected:
+                case TransfersSelectedDownloads:
                     text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No Download Transfers");
                     break;
                     
-                case UploadsTransfersSelected:
+                case TransfersSelectedUploads:
                     text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No Uploads Transfers");
                     break;
             }
@@ -590,22 +597,18 @@
 - (UIImage *)imageForEmptyState {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.areTransfersPaused) {
-            image = [UIImage imageNamed:@"pausedTransfersEmptyState"];
-        } else {
-            switch (self.transfersSelected) {
-                case AllTransfersSelected:
-                    image = [UIImage imageNamed:@"transfersEmptyState"];
-                    break;
-                    
-                case DownloadsTransfersSelected:
-                    image = [UIImage imageNamed:@"downloadsEmptyState"];
-                    break;
-                    
-                case UploadsTransfersSelected:
-                    image = [UIImage imageNamed:@"uploadsEmptyState"];
-                    break;
-            }
+        switch (self.transfersSelected) {
+            case TransfersSelectedAll:
+                image = [UIImage imageNamed:@"transfersEmptyState"];
+                break;
+                
+            case TransfersSelectedDownloads:
+                image = [UIImage imageNamed:@"downloadsEmptyState"];
+                break;
+                
+            case TransfersSelectedUploads:
+                image = [UIImage imageNamed:@"uploadsEmptyState"];
+                break;
         }
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
@@ -658,14 +661,14 @@
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     switch (self.transfersSelected) {
-        case AllTransfersSelected:
+        case TransfersSelectedAll:
             break;
             
-        case DownloadsTransfersSelected:
+        case TransfersSelectedDownloads:
             if (transfer.type == MEGATransferTypeUpload) return;
             break;
             
-        case UploadsTransfersSelected:
+        case TransfersSelectedUploads:
             if (transfer.type == MEGATransferTypeDownload) return;
             break;
     }

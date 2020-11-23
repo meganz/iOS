@@ -130,6 +130,8 @@
                 [self showUnavailableLinkViewWithError:UnavailableLinkErrorETDDown];
             } else if (self.error.userStatus == MEGAUserErrorCodeETDSuspension) {
                 [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserETDSuspension];
+            } else if (self.error.userStatus == MEGAUserErrorCodeCopyrightSuspension) {
+                [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserCopyrightSuspension];
             } else {
                 [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
             }
@@ -144,6 +146,7 @@
                     break;
                 }
                     
+                case MEGAErrorTypeApiEBlocked:
                 case MEGAErrorTypeApiENoent:
                 case MEGAErrorTypeApiETooMany: {
                     [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
@@ -224,6 +227,10 @@
             
         case UnavailableLinkErrorUserETDSuspension:
             [unavailableLinkView configureInvalidFileLinkByUserETDSuspension];
+            break;
+            
+        case UnavailableLinkErrorUserCopyrightSuspension:
+            [unavailableLinkView configureInvalidFolderLinkByUserCopyrightSuspension];
             break;
     }
     unavailableLinkView.frame = self.view.bounds;

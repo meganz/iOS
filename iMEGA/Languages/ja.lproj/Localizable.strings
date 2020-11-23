@@ -45,7 +45,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="リンク無効";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our Terms of Service."="このリンクを作成したアカウントは、当社のご利用規約に複数違反したため、終了しました。";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="このリンクを作成したアカウントは、当社の[A]ご利用規約[/A]に複数違反したため停止されました。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="復号化鍵を入力してください。";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -290,6 +290,8 @@
 "Photos"="写真";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="ボイス";
+/* Menu option from the `Add` section that allows the user to share contact. */
+"Contact"="知り合い";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="グループを開始";
 /* Menu option from the `Add` section that allows the user to share Location */
@@ -878,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを消去";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去します";
+"failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
 /* Menu item */
 "help"="ヘルプ";
 /* Title of the section to access MEGA's help centre */
@@ -891,6 +893,8 @@
 "transfers"="転送";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
+/* Title of one of the filters in the Transfers section. In this case In Progress transfers */
+"In Progress"="進行中";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="完了";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1179,6 +1183,8 @@
 "clearChatHistory"="チャット履歴をクリア";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="この会話の完全なメッセージ履歴をクリアしてもよろしいですか？　";
+/* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="チャット履歴がクリアされました";
 /* 'Next' button in a dialog */
 "continue"="続ける";
 /* Title of the incoming shared folders of a user. */
@@ -1251,8 +1257,6 @@
 "deleteMessage"="メッセージを削除";
 /*  */
 "fromCloudDrive"="クラウドドライブから";
-/* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="知り合い";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="知り合いを送信";
 /* */
@@ -2170,8 +2174,14 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="おそらく、MEGAアカウントで他のサービスと同じパスワードを使用しており、それらのサービスの少なくとも1つがデータ侵害を受けていると思われます。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="あなたのパスワードが漏えいし、悪意のあるアクターがあなたのアカウント（あなたのMEGAアカウントを含むがこれに限定されない）にログインするために使用されています。";
+/* Label indicating transfer over quota. */
+"Transfer over quota"="容量を超えた転送";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="選択をクリア";
+/* tool bar title used in transfer widget, allow user to resume all transfers in the list */
+"Pause All"="すべて一時停止";
+/* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
+"Resume All"="すべて再開";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部をクリア";
 /* Alert header for asking permission to resume transfers*/
@@ -2381,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="このリンクは使用できません。当該ユーザーのアカウントが、MEGAの[A]ご利用規約[/A]への重大な違反により閉鎖されました。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities."="このフォルダ/ファイルには、児童搾取資料、暴力的過激主義、獣姦などの好ましくないコンテンツが含まれていると報告されました。当該リンク作成者のアカウントが閉鎖され、IPアドレスを含む当該ユーザーの詳細が関係当局に提供されました。";
+"Taken down due to severe violation of our terms of service"="このフォルダ/ファイルには、児童搾取資料、暴力的過激主義、獣姦などの好ましくないコンテンツが含まれていると報告されました。当該リンク作成者のアカウントが閉鎖され、IPアドレスを含む当該ユーザーの詳細が関係当局に提供されました。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="利用できません";
 /* Error text shown when requesting email for email verification within 10 minutes */
