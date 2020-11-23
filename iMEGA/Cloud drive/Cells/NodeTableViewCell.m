@@ -114,6 +114,9 @@
             case NodeTableViewCellFlavorSharedLink:
                 nodeDisplayDateTime = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
                 break;
+            case NodeTableViewCellExplorerView:
+                nodeDisplayDateTime = self.node.parent.name;
+                break;
         }
 
         self.infoLabel.text = nodeDisplayDateTime;
@@ -135,6 +138,8 @@
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
     self.cellFlavor = NodeTableViewCellFlavorRecentAction;
+    [self updateWithTrait:[self traitCollection]];
+    self.leadingConstraint.constant = 24;
     self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
@@ -205,6 +210,27 @@
             [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transferTag.integerValue];
         }
     }
+}
+
+- (IBAction)moreButtonPressed:(UIButton *)moreButton {
+    self.moreButtonAction(moreButton);
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateWithTrait:self.traitCollection];
+        }
+    }
+}
+
+- (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
+    if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
+        return;
+    }
+    self.backgroundColor = [UIColor mnz_homeRecentsCellBackgroundForTraitCollection:currentTraitCollection];
 }
 
 @end

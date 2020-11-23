@@ -18,6 +18,16 @@ class NodeActionViewController: ActionSheetViewController {
 
     // MARK: - NodeActionViewController initializers
 
+    convenience init?(
+        node: MEGAHandle,
+        delegate: NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isIncoming: Bool = false,
+        sender: Any) {
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
+        self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, sender: sender)
+    }
+
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
         self.node = node
         self.displayMode = displayMode

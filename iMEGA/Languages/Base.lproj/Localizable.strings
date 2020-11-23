@@ -2298,6 +2298,26 @@
 "Failed to remove your phone number, please try again later."="Failed to remove your phone number, please try again later.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Discard Changes";
+/* Title for document explorer view */
+"Documents"="Documents";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Videos";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found" = "No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Photos" = "All Photos";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
 /* Title of the Proxy section under Settings */
 "Proxy"="Proxy";
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
@@ -2396,3 +2416,5 @@
 "Unavailable"="Unavailable";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Your Files";

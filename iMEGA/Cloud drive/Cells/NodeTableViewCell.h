@@ -8,11 +8,13 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
     NodeTableViewCellFlavorCloudDrive = 0,
     NodeTableViewCellFlavorVersions,
     NodeTableViewCellFlavorRecentAction,
-    NodeTableViewCellFlavorSharedLink
+    NodeTableViewCellFlavorSharedLink,
+    NodeTableViewCellExplorerView
 };
 
 @interface NodeTableViewCell : MGSwipeTableCell
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
@@ -53,6 +55,8 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 @property (strong, nonatomic) MEGARecentActionBucket *recentActionBucket;
 
 @property (nonatomic) NodeTableViewCellFlavor cellFlavor;
+
+@property (nonatomic, copy) void(^moreButtonAction)(UIButton *) ;
 
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
 

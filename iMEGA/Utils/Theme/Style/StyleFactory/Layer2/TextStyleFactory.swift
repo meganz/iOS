@@ -3,17 +3,19 @@ import Foundation
 extension InterfaceStyle {
 
     var textStyleFactory: TextStyleFactory {
-        TextStyleFactoryImpl(colorFactory: colorFactory)
+        TextStyleFactoryImpl()
     }
 }
 
 enum MEGATextStyle: Hashable {
 
+    case title
     case headline
     case caption1
     case caption2
     case subheadline
     case subheadline2
+    case body
 
     case warning
 }
@@ -25,47 +27,17 @@ protocol TextStyleFactory {
 
 private struct TextStyleFactoryImpl: TextStyleFactory {
 
-    let colorFactory: ColorFactory
-
     func textStyle(of textStyle: MEGATextStyle) -> TextStyle {
         switch textStyle {
-        case .headline: return headlineStyle()
-        case .subheadline: return subheadlin1Style()
-        case .subheadline2: return subheadline2Style()
-        case .caption1: return caption1Style()
-        case .caption2: return caption2Style()
+        case .title: return TextStyle(font: .title)
+        case .headline: return TextStyle(font: .headline)
+        case .subheadline: return TextStyle(font: .subhead)
+        case .subheadline2: return TextStyle(font: .subhead2)
+        case .caption1: return TextStyle(font: .caption1)
+        case .caption2: return TextStyle(font: .caption2)
+        case .body: return TextStyle(font: .body)
 
-        case .warning: return warningStyle()
+        case .warning: return TextStyle(font: .caption1)
         }
-    }
-
-    private func headlineStyle() -> TextStyle {
-        TextStyle(font: .headline,
-                  color: colorFactory.textColor(.primary))
-    }
-
-    private func caption1Style() -> TextStyle {
-        TextStyle(font: .caption1,
-                  color: colorFactory.textColor(.primary))
-    }
-
-    private func caption2Style() -> TextStyle {
-        TextStyle(font: .caption2,
-                  color: colorFactory.textColor(.primary))
-    }
-
-    private func subheadlin1Style() -> TextStyle {
-        TextStyle(font: .subhead,
-                  color: colorFactory.textColor(.primary))
-    }
-
-    private func subheadline2Style() -> TextStyle {
-        TextStyle(font: .subhead2,
-                  color: colorFactory.textColor(.primary))
-    }
-
-    private func warningStyle() -> TextStyle {
-        TextStyle(font: .caption1,
-                  color: colorFactory.textColor(.warning))
     }
 }

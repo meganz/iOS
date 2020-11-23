@@ -28,7 +28,7 @@ extension NibOwnerLoadable where Self: UIView {
     /**
      Adds content loaded from the nib to the end of the receiver's list of subviews and adds constraints automatically.
     */
-    func loadNibContent() {
+    func loadNibContent(withEdgeInset edgeInset: UIEdgeInsets = .zero) {
         let layoutAttributes: [NSLayoutConstraint.Attribute] = [.top, .leading, .bottom, .trailing]
         for case let view as UIView in type(of: self).nib.instantiate(withOwner: self, options: nil) {
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -37,10 +37,16 @@ extension NibOwnerLoadable where Self: UIView {
                 NSLayoutConstraint(
                     item: view, attribute: attribute,
                     relatedBy: .equal,
-                    toItem: self, attribute: attribute,
-                    multiplier: 1, constant: 0.0
+                    toItem: self,
+                    attribute: attribute,
+                    multiplier: 1,
+                    constant: 0.0
                 )
             })
         }
+    }
+
+    func loadedViewFromNibContent() -> UIView? {
+        type(of: self).nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
 }

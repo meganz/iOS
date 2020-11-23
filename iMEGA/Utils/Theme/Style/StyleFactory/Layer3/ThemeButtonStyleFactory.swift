@@ -39,9 +39,10 @@ private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
             return { button in
                 themeButtonShadowStyle
                     .applied(on: cornerStyle
-                            .applied(on: self.buttonTextStyle(of: buttonStyle)
-                                .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
-                                    .applied(on: button))))
+                        .applied(on: self.buttonTextStyle(of: buttonStyle)
+                            .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
+                                .applied(on: self.buttonColorStyle(of: buttonStyle)
+                                    .applied(on: button)))))
             }
         case .secondary:
             return { button in
@@ -49,7 +50,8 @@ private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
                     .applied(on: cornerStyle
                         .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
                             .applied(on: self.buttonTextStyle(of: buttonStyle)
-                                .applied(on: button))))
+                                .applied(on: self.buttonColorStyle(of: buttonStyle)
+                                    .applied(on: button)))))
             }
         }
     }
@@ -63,21 +65,38 @@ private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
         }
     }
 
-    func buttonTextStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStatedStyle<TextStyle> {
+    func buttonColorStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStatedStyle<ColorStyle> {
         switch buttonStyle {
         case .primary:
             let themeButtonTextFactory = colorFactory.themeButtonTextFactory(.primary)
-            return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .headline, color: themeButtonTextFactory.normalColor()),
-                .disabled: TextStyle(font: .headline, color: themeButtonTextFactory.disabledColor()),
-                .highlighted: TextStyle(font: .headline, color: themeButtonTextFactory.highlightedColor())
+            return ButtonStatedStyle<ColorStyle>(stated: [
+                .normal: themeButtonTextFactory.normalColor().asTextColorStyle,
+                .disabled: themeButtonTextFactory.disabledColor().asTextColorStyle,
+                .highlighted: themeButtonTextFactory.highlightedColor().asTextColorStyle
             ])
         case .secondary:
             let themeButtonTextFactory = colorFactory.themeButtonTextFactory(.secondary)
+            return ButtonStatedStyle<ColorStyle>(stated: [
+                .normal: themeButtonTextFactory.normalColor().asTextColorStyle,
+                .disabled: themeButtonTextFactory.disabledColor().asTextColorStyle,
+                .highlighted: themeButtonTextFactory.highlightedColor().asTextColorStyle
+            ])
+        }
+    }
+
+    func buttonTextStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStatedStyle<TextStyle> {
+        switch buttonStyle {
+        case .primary:
             return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .headline, color: themeButtonTextFactory.normalColor()),
-                .disabled: TextStyle(font: .headline, color: themeButtonTextFactory.disabledColor()),
-                .highlighted: TextStyle(font: .headline, color: themeButtonTextFactory.highlightedColor())
+                .normal: TextStyle(font: .headline),
+                .disabled: TextStyle(font: .headline),
+                .highlighted: TextStyle(font: .headline)
+            ])
+        case .secondary:
+            return ButtonStatedStyle<TextStyle>(stated: [
+                .normal: TextStyle(font: .headline),
+                .disabled: TextStyle(font: .headline),
+                .highlighted: TextStyle(font: .headline)
             ])
         }
     }

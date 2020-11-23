@@ -28,7 +28,7 @@
         <!--My Account Hall-->
         <scene sceneID="KRx-OE-hPl">
             <objects>
-                <viewController id="EN7-B0-mf8" userLabel="My Account Hall" customClass="MyAccountHallViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyAccountHall" id="EN7-B0-mf8" userLabel="My Account Hall" customClass="MyAccountHallViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HQg-ZC-hNP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -363,13 +363,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ecu-rh-paC"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Account" id="mxI-vZ-8su">
+                    <navigationItem key="navigationItem" title="My Account" leftItemsSupplementBackButton="YES" id="mxI-vZ-8su">
                         <barButtonItem key="backBarButtonItem" title=" " id="n2C-mH-XhE"/>
-                        <barButtonItem key="leftBarButtonItem" image="scanQRCode" id="0j1-YO-4t7">
-                            <connections>
-                                <action selector="scanQrCode:" destination="EN7-B0-mf8" id="kfs-Hm-Xzl"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Upgrade" id="yAq-Z4-Blx">
                             <connections>
                                 <action selector="buyPROTouchUpInside:" destination="EN7-B0-mf8" id="bSl-1d-pau"/>
@@ -410,36 +405,36 @@
         <scene sceneID="but-2O-n4M">
             <objects>
                 <viewController storyboardIdentifier="ChangeNameViewControllerID" id="xQo-am-8Q7" customClass="ChangeNameViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vP7-me-dDA">
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="vP7-me-dDA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9h-iN-veT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC6-n8-afR">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ph8-Ex-79f">
-                                                <rect key="frame" x="0.0" y="35" width="414" height="60"/>
+                                                <rect key="frame" x="0.0" y="35" width="600" height="60"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YgV-7Z-qvy">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="exG-sk-gvg"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="GJB-z9-iYA">
-                                                        <rect key="frame" x="17" y="11" width="380" height="38"/>
+                                                        <rect key="frame" x="17" y="11" width="566" height="38"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqV-uQ-ZwT">
-                                                                <rect key="frame" x="0.0" y="0.0" width="380" height="14.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="566" height="14.5"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tlv-WF-DPl">
-                                                                <rect key="frame" x="0.0" y="14.5" width="380" height="23.5"/>
+                                                                <rect key="frame" x="0.0" y="14.5" width="566" height="23.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="name"/>
                                                                 <connections>
@@ -449,7 +444,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8a-IN-hNR">
-                                                        <rect key="frame" x="0.0" y="59.5" width="414" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="59.5" width="600" height="0.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="68Z-RS-Yf7"/>
                                                         </constraints>
@@ -471,19 +466,19 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WbY-Vg-BFG">
-                                                <rect key="frame" x="0.0" y="95" width="414" height="60"/>
+                                                <rect key="frame" x="0.0" y="95" width="600" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qJ5-x8-5ec">
-                                                        <rect key="frame" x="17" y="11" width="380" height="38"/>
+                                                        <rect key="frame" x="17" y="11" width="566" height="38"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odf-p1-Oxd">
-                                                                <rect key="frame" x="0.0" y="0.0" width="380" height="14.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="566" height="14.5"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ul-Pg-DrJ">
-                                                                <rect key="frame" x="0.0" y="14.5" width="380" height="23.5"/>
+                                                                <rect key="frame" x="0.0" y="14.5" width="566" height="23.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="family-name"/>
                                                                 <connections>
@@ -493,7 +488,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcW-X5-i20">
-                                                        <rect key="frame" x="0.0" y="59.5" width="414" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="59.5" width="600" height="0.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="ZYG-Za-Nbg"/>
                                                         </constraints>
@@ -595,7 +590,6 @@
         <image name="addPhoneNumberSmall" width="60" height="60"/>
         <image name="myAccountIcon" width="31" height="28"/>
         <image name="qrCodeIcon" width="24" height="24"/>
-        <image name="scanQRCode" width="28" height="28"/>
         <image name="userManagement" width="50" height="50.5"/>
         <image name="viewAndEditProfile" width="24" height="24"/>
     </resources>

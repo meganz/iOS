@@ -29,5 +29,7 @@
 #import "SelectableTableViewCell.h"
 #import "MegaNodeActionType.h"
 #import "Helper.h"
+#import "UIImageView+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 #endif /* MEGAShare_Bridging_Header_h */

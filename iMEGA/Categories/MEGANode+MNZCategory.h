@@ -3,6 +3,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
+@property (nonatomic, readonly) MEGANode *parent;
+
 - (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;

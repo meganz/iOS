@@ -11,6 +11,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_background;
 + (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_homeRecentsCellBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark Background grouped
 

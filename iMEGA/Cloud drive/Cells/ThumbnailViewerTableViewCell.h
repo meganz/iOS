@@ -1,6 +1,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol NodeDisplayDelegate <NSObject>
+
+- (void)showSelectedNodeInViewController:(UIViewController *)viewController;
+
+@end
+
+typedef void (^ShowSelectedNodeAction)(UIViewController *);
+
 @class CloudDriveViewController;
 
 @interface ThumbnailViewerTableViewCell : UITableViewCell
@@ -25,7 +33,7 @@
 
 @property (strong, nonatomic) NSArray<MEGANode *> *nodesArray;
 
-@property (nonatomic, strong) CloudDriveViewController *cloudDrive;
+@property (nonatomic, copy) ShowSelectedNodeAction showNodeAction;
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket;
 

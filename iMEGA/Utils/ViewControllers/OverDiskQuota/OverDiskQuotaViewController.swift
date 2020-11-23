@@ -195,9 +195,8 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
         storageFullLabel.text = AMLocalizedString("Storage Full", "Screen title")
-        let style = TextStyle(font: Font.headline,
-                              color: trait.theme.colorFactory.independent(.bright))
-        style.applied(on: storageFullLabel)
+        let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
+        alwyasBrightTextStyle(storageFullLabel)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {

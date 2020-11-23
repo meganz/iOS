@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MEGABannerView" customModule="MEGA" customModuleProvider="target">
+            <connections>
+                <outlet property="carouselCollectionView" destination="lOA-lK-oQh" id="bg2-j7-R24"/>
+                <outlet property="carouselCollectionViewLayout" destination="MXY-oU-6pt" id="v9V-me-s03"/>
+                <outlet property="carouselPageControl" destination="Wge-Gz-FDX" id="I2u-lW-jMo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1H-bH-lWb">
+            <rect key="frame" x="0.0" y="0.0" width="426" height="150"/>
+            <subviews>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="1" translatesAutoresizingMaskIntoConstraints="NO" id="Wge-Gz-FDX">
+                    <rect key="frame" x="193.5" y="90" width="39" height="60"/>
+                    <color key="pageIndicatorTintColor" red="0.98640698189999998" green="0.89780992270000004" blue="0.49591010810000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="currentPageIndicatorTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </pageControl>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="lOA-lK-oQh">
+                    <rect key="frame" x="0.0" y="0.0" width="426" height="90"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="s89-FD-5q8"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MXY-oU-6pt" customClass="MEGACarouselFlowLayout" customModule="MEGA" customModuleProvider="target">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="lOA-lK-oQh" firstAttribute="top" secondItem="g1H-bH-lWb" secondAttribute="top" id="LfB-ie-A1m"/>
+                <constraint firstItem="Wge-Gz-FDX" firstAttribute="centerX" secondItem="lOA-lK-oQh" secondAttribute="centerX" id="PHO-2T-GzZ"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Wge-Gz-FDX" secondAttribute="trailing" constant="16" id="RZD-YX-CFU"/>
+                <constraint firstItem="lOA-lK-oQh" firstAttribute="leading" secondItem="g1H-bH-lWb" secondAttribute="leading" id="Xuz-kX-mJz"/>
+                <constraint firstItem="lOA-lK-oQh" firstAttribute="trailing" secondItem="g1H-bH-lWb" secondAttribute="trailing" id="kuG-YA-14K"/>
+                <constraint firstItem="Wge-Gz-FDX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g1H-bH-lWb" secondAttribute="leading" constant="16" id="qFO-MG-urX"/>
+                <constraint firstItem="Wge-Gz-FDX" firstAttribute="top" secondItem="lOA-lK-oQh" secondAttribute="bottom" id="wdX-2R-cT6"/>
+                <constraint firstAttribute="bottom" secondItem="Wge-Gz-FDX" secondAttribute="bottom" id="xMX-Ea-9VU"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="149.27536231884059" y="-70.3125"/>
+        </view>
+    </objects>
+</document>

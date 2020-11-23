@@ -63,15 +63,14 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     func start(
         with api: MEGASdk,
-        completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>)
-        -> Void
+        completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         if let userDataStore = userDataStore,
             let storageUsedStore = storageUsedStore,
             let availablePlansStore = availablePlansStore {
             let overDiskQuotaData = extractedInformation(userDataStore: userDataStore,
-                                                        storageStore: storageUsedStore,
-                                                        planStore: availablePlansStore)
+                                                         storageStore: storageUsedStore,
+                                                         planStore: availablePlansStore)
             completion(.success(overDiskQuotaData))
             return
         }

@@ -9,9 +9,27 @@ struct Color: Codable {
     var alpha: ColorValue = 255
 }
 
+extension Color {
+
+    func altering(alpha: ColorValue) -> Self {
+        return Self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
 extension Color: ColorProviding {
     var uiColor: UIColor {
         UIColor.rgbColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
+extension Color {
+
+    var asTextColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .foreground)
+    }
+
+    var asBackgroundColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .background)
     }
 }
 

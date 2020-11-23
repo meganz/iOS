@@ -1,4 +1,5 @@
 #import "OfflineTableViewCell.h"
+#import "MEGA-Swift.h"
 
 @implementation OfflineTableViewCell
 
@@ -10,7 +11,7 @@
         self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     
-    [self updateAppearance];
+    [self updateAppearance:self.traitCollection];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -40,15 +41,29 @@
 
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearance];
+            [self updateAppearance:self.traitCollection];
         }
     }
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    if (@available(iOS 13.0, *)) {
+        switch (currentTraitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.backgroundColor = UIColor.whiteColor;
+            }
+                break;
+            case UIUserInterfaceStyleDark: {
+                self.backgroundColor = UIColor.mnz_black1C1C1E;
+            }
+        }
+    } else {
+        self.backgroundColor = UIColor.whiteColor;
+    }
 }
 
 

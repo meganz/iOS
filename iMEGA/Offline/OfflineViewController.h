@@ -2,6 +2,11 @@
 
 @class MEGAQLPreviewController;
 
+typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
+    AccountScreen = 0,
+    HomeScreen,
+};
+
 @interface OfflineViewController : UIViewController
 
 @property (nonatomic, strong) NSIndexPath *peekIndexPath;
@@ -13,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *offlineSortedItems;
 @property (nonatomic) NSMutableArray *searchItemsArray;
 @property (nonatomic) UISearchController *searchController;
+@property (nonatomic) OfflineViewControllerFlavor flavor;
 
 - (NSString *)currentOfflinePath;
 - (NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;

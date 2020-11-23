@@ -10,6 +10,14 @@ extension UIButton {
     func setBackgroundColorImage(_ color: UIColor, for state: UIControl.State) {
         let smallestWidthForImageByPoint = 1
         let smallestHeightForImageByPoint = 1
-        self.setBackgroundImage(color.image(withSize:CGSize(width: smallestWidthForImageByPoint, height: smallestHeightForImageByPoint)), for: state)
+        self.setBackgroundImage(
+            color.image(withSize:
+                CGSize(
+                    width: smallestWidthForImageByPoint,
+                    height: smallestHeightForImageByPoint
+                )
+            ),
+            for: state
+        )
     }
 }

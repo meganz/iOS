@@ -14,6 +14,7 @@
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -28,6 +29,7 @@
     
     self.thumbnailViewerCollectionView.dataSource = self;
     self.thumbnailViewerCollectionView.delegate = self;
+    [self updateWithTrait: self.traitCollection];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
@@ -134,8 +136,23 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:self.nodesArray[indexPath.row] preferredIndex:indexPath.row];
-    
-    [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+
+    self.showNodeAction(photoBrowserVC);
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateWithTrait:self.traitCollection];
+        }
+    }
+}
+
+- (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
+    self.backgroundColor = [UIColor mnz_backgroundElevated:currentTraitCollection];
+    self.thumbnailViewerCollectionView.backgroundColor = [UIColor mnz_backgroundElevated:currentTraitCollection];
 }
 
 @end

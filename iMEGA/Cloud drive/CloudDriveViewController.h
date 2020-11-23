@@ -9,9 +9,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 @interface CloudDriveViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorViewHeightLayoutConstraint;
-@property (nonatomic, getter=shouldHideSelectorView) BOOL hideSelectorView;
-
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic) DisplayMode displayMode;

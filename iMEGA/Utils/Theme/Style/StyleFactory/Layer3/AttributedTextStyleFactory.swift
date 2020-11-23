@@ -3,8 +3,11 @@ import Foundation
 extension InterfaceStyle {
 
     var attributedTextStyleFactory: AttributedTextStyleFactory {
-        return AttributedTextStyleFactoryImpl(textStyleFactory: textStyleFactory,
-                                              paragraphStyleFactory: paragraphStyleFactory)
+        return AttributedTextStyleFactoryImpl(
+            colorStyleFactory: colorFactory,
+            textStyleFactory: textStyleFactory,
+            paragraphStyleFactory: paragraphStyleFactory
+        )
     }
 }
 
@@ -14,6 +17,8 @@ protocol AttributedTextStyleFactory {
 }
 
 private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
+
+    let colorStyleFactory: ColorFactory
 
     let textStyleFactory: TextStyleFactory
 
@@ -30,9 +35,12 @@ private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
                         .applied(on: attributes))
             }
         case .warning:
+            let textColorStyle = colorStyleFactory.textColor(.warning).asTextColorStyle
             return  { attributes in
-               textStyleFactory.textStyle(of: .warning)
-                   .applied(on: attributes)
+                textStyleFactory.textStyle(of: .warning)
+                    .applied(on: textColorStyle
+                        .applied(on: attributes)
+                )
            }
         case .emphasized(let textStyle):
             return { attributes in

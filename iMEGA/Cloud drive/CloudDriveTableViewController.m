@@ -33,8 +33,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self registerNibWithName:@"NodeTableViewCell" andReuseIdentifier:@"nodeCell"];
+    [self registerNibWithName:@"DownloadingNodeCell" andReuseIdentifier:@"downloadingNodeCell"];
+    
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+    
     
     [self updateAppearance];
 }
@@ -75,6 +79,11 @@
 
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+}
+
+- (void)registerNibWithName:(NSString *)nibName andReuseIdentifier:(NSString *)reuseIdentifier {
+    UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
 }
 
 #pragma mark - Public
@@ -154,6 +163,11 @@
         if (cell == nil) {
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
         }
+        
+        __weak typeof(self) weakself = self;
+        cell.moreButtonAction = ^(UIButton * moreButton) {
+            [weakself infoTouchUpInside:moreButton];
+        };
     }
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
