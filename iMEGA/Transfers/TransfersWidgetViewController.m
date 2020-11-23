@@ -996,7 +996,6 @@ static TransfersWidgetViewController* instance = nil;
 - (void)openFolderNode:(MEGANode *)node {
     CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveVC.parentNode = node;
-    cloudDriveVC.hideSelectorView = YES;
     
     [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }

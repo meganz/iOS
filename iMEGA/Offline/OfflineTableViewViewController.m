@@ -13,6 +13,7 @@
 #import "OfflineTableViewCell.h"
 #import "OfflineViewController.h"
 #import "OpenInActivity.h"
+#import "MEGA-Swift.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kPath = @"kPath";
@@ -30,9 +31,8 @@ static NSString *kPath = @"kPath";
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    
-    self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.offline.searchController.searchBar.frame));
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self updateAppearance:self.traitCollection];
 }
 
 #pragma mark - Public
@@ -286,6 +286,28 @@ static NSString *kPath = @"kPath";
     }
     else {
         return nil;
+    }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [self updateAppearance:self.traitCollection];
+}
+
+- (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
+    if (@available(iOS 13.0, *)) {
+        switch (currentTraitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.tableView.backgroundColor = UIColor.whiteColor;
+            }
+                break;
+            case UIUserInterfaceStyleDark: {
+                self.tableView.backgroundColor = UIColor.mnz_black1C1C1E;
+            }
+        }
+    } else {
+        self.tableView.backgroundColor = UIColor.whiteColor;
     }
 }
 

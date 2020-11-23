@@ -414,8 +414,7 @@
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
-                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentChatViewController.chatRoom.chatId
-                                                         delegate:currentChatViewController];
+                [currentChatViewController closeChatRoom];
                 [self.navigationController popToRootViewControllerAnimated:NO];
             }
         }
@@ -427,6 +426,36 @@
     [self updateBackBarButtonItem:chatViewController.chatRoom.unreadCount];
     
     [self.navigationController pushViewController:chatViewController animated:YES];
+}
+
+
+- (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatID {
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1) {
+        UIViewController *currentVC = self.navigationController.viewControllers[1];
+        if ([currentVC isKindOfClass:ChatViewController.class]) {
+            ChatViewController *currentMessagesVC = (ChatViewController *)currentVC;
+            if (currentMessagesVC.publicChatWithLinkCreated && [currentMessagesVC.publicChatLink isEqual:publicLink] ) {
+                if (viewControllers.count != 2) {
+                    [self.navigationController popToViewController:currentMessagesVC animated:YES];
+                }
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
+                return;
+            } else {
+                [currentMessagesVC closeChatRoom];
+                [self.navigationController popToRootViewControllerAnimated:NO];
+            }
+        }
+    }
+
+    ChatViewController *messagesVC = [[ChatViewController alloc] init];
+    messagesVC.publicChatWithLinkCreated = YES;
+    messagesVC.publicChatLink = [NSURL URLWithString:publicLink];
+    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+
+    [self updateBackBarButtonItem:messagesVC.chatRoom.unreadCount];
+
+    [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
 - (void)internetConnectionChanged {

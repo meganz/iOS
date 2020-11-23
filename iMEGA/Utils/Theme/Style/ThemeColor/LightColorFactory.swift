@@ -6,6 +6,8 @@ struct LightColorThemeFactory: ColorFactory {
         switch style {
         case .primary: return Color(red: 0, green: 0, blue: 0)
         case .secondary: return Color(red: 153, green: 153, blue: 153)
+        case .tertiary: return Color(red: 81, green: 81, blue: 81)
+        case .quaternary: return Color(red: 132, green: 132, blue: 132)
         case .warning: return Color(red: 255, green: 59, blue: 48)
         }
     }
@@ -13,10 +15,15 @@ struct LightColorThemeFactory: ColorFactory {
     func backgroundColor(_ style: MEGAColor.Background) -> Color {
         switch style {
         case .primary: return Color(red: 255, green: 255, blue: 255)
+        case .secondary: return Color(red: 196, green: 204, blue: 204, alpha: 255)
+
         case .warning: return Color(red: 255, green: 204, blue: 0, alpha: 38)
         case .enabled: return Color(red: 0, green: 168, blue: 134, alpha: 255)
         case .disabled: return Color(red: 153, green: 153, blue: 153, alpha: 255)
         case .highlighted: return Color(red: 0, green: 168, blue: 134, alpha: 204)
+
+        case .searchTextField: return Color(red: 232, green: 232, blue: 232)
+        case .navigationBar: return Color(red: 247, green: 247, blue: 247)
         }
     }
 

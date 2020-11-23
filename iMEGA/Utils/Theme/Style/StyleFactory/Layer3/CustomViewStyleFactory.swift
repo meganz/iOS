@@ -13,6 +13,9 @@ typealias ViewStyler = (UIView) -> Void
 
 enum MEGACustomViewStyle {
     case warning
+    case searchController
+    case slideIndicatorContainerView
+    case slideIndicator
 }
 
 protocol CustomViewStyleFactory {
@@ -39,6 +42,20 @@ private struct CustomViewStyleFactoryImpl: CustomViewStyleFactory {
                     .applied(on: cornerStyleFactory.cornerStyle(of: .round)
                         .applied(on: borderStyleFactory.borderStyle(of: .warning)
                             .applied(on: view)))
+            }
+        case .searchController:
+            return { view in
+                backgroundStyleFactory.backgroundStyle(of: .homeNavigationBar).applied(on: view)
+            }
+        case .slideIndicatorContainerView:
+            return { view in
+                backgroundStyleFactory.backgroundStyle(of: .slideIndicatorContainerView).applied(on: view)
+            }
+        case .slideIndicator:
+            return { view in
+                backgroundStyleFactory.backgroundStyle(of: .slideIndicator)
+                    .applied(on: cornerStyleFactory.cornerStyle(of: .twoAndHalf)
+                        .applied(on: view))
             }
         }
     }

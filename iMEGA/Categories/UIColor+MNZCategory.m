@@ -72,6 +72,22 @@
     }
 }
 
++ (UIColor *)mnz_homeRecentsCellBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                return UIColor.whiteColor;
+            }
+            case UIUserInterfaceStyleDark: {
+                return [UIColor colorWithRed: 28.0 / 255.0 green: 28.0 / 255.0 blue:28.0 / 255.0 alpha:1.0];
+            }
+        }
+    } else {
+        return UIColor.whiteColor;
+    }
+}
+
 #pragma mark Background grouped
 
 + (UIColor *)mnz_backgroundGroupedForTraitCollection:(UITraitCollection *)traitCollection {

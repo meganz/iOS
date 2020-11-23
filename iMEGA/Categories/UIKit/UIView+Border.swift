@@ -19,4 +19,10 @@ extension UIView {
         layer.borderColor = color.cgColor
         return self
     }
+
+    @discardableResult
+    func debugBorder(with color: UIColor = .red) -> Self {
+        border(withWidth: 1)
+        return border(withColor: color)
+    }
 }

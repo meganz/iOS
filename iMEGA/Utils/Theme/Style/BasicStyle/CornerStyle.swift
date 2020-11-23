@@ -15,17 +15,18 @@ extension CornerStyle {
 // MARK: - UI Applier
 
 extension CornerStyle {
-     
+
     @discardableResult
-    func applied(on view: UIView) -> UIView {
+    func applied<T: UIView>(on view: T) -> T {
         apply(style: self)(view)
     }
 }
 
 @discardableResult
-fileprivate func apply(style: CornerStyle) -> (UIView) -> UIView {
+fileprivate func apply<T: UIView>(style: CornerStyle) -> (T) -> T {
     return { view in
         view.layer.cornerRadius = style.radius
+        view.clipsToBounds = true
         return view
     }
 }

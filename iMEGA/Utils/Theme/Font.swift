@@ -13,6 +13,12 @@ extension Font {
 
 extension Font {
 
+    /// Size 17, Bold
+    static let title = Font(size: 17, weight: .bold)
+
+    /// Size 15, Bold
+    static let titleSmall = Font(size: 15, weight: .bold)
+
     /// Size 17, Semibold
     static let headline = Font(size: 17, weight: .semibold)
 

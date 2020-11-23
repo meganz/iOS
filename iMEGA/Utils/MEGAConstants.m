@@ -16,6 +16,7 @@ NSString * const MEGASortingPreference = @"MEGASortingPreference";
 NSString * const MEGASortingPreferenceType = @"SortOrderType";
 
 NSString * const MEGAViewModePreference = @"MEGAViewModePreference";
+NSString * const MEGAExplorerViewModePreference = @"MEGAExplorerViewModePreference";
 
 NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalDataEnabled";
 

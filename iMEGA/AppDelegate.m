@@ -807,7 +807,7 @@
             break;
             
         case 3:
-            tabTag = MYACCOUNT;
+            tabTag = HOME;
             break;
             
         default:

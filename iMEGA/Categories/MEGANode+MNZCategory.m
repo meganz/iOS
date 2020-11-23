@@ -37,6 +37,10 @@
 
 @implementation MEGANode (MNZCategory)
 
+- (MEGANode *)parent {
+    return [MEGASdkManager.sharedMEGASdk nodeForHandle:self.parentHandle];
+}
+
 - (void)navigateToParentAndPresent {
     MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
     
@@ -54,8 +58,7 @@
     NSArray *parentTreeArray = self.mnz_parentTreeArray;
     for (MEGANode *node in parentTreeArray) {
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveVC.parentNode = node;
-        cloudDriveVC.hideSelectorView = YES;
+        cloudDriveVC.parentNode = node;        
         [navigationController pushViewController:cloudDriveVC animated:NO];
     }
     
@@ -63,8 +66,7 @@
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = self;
-            cloudDriveVC.hideSelectorView = YES;
+            cloudDriveVC.parentNode = self;            
             [navigationController pushViewController:cloudDriveVC animated:NO];
             break;
         }

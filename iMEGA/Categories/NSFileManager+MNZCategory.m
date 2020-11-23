@@ -29,6 +29,10 @@
     return uploadsDirectory;
 }
 
+- (NSString  *)temporaryDirectory {
+    return NSTemporaryDirectory();
+}
+
 #pragma mark - Manage files and folders
 
 - (unsigned long long)mnz_sizeOfFolderAtPath:(NSString *)path {

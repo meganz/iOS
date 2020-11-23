@@ -12,6 +12,7 @@
 
 - (NSString *)downloadsDirectory;
 - (NSString *)uploadsDirectory;
+- (NSString *)temporaryDirectory;
 
 #pragma mark - Manage files and folders
 

@@ -139,6 +139,7 @@
         [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkippedWithDelegate:delegate];
     }
     [OverDiskQuotaService.sharedService invalidate];
+    [[SearchFileUseCase.alloc init] clearFileSearchHistoryEntries];
 }
 
 - (void)configureUI {

@@ -205,23 +205,17 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (void)openAchievements {
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    if (viewControllers.count > 1) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }
-    
-    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:MyAccountAchievements inSection:MyAccountSectionMEGA];
-    [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:MyAccountAchievements inSection:MyAccountSectionMEGA];
+        [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
+    });
 }
 
 - (void)openOffline {
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    if (viewControllers.count > 1) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }
-    
-    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:MyAccountOffline inSection:MyAccountSectionMEGA];
-    [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:MyAccountOffline inSection:MyAccountSectionMEGA];
+        [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
+    });
 }
 
 - (void)avatarTapped:(UITapGestureRecognizer *)sender {
@@ -404,7 +398,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
             cell.pendingLabel.text = nil;
             break;
         }
-            
+
         case MyAccountOffline: {
             cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
             cell.iconImageView.image = [UIImage imageNamed:@"icon-offline"].imageFlippedForRightToLeftLayoutDirection;
@@ -478,7 +472,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
-            
+
         case MyAccountOffline: {
             OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineVC animated:YES];

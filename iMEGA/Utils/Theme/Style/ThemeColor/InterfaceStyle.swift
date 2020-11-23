@@ -47,3 +47,12 @@ extension UITraitCollection {
         }
     }
 }
+
+// MARK: - Special Alwyas Bright Label Style
+
+extension UITraitCollection {
+
+    func alwaysBrightLabelStyler(of style: MEGALabelStyle) -> LabelStyler  {
+        theme.alwyasBrightLabelStyleFactory.styler(of: style)
+    }
+}

@@ -57,6 +57,13 @@ class NodeInfoViewController: UIViewController {
         return MEGANavigationController.init(rootViewController: nodeInfoVC)
     }
     
+    // MARK: - Public Interface
+    func display(_ node: MEGANode, withDelegate delegate: NodeInfoViewControllerDelegate) {
+        self.node = node
+        self.delegate = delegate
+    }
+
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         

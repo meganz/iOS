@@ -76,10 +76,13 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.definesPresentationContext = YES;
     
-    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    if (self.flavor == AccountScreen) {
+        [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(longPress:)]];
+    }
     
     self.searchController.delegate = self;
-    
+
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     if (@available(iOS 13.0, *)) {
@@ -161,7 +164,9 @@ static NSString *kisDirectory = @"kisDirectory";
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
             [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-
+            if (self.flavor == HomeScreen) {
+                self.view.backgroundColor = UIColor.mnz_black1C1C1E;
+            }
             [self reloadData];
         }
     }
@@ -189,34 +194,39 @@ static NSString *kisDirectory = @"kisDirectory";
 
 
 - (void)determineViewMode {
+    if (self.flavor == HomeScreen) {
+        [self initTable];
+        return;
+    }
+
     ViewModePreference viewModePreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference];
     switch (viewModePreference) {
         case ViewModePreferencePerFolder:
             //Check Core Data or determine according to the number of nodes with or without thumbnail
             break;
-            
+
         case ViewModePreferenceList:
             [self initTable];
             return;
-            
+
         case ViewModePreferenceThumbnail:
             [self initCollection];
             return;
     }
-    
+
     NSString *relativePath = [[self currentOfflinePath] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()]  withString:@""];
     OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:relativePath];
-    
+
     if (offlineAppearancePreference) {
         switch (offlineAppearancePreference.viewMode.integerValue) {
             case ViewModePreferenceList:
                 [self initTable];
                 break;
-                
+
             case ViewModePreferenceThumbnail:
                 [self initCollection];
                 break;
-                
+
             default:
                 [self initTable];
                 break;
@@ -224,17 +234,17 @@ static NSString *kisDirectory = @"kisDirectory";
     } else {
         NSInteger nodesWithThumbnail = 0;
         NSInteger nodesWithoutThumbnail = 0;
-        
+
         NSString *directoryPathString = [self currentOfflinePath];
         NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-        
+
         for (int i = 0; i < directoryContents.count; i++) {
             NSString *fileName = [directoryContents objectAtIndex:i];
             NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:fileName];
-            
+
             MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
             NSString *handleString = offNode.base64Handle;
-            
+
             BOOL isDirectory;
             [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
             if (isDirectory) {
@@ -242,7 +252,7 @@ static NSString *kisDirectory = @"kisDirectory";
             } else {
                 NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
-                
+
                 if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
                     nodesWithThumbnail = nodesWithThumbnail + 1;
                 } else {
@@ -250,7 +260,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 }
             }
         }
-        
+
         if (nodesWithThumbnail > nodesWithoutThumbnail) {
             [self initCollection];
         } else {
@@ -266,7 +276,6 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.offlineCollectionView removeFromParentViewController];
     self.offlineCollectionView = nil;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.viewModePreference = ViewModePreferenceList;
     
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
@@ -276,12 +285,19 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.offlineTableView didMoveToParentViewController:self];
     
     self.offlineTableView.offline = self;
-    self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
-    self.offlineTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
     self.offlineTableView.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+
+    if (self.flavor == AccountScreen) {
+        self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+        self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
+        self.offlineTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    } else if(self.flavor == HomeScreen) {
+        self.offlineTableView.tableView.bounces = NO;
+    }
 }
 
 - (void)initCollection {
@@ -290,7 +306,6 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.offlineTableView removeFromParentViewController];
     self.offlineTableView = nil;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.viewModePreference = ViewModePreferenceThumbnail;
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
@@ -302,6 +317,10 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
     self.offlineCollectionView.collectionView.emptyDataSetSource = self;
+
+    if (self.flavor == AccountScreen) {
+        self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    }
 }
 
 - (void)changeViewModePreference {
@@ -414,7 +433,7 @@ static NSString *kisDirectory = @"kisDirectory";
     if ([self.offlineSortedItems count] == 0) {
         self.offlineTableView.tableView.tableHeaderView = nil;
     } else {
-        if (!self.offlineTableView.tableView.tableHeaderView) {
+        if (!self.offlineTableView.tableView.tableHeaderView && self.flavor == AccountScreen) {
             self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
         }
     }

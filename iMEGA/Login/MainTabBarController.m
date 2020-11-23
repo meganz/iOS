@@ -15,7 +15,7 @@
 
 #import "NSObject+Debounce.h"
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
@@ -29,12 +29,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIViewController *homeViewController = [self homeViewController];
     NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:5];
+
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
+    [defaultViewControllersMutableArray addObject:homeViewController];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController]];
-    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateInitialViewController]];
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
@@ -59,7 +61,7 @@
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
                 break;
                 
-            case MYACCOUNT:
+            case HOME:
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
                 break;
         }
@@ -70,7 +72,6 @@
     [self setDelegate:self];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     self.progressView = ({
         ProgressIndicatorView *view = [ProgressIndicatorView.alloc initWithFrame:CGRectMake(0, 0, 70, 70)];
@@ -90,8 +91,9 @@
     });
     
     [self setBadgeValueForChats];
-    [self setBadgeValueForMyAccount];
     [self configurePhoneImageBadge];
+
+    self.selectedViewController = homeViewController;
 }
 
 - (void)tapProgressView {
@@ -191,20 +193,37 @@
     }
 }
 
-- (void)showAchievements {
-    self.selectedIndex = MYACCOUNT;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
-    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-    if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-        [myAccountHallVC openAchievements];
+- (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatID {
+    self.selectedIndex = CHAT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
+
+    UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+    if (rootViewController.presentedViewController) {
+        [rootViewController dismissViewControllerAnimated:YES completion:^{
+            [chatRoomsVC openChatRoomWithPublicLink:publicLink chatID:chatID];
+        }];
+    } else {
+        [chatRoomsVC openChatRoomWithPublicLink:publicLink chatID:chatID];
     }
 }
 
+- (void)showAchievements {
+    if (![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+        return;
+    }
+
+    self.selectedIndex = HOME;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
+    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
+    [homeRouting showAchievements];
+}
+
 - (void)showOffline {
-    self.selectedIndex = MYACCOUNT;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
-    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-    [myAccountHallVC openOffline];
+    self.selectedIndex = HOME;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
+    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
+    [homeRouting showOfflines];
 }
 
 #pragma mark - Private
@@ -219,14 +238,6 @@
     } else {
         tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }
-}
-
-- (void)setBadgeValueForMyAccount {
-    int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
-    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
-    NSUInteger total = incomingContacts + unseenUserAlerts;
-    NSString *badgeValue = total ? @"⦁" : nil;
-    [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
@@ -264,14 +275,8 @@
     self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 2 + 10, 6, 10, 10);
 }
 
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self setBadgeValueForMyAccount];
-}
-
-- (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    [self setBadgeValueForMyAccount];
+- (UIViewController *)homeViewController {
+    return [HomeScreenFactory.new createHomeScreenFrom:self];
 }
 
 #pragma mark - MEGAChatDelegate

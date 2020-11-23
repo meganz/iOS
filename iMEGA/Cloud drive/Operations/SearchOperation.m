@@ -11,6 +11,8 @@
 @property (strong, nonatomic) MEGANode *parentNode;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
+@property (assign, nonatomic) MEGASortOrderType sortOrderType;
+@property (assign, nonatomic) MEGANodeFormatType nodeFormatType;
 @property (copy, nonatomic) void (^completion)(NSArray <MEGANode *> *nodesFound);
 
 @end
@@ -18,12 +20,28 @@
 @implementation SearchOperation
 
 - (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken completion:(void (^)(NSArray  <MEGANode *> *_Nullable))completion {
+    return [self initWithParentNode:parentNode
+                               text:text
+                        cancelToken:cancelToken
+                      sortOrderType:[Helper sortTypeFor:parentNode]
+                     nodeFormatType:MEGANodeFormatTypeUnknown
+                         completion:completion];
+}
+
+- (instancetype)initWithParentNode:(MEGANode *)parentNode
+                              text:(nullable NSString *)text
+                       cancelToken:(MEGACancelToken *)cancelToken
+                     sortOrderType:(MEGASortOrderType)sortOrderType
+                    nodeFormatType:(MEGANodeFormatType)nodeFormatType
+                        completion:(void (^)(NSArray<MEGANode *> * _Nullable))completion {
     self = super.init;
     if (self) {
         _parentNode = parentNode;
         _text = text;
         _completion = completion;
         _cancelToken = cancelToken;
+        _sortOrderType = sortOrderType;
+        _nodeFormatType = nodeFormatType;
     }
     return self;
 }
@@ -44,9 +62,13 @@
 #else
     MEGALogInfo(@"[Search] starts");
 #endif
-    MEGASortOrderType sortOrderType = [Helper sortTypeFor:self.parentNode];
-    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode searchString:self.text cancelToken:self.cancelToken recursive:YES order:sortOrderType];
-    
+    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode
+                                                                         searchString:self.text
+                                                                          cancelToken:self.cancelToken
+                                                                            recursive:YES
+                                                                            orderType:self.sortOrderType
+                                                                       nodeFormatType:self.nodeFormatType
+                                                                     folderTargetType:MEGAFolderTargetTypeAll];
 #ifdef DEBUG
     MEGALogInfo(@"[Search] \"%@\" finishes", self.text);
 #else

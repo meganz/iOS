@@ -1004,8 +1004,7 @@
         case MEGANodeTypeFolder: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cloudDriveVC setParentNode:node];
-            [cloudDriveVC setDisplayMode:DisplayModeCloudDrive];
-            cloudDriveVC.hideSelectorView = YES;
+            [cloudDriveVC setDisplayMode:DisplayModeCloudDrive];            
             
             [self.navigationController pushViewController:cloudDriveVC animated:YES];
             break;

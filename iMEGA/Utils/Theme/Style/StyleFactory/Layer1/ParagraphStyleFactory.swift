@@ -8,8 +8,13 @@ extension InterfaceStyle {
 }
 
 enum MEGAParagraphStyle {
+
+    // MARK: - Multiline Paragraph
     case centerAlignedWideSpacing
     case naturalAlignedWordWrapping
+
+    // MARK: - Singleline Paragraph
+    case centered
 }
 
 protocol ParagraphStyleFactory {
@@ -25,6 +30,8 @@ private struct ParagraphStyleFactoryImpl: ParagraphStyleFactory {
             return ParagraphStyle(lineSpacing: 8, alignment: .center)
         case .naturalAlignedWordWrapping:
             return ParagraphStyle(lineBreakMode: .wordWrapping, alignment: .natural)
+        case .centered:
+            return ParagraphStyle(alignment: .center)
         }
     }
 }
