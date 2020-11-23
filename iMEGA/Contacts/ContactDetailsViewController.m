@@ -138,7 +138,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self configureShadowInLayer:self.optionalNameLabel.layer];
     [self updateUserDetails];
     
-    self.emailLabel.text = self.userEmail;
+    if (self.user.visibility == MEGAUserVisibilityVisible || self.user.visibility == MEGAUserVisibilityInactive) {
+        self.emailLabel.text = self.userEmail;
+    }
+    
     [self configureShadowInLayer:self.emailLabel.layer];
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
