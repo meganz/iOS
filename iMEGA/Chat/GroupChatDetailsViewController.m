@@ -577,6 +577,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             NSString *peerFullname;
             NSString *peerEmail;
             MEGAChatRoomPrivilege privilege;
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:base64Handle];
+
             if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
                 NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
                 peerFullname = [NSString stringWithFormat:@"%@ (%@)", myFullname, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
@@ -584,7 +586,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 privilege = self.chatRoom.ownPrivilege;
             } else {
                 peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
-                peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
+                if (user.visibility == MEGAUserVisibilityVisible || user.visibility == MEGAUserVisibilityInactive) {
+                    peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
+                } else {
+                    peerEmail = @"";
+                }
+                
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
                 if (!peerFullname) {
                     peerFullname = @"";
@@ -630,7 +637,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];
             cell.permissionsButton.tag = indexPath.row;
-            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:base64Handle];
             cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
             break;
         }
