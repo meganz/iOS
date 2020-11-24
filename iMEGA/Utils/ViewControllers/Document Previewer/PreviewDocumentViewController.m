@@ -73,7 +73,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (self.filesPathsArray) {
+    if (self.filePath) {
         [self loadPreview];
     } else {
         NSError * error = nil;
@@ -148,7 +148,7 @@
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
         [self.imageView mnz_imageForNode:self.node];
     } else {
-        [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
+        [self.imageView mnz_setImageForExtension:self.filePath.pathExtension];
     }
     
 }
@@ -172,8 +172,8 @@
     } else if (self.node && self.nodeFilePath){
         return [NSURL fileURLWithPath:self.nodeFilePath];
     } else {
-        self.title = [self.filesPathsArray objectAtIndex:self.nodeFileIndex].lastPathComponent;
-        return [NSURL fileURLWithPath:[self.filesPathsArray objectAtIndex:self.nodeFileIndex]];
+        self.title = self.filePath.lastPathComponent;
+        return [NSURL fileURLWithPath:self.filePath];
     }
 }
 
@@ -185,12 +185,6 @@
     self.previewController.delegate = self;
     self.previewController.dataSource = self;
     self.previewController.view.frame = self.view.bounds;
-    
-    if (self.filesPathsArray) {
-        self.title = [self.filesPathsArray objectAtIndex:self.nodeFileIndex].lastPathComponent;
-        [self.previewController setCurrentPreviewItemIndex:self.nodeFileIndex];
-        [self addObserver:self forKeyPath:@"self.previewController.title" options:NSKeyValueObservingOptionNew context:nil];
-    }
     
     UIBarButtonItem *flexibleItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     NSMutableArray *toolbarItems = NSMutableArray.new;
@@ -205,18 +199,8 @@
     
     [self.view addSubview:self.previewController.view];
     
-    if ([self.filesPathsArray.firstObject.pathExtension.lowercaseString isEqual: @"zip"] || [self.nodeFilePath.pathExtension.lowercaseString isEqual: @"zip"]) {
+    if ([self.filePath.pathExtension.lowercaseString isEqual: @"zip"] || [self.nodeFilePath.pathExtension.lowercaseString isEqual: @"zip"]) {
         [self createOpenZipButton];
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"self.previewController.title"]) {
-        UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex].lastPathComponent subtitle:self.previewController.title color:UIColor.mnz_label];
-        titleLabel.adjustsFontSizeToFitWidth = YES;
-        titleLabel.minimumScaleFactor = 0.8f;
-        self.navigationItem.titleView = titleLabel;
-        [self.navigationItem.titleView sizeToFit];
     }
 }
 
@@ -295,9 +279,8 @@
             UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
             [self presentViewController:activityVC animated:YES completion:nil];
         } else {
-            if (self.filesPathsArray.count > 0 && self.nodeFileIndex < self.filesPathsArray.count) {
-                NSString *filePath = self.filesPathsArray[self.nodeFileIndex];
-                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:filePath]] applicationActivities:nil];
+            if (self.filePath) {
+                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:self.filePath]] applicationActivities:nil];
                 activityVC.popoverPresentationController.barButtonItem = sender;
                 [self presentViewController:activityVC animated:YES completion:nil];
             }
@@ -341,7 +324,7 @@
 }
 
 - (void)openZipInQLViewController {
-    NSString *filePath = self.nodeFilePath ? self.nodeFilePath : self.filesPathsArray.firstObject;
+    NSString *filePath = self.nodeFilePath ? self.nodeFilePath : self.filePath;
     MEGAQLPreviewController *previewController = [MEGAQLPreviewController.alloc initWithFilePath:filePath];
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
@@ -351,15 +334,12 @@
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    if (self.filesPathsArray) {
-        return self.filesPathsArray.count;
-    }
     return 1;
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    if (self.filesPathsArray) {
-        return [NSURL fileURLWithPath:[self.filesPathsArray objectAtIndex:index]];
+    if (self.filePath) {
+        return [NSURL fileURLWithPath:self.filePath];
     } else {
         if (previewDocumentTransfer.path) {
             return [NSURL fileURLWithPath:previewDocumentTransfer.path];
@@ -373,9 +353,6 @@
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
-    if (self.filesPathsArray) {
-        [self removeObserver:self forKeyPath:@"self.previewController.title"];
-    }
 }
 
 #pragma mark - MEGATransferDelegate

@@ -141,8 +141,7 @@
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
             previewController.api = api;
-            previewController.filesPathsArray = @[previewDocumentPath];
-            previewController.nodeFileIndex = 0;
+            previewController.filePath = previewDocumentPath;
             previewController.node = self;
             previewController.isLink = isFolderLink;
             previewController.fileLink = fileLink;

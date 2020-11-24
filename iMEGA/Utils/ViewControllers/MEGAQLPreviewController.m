@@ -1,6 +1,5 @@
 
 #import "MEGAQLPreviewController.h"
-#import "Helper.h"
 #import "MEGALinkManager.h"
 
 @interface MEGAQLPreviewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource>
