@@ -825,8 +825,7 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-        previewController.filesPathsArray = self.offlineFiles;
-        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        previewController.filePath = self.previewDocumentPath;
         if (@available(iOS 13.0, *)) {
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         }
@@ -1188,8 +1187,7 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-        previewController.filesPathsArray = self.offlineFiles;
-        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        previewController.filePath = self.previewDocumentPath;
         if (@available(iOS 13.0, *)) {
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         }
