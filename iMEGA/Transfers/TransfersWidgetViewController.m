@@ -745,34 +745,16 @@ static TransfersWidgetViewController* instance = nil;
         return;
     }
     
-    NSString *transfersTypeString;
-    switch (self.transfersSelected) {
-        case TransfersWidgetSelectedAll:
-            transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
-            break;
-            
-        case TransfersWidgetSelectedCompleted:
-            transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
-            break;
-            
-    }
+    NSString *transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
     
     UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message:[NSString stringWithFormat:AMLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString] preferredStyle:UIAlertControllerStyleAlert];
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        switch (self.transfersSelected) {
-            case TransfersWidgetSelectedAll: {
-                [self cancelTransfersForDirection:0];
-                [self cancelTransfersForDirection:1];
-                break;
-            }
-                
-            case TransfersWidgetSelectedCompleted:
-                [self cancelTransfersForDirection:0];
-                break;
-                
-        }
+        [self cancelTransfersForDirection:0];
+        [self cancelTransfersForDirection:1];
+        
+        
         
         [self reloadView];
     }]];
@@ -925,7 +907,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)transferAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGATransfer *)transfer from:(id)sender {
     MEGANode *node = transfer.node;
-    if (!node) {
+    if (!node && transfer.type == MEGATransferTypeDownload) {
         return;
     }
     
