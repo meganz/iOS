@@ -4,7 +4,7 @@
 
 @interface TransfersWidgetViewController : UIViewController
 
-@property (weak, nonatomic) ProgressIndicatorView *progressView;
-+ (instancetype)sharedTransferViewController;
+@property (weak, nonatomic, nullable) ProgressIndicatorView *progressView;
++ (instancetype _Nonnull)sharedTransferViewController;
 
 @end
