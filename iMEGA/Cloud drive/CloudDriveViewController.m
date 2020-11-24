@@ -1802,10 +1802,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    BOOL shouldProcessOnNodesUpdate = NO; //DisplayModeRecents
-    if (self.displayMode == DisplayModeRubbishBin) {
-        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
-    }
+    BOOL shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
     
     if (shouldProcessOnNodesUpdate) {
         if (self.nodes.size.unsignedIntegerValue == 0) {
