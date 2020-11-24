@@ -203,7 +203,6 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
-        TransfersWidgetViewController.sharedTransfer().progressView.isHidden = true
 
     }
     
@@ -216,7 +215,7 @@ class ChatViewController: MessagesViewController {
         super.viewDidAppear(animated)
         checkIfChatHasActiveCall()
         reloadInputViews()
-        TransfersWidgetViewController.sharedTransfer().progressView.hideWidget()
+        TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
         
         if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
