@@ -966,8 +966,12 @@ class ChatViewController: MessagesViewController {
         }
         
         if chatRoom.isGroup {
-            guard chatRoom.peerCount + 1 <= 20 else {
-                SVProgressHUD.showError(withStatus: AMLocalizedString("Unable to start a call because the participants limit was exceeded.", "Error shown when trying to start a call in a group with more peers than allowed"))
+            guard chatRoom.peerCount + 1 <= 20 || call?.status == .inProgress else {
+                if callType == .active  {
+                    SVProgressHUD.showError(withStatus: AMLocalizedString("Error. No more participants are allowed in this group call.", "Message show when a call cannot be established because there are too many participants in the group call"))
+                } else {
+                    SVProgressHUD.showError(withStatus: AMLocalizedString("Unable to start a call because the participants limit was exceeded.", "Error shown when trying to start a call in a group with more peers than allowed"))
+                }
                 return
             }
             
