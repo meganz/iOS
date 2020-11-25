@@ -2186,12 +2186,6 @@
 "Clear All"="Clear All";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Resume Transfers?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Select Folder";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Choose Folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Image Quality";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2418,3 +2412,9 @@
 "Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Search Your Files";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER" = "MEGA CAMERA UPLOADS FOLDER";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder" = "Select Folder";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads." = "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads.";

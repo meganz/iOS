@@ -16,8 +16,8 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 @property (nonatomic) BOOL homeQuickActionSearch;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
-@property (nonatomic, strong) NSMutableArray *searchNodesArray;
-@property (nonatomic, strong) NSMutableArray *selectedNodesArray;
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *searchNodesArray;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
 @property (nonatomic, strong) MEGARecentActionBucket *recentActionBucket;
@@ -34,5 +34,7 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender;
 - (void)didSelectNode:(MEGANode *)node;
+- (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
+- (void)setEditMode:(BOOL)editMode;
 
 @end

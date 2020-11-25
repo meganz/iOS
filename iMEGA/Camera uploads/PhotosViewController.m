@@ -342,13 +342,26 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)reloadUI {
+    __weak __typeof__(self) weakSelf = self;
+    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+        if (node) {
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                [weakSelf reloadNodesInCameraUploadTargetFolder:node];
+            }];
+        } else {
+            MEGALogWarning(@"Could not load CU target folder due to error %@", error)
+        }
+    }];
+}
+
+- (void)reloadNodesInCameraUploadTargetFolder:(MEGANode *)targetFolder {
     MEGALogDebug(@"[Camera Upload] reload photos collection view");
+    self.parentNode = targetFolder;
+    
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
     self.photosByMonthYearArray = [NSMutableArray new];
     NSMutableArray *photosArray = [NSMutableArray new];
-    
-    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:MEGACameraUploadsNodeName];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     

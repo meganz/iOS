@@ -10,7 +10,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionOpenIn,
     BrowserActionSendFromCloudDrive,
     BrowserActionDocumentProvider,
-    BrowserActionShareExtension
+    BrowserActionShareExtension,
+    BrowserActionSelectFolder
 };
 
 @protocol BrowserViewControllerDelegate <NSObject>

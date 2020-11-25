@@ -31,7 +31,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
-#import "NSMutableArray+MNZCategory.h"
+#import "NSArray+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
@@ -1615,32 +1615,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.selectedNodesArray = nil;
 }
 
-- (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSArray *numberOfFilesAndFoldersArray = self.selectedNodesArray.mnz_numberOfFilesAndFolders;
-    NSUInteger numFilesAction = [numberOfFilesAndFoldersArray.firstObject unsignedIntegerValue];
-    NSUInteger numFoldersAction = [[numberOfFilesAndFoldersArray objectAtIndex:1] unsignedIntegerValue];
-    
-    switch (self.displayMode) {
-        case DisplayModeCloudDrive: {
-            MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:numFilesAction folders:numFoldersAction completion:^{
-                [self setEditMode:NO];
-            }];
-            for (MEGANode *node in self.selectedNodesArray) {
-                [MEGASdkManager.sharedMEGASdk moveNode:node newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
-            }
-            break;
-        }
-            
-        case DisplayModeRubbishBin: {
-            [self confirmDeleteActionFiles:numFilesAction andFolders:numFoldersAction];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
     MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -1971,7 +1945,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_askToMoveToTheRubbishBinInViewController:self];
+            [self moveToRubbishBinFor:node];
             break;
             
         case MegaNodeActionTypeRemove:

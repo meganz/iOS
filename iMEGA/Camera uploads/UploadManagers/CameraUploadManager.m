@@ -14,13 +14,13 @@
 #import "MediaInfoLoader.h"
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
-#import "CameraUploadNodeLoader.h"
 #import "VideoUploadOperation.h"
 #import "LivePhotoUploadOperation.h"
 #import "PhotoUploadOperation.h"
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
@@ -38,15 +38,12 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 @property (readonly) BOOL isPhotoUploadQueueSuspended;
 @property (readonly) BOOL isVideoUploadQueueSuspended;
-    
-@property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
 
 @property (strong, nonatomic) CameraScanner *cameraScanner;
 @property (strong, nonatomic) UploadRecordsCollator *uploadRecordsCollator;
 @property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
-@property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
 
@@ -181,20 +178,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     }
     
     return _videoUploadOperationQueue;
-}
-
-- (CameraUploadNodeLoader *)cameraUploadNodeLoader {
-    if (_cameraUploadNodeLoader) {
-        return _cameraUploadNodeLoader;
-    }
-    
-    dispatch_sync(self.propertySerialQueue, ^{
-        if (self->_cameraUploadNodeLoader == nil) {
-            self->_cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
-        }
-    });
-    
-    return _cameraUploadNodeLoader;
 }
 
 - (UploadRecordsCollator *)uploadRecordsCollator {
@@ -376,7 +359,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         return;
     }
     
-    [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
+    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
         if (error || cameraUploadNode == nil) {
             MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -384,10 +367,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
             });
             
             return;
-        }
-        
-        if (cameraUploadNode.handle != self.cameraUploadNode.handle) {
-            self.cameraUploadNode = cameraUploadNode;
         }
         
         [self uploadCameraWhenCameraUploadNodeIsLoaded];
@@ -430,8 +409,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
         return;
     }
     
-    if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodeTreeCurrent && self.cameraUploadNode != nil)) {
-        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera upload node issues");
+    if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodeTreeCurrent)) {
+        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info");
         return;
     }
     
@@ -522,29 +501,41 @@ static const NSUInteger VideoUploadBatchCount = 1;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        NSError *error;
-        CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:self.cameraUploadNode error:&error];
-        if (operation) {
-            [self queueUpOperation:operation];
-        } else {
-            MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
-            if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
-                return;
-            }
-            
-            if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
-                if (error.code == CameraUploadErrorEmptyLocalIdentifier ||
-                    error.code == CameraUploadErrorNoMediaAssetFetched ||
-                    error.code == CameraUploadErrorDisabledMediaSubtype) {
-                    [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
-                    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-                } else {
-                    [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
+        [self createUploadOperationWithRecord:record completion:^(CameraUploadOperation * _Nullable operation, NSError * _Nullable error) {
+            if (error) {
+                MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
+                if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                    return;
                 }
+                
+                if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
+                    if (error.code == CameraUploadErrorEmptyLocalIdentifier ||
+                        error.code == CameraUploadErrorNoMediaAssetFetched ||
+                        error.code == CameraUploadErrorDisabledMediaSubtype) {
+                        [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
+                        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+                    } else {
+                        [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
+                    }
+                }
+                [self uploadNextAssetForMediaType:mediaType];
+            } else {
+                [self queueUpOperation:operation];
             }
-            [self uploadNextAssetForMediaType:mediaType];
-        }
+        }];
     }
+}
+
+- (void)createUploadOperationWithRecord:(MOAssetUploadRecord *)record completion:(void (^)(CameraUploadOperation * _Nullable, NSError * _Nullable))completion {
+    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+        if (error) {
+            completion(nil, error);
+        } else {
+            NSError *creationError;
+            CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:node error:&creationError];
+            completion(operation, creationError);
+        }
+    }];
 }
 
 - (void)queueUpOperation:(CameraUploadOperation *)operation {
@@ -858,7 +849,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     MEGALogDebug(@"[Camera Upload] logout notification %@", notification);
     [self disableCameraUpload];
     _isNodeTreeCurrent = NO;
-    _cameraUploadNode = nil;
     [AttributeUploadManager.shared cancelAllAttributesUpload];
     [CameraUploadRecordManager.shared resetDataContext];
     [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];

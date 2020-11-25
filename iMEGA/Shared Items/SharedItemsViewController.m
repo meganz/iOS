@@ -14,7 +14,7 @@
 #import "MEGAUser+MNZCategory.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
-#import "NSMutableArray+MNZCategory.h"
+#import "NSArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIActivityViewController+MNZCategory.h"
 #import "UIImage+MNZCategory.h"

@@ -147,4 +147,8 @@
 #import "CloudDriveViewController.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "GridFlowLayout.h"
+#import "MEGAOperation.h"
 #import "NSObject+Debounce.h"
+#import "CloudDriveViewController.h"
+#import "MEGAMoveRequestDelegate.h"
+#import "CameraUploadManager+Settings.h"

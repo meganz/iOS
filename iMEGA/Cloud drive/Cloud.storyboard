@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -472,6 +472,7 @@
                         <outlet property="toolBarMoveBarButtonItem" destination="7Sv-uf-KA4" id="g3C-EQ-WoC"/>
                         <outlet property="toolBarNewFolderBarButtonItem" destination="Rgo-oZ-vnm" id="RJE-19-g4s"/>
                         <outlet property="toolBarSaveInMegaBarButtonItem" destination="haa-Y0-WYS" id="ENt-m3-MJB"/>
+                        <outlet property="toolBarSelectBarButtonItem" destination="cz8-46-iCu" id="ycl-vg-9UN"/>
                         <outlet property="toolbarSendBarButtonItem" destination="o2i-Qg-G0n" id="n4z-Vh-a94"/>
                     </connections>
                 </viewController>
@@ -484,6 +485,11 @@
                 <barButtonItem title="Move" style="plain" id="7Sv-uf-KA4" userLabel="Move Bar Button Item">
                     <connections>
                         <action selector="moveNode:" destination="Z2F-Nr-ypX" id="ufS-m8-fHx"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Select Folder" id="cz8-46-iCu" userLabel="Select Folder Button Item">
+                    <connections>
+                        <action selector="selectBarButtonPressed:" destination="Z2F-Nr-ypX" id="mvO-na-0ra"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Copy" style="plain" id="szH-Sn-BED" userLabel="Copy Bar Button Item">
@@ -727,7 +733,7 @@
                 </barButtonItem>
                 <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="T78-eD-QmZ" userLabel="Rubbish Bin Delete Bar Button Item">
                     <connections>
-                        <action selector="deleteAction:" destination="MwH-YC-3hO" id="kfp-Ql-4cd"/>
+                        <action selector="deleteActionWithSender:" destination="MwH-YC-3hO" id="2Ei-Ih-U7n"/>
                     </connections>
                 </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="fEo-QQ-FwW">

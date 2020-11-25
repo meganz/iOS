@@ -17,7 +17,7 @@
 #import "MEGA-Swift.h"
 #endif
 #import "NSFileManager+MNZCategory.h"
-#import "NSMutableArray+MNZCategory.h"
+#import "NSArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -49,6 +49,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarSendBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSelectBarButtonItem;
+
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
@@ -240,6 +242,16 @@
             self.navigationController.toolbarHidden = YES;
             break;
         }
+            
+        case BrowserActionSelectFolder:
+            [self setupDefaultElements];
+            self.toolBarSelectBarButtonItem.enabled = self.isChildBrowser && self.parentNode.handle != MEGASdkManager.sharedMEGASdk.rootNode.handle;
+            self.toolBarSelectBarButtonItem.title = AMLocalizedString(@"Select Folder", nil);
+            [self.toolBarSelectBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSelectBarButtonItem]];
+
+            break;
+
     }
     
     [self addSearchController];
@@ -367,7 +379,9 @@
             promptString = (self.selectedNodesMutableDictionary.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableDictionary.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableDictionary.count];
         }
         self.navigationItem.prompt = promptString;
-    } else if (self.browserAction != BrowserActionDocumentProvider && self.browserAction != BrowserActionShareExtension) {
+    } else if (self.browserAction != BrowserActionDocumentProvider
+               && self.browserAction != BrowserActionShareExtension
+               && self.browserAction != BrowserActionSelectFolder) {
         self.navigationItem.prompt = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     }
 }
@@ -668,6 +682,11 @@
     }
     
     [self reloadUI];
+}
+
+- (IBAction)selectBarButtonPressed:(UIBarButtonItem *)sender {
+    [self.browserViewControllerDelegate didSelectNode:self.parentNode];
+    [self dismissAndSelectNodesIfNeeded:NO];
 }
 
 #pragma mark - UITableViewDataSource
@@ -994,7 +1013,8 @@
     switch ([request type]) {
         case MEGARequestTypeCopy: {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            if (self.browserAction != BrowserActionSendFromCloudDrive) {
+            if (self.browserAction != BrowserActionSendFromCloudDrive && self.browserAction != BrowserActionSelectFolder) {
+
                 [SVProgressHUD show];
             }
             break;
