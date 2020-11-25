@@ -138,14 +138,9 @@ static const void *base64HandleKey = &base64HandleKey;
             }
             
 #ifdef MAIN_APP_TARGET
-            __weak __typeof__(self) weakSelf = self;
-            [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cuNode, NSError * _Nullable error) {
-                [NSOperationQueue.mainQueue addOperationWithBlock:^{
-                    if (node.handle == cuNode.handle) {
-                        weakSelf.image = UIImage.mnz_folderCameraUploadsImage;
-                    }
-                }];
-            }];
+            if ([CameraUploadNodeAccess.shared isTargetNodeFor:node]) {
+                self.image = UIImage.mnz_folderCameraUploadsImage;
+            }
 #endif
             
             break;
