@@ -113,8 +113,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
-    [self reloadUI];
-    [self reloadHeader];
+    
+    [self loadTargetFolder];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -130,12 +130,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-
-    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
-        [self showCameraUploadBoardingScreen];
-    } else if (CameraUploadManager.shared.isDiskStorageFull) {
-        [self showLocalDiskIsFullWarningScreen];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -184,6 +178,32 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     }
     
     [self configPreviewingRegistration];
+}
+
+#pragma mark - load Camera Uploads target folder
+- (void)loadTargetFolder {
+    __weak __typeof__(self) weakSelf = self;
+    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+        if (error) {
+            MEGALogWarning(@"Could not load CU target folder due to error %@", error)
+        }
+        
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            weakSelf.parentNode = node;
+            [weakSelf updateContents];
+        }];
+    }];
+}
+
+- (void)updateContents {
+    [self reloadPhotos];
+    [self reloadHeader];
+    
+    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+        [self showCameraUploadBoardingScreen];
+    } else if (CameraUploadManager.shared.isDiskStorageFull) {
+        [self showLocalDiskIsFullWarningScreen];
+    }
 }
 
 #pragma mark - uploads state
@@ -341,23 +361,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 
-- (void)reloadUI {
-    __weak __typeof__(self) weakSelf = self;
-    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
-        if (node) {
-            [NSOperationQueue.mainQueue addOperationWithBlock:^{
-                [weakSelf reloadNodesInCameraUploadTargetFolder:node];
-            }];
-        } else {
-            MEGALogWarning(@"Could not load CU target folder due to error %@", error)
-        }
-    }];
-}
-
-- (void)reloadNodesInCameraUploadTargetFolder:(MEGANode *)targetFolder {
+- (void)reloadPhotos {
     MEGALogDebug(@"[Camera Upload] reload photos collection view");
-    self.parentNode = targetFolder;
-    
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
     self.photosByMonthYearArray = [NSMutableArray new];
@@ -990,8 +995,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodeList.mnz_nodesArrayFromNodeList]) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadUI) object:nil];
-        [self performSelector:@selector(reloadUI) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotos) object:nil];
+        [self performSelector:@selector(reloadPhotos) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
     }
 }
 
