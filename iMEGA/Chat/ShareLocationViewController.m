@@ -123,7 +123,9 @@
 }
 
 - (void)sendGeolocationWithCoordinate2d:(CLLocationCoordinate2D)coordinate {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+
     MKMapSnapshotOptions *mapSnapshotOptions = [[MKMapSnapshotOptions alloc] init];
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000);
@@ -170,6 +172,10 @@
         if (!message) {
             [SVProgressHUD showErrorWithStatus:@"Share location is not possible"];
         }
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [SVProgressHUD dismiss];
+        }];
     }];
 }
 
