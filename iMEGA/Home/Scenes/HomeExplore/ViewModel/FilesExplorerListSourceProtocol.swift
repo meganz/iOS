@@ -91,6 +91,12 @@ extension FilesExplorerListSourceProtocol {
     
     private func updateNode(_ node: MEGANode) {
         if let index = nodes?.firstIndex(of: node) {
+            // update the node in selected list as well
+            if let originalNode = nodes?[index],
+               let selectedIndex = selectedNodes?.firstIndex(of: originalNode) {
+                selectedNodes?[selectedIndex] = node
+            }
+            
             nodes?[index] = node
         }
     }

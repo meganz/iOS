@@ -18,10 +18,14 @@ struct PhotosExplorerRouter {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let fileSearchRepo = SDKFilesSearchRepository(sdk: sdk)
-        let useCase = FilesSearchUseCase(repo: fileSearchRepo,
-                                         explorerType: explorerType,
-                                         nodesUpdateListenerRepo: nodesUpdateListenerRepo)
-        let viewModel = PhotoExplorerViewModel(router: self, useCase: useCase)
+        let nodeClipboardOperationRepo = SDKNodeClipboardOperationRepository(sdk: sdk)
+        let fileSearchUseCase = FilesSearchUseCase(repo: fileSearchRepo,
+                                                   explorerType: explorerType,
+                                                   nodesUpdateListenerRepo: nodesUpdateListenerRepo)
+        let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: nodeClipboardOperationRepo)
+        let viewModel = PhotoExplorerViewModel(router: self,
+                                               fileSearchUseCase: fileSearchUseCase,
+                                               nodeClipboardOperationUseCase: nodeClipboardOperationUseCase)
         let vc = PhotosExplorerViewController(viewModel: viewModel)
         navController.pushViewController(vc, animated: true)
     }

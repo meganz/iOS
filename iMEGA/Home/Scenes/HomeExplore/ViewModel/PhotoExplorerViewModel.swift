@@ -15,7 +15,8 @@ class PhotoExplorerViewModel: NSObject {
     }
     
     private let router: PhotosExplorerRouter
-    private var useCase: FilesSearchUseCaseProtocol
+    private var fileSearchUseCase: FilesSearchUseCaseProtocol
+    private var nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
 
     private var nodes: [MEGANode] = []
     private var sectionMarker: [Int] = []
@@ -30,16 +31,27 @@ class PhotoExplorerViewModel: NSObject {
                                    title: AMLocalizedString("No images found", "Photo Explorer Screen: No images in the account"))
     }
     
-    init(router: PhotosExplorerRouter, useCase: FilesSearchUseCaseProtocol) {
+    init(router: PhotosExplorerRouter,
+         fileSearchUseCase: FilesSearchUseCaseProtocol,
+         nodeClipboardOperationUseCase: NodeClipboardOperationUseCase) {
         self.router = router
-        self.useCase = useCase
+        self.fileSearchUseCase = fileSearchUseCase
+        self.nodeClipboardOperationUseCase = nodeClipboardOperationUseCase
         super.init()
         
         populateMarkers()
         
-        useCase.onNodesUpdate { [weak self] nodes in
+        fileSearchUseCase.onNodesUpdate { [weak self] nodes in
             guard let self = self else { return }
             self.onNodesUpdate(updatedNodes: nodes)
+        }
+        
+        nodeClipboardOperationUseCase.onNodeMove { [weak self] node in
+            self?.onNodesUpdate(updatedNodes: [node])
+        }
+        
+        nodeClipboardOperationUseCase.onNodeCopy { [weak self] _ in
+            self?.loadAllPhotos()
         }
     }
     
@@ -93,7 +105,7 @@ class PhotoExplorerViewModel: NSObject {
     }
     
     private func loadAllPhotos() {
-        useCase.search(string: nil,
+        fileSearchUseCase.search(string: nil,
                        inNode: nil,
                        sortOrderType: .modificationDesc,
                        cancelPreviousSearchIfNeeded: true) { [weak self] nodes in
