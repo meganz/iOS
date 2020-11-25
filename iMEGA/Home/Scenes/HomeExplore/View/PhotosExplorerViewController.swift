@@ -65,7 +65,12 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         switch command {
         case .reloadData(let nodesByDay):
             SVProgressHUD.dismiss()
-            listSource = PhotoExplorerListSource(nodesByDay: nodesByDay, collectionView: collectionView)
+            listSource = PhotoExplorerListSource(
+                nodesByDay: nodesByDay,
+                collectionView: collectionView,
+                selectedNodes: listSource?.selectedNodes,
+                allowMultipleSelection: listSource?.allowMultipleSelection ?? false
+            )
             collectionView.dataSource = listSource
             collectionView.reloadData()
         case .modified(nodes: let nodes, indexPaths: let indexPaths):

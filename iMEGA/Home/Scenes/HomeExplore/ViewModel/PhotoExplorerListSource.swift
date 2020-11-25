@@ -4,7 +4,7 @@ class PhotoExplorerListSource: NSObject {
     private(set) var selectedNodes: [MEGANode]?
     private unowned var collectionView: UICollectionView
     
-    var allowMultipleSelection: Bool = false {
+    var allowMultipleSelection: Bool {
         didSet {
             selectedNodes = allowMultipleSelection ? [] : nil
             collectionView.visibleCells.forEach { cell in
@@ -21,17 +21,28 @@ class PhotoExplorerListSource: NSObject {
         }
     }
     
-    init(nodesByDay: [[MEGANode]], collectionView: UICollectionView) {
+    init(nodesByDay: [[MEGANode]],
+         collectionView: UICollectionView,
+         selectedNodes: [MEGANode]?,
+         allowMultipleSelection: Bool) {
         self.nodesByDay = nodesByDay
         self.collectionView = collectionView
+        self.selectedNodes = selectedNodes
+        self.allowMultipleSelection = allowMultipleSelection
         super.init()
     }
     
     func update(nodes:  [MEGANode], atIndexPaths indexPaths: [IndexPath]) {
         for (index, element) in indexPaths.enumerated() {
-            var modifiedNodes = nodesByDay[element.section]
-            modifiedNodes[element.item] = nodes[index]
-            nodesByDay[element.section] = modifiedNodes
+            let originalNode = nodesByDay[element.section][element.item]
+            let updatedNode = nodes[index]
+            
+            // if the node exsists in selected node list then replace it.
+            if let index = selectedNodes?.firstIndex(of: originalNode) {
+                selectedNodes?[index] = updatedNode
+            }
+            
+            nodesByDay[element.section][element.item] = updatedNode
         }
     }
     
