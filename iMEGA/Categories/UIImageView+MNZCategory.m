@@ -9,11 +9,13 @@
 #import "MEGAGetPreviewRequestDelegate.h"
 #import <YYWebImage/YYWebImage.h>
 #import <objc/runtime.h>
+#import "MEGASdk+MNZCategory.h"
+
+#ifdef MAIN_APP_TARGET
+#import "MEGA-Swift.h"
+#endif
 
 static int _MEGAWebImageSetterKey;
-#import "MEGASdk+MNZCategory.h"
-#import <objc/runtime.h>
-
 static const void *base64HandleKey = &base64HandleKey;
 
 @implementation UIImageView (MNZCategory)
@@ -123,9 +125,7 @@ static const void *base64HandleKey = &base64HandleKey;
 - (void)mnz_imageForNode:(MEGANode *)node {
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:MEGACameraUploadsNodeName]) {
-                self.image = UIImage.mnz_folderCameraUploadsImage;
-            } else if ([node.name isEqualToString:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
+            if ([node.name isEqualToString:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
                 [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
                     if (node.handle == myChatFilesNode.handle) {
                         self.image = UIImage.mnz_folderMyChatFilesImage;
@@ -136,6 +136,18 @@ static const void *base64HandleKey = &base64HandleKey;
             } else {
                 [self mnz_commonFolderImageForNode:node];
             }
+            
+#ifdef MAIN_APP_TARGET
+            __weak __typeof__(self) weakSelf = self;
+            [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cuNode, NSError * _Nullable error) {
+                [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                    if (node.handle == cuNode.handle) {
+                        weakSelf.image = UIImage.mnz_folderCameraUploadsImage;
+                    }
+                }];
+            }];
+#endif
+            
             break;
         }
             

@@ -12,7 +12,7 @@
 #import "TransferSessionManager.h"
 @import CoreLocation;
 
-@interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
+@interface CameraUploadsTableViewController () <CLLocationManagerDelegate, BrowserViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
@@ -41,6 +41,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *targetFolderLabel;
+
 @property (weak, nonatomic) IBOutlet UITableViewCell *cameraUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadInfoCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
@@ -51,6 +53,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataForVideosCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *uploadInBackgroundCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *advancedCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *targetFolderCell;
 
 @property (strong, nonatomic) NSArray<NSArray<UITableViewCell *> *> *tableSections;
 @property (strong, nonatomic) NSArray<NSString *> *sectionHeaderTitles;
@@ -103,7 +106,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -147,7 +150,8 @@
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
     self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
     self.includeGPSTagsSwitch.on = CameraUploadManager.includeGPSTags;
-
+    
+    [self configTargetFolder];
     [self configPhotoFormatUI];
     [self configOptionsUI];
     
@@ -162,6 +166,18 @@
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
+}
+
+- (void)configTargetFolder {
+    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+        if (node) {
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                self.targetFolderLabel.text = node.name;
+            }];
+        } else {
+            MEGALogWarning(@"Could not load CU target folder due to error %@", error)
+        }
+    }];
 }
 
 - (void)configPhotoFormatUI {
@@ -207,6 +223,11 @@
         [headerTitles addObject:AMLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
         [footerTitles addObject:AMLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
     }
+    
+    // Target folder
+    [sections addObject:@[self.targetFolderCell]];
+    [headerTitles addObject:AMLocalizedString(@"MEGA CAMERA UPLOADS FOLDER", nil)];
+    [footerTitles addObject:@""];
     
     // Include GPS info cell.
     [sections addObject:@[self.includeGPSTagsCell]];
@@ -382,6 +403,17 @@
     CameraUploadManager.includeGPSTags = sender.on;
 }
 
+- (void)selectNode {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+    MEGANavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.browserAction = BrowserActionSelectFolder;
+    browserVC.childBrowser = YES;
+    browserVC.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+    browserVC.browserViewControllerDelegate = self;
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -422,6 +454,8 @@
     } else if (selectedCell == self.JPGCell) {
         CameraUploadManager.convertHEICPhoto = YES;
         [self configPhotoFormatUI];
+    } else if (selectedCell == self.targetFolderCell) {
+        [self selectNode];
     }
 }
 
@@ -448,6 +482,18 @@
 
 - (BOOL)shouldShowMobileDataForVideos {
     return [self shouldShowMobileData] && CameraUploadManager.isCellularUploadAllowed && CameraUploadManager.isVideoUploadEnabled;
+}
+
+#pragma mark - BrowserViewControllerDelegate
+
+- (void)didSelectNode:(MEGANode *)node {
+    [CameraUploadNodeAccess.shared setNode:node completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+        if (node) {
+            self.targetFolderLabel.text = node.name;
+        } else {
+            MEGALogWarning(@"Could not load CU target folder due to error %@", error)
+        }
+    }];
 }
 
 @end

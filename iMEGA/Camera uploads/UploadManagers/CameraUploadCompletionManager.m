@@ -6,15 +6,14 @@
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSFileManager+MNZCategory.h"
-#import "CameraUploadNodeLoader.h"
 #import "NSString+MNZCategory.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @interface CameraUploadCompletionManager ()
 
 @property (strong, nonatomic) NSOperationQueue *putNodeQueue;
-@property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
 
@@ -38,14 +37,6 @@
         _putNodeQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     }
     return self;
-}
-
-- (CameraUploadNodeLoader *)cameraUploadNodeLoader {
-    if (_cameraUploadNodeLoader == nil) {
-        _cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
-    }
-    
-    return _cameraUploadNodeLoader;
 }
 
 #pragma mark - handle transfer completion data
@@ -78,20 +69,16 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
-            if (uploadInfo.parentNode == nil) {
-                [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
-                    if (error || cameraUploadNode == nil) {
-                        MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@ %@", localIdentifier, error);
-                        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
-                    } else {
-                        MEGALogDebug(@"[Camera Upload] camera upload node loaded for %@", localIdentifier);
-                        uploadInfo.parentNode = cameraUploadNode;
-                        [self putNodeByUploadInfo:uploadInfo transferToken:token];
-                    }
-                }];
-            } else {
-                [self putNodeByUploadInfo:uploadInfo transferToken:token];
-            }
+            [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
+                if (error || cameraUploadNode == nil) {
+                    MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@ %@", localIdentifier, error);
+                    [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+                } else {
+                    MEGALogDebug(@"[Camera Upload] camera upload node loaded for %@", localIdentifier);
+                    uploadInfo.parentNode = cameraUploadNode;
+                    [self putNodeByUploadInfo:uploadInfo transferToken:token];
+                }
+            }];
         } else {
             MEGALogError(@"[Camera Upload] error when to unarchive upload info for asset: %@", localIdentifier);
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];

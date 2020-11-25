@@ -1370,6 +1370,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                         }];
                         [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
                     }
+                    if ([user hasChangedType:MEGAUserChangeTypeCameraUploadsFolder]) {
+                        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTargetFolderChangedInRemoteNotification object:nil];
+                    }
                 } else {
                     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
                         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];

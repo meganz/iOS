@@ -1,7 +1,7 @@
 
-#import "NSMutableArray+MNZCategory.h"
+#import "NSArray+MNZCategory.h"
 
-@implementation NSMutableArray (MNZCategory)
+@implementation NSArray (MNZCategory)
 
 - (NSArray *)mnz_numberOfFilesAndFolders {
     NSUInteger numberOfFiles = 0;
