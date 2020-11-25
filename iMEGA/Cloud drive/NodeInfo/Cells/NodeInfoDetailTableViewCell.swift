@@ -12,7 +12,15 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
         switch rowType {
         case .location:
             keyLabel.text = AMLocalizedString("location", "Title label of a node property.")
-            valueLabel.text = MEGASdkManager.sharedMEGASdk().parentNode(for: node)?.name
+            guard let paretnNode = MEGASdkManager.sharedMEGASdk().parentNode(for: node) else {
+                return
+            }
+            if paretnNode.type == .root {
+                valueLabel.text = AMLocalizedString("cloudDrive", "Title of the Cloud Drive section")
+            } else {
+                valueLabel.text = paretnNode.name
+            }
+            
             valueLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
         case .fileSize:
             keyLabel.text = AMLocalizedString("totalSize", "Size of the file or folder you are sharing")
