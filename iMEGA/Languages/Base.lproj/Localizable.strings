@@ -1103,6 +1103,10 @@
 "Search GIPHY"="Search GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="No GIFs found";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="This message has reached the maximum limit of %d reactions.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */

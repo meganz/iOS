@@ -1,7 +1,7 @@
 import Foundation
 import MessageKit
 
-class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
+class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate {
     // MARK: - Properties
 
     var transfers: [ChatMessage] = []
@@ -34,8 +34,35 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         self.chatRoom = chatRoom
         super.init()
         MEGASdkManager.sharedMEGASdk().add(self)
-
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
         reloadTransferData()
+    }
+
+    // MARK: - MEGAChatRequestDelegate
+
+    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+        switch error.type {
+        case .MEGAChatErrorTooMany:
+            switch ReactionErrorType(rawValue: Int(request.number)) {
+            case .user:
+                let title = String(format: AMLocalizedString("You have reached the maximum limit of %d reactions."), MEGAMaxReactionsPerMessagePerUser)
+                let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+                let cancel = UIAlertAction(title: AMLocalizedString("ok"), style: .cancel)
+                alertController.addAction(cancel)
+                chatViewController?.present(viewController: alertController)
+            case .message:
+                let title = String(format: AMLocalizedString("This message has reached the maximum limit of %d reactions."), MEGAMaxReactionsPerMessage)
+                let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+                let cancel = UIAlertAction(title: AMLocalizedString("ok"), style: .cancel)
+                alertController.addAction(cancel)
+                chatViewController?.present(viewController: alertController)
+            default:
+                break
+            }
+            
+        default:
+            break
+        }
     }
 
     // MARK: - MEGAChatRoomDelegate methods
@@ -399,7 +426,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             isChatRoomOpen = false
             chatMessages = []
             chatViewController?.messagesCollectionView.reloadData()
-            MEGASdkManager.sharedMEGAChatSdk()!.closeChatRoom(chatRoom.chatId, delegate: self)
+            MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom(chatRoom.chatId, delegate: self)
+            MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
+            MEGASdkManager.sharedMEGASdk().remove(self)
         }
     }
     
