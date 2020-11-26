@@ -165,7 +165,9 @@
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
-    [self languageCompatibility];
+    NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
+    [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
+    [MEGASdkManager.sharedMEGASdkFolder setLanguageCode:languageCode];
     
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
@@ -215,8 +217,8 @@
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");
             NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             [[MEGASdkManager sharedMEGAChatSdk] logout];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         } else if (chatInit == MEGAChatInitOnlineSession || chatInit == MEGAChatInitOfflineSession) {
@@ -951,11 +953,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (isInOutgoingContactRequest) {
         customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
-        customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-        NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+        customModalAlertVC.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+        NSString *detailText = NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
         detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:self.email];
         customModalAlertVC.detail = detailText;
-        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"close", nil);
+        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"close", nil);
         customModalAlertVC.dismissButtonTitle = nil;
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
@@ -963,10 +965,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         };
     } else {
         customModalAlertVC.image = [UIImage imageNamed:@"groupChat"];
-        customModalAlertVC.viewTitle = AMLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
+        customModalAlertVC.viewTitle = NSLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
         customModalAlertVC.detail = [NSString stringWithFormat:@"Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact", self.email];
-        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-        customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"later", @"Button title to allow the user postpone an action");
+        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+        customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"later", @"Button title to allow the user postpone an action");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
@@ -1033,11 +1035,11 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
-        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
+        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-            customModalAlertVC.secondButtonTitle = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"getBonus", @"Button title to see the available bonus");
         }
-        customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
@@ -1107,15 +1109,15 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)presentAccountExpiredAlertIfNeeded {
     if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:BusinessExpiredViewController.class]) {
-        NSString *alertTitle = AMLocalizedString(@"Your business account is expired", @"A dialog title shown to users when their business account is expired.");
+        NSString *alertTitle = NSLocalizedString(@"Your business account is expired", @"A dialog title shown to users when their business account is expired.");
         NSString *alertMessage;
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-            alertMessage = AMLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", @"Details shown when a Business account is expired. Details for the administrator of the Business account");
+            alertMessage = NSLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", @"Details shown when a Business account is expired. Details for the administrator of the Business account");
         } else {
-            alertMessage = [[[[AMLocalizedString(@"Your account is currently [B]suspended[/B]. You can only browse your data.", @"A dialog message which is shown to sub-users of expired business accounts.") stringByReplacingOccurrencesOfString:@"[B]" withString:@""] stringByReplacingOccurrencesOfString:@"[/B]" withString:@""] stringByAppendingString:@"\n\n"] stringByAppendingString:AMLocalizedString(@"Contact your business account administrator to resolve the issue and activate your account.", @"A dialog message which is shown to sub-users of expired business accounts.")];
+            alertMessage = [[[[NSLocalizedString(@"Your account is currently [B]suspended[/B]. You can only browse your data.", @"A dialog message which is shown to sub-users of expired business accounts.") stringByReplacingOccurrencesOfString:@"[B]" withString:@""] stringByReplacingOccurrencesOfString:@"[/B]" withString:@""] stringByAppendingString:@"\n\n"] stringByAppendingString:NSLocalizedString(@"Contact your business account administrator to resolve the issue and activate your account.", @"A dialog message which is shown to sub-users of expired business accounts.")];
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             self.accountExpiredPresented = NO;
         }]];
         
@@ -1133,9 +1135,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
             customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
-            customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
-            customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
-            customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"");
+            customModalAlertVC.viewTitle = NSLocalizedString(@"Something went wrong", @"");
+            customModalAlertVC.detail = NSLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
+            customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"");
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.dismissCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
@@ -1184,57 +1186,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)passcodeWasEnabled {
     MEGAIndexer.sharedIndexer.enableSpotlight = NO;
-}
-
-#pragma mark - Language
-
-- (void)languageCompatibility {
-    
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    
-    if ([Helper isLanguageSupported:currentLanguageID]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
-    } else {
-        [self setLanguage:currentLanguageID];
-    }
-}
-
-- (void)setLanguage:(NSString *)languageID {
-    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:languageID];
-    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
-    NSString *scriptDesignator = [componentsFromLocaleID valueForKey:NSLocaleScriptCode];
-    NSString *languageAndScriptDesignator = languageDesignator;
-    if (scriptDesignator) languageAndScriptDesignator = [NSString stringWithFormat:@"%@-%@", languageAndScriptDesignator, scriptDesignator];
-    
-    if ([Helper isLanguageSupported:languageAndScriptDesignator]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:languageAndScriptDesignator];
-    } else {
-        [self setSystemLanguage];
-    }
-}
-
-- (void)setSystemLanguage {
-    NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
-    NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = languages.firstObject;
-    
-    if ([Helper isLanguageSupported:systemLanguageID]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
-        return;
-    }
-    
-    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:systemLanguageID];
-    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
-    if ([Helper isLanguageSupported:languageDesignator]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
-    } else {
-        [self setDefaultLanguage];
-    }
-}
-
-- (void)setDefaultLanguage {    
-    [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
-    [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
 #pragma mark - PKPushRegistryDelegate
@@ -1446,13 +1397,13 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
-                    NSString *detail = event.number == StorageStateOrange ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
+                    NSString *detail = event.number == StorageStateOrange ? NSLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : NSLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
                     detail = [detail mnz_removeWebclientFormatters];
                     NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
                     NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
                     detail = [NSString stringWithFormat:detail, maxStorageTB, maxStorage];
                     alreadyPresented = YES;
-                    NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                    NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                     [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 }
@@ -1488,7 +1439,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             
             if (request.paramType != MEGAErrorTypeApiESSL) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             }
             break;
         }
@@ -1517,8 +1468,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     [self showOnboardingWithCompletion:^{
                         if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
-                            UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                            [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
+                            UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                            [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
                             [UIApplication.mnz_presentingViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
                                 [MEGALinkManager resetLinkAndURLType];
                             }];
@@ -1532,8 +1483,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                         [Helper logout];
                         [self showOnboardingWithCompletion:nil];
                         
-                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                     }
                 }
@@ -1544,8 +1495,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEOverQuota: {
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 
-                NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                NSString *detail = AMLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
+                NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                NSString *detail = NSLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
                 UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 
@@ -1565,19 +1516,19 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEIncomplete: {
                 if (request.type == MEGARequestTypeLogout && request.paramType == MEGAErrorTypeApiESSL && !self.sslKeyPinningController) {
                     [SVProgressHUD dismiss];
-                    _sslKeyPinningController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ignore", @"Button title to allow the user ignore something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    _sslKeyPinningController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"sslUnverified_alertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ignore", @"Button title to allow the user ignore something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         [api setPublicKeyPinning:NO];
                         [api reconnect];
                     }]];
                     
-                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         [api retryPendingConnections];
                     }]];
                     
-                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         NSURL *url = [NSURL URLWithString:@"https://mega.nz"];
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
@@ -1876,14 +1827,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         [SVProgressHUD dismiss];
         
         if (error.value) { // Bandwidth overquota error
-            NSString *title = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
-            NSString *detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
+            NSString *title = NSLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
+            NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
             UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
             [self presentUpgradeViewControllerTitle:title detail:detail image:image];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         } else { // Storage overquota error
-            NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-            NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
+            NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+            NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
             UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
             [self presentUpgradeViewControllerTitle:title detail:detail image:image];
         }
@@ -1931,8 +1882,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         switch (error.type) {
             MEGAErrorTypeApiEgoingOverquota:
             MEGAErrorTypeApiEOverQuota: {
-                NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
+                NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
                 UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
@@ -1945,9 +1896,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
-                    NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
+                    NSString *transferFailed = NSLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
                     NSString *errorString = [MEGAError errorStringWithErrorCode:error.type context:(transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
-                    MEGALogError(@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(errorString, nil));
+                    MEGALogError(@"%@\n%@ %@", transfer.fileName, transferFailed, NSLocalizedString(errorString, nil));
                 }
                 break;
             }

@@ -69,12 +69,12 @@
     
     self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+    self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
-    self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
+    self.downloadBarButtonItem.title = NSLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
     [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
-    self.importBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
+    self.importBarButtonItem.title = NSLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
     [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -108,7 +108,7 @@
 - (void)setNavigationBarTitle {
     [self updatePromptTitle];
     
-    NSString *navigationTitle = AMLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
+    NSString *navigationTitle = NSLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
     navigationTitle = [navigationTitle stringByReplacingOccurrencesOfString:@"%s" withString:self.message.nodeList.size.stringValue];
     self.navigationItem.title = navigationTitle;
 }
@@ -125,12 +125,12 @@
 - (NSString *)titleForPromptWithCountOfNodes:(NSNumber *)count {
     NSString *promptString;
     if (count.unsignedIntegerValue == 0) {
-        promptString = AMLocalizedString(@"select", @"Button that allows you to select a given folder");
+        promptString = NSLocalizedString(@"select", @"Button that allows you to select a given folder");
     } else if (count.unsignedIntegerValue == 1) {
-        promptString = AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo");
+        promptString = NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo");
         promptString = [promptString stringByReplacingOccurrencesOfString:@"%lu" withString:count.stringValue];
     } else {
-        promptString = AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo");
+        promptString = NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo");
         promptString = [promptString stringByReplacingOccurrencesOfString:@"%lu" withString:count.stringValue];
     }
     
@@ -141,10 +141,10 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         [self setToolbarItemsEnabled:NO];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         [self setToolbarItemsEnabled:YES];
         
         [self.selectedNodesMutableArray removeAllObjects];
@@ -159,7 +159,7 @@
         }
     }
     
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
     
     if (self.tableView.isEditing) {
         for (MEGANode *node in self.selectedNodesMutableArray) {
@@ -222,7 +222,7 @@
         }
     }
     
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

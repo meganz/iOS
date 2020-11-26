@@ -624,8 +624,6 @@
 "securityOptions"="安全选项";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="关于";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="语言";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="发送反馈";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1406,10 +1404,6 @@
 "HTTP error"="HTTP错误";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="更改语言设置后, 您需要重新启动MEGA";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="语言设置完成。点击重新启动。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA通过网页浏览器以及移动客户端的应用程序提供由用户控制的加密云储存服务。不同于其他云储存供应商，您的数据仅由用户客户端设备进行加密与解密，而从不是经由我们加解密。";

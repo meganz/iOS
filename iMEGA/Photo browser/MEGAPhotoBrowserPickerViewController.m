@@ -31,14 +31,14 @@
     self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
     [self.collectionView.collectionViewLayout invalidateLayout];
     
-    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
     
     NSString *folderName = [self.api nodeForHandle:self.mediaNodes.firstObject.parentHandle].name;
     NSString *numberOfFiles;
     if (self.mediaNodes.count==1) {
-        numberOfFiles = [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\""), 1];
+        numberOfFiles = [NSString stringWithFormat:NSLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\""), 1];
     } else {
-        numberOfFiles = [NSString stringWithFormat:AMLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), self.mediaNodes.count];
+        numberOfFiles = [NSString stringWithFormat:NSLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), self.mediaNodes.count];
     }
     
     if (!folderName) {

@@ -27,7 +27,7 @@
 }
 
 - (NSString *)activityTitle {
-    return AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
+    return NSLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
 }
 
 - (UIImage *)activityImage {

@@ -23,12 +23,12 @@ class PhotoExplorerViewModel: NSObject {
     var invokeCommand: ((Command) -> Void)?
 
     private var title: String {
-        return AMLocalizedString("All Photos", "Navigation title for the photo explorer view")
+        return NSLocalizedString("All Photos", comment: "Navigation title for the photo explorer view")
     }
     
     var emptyStateViewModel: EmptyStateViewModel {
         return EmptyStateViewModel(image: UIImage(named: "allPhotosEmptyState")!,
-                                   title: AMLocalizedString("No images found", "Photo Explorer Screen: No images in the account"))
+                                   title: NSLocalizedString("No images found", comment: "Photo Explorer Screen: No images in the account"))
     }
     
     init(router: PhotosExplorerRouter,
@@ -178,11 +178,11 @@ class PhotoExplorerViewModel: NSObject {
         let title: String
         switch count {
         case 0:
-            title = AMLocalizedString("selectTitle", "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
+            title = NSLocalizedString("selectTitle", comment: "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
         case 1:
-            title = String(format: AMLocalizedString("oneItemSelected", "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), count)
+            title = String(format: NSLocalizedString("oneItemSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), count)
         default:
-            title = String(format: AMLocalizedString("itemsSelected", "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), count)
+            title = String(format: NSLocalizedString("itemsSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), count)
         }
         
         invokeCommand?(.setTitle(title))

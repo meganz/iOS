@@ -41,15 +41,15 @@
         self.seedTextView.font = [UIFont systemFontOfSize:14.0f];
     }
     
-    self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
+    self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"");
     
     self.firstSectionLabel.userInteractionEnabled = YES;
     self.firstSectionLabel.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstSectionLabelTapped:)]];
     
     self.seedTextView.text = [self seedSplitInGroupsOfFourCharacters];
     
-    [self.openInButton setTitle:AMLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app") forState:UIControlStateNormal];
-    [self.nextButton setTitle:AMLocalizedString(@"next", @"") forState:UIControlStateNormal];
+    [self.openInButton setTitle:NSLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app") forState:UIControlStateNormal];
+    [self.nextButton setTitle:NSLocalizedString(@"next", @"") forState:UIControlStateNormal];
     
     [self.seedTextView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnTextView:)]];
     
@@ -95,7 +95,7 @@
     NSTextAttachment *imageTextAttachment = [[NSTextAttachment alloc] init];
     imageTextAttachment.image = [UIImage imageNamed:@"littleQuestionMark"];
     imageTextAttachment.bounds = CGRectMake(0, 0, 12.0f, 12.0f);
-    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[AMLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.") stringByAppendingString:@" "]];
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.") stringByAppendingString:@" "]];
     [mutableAttributedString appendAttributedString:[NSAttributedString attributedStringWithAttachment:imageTextAttachment]];
     self.firstSectionLabel.attributedText = mutableAttributedString;
 }
@@ -123,7 +123,7 @@
 
 - (void)youNeedATwoFactorAuthenticationAppAlertWithTitle:(NSString *)title {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"App Store" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/search"];
         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
@@ -134,7 +134,7 @@
 
 - (void)firstSectionLabelTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.", @"Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark")];
+        [self youNeedATwoFactorAuthenticationAppAlertWithTitle:NSLocalizedString(@"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.", @"Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark")];
     }
 }
 
@@ -147,7 +147,7 @@
             MEGALogInfo(@"URL opened on authenticator app");
         } else {
             MEGALogInfo(@"URL NOT opened");
-            [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device")];
+            [self youNeedATwoFactorAuthenticationAppAlertWithTitle:NSLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device")];
         }
     }];
 }
@@ -167,7 +167,7 @@
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = self.seed;
         
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
+        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
     }
 }
 

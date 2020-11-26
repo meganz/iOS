@@ -25,13 +25,13 @@ class TransferActionViewController: NodeActionViewController {
         titleLabel.text = transfer.fileName
         switch transfer.state {
         case .cancelled:
-            subtitleLabel.text = AMLocalizedString("Cancelled", "Cancelled")
+            subtitleLabel.text = NSLocalizedString("Cancelled", comment: "Cancelled")
         case .failed:
-            let transferFailed = AMLocalizedString("Transfer failed:", "Notification message shown when a transfer failed. Keep colon.")
+            let transferFailed = NSLocalizedString("Transfer failed:", comment: "Notification message shown when a transfer failed. Keep colon.")
             guard let error = transfer.lastErrorExtended, let errorString = MEGAError.errorStringWithErrorCode(error.type.rawValue, context: .upload) else {
                 return
             }
-            subtitleLabel.text = "\(transferFailed) \(AMLocalizedString(errorString))"
+            subtitleLabel.text = "\(transferFailed) \(NSLocalizedString(errorString, comment: ""))"
 
         default:
             break

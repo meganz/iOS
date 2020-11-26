@@ -46,23 +46,23 @@
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case PHOTOS:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case CHAT:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"chat", @"Chat section header");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"chat", @"Chat section header");
                 break;
                 
             case SHARES:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
                 break;
                 
             case HOME:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
                 break;
         }
     }
@@ -99,7 +99,7 @@
 - (void)tapProgressView {
     TransfersWidgetViewController *transferVC = [TransfersWidgetViewController sharedTransferViewController];
     MEGANavigationController *nav = [[MEGANavigationController alloc] initWithRootViewController:transferVC];
-    [nav addLeftDismissButtonWithText:AMLocalizedString(@"close", @"A button label.")];
+    [nav addLeftDismissButtonWithText:NSLocalizedString(@"close", @"A button label.")];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

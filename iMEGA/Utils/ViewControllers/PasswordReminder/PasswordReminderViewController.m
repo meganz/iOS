@@ -51,7 +51,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (self.logout) {
-        self.navigationItem.title = AMLocalizedString(@"Password Reminder", @"Title for feature Password Reminder");
+        self.navigationItem.title = NSLocalizedString(@"Password Reminder", @"Title for feature Password Reminder");
     }
 }
 
@@ -146,22 +146,22 @@
     self.keyImageView.hidden = UIDevice.currentDevice.iPhone4X;
 
     if (self.logout) {
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tapClose:)];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tapClose:)];
         self.navigationItem.rightBarButtonItem = cancelBarButtonItem;
     }
     
-    self.titleLabel.text = AMLocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
-    self.switchInfoLabel.text = AMLocalizedString(@"dontShowAgain", @"Text for don't show again Remind Password View option");
-    [self.testPasswordButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
+    self.titleLabel.text = NSLocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
+    self.switchInfoLabel.text = NSLocalizedString(@"dontShowAgain", @"Text for don't show again Remind Password View option");
+    [self.testPasswordButton setTitle:NSLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
     
     if (self.isLoggingOut) {
-        self.descriptionLabel.text = AMLocalizedString(@"remindPasswordLogoutText", @" Text to describe why the user should test his/her password before logging out");
-        [self.backupKeyButton setTitle:AMLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
-        [self.dismissButton setTitle:AMLocalizedString(@"proceedToLogout", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
+        self.descriptionLabel.text = NSLocalizedString(@"remindPasswordLogoutText", @" Text to describe why the user should test his/her password before logging out");
+        [self.backupKeyButton setTitle:NSLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
+        [self.dismissButton setTitle:NSLocalizedString(@"proceedToLogout", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     } else {
-        self.descriptionLabel.text = AMLocalizedString(@"remindPasswordText", @"Text for Remind Password View, explainig why user should test password");
-        [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
-        [self.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+        self.descriptionLabel.text = NSLocalizedString(@"remindPasswordText", @"Text for Remind Password View, explainig why user should test password");
+        [self.backupKeyButton setTitle:NSLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
+        [self.dismissButton setTitle:NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
     }
 }
 

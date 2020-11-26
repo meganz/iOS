@@ -19,22 +19,22 @@ class SortingAndViewModeTableViewController: UITableViewController {
     var sortingPreference = UserDefaults.standard.integer(forKey: MEGASortingPreference)
     var viewModePreference = UserDefaults.standard.integer(forKey: MEGAViewModePreference)
     
-    let localizedSortByStringsArray = [AMLocalizedString("nameAscending", "Sort by option (1/6). This one orders the files alphabethically"), AMLocalizedString("nameDescending", "Sort by option (2/6). This one arranges the files on reverse alphabethical order"), AMLocalizedString("largest", "Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size"), AMLocalizedString("smallest", "Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size"), AMLocalizedString("newest", "Sort by option (5/6). This one order the files by its modification date, newer first"), AMLocalizedString("oldest", "Sort by option (6/6). This one order the files by its modification date, older first")]
+    let localizedSortByStringsArray = [NSLocalizedString("nameAscending", comment: "Sort by option (1/6). This one orders the files alphabethically"), NSLocalizedString("nameDescending", comment: "Sort by option (2/6). This one arranges the files on reverse alphabethical order"), NSLocalizedString("largest", comment: "Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size"), NSLocalizedString("smallest", comment: "Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size"), NSLocalizedString("newest", comment: "Sort by option (5/6). This one order the files by its modification date, newer first"), NSLocalizedString("oldest", comment: "Sort by option (6/6). This one order the files by its modification date, older first")]
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = AMLocalizedString("Sorting And View Mode", "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app")
+        title = NSLocalizedString("Sorting And View Mode", comment: "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app")
         
-        sortingPreferencePerFolderLabel.text = AMLocalizedString("Per Folder", "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
-        sortingPreferenceSameForAllLabel.text = AMLocalizedString("Same for All", "Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
-        sortingPreferenceSameForAllDetailLabel.text = AMLocalizedString("choosePhotoVideo", "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
+        sortingPreferencePerFolderLabel.text = NSLocalizedString("Per Folder", comment: "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
+        sortingPreferenceSameForAllLabel.text = NSLocalizedString("Same for All", comment: "Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
+        sortingPreferenceSameForAllDetailLabel.text = NSLocalizedString("choosePhotoVideo", comment: "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
         
-        viewModePreferencePerFolderLabel.text = AMLocalizedString("Per Folder", "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
-        viewModePreferenceListViewLabel.text = AMLocalizedString("List View", "Text shown for switching from thumbnail view to list view.")
-        viewModePreferenceThumbnailViewLabel.text = AMLocalizedString("Thumbnail View", "Text shown for switching from list view to thumbnail view.")
+        viewModePreferencePerFolderLabel.text = NSLocalizedString("Per Folder", comment: "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
+        viewModePreferenceListViewLabel.text = NSLocalizedString("List View", comment: "Text shown for switching from thumbnail view to list view.")
+        viewModePreferenceThumbnailViewLabel.text = NSLocalizedString("Thumbnail View", comment: "Text shown for switching from list view to thumbnail view.")
         
         updateAppearance()
     }
@@ -146,10 +146,10 @@ class SortingAndViewModeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case SortingAndViewSection.sortingPreference.rawValue:
-            return AMLocalizedString("Sorting preference", "Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode.")
+            return NSLocalizedString("Sorting preference", comment: "Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode.")
             
         case SortingAndViewSection.viewModePreference.rawValue:
-            return AMLocalizedString("View mode preference", "Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode.")
+            return NSLocalizedString("View mode preference", comment: "Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode.")
             
         default:
             return nil
@@ -159,10 +159,10 @@ class SortingAndViewModeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case SortingAndViewSection.sortingPreference.rawValue:
-            return AMLocalizedString("Configure column sorting order on a per-folder basis, or use the same order for all folders.", "Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode.")
+            return NSLocalizedString("Configure column sorting order on a per-folder basis, or use the same order for all folders.", comment: "Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode.")
             
         case SortingAndViewSection.viewModePreference.rawValue:
-            return AMLocalizedString("Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.", "Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode.")
+            return NSLocalizedString("Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.", comment: "Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode.")
             
         default:
             return nil
@@ -187,28 +187,28 @@ class SortingAndViewModeTableViewController: UITableViewController {
                 sortingPreference = indexPath.row
                 UserDefaults.standard.set(sortingPreference, forKey: MEGASortingPreference)
                 
-                sortingPreferenceSameForAllDetailLabel.text = AMLocalizedString("choosePhotoVideo", "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
+                sortingPreferenceSameForAllDetailLabel.text = NSLocalizedString("choosePhotoVideo", comment: "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
             } else {
                 var actions = [ActionSheetAction]()
                 let sortType = Helper.sortType(for: nil)
                 let checkmarkImageView = UIImageView(image: UIImage(named: "turquoise_checkmark"))
     
-                actions.append(ActionSheetAction(title: AMLocalizedString("nameAscending"), detail:nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: UIImage(named: "ascending"), style: .default) {
+                actions.append(ActionSheetAction(title: NSLocalizedString("nameAscending", comment: ""), detail:nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: UIImage(named: "ascending"), style: .default) {
                     Helper.save(.defaultAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: AMLocalizedString("nameDescending"), detail:nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: UIImage(named: "descending"), style: .default) {
+                actions.append(ActionSheetAction(title: NSLocalizedString("nameDescending", comment: ""), detail:nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: UIImage(named: "descending"), style: .default) {
                     Helper.save(.defaultDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: AMLocalizedString("largest"), detail:nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: UIImage(named: "largest"), style: .default) {
+                actions.append(ActionSheetAction(title: NSLocalizedString("largest", comment: ""), detail:nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: UIImage(named: "largest"), style: .default) {
                     Helper.save(.sizeDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: AMLocalizedString("smallest"), detail:nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: UIImage(named: "smallest"), style: .default) {
+                actions.append(ActionSheetAction(title: NSLocalizedString("smallest", comment: ""), detail:nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: UIImage(named: "smallest"), style: .default) {
                     Helper.save(.sizeAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: AMLocalizedString("newest"), detail:nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: UIImage(named: "newest"), style: .default) {
+                actions.append(ActionSheetAction(title: NSLocalizedString("newest", comment: ""), detail:nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: UIImage(named: "newest"), style: .default) {
                     Helper.save(.modificationDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: AMLocalizedString("oldest"), detail:nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: UIImage(named: "oldest"), style: .default) {
+                actions.append(ActionSheetAction(title: NSLocalizedString("oldest", comment: ""), detail:nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: UIImage(named: "oldest"), style: .default) {
                     Helper.save(.modificationAsc, for: nil)
                 })
                 

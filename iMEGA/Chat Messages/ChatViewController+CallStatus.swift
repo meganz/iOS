@@ -19,7 +19,7 @@ extension ChatViewController {
                                 || call?.status == .ringIn {
                         configureTopBannerButtonForActiveCall(call!)
                     } else if call?.status == .reconnecting {
-                        setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+                        setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
                         showTopBannerButton()
                     }
                 }
@@ -67,14 +67,14 @@ extension ChatViewController {
             let startTime = Date().timeIntervalSince1970
             let time = Date().timeIntervalSince1970 - startTime + initDuration
 
-            setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_turquoise(for: traitCollection))
+            setTopBannerButton(title: String(format: NSLocalizedString("Touch to return to call %@", comment: "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_turquoise(for: traitCollection))
             timer = Timer(timeInterval: 1, repeats: true, block: { _ in
                 if self.chatCall?.status == .reconnecting {
                     return
                 }
                 let time = Date().timeIntervalSince1970 - startTime + initDuration
 
-                self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_turquoise(for: self.traitCollection))
+                self.setTopBannerButton(title: String(format: NSLocalizedString("Touch to return to call %@", comment: "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_turquoise(for: self.traitCollection))
             })
             RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
         }
@@ -82,14 +82,14 @@ extension ChatViewController {
 
     private func configureTopBannerButtonForInProgressCall(_ call: MEGAChatCall) {
         if chatCall?.status == .reconnecting {
-            setTopBannerButton(title: AMLocalizedString("You are back!", "Title shown when the user reconnect in a call."), color: UIColor.mnz_turquoise(for: traitCollection))
+            setTopBannerButton(title: NSLocalizedString("You are back!", comment: "Title shown when the user reconnect in a call."), color: UIColor.mnz_turquoise(for: traitCollection))
         }
         initTimerForCall(call)
         showTopBannerButton()
     }
 
     private func configureTopBannerButtonForActiveCall(_: MEGAChatCall) {
-        let title = chatRoom.isGroup ? AMLocalizedString("There is an active group call. Tap to join.", "Message shown in a chat room when there is an active group call") : AMLocalizedString("Tap to return to call", "Message shown in a chat room for a one on one call")
+        let title = chatRoom.isGroup ? NSLocalizedString("There is an active group call. Tap to join.", comment: "Message shown in a chat room when there is an active group call") : NSLocalizedString("Tap to return to call", comment: "Message shown in a chat room for a one on one call")
         setTopBannerButton(title: title, color: UIColor.mnz_turquoise(for: traitCollection))
         showTopBannerButton()
     }
@@ -118,7 +118,7 @@ extension ChatViewController: MEGAChatCallDelegate {
         case .inProgress:
             configureTopBannerButtonForInProgressCall(call)
         case .reconnecting:
-            setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+            setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
         case .destroyed:
             timer?.invalidate()
             configureNavigationBar()

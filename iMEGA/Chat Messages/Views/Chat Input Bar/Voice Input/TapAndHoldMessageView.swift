@@ -69,8 +69,8 @@ class TapAndHoldMessageView: UIView {
                                                                                         return
         }
         
-        let tapAndHoldText = AMLocalizedString("Tap and hold %@ to record, release to send",
-                                               "Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip")
+        let tapAndHoldText = NSLocalizedString("Tap and hold %@ to record, release to send",
+                                               comment: "Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip")
         let tapAndHoldTextComponents = tapAndHoldText.components(separatedBy: "%@")
         
         guard let tapAndHoldFirstPartString = tapAndHoldTextComponents.first,

@@ -50,22 +50,22 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.navigationItem.title = AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
+    self.navigationItem.title = NSLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SelectableTableViewCell" bundle:nil] forCellReuseIdentifier:@"SelectableTableViewCellID"];
     
-    self.onlineLabel.text = AMLocalizedString(@"online", nil);
-    self.awayLabel.text = AMLocalizedString(@"away", nil);
-    self.busyLabel.text = AMLocalizedString(@"busy", nil);
-    self.offlineLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
+    self.onlineLabel.text = NSLocalizedString(@"online", nil);
+    self.awayLabel.text = NSLocalizedString(@"away", nil);
+    self.busyLabel.text = NSLocalizedString(@"busy", nil);
+    self.offlineLabel.text = NSLocalizedString(@"offline", @"Title of the Offline section");
     
-    self.autoAwayLabel.text = AMLocalizedString(@"autoAway", nil);
+    self.autoAwayLabel.text = NSLocalizedString(@"autoAway", nil);
     
-    self.statusPersistenceLabel.text = AMLocalizedString(@"statusPersistence", nil);
-    [self.autoAwayTimeSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
+    self.statusPersistenceLabel.text = NSLocalizedString(@"statusPersistence", nil);
+    [self.autoAwayTimeSaveButton setTitle:NSLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
-    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:AMLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont italicSystemFontOfSize:17.0]}];
-    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont italicSystemFontOfSize:17.0]}];
+    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", NSLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
     [showLastSeenAttributedString appendAttributedString:lastSeenString];
     
     self.lastActiveLabel.attributedText = showLastSeenAttributedString;
@@ -181,10 +181,10 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 - (void)updateAutoAwayTimeLabel {
     NSString *xMinutes;
     if ((self.presenceConfig.autoAwayTimeout / 60) < 2) {
-        xMinutes = AMLocalizedString(@"1Minute", nil);
+        xMinutes = NSLocalizedString(@"1Minute", nil);
         self.autoAwayTimeTextField.text = xMinutes;
     } else {
-        xMinutes = AMLocalizedString(@"xMinutes", nil);
+        xMinutes = NSLocalizedString(@"xMinutes", nil);
         self.autoAwayTimeTextField.text = [xMinutes stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
     }
     
@@ -265,20 +265,20 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
             break;
             
         case 1:
-            titleForFooter = AMLocalizedString(@"Allow your contacts to see the last time you were active on MEGA.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
+            titleForFooter = NSLocalizedString(@"Allow your contacts to see the last time you were active on MEGA.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
             break;
             
         case 2:
-            titleForFooter = AMLocalizedString(@"maintainMyChosenStatusAppearance", @"Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status.");
+            titleForFooter = NSLocalizedString(@"maintainMyChosenStatusAppearance", @"Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status.");
             break;
             
         case 3:
             if (self.presenceConfig.isAutoAwayEnabled) {
                 if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
-                    titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                    titleForFooter = NSLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
                     titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
                 } else {
-                    titleForFooter = AMLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                    titleForFooter = NSLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
                 }
             }
             break;
@@ -360,7 +360,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 - (NSString *)titleForEmptyState {
     NSString *text = @"";
     if (![MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+        text = NSLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
     return text;
@@ -369,7 +369,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -386,7 +386,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

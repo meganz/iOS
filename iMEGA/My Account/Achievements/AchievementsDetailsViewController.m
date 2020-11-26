@@ -43,38 +43,38 @@
     MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:self.index];
     switch (achievementClass) {
         case MEGAAchievementWelcome: {
-            navigationTitle = AMLocalizedString(@"registrationBonus", @"achievement type");
+            navigationTitle = NSLocalizedString(@"registrationBonus", @"achievement type");
             achievementImage = [UIImage imageNamed:@"achievementsRegistration"];
-            NSString *registrationBonusExplanation = AMLocalizedString(@"registrationBonusExplanation", @"Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB");
+            NSString *registrationBonusExplanation = NSLocalizedString(@"registrationBonusExplanation", @"Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB");
             howItWorksExplanationLabel = [registrationBonusExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]];
             break;
         }
             
         case MEGAAchievementDesktopInstall: {
-            navigationTitle = AMLocalizedString(@"installMEGASync", @"");
+            navigationTitle = NSLocalizedString(@"installMEGASync", @"");
             achievementImage = [UIImage imageNamed:@"achievementsInstallMega"];
             
-            NSString *installMEGASyncCompletedExplanation = AMLocalizedString(@"installMEGASyncCompletedExplanation", @"Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB");
+            NSString *installMEGASyncCompletedExplanation = NSLocalizedString(@"installMEGASyncCompletedExplanation", @"Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB");
             installMEGASyncCompletedExplanation = [installMEGASyncCompletedExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]];
             howItWorksExplanationLabel = [installMEGASyncCompletedExplanation stringByReplacingOccurrencesOfString:@"%2" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
             break;
         }
             
         case MEGAAchievementMobileInstall: {
-            navigationTitle = AMLocalizedString(@"installOurMobileApp", @"");
+            navigationTitle = NSLocalizedString(@"installOurMobileApp", @"");
             achievementImage = [UIImage imageNamed:@"achievementsInstallMobile"];
             
-            NSString *installOurMobileAppCompletedExplanation = AMLocalizedString(@"installOurMobileAppCompletedExplanation", @"");
+            NSString *installOurMobileAppCompletedExplanation = NSLocalizedString(@"installOurMobileAppCompletedExplanation", @"");
             installOurMobileAppCompletedExplanation = [installOurMobileAppCompletedExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]];
             howItWorksExplanationLabel = [installOurMobileAppCompletedExplanation stringByReplacingOccurrencesOfString:@"%2" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
             break;
         }
             
         case MEGAAchievementAddPhone: {
-            navigationTitle = AMLocalizedString(@"Add Phone Number", nil);
+            navigationTitle = NSLocalizedString(@"Add Phone Number", nil);
             achievementImage = [UIImage imageNamed:@"addPhoneNumberSmall"];
             
-            howItWorksExplanationLabel = [[AMLocalizedString(@"You have received %1$s storage space and %2$s transfer quota for verifying your phone number.", nil) stringByReplacingOccurrencesOfString:@"%1$s" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]] stringByReplacingOccurrencesOfString:@"%2$s" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
+            howItWorksExplanationLabel = [[NSLocalizedString(@"You have received %1$s storage space and %2$s transfer quota for verifying your phone number.", nil) stringByReplacingOccurrencesOfString:@"%1$s" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]] stringByReplacingOccurrencesOfString:@"%2$s" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
             break;
         }
 
@@ -120,13 +120,13 @@
 
 - (void)setBonusExpireInLabelText {
     NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:self.index];
-    NSString *bonusExpiresIn = AMLocalizedString(@"bonusExpiresIn", @"%1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days)");
+    NSString *bonusExpiresIn = NSLocalizedString(@"bonusExpiresIn", @"%1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days)");
     bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"(" withString:@""];
     bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@")" withString:@""];
     bonusExpiresIn = [bonusExpiresIn mnz_removeWebclientFormatters];
     
     if (awardExpirationdDate.daysUntil == 0) {
-        bonusExpiresIn = AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.");
+        bonusExpiresIn = NSLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.");
         self.bonusExpireInLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
         self.bonusExpireInView.layer.borderColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)].CGColor;
     } else {
@@ -134,10 +134,10 @@
         
         if (awardExpirationdDate.daysUntil > 30) {
             bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.monthsUntil]];
-            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:AMLocalizedString(@"months", @"Used to display the number of months a plan was purchased for e.g. 3 months, 6 months.")];
+            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:NSLocalizedString(@"months", @"Used to display the number of months a plan was purchased for e.g. 3 months, 6 months.")];
         } else {
             bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
-            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:AMLocalizedString(@"days", @"")];
+            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:NSLocalizedString(@"days", @"")];
         }
     }
     

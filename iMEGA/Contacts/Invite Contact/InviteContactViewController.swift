@@ -23,11 +23,11 @@ class InviteContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
-        addFromContactsLabel.text = AMLocalizedString("addFromContacts", "Item menu option to add a contact through your device app Contacts")
-        enterEmailLabel.text = AMLocalizedString("Enter Email", "Text used as a section title or similar")
-        scanQrCodeLabel.text = AMLocalizedString("scanCode")
-        moreLabel.text = AMLocalizedString("more")
+        navigationItem.title = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
+        addFromContactsLabel.text = NSLocalizedString("addFromContacts", comment: "Item menu option to add a contact through your device app Contacts")
+        enterEmailLabel.text = NSLocalizedString("Enter Email", comment: "Text used as a section title or similar")
+        scanQrCodeLabel.text = NSLocalizedString("scanCode", comment: "")
+        moreLabel.text = NSLocalizedString("more", comment: "")
 
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
@@ -113,7 +113,7 @@ class InviteContactViewController: UIViewController {
     }
 
     @IBAction func moreButtonTapped(_ sender: Any) {
-        let items = [AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA"), userLink]
+        let items = [NSLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", comment: "Text to send as SMS message to user contacts inviting them to MEGA"), userLink]
         let activity = UIActivityViewController(activityItems: items, applicationActivities: [])
         activity.popoverPresentationController?.sourceView = moreLabel
         activity.popoverPresentationController?.sourceRect = moreLabel.frame
@@ -144,7 +144,7 @@ extension InviteContactViewController: ContactsPickerViewControllerDelegate {
         let composeVC = MFMessageComposeViewController()
         composeVC.messageComposeDelegate = self
         composeVC.recipients = values
-        composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
+        composeVC.body = NSLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", comment: "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
         self.present(composeVC, animated: true, completion: nil)
     }
 }

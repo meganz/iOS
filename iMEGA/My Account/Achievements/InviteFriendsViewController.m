@@ -30,17 +30,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
+    self.navigationItem.title = NSLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
     
-    self.inviteYourFriendsTitleLabel.text = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
+    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
     self.inviteYourFriendsSubtitleLabel.text = self.inviteYourFriendsSubtitleString;
     
-    [self.inviteButton setTitle:AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.") forState:UIControlStateNormal];
+    [self.inviteButton setTitle:NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.") forState:UIControlStateNormal];
     
-    self.howItWorksLabel.text = AMLocalizedString(@"howItWorks", @"");
-    self.howItWorksFirstParagraphLabel.text = [AMLocalizedString(@"howItWorksMain", @"")  mnz_removeWebclientFormatters];
-    self.howItWorksSecondParagraphLabel.text = AMLocalizedString(@"howItWorksSecondary", @"");
-    self.howItWorksThirdParagraphLabel.text = AMLocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
+    self.howItWorksLabel.text = NSLocalizedString(@"howItWorks", @"");
+    self.howItWorksFirstParagraphLabel.text = [NSLocalizedString(@"howItWorksMain", @"")  mnz_removeWebclientFormatters];
+    self.howItWorksSecondParagraphLabel.text = NSLocalizedString(@"howItWorksSecondary", @"");
+    self.howItWorksThirdParagraphLabel.text = NSLocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
     
     [self updateAppearance];
 }

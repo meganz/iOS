@@ -424,7 +424,7 @@
                         [self updateParticipants];
                     }
                 } else if (error.type == MEGAChatErrorTooMany) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more video are allowed in this group call.", @"Message show when a call cannot be established because there are too many video activated in the group call")];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Error. No more video are allowed in this group call.", @"Message show when a call cannot be established because there are too many video activated in the group call")];
                 }
             }];
             if (sender.selected) {
@@ -506,7 +506,7 @@
         [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
-        self.navigationSubtitleLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
+        self.navigationSubtitleLabel.text = NSLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
     }
 }
 
@@ -516,16 +516,16 @@
     switch (self.callType) {
         case CallTypeActive: {
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-            self.navigationSubtitleLabel.text = call && call.status == MEGAChatCallStatusInProgress ? @"" : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            self.navigationSubtitleLabel.text = call && call.status == MEGAChatCallStatusInProgress ? @"" : NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
         }
             
         case CallTypeOutgoing:
-            self.navigationSubtitleLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            self.navigationSubtitleLabel.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
             
         case CallTypeIncoming:
-            self.navigationSubtitleLabel.text = AMLocalizedString(@"connecting", nil);
+            self.navigationSubtitleLabel.text = NSLocalizedString(@"connecting", nil);
             break;
             
         default:
@@ -1130,7 +1130,7 @@
         }
         
         if (session.networkQuality < 2) {
-            [self showToastMessage:AMLocalizedString(@"Poor connection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:UIColor.systemYellowColor shouldHide:YES];
+            [self showToastMessage:NSLocalizedString(@"Poor connection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:UIColor.systemYellowColor shouldHide:YES];
         }
     }
     
@@ -1182,7 +1182,7 @@
             if (self.isReconnecting) {
                 self.reconnecting = NO;
                 self.toastView.hidden = YES;
-                [self showToastMessage:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                [self showToastMessage:NSLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
             }
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
@@ -1192,7 +1192,7 @@
                     case MEGAChatCallCompositionChangePeerRemoved: {
                         NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange];
                         if (displayName) {
-                            [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), displayName] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                            [self showToastMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), displayName] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                         } else {
                             MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                                 if (error.type) {
@@ -1200,7 +1200,7 @@
                                 }
                                 
                                 self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
-                                [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                                [self showToastMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                             }];
                             [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] delegate:delegate];
                         }
@@ -1211,7 +1211,7 @@
                     case MEGAChatCallCompositionChangePeerAdded: {
                         NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange];
                         if (displayName) {
-                            [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), displayName] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                            [self showToastMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), displayName] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                         } else {
                             MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                                 if (error.type) {
@@ -1219,7 +1219,7 @@
                                 }
                                 
                                 self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
-                                [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
+                                [self showToastMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                             }];
                             [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] delegate:delegate];
                         }
@@ -1259,7 +1259,7 @@
             
         case MEGAChatCallStatusReconnecting: {
             self.reconnecting = YES;
-            [self showToastMessage:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") color:UIColor.systemOrangeColor shouldHide:NO];
+            [self showToastMessage:NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") color:UIColor.systemOrangeColor shouldHide:NO];
             NSUInteger size = call.sessionsPeerId.size;
             for (int i = 0; i < size; i++) {
                 MEGAChatSession *chatSession = [call sessionForPeer:[call.sessionsPeerId megaHandleAtIndex:i] clientId:[call.sessionsClientId megaHandleAtIndex:i]];

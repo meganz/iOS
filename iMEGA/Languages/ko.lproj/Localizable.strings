@@ -624,8 +624,6 @@
 "securityOptions"="보안 옵션";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="대하여";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="언어";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="피드백 보내기";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1406,10 +1404,6 @@
 "HTTP error"="HTTP 오류";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="언어를 변경한 후 MEGA를 재시작해야합니다";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="언어가 변경되었습니다. 재시작하려면 탭하세요.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA는 모바일 기기를 위한 전용 앱과 함께 표준 웹 브라우저를 통해 사용 가능한 이용자가 제어하는 암호화된 클라우드 저장소를 제공합니다. 다른 클라우드 저장소 제공자들과 달리 당신의 데이터는 절대 우리가 아니라 당신의 클라이언트 기기를 통해 암호화되고 해독됩니다.";

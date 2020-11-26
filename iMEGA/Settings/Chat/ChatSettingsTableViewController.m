@@ -72,19 +72,19 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     self.notificationSectionRows = @[@(ChatSettingsNotificationRowChatNotification),
                                      @(ChatSettingsNotificationRowDND)];
     
-    self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
+    self.navigationItem.title = NSLocalizedString(@"chat", @"Chat section header");
     
-    self.statusLabel.text = AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
+    self.statusLabel.text = NSLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
-    self.richPreviewsLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
+    self.richPreviewsLabel.text = NSLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
     
-    self.imageQualityLabel.text = AMLocalizedString(@"Image Quality", @"Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised)");
+    self.imageQualityLabel.text = NSLocalizedString(@"Image Quality", @"Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised)");
     
-    self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
+    self.videoQualityLabel.text = NSLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
     
-    self.doNotDisturbLabel.text = AMLocalizedString(@"Do Not Disturb", nil);
+    self.doNotDisturbLabel.text = NSLocalizedString(@"Do Not Disturb", nil);
 
-    self.chatNotificationsLabel.text = AMLocalizedString(@"Chat Notifications", @"Title that refers to disabling the chat notifications forever.");
+    self.chatNotificationsLabel.text = NSLocalizedString(@"Chat Notifications", @"Title that refers to disabling the chat notifications forever.");
     
     self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
     
@@ -201,15 +201,15 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     NSString *imageQualityString;
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            imageQualityString = AMLocalizedString(@"Automatic", @"Text for some option property indicating the user the action will be determine automatically by MEGA. For example: Image Quality option for chats");
+            imageQualityString = NSLocalizedString(@"Automatic", @"Text for some option property indicating the user the action will be determine automatically by MEGA. For example: Image Quality option for chats");
             break;
             
         case ChatImageUploadQualityHigh:
-            imageQualityString = AMLocalizedString(@"high", @"Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.");
+            imageQualityString = NSLocalizedString(@"high", @"Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.");
             break;
             
         case ChatImageUploadQualityOptimised:
-            imageQualityString = AMLocalizedString(@"Optimised", @"Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats");
+            imageQualityString = NSLocalizedString(@"Optimised", @"Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats");
             break;
             
         default:
@@ -232,19 +232,19 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     switch (videoQuality) {
         case ChatVideoUploadQualityLow:
-            videoQualityString = AMLocalizedString(@"low", @"Low");
+            videoQualityString = NSLocalizedString(@"low", @"Low");
             break;
             
         case ChatVideoUploadQualityMedium:
-            videoQualityString = AMLocalizedString(@"medium", @"Medium");
+            videoQualityString = NSLocalizedString(@"medium", @"Medium");
             break;
             
         case ChatVideoUploadQualityHigh:
-            videoQualityString = AMLocalizedString(@"high", @"High");
+            videoQualityString = NSLocalizedString(@"high", @"High");
             break;
             
         case ChatVideoUploadQualityOriginal:
-            videoQualityString = AMLocalizedString(@"original", @"Original");
+            videoQualityString = NSLocalizedString(@"original", @"Original");
             break;
             
         default:
@@ -279,7 +279,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
             break;
             
         case ChatSettingsSectionRichPreview:
-            footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+            footerTitle = NSLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
             break;
             
         case ChatSettingsSectionImageQuality:
@@ -287,15 +287,15 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
             ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
             switch (imageQuality) {
                 case ChatImageUploadQualityAuto:
-                    footerTitle = AMLocalizedString(@"Send smaller size images through cellular networks and original size images through wifi", @"Description of Automatic Image Quality option");
+                    footerTitle = NSLocalizedString(@"Send smaller size images through cellular networks and original size images through wifi", @"Description of Automatic Image Quality option");
                     break;
                     
                 case ChatImageUploadQualityHigh:
-                    footerTitle = AMLocalizedString(@"Send original size, increased quality images", @"Description of High Image Quality option");
+                    footerTitle = NSLocalizedString(@"Send original size, increased quality images", @"Description of High Image Quality option");
                     break;
                     
                 case ChatImageUploadQualityOptimised:
-                    footerTitle = AMLocalizedString(@"Send smaller size images optimised for lower data consumption", @"Description of Optimised Image Quality option");
+                    footerTitle = NSLocalizedString(@"Send smaller size images optimised for lower data consumption", @"Description of Optimised Image Quality option");
                     break;
                     
                 default:
@@ -305,7 +305,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
             break;
             
         case ChatSettingsSectionVideoQuality:
-            footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
+            footerTitle = NSLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
             break;
             
         default:

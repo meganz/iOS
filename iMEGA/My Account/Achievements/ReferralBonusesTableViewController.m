@@ -28,7 +28,7 @@
     
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     
-    self.navigationItem.title = AMLocalizedString(@"referralBonuses", @"achievement type");
+    self.navigationItem.title = NSLocalizedString(@"referralBonuses", @"achievement type");
     
     self.inviteAchievementsIndexesMutableArray = [[NSMutableArray alloc] init];
     NSUInteger awardsCount = self.achievementsDetails.awardsCount;
@@ -119,7 +119,7 @@
     [self setStorageAndTransferQuotaRewardsForCell:cell withAwardId:awardId];
     
     NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:inviteIndexPath];
-    cell.daysLeftTrailingLabel.text = [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", awardExpirationdDate.daysUntil]];
+    cell.daysLeftTrailingLabel.text = [NSLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", awardExpirationdDate.daysUntil]];
     cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     return cell;

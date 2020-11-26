@@ -24,12 +24,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = AMLocalizedString(@"videoQuality", @"Title that refers to the quality of the chat (Either Online or Offline)");
+    self.navigationItem.title = NSLocalizedString(@"videoQuality", @"Title that refers to the quality of the chat (Either Online or Offline)");
     
-    self.lowLabel.text = AMLocalizedString(@"low", @"Low");
-    self.mediumLabel.text = AMLocalizedString(@"medium", nil);
-    self.highLabel.text = AMLocalizedString(@"high", @"High");
-    self.originalLabel.text = AMLocalizedString(@"original", @"Original");
+    self.lowLabel.text = NSLocalizedString(@"low", @"Low");
+    self.mediumLabel.text = NSLocalizedString(@"medium", nil);
+    self.highLabel.text = NSLocalizedString(@"high", @"High");
+    self.originalLabel.text = NSLocalizedString(@"original", @"Original");
     
     [self updateAppearance];
 }

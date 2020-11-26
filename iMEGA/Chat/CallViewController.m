@@ -91,7 +91,7 @@
                 if (self.call) {
                     self.callId = self.call.callId;
                     
-                    self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+                    self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                     [self.megaCallManager addCall:self.call];
                     [self.megaCallManager startCall:self.call];
                 } else {
@@ -112,7 +112,7 @@
             [self initShowHideControls];
             [self initDurationTimer];
         } else {
-            self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            self.statusCallLabel.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
         }
     }
     
@@ -265,7 +265,7 @@
         [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
-        self.statusCallLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
+        self.statusCallLabel.text = NSLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
     }
 }
 
@@ -543,9 +543,9 @@
             case MEGAChatSessionStatusInitial:
                 if (self.isReconnecting) {
                     self.reconnecting = NO;
-                    self.statusCallLabel.text = AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
+                    self.statusCallLabel.text = NSLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
                 } else {
-                    self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
+                    self.statusCallLabel.text = NSLocalizedString(@"connecting", nil);
                 }
 
             case MEGAChatSessionStatusDestroyed:
@@ -653,7 +653,7 @@
         case MEGAChatCallStatusReconnecting:
             [self.timer invalidate];
             self.reconnecting = YES;
-            self.statusCallLabel.text = AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again");
+            self.statusCallLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again");
             break;
         
         default:

@@ -103,8 +103,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             if chatRoom.isPreview {
                 api.closeChatPreview(chat.chatId)
                 chatViewController?.reloadInputViews()
-                let statusString = AMLocalizedString("linkRemoved",
-                                                     "Message shown when the link to a file or folder has been removed")
+                let statusString = NSLocalizedString("linkRemoved",
+                                                     comment: "Message shown when the link to a file or folder has been removed")
                 chatViewController?.updateJoinView()
                 SVProgressHUD.showInfo(withStatus: statusString)
             } else {
@@ -572,7 +572,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         } else if whoIsTyping.keys.count == 1 {
             if let handle = whoIsTyping.keys.first,
                 let username = username(forHandle: handle) {
-                let localizedString = AMLocalizedString("isTyping", "A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime.")
+                let localizedString = NSLocalizedString("isTyping", comment: "A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime.")
                 let typingIndicatorString = String(format: localizedString, username)
                 let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10, weight: .medium)]
                 let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
@@ -604,9 +604,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
             let localizedString: String?
             if keys.count > 2 {
-                localizedString = AMLocalizedString("moreThanTwoUsersAreTyping", "text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
+                localizedString = NSLocalizedString("moreThanTwoUsersAreTyping", comment: "text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
             } else {
-                localizedString = AMLocalizedString("twoUsersAreTyping", "Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
+                localizedString = NSLocalizedString("twoUsersAreTyping", comment: "Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
             }
 
             if let typingIndicatorString = localizedString?.replacingOccurrences(of: "%1$s", with: combinedUsername) {

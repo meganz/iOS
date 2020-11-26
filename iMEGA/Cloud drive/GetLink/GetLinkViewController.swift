@@ -93,7 +93,7 @@ class GetLinkViewController: UIViewController {
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         
         if getLinkVM.multilink {
-            multilinkDescriptionLabel.text = AMLocalizedString("Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.", "Description text about options when exporting links for several nodes")
+            multilinkDescriptionLabel.text = NSLocalizedString("Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.", comment: "Description text about options when exporting links for several nodes")
             multilinkDescriptionView.isHidden = false
         } else {
             tableView.isUserInteractionEnabled = false
@@ -101,9 +101,9 @@ class GetLinkViewController: UIViewController {
         
         processNodes()
         
-        shareBarButton.title = AMLocalizedString("share")
-        copyLinkBarButton.title = getLinkVM.multilink ? AMLocalizedString("Copy All") : AMLocalizedString("copyLink")
-        copyKeyBarButton.title = AMLocalizedString("copyKey")
+        shareBarButton.title = NSLocalizedString("share", comment: "")
+        copyLinkBarButton.title = getLinkVM.multilink ? NSLocalizedString("Copy All", comment: "") : NSLocalizedString("copyLink", comment: "")
+        copyKeyBarButton.title = NSLocalizedString("copyKey", comment: "")
         
         updateAppearance()
     }
@@ -129,13 +129,13 @@ class GetLinkViewController: UIViewController {
         navigationController?.setToolbarHidden(false, animated: true)
         
         if getLinkVM.multilink {
-            title = nodes.filter { !$0.isExported() }.count == 0 ? AMLocalizedString("manageLinks", "A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : AMLocalizedString("getLinks", "Title shown under the action that allows you to get several links to files and/or folders")
+            title = nodes.filter { !$0.isExported() }.count == 0 ? NSLocalizedString("manageLinks", comment: "A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : NSLocalizedString("getLinks",comment:  "Title shown under the action that allows you to get several links to files and/or folders")
         } else {
-            title = nodes[0].isExported() ? AMLocalizedString("manageLink", "A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : AMLocalizedString("getLink", "Title shown under the action that allows you to get a link to file or folder")
+            title = nodes[0].isExported() ? NSLocalizedString("manageLink", comment: "A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : NSLocalizedString("getLink", comment: "Title shown under the action that allows you to get a link to file or folder")
         }
         
         setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
-        let doneBarButtonItem = UIBarButtonItem(title: AMLocalizedString("done"), style: .done, target: self, action: #selector(doneBarButtonTapped))
+        let doneBarButtonItem = UIBarButtonItem(title: NSLocalizedString("done", comment: ""), style: .done, target: self, action: #selector(doneBarButtonTapped))
         navigationItem.rightBarButtonItem = doneBarButtonItem
     }
     
@@ -169,7 +169,7 @@ class GetLinkViewController: UIViewController {
     private func copyKeyToPasteBoard() {
         guard let copyImage = UIImage(named: "copy") else { return }
         UIPasteboard.general.string = getLinkVM.key
-        SVProgressHUD.show(copyImage, status: AMLocalizedString("Key Copied to Clipboard", "Message shown when the key has been copied to the Clipboard"))
+        SVProgressHUD.show(copyImage, status: NSLocalizedString("Key Copied to Clipboard", comment: "Message shown when the key has been copied to the Clipboard"))
     }
     
     private func copyLinkToPasteboard(atIndex index: Int?) {
@@ -177,10 +177,10 @@ class GetLinkViewController: UIViewController {
         if getLinkVM.multilink {
             if let index = index {
                 UIPasteboard.general.string = nodes[index].publicLink
-                SVProgressHUD.show(copyImage, status: AMLocalizedString("Link Copied to Clipboard", "Message shown when the link has been copied to the Clipboard"))
+                SVProgressHUD.show(copyImage, status: NSLocalizedString("Link Copied to Clipboard", comment: "Message shown when the link has been copied to the Clipboard"))
             } else {
                 UIPasteboard.general.string = nodes.map { $0.publicLink }.joined(separator: " ")
-                SVProgressHUD.show(copyImage, status: AMLocalizedString("Links Copied to Clipboard", "Message shown when the links have been copied to the Clipboard"))
+                SVProgressHUD.show(copyImage, status: NSLocalizedString("Links Copied to Clipboard", comment: "Message shown when the links have been copied to the Clipboard"))
             }
         } else {
             if getLinkVM.separateKey {
@@ -188,14 +188,14 @@ class GetLinkViewController: UIViewController {
             } else {
                 UIPasteboard.general.string = getLinkVM.link
             }
-            SVProgressHUD.show(copyImage, status: AMLocalizedString("Link Copied to Clipboard", "Message shown when the link has been copied to the Clipboard"))
+            SVProgressHUD.show(copyImage, status: NSLocalizedString("Link Copied to Clipboard", comment: "Message shown when the link has been copied to the Clipboard"))
         }
     }
     
     private func copyPasswordToPasteboard() {
         guard let copyImage = UIImage(named: "copy") else { return }
         UIPasteboard.general.string = getLinkVM.password
-        SVProgressHUD.show(copyImage, status: AMLocalizedString("Password Copied to Clipboard", "Message shown when the password has been copied to the Clipboard"))
+        SVProgressHUD.show(copyImage, status: NSLocalizedString("Password Copied to Clipboard", comment: "Message shown when the password has been copied to the Clipboard"))
     }
     
     private func updateModel(forNode node: MEGANode) {
@@ -642,15 +642,15 @@ extension GetLinkViewController: UITableViewDelegate {
         header.bottomSeparatorView.isHidden = false
         
         if getLinkVM.multilink {
-            header.titleLabel.text = AMLocalizedString("LINK", "Text presenting a link as header usually")
+            header.titleLabel.text = NSLocalizedString("LINK", comment: "Text presenting a link as header usually")
             header.topSeparatorView.isHidden = true
         } else {
             switch sections()[section] {
             case .link:
-                header.titleLabel.text = AMLocalizedString("LINK", "Text presenting a link as header usually")
+                header.titleLabel.text = NSLocalizedString("LINK", comment: "Text presenting a link as header usually")
                 header.topSeparatorView.isHidden = true
             case .key:
-                header.titleLabel.text = AMLocalizedString("KEY", "Text presenting a key (for a LINK or similar) as header usually")
+                header.titleLabel.text = NSLocalizedString("KEY", comment: "Text presenting a key (for a LINK or similar) as header usually")
                 header.topSeparatorView.isHidden = true
             case .expiryDate:
                 header.titleLabel.text = ""
@@ -677,7 +677,7 @@ extension GetLinkViewController: UITableViewDelegate {
         
         if getLinkVM.multilink {
             if section == nodes.count - 1 {
-                footer.titleLabel.text = AMLocalizedString("Tap to Copy", "Text hint to let the user know that tapping something will be copied into the pasteboard")
+                footer.titleLabel.text = NSLocalizedString("Tap to Copy", comment: "Text hint to let the user know that tapping something will be copied into the pasteboard")
                 footer.titleLabel.textAlignment = .center
                 footer.bottomSeparatorView.isHidden = true
             }
@@ -685,8 +685,8 @@ extension GetLinkViewController: UITableViewDelegate {
             switch sections()[section] {
             case .decryptKeySeparate:
                 footer.bottomSeparatorView.isHidden = true
-                let attributedString = NSMutableAttributedString(string: AMLocalizedString("Export the link and decryption key separately.", "Hint text for option separate the key from the link in Get Link View"))
-                let learnMoreString = NSAttributedString(string: " " + AMLocalizedString("Learn more", "Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible)."), attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
+                let attributedString = NSMutableAttributedString(string: NSLocalizedString("Export the link and decryption key separately.", comment: "Hint text for option separate the key from the link in Get Link View"))
+                let learnMoreString = NSAttributedString(string: " " + NSLocalizedString("Learn more", comment: "Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible)."), attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
                 attributedString.append(learnMoreString)
                 footer.titleLabel.numberOfLines = 2
                 footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
@@ -694,7 +694,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 footer.titleLabel.attributedText = attributedString
             case .expiryDate:
                 if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
-                    footer.titleLabel.text = String(format: AMLocalizedString("Link expires %@", "Text indicating the date until a link will be valid"), dateFormatter.localisedString(from: getLinkVM.date ?? Date()))
+                    footer.titleLabel.text = String(format: NSLocalizedString("Link expires %@", comment: "Text indicating the date until a link will be valid"), dateFormatter.localisedString(from: getLinkVM.date ?? Date()))
                 }
                 footer.bottomSeparatorView.isHidden = getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil)
             case .link, .passwordProtection, .key:

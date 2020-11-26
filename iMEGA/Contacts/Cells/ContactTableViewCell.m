@@ -96,7 +96,7 @@
 - (NSString *)userNameForUser:(MEGAUser *)user {
     NSString *userName;
     if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
-        userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
+        userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", NSLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
     } else {
         userName = user.mnz_displayName;
     }
@@ -120,7 +120,7 @@
     
     if (newUser) {
         self.contactNewView.hidden = NO;
-        self.contactNewLabel.text = AMLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
+        self.contactNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
         self.contactNewLabel.textColor = UIColor.whiteColor;
         self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {
@@ -136,7 +136,7 @@
         if (indexPath.row == 0) {
             self.permissionsImageView.hidden = YES;
             self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-            self.nameLabel.text = AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list");
+            self.nameLabel.text = NSLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list");
             self.shareLabel.hidden = YES;
         } else {
             NSString *userName = [self userNameForUser:user];
@@ -158,13 +158,13 @@
 - (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath {
     self.permissionsImageView.hidden = YES;
     if (indexPath.row == 0) {
-        self.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+        self.nameLabel.text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
         self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
     } else if (indexPath.row == 1) {
-        self.nameLabel.text = AMLocalizedString(@"New Group Chat", @"Text button for init a group chat");
+        self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
         self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
     } else {
-        self.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+        self.nameLabel.text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
         self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
     }
     self.shareLabel.hidden = YES;

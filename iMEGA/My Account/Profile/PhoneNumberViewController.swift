@@ -26,11 +26,11 @@ class PhoneNumberViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = AMLocalizedString("Phone Number", "Text related to verified phone number. Used as title or cell description.")
+        navigationItem.title = NSLocalizedString("Phone Number", comment: "Text related to verified phone number. Used as title or cell description.")
         
-        phoneNumberTextLabel.text = AMLocalizedString("Phone Number", "Text related to verified phone number. Used as title or cell description.")
-        modifyNumberLabel.text = AMLocalizedString("Modify Phone Number", "Title for action to modify the registered phone number.")
-        removeNumberLabel.text = AMLocalizedString("Remove Phone Number", "Title for action to remove the registered phone number.")
+        phoneNumberTextLabel.text = NSLocalizedString("Phone Number", comment: "Text related to verified phone number. Used as title or cell description.")
+        modifyNumberLabel.text = NSLocalizedString("Modify Phone Number", comment: "Title for action to modify the registered phone number.")
+        removeNumberLabel.text = NSLocalizedString("Remove Phone Number", comment: "Title for action to remove the registered phone number.")
         
         guard let verifiedPhone = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() else {
             fatalError("Can not fetch verified phone number")
@@ -68,8 +68,8 @@ class PhoneNumberViewController: UITableViewController {
     }
     
     private func showModifyPhoneAlert() {
-        let modifyPhoneNumberAlert = UIAlertController(title: AMLocalizedString("Modify Phone Number", "Title for action to modify the registered phone number."), message: AMLocalizedString("This operation will remove your current phone number and start the process of associating a new phone number with your account.", "Message for action to modify the registered phone number."), preferredStyle: .alert)
-        modifyPhoneNumberAlert.addAction(UIAlertAction(title: AMLocalizedString("ok", "Button title to accept something"), style: .default, handler: { (action) in
+        let modifyPhoneNumberAlert = UIAlertController(title: NSLocalizedString("Modify Phone Number", comment: "Title for action to modify the registered phone number."), message: NSLocalizedString("This operation will remove your current phone number and start the process of associating a new phone number with your account.", comment: "Message for action to modify the registered phone number."), preferredStyle: .alert)
+        modifyPhoneNumberAlert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: "Button title to accept something"), style: .default, handler: { (action) in
             MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (request, error) in
                 if error.type == .apiOk {
                     let presenter = self.presentingViewController
@@ -79,28 +79,28 @@ class PhoneNumberViewController: UITableViewController {
                         }
                     })
                 } else {
-                    SVProgressHUD.showError(withStatus: AMLocalizedString("Failed to remove your phone number, please try again later.", "A message shown to users when phone number removal fails."))
+                    SVProgressHUD.showError(withStatus: NSLocalizedString("Failed to remove your phone number, please try again later.", comment: "A message shown to users when phone number removal fails."))
                 }
             }))
         }))
-        modifyPhoneNumberAlert.addAction(UIAlertAction(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .cancel, handler: nil))
+        modifyPhoneNumberAlert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: nil))
         present(modifyPhoneNumberAlert, animated: true, completion: nil)
     }
     
     private func showRemovePhoneAlert() {
-        let removePhoneNumberAlert = UIAlertController(title: AMLocalizedString("Remove Phone Number", "Title for action to remove the registered phone number."), message: AMLocalizedString("This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it.", "Message for action to remove the registered phone number."), preferredStyle: .alert)
-        removePhoneNumberAlert.addAction(UIAlertAction(title: AMLocalizedString("ok", "Button title to accept something"), style: .default, handler: { (action) in
+        let removePhoneNumberAlert = UIAlertController(title: NSLocalizedString("Remove Phone Number", comment: "Title for action to remove the registered phone number."), message: NSLocalizedString("This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it.", comment: "Message for action to remove the registered phone number."), preferredStyle: .alert)
+        removePhoneNumberAlert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: "Button title to accept something"), style: .default, handler: { (action) in
             MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (request, error) in
                 if error.type == .apiOk {
                     self.dismiss(animated: true, completion: {
-                        SVProgressHUD.showInfo(withStatus: AMLocalizedString("Your phone number has been removed successfully.", "Information message shown to users when the operation of removing phone number succeed."))
+                        SVProgressHUD.showInfo(withStatus: NSLocalizedString("Your phone number has been removed successfully.", comment: "Information message shown to users when the operation of removing phone number succeed."))
                     })
                 } else {
-                    SVProgressHUD.showError(withStatus: AMLocalizedString("Failed to remove your phone number, please try again later.", "A message shown to users when phone number removal fails."))
+                    SVProgressHUD.showError(withStatus: NSLocalizedString("Failed to remove your phone number, please try again later.", comment: "A message shown to users when phone number removal fails."))
                 }
             }))
         }))
-        removePhoneNumberAlert.addAction(UIAlertAction(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .cancel, handler: nil))
+        removePhoneNumberAlert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: nil))
         present(removePhoneNumberAlert, animated: true, completion: nil)
     }
     

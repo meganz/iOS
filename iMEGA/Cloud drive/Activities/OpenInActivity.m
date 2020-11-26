@@ -34,7 +34,7 @@
 }
 
 - (NSString *)activityTitle {
-    return AMLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app");
+    return NSLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app");
 }
 
 - (UIImage *)activityImage {

@@ -81,7 +81,9 @@
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
     self.semaphore = dispatch_semaphore_create(0);
-    [self languageCompatibility];
+    
+    NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
+    [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
     
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
@@ -226,8 +228,8 @@
     
     MEGALogError(@"Share extension received memory warning");
     if (!self.presentedViewController) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:NSLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissWithCompletionHandler:^{
                 [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
             }];
@@ -245,58 +247,6 @@
             [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         }
     }
-}
-
-#pragma mark - Language
-
-- (void)languageCompatibility {
-    NSString *languageCode = [self.sharedUserDefaults objectForKey:@"languageCode"];
-    if (languageCode) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:languageCode];
-        [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageCode];
-    } else {
-        NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-        
-        if ([Helper isLanguageSupported:currentLanguageID]) {
-            [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
-        } else {
-            [self setLanguage:currentLanguageID];
-        }
-    }
-}
-
-- (void)setLanguage:(NSString *)languageID {
-    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:languageID];
-    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
-    if ([Helper isLanguageSupported:languageDesignator]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
-    } else {
-        [self setSystemLanguage];
-    }
-}
-
-- (void)setSystemLanguage {
-    NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
-    NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = languages.firstObject;
-    
-    if ([Helper isLanguageSupported:systemLanguageID]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
-        return;
-    }
-    
-    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:systemLanguageID];
-    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
-    if ([Helper isLanguageSupported:languageDesignator]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
-    } else {
-        [self setDefaultLanguage];
-    }
-}
-
-- (void)setDefaultLanguage {
-    [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
-    [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
 #pragma mark - Login and Setup
@@ -336,7 +286,7 @@
         
         LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
         loginRequiredVC.navigationItem.title = @"MEGA";
-        loginRequiredVC.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
+        loginRequiredVC.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
         loginRequiredVC.cancelCompletion = ^{
             [self.loginRequiredNC dismissViewControllerAnimated:YES completion:^{
                 [self dismissWithCompletionHandler:^{
@@ -383,7 +333,7 @@
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES
-                        andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                        andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
         
         [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
         [self presentViewController:passcodeVC animated:NO completion:nil];
@@ -832,12 +782,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
         NSString *message;
         if (self.unsupportedAssets > 0) {
-            message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+            message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         } else {
-            message = [NSString stringWithFormat:AMLocalizedString(@"filesAlreadyExistMessage", @"Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder"), self.alreadyInDestinationAssets];
+            message = [NSString stringWithFormat:NSLocalizedString(@"filesAlreadyExistMessage", @"Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder"), self.alreadyInDestinationAssets];
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self dismissWithCompletionHandler:^{
                 [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
             }];
@@ -846,7 +796,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self presentViewController:alertController animated:YES completion:nil];
         }];
     } else {
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
+        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self dismissWithCompletionHandler:^{
                 [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
@@ -927,7 +877,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (error.type) {
         [self oneUnsupportedMore];
-        MEGALogError(@"Transfer finished with error: %@", AMLocalizedString(error.name, nil));
+        MEGALogError(@"Transfer finished with error: %@", NSLocalizedString(error.name, nil));
         return;
     }
     

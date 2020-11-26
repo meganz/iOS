@@ -12,7 +12,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         
         test(viewModel: sut,
              action: VerificationCodeAction.onViewReady,
-             expectedCommands: [.configView(phoneNumber: "+64 27 314 2791", screenTitle: AMLocalizedString("Add Phone Number"))])
+             expectedCommands: [.configView(phoneNumber: "+64 27 314 2791", screenTitle: NSLocalizedString("Add Phone Number"))])
     }
     
     func testAction_onViewReady_unblockAccount() {
@@ -24,7 +24,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         
         test(viewModel: sut,
              action: VerificationCodeAction.onViewReady,
-             expectedCommands: [.configView(phoneNumber: "+64 27 314 2791", screenTitle: AMLocalizedString("Verify Your Account"))])
+             expectedCommands: [.configView(phoneNumber: "+64 27 314 2791", screenTitle: NSLocalizedString("Verify Your Account"))])
     }
 
     func testAction_resendCode() {
@@ -92,10 +92,10 @@ final class VerificationCodeViewModelTests: XCTestCase {
     
     func testAction_checkVerificationCode_error() {
         let errorMessageDict: [CheckSMSErrorEntity: String] =
-            [.reachedDailyLimit: AMLocalizedString("You have reached the daily limit"),
-             .codeDoesNotMatch: AMLocalizedString("The verification code doesn't match."),
-             .alreadyVerifiedWithAnotherAccount: AMLocalizedString("Your account is already verified"),
-             .generic: AMLocalizedString("Unknown error")]
+            [.reachedDailyLimit: NSLocalizedString("You have reached the daily limit"),
+             .codeDoesNotMatch: NSLocalizedString("The verification code doesn't match."),
+             .alreadyVerifiedWithAnotherAccount: NSLocalizedString("Your account is already verified"),
+             .generic: NSLocalizedString("Unknown error")]
         
         for (error, message) in errorMessageDict {
             let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),

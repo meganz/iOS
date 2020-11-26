@@ -38,48 +38,6 @@ static MEGAIndexer *indexer;
 
 @implementation Helper
 
-#pragma mark - Languages
-
-+ (NSArray *)languagesSupportedIDs {
-    static NSArray *languagesSupportedIDs = nil;
-    
-    if (languagesSupportedIDs == nil) {
-        languagesSupportedIDs = [NSArray arrayWithObjects:@"ar",
-                                 @"de",
-                                 @"en",
-                                 @"es",
-                                 @"fr",
-                                 @"id",
-                                 @"it",
-                                 @"ja",
-                                 @"ko",
-                                 @"nl",
-                                 @"pl",
-                                 @"pt-br",
-                                 @"ro",
-                                 @"ru",
-                                 @"th",
-                                 @"vi",
-                                 @"zh-Hans",
-                                 @"zh-Hant",
-                                 nil];
-    }
-    
-    return languagesSupportedIDs;
-}
-
-+ (BOOL)isLanguageSupported:(NSString *)languageID {
-    BOOL isLanguageSupported = [self.languagesSupportedIDs containsObject:languageID];
-    if (isLanguageSupported) {
-        [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageID];
-    }
-    return isLanguageSupported;
-}
-
-+ (NSString *)languageID:(NSUInteger)index {
-    return [self.languagesSupportedIDs objectAtIndex:index];
-}
-
 #pragma mark - Images
 
 + (NSDictionary *)fileTypesDictionary {
@@ -338,7 +296,7 @@ static MEGAIndexer *indexer;
     }
     
     if ([nodeSizeNumber longLongValue] == 0) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
         return NO;
     }
     NSError *error;
@@ -359,7 +317,7 @@ static MEGAIndexer *indexer;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
     if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderInboxError", nil)];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderInboxError", nil)];
         return;
     }
     
@@ -413,7 +371,7 @@ static MEGAIndexer *indexer;
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
             if (error != nil) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:[NSString stringWithFormat:NSLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
             }
         }
         MEGANodeList *nList = [api childrenForParent:node];
@@ -498,7 +456,7 @@ static MEGAIndexer *indexer;
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", NSLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
@@ -612,13 +570,13 @@ static MEGAIndexer *indexer;
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [Helper apiURLChanged];
     } else {
-        NSString *alertTitle = AMLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
-        NSString *alertMessage = AMLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
+        NSString *alertTitle = NSLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
+        NSString *alertMessage = NSLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
         
         UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [Helper apiURLChanged];
@@ -650,8 +608,8 @@ static MEGAIndexer *indexer;
 }
 
 + (void)cannotPlayContentDuringACallAlert {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
@@ -660,9 +618,9 @@ static MEGAIndexer *indexer;
 
     UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
-    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
 
-    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         confirmAction();
     }]];
 
@@ -813,8 +771,8 @@ static MEGAIndexer *indexer;
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         return YES;
     } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", @"Alert title shown when you need to log in to continue with the action you want to do") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"pleaseLogInToYourAccount", @"Alert title shown when you need to log in to continue with the action you want to do") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
@@ -945,8 +903,8 @@ static MEGAIndexer *indexer;
     
     BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
     if (success) {
-        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:AMLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
-        [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:NSLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
+        [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] masterKeyExported];
             [viewController dismissViewControllerAnimated:YES completion:^{
                 if (completion) {
@@ -963,8 +921,8 @@ static MEGAIndexer *indexer;
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
     [[MEGASdkManager sharedMEGASdk] masterKeyExported];
@@ -974,13 +932,13 @@ static MEGAIndexer *indexer;
 
 + (void)enableOrDisableLog {
     BOOL enableLog = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
-    NSString *alertTitle = enableLog ? AMLocalizedString(@"enableDebugMode_title", @"Alert title shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_title", @"Alert title shown when the DEBUG mode is disabled");
-    NSString *alertMessage = enableLog ? AMLocalizedString(@"enableDebugMode_message", @"Alert message shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_message", @"Alert message shown when the DEBUG mode is disabled");
+    NSString *alertTitle = enableLog ? NSLocalizedString(@"enableDebugMode_title", @"Alert title shown when the DEBUG mode is enabled") :NSLocalizedString(@"disableDebugMode_title", @"Alert title shown when the DEBUG mode is disabled");
+    NSString *alertMessage = enableLog ? NSLocalizedString(@"enableDebugMode_message", @"Alert message shown when the DEBUG mode is enabled") :NSLocalizedString(@"disableDebugMode_message", @"Alert message shown when the DEBUG mode is disabled");
     
     UIAlertController *logAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [logAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [logAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
     }]];
     

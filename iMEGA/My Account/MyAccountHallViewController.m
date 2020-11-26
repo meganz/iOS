@@ -72,8 +72,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 - (void)viewDidLoad {
     [super viewDidLoad];
         
-    self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+    self.viewAndEditProfileLabel.text = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+    self.viewAndEditProfileButton.accessibilityLabel = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
 
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
@@ -166,15 +166,15 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (void)configAddPhoneNumberTexts {
-    self.addPhoneNumberTitle.text = AMLocalizedString(@"Add Your Phone Number", nil);
+    self.addPhoneNumberTitle.text = NSLocalizedString(@"Add Your Phone Number", nil);
 
     if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
-        self.addPhoneNumberDescription.text = AMLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
+        self.addPhoneNumberDescription.text = NSLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
     } else {
         [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type == MEGAErrorTypeApiOk) {
                 NSString *storageText = [Helper memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
-                self.addPhoneNumberDescription.text = [NSString stringWithFormat:AMLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
+                self.addPhoneNumberDescription.text = [NSString stringWithFormat:NSLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
             }
         }]];
     }
@@ -236,18 +236,18 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 - (void)configNavigationItem {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.navigationItem.rightBarButtonItem = nil;
-        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
-        self.businessLabel.text = AMLocalizedString(@"Business", nil);
+        self.navigationItem.title = NSLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+        self.businessLabel.text = NSLocalizedString(@"Business", nil);
     } else {
-        self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+        self.buyPROBarButtonItem.title = NSLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
+        self.navigationItem.title = NSLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
         self.businessLabel.text = @"";
     }
 }
 
 - (void)configTableFooterView {
     if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available from a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
+        self.tableFooterLabel.text = NSLocalizedString(@"User management is only available from a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
         self.tableView.tableFooterView = self.tableFooterView;
     } else {
         self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
@@ -304,7 +304,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     }
     
     if (indexPath.section == MyAccountSectionOther) {
-        cell.sectionLabel.text = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
+        cell.sectionLabel.text = NSLocalizedString(@"settingsTitle", @"Title of the Settings section");
         cell.iconImageView.image = [UIImage imageNamed:@"icon-settings"].imageFlippedForRightToLeftLayoutDirection;
         cell.pendingView.hidden = YES;
         cell.pendingLabel.text = nil;
@@ -315,9 +315,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     switch (indexPath.row) {
         case MyAccountStorage: {
             if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
-                cell.storageLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
-                cell.transferLabel.text = AMLocalizedString(@"Transfer", nil);
+                cell.sectionLabel.text = NSLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+                cell.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+                cell.transferLabel.text = NSLocalizedString(@"Transfer", nil);
                 MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
                 if (accountDetails) {
                     NSString *storageUsedString =  [NSString mnz_formatStringFromByteCountFormatter:[Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue]];
@@ -333,7 +333,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                 cell.transferLabel.textColor = cell.transferUsedLabel.textColor = UIColor.systemGreenColor;
             } else {
                 cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
-                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+                cell.sectionLabel.text = NSLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
                 
                 if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
                     MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
@@ -347,7 +347,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         }
             
         case MyAccountNotifications: {
-            cell.sectionLabel.text = AMLocalizedString(@"notifications", nil);
+            cell.sectionLabel.text = NSLocalizedString(@"notifications", nil);
             cell.iconImageView.image = [UIImage imageNamed:@"icon-notifications"].imageFlippedForRightToLeftLayoutDirection;
             NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
             if (unseenUserAlerts == 0) {
@@ -365,7 +365,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         }
             
         case MyAccountContacts: {
-            cell.sectionLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section");
+            cell.sectionLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section");
             cell.iconImageView.image = [UIImage imageNamed:@"icon-contacts"].imageFlippedForRightToLeftLayoutDirection;
             MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
             NSUInteger incomingContacts = incomingContactsLists.size.unsignedIntegerValue;
@@ -384,7 +384,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         }
             
         case MyAccountAchievements: {
-            cell.sectionLabel.text = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
+            cell.sectionLabel.text = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
             cell.iconImageView.image = [UIImage imageNamed:@"icon-achievements"].imageFlippedForRightToLeftLayoutDirection;
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
@@ -392,7 +392,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         }
             
         case MyAccountTransfers: {
-            cell.sectionLabel.text = AMLocalizedString(@"transfers", @"Title of the Transfers section");
+            cell.sectionLabel.text = NSLocalizedString(@"transfers", @"Title of the Transfers section");
             cell.iconImageView.image = [UIImage imageNamed:@"icon-transfers"].imageFlippedForRightToLeftLayoutDirection;
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
@@ -400,7 +400,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         }
 
         case MyAccountOffline: {
-            cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
+            cell.sectionLabel.text = NSLocalizedString(@"offline", @"Title of the Offline section");
             cell.iconImageView.image = [UIImage imageNamed:@"icon-offline"].imageFlippedForRightToLeftLayoutDirection;
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;

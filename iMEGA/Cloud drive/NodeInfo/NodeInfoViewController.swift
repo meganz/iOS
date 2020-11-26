@@ -67,8 +67,8 @@ class NodeInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = AMLocalizedString("info", "A button label. The button allows the user to get more info of the current context.")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close", "A button label. The button allows the user to close the conversation."), style: .plain, target: self, action: #selector(closeButtonTapped))
+        title = NSLocalizedString("info", comment: "A button label. The button allows the user to get more info of the current context.")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: "A button label. The button allows the user to close the conversation."), style: .plain, target: self, action: #selector(closeButtonTapped))
         
         MEGASdkManager.sharedMEGASdk().add(self)
     }
@@ -114,10 +114,10 @@ class NodeInfoViewController: UIViewController {
     
     private func reloadOrShowWarningAfterActionOnNode() {
         guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle) else {
-            let alertTitle = node.isFolder() ? AMLocalizedString("youNoLongerHaveAccessToThisFolder_alertTitle", "Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString("youNoLongerHaveAccessToThisFile_alertTitle", "Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be")
+            let alertTitle = node.isFolder() ? NSLocalizedString("youNoLongerHaveAccessToThisFolder_alertTitle", comment: "Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : NSLocalizedString("youNoLongerHaveAccessToThisFile_alertTitle", comment: "Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be")
             
             let warningAlertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
-            warningAlertController.addAction(UIAlertAction(title: AMLocalizedString("ok", "Button title to accept something"), style: .default, handler: { _ in
+            warningAlertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: "Button title to accept something"), style: .default, handler: { _ in
                 self.navigationController?.popViewController(animated: true)
             }))
             present(warningAlertController, animated: true, completion: nil)
@@ -196,10 +196,10 @@ class NodeInfoViewController: UIViewController {
             return
         }
         
-        let removePendingShareAlertController = UIAlertController(title: AMLocalizedString("removeUserTitle", "Alert title shown when you want to remove one or more contacts"), message: email, preferredStyle: .alert)
+        let removePendingShareAlertController = UIAlertController(title: NSLocalizedString("removeUserTitle", comment: "Alert title shown when you want to remove one or more contacts"), message: email, preferredStyle: .alert)
         
-        removePendingShareAlertController.addAction(UIAlertAction(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .cancel, handler: nil))
-        removePendingShareAlertController.addAction(UIAlertAction(title: AMLocalizedString("ok", nil), style: .default, handler: { _ in
+        removePendingShareAlertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: nil))
+        removePendingShareAlertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: { _ in
             MEGASdkManager.sharedMEGASdk().share(self.node, withEmail: email, level: MEGAShareType.accessUnknown.rawValue, delegate: MEGAShareRequestDelegate.init(toChangePermissionsWithNumberOfRequests: 1, completion: {
                 
                 guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: self.node.handle) else {
@@ -226,21 +226,21 @@ class NodeInfoViewController: UIViewController {
         }
         var actions = [ActionSheetAction]()
 
-        actions.append(ActionSheetAction(title: AMLocalizedString("fullAccess", "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
+        actions.append(ActionSheetAction(title: NSLocalizedString("fullAccess", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
             self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
         })
-        actions.append(ActionSheetAction(title: AMLocalizedString("readAndWrite", "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
+        actions.append(ActionSheetAction(title: NSLocalizedString("readAndWrite", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
             self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
         })
-        actions.append(ActionSheetAction(title: AMLocalizedString("readOnly", "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
+        actions.append(ActionSheetAction(title: NSLocalizedString("readOnly", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
             self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
         })
         
-        actions.append(ActionSheetAction(title: AMLocalizedString("remove", "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
+        actions.append(ActionSheetAction(title: NSLocalizedString("remove", comment: "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
-        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: AMLocalizedString("permissions", "Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder"), dismissCompletion: nil, sender: cell.permissionsImageView)
+        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: NSLocalizedString("permissions", comment: "Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder"), dismissCompletion: nil, sender: cell.permissionsImageView)
         
         present(permissionsActionSheet, animated: true, completion: nil)
     }
@@ -379,7 +379,7 @@ class NodeInfoViewController: UIViewController {
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
         cell.avatarImageView.image = UIImage(named: "inviteToChat")
-        cell.nameLabel.text = AMLocalizedString("addContact", "Alert title shown when you select to add a contact inserting his/her email ")
+        cell.nameLabel.text = NSLocalizedString("addContact", comment: "Alert title shown when you select to add a contact inserting his/her email ")
         cell.shareLabel.isHidden = true
         
         return cell
@@ -434,7 +434,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get RemoveLabel")
         }
 
-        removeLabel.text = AMLocalizedString("Remove Share", "The text in the button to remove all contacts to a shared folder on one click")
+        removeLabel.text = NSLocalizedString("Remove Share", comment: "The text in the button to remove all contacts to a shared folder on one click")
         
         return cell
     }
@@ -533,15 +533,15 @@ extension NodeInfoViewController: UITableViewDelegate {
         
         switch sections()[section] {
         case .details:
-            header.titleLabel.text = AMLocalizedString("DETAILS", "Text used for a title or header listing the details of something.")
+            header.titleLabel.text = NSLocalizedString("DETAILS", comment: "Text used for a title or header listing the details of something.")
         case .link:
-            header.titleLabel.text = AMLocalizedString("LINK", "Text used as title or header for reference an url, for instance, a node link.")
+            header.titleLabel.text = NSLocalizedString("LINK", comment: "Text used as title or header for reference an url, for instance, a node link.")
         case .versions:
-            header.titleLabel.text = AMLocalizedString("VERSIONS", "Text used as title or header to display number of all historical versions of files.")
+            header.titleLabel.text = NSLocalizedString("VERSIONS", comment: "Text used as title or header to display number of all historical versions of files.")
         case .sharing:
-            header.titleLabel.text = AMLocalizedString("SHARE WITH", "Text used for a title or header to list users whom you are sharing something.")
+            header.titleLabel.text = NSLocalizedString("SHARE WITH", comment: "Text used for a title or header to list users whom you are sharing something.")
         case .pendingSharing:
-            header.titleLabel.text = AMLocalizedString("PENDING", "Text used for a title or header to list pending users whom you are sharing something.")
+            header.titleLabel.text = NSLocalizedString("PENDING", comment: "Text used for a title or header to list pending users whom you are sharing something.")
         case .removeSharing, .info:
             header.titleLabel.text = ""
         }

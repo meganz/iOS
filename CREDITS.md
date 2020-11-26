@@ -3,17 +3,6 @@
 Here is the list of the external libraries used by the iOS Client.
 We thank them all for their contributions:
 
-#### AMLocalizedString
-https://github.com/tagyro/AMLocalizedString
-
-Copyright (c) 2010-2015 Juan Albero Sanchis
-
-######  License: 
-
-https://github.com/tagyro/AMLocalizedString/blob/master/LICENSE
-
---------------------------------------------------------------------
-
 #### DateTools
 https://github.com/MatthewYork/DateTools
 

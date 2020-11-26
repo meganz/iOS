@@ -79,29 +79,29 @@
 
 + (void)alertAudioPermissionForIncomingCall:(BOOL)incomingCall {
     if (incomingCall) {
-        [self alertPermissionWithTitle:AMLocalizedString(@"Incoming call", nil) message:AMLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
+        [self alertPermissionWithTitle:NSLocalizedString(@"Incoming call", nil) message:NSLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
     } else {
-        [self alertPermissionWithMessage:AMLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
+        [self alertPermissionWithMessage:NSLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
     }
 }
 
 + (void)alertVideoPermissionWithCompletionHandler:(void (^)(void))handler {
-    [self alertPermissionWithMessage:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") completionHandler:handler];
+    [self alertPermissionWithMessage:NSLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") completionHandler:handler];
 }
 
 + (void)alertPhotosPermission {
-    [self alertPermissionWithMessage:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") completionHandler:nil];
+    [self alertPermissionWithMessage:NSLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") completionHandler:nil];
 }
 
 + (void)alertPermissionWithMessage:(NSString *)message completionHandler:(void (^)(void))handler {
-    [self alertPermissionWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:message completionHandler:handler];
+    [self alertPermissionWithTitle:NSLocalizedString(@"attention", @"Alert title to attract attention") message:message completionHandler:handler];
 }
 
 + (void)alertPermissionWithTitle:(NSString *)title message:(NSString *)message completionHandler:(void (^)(void))handler {
     UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil]];
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil]];
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (handler) {
             handler();
         }
@@ -120,10 +120,10 @@
     __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"groupChat"];
-    permissionsModal.viewTitle = incomingCall ? AMLocalizedString(@"Incoming call", nil) : AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
-    permissionsModal.detail = AMLocalizedString(@"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", @"Detailed explanation of why the user should give permission to access to the camera and the microphone");
-    permissionsModal.firstButtonTitle = AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
-    permissionsModal.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
+    permissionsModal.viewTitle = incomingCall ? NSLocalizedString(@"Incoming call", nil) : NSLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
+    permissionsModal.detail = NSLocalizedString(@"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", @"Detailed explanation of why the user should give permission to access to the camera and the microphone");
+    permissionsModal.firstButtonTitle = NSLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
+    permissionsModal.dismissButtonTitle = NSLocalizedString(@"notNow", nil);
     
     permissionsModal.firstCompletion = ^{
         [weakPermissionsModal dismissViewControllerAnimated:YES completion:^{
@@ -139,9 +139,9 @@
     __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"micAndCamPermission"];
-    permissionsModal.viewTitle = AMLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
-    permissionsModal.detail = AMLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
-    permissionsModal.firstButtonTitle = AMLocalizedString(@"continue", @"'Next' button in a dialog");
+    permissionsModal.viewTitle = NSLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
+    permissionsModal.detail = NSLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
+    permissionsModal.firstButtonTitle = NSLocalizedString(@"continue", @"'Next' button in a dialog");
     
     permissionsModal.firstCompletion = ^{
         [self notificationsPermissionWithCompletionHandler:^(BOOL granted) {

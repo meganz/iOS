@@ -41,7 +41,7 @@ class AudioRecordingInputBar: UIView {
         
         addGestureRecognizer(trashedTapGesture)
                 
-        suggestionLabel.text = AMLocalizedString("Drag left to cancel, release to send", "Action suggestion text to the user in voice recording view")
+        suggestionLabel.text = NSLocalizedString("Drag left to cancel, release to send", comment: "Action suggestion text to the user in voice recording view")
         audioWavesView = AudioWavesView.instanceFromNib
         audioWavesholderView.addSubview(audioWavesView)
         audioWavesView.autoPinEdgesToSuperviewEdges()

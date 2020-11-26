@@ -3,12 +3,12 @@
 struct VideoExplorerViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {
-        return AMLocalizedString("Videos","Title for video explorer view")
+        return NSLocalizedString("Videos", comment: "Title for video explorer view")
     }
     
     var emptyStateViewModel: EmptyStateViewModel {
         return EmptyStateViewModel(image: UIImage(named: "videoEmptyState")!,
-                                   title: AMLocalizedString("No videos found", "Video Explorer Screen: No audio files in the account"))
+                                   title: NSLocalizedString("No videos found", comment: "Video Explorer Screen: No audio files in the account"))
     }
     
     var listSourceType: FilesExplorerListSourceProtocol.Type {

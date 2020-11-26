@@ -34,7 +34,7 @@ final class OverDiskQuotaViewController: UIViewController {
         // MARK: - Exposed Methods
 
         var titleMessage: String {
-            AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
+            NSLocalizedString("Your Data is at Risk!", comment: "Warning title message tells user data in danger.")
         }
 
         func overDiskQuotaMessage(with traitCollection: UITraitCollection) -> NSAttributedString {
@@ -71,14 +71,14 @@ final class OverDiskQuotaViewController: UIViewController {
             let daysLeft = daysDistance(from: Date(), endDate: deadline)
             switch daysLeft {
             case 0..<1: return
-                AMLocalizedString(
+                NSLocalizedString(
                     "<body><warn>You must act immediately to save your data.</warn><body>",
-                    "<body><warn>You must act immediately to save your data.</warn><body>"
+                    comment: "<body><warn>You must act immediately to save your data.</warn><body>"
                 )
             default:
-                let warningTitleMessage = AMLocalizedString(
+                let warningTitleMessage = NSLocalizedString(
                     "<body>You have <warn>%@</warn> left to upgrade.</body>",
-                    "Warning message to tell user time left to upgrade subscription."
+                    comment: "Warning message to tell user time left to upgrade subscription."
                 )
                 let formattedTitleMessage = String(format: warningTitleMessage,
                                                    daysLeftLocalized(from: Date(), to: deadline))
@@ -92,7 +92,7 @@ final class OverDiskQuotaViewController: UIViewController {
         }
 
         private func suggestingMEGAPlan(from overDiskQuotaData: OverDiskQuotaInternal, withPlanName plan: String) -> String {
-            let localisedWarning = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>")
+            let localisedWarning = NSLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>", comment: "")
             return String(format: localisedWarning,
                           overDiskQuotaData.email,
                           overDiskQuotaData.formattedWarningDates(with: dateFormatter),
@@ -102,7 +102,7 @@ final class OverDiskQuotaViewController: UIViewController {
         }
 
         private func suggestingContactSupport(from overDiskQuotaData: OverDiskQuotaInternal) -> String {
-            let localisedWarning = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>")
+            let localisedWarning = NSLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>", comment: "")
             return String(format: localisedWarning,
                           overDiskQuotaData.email,
                           overDiskQuotaData.formattedWarningDates(with: dateFormatter),
@@ -194,13 +194,13 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
-        storageFullLabel.text = AMLocalizedString("Storage Full", "Screen title")
+        storageFullLabel.text = NSLocalizedString("Storage Full", comment: "Screen title")
         let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
         alwyasBrightTextStyle(storageFullLabel)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
-        titleLabel.text = AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
+        titleLabel.text = NSLocalizedString("Your Data is at Risk!", comment: "Warning title message tells user data in danger.")
         let style = traitCollection.styler(of: .headline)
         style(titleLabel)
     }
@@ -212,14 +212,14 @@ final class OverDiskQuotaViewController: UIViewController {
     private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
         let style = trait.styler(of: .primary)
         style(button)
-        button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
+        button.setTitle(NSLocalizedString("upgrade", comment: "Upgrade"), for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
         let style = trait.styler(of: .secondary)
         style(button)
-        button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
+        button.setTitle(NSLocalizedString("dismiss", comment: "Dismiss"), for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
 
