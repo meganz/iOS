@@ -1,8 +1,15 @@
 
 class FilesExplorerContainerViewController: UIViewController {
     //MARK:- Private variables
+    
+    enum ViewPreference {
+        case list
+        case grid
+        case both
+    }
 
     private let viewModel: FilesExplorerViewModel
+    private let viewPreference: ViewPreference
     
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
@@ -27,10 +34,11 @@ class FilesExplorerContainerViewController: UIViewController {
     
     //MARK:-
     
-    init(viewModel: FilesExplorerViewModel) {
+    init(viewModel: FilesExplorerViewModel, viewPreference: ViewPreference) {
         self.viewModel = viewModel
+        self.viewPreference = viewPreference
         super.init(nibName: nil, bundle: nil)
-        if UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue {
+        if UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue, viewPreference != .list {
             currentState = states[FilesExplorerContainerGridViewState.identifier]!
         } else {
             currentState = states[FilesExplorerContainerListViewState.identifier]!
@@ -158,13 +166,24 @@ class FilesExplorerContainerViewController: UIViewController {
             self?.currentState.setEditingMode()
         }
         
-        let actionSheetVC = ActionSheetViewController(
-            actions: [viewPreferenceAction, sortPreferenceAction, selectAction],
-            headerTitle: nil,
-            dismissCompletion: nil,
-            sender: sender
-        )
-
+        let actionSheetVC: ActionSheetViewController
+        
+        if viewPreference == .list {
+            actionSheetVC = ActionSheetViewController(
+                actions: [sortPreferenceAction],
+                headerTitle: nil,
+                dismissCompletion: nil,
+                sender: sender
+            )
+        } else {
+            actionSheetVC = ActionSheetViewController(
+                actions: [viewPreferenceAction, sortPreferenceAction, selectAction],
+                headerTitle: nil,
+                dismissCompletion: nil,
+                sender: sender
+            )
+        }
+        
         present(actionSheetVC, animated: true)
     }
     
