@@ -144,7 +144,7 @@ extension DocAndAudioListSource {
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
 
-            var actions = [shareAction, rubbishBinAction]
+            var actions = [rubbishBinAction, shareAction]
             
             if let base64Handle = node.base64Handle,
                Helper.downloadingNodes()[base64Handle] == nil {
