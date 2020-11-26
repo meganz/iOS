@@ -7,12 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Helper : NSObject
 
-#pragma mark - Languages
-
-+ (NSArray *)languagesSupportedIDs;
-+ (BOOL)isLanguageSupported:(NSString *)languageID;
-+ (NSString *)languageID:(NSUInteger)index;
-
 #pragma mark - Images
 
 + (NSDictionary *)fileTypesDictionary;

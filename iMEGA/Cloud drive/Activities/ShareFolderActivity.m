@@ -25,10 +25,10 @@
 
 - (NSString *)activityTitle {
     if ([self.nodes count] > 1) {
-        return AMLocalizedString(@"shareFolders", nil);
+        return NSLocalizedString(@"shareFolders", nil);
     }
     
-    return AMLocalizedString(@"shareFolder", nil);
+    return NSLocalizedString(@"shareFolder", nil);
 }
 
 - (UIImage *)activityImage {

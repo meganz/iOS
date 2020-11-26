@@ -88,14 +88,14 @@ extension CloudDriveViewController {
     }
     
     private func promptCameraUploadFolderDeletion(deleteHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        let alert = UIAlertController(title: AMLocalizedString("moveToTheRubbishBin"),
-                                      message: AMLocalizedString("Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."),
+        let alert = UIAlertController(title: NSLocalizedString("moveToTheRubbishBin", comment: ""),
+                                      message: NSLocalizedString("Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads.", comment: ""),
                                       preferredStyle: .alert)
-        alert.addAction(.init(title: AMLocalizedString("cancel"), style: .cancel) { _ in
+        alert.addAction(.init(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { _ in
             cancelHandler?()
         })
         
-        alert.addAction(.init(title: AMLocalizedString("ok"), style: .default) { _ in
+        alert.addAction(.init(title: NSLocalizedString("ok", comment: ""), style: .default) { _ in
             deleteHandler()
         })
         

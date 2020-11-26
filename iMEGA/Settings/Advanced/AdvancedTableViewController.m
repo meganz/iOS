@@ -45,9 +45,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"advanced", nil)];
+    [self.navigationItem setTitle:NSLocalizedString(@"advanced", nil)];
     
-     self.cancelAccountLabel.text = AMLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
+     self.cancelAccountLabel.text = NSLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
     
     [self checkAuthorizationStatus];
     
@@ -62,11 +62,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.dontUseHttpLabel setText:AMLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
-    self.savePhotosLabel.text = AMLocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
-    self.saveVideosLabel.text = AMLocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
-    self.saveMediaInGalleryLabel.text = AMLocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
-    self.spotlightLabel.text = AMLocalizedString(@"Spotlight Search", @"Settings section title where you can enable the option to 'Spotlight search'");
+    [self.dontUseHttpLabel setText:NSLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
+    self.savePhotosLabel.text = NSLocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
+    self.saveVideosLabel.text = NSLocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
+    self.saveMediaInGalleryLabel.text = NSLocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
+    self.spotlightLabel.text = NSLocalizedString(@"Spotlight Search", @"Settings section title where you can enable the option to 'Spotlight search'");
     BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
     
@@ -136,8 +136,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"processStarted" object:nil];
     
     AwaitingEmailConfirmationView *awaitingEmailConfirmationView = [[[NSBundle mainBundle] loadNibNamed:@"AwaitingEmailConfirmationView" owner:self options: nil] firstObject];
-    awaitingEmailConfirmationView.titleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-    awaitingEmailConfirmationView.descriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
+    awaitingEmailConfirmationView.titleLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    awaitingEmailConfirmationView.descriptionLabel.text = NSLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
     awaitingEmailConfirmationView.frame = self.view.bounds;
     self.view = awaitingEmailConfirmationView;
 }
@@ -192,19 +192,19 @@
     NSString *titleHeader;
     switch (section) {
         case 0: //Transfers
-            titleHeader = AMLocalizedString(@"transfers", @"Title of the Transfers section");
+            titleHeader = NSLocalizedString(@"transfers", @"Title of the Transfers section");
             break;
             
         case 1: //Downloads Options
-            titleHeader = AMLocalizedString(@"Download options", @"Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible).");
+            titleHeader = NSLocalizedString(@"Download options", @"Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible).");
             break;
             
         case 2: //Camera
-            titleHeader = AMLocalizedString(@"Camera", @"Setting associated with the 'Camera' of the device");
+            titleHeader = NSLocalizedString(@"Camera", @"Setting associated with the 'Camera' of the device");
             break;
       
         case 3:  //Spotlight
-            titleHeader = AMLocalizedString(@"Search", @"Title of the Spotlight Search section");
+            titleHeader = NSLocalizedString(@"Search", @"Title of the Spotlight Search section");
             break;
         
     }
@@ -216,22 +216,22 @@
     NSString *titleFooter;
     switch (section) {
         case 0: { //Transfers
-            titleFooter = AMLocalizedString(@"transfersSectionFooter", @"Footer text that explains when disabling the HTTP protocol for transfers may be useful");
+            titleFooter = NSLocalizedString(@"transfersSectionFooter", @"Footer text that explains when disabling the HTTP protocol for transfers may be useful");
             break;
         }
             
         case 1: { //Download options
-            titleFooter = AMLocalizedString(@"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.", @"Footer text shown under the settings for download options 'Save Images/Videos in Library'");
+            titleFooter = NSLocalizedString(@"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.", @"Footer text shown under the settings for download options 'Save Images/Videos in Library'");
             break;
         }
             
         case 2: { //Camera
-            titleFooter = AMLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Photos'");
+            titleFooter = NSLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Photos'");
             break;
         }
             
         case 3: { //Spotlight
-            titleFooter = AMLocalizedString(@"When enabled, allow search and look up MEGA files/folders in Spotlight Search.", @"Footer text shown under the Spotlight search setting to explain the option 'Spotlight search'");
+            titleFooter = NSLocalizedString(@"When enabled, allow search and look up MEGA files/folders in Spotlight Search.", @"Footer text shown under the Spotlight search setting to explain the option 'Spotlight search'");
             break;
         }
     }
@@ -249,9 +249,9 @@
     switch (indexPath.section) {
         case 4: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     if (self.isTwoFactorAuthenticationEnabled) {
                         TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
                         twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationCancelAccount;

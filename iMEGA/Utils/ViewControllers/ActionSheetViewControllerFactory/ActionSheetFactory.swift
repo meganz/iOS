@@ -125,21 +125,21 @@ private extension NodeLabelColor {
     var localizedTitle: String {
         switch self {
         case .red:
-            return AMLocalizedString("Red", "A user can mark a folder or file with its own colour, in this case “Red”.")
+            return NSLocalizedString("Red", comment: "A user can mark a folder or file with its own colour, in this case “Red”.")
         case .orange:
-            return AMLocalizedString("Orange", "A user can mark a folder or file with its own colour, in this case “Orange”.")
+            return NSLocalizedString("Orange", comment: "A user can mark a folder or file with its own colour, in this case “Orange”.")
         case .yellow:
-            return AMLocalizedString("Yellow", "A user can mark a folder or file with its own colour, in this case “Yellow”.")
+            return NSLocalizedString("Yellow", comment: "A user can mark a folder or file with its own colour, in this case “Yellow”.")
         case .green:
-            return AMLocalizedString("Green", "A user can mark a folder or file with its own colour, in this case “Green”.")
+            return NSLocalizedString("Green", comment: "A user can mark a folder or file with its own colour, in this case “Green”.")
         case .blue:
-            return AMLocalizedString("Blue", "A user can mark a folder or file with its own colour, in this case “Blue”.")
+            return NSLocalizedString("Blue", comment: "A user can mark a folder or file with its own colour, in this case “Blue”.")
         case .purple:
-            return AMLocalizedString("Purple", "A user can mark a folder or file with its own colour, in this case “Purple”.")
+            return NSLocalizedString("Purple", comment: "A user can mark a folder or file with its own colour, in this case “Purple”.")
         case .grey:
-            return AMLocalizedString("Grey", "A user can mark a folder or file with its own colour, in this case “Grey”.")
+            return NSLocalizedString("Grey", comment: "A user can mark a folder or file with its own colour, in this case “Grey”.")
         case .unknown:
-            return AMLocalizedString("Remove Label", "Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label")
+            return NSLocalizedString("Remove Label", comment: "Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label")
         }
     }
 }

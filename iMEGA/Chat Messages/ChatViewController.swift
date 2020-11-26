@@ -221,7 +221,7 @@ class ChatViewController: MessagesViewController {
         TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
         
         if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: ""), style: .plain, target: self, action: #selector(dismissChatRoom))
         }
         
         if publicChatWithLinkCreated {
@@ -229,11 +229,11 @@ class ChatViewController: MessagesViewController {
             customModalAlertVC.modalPresentationStyle = .overCurrentContext
             customModalAlertVC.image = UIImage(named: "chatLinkCreation")
             customModalAlertVC.viewTitle = chatRoom.title
-            customModalAlertVC.detail = AMLocalizedString("People can join your group by using this link.", "Text explaining users how the chat links work.")
-            customModalAlertVC.firstButtonTitle = AMLocalizedString("share", "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected")
+            customModalAlertVC.detail = NSLocalizedString("People can join your group by using this link.", comment: "Text explaining users how the chat links work.")
+            customModalAlertVC.firstButtonTitle = NSLocalizedString("share", comment: "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected")
             customModalAlertVC.link = publicChatLink?.absoluteString
-            customModalAlertVC.secondButtonTitle = AMLocalizedString("delete", nil)
-            customModalAlertVC.dismissButtonTitle = AMLocalizedString("dismiss", "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
+            customModalAlertVC.secondButtonTitle = NSLocalizedString("delete", comment: "")
+            customModalAlertVC.dismissButtonTitle = NSLocalizedString("dismiss", comment: "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
             customModalAlertVC.firstCompletion = { [weak customModalAlertVC] in
                 customModalAlertVC?.dismiss(animated: true, completion: {
                     let activityVC = UIActivityViewController(activityItems: [self.publicChatLink?.absoluteString], applicationActivities: nil)
@@ -251,7 +251,7 @@ class ChatViewController: MessagesViewController {
                 customModalAlertVC?.dismiss(animated: true, completion: {
                     MEGASdkManager.sharedMEGAChatSdk()?.removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {
-                            SVProgressHUD.showSuccess(withStatus: AMLocalizedString("linkRemoved", "Message shown when the link to a file or folder has been removed"))
+                            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("linkRemoved", comment: "Message shown when the link to a file or folder has been removed"))
                         }
                     }))
                     
@@ -625,17 +625,17 @@ class ChatViewController: MessagesViewController {
     }
     
     private func configureMenus() {
-        let forwardMenuItem = UIMenuItem(title:AMLocalizedString("forward","Item of a menu to forward a message chat to another chatroom"), action: #selector(MessageCollectionViewCell.forward(_:)))
+        let forwardMenuItem = UIMenuItem(title:NSLocalizedString("forward", comment: "Item of a menu to forward a message chat to another chatroom"), action: #selector(MessageCollectionViewCell.forward(_:)))
         
-        let importMenuItem = UIMenuItem(title:AMLocalizedString("Import to Cloud Drive","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
+        let importMenuItem = UIMenuItem(title:NSLocalizedString("Import to Cloud Drive", comment: "Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
         
-        let editMenuItem = UIMenuItem(title:AMLocalizedString("edit","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
+        let editMenuItem = UIMenuItem(title:NSLocalizedString("edit", comment: "Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
 
-        let downloadMenuItem = UIMenuItem(title:AMLocalizedString("saveForOffline","Caption of a button to download the files that are selected"), action: #selector(MessageCollectionViewCell.download(_:)))
+        let downloadMenuItem = UIMenuItem(title:NSLocalizedString("saveForOffline", comment: "Caption of a button to download the files that are selected"), action: #selector(MessageCollectionViewCell.download(_:)))
 
-        let addContactMenuItem = UIMenuItem(title:AMLocalizedString("addContact","Alert title shown when you select to add a contact inserting his/her email"), action: #selector(MessageCollectionViewCell.addContact(_:)))
+        let addContactMenuItem = UIMenuItem(title:NSLocalizedString("addContact", comment: "Alert title shown when you select to add a contact inserting his/her email"), action: #selector(MessageCollectionViewCell.addContact(_:)))
 
-        let removeRichLinkMenuItem = UIMenuItem(title:AMLocalizedString("removePreview","Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
+        let removeRichLinkMenuItem = UIMenuItem(title:NSLocalizedString("removePreview", comment: "Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
 
         
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
@@ -825,11 +825,11 @@ class ChatViewController: MessagesViewController {
     
     func checkTransferPauseStatus() {
         if UserDefaults.standard.bool(forKey: "TransfersPaused") {
-            let alertController = UIAlertController(title: AMLocalizedString("Resume Transfers?"), message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("Resume Transfers?", comment: ""), message: nil, preferredStyle: .alert)
             
-            let cancel = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel)
+            let cancel = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel)
             
-            let action2 = UIAlertAction(title: AMLocalizedString("resume"), style: .default) { (action:UIAlertAction) in
+            let action2 = UIAlertAction(title: NSLocalizedString("resume", comment: ""), style: .default) { (action:UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk().pauseTransfers(false)
                 UserDefaults.standard.set(false, forKey: "TransfersPaused")
             }
@@ -967,7 +967,7 @@ class ChatViewController: MessagesViewController {
         
         if chatRoom.isGroup {
             guard chatRoom.peerCount + 1 <= 20 else {
-                SVProgressHUD.showError(withStatus: AMLocalizedString("Unable to start a call because the participants limit was exceeded.", "Error shown when trying to start a call in a group with more peers than allowed"))
+                SVProgressHUD.showError(withStatus: NSLocalizedString("Unable to start a call because the participants limit was exceeded.", comment: "Error shown when trying to start a call in a group with more peers than allowed"))
                 return
             }
             

@@ -49,7 +49,7 @@ enum SortOrderType {
             key = ""
         }
         
-        return AMLocalizedString(key)
+        return NSLocalizedString(key, comment: "")
     }
     
     var image: UIImage? {

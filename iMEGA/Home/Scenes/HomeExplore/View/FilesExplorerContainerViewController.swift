@@ -71,7 +71,7 @@ class FilesExplorerContainerViewController: UIViewController {
     
     func showCancelRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: AMLocalizedString("cancel"),
+            title: NSLocalizedString("cancel", comment: ""),
             style: .plain,
             target: self,
             action: #selector(cancelButtonPressed(_:)))
@@ -142,14 +142,14 @@ class FilesExplorerContainerViewController: UIViewController {
     
     func showPreferences(withViewPreferenceAction viewPreferenceAction: ActionSheetAction, sender: UIBarButtonItem) {
         let sortPreferenceAction = ActionSheetAction(
-            title: AMLocalizedString("sortTitle", "Section title of the 'Sort by'"),
+            title: NSLocalizedString("sortTitle", comment: "Section title of the 'Sort by'"),
             detail: NSString.localizedSortOrderType(Helper.sortType(for: nil)),
             image: UIImage(named: "sort"), style: .default) { [weak self] in
             self?.showSortOptions(sender: sender)
         }
         
         let selectAction = ActionSheetAction(
-            title: AMLocalizedString("select", "Button that allows you to select a given folder") ,
+            title: NSLocalizedString("select", comment: "Button that allows you to select a given folder") ,
             detail: nil,
             image: UIImage(named: "select"),
             style: .default) { [weak self] in

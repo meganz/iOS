@@ -65,9 +65,9 @@
     [self configureNavigation];
     [self updateAppearance];
     
-    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
     
-    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -207,7 +207,7 @@
 - (void)presentWebCodeViewController {
     WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
     
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
@@ -239,7 +239,7 @@
 }
 
 - (void)download {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
     if (self.isLink && self.fileLink) {
         [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
     } else {
@@ -255,7 +255,7 @@
 
 - (void)createOpenZipButton {
     UIButton *openZipButton = [UIButton newAutoLayoutView];
-    [openZipButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [openZipButton setTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
     [openZipButton mnz_setupBasic:self.traitCollection];
     [self.view addSubview:openZipButton];
     [openZipButton autoSetDimension:ALDimensionWidth toSize:300];

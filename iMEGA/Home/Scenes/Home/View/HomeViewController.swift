@@ -478,7 +478,7 @@ extension HomeViewController: RecentNodeActionDelegate {
             case .download:
                 SVProgressHUD.show(
                     UIImage(named: "hudDownload")!,
-                    status: AMLocalizedString("downloadStarted", "Message shown when a download starts")
+                    status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
                 )
                 node.mnz_downloadNodeOverwriting(true)
 

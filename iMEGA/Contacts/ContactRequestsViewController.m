@@ -52,10 +52,10 @@ typedef NS_ENUM(NSInteger, Segment) {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
+    [self.navigationItem setTitle:NSLocalizedString(@"contactRequests", @"Contact requests")];
     
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:SegmentReceived];
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", @"Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out.") forSegmentAtIndex:SegmentSent];
+    [self.contactRequestsSegmentedControl setTitle:NSLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:SegmentReceived];
+    [self.contactRequestsSegmentedControl setTitle:NSLocalizedString(@"sent", @"Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out.") forSegmentAtIndex:SegmentSent];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -245,7 +245,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     cell.declineButton.tag = indexPath.row;
     [cell.declineButton addTarget:self action:@selector(declineOrDeleteTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
-    NSString *pendingString = [[@" (" stringByAppendingString:AMLocalizedString(@"pending", nil)] stringByAppendingString:@")"];
+    NSString *pendingString = [[@" (" stringByAppendingString:NSLocalizedString(@"pending", nil)] stringByAppendingString:@")"];
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
         case SegmentReceived: {
             [cell.acceptButton setHidden:NO];
@@ -304,9 +304,9 @@ typedef NS_ENUM(NSInteger, Segment) {
 - (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"noRequestPending", nil);
+        text = NSLocalizedString(@"noRequestPending", nil);
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return text;
@@ -315,7 +315,7 @@ typedef NS_ENUM(NSInteger, Segment) {
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -332,7 +332,7 @@ typedef NS_ENUM(NSInteger, Segment) {
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;
@@ -356,7 +356,7 @@ typedef NS_ENUM(NSInteger, Segment) {
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeInviteContact) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
         }
         self.performingRequest = NO;
         return;
@@ -383,7 +383,7 @@ typedef NS_ENUM(NSInteger, Segment) {
         case MEGARequestTypeInviteContact:
             switch (request.number.integerValue) {                    
                 case 1:
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"requestCancelled", nil)];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"requestCancelled", nil)];
                     break;
                     
                 default:
@@ -395,11 +395,11 @@ typedef NS_ENUM(NSInteger, Segment) {
         case MEGARequestTypeReplyContactRequest:
             switch (request.number.integerValue) {
                 case 0:
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestAccepted", nil)];
+                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"requestAccepted", nil)];
                     break;
                     
                 case 1:
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"requestDeleted", nil)];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"requestDeleted", nil)];
                     break;
                     
                 default:

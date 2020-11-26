@@ -39,7 +39,7 @@ static MEGALogger *_megaLogger = nil;
     
     NSString *version = [NSString stringWithFormat:@"%@ (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-    NSArray *languageArray = [NSLocale preferredLanguages];
+    NSArray *languageArray = NSBundle.mainBundle.preferredLocalizations;
     NSString *language = [NSLocale.currentLocale displayNameForKey:NSLocaleIdentifier value:languageArray.firstObject];
     
     MEGALogInfo(@"Device information:\nVersion: %@\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@", version, [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name);

@@ -53,22 +53,22 @@
     
     NSString *title;
     if (numberOfPhotos == 0) {
-        NSString *tempString = AMLocalizedString(@"%2 Videos", @"Multiple videos title shown in recents section of web client.");
+        NSString *tempString = NSLocalizedString(@"%2 Videos", @"Multiple videos title shown in recents section of web client.");
         title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
     } else if (numberOfVideos == 0) {
-        NSString *tempString = AMLocalizedString(@"%1 Images", @"Multiple Images title shown in recents section of webclient");
+        NSString *tempString = NSLocalizedString(@"%1 Images", @"Multiple Images title shown in recents section of webclient");
         title = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
     } else {
         if ((numberOfPhotos == 1) && (numberOfVideos == 1)) {
-            title = AMLocalizedString(@"1 Image and 1 Video", @"A single image and single video title shown in recents section of webclient.");
+            title = NSLocalizedString(@"1 Image and 1 Video", @"A single image and single video title shown in recents section of webclient.");
         } else if (numberOfPhotos == 1) {
-            NSString *tempString = AMLocalizedString(@"1 Image and %2 Videos", @"One image and multiple videos title in recents.");
+            NSString *tempString = NSLocalizedString(@"1 Image and %2 Videos", @"One image and multiple videos title in recents.");
             title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
         } else if (numberOfVideos == 1) {
-            NSString *tempString = AMLocalizedString(@"%1 Images and 1 Video", @"Multiple images and 1 video");
+            NSString *tempString = NSLocalizedString(@"%1 Images and 1 Video", @"Multiple images and 1 video");
             title = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
         } else {
-            NSString *tempString = AMLocalizedString(@"%1 Images and %2 Videos", @"Title for multiple images and multiple videos in recents section");
+            NSString *tempString = NSLocalizedString(@"%1 Images and %2 Videos", @"Title for multiple images and multiple videos in recents section");
             tempString = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
             title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
         }

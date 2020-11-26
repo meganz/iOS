@@ -35,11 +35,11 @@
     [super viewDidLoad];
     
     if (!CLLocationManager.locationServicesEnabled || CLLocationManager.authorizationStatus == kCLAuthorizationStatusDenied || CLLocationManager.authorizationStatus == kCLAuthorizationStatusRestricted) {
-        NSString *message = [[AMLocalizedString(@"NSLocationAlwaysAndWhenInUseUsageDescription", @"Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed.") stringByAppendingString:@"\n\n"] stringByAppendingString:AMLocalizedString(@"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.", @"Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA")];
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Please allow access", @"Title of a dialog in which we request access to a specific permission, like the Location Services") message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *notNow = [UIAlertAction actionWithTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil];
+        NSString *message = [[NSLocalizedString(@"NSLocationAlwaysAndWhenInUseUsageDescription", @"Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed.") stringByAppendingString:@"\n\n"] stringByAppendingString:NSLocalizedString(@"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.", @"Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA")];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Please allow access", @"Title of a dialog in which we request access to a specific permission, like the Location Services") message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *notNow = [UIAlertAction actionWithTitle:NSLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:notNow];
-        UIAlertAction *settings = [UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *settings = [UIAlertAction actionWithTitle:NSLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
         }];
         [alertController addAction:settings];
@@ -66,7 +66,7 @@
     gesture.numberOfTapsRequired = 1;
     [self.sendLocationView addGestureRecognizer:gesture];
     
-    self.sendLocationLabel.text = AMLocalizedString(@"Send This Location", @"Title of the button to share a location in a chat.");
+    self.sendLocationLabel.text = NSLocalizedString(@"Send This Location", @"Title of the button to share a location in a chat.");
     
     UIView *separatorBetweenButtonsLayer = [UIView.alloc initWithFrame:CGRectMake(0, self.mapOptionsView.frame.size.height / 2, self.mapOptionsView.frame.size.width, 0.5)];
     separatorBetweenButtonsLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
@@ -94,7 +94,7 @@
         [self.view addSubview:self.searchController.searchBar];
     }
     
-    self.navigationItem.title = AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
+    self.navigationItem.title = NSLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
     [self updateAppearance];
 }
 
@@ -186,24 +186,24 @@
 #pragma mark - IBAction
 
 - (IBAction)infoButtonTouchUpInside:(UIButton *)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Map settings", @"Title of the alert that allows change between different maps: Standar, Satellite or Hybrid.") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Map settings", @"Title of the alert that allows change between different maps: Standar, Satellite or Hybrid.") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     if (self.mapView.mapType != MKMapTypeStandard) {
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeStandard;
         }]];
     }
     if (self.mapView.mapType != MKMapTypeSatellite) {
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Satellite", @"Satellite") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Satellite", @"Satellite") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeSatellite;
         }]];
     }
     if (self.mapView.mapType != MKMapTypeHybrid) {
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Hybrid", @"Hybrid") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Hybrid", @"Hybrid") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeHybrid;
         }]];
     }
     
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         alertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -268,7 +268,7 @@
             CLPlacemark *placemark = placemarks.firstObject;
             self.subtitleLabel.text = placemark.name;
         } else {
-            self.subtitleLabel.text = [NSString stringWithFormat:AMLocalizedString(@"Accurate to %d meters", @"Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location."), (int)location.horizontalAccuracy];
+            self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Accurate to %d meters", @"Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location."), (int)location.horizontalAccuracy];
         }
     }];
 }

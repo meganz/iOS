@@ -63,11 +63,11 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.segmentedControl setTitle:AMLocalizedString(@"My QR code", @"Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible).") forSegmentAtIndex:0];
-    [self.segmentedControl setTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") forSegmentAtIndex:1];
-    [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
+    [self.segmentedControl setTitle:NSLocalizedString(@"My QR code", @"Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible).") forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:NSLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") forSegmentAtIndex:1];
+    [self.linkCopyButton setTitle:NSLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
-    self.hintLabel.text = AMLocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
+    self.hintLabel.text = NSLocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
     
     if ([UIDevice currentDevice].iPhone4X) {
         self.contactLinkConstraint.constant = 70.0f;
@@ -246,15 +246,15 @@ typedef NS_ENUM(NSInteger, QRSection) {
 
 - (IBAction)linkCopyButtonTapped:(UIButton *)sender {
     [UIPasteboard generalPasteboard].string = self.contactLinkLabel.text;
-    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
+    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
 }
 
 - (IBAction)moreButtonTapped:(UIButton *)sender {
     UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [moreAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     if (self.contactLinkLabel.text.length>0) {
-        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"share", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"share", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
             [activityVC.popoverPresentationController setSourceView:self.view];
             [activityVC.popoverPresentationController setSourceRect:sender.frame];
@@ -264,13 +264,13 @@ typedef NS_ENUM(NSInteger, QRSection) {
         [moreAlertController addAction:shareAlertAction];
     }
     
-    UIAlertAction *settingsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *settingsAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"settingsTitle", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
         [self presentViewController:qrSettingsNC animated:YES completion:nil];
     }];
     [moreAlertController addAction:settingsAlertAction];
     
-    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
         [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self.contactLinkCreateDelegate];
     }];
@@ -411,8 +411,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
-        inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
-        inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.detail = [NSLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
+        inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
@@ -426,17 +426,17 @@ typedef NS_ENUM(NSInteger, QRSection) {
         }
         if (isInOutgoingContactRequest) {
             inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
-            inviteOrDismissModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-            NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            inviteOrDismissModal.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            NSString *detailText = NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
-            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"close", nil);
             inviteOrDismissModal.firstCompletion = dismissCompletion;
         } else {
             inviteOrDismissModal.detail = email;
-            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-            inviteOrDismissModal.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
             inviteOrDismissModal.firstCompletion = firstCompletion;
             inviteOrDismissModal.dismissCompletion = dismissCompletion;
         }
@@ -446,7 +446,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 }
 
 - (void)feedbackWithSuccess:(BOOL)success {
-    NSString *message = success ? AMLocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : AMLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
+    NSString *message = success ? NSLocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : NSLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     UIColor *color = success ? [UIColor greenColor] : [UIColor redColor];
     dispatch_async(dispatch_get_main_queue(), ^{
         self.errorLabel.text = message;

@@ -6,7 +6,6 @@
 
 #import <QuickLook/QuickLook.h>
 
-#import "LocalizationSystem.h"
 #import "LTHPasscodeViewController.h"
 #import "MEGAPushNotificationSettings.h"
 #import "UIImage+GKContact.h"

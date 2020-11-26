@@ -624,8 +624,6 @@
 "securityOptions"="Opcje bezpieczeństwa";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="O Nas";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Język";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Wyślij opinię";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1406,10 +1404,6 @@
 "HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Nieznany błąd";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Po zmianie jezyka, należy zrestartować aplikację MEGA";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Język został zmieniony. Kliknij aby zrestartować.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA zapewnia kontrolowane przez użytkownika szyfrowane przechowywanie w chmurze za pośrednictwem standardowych przeglądarek internetowych wraz z dedykowanymi aplikacjami na urządzenia mobilne. W przeciwieństwie do innych dostawców usług przechowywania w chmurze, twoje dane są szyfrowane i odszyfrowywane tylko przez urządzenia klienckie, a nigdy przez nas.";

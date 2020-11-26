@@ -19,10 +19,10 @@ extension UIAlertController {
     
     private func discardChangesAlert(withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
         let alert = UIAlertController(title: nil, message:nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: AMLocalizedString("Discard Changes", "Text used to notify the user that some action would discard a non ended action"), style: .destructive) { _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Discard Changes", comment: "Text used to notify the user that some action would discard a non ended action"), style: .destructive) { _ in
             action()
         })
-        alert.addAction(UIAlertAction(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel))
         
         return alert
     }

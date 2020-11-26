@@ -48,13 +48,13 @@
             
             switch (error.type) {
                 case MEGAErrorTypeApiEExist: {
-                    NSString *message = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
+                    NSString *message = NSLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                     [SVProgressHUD showErrorWithStatus:message];
                     break;
                 }
                     
                 default: {
-                    NSString *message = [NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)];
+                    NSString *message = [NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)];
                     [SVProgressHUD showErrorWithStatus:message];
                     break;
                 }

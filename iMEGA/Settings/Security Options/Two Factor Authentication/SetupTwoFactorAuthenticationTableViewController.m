@@ -25,9 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
+    self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"");
     
-    self.twoFactorAuthenticationLabel.text = AMLocalizedString(@"twoFactorAuthentication", @"");
+    self.twoFactorAuthenticationLabel.text = NSLocalizedString(@"twoFactorAuthentication", @"");
     
     [self updateAppearance];
 }
@@ -83,7 +83,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return AMLocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
+            return NSLocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
             break;
             
         default:

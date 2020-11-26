@@ -67,11 +67,11 @@ final class VerificationCodeViewController: UIViewController, ViewType {
     
     // MARK: - Config views
     private func configViewContents() {
-        verificationCodeSentToLabel.text = AMLocalizedString("Please type the verification code sent to")
+        verificationCodeSentToLabel.text = NSLocalizedString("Please type the verification code sent to", comment: "")
         errorView.isHidden = true
-        didnotReceiveCodeLabel.text = AMLocalizedString("You didn't receive a code?")
-        resendButton.setTitle(AMLocalizedString("resend"), for: .normal)
-        confirmButton.setTitle(AMLocalizedString("confirm"), for: .normal)
+        didnotReceiveCodeLabel.text = NSLocalizedString("You didn't receive a code?", comment: "")
+        resendButton.setTitle(NSLocalizedString("resend", comment: ""), for: .normal)
+        confirmButton.setTitle(NSLocalizedString("confirm", comment: ""), for: .normal)
         
         resendStackView.isHidden = true
         showResendView()
@@ -155,7 +155,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
     private func checkSMSVerificationCodeSucceeded() {
         errorView.isHidden = true
         updateCodeFieldsAppearance()
-        SVProgressHUD.showInfo(withStatus: AMLocalizedString("Your phone number has been verified successfully"))
+        SVProgressHUD.showInfo(withStatus: NSLocalizedString("Your phone number has been verified successfully", comment: ""))
         setEditing(false, animated: true)
         viewModel.dispatch(.didCheckCodeSucceeded)
     }

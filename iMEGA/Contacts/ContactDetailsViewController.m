@@ -108,9 +108,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     
     [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
-    self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).");
-    self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call");
-    self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");
+    self.messageLabel.text = NSLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).");
+    self.callLabel.text = NSLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call");
+    self.videoLabel.text = NSLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");
         
     self.userNickname = self.user.mnz_nickname;
     
@@ -244,7 +244,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
-    cell.nameLabel.text = AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
+    cell.nameLabel.text = NSLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
     cell.nameLabel.textColor = UIColor.mnz_label;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
@@ -254,7 +254,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
-    cell.nameLabel.text = self.userNickname.length == 0 ? AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") : AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
+    cell.nameLabel.text = self.userNickname.length == 0 ? NSLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") : NSLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
     cell.nameLabel.textColor = UIColor.mnz_label;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -264,9 +264,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForVerifyCredentialsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
-    cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
+    cell.nameLabel.text = NSLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     cell.nameLabel.textColor = UIColor.mnz_label;
-    cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? AMLocalizedString(@"verified", @"Button title") : @"";
+    cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? NSLocalizedString(@"verified", @"Button title") : @"";
     
     return cell;
 }
@@ -276,12 +276,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
         cell.avatarImageView.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
-        cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
+        cell.nameLabel.text = NSLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
         cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else { //Add contact
         cell.avatarImageView.image = [UIImage imageNamed:@"add"];
         cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-        cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
+        cell.nameLabel.text = NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     }
     
     return cell;
@@ -306,7 +306,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForClearChatHistoryWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
-    cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+    cell.nameLabel.text = NSLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
@@ -316,7 +316,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
     cell.avatarImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+    cell.nameLabel.text = self.chatRoom.isArchived ? NSLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : NSLocalizedString(@"archiveChat", @"Title of button to archive chats.");
     cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
@@ -327,7 +327,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"add"];
     cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
+    cell.nameLabel.text = NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
     
     return cell;
@@ -336,7 +336,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForSetPermissionWithIndexPath:(NSIndexPath *)indexPath  {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"readWritePermissions"];
-    cell.nameLabel.text = AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder");
+    cell.nameLabel.text = NSLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder");
     MEGAChatRoomPrivilege privilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
     switch (privilege) {
         case MEGAChatRoomPrivilegeUnknown:
@@ -344,15 +344,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             break;
             
         case MEGAChatRoomPrivilegeRo:
-            cell.permissionsLabel.text = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+            cell.permissionsLabel.text = NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
             break;
             
         case MEGAChatRoomPrivilegeStandard:
-            cell.permissionsLabel.text = AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
+            cell.permissionsLabel.text = NSLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
             break;
             
         case MEGAChatRoomPrivilegeModerator:
-            cell.permissionsLabel.text = AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.");
+            cell.permissionsLabel.text = NSLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.");
             break;
     }
     
@@ -364,7 +364,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForRemoveParticipantWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
-    cell.nameLabel.text = AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
+    cell.nameLabel.text = NSLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
     cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
@@ -386,11 +386,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)showClearChatHistoryAlert {
-    UIAlertController *clearChatHistoryAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.") message:AMLocalizedString(@"clearTheFullMessageHistory", @"A confirmation message for a user to confirm that they want to clear the history of a chat.") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *clearChatHistoryAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.") message:NSLocalizedString(@"clearTheFullMessageHistory", @"A confirmation message for a user to confirm that they want to clear the history of a chat.") preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     
-    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
             if (request.type == MEGAChatRequestTypeTruncateHistory && error.type == MEGAChatErrorTypeOk) {
                 [self showClearChatHistoryConfirmationAlert];
@@ -407,15 +407,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)showClearChatHistoryConfirmationAlert {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:AMLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted")];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:NSLocalizedString(@"clearChatHistoryConfirmation", @"Message show when the history of a chat has been successfully deleted")];
 }
 
 - (void)showArchiveChatAlertAtIndexPath {
-    NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
+    NSString *title = self.chatRoom.isArchived ? NSLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : NSLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
     UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [leaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [leaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             if (chatRoom.isArchived) {
                 if (self.navigationController.childViewControllers.count >= 3) {
@@ -437,7 +437,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)showPermissionAlertWithSourceView:(UIView *)sourceView {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
         } else {
             self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
             [self.tableView reloadData];
@@ -449,24 +449,24 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
     }]];
     
-    ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder ") dismissCompletion:nil sender:sourceView];
+    ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:NSLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder ") dismissCompletion:nil sender:sourceView];
     [self presentViewController:permissionsActionSheet animated:YES completion:nil];
 }
 
 - (void)removeParticipantFromGroup {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
         }
@@ -927,7 +927,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if ([self isSharedFolderSection:section]) {
         GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
-        headerView.titleLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
+        headerView.titleLabel.text = [NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
         headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
         
         return headerView;
@@ -1041,7 +1041,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             [node mnz_downloadNodeOverwriting:NO];
             break;
             

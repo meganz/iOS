@@ -137,7 +137,7 @@
     
     [self.passwordView updateAppearance];
     
-    if (![self.confirmButton.titleLabel.text isEqualToString:AMLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.")]) {
+    if (![self.confirmButton.titleLabel.text isEqualToString:NSLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.")]) {
         [self.confirmButton mnz_setupBasic:self.traitCollection];
     }
     [self.backupKeyButton mnz_setupPrimary:self.traitCollection];
@@ -146,7 +146,7 @@
 }
 
 - (void)configureUI {
-    self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
+    self.title = NSLocalizedString(@"testPassword", @"Label for test password button");
     self.passwordView.passwordTextField.delegate = self;
     
     [self arrangeLogoutButton];
@@ -154,22 +154,22 @@
     if (self.isLoggingOut) {
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationController.navigationBar.topItem.title = @"";
-        self.descriptionLabel.text = AMLocalizedString(@"testPasswordLogoutText", @"Text that described that you are about to logout remenbering why the user should remenber the password and/or test it");
+        self.descriptionLabel.text = NSLocalizedString(@"testPasswordLogoutText", @"Text that described that you are about to logout remenbering why the user should remenber the password and/or test it");
         
-        [self.backupKeyButton setTitle:AMLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
+        [self.backupKeyButton setTitle:NSLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
     } else {
-        self.closeBarButton.title = AMLocalizedString(@"close", @"A button label.");
-        NSString *testPasswordText = AMLocalizedString(@"testPasswordText", @"Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.");
+        self.closeBarButton.title = NSLocalizedString(@"close", @"A button label.");
+        NSString *testPasswordText = NSLocalizedString(@"testPasswordText", @"Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.");
         NSString *learnMoreString = [testPasswordText mnz_stringBetweenString:@"[A]" andString:@"[/A]"];
         testPasswordText = [testPasswordText stringByReplacingCharactersInRange:[testPasswordText rangeOfString:learnMoreString] withString:@""];
         self.descriptionLabel.text = [testPasswordText mnz_removeWebclientFormatters];
         
-        [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
+        [self.backupKeyButton setTitle:NSLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
     }
     
-    [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
+    [self.confirmButton setTitle:NSLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
     
-    [self.logoutButton setTitle:AMLocalizedString(@"proceedToLogout", @"Title to confirm that you want to logout") forState:UIControlStateNormal];
+    [self.logoutButton setTitle:NSLocalizedString(@"proceedToLogout", @"Title to confirm that you want to logout") forState:UIControlStateNormal];
 }
 
 - (void)arrangeLogoutButton {
@@ -193,7 +193,7 @@
                 changePasswordVC.twoFactorAuthenticationEnabled = request.flag;
                 
                 MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
-                [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", @"Button title to cancel something")];
+                [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"cancel", @"Button title to cancel something")];
                 [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
             }];
         }];
@@ -206,7 +206,7 @@
     [self.confirmButton mnz_clearSetup];
     [self.confirmButton setTitleColor:UIColor.systemGreenColor forState:UIControlStateNormal];
     [self.confirmButton setImage:[UIImage imageNamed:@"contact_request_accept"] forState:UIControlStateNormal];
-    [self.confirmButton setTitle:AMLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
+    [self.confirmButton setTitle:NSLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
     
     self.logoutButton.hidden = !self.isLoggingOut;
 }
@@ -216,9 +216,9 @@
     self.confirmButton.enabled = YES;
     
     if (self.isLoggingOut) {
-        [self.confirmButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
+        [self.confirmButton setTitle:NSLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
     } else {
-        [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
+        [self.confirmButton setTitle:NSLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
     }
     
     [self.confirmButton mnz_setupBasic:self.traitCollection];

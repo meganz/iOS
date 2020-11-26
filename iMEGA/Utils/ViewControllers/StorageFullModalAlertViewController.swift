@@ -23,10 +23,10 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
     
     func configureView() {
         image = UIImage(named: "deviceStorageAlmostFull")
-        viewTitle = AMLocalizedString("Device Storage Almost Full", "Title to show when device local storage is almost full")
-        detail = String(format: AMLocalizedString("MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.", "Message shown when you try to downlonad files bigger than the available memory."), Helper.memoryStyleString(fromByteCount: requiredStorage)
+        viewTitle = NSLocalizedString("Device Storage Almost Full", comment: "Title to show when device local storage is almost full")
+        detail = String(format: NSLocalizedString("MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.", comment: "Message shown when you try to downlonad files bigger than the available memory."), Helper.memoryStyleString(fromByteCount: requiredStorage)
 )
-        firstButtonTitle = AMLocalizedString("Manage", "Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache.")
+        firstButtonTitle = NSLocalizedString("Manage", comment: "Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache.")
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
                 let fileManagementVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "FileManagementTableViewControllerID")
@@ -34,7 +34,7 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
             })
         }
         
-        dismissButtonTitle = AMLocalizedString("notNow", "Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage.")
+        dismissButtonTitle = NSLocalizedString("notNow", comment: "Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage.")
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
                 UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "MEGAStorageFullNotification")

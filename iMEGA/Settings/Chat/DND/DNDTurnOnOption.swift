@@ -55,29 +55,29 @@ enum DNDTurnOnOption {
     private var localizedTitle: String {
         switch self {
         case .thirtyMinutes:
-            return AMLocalizedString("30 minutes", "Chat Notifications DND: Option that deactivates DND after 30 minutes")
+            return NSLocalizedString("30 minutes", comment: "Chat Notifications DND: Option that deactivates DND after 30 minutes")
         case .oneHour:
-            return AMLocalizedString("1 hour")
+            return NSLocalizedString("1 hour", comment: "")
         case .sixHours:
-            return AMLocalizedString("6 hours")
+            return NSLocalizedString("6 hours", comment: "")
         case .twentyFourHours:
-            return AMLocalizedString("24 hours")
+            return NSLocalizedString("24 hours", comment: "")
         case .morningEightAM:
-            return isMorningEightToday ?  AMLocalizedString("Until this morning") : AMLocalizedString("Until tomorrow morning")
+            return isMorningEightToday ?  NSLocalizedString("Until this morning", comment: "") : NSLocalizedString("Until tomorrow morning", comment: "")
         case .forever:
-            return AMLocalizedString("Until I turn it back on")
+            return NSLocalizedString("Until I turn it back on", comment: "")
         }
     }
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
                                 isGlobalSetting: Bool,
                                 identifier: Int64?) -> UIAlertController {
-        let alertMessage = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
+        let alertMessage = NSLocalizedString("Mute chat Notifications for", comment: "Chat Notifications DND: Title bar message for the dnd activate options")
         let alertController = UIAlertController(title: nil,
                                                 message: alertMessage,
                                                 preferredStyle: .actionSheet)
         
-        let cancelString = AMLocalizedString("cancel")
+        let cancelString = NSLocalizedString("cancel", comment: "")
         alertController.addAction(UIAlertAction(title: cancelString,
                                                 style: .cancel,
                                                 handler: delegate.cancelAction))

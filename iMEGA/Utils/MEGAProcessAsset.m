@@ -158,9 +158,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self.alertController dismissViewControllerAnimated:YES completion:^{
                 if (self.exportAssetFailed) {
-                    NSString *message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+                    NSString *message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
                     UIAlertController  *videoExportFailedController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-                    [videoExportFailedController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:nil]];
+                    [videoExportFailedController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:nil]];
                     [UIApplication.mnz_presentingViewController presentViewController:videoExportFailedController animated:YES completion:nil];
                 }
             }];
@@ -436,9 +436,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:self.avAsset videoQuality:videoQuality filePath:filePath];
             
             if (!self.alertController) {
-                NSString *title = [AMLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
+                NSString *title = [NSLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
                 self.alertController = [UIAlertController alertControllerWithTitle:title message:@"\n" preferredStyle:UIAlertControllerStyleAlert];
-                [self.alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [self.alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     MEGALogDebug(@"[PA] User cancelled the export session");
                     [encoder cancelExport];
                 }]];
@@ -486,7 +486,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     uint64_t freeSpace = NSFileManager.defaultManager.mnz_fileSystemFreeSize;
      
     if (fileSize > freeSpace) {
-        NSDictionary *dict = @{NSLocalizedDescriptionKey:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
+        NSDictionary *dict = @{NSLocalizedDescriptionKey:NSLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
         NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-2 userInfo:dict];
         if (self.error) {
             self.error(error);
@@ -731,9 +731,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 - (void)downscaleVideoAsset:(PHAsset *)asset encoder:(SDAVAssetExportSession *)encoder {
     if (!self.alertController) {
-        NSString *title = [AMLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
+        NSString *title = [NSLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
         self.alertController = [UIAlertController alertControllerWithTitle:title message:@"\n" preferredStyle:UIAlertControllerStyleAlert];
-        [self.alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self.alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             MEGALogDebug(@"[PA] User cancelled the export session");
             self.cancelExportByUser = YES;
             [self exportSessionCancelledOrFailed];

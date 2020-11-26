@@ -126,7 +126,7 @@ extension ChatViewController {
         }
             
         let navController = MEGANavigationController(rootViewController: shareLocationViewController)
-        navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+        navController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
         present(viewController: navController)
     }
     
@@ -178,7 +178,7 @@ extension ChatViewController {
         if UIDevice.current.iPadDevice {
             let navController = MEGANavigationController(rootViewController: addToChatViewController)
             navController.navigationBar.isTranslucent = false
-            navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+            navController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
             navController.modalPresentationStyle = .popover
 
             if let popover = navController.popoverPresentationController {
@@ -344,10 +344,10 @@ extension ChatViewController {
                 return
             }
             
-            let title = AMLocalizedString("error")
+            let title = NSLocalizedString("error", comment: "")
             let message = error?.localizedDescription
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: nil))
             
             DispatchQueue.main.async {
                 self.present(viewController: alertController)
@@ -387,13 +387,13 @@ extension ChatViewController {
                     errors.count == 1 {
                     message = error.localizedDescription
                 } else {
-                    message = AMLocalizedString("shareExtensionUnsupportedAssets")
+                    message = NSLocalizedString("shareExtensionUnsupportedAssets", comment: "")
                 }
                 
-                let alertController = UIAlertController(title: AMLocalizedString("error"),
+                let alertController = UIAlertController(title: NSLocalizedString("error", comment: ""),
                                                         message: message,
                                                         preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"),
+                alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""),
                                                         style: .cancel,
                                                         handler: nil))
                 
@@ -615,8 +615,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        let selectionActionText = AMLocalizedString("Send (%d)", "Used in Photos app browser view to send the photos from the view to the chat.")
-        let selectionActionDisabledText = AMLocalizedString("send", "Used in Photos app browser view as a disabled action when there is no assets selected")
+        let selectionActionText = NSLocalizedString("Send (%d)", comment: "Used in Photos app browser view to send the photos from the view to the chat.")
+        let selectionActionDisabledText = NSLocalizedString("send", comment: "Used in Photos app browser view as a disabled action when there is no assets selected")
         let albumTableViewController = AlbumsTableViewController(selectionActionText: selectionActionText,
                                                                  selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
                                                                     guard let `self` = self else {
@@ -724,19 +724,19 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     func showLocation() {
         let genericRequestDelegate = MEGAGenericRequestDelegate { (request, error) in
             if error.type != .apiOk {
-                let title = AMLocalizedString("Send Location", "Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
+                let title = NSLocalizedString("Send Location", comment: "Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
                 
-                let message = AMLocalizedString("This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", "Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
+                let message = NSLocalizedString("This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", comment: "Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
                 
-                let cancelAction = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil)
                 
-                let continueAction = UIAlertAction(title: AMLocalizedString("continue"), style: .default) { _ in
+                let continueAction = UIAlertAction(title: NSLocalizedString("continue", comment: ""), style: .default) { _ in
                     let enableGeolocationDelegate = MEGAGenericRequestDelegate { (request, error) in
                         if error.type != .apiOk {
-                            let alertTitle = AMLocalizedString("error")
+                            let alertTitle = NSLocalizedString("error", comment: "")
                             let alertMessage = String(format: "Enable geolocation failed. Error: %@", error.name)
                             
-                            let enableGeolocationAlertAction = UIAlertAction(title: AMLocalizedString("ok"),
+                            let enableGeolocationAlertAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""),
                                                                              style: .default,
                                                                              handler: nil)
                             let enableGeolocationAlertController = UIAlertController(title: alertTitle,
@@ -784,7 +784,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         }
         
         if chatSDK.mnz_existsActiveCall {
-            let message = AMLocalizedString("It is not possible to record voice messages while there is a call in progress", "Message shown when there is an ongoing call and the user tries to record a voice message")
+            let message = NSLocalizedString("It is not possible to record voice messages while there is a call in progress", comment: "Message shown when there is an ongoing call and the user tries to record a voice message")
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.showError(withStatus: message)
             return false

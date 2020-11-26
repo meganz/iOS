@@ -2,7 +2,7 @@ import Foundation
 
 struct L10nRepository: L10nRepositoryProtocol {
     var appLanguage: String {
-        LocalizationSystem.sharedLocal()?.getLanguage() ?? "en"
+        Bundle.main.preferredLocalizations.first ?? "en"
     }
     
     var deviceRegion: String {

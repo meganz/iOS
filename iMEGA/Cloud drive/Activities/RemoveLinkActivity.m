@@ -30,10 +30,10 @@
 
 - (NSString *)activityTitle {
     if ([self.nodes count] > 1) {
-        return AMLocalizedString(@"removeLinks", nil);
+        return NSLocalizedString(@"removeLinks", nil);
     }
     
-    return AMLocalizedString(@"removeLink", nil);
+    return NSLocalizedString(@"removeLink", nil);
 }
 
 - (UIImage *)activityImage {
@@ -51,7 +51,7 @@
             
             MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (--self.pending==0) {
-                    NSString *status = self.nodes.count > 1 ? AMLocalizedString(@"linksRemoved", @"Message shown when the links to files and folders have been removed") : AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
+                    NSString *status = self.nodes.count > 1 ? NSLocalizedString(@"linksRemoved", @"Message shown when the links to files and folders have been removed") : NSLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
                     [SVProgressHUD showSuccessWithStatus:status];
                 }
             } multipleLinks:self.nodes.count > 1];

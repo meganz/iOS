@@ -171,7 +171,7 @@ final class PhotoCarouselViewController: UIViewController {
                         let alertController = UIAlertController(title: nil,
                                                                 message: error.localizedDescription,
                                                                 preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel, handler: nil))
+                        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: nil))
                         self?.present(alertController, animated: true, completion: nil)
                         MEGALogError("[Photo Carousel View] unable to play video \(error.localizedDescription)")
                         return
@@ -223,9 +223,9 @@ final class PhotoCarouselViewController: UIViewController {
     
     private func updateSelectDeselectButtonTitle(withSelectedAsset asset: PHAsset) {
         if selectedAssets.contains(asset) {
-            selectDeselectBarButtonItem?.title = AMLocalizedString("Unselect", "Used in Photos app browser carousel view to unselect a selected photo.")
+            selectDeselectBarButtonItem?.title = NSLocalizedString("Unselect", comment: "Used in Photos app browser carousel view to unselect a selected photo.")
         } else {
-            selectDeselectBarButtonItem?.title = AMLocalizedString("select", "Used in Photos app browser carousel view to select a photo.")
+            selectDeselectBarButtonItem?.title = NSLocalizedString("select", comment: "Used in Photos app browser carousel view to select a photo.")
         }
     }
         
@@ -235,7 +235,7 @@ final class PhotoCarouselViewController: UIViewController {
                                                 target: self,
                                                 action: #selector(sendBarButtonTapped))
         let selectDeselectBarButtonItem = UIBarButtonItem(
-            title: AMLocalizedString("select", "Used in Photos app browser carousel view to select a photo."),
+            title: NSLocalizedString("select", comment: "Used in Photos app browser carousel view to select a photo."),
             style: .plain,
             target: self,
             action: #selector(selectBarButtonTapped)

@@ -10,8 +10,6 @@
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) NSString *selectedLanguage;
-
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
@@ -25,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
-@property (weak, nonatomic) IBOutlet UILabel *languageLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *helpLabel;
 
@@ -41,13 +38,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSString *language = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    if (language) {
-        self.selectedLanguage = language;
-    } else {
-        self.selectedLanguage = nil;
-    }
     
     [self updateAppearance];
 }
@@ -75,28 +65,27 @@
 #pragma mark - Private
 
 - (void)setupUI {
-    self.navigationItem.title = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
+    self.navigationItem.title = NSLocalizedString(@"settingsTitle", @"Title of the Settings section");
     
-    self.cameraUploadsLabel.text = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-    self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
-    self.chatLabel.text = AMLocalizedString(@"chat", @"Chat section header");
+    self.cameraUploadsLabel.text = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+    self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
+    self.chatLabel.text = NSLocalizedString(@"chat", @"Chat section header");
     
-    self.passcodeLabel.text = AMLocalizedString(@"passcode", nil);
-    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil));
-    self.securityOptionsLabel.text = AMLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
+    self.passcodeLabel.text = NSLocalizedString(@"passcode", nil);
+    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil));
+    self.securityOptionsLabel.text = NSLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
     
-    self.fileManagementLabel.text = AMLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
-    self.appearanceLabel.text = AMLocalizedString(@"Appearance", @"Title of one of the Settings sections where you can customise the 'Appearance' of the app.");
-    self.advancedLabel.text = AMLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options");
+    self.fileManagementLabel.text = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
+    self.appearanceLabel.text = NSLocalizedString(@"Appearance", @"Title of one of the Settings sections where you can customise the 'Appearance' of the app.");
+    self.advancedLabel.text = NSLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options");
     
-    self.aboutLabel.text = AMLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
-    self.languageLabel.text = AMLocalizedString(@"language", @"Title of one of the Settings sections where you can set up the 'Language' of the app");
+    self.aboutLabel.text = NSLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
     
-    self.helpLabel.text = AMLocalizedString(@"help", @"Menu item");
+    self.helpLabel.text = NSLocalizedString(@"help", @"Menu item");
     
-    self.privacyPolicyLabel.text = AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
-    self.termsOfServiceLabel.text = AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
-    self.dataProtectionRegulationLabel.text = AMLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
+    self.privacyPolicyLabel.text = NSLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
+    self.termsOfServiceLabel.text = NSLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
+    self.dataProtectionRegulationLabel.text = NSLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
 - (void)updateAppearance {

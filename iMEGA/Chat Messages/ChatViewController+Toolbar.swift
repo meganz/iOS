@@ -120,7 +120,7 @@ extension ChatViewController {
             }
 
             if showSuccess {
-                SVProgressHUD.showSuccess(withStatus: AMLocalizedString("messagesSent", "Success message shown after forwarding messages to other chats"))
+                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("messagesSent", comment: "Success message shown after forwarding messages to other chats"))
                 
             }
         }
@@ -141,7 +141,7 @@ extension ChatViewController {
         
         DispatchQueue.global(qos: .default).async {
             guard let activityViewController = UIActivityViewController(for: megaMessages, sender: sender) else {
-                SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
+                SVProgressHUD.showError(withStatus: NSLocalizedString("linkUnavailable", comment: ""))
                 return
             }
             

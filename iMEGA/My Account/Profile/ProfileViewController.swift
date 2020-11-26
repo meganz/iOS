@@ -201,9 +201,9 @@ enum SessionSectionRow: Int {
     
     private func presentChangeAvatarController(tableView: UITableView, cell: UITableViewCell) -> Void {
         let changeAvatarAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        changeAvatarAlertController.addAction(UIAlertAction.init(title: AMLocalizedString("cancel", ""), style: .cancel, handler: nil))
+        changeAvatarAlertController.addAction(UIAlertAction.init(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
         
-        let fromPhotosAlertAction = UIAlertAction.init(title: AMLocalizedString("choosePhotoVideo", "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA"), style: .default) { (UIAlertAction) in
+        let fromPhotosAlertAction = UIAlertAction.init(title: NSLocalizedString("choosePhotoVideo", comment: "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA"), style: .default) { (UIAlertAction) in
             DevicePermissionsHelper.photosPermission(completionHandler: { (granted) in
                 if granted {
                     self.showImagePicker(sourceType: .photoLibrary)
@@ -214,7 +214,7 @@ enum SessionSectionRow: Int {
         }
         changeAvatarAlertController.addAction(fromPhotosAlertAction)
         
-        let captureAlertAction = UIAlertAction.init(title: AMLocalizedString("capturePhotoVideo", "Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA."), style: .default) { (UIAlertAction) in
+        let captureAlertAction = UIAlertAction.init(title: NSLocalizedString("capturePhotoVideo", comment: "Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA."), style: .default) { (UIAlertAction) in
             DevicePermissionsHelper.videoPermission(completionHandler: { (granted) in
                 if granted {
                     DevicePermissionsHelper.photosPermission(completionHandler: { (granted) in
@@ -240,7 +240,7 @@ enum SessionSectionRow: Int {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
-            let removeAvatarAlertAction = UIAlertAction.init(title: AMLocalizedString("Remove Photo", "Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
+            let removeAvatarAlertAction = UIAlertAction.init(title: NSLocalizedString("Remove Photo", comment: "Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk().setAvatarUserWithSourceFilePath(nil)
             }
             changeAvatarAlertController.addAction(removeAvatarAlertAction)
@@ -306,7 +306,7 @@ enum SessionSectionRow: Int {
                     }
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
-                    navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+                    navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
                     
                     self.present(navigationController, animated: true, completion: nil)
                  }))
@@ -317,13 +317,13 @@ enum SessionSectionRow: Int {
             case .disabled, .enabled:
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .enabled
                     let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
-                    navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+                    navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
                     
                     present(navigationController, animated: true, completion: nil)
             }
         } else {
             let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
-            navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+            navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
             
             present(navigationController, animated: true, completion: nil)
         }
@@ -391,9 +391,9 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch tableViewSections()[section] {
         case .security:
-            return AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")
+            return NSLocalizedString("masterKey", comment: "Title for the MEGA Recovery Key")
         case .plan:
-            return AMLocalizedString("Plan", "Title of the section about the plan in the storage tab in My Account Section")
+            return NSLocalizedString("Plan", comment: "Title of the section about the plan in the storage tab in My Account Section")
         default:
             return nil
         }
@@ -402,7 +402,7 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch tableViewSections()[section] {
         case .security:
-            return AMLocalizedString("If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].", "").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
+            return NSLocalizedString("If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].", comment: "").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
         case .plan:
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return nil
@@ -412,20 +412,20 @@ extension ProfileViewController: UITableViewDataSource {
             if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
+                    planFooterString = NSLocalizedString("Renews on", comment: "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
                 } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
+                    planFooterString = String(format: NSLocalizedString("expiresOn", comment: "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
                 }
             }
             return planFooterString
         case .session:
             if FileManager.default.mnz_existsOfflineFiles() && MEGASdkManager.sharedMEGASdk().transfers.size != 0 {
-                return AMLocalizedString("When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.", "Warning message to alert user about logout in My Account section if has offline files and transfers in progress.")
+                return NSLocalizedString("When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.", comment: "Warning message to alert user about logout in My Account section if has offline files and transfers in progress.")
             } else if FileManager.default.mnz_existsOfflineFiles() {
-                return AMLocalizedString("When you logout, files from your Offline section will be deleted from your device.", "Warning message to alert user about logout in My Account section if has offline files.")
+                return NSLocalizedString("When you logout, files from your Offline section will be deleted from your device.", comment: "Warning message to alert user about logout in My Account section if has offline files.")
             } else if MEGASdkManager.sharedMEGASdk().transfers.size != 0 {
-                return AMLocalizedString("When you logout, ongoing transfers will be cancelled.", "Warning message to alert user about logout in My Account section if has transfers in progress.")
+                return NSLocalizedString("When you logout, ongoing transfers will be cancelled.", comment: "Warning message to alert user about logout in My Account section if has transfers in progress.")
             } else {
                 return nil
             }
@@ -442,10 +442,10 @@ extension ProfileViewController: UITableViewDataSource {
             cell.detailLabel.text = ""
             switch rowsForProfileSection()[indexPath.row] {
             case .changeName:
-                cell.nameLabel.text = AMLocalizedString("changeName", "Button title that allows the user change his name")
+                cell.nameLabel.text = NSLocalizedString("changeName", comment: "Button title that allows the user change his name")
             case .changePhoto:
                 let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? ""))
-                cell.nameLabel.text = hasPhotoAvatar ? AMLocalizedString("Change Photo", "Button that allows the user the change a photo, e.g. his avatar photo ") : AMLocalizedString("Add Photo", "Button that allows the user the add a photo, e.g avatar photo")
+                cell.nameLabel.text = hasPhotoAvatar ? NSLocalizedString("Change Photo", comment: "Button that allows the user the change a photo, e.g. his avatar photo ") : NSLocalizedString("Add Photo", comment: "Button that allows the user the add a photo, e.g avatar photo")
             case .changeEmail:
                 switch twoFactorAuthStatus {
                 case .unknown, .disabled, .enabled:
@@ -457,12 +457,12 @@ extension ProfileViewController: UITableViewDataSource {
                     activityIndicator.startAnimating()
                     cell.accessoryView = activityIndicator
                 }
-                cell.nameLabel.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
+                cell.nameLabel.text = NSLocalizedString("Change Email", comment: "The title of the alert dialog to change the email associated to an account.")
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
-                    cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title")
+                    cell.nameLabel.text = NSLocalizedString("Add Phone Number", comment: "Add Phone Number title")
                 } else {
-                    cell.nameLabel.text = AMLocalizedString("Phone Number", "Text related to verified phone number. Used as title or cell description.")
+                    cell.nameLabel.text = NSLocalizedString("Phone Number", comment: "Text related to verified phone number. Used as title or cell description.")
                     let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
                     do {
                         let phone = try PhoneNumberKit().parse(phoneNumber ?? "")
@@ -473,19 +473,19 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 }
             case .changePassword:
-                cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password")
+                cell.nameLabel.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password")
             }
             return cell
         case .security:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
             cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackgroundGrouped(traitCollection)
-            cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
-            cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
+            cell.recoveryKeyLabel.text = NSLocalizedString("masterKey", comment: "Title for the MEGA Recovery Key")+".txt"
+            cell.backupRecoveryKeyLabel.text = NSLocalizedString("backupRecoveryKey", comment: "Label for recovery key button")
             cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
             return cell
         case .plan:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
-            cell.nameLabel.text = AMLocalizedString("upgradeAccount", "Button title which triggers the action to upgrade your MEGA account level")
+            cell.nameLabel.text = NSLocalizedString("upgradeAccount", comment: "Button title which triggers the action to upgrade your MEGA account level")
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return cell
             }
@@ -495,7 +495,7 @@ extension ProfileViewController: UITableViewDataSource {
             case .upgrade:
                 switch accountType {
                 case .free:
-                    cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
+                    cell.detailLabel.text = NSLocalizedString("Free", comment: "Text relative to the MEGA account level. UPPER CASE")
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 case .proI:
                     cell.detailLabel.text = "Pro I"
@@ -511,24 +511,24 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.detailLabel.textColor = UIColor.systemOrange
                 case .business:
                     if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
-                        cell.detailLabel.text = AMLocalizedString("Active", "")
+                        cell.detailLabel.text = NSLocalizedString("Active", comment: "")
                     } else {
-                        cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
+                        cell.detailLabel.text = NSLocalizedString("Payment overdue", comment: "Business expired account Overdue payment page header.")
                     }
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
-                    cell.nameLabel.text = AMLocalizedString("Business", "")
+                    cell.nameLabel.text = NSLocalizedString("Business", comment: "")
                     cell.accessoryType = .none
                 default:
                     cell.detailLabel.text = "..."
                 }
             case .role:
                 if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.detailLabel.text = AMLocalizedString("Administrator", "")
+                    cell.detailLabel.text = NSLocalizedString("Administrator", comment: "")
                 } else {
-                    cell.detailLabel.text = AMLocalizedString("User", "Business user role")
+                    cell.detailLabel.text = NSLocalizedString("User", comment: "Business user role")
                 }
                 cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
-                cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
+                cell.nameLabel.text = NSLocalizedString("Role:", comment: "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
                 cell.accessoryType = .none
             }
             return cell
@@ -536,7 +536,7 @@ extension ProfileViewController: UITableViewDataSource {
             switch rowsForSessionSection()[indexPath.row] {
             case .logout:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
-                cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
+                cell.logoutLabel.text = NSLocalizedString("logoutLabel", comment: "Title of the button which logs out from your account.")
                 cell.logoutLabel.textColor = UIColor.mnz_red(for: traitCollection)
                 return cell
             }
@@ -637,7 +637,7 @@ extension ProfileViewController: MEGARequestDelegate {
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .avatar {
                 if error.type != .apiOk {
-                    SVProgressHUD.showError(withStatus: request.requestString + " " + AMLocalizedString(error.name, nil))
+                    SVProgressHUD.showError(withStatus: request.requestString + " " + NSLocalizedString(error.name, comment: ""))
                     return
                 }
             }

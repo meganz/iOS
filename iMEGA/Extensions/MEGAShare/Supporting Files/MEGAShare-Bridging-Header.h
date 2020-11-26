@@ -4,7 +4,6 @@
 
 #import "MEGASdkManager.h"
 
-#import "LocalizationSystem.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import <PureLayout/PureLayout.h>

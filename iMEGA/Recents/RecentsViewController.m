@@ -172,9 +172,9 @@
     }
     
     if (recentActionBucket.timestamp.isToday) {
-        recentsTVHFV.dateLabel.text = AMLocalizedString(@"Today", @"").uppercaseString;
+        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Today", @"").uppercaseString;
     } else if (recentActionBucket.timestamp.isYesterday) {
-        recentsTVHFV.dateLabel.text = AMLocalizedString(@"Yesterday", @"").uppercaseString;
+        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"").uppercaseString;
     } else {
         NSString *dateString = [self.dateFormatter stringFromDate:recentActionBucket.timestamp];
         recentsTVHFV.dateLabel.text = dateString.uppercaseString;
@@ -244,8 +244,8 @@
 
 - (UIViewController *)viewControllerForNode:(MEGANode *)node withFolderLink:(BOOL)isFolderLink {
     if (node.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         return alertController;
     } else {
         return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil];
@@ -264,7 +264,7 @@
 #pragma mark - Empty State
 
 - (NSString *)titleForEmptyState {
-    NSString *text = (MEGAReachabilityManager.isReachable) ? AMLocalizedString(@"No recent activity", @"Message shown when the user has not recent activity in their account.") : AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+    NSString *text = (MEGAReachabilityManager.isReachable) ? NSLocalizedString(@"No recent activity", @"Message shown when the user has not recent activity in their account.") : NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     
     return text;
 }
@@ -272,7 +272,7 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -287,7 +287,7 @@
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

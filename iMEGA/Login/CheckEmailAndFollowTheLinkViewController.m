@@ -53,15 +53,15 @@
         self.mailImageTopLayoutConstraint.constant = 24.0f;
     }
 
-    self.awaitingEmailConfirmationLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-    self.checkYourEmailLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+    self.awaitingEmailConfirmationLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    self.checkYourEmailLabel.text = NSLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
     
     self.emailInputView.inputTextField.text = self.email;
     
-    self.misspelledLabel.text = AMLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
-    [self.resendButton setTitle:AMLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
+    self.misspelledLabel.text = NSLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
+    [self.resendButton setTitle:NSLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
     
-    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
+    [self.cancelButton setTitle:NSLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -103,11 +103,11 @@
 
 - (void)setErrorState:(BOOL)error {
     if (error) {
-        self.emailInputView.topLabel.text = AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field");
+        self.emailInputView.topLabel.text = NSLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field");
         self.emailInputView.topLabel.textColor = UIColor.mnz_redError;
         self.emailInputView.inputTextField.textColor = UIColor.mnz_redError;
     } else {
-        self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", nil);
+        self.emailInputView.topLabel.text = NSLocalizedString(@"emailPlaceholder", nil);
         self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
         self.emailInputView.inputTextField.textColor = UIColor.mnz_label;
     }
@@ -129,10 +129,10 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIButton *)sender {
-    NSString *message = AMLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
+    NSString *message = NSLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [MEGASdkManager.sharedMEGASdk cancelCreateAccount];        
         [Helper clearEphemeralSession];
         [self dismissViewControllerAnimated:YES completion:nil];

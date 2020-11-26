@@ -30,9 +30,9 @@ class SetLinkPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = AMLocalizedString("Set Password", "Text for options in Get Link View to set password protection")
+        title = NSLocalizedString("Set Password", comment: "Text for options in Get Link View to set password protection")
 
-        let cancelBarButtonItem = UIBarButtonItem(title: AMLocalizedString("cancel"), style: .done, target: self, action: #selector(cancelBarButtonTapped))
+        let cancelBarButtonItem = UIBarButtonItem(title: NSLocalizedString("cancel", comment: ""), style: .done, target: self, action: #selector(cancelBarButtonTapped))
         navigationItem.rightBarButtonItem = cancelBarButtonItem
         
         passwordView.passwordTextField.returnKeyType = .next
@@ -46,7 +46,7 @@ class SetLinkPasswordViewController: UIViewController {
         
         passwordView.passwordTextField.becomeFirstResponder()
         
-        encryptButton.setTitle(AMLocalizedString("encrypt", "The text of a button. This button will encrypt a link with a password."), for: .normal)
+        encryptButton.setTitle(NSLocalizedString("encrypt", comment: "The text of a button. This button will encrypt a link with a password."), for: .normal)
 
         updateAppearance()
     }
@@ -81,27 +81,27 @@ class SetLinkPasswordViewController: UIViewController {
     
     private func validatePassword() -> Bool {
         guard let password = passwordView.passwordTextField.text as NSString? else {
-            passwordView.setErrorState(true, withText: AMLocalizedString("passwordInvalidFormat", "Message shown when the user enters a wrong password"))
+            passwordView.setErrorState(true, withText: NSLocalizedString("passwordInvalidFormat", comment: "Message shown when the user enters a wrong password"))
             return false
         }
         if password.mnz_isEmpty() {
-            passwordView.setErrorState(true, withText: AMLocalizedString("passwordInvalidFormat", "Message shown when the user enters a wrong password"))
+            passwordView.setErrorState(true, withText: NSLocalizedString("passwordInvalidFormat", comment: "Message shown when the user enters a wrong password"))
             return false
         } else if MEGASdkManager.sharedMEGASdk().passwordStrength(password as String) == .veryWeak {
-           passwordView.setErrorState(true, withText: AMLocalizedString("pleaseStrengthenYourPassword"))
+           passwordView.setErrorState(true, withText: NSLocalizedString("pleaseStrengthenYourPassword", comment: ""))
             return false
         } else {
-            passwordView.setErrorState(true, withText: AMLocalizedString("passwordPlaceholder", "Hint text to suggest that the user has to write his password"))
+            passwordView.setErrorState(true, withText: NSLocalizedString("passwordPlaceholder", comment: "Hint text to suggest that the user has to write his password"))
             return true
         }
     }
     
     private func validateConfirmPassword() -> Bool {
         if passwordView.passwordTextField.text == confirmPasswordView.passwordTextField.text {
-            passwordView.setErrorState(false, withText: AMLocalizedString("confirmPassword", "Hint text where the user have to re-write the new password to confirm it"))
+            passwordView.setErrorState(false, withText: NSLocalizedString("confirmPassword", comment: "Hint text where the user have to re-write the new password to confirm it"))
             return true
         } else {
-            passwordView.setErrorState(true, withText: AMLocalizedString("passwordsDoNotMatch", "Error text shown when you have not written the same password"))
+            passwordView.setErrorState(true, withText: NSLocalizedString("passwordsDoNotMatch", comment: "Error text shown when you have not written the same password"))
             return false
         }
     }
@@ -132,11 +132,11 @@ extension SetLinkPasswordViewController: UITextFieldDelegate {
                 passwordStrenghtIndicatorHeightConstraint.constant = 0
             } else {
                 passwordStrenghtIndicatorHeightConstraint.constant = 44.5
-                passwordView.setErrorState(false, withText: AMLocalizedString("passwordPlaceholder", "Hint text to suggest that the user has to write his password"))
+                passwordView.setErrorState(false, withText: NSLocalizedString("passwordPlaceholder", comment: "Hint text to suggest that the user has to write his password"))
                 passwordStrenghtIndicatorView.update(with: MEGASdkManager.sharedMEGASdk().passwordStrength(text), updateDescription: false)
             }
         } else if textField == confirmPasswordView.passwordTextField {
-            confirmPasswordView.setErrorState(false, withText: AMLocalizedString("confirmPassword", "Hint text where the user have to re-write the new password to confirm it"))
+            confirmPasswordView.setErrorState(false, withText: NSLocalizedString("confirmPassword", comment: "Hint text where the user have to re-write the new password to confirm it"))
         }
         
         return true

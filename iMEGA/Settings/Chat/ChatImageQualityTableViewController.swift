@@ -7,7 +7,7 @@ class ChatImageQualityTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = AMLocalizedString("Image Quality", "Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original)")
+        navigationItem.title = NSLocalizedString("Image Quality", comment: "Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original)")
         
         updateAppearance()
     }
@@ -48,16 +48,16 @@ class ChatImageQualityTableViewController: UITableViewController {
 
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = AMLocalizedString("Automatic", "Label indicating that Send smaller size images through cellular networks and original size images through wifi")
-            cell.detailTextLabel?.text = AMLocalizedString("Send smaller size images through cellular networks and original size images through wifi", "Description of Automatic Image Quality option")
+            cell.textLabel?.text = NSLocalizedString("Automatic", comment: "Label indicating that Send smaller size images through cellular networks and original size images through wifi")
+            cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images through cellular networks and original size images through wifi", comment: "Description of Automatic Image Quality option")
 
         case 1:
-            cell.textLabel?.text = AMLocalizedString("high", "Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.")
-            cell.detailTextLabel?.text = AMLocalizedString("Send original size, increased quality images", "Description of High Image Quality option")
+            cell.textLabel?.text = NSLocalizedString("high", comment: "Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.")
+            cell.detailTextLabel?.text = NSLocalizedString("Send original size, increased quality images", comment: "Description of High Image Quality option")
 
         case 2:
-            cell.textLabel?.text = AMLocalizedString("Optimised", "Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats")
-            cell.detailTextLabel?.text = AMLocalizedString("Send smaller size images optimised for lower data consumption", "Description of Optimised Image Quality option")
+            cell.textLabel?.text = NSLocalizedString("Optimised", comment: "Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats")
+            cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images optimised for lower data consumption", comment: "Description of Optimised Image Quality option")
         
         default:
             return cell

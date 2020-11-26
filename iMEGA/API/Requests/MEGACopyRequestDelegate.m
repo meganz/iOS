@@ -32,7 +32,7 @@
     
     if (error.type) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
         return;
     }
     

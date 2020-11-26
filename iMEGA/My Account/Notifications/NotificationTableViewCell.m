@@ -9,7 +9,7 @@
     self.theNewView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
     self.theNewLabel.textColor = UIColor.whiteColor;
-    self.theNewLabel.text = AMLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
+    self.theNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
 }
 
 - (void)prepareForReuse {

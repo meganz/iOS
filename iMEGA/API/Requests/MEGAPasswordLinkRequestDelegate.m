@@ -40,7 +40,7 @@
     [super onRequestStart:api request:request];
     
     if (!self.forDecryption) {
-        NSString *status = self.multipleLinks ? AMLocalizedString(@"generatingLinks", nil) : AMLocalizedString(@"generatingLink", nil);
+        NSString *status = self.multipleLinks ? NSLocalizedString(@"generatingLinks", nil) : NSLocalizedString(@"generatingLink", nil);
         [SVProgressHUD showWithStatus:status];
     }
 }
@@ -49,7 +49,7 @@
     [super onRequestFinish:api request:request error:error];
     
     if ([error type] && !self.forDecryption) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
         return;
     }
     
