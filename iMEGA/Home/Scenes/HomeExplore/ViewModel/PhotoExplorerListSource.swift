@@ -59,16 +59,10 @@ class PhotoExplorerListSource: NSObject {
         selectedNodes?.removeAll(where: { $0 == selectedNode })
     }
     
-    func selectAllNodes() {
-        selectedNodes = nodesByDay.reduce([], +)
-        
-        collectionView.indexPathsForVisibleItems.forEach { indexPath in
-            if let photoExplorerCollectionCell = collectionView.cellForItem(at: indexPath) as? PhotoExplorerCollectionCell {
-                photoExplorerCollectionCell.allowSelection = allowMultipleSelection
-                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-            }
-        }
-
+    func toggleSelectAllNodes() {
+        let allNodes = nodesByDay.reduce([], +)
+        selectedNodes = (selectedNodes == allNodes) ? nil : allNodes
+        collectionView.reloadData()
     }
 }
 
@@ -90,10 +84,14 @@ extension PhotoExplorerListSource: UICollectionViewDataSource {
 
         cell.allowSelection = allowMultipleSelection
         
-        if collectionView.allowsMultipleSelection,
-           selectedNodes?.contains(nodesByDay[indexPath.section][indexPath.row]) ?? false {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-            cell.isSelected = true
+        if collectionView.allowsMultipleSelection{
+            if selectedNodes?.contains(nodesByDay[indexPath.section][indexPath.row]) ?? false {
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                cell.isSelected = true
+            } else {
+                collectionView.deselectItem(at: indexPath, animated: false)
+                cell.isSelected = false
+            }
         }
         
         return cell

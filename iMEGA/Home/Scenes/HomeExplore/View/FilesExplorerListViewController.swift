@@ -51,8 +51,8 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     //MARK: - Interface methods
     
-    override func selectAllNodes() {
-        listSource?.selectAllNodes()
+    override func toggleSelectAllNodes() {
+        listSource?.toggleSelectAllNodes()
         configureToolbarButtons()
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
     }

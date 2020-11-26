@@ -50,8 +50,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         delegate?.updateSearchResults()
     }
     
-    override func selectAllNodes() {
-        gridSource?.selectAllNodes()
+    override func toggleSelectAllNodes() {
+        gridSource?.toggleSelectAllNodes()
         configureToolbarButtons()
         delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
     }

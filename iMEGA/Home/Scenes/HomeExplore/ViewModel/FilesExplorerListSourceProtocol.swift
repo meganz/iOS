@@ -22,7 +22,7 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
     func toggleSelection(at indexPath: IndexPath)
     func setEditingMode()
     func endEditingMode()
-    func selectAllNodes()
+    func toggleSelectAllNodes()
 }
 
 extension FilesExplorerListSourceProtocol {
@@ -84,8 +84,8 @@ extension FilesExplorerListSourceProtocol {
         selectedNodes = nil
     }
     
-    func selectAllNodes() {
-        selectedNodes = nodes
+    func toggleSelectAllNodes() {
+        selectedNodes = (selectedNodes == nodes) ? nil : nodes
         tableView.reloadData()
     }
     

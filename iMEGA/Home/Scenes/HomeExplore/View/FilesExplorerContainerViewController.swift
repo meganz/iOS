@@ -134,7 +134,7 @@ class FilesExplorerContainerViewController: UIViewController {
     }
     
     @objc private func selectAllButtonPressed(_ button: UIBarButtonItem) {
-        currentState.selectAllNodes()
+        currentState.toggleSelectAllNodes()
     }
     
     func configureSearchBar() {
