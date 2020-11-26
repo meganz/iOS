@@ -35,7 +35,7 @@ final class UploadFileUseCase: UploadFilesUseCaseProtocol {
 
     func uploadOptions() -> [FileUploadOption] {
         if #available(iOS 13, *) {
-            return [.photos, .camera, .imports, .documentScan]
+            return [.photos, .documentScan, .camera, .imports]
         } else {
             return [.photos, .camera, .imports]
         }
