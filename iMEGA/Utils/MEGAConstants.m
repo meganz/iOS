@@ -142,3 +142,8 @@ NSString * const MEGAApplicationIconBadgeNumber = @"MEGAApplicationIconBadgeNumb
 #pragma mark - Delay events
 
 const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;
+
+#pragma mark - Chat Reaction
+
+const NSInteger MEGAMaxReactionsPerMessagePerUser = 24;
+const NSInteger MEGAMaxReactionsPerMessage = 50;

@@ -146,3 +146,8 @@ extern NSString * const MEGAApplicationIconBadgeNumber;
 
 /// Minimum delay in seconds to send an event (used for chat messages)
 extern const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent;
+
+#pragma mark - Chat Reaction
+
+extern const NSInteger MEGAMaxReactionsPerMessagePerUser;
+extern const NSInteger MEGAMaxReactionsPerMessage;
