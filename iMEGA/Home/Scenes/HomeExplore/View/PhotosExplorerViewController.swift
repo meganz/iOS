@@ -121,7 +121,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
-        listSource?.selectAllNodes()
+        listSource?.toggleSelectAllNodes()
         configureToolbarButtons()
         viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
     }

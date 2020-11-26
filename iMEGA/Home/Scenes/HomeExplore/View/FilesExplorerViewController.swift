@@ -44,7 +44,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         navigationController.present(vc, animated: true, completion: nil)
     }
     
-    func selectAllNodes() {
+    func toggleSelectAllNodes() {
         fatalError("selectAllNodes() needs to be implemented by the subclass ")
     }
     

@@ -45,12 +45,9 @@ final class FilesExplorerGridSource: NSObject {
         }
     }
     
-    func selectAllNodes() {
-        selectedNodes = nodes
-        collectionView.visibleCells.forEach { cell in
-            guard let gridCell = cell as? FileExplorerGridCell, let viewModel = gridCell.viewModel else { return }
-            viewModel.markSelection = true
-        }
+    func toggleSelectAllNodes() {
+        selectedNodes = (selectedNodes == nodes) ? nil : nodes
+        collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView,
