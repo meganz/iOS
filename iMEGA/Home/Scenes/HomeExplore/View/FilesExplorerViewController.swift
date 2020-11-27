@@ -4,6 +4,7 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
     func didScroll(scrollView: UIScrollView)
     func didSelectNodes(withCount count: Int)
     func configureNavigationBarToDefault()
+    func showSearchBar(_ show: Bool)
 }
 
 class FilesExplorerViewController: ExplorerBaseViewController {
@@ -44,6 +45,14 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         navigationController.present(vc, animated: true, completion: nil)
     }
     
+    func showSearchBarIfNeeded(withSearchText searchText: String?, nodes: [MEGANode]?) {
+        if searchText == nil {
+            delegate?.showSearchBar(nodes?.isEmpty == false)
+        } else {
+            delegate?.showSearchBar(true)
+        }
+    }
+    
     func toggleSelectAllNodes() {
         fatalError("selectAllNodes() needs to be implemented by the subclass ")
     }
@@ -54,6 +63,10 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     func configureSearchController(_ searchController: UISearchController) {
         fatalError("configureSearchController(searchController:) needs to be implemented by the subclass")
+    }
+    
+    func removeSearchController(_ searchController: UISearchController) {
+        fatalError("removeSearchController(searchController:) needs to be implemented by the subclass")
     }
     
     override func endEditingMode() {

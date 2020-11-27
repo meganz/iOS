@@ -8,7 +8,7 @@ enum FilesExplorerAction: ActionType {
 final class FilesExplorerViewModel {
     
     enum Command: CommandType {
-        case reloadNodes([MEGANode]?)
+        case reloadNodes(nodes: [MEGANode]?, searchText: String?)
         case onNodesUpdate([MEGANode])
         case reloadData
         case setViewConfiguration(FilesExplorerViewConfiguration)
@@ -91,7 +91,7 @@ final class FilesExplorerViewModel {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.updateListenerForFilesDownload(withNodes: nodes)
-                self.invokeCommand?(.reloadNodes(nodes))
+                self.invokeCommand?(.reloadNodes(nodes: nodes, searchText: text))
             }
         }
     }
