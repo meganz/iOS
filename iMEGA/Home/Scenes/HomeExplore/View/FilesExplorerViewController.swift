@@ -47,7 +47,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     func showSearchBarIfNeeded(withSearchText searchText: String?, nodes: [MEGANode]?) {
         if searchText == nil {
-            delegate?.showSearchBar(!(nodes?.isEmpty ?? true))
+            delegate?.showSearchBar(nodes?.isEmpty == false)
         } else {
             delegate?.showSearchBar(true)
         }
