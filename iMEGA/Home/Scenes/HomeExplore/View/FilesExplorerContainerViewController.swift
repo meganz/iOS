@@ -53,7 +53,6 @@ class FilesExplorerContainerViewController: UIViewController {
         super.viewDidLoad()
         currentState.showContent()
         showMoreRightBarButton()
-        configureSearchBar()
     }
     
     // Problem: When the view is displayed on the screen the search bar isn't visible but the expectation is to show it.
@@ -115,6 +114,14 @@ class FilesExplorerContainerViewController: UIViewController {
         UserDefaults.standard.setValue(preference.rawValue, forKey: MEGAExplorerViewModePreference)
     }
     
+    func showSearchBar(_ show: Bool) {
+        if show {
+            configureSearchBar()
+        } else {
+            removeSearchBar()
+        }
+    }
+    
     private func showMoreRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "moreSelected"),
@@ -139,10 +146,19 @@ class FilesExplorerContainerViewController: UIViewController {
     
     func configureSearchBar() {
         if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
+            if navigationItem.searchController == nil {
+                navigationItem.searchController = searchController
+            }
         } else {
             currentState.configureSearchController(searchController)
+        }
+    }
+    
+    func removeSearchBar() {
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = nil
+        } else {
+            currentState.removeSearchController(searchController)
         }
     }
     

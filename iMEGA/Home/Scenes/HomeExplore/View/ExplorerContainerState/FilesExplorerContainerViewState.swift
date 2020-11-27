@@ -86,6 +86,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         filesExplorerViewController?.configureSearchController(searchController)
     }
     
+    func removeSearchController(_ searchController: UISearchController) {
+        filesExplorerViewController?.removeSearchController(searchController)
+    }
+    
     func updateSearchResults(for searchString: String?) {
         filesExplorerViewController?.updateSearchResults(for: searchString)
     }
@@ -104,6 +108,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     
     func configureNavigationBarToDefault() {
         containerViewController.configureNavigationBarToDefault()
+    }
+    
+    func showSearchBar(_ show: Bool) {
+        containerViewController.showSearchBar(show)
     }
     
     // MARK: - Private methods.
