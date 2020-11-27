@@ -45,15 +45,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         case .MEGAChatErrorTooMany:
             switch ReactionErrorType(rawValue: Int(request.number)) {
             case .user:
-                let title = String(format: AMLocalizedString("You have reached the maximum limit of %d reactions."), MEGAMaxReactionsPerMessagePerUser)
+                let title = String(format: NSLocalizedString("You have reached the maximum limit of %d reactions.", comment: ""), MEGAMaxReactionsPerMessagePerUser)
                 let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: AMLocalizedString("ok"), style: .cancel)
+                let cancel = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel)
                 alertController.addAction(cancel)
                 chatViewController?.present(viewController: alertController)
             case .message:
-                let title = String(format: AMLocalizedString("This message has reached the maximum limit of %d reactions."), MEGAMaxReactionsPerMessage)
+                let title = String(format: NSLocalizedString("This message has reached the maximum limit of %d reactions.", comment: ""), MEGAMaxReactionsPerMessage)
                 let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: AMLocalizedString("ok"), style: .cancel)
+                let cancel = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel)
                 alertController.addAction(cancel)
                 chatViewController?.present(viewController: alertController)
             default:
