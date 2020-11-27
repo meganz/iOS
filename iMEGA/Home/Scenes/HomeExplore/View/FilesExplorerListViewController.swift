@@ -62,6 +62,14 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         searchController.searchBar.barTintColor = .mnz_backgroundElevated(traitCollection)
     }
     
+    override func removeSearchController(_ searchController: UISearchController) {
+        guard tableView.tableHeaderView == searchController.searchBar else {
+            return
+        }
+        
+        tableView.tableHeaderView = nil
+    }
+    
     override func setEditingMode() {
         tableView.setEditing(true, animated: true)
         tableView.visibleCells.forEach {
@@ -82,7 +90,8 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     // MARK: - Execute command
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {
-        case .reloadNodes(let nodes):
+        case .reloadNodes(let nodes, let searchText):
+            showSearchBarIfNeeded(withSearchText: searchText, nodes: nodes)
             if isProgressViewBeingShown {
                 isProgressViewBeingShown = false
                 SVProgressHUD.dismiss()

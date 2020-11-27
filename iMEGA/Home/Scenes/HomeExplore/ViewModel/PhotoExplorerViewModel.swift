@@ -23,7 +23,7 @@ class PhotoExplorerViewModel: NSObject {
     var invokeCommand: ((Command) -> Void)?
 
     private var title: String {
-        return AMLocalizedString("All Photos", "Navigation title for the photo explorer view")
+        return AMLocalizedString("All Images", "Navigation title for the photo explorer view")
     }
     
     var emptyStateViewModel: EmptyStateViewModel {
