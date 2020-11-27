@@ -130,6 +130,9 @@
         [self configPreviewingRegistration];
     }
     self.sortOrderType = [NSUserDefaults.standardUserDefaults integerForKey:@"SharedItemsSortOrderType"];
+    if (self.sortOrderType == MEGASortOrderTypeNone) {
+        self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
