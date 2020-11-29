@@ -7,6 +7,8 @@ final class HandlerView: UIView {
     private var styler: Reader<UIView, CALayer>?
 
     private var shadowCornerLayer: CALayer?
+    
+    private var indicatorView: SlideIndicatorView!
 
     // MARK: - Initialization
 
@@ -24,17 +26,28 @@ final class HandlerView: UIView {
 
     private func setupView(with trait: UITraitCollection) {
         let (backgroundColor, shadowColor) = themeColor(of: trait)
+        
+        let slideIndicatorView = SlideIndicatorView(forAutoLayout: ())
+        addSubview(slideIndicatorView)
+        self.indicatorView = slideIndicatorView
+        
+        NSLayoutConstraint.activate([
+            slideIndicatorView.heightAnchor.constraint(equalToConstant: 10),
+            centerYAnchor.constraint(equalTo: slideIndicatorView.centerYAnchor),
+            leadingAnchor.constraint(equalTo: slideIndicatorView.leadingAnchor),
+            trailingAnchor.constraint(equalTo: slideIndicatorView.trailingAnchor),
+        ])
 
         let config = RoundCornerShadowConfiguration(
             backgroundColor: backgroundColor,
             corner: .init(
                 corners: [.topLeft, .topRight],
-                radius: 10
+                radius: 20
             ),
             shadow: .init(
-                radius: 2,
+                radius: 20,
                 opacity: 0.2,
-                offset: .init(width: 0, height: 0),
+                offset: .init(width: 0, height: 0.2),
                 color: shadowColor
             )
         )
@@ -58,6 +71,7 @@ final class HandlerView: UIView {
         super.layoutSubviews()
         shadowCornerLayer?.removeFromSuperlayer()
         shadowCornerLayer = styler?.runReader(self)
+        bringSubviewToFront(indicatorView)
     }
 }
 

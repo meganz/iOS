@@ -146,7 +146,11 @@ final class HomeViewController: UIViewController {
         guard slidePanelAnimator.animationOffsetY == nil else { return }
         // Will only be executed once - the first time, and tell the `SlidePanelAnimator` that the **Vertical Offset**
         // between the top of slide panel and the top of `searchBarView`.
-        slidePanelAnimator.animationOffsetY = (slidePanelView.frame.minY - searchBarView.frame.minY) + 10
+        slidePanelAnimator.animationOffsetY = (slidePanelView.frame.minY - searchBarView.frame.minY) + Constant.slidePanelRoundCornerHeight
+    }
+
+    private enum Constant {
+        static let slidePanelRoundCornerHeight: CGFloat = 20 // This value need to be same as `constraintToTopPosition`
     }
 
     // MARK: - View Setup
@@ -233,8 +237,10 @@ final class HomeViewController: UIViewController {
     private func setupBackgroundColor(with trait: UITraitCollection) {
         switch trait.theme {
         case .light:
+            slidePanelView.backgroundColor = UIColor.mnz_grayF7F7F7()
             view.backgroundColor = UIColor.mnz_grayF7F7F7()
         case .dark:
+            slidePanelView.backgroundColor = UIColor.black
             view.backgroundColor = UIColor.black
         }
     }
