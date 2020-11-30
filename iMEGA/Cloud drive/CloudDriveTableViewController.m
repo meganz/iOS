@@ -38,6 +38,7 @@
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+    self.tableView.allowsMultipleSelectionDuringEditing = YES;
     
     
     [self updateAppearance];
@@ -209,6 +210,13 @@
     MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
     if (tableView.isEditing) {
+        
+        for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
+            if (tempNode.handle == node.handle) {
+                return;
+            }
+        }
+        
         [self.cloudDrive.selectedNodesArray addObject:node];
         
         [self.cloudDrive updateNavigationBarTitle];
@@ -262,6 +270,11 @@
         
         return;
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:YES animated:YES];
+    return YES;
 }
 
 #pragma clang diagnostic push

@@ -79,6 +79,7 @@ static NSString *kisDirectory = @"kisDirectory";
     if (self.flavor == AccountScreen) {
         [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                                       action:@selector(longPress:)]];
+        self.offlineTableView.tableView.allowsMultipleSelectionDuringEditing = YES;
     }
     
     self.searchController.delegate = self;
