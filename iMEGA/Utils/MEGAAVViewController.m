@@ -179,7 +179,10 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     self.delegate = self;
     
     if (mediaDestination) {
-        [self.player seekToTime:CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue)];
+        CMTime time = CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue);
+        if (CMTIME_IS_VALID(time)) {
+            [self.player seekToTime:time];
+        }
     }
     
     if (play) {
