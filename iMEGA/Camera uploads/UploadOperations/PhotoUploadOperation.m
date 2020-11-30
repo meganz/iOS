@@ -6,6 +6,7 @@
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
 @import CoreServices;
+@import FirebaseCrashlytics;
 
 static const NSInteger PhotoExportDiskSizeScalingFactor = 2;
 static NSString * const PhotoExportTempName = @"photoExportTemp";
@@ -129,12 +130,20 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     }
     
     NSString *outputTypeUTI;
+    NSError *error;
     if ([self shouldConvertToJPGForUTI:dataUTI]) {
-        self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAJPGFileExtension];
+        self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAJPGFileExtension error:&error];
         outputTypeUTI = (__bridge NSString *)kUTTypeJPEG;
     } else {
         NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
-        self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:fileExtension];
+        self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:fileExtension error:&error];
+    }
+    
+    if (error) {
+        MEGALogError(@"[Camera Upload] %@ error when to generate local unique file name %@", self, error);
+        [[FIRCrashlytics crashlytics] recordError:error];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
     }
     
     __weak __typeof__(self) weakSelf = self;

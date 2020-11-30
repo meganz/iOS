@@ -8,6 +8,8 @@
 #import "LivePhotoUploadOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
+#import "NSError+CameraUpload.h"
+@import FirebaseCrashlytics;
 
 static NSString * const CameraUploadLivePhotoExtension = @"live";
 static NSString * const CameraUploadBurstPhotoExtension = @"burst";
@@ -64,7 +66,15 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 }
 
 - (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node {
-    NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension];
+    NSError *error;
+    NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension error:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] %@ error when to generate local unique file name %@", self, error);
+        [[FIRCrashlytics crashlytics] recordError:error];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+    
     [self copyToParentNodeIfNeededForMatchingNode:node localFileName:localFileName];
 }
 
@@ -107,8 +117,15 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 #pragma mark - generate local file name
 
-- (NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension {
+- (nullable NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension error:(NSError * __autoreleasing _Nullable *)error {
     NSString *originalFileName = [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia];
+    if (originalFileName == nil) {
+        if (error != NULL) {
+            *error = [NSError mnz_cameraUploadEmptyFileNameError];
+        }
+        
+        return nil;
+    }
     
     if ([self isKindOfClass:[LivePhotoUploadOperation class]]) {
         originalFileName = [originalFileName stringByAppendingPathExtension:CameraUploadLivePhotoExtension];

@@ -29,6 +29,10 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorChunksMissing userInfo:@{NSLocalizedDescriptionKey : @"file chunk is not found"}];
 }
 
++ (NSError *)mnz_cameraUploadEmptyFileNameError {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEmptyFileName userInfo:@{NSLocalizedDescriptionKey : @"empty local file name"}];
+}
+
 + (NSError *)mnz_cameraUploadNoWritePermissionErrorForFileURL:(NSURL *)URL {
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorNoFileWritePermission userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"no write permission for file %@", URL]}];
 }
