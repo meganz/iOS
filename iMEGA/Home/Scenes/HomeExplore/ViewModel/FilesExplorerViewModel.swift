@@ -58,7 +58,7 @@ final class FilesExplorerViewModel {
         
         self.useCase.onNodesUpdate { [weak self] nodes in
             guard let self = self else { return }
-            self.invokeCommand?(.onNodesUpdate(nodes))
+            self.invokeCommand?(.reloadData)
         }
         
         self.nodeClipboardOperationUseCase.onNodeMove { [weak self] node in
