@@ -49,6 +49,7 @@ class ChatSharedItemsViewController: UIViewController {
         title = NSLocalizedString("Shared Files", comment: "Header of block with all shared files in chat.")
         
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
+        tableView.allowsMultipleSelectionDuringEditing = true
         
         MEGASdkManager.sharedMEGAChatSdk()?.openNodeHistory(forChat: chatRoom.chatId, delegate: self)
         
@@ -453,6 +454,14 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             updateSelectCountTitle()
             updateToolbarButtonsState()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        selectTapped()
     }
 }
 

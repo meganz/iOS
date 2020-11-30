@@ -101,6 +101,8 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    self.tableView.allowsMultipleSelectionDuringEditing = YES;
+    
     self.navigationItem.title = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
@@ -978,6 +980,13 @@
     }
     
     if (tableView.isEditing) {
+        
+        for (MEGANode *tempNode in self.selectedNodesMutableArray) {
+            if (tempNode.handle == node.handle) {
+                return;
+            }
+        }
+        
         if (node != nil) {
             [_selectedNodesMutableArray addObject:node];
         }
@@ -1050,6 +1059,11 @@
         
         return;
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setEditing:YES animated:YES];
+    return YES;
 }
 
 #pragma clang diagnostic push
