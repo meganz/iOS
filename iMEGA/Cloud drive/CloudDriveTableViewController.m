@@ -206,7 +206,20 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    BOOL isInSearch = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
+    MEGANode *node;
+    if (isInSearch) {
+        if (self.cloudDrive.searchNodesArray.count > indexPath.row) {
+            node = self.cloudDrive.searchNodesArray[indexPath.row];
+        }
+    } else {
+        node = [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    }
+    
+    if (node == nil) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
 
     if (tableView.isEditing) {
         [self.cloudDrive.selectedNodesArray addObject:node];
