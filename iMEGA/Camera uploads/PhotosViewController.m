@@ -550,7 +550,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
     }
     [self setEditing:NO animated:YES];
 }

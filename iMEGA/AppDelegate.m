@@ -1908,7 +1908,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database files saved in others applications
-        if ([transfer.appData containsString:@"SaveInPhotosApp"]) {
+        if ([transfer.appData containsString:@"SaveInPhotosApp"] ||
+            (transfer.path.mnz_isImagePathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSavePhotoToGalleryEnabled"])
+            || (transfer.path.mnz_isVideoPathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
             [transfer mnz_saveInPhotosApp];
             return;
         }

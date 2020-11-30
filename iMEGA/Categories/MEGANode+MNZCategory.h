@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Actions
 
+- (BOOL)mnz_downloadNode;
+- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
-- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite;
-- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
 - (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController;

@@ -247,7 +247,7 @@
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNodeOverwriting:YES];
+        [node mnz_downloadNode];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -395,7 +395,7 @@
     if (self.selectedNodesArray.count == 1) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
         
-        [self.selectedNodesArray.firstObject mnz_downloadNodeOverwriting:YES];
+        [self.selectedNodesArray.firstObject mnz_downloadNode];
         
         [self setEditing:NO animated:YES];
         
@@ -492,9 +492,8 @@
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-        
         MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [node mnz_downloadNodeOverwriting:YES];
+            [node mnz_downloadNode];
             return YES;
         }];
         downloadButton.tintColor = UIColor.whiteColor;
@@ -533,7 +532,7 @@
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:YES];
+            [node mnz_downloadNode];
             break;
             
         case MegaNodeActionTypeRemove:

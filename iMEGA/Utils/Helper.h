@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
 
 + (NSMutableArray *)uploadingNodes;
 + (void)startPendingUploadTransferIfNeeded;

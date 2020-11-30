@@ -480,7 +480,7 @@ extension HomeViewController: RecentNodeActionDelegate {
                     UIImage(named: "hudDownload")!,
                     status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
                 )
-                node.mnz_downloadNodeOverwriting(true)
+                node.mnz_downloadNode()
 
             // MARK: - Rename
             case .rename:

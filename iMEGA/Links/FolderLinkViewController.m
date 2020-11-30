@@ -574,10 +574,10 @@
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (self.selectedNodesArray.count) {
             for (MEGANode *node in self.selectedNodesArray) {
-                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES];
             }
         } else {
-            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES];
         }
         
         //FIXME: Temporal fix. This lets the SDK process some transfers before going back to the Transfers view (In case it is on the navigation stack)
