@@ -6,6 +6,11 @@ if ! type "megacmd" > /dev/null; then
 	exit 1
 fi
 
+file="ZZlSzKCQ"
+key="pCnK7UKbV3bjZvnRxkHkudcHGQcoarEE8bNlN2WDGfM"
+fileUrl="https://mega.nz/#!${file}!${key}"
+filePath="./iMEGA/Vendor/SDK/bindings/ios/3rdparty/${file}"
 
-mega-get https://mega.nz/#!ZZlSzKCQ!pCnK7UKbV3bjZvnRxkHkudcHGQcoarEE8bNlN2WDGfM ./iMEGA/Vendor/SDK/bindings/ios/3rdparty/
-unzip -o ./iMEGA/Vendor/SDK/bindings/ios/3rdparty/3rdparty.zip -d ./iMEGA/Vendor/SDK/bindings/ios/3rdparty/
+mkdir $filePath
+mega-get $fileUrl $filePath
+unzip -o ${filePath}/3rdparty.zip -d ./iMEGA/Vendor/SDK/bindings/ios/3rdparty/
