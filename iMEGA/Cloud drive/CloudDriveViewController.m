@@ -1073,12 +1073,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
-    UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
-    if (newFolderAlertController) {
-        UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
-        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
-        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
+    if ([self.presentedViewController isKindOfClass:[UIAlertController class]]) {
+        UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
+        if (newFolderAlertController) {
+            UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
+            rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
+        }
     }
 }
 
