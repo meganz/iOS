@@ -17,6 +17,7 @@
 #import "CameraUploadOperation+Utils.h"
 #import "NSDate+MNZCategory.h"
 @import Photos;
+@import FirebaseCrashlytics;
 
 static NSString * const VideoAttributeImageName = @"AttributeImage";
 
@@ -182,13 +183,13 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     self.fileEncrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     
     __weak __typeof__(self) weakSelf = self;
-    [self.fileEncrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
+    [self.fileEncrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nullable chunkURLsKeyedByUploadSuffix, NSError * _Nullable error) {
         if (weakSelf.isCancelled) {
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
 
-        if (success) {
+        if (error == nil) {
             MEGALogDebug(@"[Camera Upload] %@ file %llu encrypted to %lu, %@", weakSelf, fileSize, (unsigned long)chunkURLsKeyedByUploadSuffix.count, chunkURLsKeyedByUploadSuffix.allKeys);
             weakSelf.uploadInfo.fileSize = fileSize;
             weakSelf.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
@@ -196,6 +197,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             [weakSelf requestUploadURL];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to encrypt file %@", weakSelf, error);
+            [[FIRCrashlytics crashlytics] recordError:error];
+            
             if ([error.domain isEqualToString:CameraUploadErrorDomain] && error.code == CameraUploadErrorNoEnoughDiskFreeSpace) {
                 [weakSelf finishUploadWithNoEnoughDiskSpace];
             } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
