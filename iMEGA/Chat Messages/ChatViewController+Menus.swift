@@ -94,7 +94,7 @@ extension ChatViewController {
             }
             
             if node != nil {
-                Helper.downloadNode(node!, folderPath: Helper.relativePathForOffline(), isFolderLink: false, shouldOverwrite: false)
+                Helper.downloadNode(node!, folderPath: Helper.relativePathForOffline(), isFolderLink: false)
                 downloading = true
             }
         }

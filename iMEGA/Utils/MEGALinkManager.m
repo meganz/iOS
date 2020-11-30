@@ -137,9 +137,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
-                
+            
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:NO shouldOverwrite:NO];
+            [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:NO];
             break;
         }
             
@@ -162,7 +162,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
-                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES];
             }
             break;
         }

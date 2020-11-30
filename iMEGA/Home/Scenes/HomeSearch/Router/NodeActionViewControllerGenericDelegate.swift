@@ -19,7 +19,7 @@ final class NodeActionViewControllerGenericDelegate:
                     status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
                 )
             }
-            node.mnz_downloadNodeOverwriting(false)
+            node.mnz_downloadNode()
         case .copy, .move:
             showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
 

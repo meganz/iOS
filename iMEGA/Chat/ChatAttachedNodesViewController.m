@@ -163,7 +163,7 @@
     
     if (self.tableView.isEditing) {
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO  shouldOverwrite:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
     }
 }
@@ -218,7 +218,7 @@
         }
         
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
     }
     

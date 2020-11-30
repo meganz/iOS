@@ -1023,7 +1023,7 @@ static const CGFloat GapBetweenPages = 10.0;
                     
                 default:
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeOverwriting:NO api:self.api];
+                    [node mnz_downloadNodeWithApi:self.api];
                     break;
             }
             break;

@@ -243,7 +243,7 @@
     if (self.isLink && self.fileLink) {
         [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
     } else {
-        [self.node mnz_downloadNodeOverwriting:NO];
+        [self.node mnz_downloadNode];
     }
 }
 

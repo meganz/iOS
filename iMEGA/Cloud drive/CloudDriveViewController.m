@@ -1581,7 +1581,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *node in self.selectedNodesArray) {
-        if ([node mnz_downloadNodeOverwriting:NO]) {
+        if ([node mnz_downloadNode]) {
             [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
         } else {
             return;
@@ -1873,7 +1873,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            if ([node mnz_downloadNodeOverwriting:NO]) {
+            if ([node mnz_downloadNode]) {
                 [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
             }
             break;

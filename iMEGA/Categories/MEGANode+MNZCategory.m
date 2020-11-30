@@ -200,6 +200,10 @@
 
 #pragma mark - Actions
 
+- (BOOL)mnz_downloadNode {
+    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
+}
+
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController {
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
     
@@ -242,26 +246,17 @@
     [viewController presentViewController:labelsActionSheet animated:YES completion:nil];
 }
 
-- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
-    return [self mnz_downloadNodeOverwriting:overwrite api:[MEGASdkManager sharedMEGASdk]];
-}
-
-- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
-    if (offlineNodeExist) {
-        return YES;
-    } else {
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:overwrite];
-                return YES;
-            } else {
-                return NO;
-            }
+- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
+        if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink];
+            return YES;
         } else {
             return NO;
         }
+    } else {
+        return NO;
     }
 }
 
@@ -495,7 +490,7 @@
         }
 
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink shouldOverwrite:NO];
+            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink];
             
             [viewController dismissViewControllerAnimated:YES completion:^{
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];

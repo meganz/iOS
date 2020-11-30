@@ -1042,7 +1042,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:NO];
+            [node mnz_downloadNode];
             break;
             
         case MegaNodeActionTypeCopy: {

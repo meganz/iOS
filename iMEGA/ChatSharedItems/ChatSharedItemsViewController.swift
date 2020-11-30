@@ -245,7 +245,7 @@ class ChatSharedItemsViewController: UIViewController {
             return
         }
         SVProgressHUD.show(image, status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts"))
-        nodes.forEach { $0.mnz_downloadNodeOverwriting(false) }
+        nodes.forEach { $0.mnz_downloadNode() }
         
         cancelSelectTapped()
     }
