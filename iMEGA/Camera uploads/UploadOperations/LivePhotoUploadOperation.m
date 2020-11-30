@@ -6,6 +6,7 @@
 #import "CameraUploadManager+Settings.h"
 @import Photos;
 @import CoreServices;
+@import FirebaseCrashlytics;
 
 static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResource.mov";
 
@@ -66,7 +67,16 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
     self.exportSession = session;
     session.outputFileType = AVFileTypeMPEG4;
-    self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAMP4FileExtension];
+    
+    NSError *error;
+    self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAMP4FileExtension error:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] %@ error when to generate local unique file name %@", self, error);
+        [[FIRCrashlytics crashlytics] recordError:error];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+    
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
