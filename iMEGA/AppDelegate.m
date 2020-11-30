@@ -1151,6 +1151,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
         BusinessExpiredViewController *businessStatusVC = BusinessExpiredViewController.alloc.init;
+        businessStatusVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [UIApplication.mnz_presentingViewController presentViewController:businessStatusVC animated:YES completion:nil];
     }
 }
