@@ -96,16 +96,16 @@ static const NSUInteger VideoUploadBatchCount = 1;
     
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        [self.uploadRecordsCollator collateNonUploadingRecords];
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+    });
+    
     if (CameraUploadManager.isCameraUploadEnabled) {
         [TransferSessionManager.shared restoreAllSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
             [self.uploadRecordsCollator collateAllUploadingRecordsByUploadTasks:uploadTasks];
         }];
     }
-    
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.uploadRecordsCollator collateNonUploadingRecords];
-        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-    });
 }
 
 #pragma mark - manage operation queues

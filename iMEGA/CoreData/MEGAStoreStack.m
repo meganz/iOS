@@ -1,6 +1,10 @@
 
 #import "MEGAStoreStack.h"
 
+#ifdef MAIN_APP_TARGET
+@import FirebaseCrashlytics;
+#endif
+
 @interface MEGAStoreStack ()
 
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
@@ -47,6 +51,11 @@
     [container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription * _Nonnull storeDescription, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"error when to create core data stack %@", error);
+            
+#ifdef MAIN_APP_TARGET
+            [[FIRCrashlytics crashlytics] recordError:error];
+#endif
+            
             abort();
         }
     }];
