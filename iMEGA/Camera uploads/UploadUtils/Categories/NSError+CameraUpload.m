@@ -61,4 +61,12 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorDisabledMediaSubtype userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"the media subtype %lu currently is disabled", (unsigned long)mediaSubtype]}];
 }
 
++ (NSError *)mnz_cameraUploadFileHandleException:(NSException *)exception {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorFileHandleException userInfo:@{
+        NSLocalizedDescriptionKey : exception.name ?: @"",
+        NSLocalizedFailureReasonErrorKey : exception.reason ?: @"file handle exception",
+        NSLocalizedRecoverySuggestionErrorKey : exception.userInfo ?: @{}
+    }];
+}
+
 @end
