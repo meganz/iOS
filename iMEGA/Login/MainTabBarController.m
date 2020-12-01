@@ -62,7 +62,7 @@
                 break;
                 
             case HOME:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
+                tabBarItem.accessibilityLabel = AMLocalizedString(@"Home", @"Accessibility label of Home section in tabbar item");
                 break;
         }
     }
