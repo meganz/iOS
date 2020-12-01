@@ -43,7 +43,11 @@ final class FilesExplorerViewModel {
     private var viewTypePreference: ViewTypePreference = .list
     
     var invokeCommand: ((Command) -> Void)?
-
+    
+    // MARK: - Debouncer
+    private static let REQUESTS_DELAY: TimeInterval = 0.35
+    private var debouncer: Debouncer = Debouncer(delay: REQUESTS_DELAY)
+    
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,
@@ -58,7 +62,9 @@ final class FilesExplorerViewModel {
         
         self.useCase.onNodesUpdate { [weak self] nodes in
             guard let self = self else { return }
-            self.invokeCommand?(.reloadData)
+            self.debouncer.start {
+                self.invokeCommand?(.reloadData)
+            }
         }
         
         self.nodeClipboardOperationUseCase.onNodeMove { [weak self] node in
@@ -66,7 +72,10 @@ final class FilesExplorerViewModel {
         }
         
         self.nodeClipboardOperationUseCase.onNodeCopy { [weak self] _ in
-            self?.invokeCommand?(.reloadData)
+            guard let self = self else { return }
+            self.debouncer.start {
+                self.invokeCommand?(.reloadData)
+            }
         }
     }
     

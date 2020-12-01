@@ -21,6 +21,10 @@ class PhotoExplorerViewModel: NSObject {
     private var nodes: [MEGANode] = []
     private var sectionMarker: [Int] = []
     var invokeCommand: ((Command) -> Void)?
+    
+    // MARK: - Debouncer
+    private static let REQUESTS_DELAY: TimeInterval = 0.35
+    private var debouncer = Debouncer(delay: REQUESTS_DELAY)
 
     private var title: String {
         return AMLocalizedString("All Images", "Navigation title for the photo explorer view")
@@ -104,7 +108,7 @@ class PhotoExplorerViewModel: NSObject {
         router.didSelect(node: node, allNodes: nodes)
     }
     
-    private func loadAllPhotos() {
+    @objc private func loadAllPhotos() {
         fileSearchUseCase.search(string: nil,
                        inNode: nil,
                        sortOrderType: .modificationDesc,
@@ -152,7 +156,9 @@ class PhotoExplorerViewModel: NSObject {
     private func onNodesUpdate(updatedNodes: [MEGANode]) {
         if isAnyNodeMovedToTrash(nodes: nodes, updatedNodes: updatedNodes)
             || updatedNodes.containsNewNode() {
-            loadAllPhotos()
+            debouncer.start { [weak self] in
+                self?.loadAllPhotos()
+            }
         } else {
             var resultNodes = [MEGANode]()
             var resultIndexPaths = [IndexPath]()
