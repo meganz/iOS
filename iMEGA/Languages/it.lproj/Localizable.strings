@@ -2054,8 +2054,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Mentre MEGA non ha accesso ai tuoi dati, gli amministratori della tua organizzazione hanno l'abilità di controllare e vedere i Caricamenti da fotocamera nel tuo account utente.";
 /* */
 "Something went wrong"="Qualcosa è andato storto";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Utilizzo";
 /* Title of the "Links" Shared Items. */
 "Links"="Link";
 /* Title for empty state view of "Links" in Shared Items. */
