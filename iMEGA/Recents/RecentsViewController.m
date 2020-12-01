@@ -19,6 +19,8 @@
 #import "ThumbnailViewerTableViewCell.h"
 #import "MEGA-Swift.h"
 
+static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
+
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
 
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
@@ -299,6 +301,11 @@
     }
 }
 
+- (void)reloadUI {
+    self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
+    [self.tableView reloadData];
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
@@ -314,8 +321,7 @@
     }
     
     if (shouldProcessOnNodesUpdate) {
-        self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
-        [self.tableView reloadData];
+        [self debounce:@selector(reloadUI) delay:RecentsViewReloadTimeDelay];
     }
 }
 
