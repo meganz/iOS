@@ -497,12 +497,14 @@
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
-    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    if (alertController) {
-        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
-        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
-        rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
+    if ([self.presentedViewController isKindOfClass:[UIAlertController class]]) {
+        UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+        if (alertController) {
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
+            UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+            rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
+        }
     }
 }
 
