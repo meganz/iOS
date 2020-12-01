@@ -79,7 +79,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+    self.navigationItem.title = AMLocalizedString(@"Storage", @"Navigate title for the storage information screen");
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

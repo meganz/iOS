@@ -915,8 +915,6 @@
 "uploadInUppercaseTransfers"="ถ่ายโอนการอัปโหลด";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="ถ่ายโอนการดาวน์โหลด";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="บัญชีของฉัน";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="อัปเกรด";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -2054,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="แม้ว่า MEGA จะไม่เข้าถึงข้อมูลของคุณ แต่ผู้ดูแลระบบองค์กรของคุณมีความสามารถในการควบคุมและดูการอัปโหลดจากกล้องในบัญชีผู้ใช้ของคุณได้";
 /* */
 "Something went wrong"="มีบางอย่างผิดพลาด";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="การใช้งาน";
 /* Title of the "Links" Shared Items. */
 "Links"="ลิงก์";
 /* Title for empty state view of "Links" in Shared Items. */
