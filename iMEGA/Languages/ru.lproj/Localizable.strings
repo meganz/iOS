@@ -915,8 +915,6 @@
 "uploadInUppercaseTransfers"="ЗАГРУЗКИ в облако";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="Мой аккаунт";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Улучшить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
