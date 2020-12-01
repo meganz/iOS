@@ -915,8 +915,6 @@
 "uploadInUppercaseTransfers"="UPLOAD transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="My Account";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -2416,3 +2414,5 @@
 "Select Folder" = "Select Folder";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads." = "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads.";
+/* Accessibility label for Home section in tabbar item */
+"Home" = "Home";
