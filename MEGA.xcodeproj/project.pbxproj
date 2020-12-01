@@ -71,7 +71,6 @@
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
 		2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */; };
 		2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
-		2FA6DA5F243E9191007A8E81 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */; };
 		2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
 		2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
@@ -3390,7 +3389,6 @@
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */,
 				2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */,
-				2FA6DA5F243E9191007A8E81 /* AssetsLibrary.framework in Frameworks */,
 				2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */,
 				2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */,
 				77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
