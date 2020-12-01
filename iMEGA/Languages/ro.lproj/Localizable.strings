@@ -2054,8 +2054,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Deși MEGA nu are acces la datele tale, administratorii organizației tale pot controla și vedea încărcările cameră din contul tău de utilizator";
 /* */
 "Something went wrong"="Ceva a mers prost";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Utilizare";
 /* Title of the "Links" Shared Items. */
 "Links"="Linkuri";
 /* Title for empty state view of "Links" in Shared Items. */

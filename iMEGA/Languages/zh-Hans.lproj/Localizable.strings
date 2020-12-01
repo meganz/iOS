@@ -2054,8 +2054,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="尽管MEGA无法访问您的数据，但您的企业管理员可以控制并查看用户的帐户中的“相机上传”文件。";
 /* */
 "Something went wrong"="出错了";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="用量";
 /* Title of the "Links" Shared Items. */
 "Links"="链接";
 /* Title for empty state view of "Links" in Shared Items. */
