@@ -7,6 +7,7 @@ import UIKit
 class NodeActionViewController: ActionSheetViewController {
     
     private var node: MEGANode
+    var shouldAutorotateScreen: Bool = true
     private var displayMode: DisplayMode
     var delegate: NodeActionViewControllerDelegate
     var sender: Any
@@ -152,5 +153,11 @@ class NodeActionViewController: ActionSheetViewController {
         separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         separatorLineView.backgroundColor = tableView.separatorColor
+    }
+
+    // MARK: - Should or not auto rotate
+
+    override var shouldAutorotate: Bool {
+        shouldAutorotateScreen
     }
 }

@@ -93,18 +93,20 @@ final class HomeViewController: UIViewController {
             guard let self = self else { return }
             let resizedImage = output.avatarImage
 
-            if let badgeButton = self.badgeButton {
-                badgeButton.setBadgeText(output.notificationNumber)
-                badgeButton.setBackgroundImage(resizedImage, for: .normal)
-            } else {
-                let badgeButton = BadgeButton()
-                badgeButton.setBadgeText(output.notificationNumber)
-                badgeButton.setBackgroundImage(resizedImage, for: .normal)
-                badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
-                self.badgeButton = badgeButton
+            asyncOnMain {
+                if let badgeButton = self.badgeButton {
+                    badgeButton.setBadgeText(output.notificationNumber)
+                    badgeButton.setBackgroundImage(resizedImage, for: .normal)
+                } else {
+                    let badgeButton = BadgeButton()
+                    self.badgeButton = badgeButton
+                    badgeButton.setBadgeText(output.notificationNumber)
+                    badgeButton.setBackgroundImage(resizedImage, for: .normal)
+                    badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
 
-                let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
-                self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+                    let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
+                    self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+                }
             }
         }
         accountViewModel.inputs.viewIsReady()
@@ -135,6 +137,11 @@ final class HomeViewController: UIViewController {
             }
         }
         uploadViewModel.inputs.didLoadView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        accountViewModel.inputs.viewIsAppearing()
     }
 
     override func viewDidLayoutSubviews() {
@@ -264,7 +271,6 @@ final class HomeViewController: UIViewController {
             navigationBar?.barTintColor = color
         }
     }
-
 
     // MARK: - Tap Actions
 
