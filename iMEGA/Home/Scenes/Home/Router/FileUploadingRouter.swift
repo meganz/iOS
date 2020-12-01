@@ -145,7 +145,7 @@ final class FileUploadingRouter {
         }
 
         browserViewController.browserViewControllerDelegate = delegate
-        browserViewController.browserAction = .shareExtension
+        browserViewController.browserAction = .newHomeUpload
         let browserNavigationController = MEGANavigationController(rootViewController: browserViewController)
         browserNavigationController.setToolbarHidden(false, animated: false)
         navigationController?.present(browserNavigationController, animated: true, completion: nil)
