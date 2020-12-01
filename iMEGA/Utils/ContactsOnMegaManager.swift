@@ -165,13 +165,13 @@ struct ContactOnMega: Codable {
             contactsFetched()
         }
         contactsOnMegaDictionary.forEach { (contactOnMega) in
-            let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, _) in
-                if request.text != MEGASdkManager.sharedMEGASdk().myEmail {
-                    self.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: request.text, name: contactOnMega.value))
+            let emailRequestDelegate = MEGAChatGenericRequestDelegate(completion: { [weak self] (request, _) in
+                if let email = request.text, email != MEGASdkManager.sharedMEGASdk().myEmail {
+                    self?.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: email, name: contactOnMega.value))
                 }
                 contactsCount -= 1
                 if contactsCount == 0 {
-                    self.persistContactsOnMega()
+                    self?.persistContactsOnMega()
                 }
             })
             MEGASdkManager.sharedMEGAChatSdk()?.userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
