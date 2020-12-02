@@ -862,11 +862,11 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="อีเมลไม่ตรงกัน";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="คุณมีการยืนยันลิงก์คำขอสำหรับอีเมลแล้ว";
+"emailAddressChangeAlreadyRequested"="คุณได้ส่งคำขอลิงก์ยืนยันสำหรับที่อยู่อีเมลนั้นแล้ว";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
 "emailIsChanging_description"="กรุณาไปที่กล่องจดหมายและคลิกลิงก์เพื่อยืนยันอีเมลใหม่ของคุณ";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="กรุณาใส่รหัสผ่านเพื่อยืนยันอีเมลของคุณ";
+"verifyYourEmailAddress_description"="กรุณาใส่รหัสผ่านเพื่อตรวจสอบที่อยู่อีเมลของคุณ";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="ขอแสดงความยินดี อีเมลใหม่ของคุณสำหรับบัญชี MEGA นี้คือ: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -968,13 +968,13 @@
 /* Add Phone Number title  */
 "Add Phone Number"="เพิ่มหมายเลขโทรศัพท์";
 /* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="คุณได้รับพื้นที่เก็บข้อมูล %1$s และโควต้าการถ่ายโอน %2$s สำหรับการยืนยันหมายเลขโทรศัพท์ของคุณ";
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="คุณได้รับพื้นที่เก็บข้อมูลจำนวน %1$s และโควต้าการถ่ายโอนอีก %2$s สำหรับการตรวจสอบหมายเลขโทรศัพท์ของคุณ";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="รับ %@ ฟรีเมื่อคุณเพิ่มหมายเลขโทรศัพท์ จะช่วยทำให้ผู้ติดต่อของคุณหาคุณเจอได้ง่ายขึ้นใน MEGA";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="เพิ่มหมายเลขโทรศัพท์ของคุณเข้าไปยัง MEGA จะช่วยให้ผู้ติดต่อสามารถหาคุณเจอได้ง่ายขึ้นใน MEGA";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิด กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิด กรุณาตรวจสอบหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ";
 /* Verify your account title */
 "Verify Your Account"="ตรวจสอบบัญชีของคุณ";
 /* Add your phone number title */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="เลือกประเภทบัญชีของคุณ";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
+"cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
+"cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="ที่เก็บข้อมูล";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1172,7 +1172,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="ส่งข้อความ";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="ยืนยันข้อมูลรับรอง";
+"verifyCredentials"="ตรวจสอบข้อมูลประจำตัว";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="ตรวจสอบ";
 /* Button title */
@@ -1190,7 +1190,7 @@
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="ข้อมูลรับรองการติดต่อ";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="สิ่งนี้ทำได้ดีที่สุดในชีวิตจริงได้โดยการประชุมแบบเห็นหน้า หากคุณมีช่องทางที่ได้รับการตรวจสอบแล้ว เช่น OTR ที่ตรวจสอบแล้วหรือ PGP คุณอาจใช้ช่องดังกล่าวได้";
+"thisIsBestDoneInRealLife"="สิ่งนี้ทำได้ดีที่สุดในชีวิตจริงโดยการพบปะแบบเห็นหน้า หากคุณมีช่องอื่นที่ผ่านการตรวจสอบแล้ว เช่น OTR ที่ตรวจสอบแล้วหรือ PGP คุณอาจใช้ช่องดังกล่าวได้";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="ข้อมูลประจำตัวของฉัน";
 /* Button to reset the password */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ข้อความที่ยังไม่ได้อ่าน";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="การสมัครใช้งานแบบต่ออายุอัตโนมัติอย่างต่อเนื่องนั้น จะถูกกำหนดค่าไม่ว่าจะเป็นระยะเวลาการสมัครใช้งานหรือราคา จะเป็นไปในทิศทางเดียวกันและเป็นค่าแรกเริ่มให้โดยอัตโนมัติ คุณสามารถปิดการใช้งานดังกล่าว แพคเกจ MEGA PRO ได้ไม่เกิน 24 ชั่วโมงก่อนการชำระเงินในรอบถัดไป เนื่องจากเป็นการตั้งค่าผ่านหน้าบัญชี iTunes ของคุณ และเพื่อจัดการกับการสมัครใช้งานของคุณ เพียงแค่แตะที่ไอคอน App Store บนโทรศัพท์ของคุณ ลงชื่อเข้าด้วย Apple ID ของคุณที่ด้านล่างของหน้า (ถ้าคุณยังไม่ได้ดำเนินการ) แล้วคลิกดูรหัส คุณจะถูกนำไปยังหน้าบัญชีของคุณ สามารถเลื่อนลงไปจัดการ การสมัครใช้งานแอปได้ จากนั้น คุณสามารถเลือกการสมัครใช้งาน MEGA PRO และสามารถดูกำหนดการต่ออายุ เลือกแพคเกจสมัครใช้งานต่างๆ หรือสลับสวิทช์เปิด-ปิด เพื่อปิดใช้งาน การสมัครใช้งานแบบต่ออายุอัตโนมัติของคุณได้เช่นเดียวกัน";
+"autorenewableDescription"="การสมัครใช้งานจะได้รับการต่ออายุโดยอัตโนมัติตามระยะเวลาที่สมัครไว้แบบต่อเนื่องในระยะเวลาเดียวกันและในราคาเดียวกับช่วงเวลาเริ่มต้นที่เลือกไว้ คุณสามารถปิดการต่ออายุการสมัครใช้งาน MEGA Pro โดยอัตโนมัติได้ไม่เกิน 24 ชั่วโมงก่อนถึงกำหนดชำระเงินครั้งต่อไปผ่านหน้าการตั้งค่าบัญชี iTunes ของคุณ ในการจัดการการสมัครใช้งานของคุณเพียงคลิกที่ไอคอน App Store บนอุปกรณ์มือถือของคุณ ลงชื่อเข้าใช้ด้วย Apple ID ของคุณที่ด้านล่างของหน้า (กรณีที่ยังไม่ได้ลงชื่อเข้าใช้) จากนั้นคลิกดู ID คุณจะเข้าสู่หน้าบัญชีของคุณซึ่งคุณสามารถเลื่อนลงไปที่จัดการการสมัครใช้งานแอป จากตรงนั้นคุณสามารถเลือกการสมัครใช้งาน MEGA Pro แและสามารถดูกำหนดการต่ออายุ เลือกแพ็คเกจการสมัครใช้งานอื่น ๆ หรือสลับสวิตช์เปิด-ปิด เป็นปิด เพื่อปิดใช้งานการต่ออายุการสมัครใช้งานของคุณ";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1381,7 +1381,7 @@
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="ไม่สามารถเข้าถึงได้เนื่องจากการละเมิด ToS/AUP";
 /* Error shown when SSL check has failed */
-"SSL verification failed"="ยืนยัน SSL ไม่สำเร็จ";
+"SSL verification failed"="การตรวจสอบ SSL ล้มเหลว";
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="โควต้าไม่เพียงพอ";
 /* SDK error returned when a MFA is required to perform an operation */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA มีพื้นที่เก็บข้อมูลฟรี 50 GB สำหรับผู้ใช้ที่ลงทะเบียนทุกคนพร้อมโบนัสพิเศษและเสนอแผนการจ่ายเงินที่มีให้เลือกมากมาย:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="สมัครใช้งาน PRO LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 400 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน PRO I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 2 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน PRO II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน PRO III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 16 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
+"generalDescriptionParagraph5"="สมัครใช้งาน Pro LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 400 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน Pro I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 2 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน Pro II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน Pro III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 16 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายสิทธิส่วนบุคคล: https://mega.nz/privacy";
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="ข้อมูลการชำระเงิน";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="แผนสมาชิกแบบ PRO จะหมดอายุเร็ว ๆนี้";
+"PRO membership plan expiring soon"="แผนสมาชิก Pro จะหมดอายุเร็ว ๆ นี้";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="แจ้งให้ลบเนื้อหา";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="การชำระเงินสำหรับแผน %1 ไม่สมบูรณ์";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="แผนสมาชิกแบบ PRO ของคุณจะหมดอายุใน 1 วัน";
+"Your PRO membership plan will expire in 1 day."="แผนสมาชิก Pro ของคุณจะหมดอายุใน 1 วัน";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="แผนสมาชิกแบบ PRO ของคุณจะหมดอายุใน %1 วัน";
+"Your PRO membership plan will expire in %1 days."="แผนสมาชิก Pro ของคุณจะหมดอายุใน %1 วัน";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="แผนบัญชี PRO ของคุณหมดอายุ 1 วันที่ผ่านมา";
+"Your PRO membership plan expired 1 day ago"="แผน Pro ของคุณหมดอายุเมื่อ 1 วันก่อน";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="แผนบัญชี PRO ของคุณหมดอายุ %1 วันที่ผ่านมา";
+"Your PRO membership plan expired %1 days ago"="แผน Pro ของคุณหมดอายุเมื่อ %1 วันก่อน";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="การแชร์สาธารณะของคุณ %1 (%2) ถูกแจ้งว่าให้ลบเนื้อหา";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2137,7 +2137,7 @@
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="คุณถึงขีดจำกัดรายวันแล้ว";
 /* Error message that will be shown when the code introduced do not match with the one you received */
-"The verification code doesn't match."="รหัสยืนยันไม่ตรงกัน";
+"The verification code doesn't match."="รหัสการตรวจสอบไม่ตรงกัน";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="รหัสไม่ถูกต้อง กรุณาลองใหม่หรือส่งอีกครั้ง";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2151,7 +2151,7 @@
 /* Text related to verified phone number. Used as title or cell description.  */
 "Phone Number"="หมายเลขโทรศัพท์";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="กรุณากรอกรหัสยืนยันที่ส่งถึง";
+"Please type the verification code sent to"="กรุณากรอกรหัสการตรวจสอบที่ส่งถึง";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="คุณไม่ได้รับรหัสใช่ไหม";
 /* Message shown when verify phone number successfully */
@@ -2169,7 +2169,7 @@
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึงการไม่จำกัดบัญชี MEGA ของคุณ";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="เกินโควต้าการถ่ายโอนแล้ว";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
@@ -2182,12 +2182,6 @@
 "Clear All"="ลบทั้งหมด";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="ดำเนินการถ่ายโอนต่อหรือไม่";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="เลือกโฟลเดอร์";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="เลือกโฟลเดอร์";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="คุณภาพของรูป";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2285,7 +2279,7 @@
 /* Title for action to remove the registered phone number. */
 "Remove Phone Number"="ลบหมายเลขโทรศัพท์";
 /* Message for action to remove the registered phone number. */
-"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="วิธีนี้จะเป็นการลบหมายเลขโทรศัพท์ที่เกี่ยวข้องของคุณออกจากบัญชีของคุณ หากภายหลังคุณเลือกที่จะเพิ่มหมายเลขโทรศัพท์ คุณจะต้องยืนยันหมายเลขโทรศัพท์อีกครั้ง";
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="การดำเนินการนี้จะลบหมายเลขโทรศัพท์ที่เกี่ยวข้องออกจากบัญชีของคุณ หากคุณเลือกที่จะเพิ่มหมายเลขโทรศัพท์ในภายหลัง คุณจะต้องตรวจสอบหมายเลขนั้น";
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="การดําเนินการนี้จะลบหมายเลขโทรศัพท์ปัจจุบันของคุณและเริ่มกระบวนการเชื่อมโยงหมายเลขโทรศัพท์ใหม่กับบัญชีของคุณอีกครั้ง";
 /* Information message shown to users when the operation of removing phone number succeed. */
@@ -2391,4 +2385,34 @@
 /* Text used to show the user that some resource is not available */
 "Unavailable"="ไม่พร้อมใช้งาน";
 /* Error text shown when requesting email for email verification within 10 minutes */
-"Email already sent. Please wait a few minutes before trying again."="อีเมลได้ส่งอีเมลแล้ว กรุณารอสักครู่ก่อนที่จะลองใหม่อีกครั้ง";
+"Email already sent. Please wait a few minutes before trying again."="ส่งอีเมลไปแล้ว กรุณารอสักครู่ก่อนที่จะลองใหม่อีกครั้ง";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="ค้นหาไฟล์ของคุณ";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="เลือกโฟลเดอร์";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="เอกสาร";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="วิดีโอ";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

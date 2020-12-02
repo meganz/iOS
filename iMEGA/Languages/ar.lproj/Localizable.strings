@@ -880,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="محو البيانات المحلية";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
+"failedAttempstSectionTitle"="قم بتسجيل الخروج ومسح البيانات المحلية بعد 10 محاولات فاشلة لإدخال رمز المرور";
 /* Menu item */
 "help"="المساعدة";
 /* Title of the section to access MEGA's help centre */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu رسائل غير مقروءة";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
+"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية لنفس المدة وبنفس سعر الفترة الأولية المختارة. يمكنك إيقاف التجديد التلقائي لاشتراكك ميغا برو MEGA Pro في موعد أقصاه 24 ساعة قبل أن يحين موعد سداد اشتراكك التالي عبر صفحة إعدادات الحساب iTunes اي تيونز الخاص بك. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة متجر التطبيقات App Store على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام رمز أبل Apple ID الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك بالفعل) ثم انقر فوق عرض الرمز ID. سيتم نقلك إلى صفحة حسابك حيث يمكنك التمرير لأسفل إلى مدير اشتراكات التطبيقات. من هناك ، يمكنك تحديد اشتراك ميغا برو MEGA Pro الخاص بك وعرض تاريخ التجديد المجدول، أو اختيار حزمة اشتراك مختلفة أو تبديل مفتاح التشغيل/الإيقاف إلى إيقاف التشغيل لتعطيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح MEGA و سجل دخولك للاستمرار";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="تقدم MEGA مساحة تخزين مجانية بحجم 50 غيغا بايت لكل المشتركين بلاضافة الى مكافات على الانجازات. بالاضافة الى باقات مأجورة بمساحات تخزين اكبر.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="اشتراك برو لايت: €4.99 (US$4.99) في الشهر أو €49.99 (US$49.99) في السنة يعطيك 400 غيغابايت من مساحة التخزين و 1 تيرابايت من حجم التراسل المتاح في الشهر. \nاشتراك برو 1: €9.99 (US$9.99) في الشهر أو €99.99 (US$99.99) في السنة يعطيك 2 تيرابايت من مساحة التخزين و 2 تيرابايت من حجم التراسل المتاح في الشهر. [BR]اشتراك برو 2:€19.99 (US$19.99) في الشهر أو €199.99 (US$199.99) في السنة يعطيك 8 تيرابايت من مساحة التخزين و 8 تيرابايت من حجم التراسل المتاح في الشهر.\nاشتراك برو 3: €29.99 (US$29.99) في الشهر أو €299.99 (US$299.99) في السنة يعطيك 16 تيرابايت من مساحة التخزين و 16 تيرابايت من حجم التراسل المتاح في الشهر.";
+"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="لمزيد من المعلومات يرجى زيارة موقعنا الالكتروني: https://mega.nz \n شروط استخدام الخدمة: https://mega.nz/terms \n سياسة الخصوصية: https://mega.nz/privacy";
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="معلومات الدفع";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="عضوية PRO ستنتهي قريبا";
+"PRO membership plan expiring soon"="ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً.";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="إحباط";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,9 +1855,9 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="عملية الدفع للخطة %1 لم تنجح";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="عضويتك كـ PRO ستنتهي في يوم واحد";
+"Your PRO membership plan will expire in 1 day."="ستنتهي صلاحية اشتراك برو Pro الخاص بك في يوم واحد.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="عضويتك كـ PRO ستنتهس في %1 أيام.";
+"Your PRO membership plan will expire in %1 days."="ستنتهي صلاحية اشتراك برو Pro الخاص بك في %1 يوم.";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="لقد انتهت صلاحية إشتراك PRO الخاص بك منذ يوم واحد";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2182,12 +2182,6 @@
 "Clear All"="مسح الكل";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="استئناف عمليات النقل؟";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="مجلد ميغا MEGA لترفيعات الكاميرا";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="اختر مجلد";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="اختر مجلد";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="جودة الصورة";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2392,3 +2386,33 @@
 "Unavailable"="غير متاحة";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="تم إرسال البريد الإلكتروني بالفعل. يرجى الانتظار بضع دقائق قبل المحاولة مرة أخرى.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="ابحث في ملفاتك";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="مجلد ميغا MEGA لترفيعات الكاميرا";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="اختر مجلد";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="المستندات";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="مقاطع الفيديو";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

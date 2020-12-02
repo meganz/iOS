@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Kies uw type account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
+"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S]aan cloud opslagruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
+"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S]tot %@TB (%@GB) [/S] aan cloud opslagruimte.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Opslag";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ONGELEZEN BERICHTEN";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer Applicatie Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
+"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperiodes van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, klikt u eenvoudig op het App Store-pictogram op uw mobiele apparaat, logt u in met uw Apple ID onder aan de pagina (als u dit nog niet heeft gedaan) en klikt u vervolgens op Bekijk ID. U wordt naar uw accountpagina geleid waar u omlaag kunt scrollen naar Applicatie-abonnementen beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Betalingsinformatie";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="PRO abonnement verloopt binnenkort";
+"PRO membership plan expiring soon"="Pro-lidmaatschap verloopt binnenkort";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Bericht van takedown";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,9 +1855,9 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Uw betaling voor het %1 abonnement is mislukt.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Uw PRO abonnement verloopt binnen 1 dag.";
+"Your PRO membership plan will expire in 1 day."="Uw Pro-lidmaatschap verloopt over 1 dag.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Uw PRO abonnement zal binnen %1 dagen verlopen.";
+"Your PRO membership plan will expire in %1 days."="Uw Pro-lidmaatschapsplan verloopt over %1 dagen.";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="Uw PRO abonnement is 1 dag geleden verlopen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2182,12 +2182,6 @@
 "Clear All"="Wis alles";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Overdrachten Hervatten?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Selecteer Map";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Kies Map";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Afbeelding Kwaliteit";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2392,3 +2386,33 @@
 "Unavailable"="Onbeschikbaar";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail al verzonden. Wacht een paar minuten voordat u het opnieuw probeert.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Uw Bestanden";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Selecteer Map";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Documenten";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Video's";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

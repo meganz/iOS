@@ -47,7 +47,7 @@
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由于多次违反我们的[A]服务条款[/A]，因此创建此链接的账户已被停权。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="请输入解密金钥";
+"decryptionKeyAlertTitle"="请输入解密密钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="此文件夹/文件需要解密密钥才可访问，若没有密钥，请与链接创建者联系。";
 /* Hint text to suggest that the user has to write the decryption key */
@@ -69,7 +69,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您尝试访问的内容对该帐户不可用。请使用与手机客户端相同的帐户登录。";
+"theContentIsNotAvailableForThisAccount"="您尝试访问的内容无法用于该帐户。请使用与手机客户端相同的帐户登录。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -299,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="语音剪辑";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="新增文件夹";
+"newFolder"="新建文件夹";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="新文件夹的名字";
 /* Title button for the create folder alert.  */
@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="进行中的传输";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="完成";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99 (USD$4.99)或每年€49.99 (USD$49.99)，您会获得每月400GB的存储空间和1TB的传输流量。\nPRO I订阅：每月€9.99 (USD$9.99)或每年€99.99 (USD$99.99)，您会获得每月2TB的存储空间和2TB的传输流量。\nPRO II订阅：每月€19.99 (USD$19.99)或每年€199.99 (USD$199.99)，您会获得每月8TB的存储空间和8TB的传输流量。\nPRO III订阅：每月€29.99 (USD$29.99)或每年€299.99 (USD$299.99)，您会获得每月16TB的存储空间和16TB的传输流量。";
+"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多信息，请浏览我们的网站：https://mega.nz/\n服务条款：https://mega.nz/terms\n隐私政策：https://mega.nz/privacy";
@@ -1529,7 +1529,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="登出帐户前，请确认您是否记住了您的密码。 如果您忘记了密码，则无法访问存储在MEGA中的数据。";
+"testPasswordLogoutText"="登出帐户前，请确认您是否记住了您的密码。如果您忘记密码，则无法访问您的数据。";
 /* state previous to import a file */
 "loading"="加载中";
 /*   */
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="付款资讯";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="专业版会员计划即将到期";
+"PRO membership plan expiring soon"="Pro会员方案即将到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="删除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,9 +1855,9 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="您的%1付款不成功。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="您的专业版会员计划将在一天内到期";
+"Your PRO membership plan will expire in 1 day."="您的Pro会员方案将于1天后到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="您的专业版会员计划将在%1天内到期";
+"Your PRO membership plan will expire in %1 days."="您的Pro会员方案将于%1天后到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="您的PRO计划于1天前已到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2182,12 +2182,6 @@
 "Clear All"="全部清除";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="恢复传输？";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="选择文件夹";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="选择文件夹";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="图片质量";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2392,3 +2386,33 @@
 "Unavailable"="不可用";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="邮件已发送。请等待几分钟后再试。";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="搜索您的文件";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="选择文件夹";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="文档";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="影片";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

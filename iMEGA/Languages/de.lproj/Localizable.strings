@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA bietet großzügige 50 GB kostenlosen Speicherplatz für erfolgreiche Bonus-Teilnehmer und PRO-Abonnements mit erheblich höheren Limits:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE-Abonnement: €4.99 (US$4.99) monatlich oder €49.99 (US$49.99) jährlich für 400 GB Speicherplatz und 1 TB Transfervolumen pro Monat. \nPRO I-Abonnement: €9.99 (US$9.99) monatlich oder €99.99 (US$99.99) jährlich für 3 TB Speicherplatz und 2 TB Transfervolumen pro Monat.\nPRO II-Abonnement: €19.99 (US$19.99) monatlich oder €199.99 (US$199.99) jährlich für 8 TB Speicherplatz und 8 TB Transfervolumen pro Monat.\nPRO III-Abonnement: €29.99 (US$29.99) monatlich oder €299.99 (US$299.99) jährlich für 16 TB Speicherplatz und 16 TB Transfervolumen pro Monat.";
+"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Mehr Informationen auf unserer Website: https://mega.nz/\nBenutzungsbedingungen: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
@@ -2182,12 +2182,6 @@
 "Clear All"="Alle entfernen";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Resume Transfers?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA KAMERAUPLOADS";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Ordner auswählen";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Ordner auswählen";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Image Quality";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2392,3 +2386,33 @@
 "Unavailable"="Unavailable";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Your Files";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA KAMERAUPLOADS";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Ordner auswählen";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Dokumente";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Videos";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

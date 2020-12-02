@@ -880,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Șterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
+"failedAttempstSectionTitle"="Deconectează-te și șterge datele locale după 10 încercări eșuate pentru codul de acces";
 /* Menu item */
 "help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
@@ -894,9 +894,9 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Toate";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="În curs";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
-"Completed"="Terminat";
+"Completed"="Finalizate";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Descărcări";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Alege tipul contului tău";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Unitatea ta cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
+"cloudDriveIsAlmostFull"="[S]Unitatea ta cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont Pro și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
+"cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont Pro și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Spațiu de stocare";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESAJE NECITITE";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge la pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți selecta abonamentul MEGA PRO și să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge la pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți selecta abonamentul MEGA Pro și să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA și autentifică-te pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA oferă un spațiu de stocare generos de 50 GB gratuit pentru toți utilizatorii înregistrați cu realizările bonus și oferă planuri plătite cu limite mult mai mari:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonamentul PRO LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îți oferă 400 GB spațiu de stocare și 1 TB cotă de transfer pe lună.\nAbonamentul PRO I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îți oferă 2 TB spațiu de stocare și 2 TB cotă de transfer pe lună.\nAbonamentul PRO II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îți oferă 8 TB spațiu de stocare și 8 TB cotă de transfer pe lună.\nAbonamentul PRO III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îți oferă 16 TB spațiu de stocare și 16 TB cotă de transfer pe lună.";
+"generalDescriptionParagraph5"="Abonamentul Pro LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îți oferă 400 GB spațiu de stocare și 1 TB cotă de transfer pe lună.\nAbonamentul Pro I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îți oferă 2 TB spațiu de stocare și 2 TB cotă de transfer pe lună.\nAbonamentul Pro II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îți oferă 8 TB spațiu de stocare și 8 TB cotă de transfer pe lună.\nAbonamentul Pro III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îți oferă 16 TB spațiu de stocare și 16 TB cotă de transfer pe lună.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Pentru mai multe informații, te rugăm să verifici site-ul nostru web: https://mega.nz/\nTermenii de utilizare a serviciului: https://mega.nz/terms\nPolitica de confidențialitate: https://mega.nz/privacy";
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informații de plată";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Planul pentru calitatea de membru PRO expiră în curând";
+"PRO membership plan expiring soon"="Planul pentru calitatea de membru Pro expiră în curând";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Notificare de eliminare";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Plata pentru planul %1 nu a avut succes.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru PRO va expira peste 1 zi.";
+"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru Pro va expira peste 1 zi.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru PRO va expira în %1 zile.";
+"Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru Pro va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Planul tău PRO a expirat acum 1 zi";
+"Your PRO membership plan expired 1 day ago"="Planul tău Pro a expirat acum 1 zi";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Planul tău PRO a expirat acum %1 zile";
+"Your PRO membership plan expired %1 days ago"="Planul tău Pro a expirat acum %1 zile";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Partajarea ta publică %1 (%2) a fost eliminată.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2182,12 +2182,6 @@
 "Clear All"="Șterge toate";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Reiei transferurile?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Selectează folderul";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Alege un folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Calitatea imaginilor";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2321,7 +2315,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIUNI";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favourite";
+"Favourite"="Adaugă la favorite";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2392,3 +2386,33 @@
 "Unavailable"="Indisponibil";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail trimis deja. Te rugăm să aștepți câteva minute înainte de a încerca din nou.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Your Files";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Selectează folderul";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Documente";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Videoclipuri";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

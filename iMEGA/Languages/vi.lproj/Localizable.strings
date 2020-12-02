@@ -896,7 +896,7 @@
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="Đang Truyền";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
-"Completed"="Hoàn thành";
+"Completed"="Hoàn tất";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Phiên Tải Xuống";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Chọn hạng tài khoản";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ổ Mây sắp hết chỗ trống.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
+"cloudDriveIsAlmostFull"="[S]Ổ Mây sắp hết chỗ trống.[/S] [A]Nâng cấp ngay[/A] lên hạng Pro để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
+"cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng Pro để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Lưu trữ";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu TIN NHẮN CHƯA ĐỌC";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA PRO ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA PRO của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
+"autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA Pro của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Mở app MEGA và đăng nhập để tiếp tục";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA cũng cấp cho mỗi thành viên 50 GB không gian để lưu trữ hoàn toàn miễn phí, kèm thêm nhiều cách ưu đãi để mở rộng hạn mức cùng với hạng tài khoản trả phí:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Gói cước PRO LITE: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 400 GB không gian lưu trữ và 1 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 2 TB không gian lưu trữ và 2 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 8 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 16 TB không gian lưu trữ và 16 TB cho băng thông truyền tải mỗi tháng.";
+"generalDescriptionParagraph5"="Gói Pro LITE: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 400 GB không gian lưu trữ và 1 TB cho băng thông truyền tải mỗi tháng.\nGói Pro I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 2 TB không gian lưu trữ và 2 TB cho băng thông truyền tải mỗi tháng.\nGói Pro II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 8 TB cho băng thông truyền tải mỗi tháng.\nGói Pro III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 16 TB không gian lưu trữ và 16 TB cho băng thông truyền tải mỗi tháng.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nĐiều Khoản Sử Dụng Dịch Vụ: https://mega.nz/terms\nChính Sách Quyền Riêng Tư: https://mega.nz/privacy";
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Thông tin thanh toán";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Gói thành viện hạng PRO sắp hết hạn";
+"PRO membership plan expiring soon"="Gói thành viện hạng Pro sắp hết hạn";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Thông báo gỡ bỏ";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Quá trình thanh toán cho gói %1 không thành công.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Gói thành viên hạng PRO của bạn sẽ hết hạn trong 1 ngày.";
+"Your PRO membership plan will expire in 1 day."="Gói thành viên hạng Pro sẽ hết hạn trong 1 ngày.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Tài khoản hạng PRO sẽ hết hạn trong %1 ngày tới.";
+"Your PRO membership plan will expire in %1 days."="Tài khoản hạng Pro sẽ hết hạn trong %1 ngày tới.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Hạng PRO đã hết hạn 1 ngày qua";
+"Your PRO membership plan expired 1 day ago"="Hạng Pro đã hết hạn 1 ngày qua";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Hạng PRO đã hết hạn %1 ngày qua";
+"Your PRO membership plan expired %1 days ago"="Hạng Pro đã hết hạn %1 ngày qua";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Một %1 chia sẻ công cộng của bạn (tên %2) đã bị gỡ bỏ.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2182,12 +2182,6 @@
 "Clear All"="Dọn Danh Sách";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Tiếp Tục Phiên Truyền Tải?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Chọn Thư Mục";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Chọn Thư Mục";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Chất Lượng Hình Ảnh";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2392,3 +2386,33 @@
 "Unavailable"="Không Khả Dụng";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email đã được gửi đi rồi. Xin chờ vài phút trước khi gửi lại cái mới.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Your Files";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Chọn Thư Mục";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Tệp Tài Liệu";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Video";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";
