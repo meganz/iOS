@@ -332,8 +332,11 @@
     
     if (self.isParentBrowser) {
         self.navigationItem.title = @"MEGA";
+
         if (self.browserAction == BrowserActionDocumentProvider) {
             self.navigationItem.title = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+        } else if (self.browserAction == BrowserActionNewHomeUpload) {
+            self.navigationItem.title = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
         }
     } else {
         if (self.isChildBrowserFromIncoming) {
