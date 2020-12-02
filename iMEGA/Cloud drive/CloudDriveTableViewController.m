@@ -90,7 +90,7 @@
 #pragma mark - Public
 
 - (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath) {
+    if (indexPath && [self.tableView numberOfRowsInSection:indexPath.section] > indexPath.row) {
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
