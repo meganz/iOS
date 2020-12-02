@@ -1840,7 +1840,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+        [self.cdTableView reloadRowAtIndexPath:self.nodesIndexPathMutableDictionary[base64Handle]];
     }
 }
 
