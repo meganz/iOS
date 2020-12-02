@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為PRO帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
+"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為專業版帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為PRO帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
+"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為專業版帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="儲存空間";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1104,7 +1104,7 @@
 /* Empty Gifs section */
 "No GIFs found"="找不到GIF";
 /* Chat section header */
-"chat"="交談";
+"chat"="聊天";
 /* Empty Conversations section */
 "noConversations"="無對話(已清空)";
 /* Empty Conversations description */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
+"autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續約日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1387,7 +1387,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="需要多重驗證";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="非管理者用戶存取拒絕";
+"Access denied for users"="非管理員拒絕存取";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="商業帳戶已過期";
 /* SDK error returned when the credit card has been rejected */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA提供超大的50GB免費儲存空間給所有獲得獎勵成就的用戶，並提供更大空間的付費方案：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE 訂閱方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），即可享有400GB的儲存空間和每月1TB的傳輸配額。\n PRO I 訂閱方案：每月€9.99歐元（$9.99美元） 或每年€99.99歐元（$99.99美元）即可享有2TB的儲存空間和每月2TB的傳輸配額。\n PRO II 訂閱方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元） 即可享有8TB的儲存空間和每月8TB的傳輸配額。\n PRO III 訂閱方案：每月€29.99歐元（$29.99美元）或每年€299.99歐元（$299.99美元）即可享有16TB的儲存空間和每月16TB傳輸配額。";
+"generalDescriptionParagraph5"="專業版Lite 訂閱方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），即可享有400GB的儲存空間和每月1TB的傳輸配額。\n 專業版I 訂閱方案：每月€9.99歐元（$9.99美元） 或每年€99.99歐元（$99.99美元）即可享有2TB的儲存空間和每月2TB的傳輸配額。\n 專業版II 訂閱方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元） 即可享有8TB的儲存空間和每月8TB的傳輸配額。\n專業版III 訂閱方案：每月€29.99歐元（$29.99美元）或每年€299.99歐元（$299.99美元）即可享有16TB的儲存空間和每月16TB傳輸配額。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多資訊，請參考我們的網站： https://mega.nz/\n服務條款： https://mega.nz/terms\n隱私權政策： https://mega.nz/privacy";
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="付款資訊";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="專業版會員專案即將到期";
+"PRO membership plan expiring soon"="專業版會員即將到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="刪除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="您的 %1付款不成功。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="您的專業版會員專案將在一天內到期";
+"Your PRO membership plan will expire in 1 day."="您的專業版會員將在一天內到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="您的專業版會員專案將在%1天內到期";
+"Your PRO membership plan will expire in %1 days."="您的專業版會員將在%1天內到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="您的專業版會員資格已於1天前到期";
+"Your PRO membership plan expired 1 day ago"="您的專業版方案已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="您的專業版會員資格已於%1天前到期";
+"Your PRO membership plan expired %1 days ago"="您的專業版方案資格已於%1天前到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公開分享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2182,12 +2182,6 @@
 "Clear All"="全部清除";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="恢復傳輸？";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="選擇資料夾";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="選擇資料夾";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="影像品質";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2392,3 +2386,33 @@
 "Unavailable"="無用的";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="電子郵件已發送。請等待幾分鐘，然後再重試。";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="搜尋您的檔案";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="選擇資料夾";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="文檔";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="影片";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";
