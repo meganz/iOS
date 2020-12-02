@@ -964,7 +964,6 @@ static TransfersWidgetViewController* instance = nil;
 - (void)switchEdit {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
     [self.editBarButtonItem setTitle:self.tableView.isEditing ? AMLocalizedString(@"done", @"") : AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
-    self.navigationItem.leftBarButtonItem = self.tableView.isEditing ? nil : [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissVC)];
     self.navigationItem.rightBarButtonItems = self.tableView.isEditing ? @[self.editBarButtonItem, self.cancelBarButtonItem] : @[self.editBarButtonItem];
 
     [self reloadView];
