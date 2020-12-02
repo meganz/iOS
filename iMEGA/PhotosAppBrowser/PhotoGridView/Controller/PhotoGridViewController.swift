@@ -196,6 +196,13 @@ extension PhotoGridViewController: AlbumDelegate {
     func didChange(removedIndexPaths: [IndexPath]?,
                    insertedIndexPaths: [IndexPath]?,
                    changedIndexPaths: [IndexPath]?) {
+        if let removedIndexPaths = removedIndexPaths,
+              let changedIndexPaths = changedIndexPaths,
+              !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
+            collectionView.reloadData()
+            return
+        }
+        
         collectionView.performBatchUpdates({
             if let removedIndexPaths = removedIndexPaths {
                 let selectedIndexPathsToBeDeleted = removeSelectedAssets(forIndexPaths: removedIndexPaths)
