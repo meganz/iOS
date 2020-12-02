@@ -9,5 +9,5 @@
     #import "UIFont+MNZCategory.h"
     #import <YYWebImage/YYWebImage.h>
     #import "UINavigationController+FDFullscreenPopGesture.h"
-
+    #import "YYCategories.h"
 #endif

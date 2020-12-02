@@ -241,13 +241,13 @@ static TransfersWidgetViewController* instance = nil;
         
         switch (indexPath.section) {
             case 0: {
-                MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
+                MEGATransfer *transfer = [self.transfers objectOrNilAtIndex:indexPath.row];
                 [cell configureCellForTransfer:transfer overquota:[TransfersWidgetViewController sharedTransferViewController].progressView.overquota delegate:self];
                 break;
             }
                 
             case 1: {
-                NSString *uploadTransferLocalIdentifier = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
+                NSString *uploadTransferLocalIdentifier = [self.uploadTransfersQueued objectOrNilAtIndex:indexPath.row];
                 [cell configureCellForQueuedTransfer:uploadTransferLocalIdentifier delegate:self];
                 break;
             }
@@ -257,7 +257,7 @@ static TransfersWidgetViewController* instance = nil;
         
     } else {
         
-        MEGATransfer *transfer = [self.completedTransfers objectAtIndex:indexPath.row];
+        MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
         
 
         MEGANode *node = transfer.node;
@@ -310,7 +310,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.completedButton.selected) {
-        MEGATransfer *transfer = [self.completedTransfers objectAtIndex:indexPath.row];
+        MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
         [self.selectedTransfers removeObject:transfer];
         if (self.selectedTransfers.count == 0) {
             self.clearAllButton.enabled = false;
@@ -321,7 +321,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.completedButton.selected) {
         
-        MEGATransfer *transfer = [self.completedTransfers objectAtIndex:indexPath.row];
+        MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
         
         if (tableView.isEditing) {
             [self.selectedTransfers addObject:transfer];
@@ -373,14 +373,14 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    MEGATransfer *selectedTransfer = [self.transfers objectAtIndex:fromIndexPath.row];
+    MEGATransfer *selectedTransfer = [self.transfers objectOrNilAtIndex:fromIndexPath.row];
     
     BOOL isDemoted = fromIndexPath.row < toIndexPath.row;
     
     if (isDemoted) {
         if (toIndexPath.row + 1 < self.transfers.count) {
             [MEGASdkManager.sharedMEGASdk moveTransferBefore:selectedTransfer prevTransfer:({
-                MEGATransfer *prevTransfer = [self.transfers objectAtIndex:toIndexPath.row + 1];
+                MEGATransfer *prevTransfer = [self.transfers objectOrNilAtIndex:toIndexPath.row + 1];
                 prevTransfer;
                 
             })];
@@ -389,7 +389,7 @@ static TransfersWidgetViewController* instance = nil;
         }
     } else {
         [MEGASdkManager.sharedMEGASdk moveTransferBefore:selectedTransfer prevTransfer:({
-            MEGATransfer *prevTransfer = [self.transfers objectAtIndex:toIndexPath.row];
+            MEGATransfer *prevTransfer = [self.transfers objectOrNilAtIndex:toIndexPath.row];
             prevTransfer;
             
         })];
@@ -531,7 +531,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSIndexPath *)indexPathForUploadTransferQueuedWithLocalIdentifier:(NSString *)localIdentifier {
     for (int i = 0; i < self.uploadTransfersQueued.count; i++) {
-        NSString *tempLocalIndentifier = [self.uploadTransfersQueued objectAtIndex:i];
+        NSString *tempLocalIndentifier = [self.uploadTransfersQueued objectOrNilAtIndex:i];
         if ([localIdentifier isEqualToString:tempLocalIndentifier]) {
             return [NSIndexPath indexPathForRow:i inSection:1];
         }
@@ -725,7 +725,7 @@ static TransfersWidgetViewController* instance = nil;
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    MEGATransfer *transfer = [self.completedTransfers objectAtIndex:indexPath.row];
+    MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
     
     [self showCustomActionsForTransfer:transfer sender:sender];
 }
