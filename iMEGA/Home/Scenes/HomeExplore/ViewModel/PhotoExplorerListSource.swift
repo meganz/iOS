@@ -62,7 +62,19 @@ class PhotoExplorerListSource: NSObject {
     func toggleSelectAllNodes() {
         let allNodes = nodesByDay.reduce([], +)
         selectedNodes = (selectedNodes == allNodes) ? nil : allNodes
-        collectionView.reloadData()
+        // update the marker for the visible items
+        collectionView.visibleCells.forEach { cell in
+            guard let cell = cell as? PhotoExplorerCollectionCell else { return }
+            cell.allowSelection = allowMultipleSelection
+            cell.isSelected = selectedNodes != nil
+            if selectedNodes == nil {
+                if let indexPath = collectionView.indexPath(for: cell) {
+                    collectionView.deselectItem(at: indexPath, animated: false)
+                }
+            } else {
+                collectionView.selectItem(at: collectionView.indexPath(for: cell), animated: false, scrollPosition: [])
+            }
+        }
     }
 }
 
@@ -81,19 +93,6 @@ extension PhotoExplorerListSource: UICollectionViewDataSource {
         }
         
         cell.viewModel = FileExplorerGridCellViewModel(node: nodesByDay[indexPath.section][indexPath.row])
-
-        cell.allowSelection = allowMultipleSelection
-        
-        if collectionView.allowsMultipleSelection{
-            if selectedNodes?.contains(nodesByDay[indexPath.section][indexPath.row]) ?? false {
-                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-                cell.isSelected = true
-            } else {
-                collectionView.deselectItem(at: indexPath, animated: false)
-                cell.isSelected = false
-            }
-        }
-        
         return cell
     }
     
@@ -113,5 +112,23 @@ extension PhotoExplorerListSource: UICollectionViewDataSource {
             }
         }
         return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? PhotoExplorerCollectionCell else { return }
+        
+        cell.allowSelection = allowMultipleSelection
+        
+        if collectionView.allowsMultipleSelection{
+            if selectedNodes?.contains(nodesByDay[indexPath.section][indexPath.row]) ?? false {
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                cell.isSelected = true
+            } else {
+                collectionView.deselectItem(at: indexPath, animated: false)
+                cell.isSelected = false
+            }
+        }
     }
 }
