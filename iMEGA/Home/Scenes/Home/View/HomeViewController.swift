@@ -159,6 +159,14 @@ final class HomeViewController: UIViewController {
     private enum Constant {
         static let slidePanelRoundCornerHeight: CGFloat = 20 // This value need to be same as `constraintToTopPosition`
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.iPhoneDevice {
+            return .portrait
+        }
+        
+        return .all
+    }
 
     // MARK: - View Setup
 
@@ -221,17 +229,15 @@ final class HomeViewController: UIViewController {
     }
 
     private func addContentViewController() {
-        contentViewController.willMove(toParent: self)
         addChild(contentViewController)
         slidePanelView.addRecentsViewController(contentViewController)
         contentViewController.didMove(toParent: self)
     }
 
     private func addOfflineViewController() {
-        offlineViewController.willMove(toParent: self)
         addChild(offlineViewController)
         slidePanelView.addOfflineViewController(offlineViewController)
-        contentViewController.didMove(toParent: self)
+        offlineViewController.didMove(toParent: self)
     }
 
     // MARK: - Refresh view with light/dark mode
@@ -409,17 +415,6 @@ extension HomeViewController: ExploreViewStackDelegate {
         case .audio:    router.audioExplorerSelected()
         case .video:    router.videoExplorerSelected()
         }
-    }
-}
-
-// MARK: - Lock of orientation for Home
-
-extension HomeViewController {
-
-    // MARK: - Force Vertical
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        .portrait
     }
 }
 
