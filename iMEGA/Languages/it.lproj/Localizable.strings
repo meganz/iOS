@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Il tuo Cloud Drive è quasi pieno.[/S] [A]Fai l'upgrade adesso[/A] ad un account PRO ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
+"cloudDriveIsAlmostFull"="[S]Il tuo Cloud Drive è quasi pieno.[/S] [A]Fai l’upgrade adesso[/A] ad un account Pro ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Il tuo Cloud Drive è pieno.[/S] [A]Fai l'upgrade adesso[/A] ad un account PRO ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
+"cloudDriveIsFull"="[S]Il tuo Cloud Drive è pieno.[/S] [A]Fai l’upgrade adesso[/A] ad un account Pro ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Archivio";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA offre un enorme spazio di archiviazione di 50 GB gratuito per tutti gli utenti registrati, insieme a bonus a obiettivi ed offerte di piani a pagamento con limiti molto più alti:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
+"generalDescriptionParagraph5"="Abbonamento Pro Lite: €4.99 (US$4.99) al mese o €49.99 (US$49.99) all’anno ti dà 400GB di spazio di archiviazione e 1TB di banda di trasferimento ogni mese.\nAbbonamento Pro I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) all’anno ti dà 2TB di spazio di archiviazione e 2TB di banda di trasferimento ogni mese.\nAbbonamento Pro II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) all’anno ti dà 8TB di spazio di archiviazione e 8TB di banda di trasferimento ogni mese.\nAbbonamento Pro III: €29.99 (US$299.99) al mese o €299.99 (US$299.99) all’anno ti dà 16TB di spazio di archiviazione e 16TB di banda di trasferimento ogni mese.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Per maggiori informazioni, per favore visita il nostro sito web: https://mega.nz/\nTermini di Servizio: https://mega.nz/terms\nPolitica sulla Privacy: https://mega.nz/privacy";
@@ -1859,9 +1859,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Il tuo piano di iscrizione Pro scadrà tra %1 giorni.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Il tuo piano PRO è scaduto 1 giorno fa";
+"Your PRO membership plan expired 1 day ago"="Il tuo piano Pro è scaduto 1 giorno fa";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Il tuo piano PRO è scaduto %1 giorni fa";
+"Your PRO membership plan expired %1 days ago"="Il tuo piano Pro è scaduto %1 giorni fa";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Il/la tuo/a %1 condiviso/a pubblicamente (%2) è stato/a chiuso/a.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */

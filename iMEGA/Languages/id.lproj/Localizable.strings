@@ -880,7 +880,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Hapus Data Lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal memasukkan kode sandi";
+"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal memasukkan passcode";
 /* Menu item */
 "help"="Bantuan";
 /* Title of the section to access MEGA's help centre */
@@ -894,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Semua";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="Sedang berlangsung";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Selesai";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Pilih tipe akun anda";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Drive Cloud Anda hampir penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun PRO dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
+"cloudDriveIsAlmostFull"="[S]Drive Cloud Anda hampir penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun PRO dan dapatkan [S]hingga %@ TB (%@ GB) [/S] ruang penyimpanan cloud.";
+"cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Gudang";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1182,7 +1182,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Anda yakin ingin menghapus seluruh riwayat pesan dari percakapan ini?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="Histori obrolan telah dihapus";
 /* 'Next' button in a dialog */
 "continue"="Lanjutkan";
 /* Title of the incoming shared folders of a user. */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu PESAN BELUM TERBACA";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA PRO anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (Jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA PRO anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";
+"autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA Pro anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA Pro anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Buka MEGA dan masuk untuk melanjutkan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA menawarkan penyimpanan gratis 50 GB yang murah hati untuk semua pengguna terdaftar dengan pencapaian bonus, dan menawarkan paket berbayar dengan batas yang jauh lebih tinggi:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
+"generalDescriptionParagraph5"="Langganan Pro Lite: €4,99 (US$4,99) per bulan atau €49,99 (US$49,99) per tahun memberi anda ruang penyimpanan 400 GB dan kuota transfer 1 TB per bulan.\nLangganan Pro I: €9,99 (US$9,99) per bulan atau €99,99 (US$99,99) per tahun memberi anda ruang penyimpanan 2 TB dan kuota transfer 2 TB per bulan.\n Langganan Pro II: €19,99 (US$19,99) per bulan atau €199,99 (US$199,99) per tahun memberi Anda 8 TB ruang penyimpanan dan 8 TB kuota transfer per bulan.\nLangganan Pro III: €29,99 (US$29,99) per bulan atau €299,99 (US$299,99) per tahun memberi anda ruang penyimpanan 16 TB dan 16 TB kuota transfer per bulan.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Untuk info lebih lanjut, silakan cek situs web kami: https://mega.nz/\nKetentuan Layanan: https://mega.nz/terms\nKebijakan Privasi: https://mega.nz/privacy";
@@ -1795,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Info pembayaran";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Membership PRO akan habis dalam waktu dekat";
+"PRO membership plan expiring soon"="Membership Pro akan habis dalam waktu dekat";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Pemberitahuan pencopotan";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1855,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Pembayaran anda untuk plan %1 tidak berhasil.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Membership PRO anda akan habis dalam 1 hari.";
+"Your PRO membership plan will expire in 1 day."="Membership Pro anda akan habis dalam 1 hari.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Membership PRO anda akan habis dalam %1 hari.";
+"Your PRO membership plan will expire in %1 days."="Membership Pro anda akan habis dalam %1 hari.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Paket PRO Anda kedaluwarsa 1 hari yang lalu";
+"Your PRO membership plan expired 1 day ago"="Paket Pro Anda kedaluwarsa 1 hari yang lalu";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Paket PRO Anda kedaluwarsa %1 hari yang lalu";
+"Your PRO membership plan expired %1 days ago"="Paket Pro Anda kedaluwarsa %1 hari yang lalu";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Anda punya %1 (%2) telah dicopot.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2171,13 +2171,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Kata sandi Anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun Anda, termasuk, namun tidak terbatas pada, akun MEGA Anda.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Transfer melebihi kuota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Hapus Dipilih";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Jeda Semua";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Lanjutkan semuanya";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Hapus semua";
 /* Alert header for asking permission to resume transfers*/
@@ -2393,7 +2393,7 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Pilih Folder";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah Anda yakin ingin memindahkan folder Unggahan Kamera ke Tong Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan Kamera.";
 /* Title for document explorer view */
 "Documents"="Document";
 /* Title for audio explorer view */
@@ -2401,18 +2401,18 @@
 /* Title for video explorer view */
 "Videos"="Video";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="Tidak ada dokumen yang ditemukan";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="Tidak ada file audio yang ditemukan";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="Video tidak ditemukan";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="Semua Gambar";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="HARI INI";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="KEMARIN";
 /* Photo Explorer Screen: No images in the accoun t*/
-"No images found"="No images found";
+"No images found"="Tidak ada gambar ditemukan";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Home";
+"Home"="Beranda";
