@@ -85,7 +85,7 @@ extension FilesExplorerListSourceProtocol {
     }
     
     func toggleSelectAllNodes() {
-        selectedNodes = (selectedNodes == nodes) ? nil : nodes
+        selectedNodes = (selectedNodes == nodes || selectedNodes?.count == nodes?.count) ? [] : nodes
         tableView.reloadData()
     }
     

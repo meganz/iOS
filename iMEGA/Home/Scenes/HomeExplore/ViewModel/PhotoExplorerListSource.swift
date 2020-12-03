@@ -61,13 +61,13 @@ class PhotoExplorerListSource: NSObject {
     
     func toggleSelectAllNodes() {
         let allNodes = nodesByDay.reduce([], +)
-        selectedNodes = (selectedNodes == allNodes) ? nil : allNodes
+        selectedNodes = (selectedNodes == allNodes || selectedNodes?.count == allNodes.count) ? [] : allNodes
         // update the marker for the visible items
         collectionView.visibleCells.forEach { cell in
             guard let cell = cell as? PhotoExplorerCollectionCell else { return }
             cell.allowSelection = allowMultipleSelection
-            cell.isSelected = selectedNodes != nil
-            if selectedNodes == nil {
+            cell.isSelected = !(selectedNodes?.isEmpty == false)
+            if !(selectedNodes?.isEmpty == false) {
                 if let indexPath = collectionView.indexPath(for: cell) {
                     collectionView.deselectItem(at: indexPath, animated: false)
                 }
