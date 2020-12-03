@@ -519,6 +519,27 @@
                 
                 break;
             }
+                
+            case SendModeShareActivity: {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
+                        [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatListItem.chatId message:self.text];
+                    }
+                    
+                    for (MEGAUser *user in self.selectedUsersMutableArray) {
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                        if (chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:self.text];
+                        } else {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                                [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:self.text];
+                            }];
+                        }
+                    }
+                }];
+
+                break;
+            }
         }
     }
 }

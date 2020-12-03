@@ -7,6 +7,7 @@
 @interface SendToChatActivity ()
 
 @property (strong, nonatomic) NSArray *nodes;
+@property (strong, nonatomic) NSString *text;
 
 @end
 
@@ -16,6 +17,15 @@
     self = [super init];
     if (self) {
         _nodes = nodesArray;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithText:(NSString *)text {
+    self = [super init];
+    if (self) {
+        _text = text;
     }
     
     return self;
@@ -40,8 +50,13 @@
 - (UIViewController *)activityViewController {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
-    sendToViewController.nodes = self.nodes;
-    sendToViewController.sendMode = SendModeCloud;
+    if (self.text) {
+        sendToViewController.text = self.text;
+        sendToViewController.sendMode = SendModeShareActivity;
+    } else if (self.nodes) {
+        sendToViewController.nodes = self.nodes;
+        sendToViewController.sendMode = SendModeCloud;
+    }
     
     return navigationController;
 }
