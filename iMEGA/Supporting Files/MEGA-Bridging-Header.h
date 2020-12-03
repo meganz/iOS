@@ -45,6 +45,7 @@
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import "UITableView+MNZCategory.h"
 
+#import "SendToChatActivity.h"
 #import "SendToViewController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"

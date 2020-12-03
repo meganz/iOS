@@ -15,6 +15,7 @@
 
 @property (nonatomic) NSArray *nodes;
 @property (nonatomic) NSArray<MEGAChatMessage *> *messages;
+@property (nonatomic) NSString *text;
 @property (nonatomic) SendMode sendMode;
 @property (nonatomic) void (^completion)(NSArray<NSNumber *> *chatIdNumbers, NSArray<MEGAChatMessage *> *sentMessages);
 @property (nonatomic) uint64_t sourceChatId;

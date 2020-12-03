@@ -371,9 +371,14 @@ class GetLinkViewController: UIViewController {
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
         let textToShare = getLinkVM.multilink ? nodes.map { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
-        let shareActivity = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+        let shareActivity = UIActivityViewController(activityItems: [textToShare], applicationActivities: [SendToChatActivity(text: textToShare)])
         shareActivity.excludedActivityTypes = [.print, .assignToContact, .saveToCameraRoll, .addToReadingList, .airDrop]
         shareActivity.popoverPresentationController?.barButtonItem = sender
+        shareActivity.completionWithItemsHandler = {activity, _, _, _ in
+            if activity?.rawValue == MEGAUIActivityTypeSendToChat {
+                shareActivity.dismissView()
+            }
+        }
         present(shareActivity, animated: true, completion: nil)
     }
     
