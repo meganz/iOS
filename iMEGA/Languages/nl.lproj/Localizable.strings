@@ -1420,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA biedt een gulle 50 GB gratis opslag voor alle geregistreerde gebruikers met bonus prestaties, en biedt betaalde abonnementen met veel hogere limieten:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE-abonnement: €4,99(US$4,99) per maand of €49,99 (US$49,99) per jaar biedt 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \n PRO I-abonnement: € 9,99 (US$9,99) per maand of € 99,99 (US $99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n PRO II-abonnement: € 19,99 (US$19,99) per maand of € 199,99 (US$199,99) per maand geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n PRO III-abonnement: € 29,99 (US$29,99) per maand of € 299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
+"generalDescriptionParagraph5"="Pro Lite-abonnement: €4,99 (US$4,99) per maand of €49,99 (US$49,99) per jaar geeft u 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \nPro I-abonnement: €9,99 (US$9,99) per maand of €99,99 (US$99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n Pro II-abonnement: €19,99 (US$19,99) per maand of €199,99 (US$199,99) per jaar geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n Pro III-abonnement: € 29,99 (US$29,99) per maand of €299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nPrivacy Beleid: https://mega.nz/privacy";
@@ -2393,7 +2393,7 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Selecteer Map";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Weet u zeker dat u de Camera Uploads map naar de Prullenbak wilt verplaatsen? Zo ja, een nieuwe map wordt automatisch gegenereerd voor Camera Uploads.";
 /* Title for document explorer view */
 "Documents"="Documenten";
 /* Title for audio explorer view */
@@ -2401,18 +2401,18 @@
 /* Title for video explorer view */
 "Videos"="Video's";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="Geen documenten gevonden";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="Geen audio bestanden gevonden";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="Geen video’s gevonden";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="Alle Afbeeldingen";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="VANDAAG";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="GISTEREN";
 /* Photo Explorer Screen: No images in the accoun t*/
-"No images found"="No images found";
+"No images found"="Geen afbeeldingen gevonden";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Home";
+"Home"="Thuis";

@@ -2393,26 +2393,26 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Выбрать папку";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в корзину? В этом случае будет автоматически создана новая папка для загрузок из камеры.";
 /* Title for document explorer view */
 "Documents"="Документы";
 /* Title for audio explorer view */
-"Audio"="Audio";
+"Audio"="Аудио";
 /* Title for video explorer view */
 "Videos"="Видео";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="Документы не найдены";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="Аудиофайлы не найдены";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="Видео не найдены";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="Все изображения";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="СЕГОДНЯ";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="ВЧЕРА";
 /* Photo Explorer Screen: No images in the accoun t*/
-"No images found"="No images found";
+"No images found"="Изображения не найдены";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Home";
+"Home"="Домой";
