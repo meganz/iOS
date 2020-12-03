@@ -22,16 +22,6 @@ extension MEGANode {
             return parent.isDescendant(of: node, in: sdk)
         }
     }
-    
-    /// It is not supposed to override methods in extension. It could lead to undefined behaviours.
-    /// Let's move this `isEqual` method to the original class later
-    open override func isEqual(_ object: Any?) -> Bool {
-        guard let object = object as? MEGANode else {
-            return false
-        }
-
-        return handle == object.handle
-    }
 }
 
 
