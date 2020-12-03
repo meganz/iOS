@@ -344,7 +344,7 @@
 
 - (void)completeForwardingMessage:(MEGAChatMessage *)message toChat:(uint64_t)chatId {
     @synchronized(self.sentMessages) {
-        if (chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment && message.type != MEGAChatMessageTypeVoiceClip) {
+        if (message && chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment && message.type != MEGAChatMessageTypeVoiceClip) {
             [self.sentMessages addObject:message];
         }
         
