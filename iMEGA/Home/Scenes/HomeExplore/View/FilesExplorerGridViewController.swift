@@ -15,6 +15,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             frame: .zero,
             collectionViewLayout: gridFlowLayout
         )
+        collectionView.alwaysBounceVertical = true
         return collectionView
     }()
     
