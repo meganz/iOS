@@ -303,7 +303,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
     }
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        MEGASdkManager.sharedMEGASdk().completedTransfers.add(transfer)
+        if !transfer.isStreamingTransfer {
+            MEGASdkManager.sharedMEGASdk().completedTransfers.add(transfer)
+        }
 
         if MEGASdkManager.sharedMEGASdk().transfers.size.intValue == 0 {
             MEGASdkManager.sharedMEGASdk().resetTotalUploads()
