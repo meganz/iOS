@@ -56,6 +56,7 @@
 @import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
+static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate> {
     
@@ -1165,7 +1166,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
     
     static BOOL alreadyPresented = NO;
-    if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+    
+    NSDate *accountCreationDate = MEGASdkManager.sharedMEGASdk.accountCreationDate;
+    NSInteger days = [NSCalendar.currentCalendar components:NSCalendarUnitDay
+                                                   fromDate:accountCreationDate
+                                                     toDate:NSDate.date
+                                                    options:NSCalendarWrapComponents].day;
+    
+    if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount] && days > kMinDaysToEncourageToUpgrade) {
         NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
         if (lastEncourageUpgradeDate) {
             NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
