@@ -390,16 +390,7 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-#pragma mark - Private
-
-- (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
-    self.navigationController.view.backgroundColor = UIColor.mnz_background;
-
-    self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
-    
-    self.topBannerButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-}
+#pragma mark - Public
 
 - (void)openChatRoomWithID:(uint64_t)chatID {
     NSArray *viewControllers = self.navigationController.viewControllers;
@@ -456,6 +447,26 @@
     [self updateBackBarButtonItem:messagesVC.chatRoom.unreadCount];
 
     [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
+- (void)showStartConversation {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+    contactsVC.contactsMode = ContactsModeChatStartConversation;
+    [self blockCompletionsForCreateChatInContacts:contactsVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    self.navigationController.view.backgroundColor = UIColor.mnz_background;
+
+    self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
+    
+    self.topBannerButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 
 - (void)internetConnectionChanged {
@@ -984,12 +995,7 @@
 }
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
-    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    contactsVC.contactsMode = ContactsModeChatStartConversation;
-    [self blockCompletionsForCreateChatInContacts:contactsVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self showStartConversation];
 }
 
 - (IBAction)optionsTapped:(UIBarButtonItem *)sender {

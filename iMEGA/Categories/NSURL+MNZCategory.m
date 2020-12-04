@@ -150,6 +150,22 @@
         return URLTypeChatPeerOptionsLink;
     }
     
+    if ([afterSlashesString containsString:@"uploadFile"]) {
+        return URLTypeUploadFile;
+    }
+    
+    if ([afterSlashesString containsString:@"scanDocument"]) {
+        return URLTypeScanDocument;
+    }
+    
+    if ([afterSlashesString containsString:@"startConversation"]) {
+        return URLTypeStartConversation;
+    }
+    
+    if ([afterSlashesString containsString:@"addContact"]) {
+        return URLTypeAddContact;
+    }
+    
     return type;
 }
 

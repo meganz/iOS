@@ -655,11 +655,23 @@
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
 		8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */; };
+		8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315B91522DF52DD000CA232 /* ContactOnMegaTableViewCell.swift */; };
 		8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */; };
 		831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */; };
 		831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */; };
+		8318CE322562C5B300C97779 /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */; };
+		8318CE642562C89600C97779 /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */; };
+		8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */; };
+		83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1225556CD900344531 /* WidgetKit.framework */; };
+		83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1425556CDA00344531 /* SwiftUI.framework */; };
+		83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83199F592555780300344531 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */; };
+		831B4911256FED6F0086002B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B4910256FED6F0086002B /* IntentHandler.swift */; };
+		831B4915256FED6F0086002B /* MEGAIntent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 831B490E256FED6F0086002B /* MEGAIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		831B4939256FEDF90086002B /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */; };
+		831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
 		831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
 		831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831D61A7218738EB0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
@@ -684,6 +696,9 @@
 		8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */; };
 		8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */; };
 		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
+		8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
+		83422B25255984C300D46907 /* MEGAWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83422B20255984C300D46907 /* MEGAWidget.swift */; };
+		83422B28255984C300D46907 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83422B23255984C300D46907 /* Assets.xcassets */; };
 		834AD6052024694200D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
 		834AD6062024694200D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
 		834AD6072024697200D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
@@ -730,6 +745,13 @@
 		837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9C0924781B1600D409B4 /* NodeActionsTests.swift */; };
 		837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */; };
 		837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */; };
+		837DC5592565605100CA289E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
+		837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DC7A2256D196200CA289E /* GetLinkDatePickerTableViewCell.swift */; };
+		837DC7A9256D196400CA289E /* GetLinkStringTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DC7A3256D196200CA289E /* GetLinkStringTableViewCell.swift */; };
+		837DC7AA256D196400CA289E /* GetLinkSwitchOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DC7A4256D196300CA289E /* GetLinkSwitchOptionTableViewCell.swift */; };
+		837DC7AB256D196400CA289E /* GetLinkDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DC7A5256D196300CA289E /* GetLinkDetailTableViewCell.swift */; };
+		837DC7AC256D196400CA289E /* GetLinkPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DC7A6256D196300CA289E /* GetLinkPasswordTableViewCell.swift */; };
+		837DC7AD256D196400CA289E /* GetLinkInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DC7A7256D196300CA289E /* GetLinkInfoTableViewCell.swift */; };
 		837EE205253DB8540083D927 /* GetLink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837EE204253DB8540083D927 /* GetLink.storyboard */; };
 		837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */; };
 		837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */; };
@@ -1093,12 +1115,6 @@
 		A86B9F882316D6AB00F35E7A /* FLEXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9F1F2316D6AB00F35E7A /* FLEXColor.m */; };
 		A86B9F8A2316D6AB00F35E7A /* FLEXObjcInternal.mm in Sources */ = {isa = PBXBuildFile; fileRef = A86B9F232316D6AB00F35E7A /* FLEXObjcInternal.mm */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
-		A86F05792567E65500437985 /* GetLinkDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05732567E65500437985 /* GetLinkDetailTableViewCell.swift */; };
-		A86F057A2567E65500437985 /* GetLinkDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05742567E65500437985 /* GetLinkDatePickerTableViewCell.swift */; };
-		A86F057B2567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05752567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift */; };
-		A86F057C2567E65500437985 /* GetLinkInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05762567E65500437985 /* GetLinkInfoTableViewCell.swift */; };
-		A86F057D2567E65500437985 /* GetLinkStringTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05772567E65500437985 /* GetLinkStringTableViewCell.swift */; };
-		A86F057E2567E65500437985 /* GetLinkPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F05782567E65500437985 /* GetLinkPasswordTableViewCell.swift */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1586,6 +1602,20 @@
 			remoteGlobalIDString = 7794AED3231E4E0A0039C1D2;
 			remoteInfo = MEGANotifications;
 		};
+		83199F1C25556CDE00344531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 83199F1025556CD900344531;
+			remoteInfo = MEGAWidgetExtension;
+		};
+		831B4913256FED6F0086002B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 831B490D256FED6F0086002B;
+			remoteInfo = MEGAIntent;
+		};
 		942254F31EDC03150074C51A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 137361821A6664C300B740E8 /* Project object */;
@@ -1623,9 +1653,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed App Extensions */,
 				942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */,
 				942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */,
 				943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed App Extensions */,
+				831B4915256FED6F0086002B /* MEGAIntent.appex in Embed App Extensions */,
 				7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -2334,9 +2366,17 @@
 		8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsOnMegaManager.swift; sourceTree = "<group>"; };
 		831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPermissionBottomView.swift; sourceTree = "<group>"; };
 		831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsPermissionBottomView.xib; sourceTree = "<group>"; };
+		8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = ShortcutIntents.intentdefinition; sourceTree = "<group>"; };
+		8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWidget.swift; sourceTree = "<group>"; };
+		83199F1125556CD900344531 /* MEGAWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		83199F1225556CD900344531 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		83199F1425556CDA00344531 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8319C15C22A138D70048B8A3 /* UIView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+MNZCategory.h"; sourceTree = "<group>"; };
 		8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+MNZCategory.m"; sourceTree = "<group>"; };
 		831A4F08229C339200EBE256 /* TransfersSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersSelected.h; sourceTree = "<group>"; };
+		831B490E256FED6F0086002B /* MEGAIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		831B4910256FED6F0086002B /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		831B4912256FED6F0086002B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
 		831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -2362,6 +2402,9 @@
 		8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveCollectionViewController.h; sourceTree = "<group>"; };
 		83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveCollectionViewController.m; sourceTree = "<group>"; };
+		8337BC60256283F400F3A81A /* ShortcutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutDetail.swift; sourceTree = "<group>"; };
+		83422B20255984C300D46907 /* MEGAWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAWidget.swift; sourceTree = "<group>"; };
+		83422B23255984C300D46907 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		834AD6012024694200D2527F /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
 		834AD6022024694200D2527F /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
 		834AD6032024694200D2527F /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
@@ -2420,6 +2463,12 @@
 		837B9C0924781B1600D409B4 /* NodeActionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionsTests.swift; sourceTree = "<group>"; };
 		837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VerifyEmail.storyboard; sourceTree = "<group>"; };
 		837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		837DC7A2256D196200CA289E /* GetLinkDatePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkDatePickerTableViewCell.swift; sourceTree = "<group>"; };
+		837DC7A3256D196200CA289E /* GetLinkStringTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCell.swift; sourceTree = "<group>"; };
+		837DC7A4256D196300CA289E /* GetLinkSwitchOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionTableViewCell.swift; sourceTree = "<group>"; };
+		837DC7A5256D196300CA289E /* GetLinkDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkDetailTableViewCell.swift; sourceTree = "<group>"; };
+		837DC7A6256D196300CA289E /* GetLinkPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkPasswordTableViewCell.swift; sourceTree = "<group>"; };
+		837DC7A7256D196300CA289E /* GetLinkInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkInfoTableViewCell.swift; sourceTree = "<group>"; };
 		837EE204253DB8540083D927 /* GetLink.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GetLink.storyboard; sourceTree = "<group>"; };
 		837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecryptionKeysViewController.swift; sourceTree = "<group>"; };
 		837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLinkPasswordViewController.swift; sourceTree = "<group>"; };
@@ -2433,6 +2482,7 @@
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
+		83AB5A8125598CE200A04232 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerVideo.h; sourceTree = "<group>"; };
 		83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerAudio.h; sourceTree = "<group>"; };
 		83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSharedItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -2465,6 +2515,7 @@
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
+		83E74545255BF81600D35E13 /* MEGAWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAWidgetExtension.entitlements; sourceTree = "<group>"; };
 		83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupsViewController.swift; sourceTree = "<group>"; };
 		83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsGroups.storyboard; sourceTree = "<group>"; };
 		83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupTableViewCell.swift; sourceTree = "<group>"; };
@@ -2785,12 +2836,6 @@
 		A86B9F242316D6AB00F35E7A /* FLEXAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXAlert.h; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
-		A86F05732567E65500437985 /* GetLinkDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkDetailTableViewCell.swift; sourceTree = "<group>"; };
-		A86F05742567E65500437985 /* GetLinkDatePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkDatePickerTableViewCell.swift; sourceTree = "<group>"; };
-		A86F05752567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionTableViewCell.swift; sourceTree = "<group>"; };
-		A86F05762567E65500437985 /* GetLinkInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkInfoTableViewCell.swift; sourceTree = "<group>"; };
-		A86F05772567E65500437985 /* GetLinkStringTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCell.swift; sourceTree = "<group>"; };
-		A86F05782567E65500437985 /* GetLinkPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTimeDurationTableViewController.swift; sourceTree = "<group>"; };
 		A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeDurationInfo.swift; sourceTree = "<group>"; };
@@ -2812,6 +2857,7 @@
 		A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAProviderDelegate.h; path = Chat/MEGAProviderDelegate.h; sourceTree = "<group>"; };
 		A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAProviderDelegate.m; path = Chat/MEGAProviderDelegate.m; sourceTree = "<group>"; };
 		A89D2A9C23CE2B3E00AD5488 /* SAMKeychain.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SAMKeychain.bundle; path = iMEGA/Vendor/SAMKeychain/Support/SAMKeychain.bundle; sourceTree = SOURCE_ROOT; };
+		A89EEC3325599FA6009FBF33 /* MEGAWidget-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAWidget-PrefixHeader.pch"; sourceTree = "<group>"; };
 		A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGALoginRequestDelegate.h; path = API/Requests/MEGALoginRequestDelegate.h; sourceTree = "<group>"; };
 		A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGALoginRequestDelegate.m; path = API/Requests/MEGALoginRequestDelegate.m; sourceTree = "<group>"; };
 		A8AA4F7B1ED433CA00E7BA23 /* MEGABaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGABaseRequestDelegate.h; path = API/Requests/MEGABaseRequestDelegate.h; sourceTree = "<group>"; };
@@ -3455,6 +3501,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83199F0E25556CD900344531 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
+				83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		831B490B256FED6F0086002B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		942254D91EDC03130074C51A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3618,6 +3680,8 @@
 				943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */,
 				B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */,
 				7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */,
+				83199F1125556CD900344531 /* MEGAWidgetExtension.appex */,
+				831B490E256FED6F0086002B /* MEGAIntent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4101,6 +4165,8 @@
 				4182D57C46F62F9FFCF743AD /* Pods_iMEGA_MEGAPicker.framework */,
 				CDF4D43AD78677D03A93A32C /* Pods_iMEGA_MEGAPickerFileProvider.framework */,
 				095F19B5BE34E0045DD54EFB /* Pods_iMEGA_MEGAShare.framework */,
+				83199F1225556CD900344531 /* WidgetKit.framework */,
+				83199F1425556CDA00344531 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -5681,7 +5747,8 @@
 				7794AEE0231E54680039C1D2 /* MEGANotifications-Bridging-Header.h */,
 				7794AEE2231E5C2F0039C1D2 /* MEGANotifications-PrefixHeader.pch */,
 			);
-			path = MEGANotifications;
+			name = MEGANotifications;
+			path = iMEGA/Extensions/MEGANotifications;
 			sourceTree = "<group>";
 		};
 		7795677421C80C43002B6227 /* OnboardingViewController */ = {
@@ -5752,6 +5819,24 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		831B490F256FED6F0086002B /* MEGAIntent */ = {
+			isa = PBXGroup;
+			children = (
+				831B4910256FED6F0086002B /* IntentHandler.swift */,
+				831B4942256FEE270086002B /* Supporting Files */,
+			);
+			name = MEGAIntent;
+			path = iMEGA/Extensions/MEGAIntent;
+			sourceTree = "<group>";
+		};
+		831B4942256FEE270086002B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				831B4912256FED6F0086002B /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		832E1020202B097900BDD30F /* CustomActionViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -5814,6 +5899,38 @@
 				83337CAA21009494000F40A7 /* ItemListModel.m */,
 			);
 			path = ItemList;
+			sourceTree = "<group>";
+		};
+		8337BC56256283AF00F3A81A /* Shortcuts */ = {
+			isa = PBXGroup;
+			children = (
+				8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */,
+				8337BC60256283F400F3A81A /* ShortcutDetail.swift */,
+				8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */,
+			);
+			path = Shortcuts;
+			sourceTree = "<group>";
+		};
+		83422B1F255984C200D46907 /* MEGAWidget */ = {
+			isa = PBXGroup;
+			children = (
+				8337BC56256283AF00F3A81A /* Shortcuts */,
+				83422B562559861600D46907 /* Supporting Files */,
+				83422B20255984C300D46907 /* MEGAWidget.swift */,
+				83422B23255984C300D46907 /* Assets.xcassets */,
+			);
+			name = MEGAWidget;
+			path = iMEGA/Extensions/MEGAWidget;
+			sourceTree = "<group>";
+		};
+		83422B562559861600D46907 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				83AB5A8125598CE200A04232 /* Info.plist */,
+				A89EEC3325599FA6009FBF33 /* MEGAWidget-PrefixHeader.pch */,
+				83E74545255BF81600D35E13 /* MEGAWidgetExtension.entitlements */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		834AD6002024692200D2527F /* MGSwipeTableCell */ = {
@@ -5991,10 +6108,12 @@
 		942254D71EDC02CB0074C51A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				831B490F256FED6F0086002B /* MEGAIntent */,
+				7794AED5231E4E0A0039C1D2 /* MEGANotifications */,
 				942254DD1EDC03140074C51A /* MEGAPicker */,
 				942254EC1EDC03150074C51A /* MEGAPickerFileProvider */,
 				943F8B101EF26E9C00AFD89F /* MEGAShare */,
-				7794AED5231E4E0A0039C1D2 /* MEGANotifications */,
+				83422B1F255984C200D46907 /* MEGAWidget */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -6554,12 +6673,12 @@
 		A86F05722567E65500437985 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				A86F05732567E65500437985 /* GetLinkDetailTableViewCell.swift */,
-				A86F05742567E65500437985 /* GetLinkDatePickerTableViewCell.swift */,
-				A86F05752567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift */,
-				A86F05762567E65500437985 /* GetLinkInfoTableViewCell.swift */,
-				A86F05772567E65500437985 /* GetLinkStringTableViewCell.swift */,
-				A86F05782567E65500437985 /* GetLinkPasswordTableViewCell.swift */,
+				837DC7A2256D196200CA289E /* GetLinkDatePickerTableViewCell.swift */,
+				837DC7A5256D196300CA289E /* GetLinkDetailTableViewCell.swift */,
+				837DC7A7256D196300CA289E /* GetLinkInfoTableViewCell.swift */,
+				837DC7A6256D196300CA289E /* GetLinkPasswordTableViewCell.swift */,
+				837DC7A3256D196200CA289E /* GetLinkStringTableViewCell.swift */,
+				837DC7A4256D196300CA289E /* GetLinkSwitchOptionTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -7679,6 +7798,8 @@
 				942254F71EDC03150074C51A /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
 				7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */,
+				83199F1D25556CDE00344531 /* PBXTargetDependency */,
+				831B4914256FED6F0086002B /* PBXTargetDependency */,
 			);
 			name = MEGA;
 			productName = iMEGA;
@@ -7701,6 +7822,40 @@
 			name = MEGANotifications;
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		83199F1025556CD900344531 /* MEGAWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83199F2325556CDE00344531 /* Build configuration list for PBXNativeTarget "MEGAWidgetExtension" */;
+			buildPhases = (
+				83199F0D25556CD900344531 /* Sources */,
+				83199F0E25556CD900344531 /* Frameworks */,
+				83199F0F25556CD900344531 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAWidgetExtension;
+			productName = MEGAWidgetExtension;
+			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		831B490D256FED6F0086002B /* MEGAIntent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 831B4916256FED700086002B /* Build configuration list for PBXNativeTarget "MEGAIntent" */;
+			buildPhases = (
+				831B490A256FED6F0086002B /* Sources */,
+				831B490B256FED6F0086002B /* Frameworks */,
+				831B490C256FED6F0086002B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAIntent;
+			productName = MEGAIntent;
+			productReference = 831B490E256FED6F0086002B /* MEGAIntent.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		942254DB1EDC03130074C51A /* MEGAPicker */ = {
@@ -7782,7 +7937,7 @@
 		137361821A6664C300B740E8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = MEGA;
 				TargetAttributes = {
@@ -7824,6 +7979,16 @@
 								enabled = 0;
 							};
 						};
+					};
+					83199F1025556CD900344531 = {
+						CreatedOnToolsVersion = 12.1;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
+					};
+					831B490D256FED6F0086002B = {
+						CreatedOnToolsVersion = 12.2;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
 					};
 					942254DB1EDC03130074C51A = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -7928,6 +8093,8 @@
 				943F8B0E1EF26E9C00AFD89F /* MEGAShare */,
 				7794AED3231E4E0A0039C1D2 /* MEGANotifications */,
 				B6CED48A22B8AC70009C4861 /* MEGAUnitTests */,
+				83199F1025556CD900344531 /* MEGAWidgetExtension */,
+				831B490D256FED6F0086002B /* MEGAIntent */,
 			);
 		};
 /* End PBXProject section */
@@ -8092,6 +8259,24 @@
 			files = (
 				77BE2FEF24000CB600514DB8 /* Localizable.strings in Resources */,
 				B6CB4E44253EF8F40009E87F /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83199F0F25556CD900344531 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
+				837DC5592565605100CA289E /* Localizable.strings in Resources */,
+				83199F592555780300344531 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		831B490C256FED6F0086002B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8403,7 +8588,6 @@
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
-				A86F057C2567E65500437985 /* GetLinkInfoTableViewCell.swift in Sources */,
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
 				A86B9F662316D6AB00F35E7A /* FLEXFileBrowserSearchOperation.m in Sources */,
 				A86B9F722316D6AB00F35E7A /* FLEXTableListViewController.m in Sources */,
@@ -8745,7 +8929,6 @@
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				5D9DC3E1253EB9230055F4C4 /* UnitDataStorage.swift in Sources */,
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
-				A86F057B2567E65500437985 /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
 				B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */,
@@ -8754,7 +8937,6 @@
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
 				A86B9F562316D6AB00F35E7A /* FLEXArgumentInputFontsPickerView.m in Sources */,
-				A86F057E2567E65500437985 /* GetLinkPasswordTableViewCell.swift in Sources */,
 				B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */,
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
 				A86B9F732316D6AB00F35E7A /* FLEXTableColumnHeader.m in Sources */,
@@ -8989,6 +9171,7 @@
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
 				BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */,
+				837DC7AA256D196400CA289E /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				41D21DF11D01AE89002E6296 /* NSArray+PureLayout.m in Sources */,
 				B6B73E7022C9A39500ACAD48 /* SMSRegion.swift in Sources */,
 				5D0B42B6250618070057D49B /* NodeLinkRouter.swift in Sources */,
@@ -9000,7 +9183,6 @@
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
 				A86B9F392316D6AB00F35E7A /* FLEXTableViewCell.m in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
-				A86F057A2567E65500437985 /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */,
@@ -9052,6 +9234,7 @@
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
 				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
+				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
 				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
@@ -9112,6 +9295,7 @@
 				A86B9F712316D6AB00F35E7A /* FLEXTableContentViewController.m in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
+				837DC7AC256D196400CA289E /* GetLinkPasswordTableViewCell.swift in Sources */,
 				5DA9759924B6CD6C00FBD045 /* UIControl.State+Hashable.swift in Sources */,
 				5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */,
 				5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */,
@@ -9142,6 +9326,7 @@
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				BF943E9B23554181001C18E0 /* PushNotificationControl.swift in Sources */,
+				8318CE642562C89600C97779 /* ShortcutIntents.intentdefinition in Sources */,
 				41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */,
 				BFAAF70F252E6D170053A9BF /* VideoExplorerListSource.swift in Sources */,
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
@@ -9213,6 +9398,7 @@
 				B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */,
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
+				837DC7AD256D196400CA289E /* GetLinkInfoTableViewCell.swift in Sources */,
 				2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */,
 				2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
@@ -9288,6 +9474,7 @@
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				B6E7A8E12503622200CD6AC2 /* PreferenceRepository.swift in Sources */,
 				8330A9F322F41F470059B39C /* Array+Additions.swift in Sources */,
+				837DC7AB256D196400CA289E /* GetLinkDetailTableViewCell.swift in Sources */,
 				B63AEB0D2511BD96000B8517 /* CheckSMSErrorEntity.swift in Sources */,
 				2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */,
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
@@ -9312,9 +9499,8 @@
 				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,
 				5D1B240924AF61F000ACE1C5 /* AttributedTextStyleFactory.swift in Sources */,
-				A86F05792567E65500437985 /* GetLinkDetailTableViewCell.swift in Sources */,
-				A86F057D2567E65500437985 /* GetLinkStringTableViewCell.swift in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
+				837DC7A9256D196400CA289E /* GetLinkStringTableViewCell.swift in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
 				5DA32DC524EA936D0075B613 /* FileSystemImageCacheClient.swift in Sources */,
 				A86B9F6F2316D6AB00F35E7A /* FLEXTableLeftCell.m in Sources */,
@@ -9367,6 +9553,27 @@
 				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
 				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83199F0D25556CD900344531 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
+				8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */,
+				8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */,
+				8318CE322562C5B300C97779 /* ShortcutIntents.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		831B490A256FED6F0086002B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				831B4939256FEDF90086002B /* ShortcutIntents.intentdefinition in Sources */,
+				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
+				831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9660,6 +9867,16 @@
 			isa = PBXTargetDependency;
 			target = 7794AED3231E4E0A0039C1D2 /* MEGANotifications */;
 			targetProxy = 7794AED9231E4E0A0039C1D2 /* PBXContainerItemProxy */;
+		};
+		83199F1D25556CDE00344531 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 83199F1025556CD900344531 /* MEGAWidgetExtension */;
+			targetProxy = 83199F1C25556CDE00344531 /* PBXContainerItemProxy */;
+		};
+		831B4914256FED6F0086002B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 831B490D256FED6F0086002B /* MEGAIntent */;
+			targetProxy = 831B4913256FED6F0086002B /* PBXContainerItemProxy */;
 		};
 		942254F41EDC03150074C51A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10097,6 +10314,176 @@
 			};
 			name = Release;
 		};
+		83199F1F25556CDE00344531 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidgetExtension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					MNZ_APP_EXTENSION,
+					"MNZ_WIDGET_EXTENSION=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					iMEGA/Vendor/Import,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(SDKROOT)/usr/lib/swift",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios iMEGA/Vendor/Karere/bindings/Objective-C";
+			};
+			name = Debug;
+		};
+		83199F2025556CDE00344531 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidgetExtension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					MNZ_APP_EXTENSION,
+					"MNZ_WIDGET_EXTENSION=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					iMEGA/Vendor/Import,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(SDKROOT)/usr/lib/swift",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios iMEGA/Vendor/Karere/bindings/Objective-C";
+			};
+			name = Release;
+		};
+		831B4917256FED700086002B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"MNZ_INTENT_EXTENSION=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		831B4918256FED700086002B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PREPROCESSOR_DEFINITIONS = "MNZ_INTENT_EXTENSION=1";
+				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		942254FA1EDC03150074C51A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A9379C73D8ADAB6FAA640B4 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */;
@@ -10509,6 +10896,24 @@
 			buildConfigurations = (
 				7794AEDC231E4E0A0039C1D2 /* Debug */,
 				7794AEDD231E4E0A0039C1D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83199F2325556CDE00344531 /* Build configuration list for PBXNativeTarget "MEGAWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83199F1F25556CDE00344531 /* Debug */,
+				83199F2025556CDE00344531 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		831B4916256FED700086002B /* Build configuration list for PBXNativeTarget "MEGAIntent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				831B4917256FED700086002B /* Debug */,
+				831B4918256FED700086002B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

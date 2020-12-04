@@ -2,6 +2,7 @@
 #import "MainTabBarController.h"
 
 #import "ChatRoomsViewController.h"
+#import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MyAccountHallViewController.h"
@@ -224,6 +225,34 @@
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showOfflines];
+}
+
+- (void)showUploadFile {
+    self.selectedIndex = CLOUD;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+    [cloudDriveVC presentUploadAlertController];
+}
+
+- (void)showScanDocument {
+    self.selectedIndex = CLOUD;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+    [cloudDriveVC presentScanDocument];
+}
+
+- (void)showStartConversation {
+    self.selectedIndex = CHAT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    ChatRoomsViewController *chatRoomsViewController = navigationController.viewControllers.firstObject;
+    [chatRoomsViewController showStartConversation];
+}
+
+- (void)showAddContact {
+    InviteContactViewController *inviteContactVC = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+    MEGANavigationController *navigation = [MEGANavigationController.alloc initWithRootViewController:inviteContactVC];
+    [navigation addLeftDismissButtonWithText:NSLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")];
+    [self presentViewController:navigation animated:YES completion:nil];
 }
 
 #pragma mark - Private
