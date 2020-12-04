@@ -563,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Add from Contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Add contact";
+"addContact"="Add Contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
 /* Button title to 'Add' the contact to your contacts list */
@@ -2391,7 +2391,13 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Select Folder";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads." = "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Upload File";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Shortcuts";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */

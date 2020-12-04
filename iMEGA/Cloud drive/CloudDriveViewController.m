@@ -1118,6 +1118,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:uploadActions animated:YES completion:nil];
 }
 
+- (void)presentScanDocument {
+    if (@available(iOS 13.0, *)) {
+        [self presentViewController:({
+            VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+            scanVC.delegate = self;
+            scanVC;
+        }) animated:YES completion:nil];
+    }
+}
+
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
@@ -1432,11 +1442,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     if (@available(iOS 13.0, *)) {
         [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-            [self presentViewController:({
-                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
-                scanVC.delegate = self;
-                scanVC;
-            }) animated:YES completion:nil];
+            [self presentScanDocument];
         }]];
     }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{

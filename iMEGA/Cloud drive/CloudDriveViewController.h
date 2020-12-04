@@ -28,6 +28,7 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 - (void)activateSearch;
 - (void)presentUploadAlertController;
+- (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)updateNavigationBarTitle;
 - (void)toolbarActionsForNodeArray:(NSArray *)nodeArray;

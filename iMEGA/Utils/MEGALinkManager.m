@@ -415,6 +415,34 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
             break;
             
+        case URLTypeUploadFile:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showUploadFile];
+            }
+            break;
+            
+        case URLTypeScanDocument:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showScanDocument];
+            }
+            break;
+            
+        case URLTypeStartConversation:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showStartConversation];
+            }
+            break;
+            
+        case URLTypeAddContact:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showAddContact];
+            }
+            break;
+            
         default:
             break;
     }
