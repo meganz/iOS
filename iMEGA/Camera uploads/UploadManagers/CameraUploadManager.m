@@ -21,6 +21,7 @@
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
+@import FirebaseCrashlytics;
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
@@ -95,16 +96,16 @@ static const NSUInteger VideoUploadBatchCount = 1;
     
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        [self.uploadRecordsCollator collateNonUploadingRecords];
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+    });
+    
     if (CameraUploadManager.isCameraUploadEnabled) {
         [TransferSessionManager.shared restoreAllSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
             [self.uploadRecordsCollator collateAllUploadingRecordsByUploadTasks:uploadTasks];
         }];
     }
-    
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.uploadRecordsCollator collateNonUploadingRecords];
-        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-    });
 }
 
 #pragma mark - manage operation queues
@@ -504,6 +505,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
         [self createUploadOperationWithRecord:record completion:^(CameraUploadOperation * _Nullable operation, NSError * _Nullable error) {
             if (error) {
                 MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
+                [[FIRCrashlytics crashlytics] recordError:error];
+                
                 if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
                     return;
                 }
@@ -518,7 +521,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
                         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
                     }
                 }
-                [self uploadNextAssetForMediaType:mediaType];
+                
+                dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+                    [self uploadNextAssetForMediaType:mediaType];
+                });
             } else {
                 [self queueUpOperation:operation];
             }

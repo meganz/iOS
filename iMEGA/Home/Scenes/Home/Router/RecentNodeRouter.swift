@@ -25,6 +25,7 @@ final class RecentNodeRouter {
             isIncoming: false,
             sender: self
         )
+        nodeActionViewController.shouldAutorotateScreen = false
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 

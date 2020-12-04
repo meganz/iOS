@@ -62,7 +62,7 @@
                 break;
                 
             case HOME:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"Home", @"Accessibility label of Home section in tabbar item");
                 break;
         }
     }
@@ -272,7 +272,7 @@
         self.phoneBadgeImageView.hidden = YES;
         [self.tabBar addSubview:self.phoneBadgeImageView];
     }
-    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 2 + 10, 6, 10, 10);
+    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 4 * 3 - 10, 6, 10, 10);
 }
 
 - (UIViewController *)homeViewController {

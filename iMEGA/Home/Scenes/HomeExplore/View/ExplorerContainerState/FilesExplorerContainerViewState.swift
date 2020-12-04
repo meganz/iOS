@@ -78,12 +78,16 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         fatalError("showPreferences(sender:) needs to be implemented by the subclass")
     }
     
-    func selectAllNodes() {
-        filesExplorerViewController?.selectAllNodes()
+    func toggleSelectAllNodes() {
+        filesExplorerViewController?.toggleSelectAllNodes()
     }
     
     func configureSearchController(_ searchController: UISearchController) {
         filesExplorerViewController?.configureSearchController(searchController)
+    }
+    
+    func removeSearchController(_ searchController: UISearchController) {
+        filesExplorerViewController?.removeSearchController(searchController)
     }
     
     func updateSearchResults(for searchString: String?) {
@@ -104,6 +108,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     
     func configureNavigationBarToDefault() {
         containerViewController.configureNavigationBarToDefault()
+    }
+    
+    func showSearchBar(_ show: Bool) {
+        containerViewController.showSearchBar(show)
     }
     
     // MARK: - Private methods.

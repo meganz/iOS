@@ -173,6 +173,7 @@
         if (node) {
             [NSOperationQueue.mainQueue addOperationWithBlock:^{
                 self.targetFolderLabel.text = node.name;
+                [self.tableView reloadData];
             }];
         } else {
             MEGALogWarning(@"Could not load CU target folder due to error %@", error)
@@ -490,6 +491,7 @@
     [CameraUploadNodeAccess.shared setNode:node completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (node) {
             self.targetFolderLabel.text = node.name;
+            [self.tableView reloadData];
         } else {
             MEGALogWarning(@"Could not load CU target folder due to error %@", error)
         }

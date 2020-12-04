@@ -1,8 +1,15 @@
 
 class FilesExplorerContainerViewController: UIViewController {
     //MARK:- Private variables
+    
+    enum ViewPreference {
+        case list
+        case grid
+        case both
+    }
 
     private let viewModel: FilesExplorerViewModel
+    private let viewPreference: ViewPreference
     
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
@@ -27,10 +34,11 @@ class FilesExplorerContainerViewController: UIViewController {
     
     //MARK:-
     
-    init(viewModel: FilesExplorerViewModel) {
+    init(viewModel: FilesExplorerViewModel, viewPreference: ViewPreference) {
         self.viewModel = viewModel
+        self.viewPreference = viewPreference
         super.init(nibName: nil, bundle: nil)
-        if UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue {
+        if UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue, viewPreference != .list {
             currentState = states[FilesExplorerContainerGridViewState.identifier]!
         } else {
             currentState = states[FilesExplorerContainerListViewState.identifier]!
@@ -45,7 +53,6 @@ class FilesExplorerContainerViewController: UIViewController {
         super.viewDidLoad()
         currentState.showContent()
         showMoreRightBarButton()
-        configureSearchBar()
     }
     
     // Problem: When the view is displayed on the screen the search bar isn't visible but the expectation is to show it.
@@ -107,6 +114,14 @@ class FilesExplorerContainerViewController: UIViewController {
         UserDefaults.standard.setValue(preference.rawValue, forKey: MEGAExplorerViewModePreference)
     }
     
+    func showSearchBar(_ show: Bool) {
+        if show {
+            configureSearchBar()
+        } else {
+            removeSearchBar()
+        }
+    }
+    
     private func showMoreRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "moreSelected"),
@@ -126,15 +141,24 @@ class FilesExplorerContainerViewController: UIViewController {
     }
     
     @objc private func selectAllButtonPressed(_ button: UIBarButtonItem) {
-        currentState.selectAllNodes()
+        currentState.toggleSelectAllNodes()
     }
     
     func configureSearchBar() {
         if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
+            if navigationItem.searchController == nil {
+                navigationItem.searchController = searchController
+            }
         } else {
             currentState.configureSearchController(searchController)
+        }
+    }
+    
+    func removeSearchBar() {
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = nil
+        } else {
+            currentState.removeSearchController(searchController)
         }
     }
     
@@ -158,13 +182,24 @@ class FilesExplorerContainerViewController: UIViewController {
             self?.currentState.setEditingMode()
         }
         
-        let actionSheetVC = ActionSheetViewController(
-            actions: [viewPreferenceAction, sortPreferenceAction, selectAction],
-            headerTitle: nil,
-            dismissCompletion: nil,
-            sender: sender
-        )
-
+        let actionSheetVC: ActionSheetViewController
+        
+        if viewPreference == .list {
+            actionSheetVC = ActionSheetViewController(
+                actions: [sortPreferenceAction],
+                headerTitle: nil,
+                dismissCompletion: nil,
+                sender: sender
+            )
+        } else {
+            actionSheetVC = ActionSheetViewController(
+                actions: [viewPreferenceAction, sortPreferenceAction, selectAction],
+                headerTitle: nil,
+                dismissCompletion: nil,
+                sender: sender
+            )
+        }
+        
         present(actionSheetVC, animated: true)
     }
     

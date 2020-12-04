@@ -28,6 +28,7 @@ pipeline {
                         sh "sh $WORKSPACE/download_3rdparty.sh"
                     }
                     sh "bundle install"
+                    sh "bundle exec pod repo update"
                     sh "bundle exec pod cache clean --all --verbose"
                     sh "bundle exec pod install --verbose"
                 })

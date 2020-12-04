@@ -624,6 +624,8 @@
 "securityOptions"="보안 옵션";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="대하여";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="언어";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="피드백 보내기";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -892,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="모두";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="진행중";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="완료";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="업로드 전송";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="다운로드 전송";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="내 계정";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="업그레이드";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -930,7 +930,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="휴대전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요.";
+"Select from phone contacts or enter multiple email addresses"="휴대 전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
 /*  */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
+"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] Pro 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
+"cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] Pro 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="저장소";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1182,7 +1182,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="이 대화의 모든 메시지 기록을 삭제하시겠습니까?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="대화 기록이 삭제되었습니다";
 /* 'Next' button in a dialog */
 "continue"="계속";
 /* Title of the incoming shared folders of a user. */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu개의 읽지 않은 메시지";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
+"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1404,6 +1404,10 @@
 "HTTP error"="HTTP 오류";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="언어를 변경한 후 MEGA를 재시작해야합니다";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="언어가 변경되었습니다. 재시작하려면 탭하세요.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA는 모바일 기기를 위한 전용 앱과 함께 표준 웹 브라우저를 통해 사용 가능한 이용자가 제어하는 암호화된 클라우드 저장소를 제공합니다. 다른 클라우드 저장소 제공자들과 달리 당신의 데이터는 절대 우리가 아니라 당신의 클라이언트 기기를 통해 암호화되고 해독됩니다.";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 400 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 2 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 8 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 16 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
+"generalDescriptionParagraph5"="Pro LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 400 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPro I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 2 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPro II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 8 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPro III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 16 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
@@ -1615,7 +1619,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="이 기기에 2단계 인증 앱이 필요합니다";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대전화 또는 태블릿용 Google 인증기, Duo Mobile, Authy 또는 Microsoft 인증기 앱을 다운로드하고 설치할 수 있습니다.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대 전화 또는 태블릿용 Google 인증기, Duo Mobile, Authy 또는 Microsoft 인증기 앱을 다운로드하고 설치할 수 있습니다.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="2단계 인증 활성화됨";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1689,11 +1693,11 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="파일 관리";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="파일 버전 기록";
+"File versioning"="파일 버전 관리";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 기록을 활성화하거나 비활성화합니다.\n파일 버전 기록을 해제하면 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 관리를 활성화하거나 비활성화합니다.\n파일 버전 관리를 해제하는 것이 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 관리가 해제되면, 파일이 업데이트되면 현재 버전이 새 버전으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다). 파일 버전 관리를 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="파일 버전";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -1791,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="결제 정보";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="PRO 회원권이 곧 만료됩니다";
+"PRO membership plan expiring soon"="Pro 회원권이 곧 만료됩니다";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="게시 중단 알림";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1851,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="%1 요금제에 대한 지불이 처리되지 않았습니다.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="PRO 회원권이 1일 이내에 만료됩니다.";
+"Your PRO membership plan will expire in 1 day."="Pro 회원권이 1일 이내에 만료됩니다.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="PRO 회원권이 %1일 이내에 만료됩니다.";
+"Your PRO membership plan will expire in %1 days."="Pro 회원권이 %1일 이내에 만료됩니다.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="당신의 PRO 요금제가 1일 전에 만료되었습니다";
+"Your PRO membership plan expired 1 day ago"="당신의 Pro 요금제가 1일 전에 만료되었습니다";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="당신의 PRO 요금제가 %1일 전에 만료되었습니다";
+"Your PRO membership plan expired %1 days ago"="당신의 Pro 요금제가 %1일 전에 만료되었습니다";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="공개적으로 공유된 %1 (%2)가 게시 중단되었습니다.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA는 당신의 데이터에 접근할 수 없지만, 당신의 조직 관리자는 당신의 이용자 계정의 카메라 업로드를 보거나 제어할 수 있는 권한이 있습니다.";
 /* */
 "Something went wrong"="뭔가 잘못 됐습니다";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="사용량";
 /* Title of the "Links" Shared Items. */
 "Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2169,23 +2171,17 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="전송 할당량 초과";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="선택 초기화";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="모두 일시정지";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="모두 재개";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="모두 삭제";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="전송을 재개할까요?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA 카메라 업로드 폴더";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="폴더 선택";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="폴더 선택";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="이미지 품질";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2279,9 +2275,9 @@
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="그 이후, 당신의 데이터는 삭제 대상이 됩니다.";
 /* Title for action to modify the registered phone number. */
-"Modify Phone Number"="휴대전화 번호 수정";
+"Modify Phone Number"="휴대 전화 번호 수정";
 /* Title for action to remove the registered phone number. */
-"Remove Phone Number"="휴대전화 번호 삭제";
+"Remove Phone Number"="휴대 전화 번호 삭제";
 /* Message for action to remove the registered phone number. */
 "This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="이것은 당신의 계정에 연결된 전화번호를 삭제합니다. 만약 나중에 전화번호를 추가하려면 전화번호를 인증해야합니다.";
 /* Message for action to modify the registered phone number. */
@@ -2390,3 +2386,33 @@
 "Unavailable"="이용 불가";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="이메일이 이미 발송되었습니다. 몇 분 기다린 후 다시 시도하세요.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="파일 찾기";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA 카메라 업로드 폴더";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="폴더 선택";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="문서";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="동영상";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

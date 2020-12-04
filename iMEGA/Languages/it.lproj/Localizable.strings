@@ -624,6 +624,8 @@
 "securityOptions"="Opzioni di Sicurezza";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Info";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="Lingua";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Invia un commento";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -892,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tutti";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="In corso";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Completato";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="UPLOAD trasferimenti";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD trasferimenti";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="Account";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Fai l'upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Il tuo Cloud Drive è quasi pieno.[/S] [A]Fai l'upgrade adesso[/A] ad un account PRO ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
+"cloudDriveIsAlmostFull"="[S]Il tuo Cloud Drive è quasi pieno.[/S] [A]Fai l’upgrade adesso[/A] ad un account Pro ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Il tuo Cloud Drive è pieno.[/S] [A]Fai l'upgrade adesso[/A] ad un account PRO ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
+"cloudDriveIsFull"="[S]Il tuo Cloud Drive è pieno.[/S] [A]Fai l’upgrade adesso[/A] ad un account Pro ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Archivio";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1182,7 +1182,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sei sicuro di voler cancellare tutta la chat?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="La cronologia della chat è stata pulita";
 /* 'Next' button in a dialog */
 "continue"="Continua";
 /* Title of the incoming shared folders of a user. */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESSAGGI NON LETTI";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, ACCEDERE con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su \"Visualizza ID Apple.\" Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
+"autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA Pro fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, ACCEDERE con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su \"Visualizza ID Apple.\" Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA Pro e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1404,6 +1404,10 @@
 "HTTP error"="Errore HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Dovrai riavviare MEGA dopo aver cambiato la lingua";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Lingua cambiata. Clicca per riavviare.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA fornisce uno spazio di archiviazione Cloud criptato controllato dall'utente attraverso i browser web, insieme ad applicazioni dedicate sui dispositivi mobili. Diversamente da altri provider di spazio di archiviazione cloud, i tuoi dati sono criptati e decriptati solo dai tuoi dispositivi e mai da noi.";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA offre un enorme spazio di archiviazione di 50 GB gratuito per tutti gli utenti registrati, insieme a bonus a obiettivi ed offerte di piani a pagamento con limiti molto più alti:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 (US$4.99) al mese o €49.99 (US$49.99) l'anno ti dà 400 GB di spazio di archiviazione e 1 TB di banda di trasferimento mensile.\nAbbonamento PRO I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) l'anno ti dà 2 TB di spazio di archiviazione e 2 TB di banda di trasferimento mensile.\nAbbonamento PRO II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) l'anno ti dà 48TB di spazio di archiviazione e 8 TB di banda di trasferimento mensile.\nAbbonamento PRO III: €29.99 (US$29.99) al mese o €299.99 (US$299.99) l'anno ti dà 16 TB di spazio di archiviazione e 16 TB di banda di trasferimento mensile.";
+"generalDescriptionParagraph5"="Abbonamento Pro Lite: €4.99 (US$4.99) al mese o €49.99 (US$49.99) all’anno ti dà 400GB di spazio di archiviazione e 1TB di banda di trasferimento ogni mese.\nAbbonamento Pro I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) all’anno ti dà 2TB di spazio di archiviazione e 2TB di banda di trasferimento ogni mese.\nAbbonamento Pro II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) all’anno ti dà 8TB di spazio di archiviazione e 8TB di banda di trasferimento ogni mese.\nAbbonamento Pro III: €29.99 (US$299.99) al mese o €299.99 (US$299.99) all’anno ti dà 16TB di spazio di archiviazione e 16TB di banda di trasferimento ogni mese.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Per maggiori informazioni, per favore visita il nostro sito web: https://mega.nz/\nTermini di Servizio: https://mega.nz/terms\nPolitica sulla Privacy: https://mega.nz/privacy";
@@ -1791,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informazioni di pagamento";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Il piano di iscrizione PRO scadrà a breve";
+"PRO membership plan expiring soon"="Il piano di iscrizione Pro scadrà a breve";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Avviso di chiusura";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1851,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="I pagamento per il piano %1 non ha avuto successo.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Il tuo piano di iscrizione PRO scadrà tra 1 giorno.";
+"Your PRO membership plan will expire in 1 day."="Il tuo piano di iscrizione Pro scadrà tra 1 giorno.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Il tuo piano di iscrizione PRO scadrà tra %1 giorni.";
+"Your PRO membership plan will expire in %1 days."="Il tuo piano di iscrizione Pro scadrà tra %1 giorni.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Il tuo piano PRO è scaduto 1 giorno fa";
+"Your PRO membership plan expired 1 day ago"="Il tuo piano Pro è scaduto 1 giorno fa";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Il tuo piano PRO è scaduto %1 giorni fa";
+"Your PRO membership plan expired %1 days ago"="Il tuo piano Pro è scaduto %1 giorni fa";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Il/la tuo/a %1 condiviso/a pubblicamente (%2) è stato/a chiuso/a.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Mentre MEGA non ha accesso ai tuoi dati, gli amministratori della tua organizzazione hanno l'abilità di controllare e vedere i Caricamenti da fotocamera nel tuo account utente.";
 /* */
 "Something went wrong"="Qualcosa è andato storto";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Utilizzo";
 /* Title of the "Links" Shared Items. */
 "Links"="Link";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2169,23 +2171,17 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="La tua password è stata rubata e adesso viene usata da persone non identificate per entrare nei tuoi account, incluso, ma non limitato, il tuo account MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="I trasferimenti hanno superato la banda";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Pulisci selezionati";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Metti tutto in pausa";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Riprendi tutto";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Pulisci Tutto";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Riprendere i trasferimenti?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="CARTELLA MEGA PER CARICAMENTI DA FOTOCAMERA";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Seleziona la cartella";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Scegli cartella";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Qualità delle immagini";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2390,3 +2386,33 @@
 "Unavailable"="Non disponibile";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email già inviata. Per favore, attendi un po' di minuti prima di riprovare nuovamente.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Cerca i tuoi file";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="CARTELLA MEGA PER CARICAMENTI DA FOTOCAMERA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Seleziona la cartella";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Documenti";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Video";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

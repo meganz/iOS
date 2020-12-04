@@ -51,6 +51,9 @@ PODS:
   - PinLayout (1.9.2)
   - PromisesObjC (1.2.11)
   - YYCache (1.0.4)
+  - YYCategories (1.0.4):
+    - YYCategories/no-arc (= 1.0.4)
+  - YYCategories/no-arc (1.0.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
@@ -70,11 +73,12 @@ DEPENDENCIES:
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
+  - YYCategories
   - YYImage/WebP (from `https://github.com/sundayfun/YYImage.git`)
   - YYWebImage
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - CHTCollectionViewWaterfallLayout
     - Firebase
     - FirebaseCore
@@ -91,6 +95,7 @@ SPEC REPOS:
     - PinLayout
     - PromisesObjC
     - YYCache
+    - YYCategories
     - YYWebImage
 
 EXTERNAL SOURCES:
@@ -139,9 +144,10 @@ SPEC CHECKSUMS:
   PinLayout: 0d96022e46e8b80468d819f182a393b97ca038da
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 1aa8c694dc5cecfb653feb363c6c0c3a7f22e96d
+PODFILE CHECKSUM: fd90d43b9df2c55886474c586a3f966aa2c7bbd6
 
 COCOAPODS: 1.10.0

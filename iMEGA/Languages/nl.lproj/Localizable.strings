@@ -624,6 +624,8 @@
 "securityOptions"="Beveiligingsopties";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Over";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="Taal";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Feedback versturen";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="UPLOAD overdrachten";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD overdrachten";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="Mijn Account";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Kies uw type account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
+"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S]aan cloud opslagruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
+"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S]tot %@TB (%@GB) [/S] aan cloud opslagruimte.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Opslag";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ONGELEZEN BERICHTEN";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer Applicatie Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
+"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperiodes van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, klikt u eenvoudig op het App Store-pictogram op uw mobiele apparaat, logt u in met uw Apple ID onder aan de pagina (als u dit nog niet heeft gedaan) en klikt u vervolgens op Bekijk ID. U wordt naar uw accountpagina geleid waar u omlaag kunt scrollen naar Applicatie-abonnementen beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1404,6 +1404,10 @@
 "HTTP error"="HTTP fout";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Onbekende fout";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="U zal MEGA moeten herstarten nadat u de taal heeft gewijzigd";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Taal gewijzigd. Tik om te herstarten.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA biedt gebruikers-gecontroleerde gecodeerde cloud opslag via standaard webbrowsers, samen met toegewijde applicaties voor mobiele apparaten. Anders dan andere cloud opslag aanbieders, worden uw gegevens gecodeerd en gedecodeerd door alleen uw klant apparaat en nooit door ons.";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA biedt een gulle 50 GB gratis opslag voor alle geregistreerde gebruikers met bonus prestaties, en biedt betaalde abonnementen met veel hogere limieten:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE-abonnement: €4,99(US$4,99) per maand of €49,99 (US$49,99) per jaar biedt 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \n PRO I-abonnement: € 9,99 (US$9,99) per maand of € 99,99 (US $99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n PRO II-abonnement: € 19,99 (US$19,99) per maand of € 199,99 (US$199,99) per maand geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n PRO III-abonnement: € 29,99 (US$29,99) per maand of € 299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
+"generalDescriptionParagraph5"="Pro Lite-abonnement: €4,99 (US$4,99) per maand of €49,99 (US$49,99) per jaar geeft u 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \nPro I-abonnement: €9,99 (US$9,99) per maand of €99,99 (US$99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n Pro II-abonnement: €19,99 (US$19,99) per maand of €199,99 (US$199,99) per jaar geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n Pro III-abonnement: € 29,99 (US$29,99) per maand of €299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nPrivacy Beleid: https://mega.nz/privacy";
@@ -1791,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Betalingsinformatie";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="PRO abonnement verloopt binnenkort";
+"PRO membership plan expiring soon"="Pro-lidmaatschap verloopt binnenkort";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Bericht van takedown";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1851,9 +1855,9 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Uw betaling voor het %1 abonnement is mislukt.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Uw PRO abonnement verloopt binnen 1 dag.";
+"Your PRO membership plan will expire in 1 day."="Uw Pro-lidmaatschap verloopt over 1 dag.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Uw PRO abonnement zal binnen %1 dagen verlopen.";
+"Your PRO membership plan will expire in %1 days."="Uw Pro-lidmaatschapsplan verloopt over %1 dagen.";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="Uw PRO abonnement is 1 dag geleden verlopen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Hoewel MEGA geen toegang heeft tot uw gegevens, hebben de beheerders van uw organisatie de mogelijkheid om de camera-uploads in uw gebruikersaccount te beheren en te bekijken";
 /* */
 "Something went wrong"="Er is iets fout gegaan";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Gebruik";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2180,12 +2182,6 @@
 "Clear All"="Wis alles";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Overdrachten Hervatten?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Selecteer Map";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Kies Map";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Afbeelding Kwaliteit";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2390,3 +2386,33 @@
 "Unavailable"="Onbeschikbaar";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail al verzonden. Wacht een paar minuten voordat u het opnieuw probeert.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Uw Bestanden";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Selecteer Map";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Weet u zeker dat u de Camera Uploads map naar de Prullenbak wilt verplaatsen? Zo ja, een nieuwe map wordt automatisch gegenereerd voor Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Documenten";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Video's";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="Geen documenten gevonden";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="Geen audio bestanden gevonden";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="Geen video’s gevonden";
+/* Navigation title for the photo explorer view */
+"All Images"="Alle Afbeeldingen";
+/* Section title for the photo explorer view */
+"TODAY"="VANDAAG";
+/* Section title for the photo explorer view */
+"YESTERDAY"="GISTEREN";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="Geen afbeeldingen gevonden";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Thuis";

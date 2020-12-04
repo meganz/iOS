@@ -4,6 +4,8 @@ protocol HomeAccountViewModelInputs {
 
     /// Tells view model that view is ready to display the account
     func viewIsReady()
+
+    func viewIsAppearing()
 }
 
 protocol HomeAccountViewModelOutputs {
@@ -62,14 +64,29 @@ final class HomeAccountViewModel {
 extension HomeAccountViewModel: HomeAccountViewModelInputs {
 
     func viewIsReady() {
-        loadAvatarImage()
         observeUserAlertsAndContactRequests()
+    }
+
+    func viewIsAppearing() {
+        loadAvatarImageIfAvatarIsMissing()
     }
 }
 
 // MARK: - Load Avatar Image
 
 extension HomeAccountViewModel {
+
+    private func loadAvatarImageIfAvatarIsMissing() {
+        guard avatarImage != nil else {
+            loadAvatarImage()
+            return
+        }
+
+        guard case .success = avatarImage else {
+            loadAvatarImage()
+            return
+        }
+    }
 
     private func loadAvatarImage() {
         if let cachedAvatarImage = megaAvatarUseCase.getCachedAvatarImage() {

@@ -15,7 +15,19 @@ final class CameraUploadNodeAccess: NSObject {
         super.init()
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodeChangeNotification), name: NSNotification.Name.MEGACameraUploadTargetFolderChangedInRemote, object: nil)
+        loadNodeToMemory()
     }
+    
+    /// Check if a given node is Camera Uploads target folder or not
+    ///
+    /// - Attention:
+    /// This method is not as accurate as `loadNode(:)` which will check if the current target node in memory is valid or not, and load it from server side if needed.
+    /// This method `isTargetNode` simply check if the given node against the current target node in memory. There is a small gap that the target node
+    /// in memory is not valid in some edge cases. If you need accurate target node, please use `loadNode(:)` method.
+    ///
+    /// - Parameter node: The given node to be checked
+    /// - Returns: if the node is the target folder return true, otherwise return false
+    @objc func isTargetNode(for node: MEGANode) -> Bool { node.handle == handle }
     
     // MARK: - Load node
     
@@ -47,7 +59,7 @@ final class CameraUploadNodeAccess: NSObject {
         MEGALogDebug("[Camera Upload] thead \(Thread.current) starts loading target folder")
         
         guard let node = handle?.validNode(in: sdk) else {
-            let operation = CameraUploadNodeLoadOperation { node, error in
+            let operation = CameraUploadNodeLoadOperation(autoCreate: CameraUploadManager.isCameraUploadEnabled) { node, error in
                 self.handle = node?.handle
                 completion(node, error)
                 MEGALogDebug("[Camera Upload] thead \(Thread.current) finished loading target folder")
@@ -61,6 +73,12 @@ final class CameraUploadNodeAccess: NSObject {
         completion(node, nil)
         MEGALogDebug("[Camera Upload] thead \(Thread.current) gets a valid target folder without loading")
         nodeAccessSemaphore.signal()
+    }
+    
+    private func loadNodeToMemory() {
+        loadNode { _, error in
+            MEGALogWarning("[Camera Upload] could not load node to memory \(String(describing: error))")
+        }
     }
     
     // MARK: - Switch node
@@ -87,5 +105,7 @@ final class CameraUploadNodeAccess: NSObject {
     
     @objc func didReceiveNodeChangeNotification() {
         handle = nil
+        
+        loadNodeToMemory()
     }
 }

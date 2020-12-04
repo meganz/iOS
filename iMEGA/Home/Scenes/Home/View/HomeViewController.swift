@@ -93,18 +93,20 @@ final class HomeViewController: UIViewController {
             guard let self = self else { return }
             let resizedImage = output.avatarImage
 
-            if let badgeButton = self.badgeButton {
-                badgeButton.setBadgeText(output.notificationNumber)
-                badgeButton.setBackgroundImage(resizedImage, for: .normal)
-            } else {
-                let badgeButton = BadgeButton()
-                badgeButton.setBadgeText(output.notificationNumber)
-                badgeButton.setBackgroundImage(resizedImage, for: .normal)
-                badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
-                self.badgeButton = badgeButton
+            asyncOnMain {
+                if let badgeButton = self.badgeButton {
+                    badgeButton.setBadgeText(output.notificationNumber)
+                    badgeButton.setBackgroundImage(resizedImage, for: .normal)
+                } else {
+                    let badgeButton = BadgeButton()
+                    self.badgeButton = badgeButton
+                    badgeButton.setBadgeText(output.notificationNumber)
+                    badgeButton.setBackgroundImage(resizedImage, for: .normal)
+                    badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
 
-                let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
-                self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+                    let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
+                    self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+                }
             }
         }
         accountViewModel.inputs.viewIsReady()
@@ -137,6 +139,11 @@ final class HomeViewController: UIViewController {
         uploadViewModel.inputs.didLoadView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        accountViewModel.inputs.viewIsAppearing()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupSlidePanelVerticalOffset()
@@ -146,7 +153,19 @@ final class HomeViewController: UIViewController {
         guard slidePanelAnimator.animationOffsetY == nil else { return }
         // Will only be executed once - the first time, and tell the `SlidePanelAnimator` that the **Vertical Offset**
         // between the top of slide panel and the top of `searchBarView`.
-        slidePanelAnimator.animationOffsetY = (slidePanelView.frame.minY - searchBarView.frame.minY) + 10
+        slidePanelAnimator.animationOffsetY = (slidePanelView.frame.minY - searchBarView.frame.minY) + Constant.slidePanelRoundCornerHeight
+    }
+
+    private enum Constant {
+        static let slidePanelRoundCornerHeight: CGFloat = 20 // This value need to be same as `constraintToTopPosition`
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.iPhoneDevice {
+            return .portrait
+        }
+        
+        return .all
     }
 
     // MARK: - View Setup
@@ -170,6 +189,8 @@ final class HomeViewController: UIViewController {
 
     private func setTitle(with text: String) {
         navigationItem.title = text
+        // Avoid using the title on pushing a view controller
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     private func setupSearchResultExtendedLayout() {
@@ -208,17 +229,15 @@ final class HomeViewController: UIViewController {
     }
 
     private func addContentViewController() {
-        contentViewController.willMove(toParent: self)
         addChild(contentViewController)
         slidePanelView.addRecentsViewController(contentViewController)
         contentViewController.didMove(toParent: self)
     }
 
     private func addOfflineViewController() {
-        offlineViewController.willMove(toParent: self)
         addChild(offlineViewController)
         slidePanelView.addOfflineViewController(offlineViewController)
-        contentViewController.didMove(toParent: self)
+        offlineViewController.didMove(toParent: self)
     }
 
     // MARK: - Refresh view with light/dark mode
@@ -231,8 +250,10 @@ final class HomeViewController: UIViewController {
     private func setupBackgroundColor(with trait: UITraitCollection) {
         switch trait.theme {
         case .light:
+            slidePanelView.backgroundColor = UIColor.mnz_grayF7F7F7()
             view.backgroundColor = UIColor.mnz_grayF7F7F7()
         case .dark:
+            slidePanelView.backgroundColor = UIColor.black
             view.backgroundColor = UIColor.black
         }
     }
@@ -256,7 +277,6 @@ final class HomeViewController: UIViewController {
             navigationBar?.barTintColor = color
         }
     }
-
 
     // MARK: - Tap Actions
 
@@ -395,17 +415,6 @@ extension HomeViewController: ExploreViewStackDelegate {
         case .audio:    router.audioExplorerSelected()
         case .video:    router.videoExplorerSelected()
         }
-    }
-}
-
-// MARK: - Lock of orientation for Home
-
-extension HomeViewController {
-
-    // MARK: - Force Vertical
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        .portrait
     }
 }
 

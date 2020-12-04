@@ -59,16 +59,22 @@ class PhotoExplorerListSource: NSObject {
         selectedNodes?.removeAll(where: { $0 == selectedNode })
     }
     
-    func selectAllNodes() {
-        selectedNodes = nodesByDay.reduce([], +)
-        
-        collectionView.indexPathsForVisibleItems.forEach { indexPath in
-            if let photoExplorerCollectionCell = collectionView.cellForItem(at: indexPath) as? PhotoExplorerCollectionCell {
-                photoExplorerCollectionCell.allowSelection = allowMultipleSelection
-                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+    func toggleSelectAllNodes() {
+        let allNodes = nodesByDay.reduce([], +)
+        selectedNodes = Set(selectedNodes ?? []) == Set(allNodes) ? [] : allNodes
+        // update the marker for the visible items
+        collectionView.visibleCells.forEach { cell in
+            guard let cell = cell as? PhotoExplorerCollectionCell else { return }
+            cell.allowSelection = allowMultipleSelection
+            cell.isSelected = !(selectedNodes?.isEmpty ?? true)
+            if selectedNodes?.isEmpty ?? true {
+                if let indexPath = collectionView.indexPath(for: cell) {
+                    collectionView.deselectItem(at: indexPath, animated: false)
+                }
+            } else {
+                collectionView.selectItem(at: collectionView.indexPath(for: cell), animated: false, scrollPosition: [])
             }
         }
-
     }
 }
 
@@ -87,15 +93,6 @@ extension PhotoExplorerListSource: UICollectionViewDataSource {
         }
         
         cell.viewModel = FileExplorerGridCellViewModel(node: nodesByDay[indexPath.section][indexPath.row])
-
-        cell.allowSelection = allowMultipleSelection
-        
-        if collectionView.allowsMultipleSelection,
-           selectedNodes?.contains(nodesByDay[indexPath.section][indexPath.row]) ?? false {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-            cell.isSelected = true
-        }
-        
         return cell
     }
     
@@ -115,5 +112,23 @@ extension PhotoExplorerListSource: UICollectionViewDataSource {
             }
         }
         return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? PhotoExplorerCollectionCell else { return }
+        
+        cell.allowSelection = allowMultipleSelection
+        
+        if collectionView.allowsMultipleSelection{
+            if selectedNodes?.contains(nodesByDay[indexPath.section][indexPath.row]) ?? false {
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                cell.isSelected = true
+            } else {
+                collectionView.deselectItem(at: indexPath, animated: false)
+                cell.isSelected = false
+            }
+        }
     }
 }

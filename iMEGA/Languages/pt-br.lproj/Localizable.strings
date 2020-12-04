@@ -624,6 +624,8 @@
 "securityOptions"="Opções de segurança";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Sobre";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="Idioma";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar comentários";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -892,7 +894,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="Em andamento";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Concluído";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="Uploads";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Downloads";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="Minha conta";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Escolha o seu tipo de conta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
+"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça o upgrade[/A] a um plano Pro e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
+"cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça o upgrade[/A] a um plano Pro e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Armazenamento";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1182,7 +1182,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens deste chat?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="O histórico do chat foi deletado.";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Title of the incoming shared folders of a user. */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MENSAGENS NÃO LIDAS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura no MEGA até 24 horas antes do próximo pagamento através da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta clicar no ícone da App Store no seu dispositivo, fazer login com o seu ID Apple na parte inferior da página (se você ainda tiver feito isso) e então clicar em Ver ID. Você será levado à página da sua conta, na qual deve ir até a opção Assinaturas. A partir daqui, você pode selecionar a sua assinatura PRO do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão on-off para desativar a renovação automática da sua assinatura.";
+"autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura Pro no MEGA até 24 horas antes do próximo pagamento, por meio da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta clicar no ícone da App Store no seu dispositivo, fazer login com o seu Apple ID na parte inferior da página (se você ainda não tiver feito isso), e então clicar em Ver ID. Você será direcionado à página da sua conta, na qual deve ir até a opção Assinaturas. A continuação, você poderá selecionar a sua assinatura Pro do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão ON/OFF para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1404,6 +1404,10 @@
 "HTTP error"="Erro HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Você precisará reiniciar o MEGA depois de alterar o idioma.";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Idioma alterado. Toque para reiniciar.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="O MEGA oferece armazenamento em nuvem criptografado controlado pelo usuário por meio de navegadores padrão, assim como aplicativos para dispositivos móveis. Diferentemente de outros provedores de armazenamento em nuvem, no MEGA os seus dados são criptografados e descriptografados apenas pelos seus dispositivos, e nunca por nós.";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="O MEGA oferece um generoso armazenamento gratuito de 50 GB para todos os usuários cadastrados com bônus de conquistas, e oferece planos pagos com limites muito mais altos:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Assinatura PRO LITE: 4,99€ (US$4,99) por mês ou 49,99€ (US$49,99) por ano - oferece 200 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura PRO I: 9,99€ (US$9,99) por mês ou 99,99€ (US$99,99) por ano - oferece 1 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura PRO II: 19,99€ (US$19,99) por mês ou 199,99€ (US$199,99) por ano - oferece 4 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura PRO III: 29,99 (US$29,99) por mês ou 299,99€ (US$299,99) por ano - oferece 8 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
+"generalDescriptionParagraph5"="Assinatura Pro Lite: 4,99€ (US$4,99) por mês ou 49,99€ (US$49,99) por ano - oferece 200 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura Pro I: 9,99€ (US$9,99) por mês ou 99,99€ (US$99,99) por ano - oferece 1 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura Pro II: 19,99€ (US$19,99) por mês ou 199,99€ (US$199,99) por ano - oferece 4 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura Pro III: 29,99 (US$29,99) por mês ou 299,99€ (US$299,99) por ano - oferece 8 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
@@ -1689,11 +1693,11 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gerenciamento de arquivos";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="Controle de versões de arquivos";
+"File versioning"="Controle das versões de arquivos";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Ativar ou desativar o controle de versões de arquivos na sua conta. \nDesativar as versões de arquivos não previne que os seus arquivos criem novas versões em pastas compartilhadas .";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Ativar ou desativar o controle das versões de arquivos na sua conta. \nDesativar o controle das versões de arquivos não impede que os seus contatos criem novas versões em pastas compartilhadas.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Se o controle de versões de arquivos estiver desativado, ao modificar um arquivo a versão atual será substituída pela nova versão (e suas alterações no arquivo já não serão salvas). Você tem certeza de que quer desativar o controle de versões de arquivos?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Se o controle das versões de arquivos estiver desativado, ao modificar um arquivo a versão atual será substituída pela nova versão (e suas alterações no arquivo já não serão salvas). Você tem certeza de que quer desativar o controle das versões de arquivos?";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="Versões de arquivos";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -1791,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informações de pagamento";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="O seu plano PRO expirará em breve";
+"PRO membership plan expiring soon"="O plano Pro está prestes a expirar";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Aviso de remoção";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1851,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="O seu pagamento para o plano %1 não foi concluído.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="O seu plano PRO expirará em 1 dia.";
+"Your PRO membership plan will expire in 1 day."="O seu plano Pro expirará em 1 dia.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="O seu plano PRO expirará em %1 dias.";
+"Your PRO membership plan will expire in %1 days."="O seu plano Pro expirará em %1 dias.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="O seu plano PRO expirou há 1 dia";
+"Your PRO membership plan expired 1 day ago"="O seu plano Pro expirou há 1 dia";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="O seu plano PRO expirou há %1 dias";
+"Your PRO membership plan expired %1 days ago"="O seu plano Pro expirou há %1 dias";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="O(a) %1 (%2) compartilhado publicamente foi removido(a).";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2039,7 +2043,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Não foi possível processar o seu último pagamento. Por favor, acesse o MEGA usando um navegador em um computador para obter mais informações.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="A sua conta business expirou";
+"Your business account is expired"="A sua conta Business expirou";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Não foi possível processar o seu pagamento. O seu acesso será somente leitura até que o problema seja corrigido usando um navegador em um computador.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Embora o MEGA não tenha acesso a seus dados, os administradores de sua organização podem controlar e visualizar os Uploads da câmera na sua conta de usuário.";
 /* */
 "Something went wrong"="Algo deu errado";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Uso";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2169,23 +2171,17 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Cota de transferência excedida";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Eliminar a seleção";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Pausar todas as transferências";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Continuar todas as transferências";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Limpar tudo";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Retomar as transferências?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="PASTA DOS UPLOADS DA CÂMERA NO MEGA";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Selecionar pasta";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Escolher pasta";
+"Resume Transfers?"="Continuar transferências?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Qualidade da imagem";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2390,3 +2386,33 @@
 "Unavailable"="Não disponível";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="O email já foi enviado. Espere alguns minutos antes de tentar novamente.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Pesquisar nos seus arquivos";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="PASTA DOS UPLOADS DA CÂMERA NO MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Selecionar pasta";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Documentos";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Vídeos";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

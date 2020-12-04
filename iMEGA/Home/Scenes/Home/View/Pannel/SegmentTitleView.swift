@@ -47,6 +47,9 @@ final class SegmentTitleView: UIView {
             if index == 0 { button.isSelected = true }
             button.addTarget(self, action: #selector(didTap(button:)), for: .touchUpInside)
             titleButtonStyler(button)
+            button.widthAnchor.constraint(
+                equalToConstant: button.intrinsicContentSize.width + Constants.reservedWidthForLargeFont
+            ).isActive = true
             return button
         }
 
@@ -102,10 +105,11 @@ final class SegmentTitleView: UIView {
     }
 
     private func createStackView(with buttons: [UIView]) -> UIStackView {
-        let views = buttons + [UIView(forAutoLayout: ())] + [UIView(forAutoLayout: ())]
-        let horizontalStackContainer = views.embedInStackView(axis: .horizontal,
-                                                              distribution: .fillEqually,
-                                                              spacing: 20)
+        let horizontalStackContainer = (buttons).embedInStackView(
+            axis: .horizontal,
+            distribution: .fill,
+            spacing: Constants.spacingBetweenButtons
+        )
         pinStackView(horizontalStackContainer)
         return horizontalStackContainer
     }
@@ -113,11 +117,15 @@ final class SegmentTitleView: UIView {
     private func pinStackView(_ stackView: UIStackView) {
         stackView.configureForAutoLayout()
         addSubview(stackView)
-        stackView.autoPinEdge(toSuperviewMargin: .leading, withInset: 16)
+        stackView.autoPinEdge(toSuperviewMargin: .leading, withInset: Constants.stackViewInset)
         stackView.autoPinEdge(toSuperviewEdge: .top)
-        stackView.autoPinEdge(toSuperviewMargin: .trailing, withInset: 16)
     }
 
+    private enum Constants {
+        static let spacingBetweenButtons: CGFloat = 8
+        static let stackViewInset: CGFloat = 16
+        static let reservedWidthForLargeFont: CGFloat = 20
+    }
 }
 
 // MARK: - TraitEnviromentAware

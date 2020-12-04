@@ -28,8 +28,8 @@ struct FilesExplorerRouter {
                                                useCase: useCase,
                                                filesDownloadUseCase: fileDownloadUseCase,
                                                nodeClipboardOperationUseCase: nodeClipboardOperationUseCase)
-        
-        let vc = FilesExplorerContainerViewController(viewModel: viewModel)
+        let vc = FilesExplorerContainerViewController(viewModel: viewModel,
+                                                      viewPreference: explorerType == .video ? .list : .both)
         navController.pushViewController(vc, animated: true)
     }
     

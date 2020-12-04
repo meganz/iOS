@@ -3,6 +3,7 @@ import Foundation
 enum NodeLoadError: Error {
     case noRootNode
     case loadCancelled
+    case invalidNode
 }
 
 final class CameraUploadNodeLoadOperation: MEGAOperation {
@@ -10,9 +11,11 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
     private let completion: NodeLoadCompletion
     private let sdk: MEGASdk
     private let localCachedHandleKey = "CameraUploadsNodeHandle"
+    private let autoCreate: Bool
     
     // MARK: - Init
-    init(completion: @escaping NodeLoadCompletion) {
+    init(autoCreate: Bool, completion: @escaping NodeLoadCompletion) {
+        self.autoCreate = autoCreate
         self.completion = completion
         sdk = MEGASdkManager.sharedMEGASdk()
         super.init()
@@ -51,7 +54,11 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
     // MARK: - Check loaded node handle
     private func validateLoadedHandle(_ handle: NodeHandle) {
         guard let node = handle.validNode(in: sdk) else {
-            createCameraUploadNode()
+            if autoCreate {
+                createCameraUploadNode()
+            } else {
+                finishOperation(node: nil, error: NodeLoadError.invalidNode)
+            }
             return
         }
         
@@ -60,6 +67,11 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
     
     // MARK: - Backwards compatibility for local cache
     private func checkLocalCacheForBackwardsCompatibility() {
+        guard autoCreate else {
+            finishOperation(node: nil, error: NodeLoadError.invalidNode)
+            return
+        }
+        
         guard let cachedHandleNumber = UserDefaults.standard.object(forKey: localCachedHandleKey) as? NSNumber else {
             createCameraUploadNode()
             return
