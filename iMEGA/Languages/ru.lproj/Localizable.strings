@@ -624,6 +624,8 @@
 "securityOptions"="Параметры безопасности";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="О программе";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="Язык";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Отправить отзыв";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="ЗАГРУЗКИ в облако";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="Мой аккаунт";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Улучшить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="Выберите тип учётной записи";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ваш облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] места в облаке.";
+"cloudDriveIsAlmostFull"="[S]Ваш облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] места в облаке.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
+"cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="свободного места";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="НЕ ПРОЧИТАНО: %lu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
+"autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA Pro не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA Pro и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1404,6 +1404,10 @@
 "HTTP error"="Ошибка HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Неизвестная ошибка";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Нужно перезапустить приложение после смены языка";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Язык изменён. Коснитесь для перезапуска.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA предоставляет услуги зашифрованного облачного хранения данных, управляемого пользователем, в обычных веб-браузерах и специальных приложениях для мобильных устройств. В отличие от других облачных хранилищ, здесь данные шифруют и расшифровывают только ваши устройства, а не мы.";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA предлагает до 50 ГБ хранилища бесплатно всем зарегистрированным пользователям c бонусными достижениями, а также платные подписки с гораздо более высокими лимитами:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Подписка PRO LITE: 4,99 € (4,99 $ США) в месяц или 49,99 € (49,99 $ США) в год предоставляет 400 ГБ дискового пространства и 1 ТБ трафика в месяц.\nПодписка PRO I: 9,99 € (9,99 $ США) в месяц или 99,99 € (99,99 $ США) в год предоставляет 2 ТБ дискового пространства и 2 ТБ трафика в месяц.\nПодписка PRO II: 19,99 € (19,99 $ США) в месяц или 199,99 € (199,99 $ США) в год предоставляет 8 ТБ дискового пространства и 8 ТБ трафика в месяц.\nПодписка PRO III: 29,99 € (29,99 $ США) в месяц или 299,99 € (299,99 $ США) в год предоставляет 16 ТБ дискового пространства и 16 TB ТБ трафика в месяц.";
+"generalDescriptionParagraph5"="Подписка Pro Lite: €4.99 (US$4.99) в месяц или €49.99 (US$49.99) в год предоставляет 400 ГБ дискового пространства и 1 ТБ трафика в месяц.\nПодписка Pro I: €9.99 (US$9.99) в месяц или €99.99 (US$99.99) в год предоставляет 2 ТБ дискового пространства и 2 ТБ трафика в месяц.\nПодписка Pro II: €19.99 (US$19.99) в месяц или €199.99 (US$199.99) в год предоставляет 8 ТБ дискового пространства и 8 ТБ трафика в месяц.\nПодписка Pro III: €29.99 (US$29.99) в месяц или €299.99 (US$299.99) в год предоставляет 16 ТБ дискового пространства и 16 ТБ трафика в месяц.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Подробнее на нашем сайте:https://mega.nz/\nУсловия использования: https://mega.nz/terms\nПолитика конфиденциальности: https://mega.nz/privacy";
@@ -1791,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Платежная информация";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="PRO-подписка скоро истекает";
+"PRO membership plan expiring soon"="Pro-подписка скоро истекает";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Уведомление о нарушении";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1851,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Ваша оплата %1 плана не удалась.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Ваша PRO-подписка истекает через 1 день";
+"Your PRO membership plan will expire in 1 day."="Ваша Pro-подписка истекает через 1 день";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Ваша PRO-подписка истекает через %1 суток(и).";
+"Your PRO membership plan will expire in %1 days."="Ваша Pro-подписка истекает через %1 д.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Ваш план PRO истёк 1 день назад";
+"Your PRO membership plan expired 1 day ago"="Ваш план Pro истёк 1 день назад";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Ваш план PRO истёк %1 д. назад";
+"Your PRO membership plan expired %1 days ago"="Ваш план Pro истёк %1 д. назад";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Ваш элемент с общим доступом (%1 (%2)) убран.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Несмотря на то, что MEGA не имеет доступа к вашим данным, администраторы вашей организации могут контролировать и просматривать загрузки из камеры в вашем аккаунте.";
 /* */
 "Something went wrong"="Что-то пошло не так";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Использование";
 /* Title of the "Links" Shared Items. */
 "Links"="Ссылки";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2180,12 +2182,6 @@
 "Clear All"="Очистить все";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Возобновить передачи?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="ПАПКА ЗАГРУЗОК ИЗ КАМЕРЫ MEGA";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Выбрать папку";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Выбрать папку";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Качество изображения";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2390,3 +2386,33 @@
 "Unavailable"="Недоступно";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Письмо уже отправлено. Пожалуйста, подождите несколько минут, прежде чем попробовать снова.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Искать в файлах";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="ПАПКА ЗАГРУЗОК ИЗ КАМЕРЫ MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Выбрать папку";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в корзину? В этом случае будет автоматически создана новая папка для загрузок из камеры.";
+/* Title for document explorer view */
+"Documents"="Документы";
+/* Title for audio explorer view */
+"Audio"="Аудио";
+/* Title for video explorer view */
+"Videos"="Видео";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="Документы не найдены";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="Аудиофайлы не найдены";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="Видео не найдены";
+/* Navigation title for the photo explorer view */
+"All Images"="Все изображения";
+/* Section title for the photo explorer view */
+"TODAY"="СЕГОДНЯ";
+/* Section title for the photo explorer view */
+"YESTERDAY"="ВЧЕРА";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="Изображения не найдены";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Домой";

@@ -34,17 +34,17 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     self.isEncryptionCancelled = YES;
 }
 
-- (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSDictionary<NSString *, NSURL *> *chunkURLsKeyedByUploadSuffix, NSError *error))completion {
+- (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(unsigned long long fileSize, NSDictionary<NSString *, NSURL *> *chunkURLsKeyedByUploadSuffix, NSError *error))completion {
     NSError *error;
     [NSFileManager.defaultManager createDirectoryAtPath:self.outputDirectoryURL.path withIntermediateDirectories:YES attributes:nil error:&error];
     if (error) {
-        completion(NO, 0, nil, error);
+        completion(0, nil, error);
         return;
     }
     
     NSDictionary<NSFileAttributeKey, id> *attributeDict = [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:&error];
     if (error) {
-        completion(NO, 0, nil, error);
+        completion(0, nil, error);
         return;
     }
     
@@ -53,17 +53,17 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
-            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughDiskSpaceError]);
+            completion(0, nil, [NSError mnz_cameraUploadNoEnoughDiskSpaceError]);
             return;
         }
         
         if (![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path]) {
-            completion(NO, 0, nil, [NSError mnz_cameraUploadNoWritePermissionErrorForFileURL:fileURL]);
+            completion(0, nil, [NSError mnz_cameraUploadNoWritePermissionErrorForFileURL:fileURL]);
             return;
         }
     } else {
         if (deviceFreeSize < self.fileSize) {
-            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughDiskSpaceError]);
+            completion(0, nil, [NSError mnz_cameraUploadNoEnoughDiskSpaceError]);
             return;
         }
     }
@@ -71,15 +71,15 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
     
     if (self.isEncryptionCancelled) {
-        completion(NO, 0, nil, [NSError mnz_cameraUploadEncryptionCancelledError]);
+        completion(0, nil, [NSError mnz_cameraUploadEncryptionCancelledError]);
         return;
     }
     
     NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
     if (error) {
-        completion(NO, 0, nil, error);
+        completion(0, nil, error);
     } else {
-        completion(YES, self.fileSize, chunkURLsKeyedByUploadSuffix, nil);
+        completion(self.fileSize, chunkURLsKeyedByUploadSuffix, nil);
     }
 }
 
@@ -122,8 +122,15 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
         if (encryptedChunkFileSuffix.length > 0) {
             chunksDict[encryptedChunkFileSuffix] = chunkURL;
             lastPosition = position.unsignedLongLongValue;
-            if (self.shouldTruncateFile && fileHandle) {
-                [fileHandle truncateFileAtOffset:position.unsignedLongLongValue];
+            
+            NSError *fileHandleError;
+            [self truncateFileIfPossibleAtOffset:lastPosition withHandle:fileHandle error:&fileHandleError];
+            if (fileHandleError) {
+                if (error != NULL) {
+                    *error = fileHandleError;
+                }
+                
+                return @{};
             }
         } else {
             if (error != NULL) {
@@ -139,6 +146,20 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
     
     return chunksDict;
+}
+
+- (void)truncateFileIfPossibleAtOffset:(unsigned long long)offset withHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing _Nullable *)error {
+    if (self.shouldTruncateFile && fileHandle) {
+        @try {
+            [fileHandle truncateFileAtOffset:offset];
+        } @catch (NSException *exception) {
+            if (NSFileManager.defaultManager.mnz_fileSystemFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes && error != NULL) {
+                *error = [NSError mnz_cameraUploadNoEnoughDiskSpaceError];
+            } else if (error != NULL) {
+                *error = [NSError mnz_cameraUploadFileHandleException:exception];
+            }
+        }
+    }
 }
 
 - (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {

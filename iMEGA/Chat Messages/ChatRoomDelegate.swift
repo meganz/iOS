@@ -152,10 +152,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
         if let chatMessage = message {
             if !chatMessage.isDeleted {
-                if chatMessage.status == .sending || chatMessage.status == .sendingManual {
-                    historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
-                } else {
-                    historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
+                if supportedMessage(message) {
+                    if chatMessage.status == .sending || chatMessage.status == .sendingManual {
+                        historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
+                    } else {
+                        historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
+                    }
                 }
             }
 
@@ -212,6 +214,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             MEGALogError("ChatRoomDelegate: onMessageReceived - message is nil")
             return
         }
+        
+        guard supportedMessage(message) else {
+            MEGALogError("ChatRoomDelegate: onMessageReceived - message not supported")
+            return
+        }
+        
         if UIApplication.shared.applicationState == .active,
             UIApplication.mnz_visibleViewController() == chatViewController,
             let chatViewController = chatViewController,
@@ -662,6 +670,17 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             return userFirstName
         }
         return nil
+    }
+            
+    private func supportedMessage(_ message: MEGAChatMessage) -> Bool {
+        switch message.type {
+        case .normal, .alterParticipants, .truncate, .privilegeChange, .chatTitle, .attachment, .contact,
+             .callEnded, .callStarted, .containsMeta, .voiceClip, .publicHandleCreate, .publicHandleDelete,
+             . setPrivateMode:
+            return true
+        default:
+            return false
+        }
     }
 }
 

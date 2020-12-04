@@ -236,11 +236,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 - (void)configNavigationItem {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.navigationItem.rightBarButtonItem = nil;
-        self.navigationItem.title = NSLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
         self.businessLabel.text = NSLocalizedString(@"Business", nil);
     } else {
         self.buyPROBarButtonItem.title = NSLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-        self.navigationItem.title = NSLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
         self.businessLabel.text = @"";
     }
 }
@@ -315,7 +313,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     switch (indexPath.row) {
         case MyAccountStorage: {
             if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-                cell.sectionLabel.text = NSLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+                cell.sectionLabel.text = NSLocalizedString(@"Storage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
                 cell.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
                 cell.transferLabel.text = NSLocalizedString(@"Transfer", nil);
                 MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
@@ -333,7 +331,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                 cell.transferLabel.textColor = cell.transferUsedLabel.textColor = UIColor.systemGreenColor;
             } else {
                 cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
-                cell.sectionLabel.text = NSLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+                cell.sectionLabel.text = NSLocalizedString(@"Storage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
                 
                 if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
                     MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;

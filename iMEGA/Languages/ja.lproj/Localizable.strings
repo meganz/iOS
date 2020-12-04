@@ -624,6 +624,8 @@
 "securityOptions"="セキュリティオプション";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="概要";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="言語";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="フィードバックを送る";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="アップロード中";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="ダウンロード中";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="アカウント設定";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="アップグレード";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1024,9 +1024,9 @@
 /*  */
 "chooseYourAccountType"="アカウントのタイプを選択して下さい。";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]Proアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]Proアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="ストレージ";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1314,7 +1314,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu件の未読メッセージ";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDを表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理]まで下にスクロールします。そこから、MEGA PROのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
+"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA Proサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDの表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理」まで下にスクロールします。そこから、MEGA Proのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="MEGAを開いて、ログインして続行してください";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1404,6 +1404,10 @@
 "HTTP error"="HTTPエラー";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知のエラー";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="言語を変更後、MEGAを再起動する必要があります";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="言語が変更されました。タップして再起動します。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGAは、標準のウェブブラウザを通じてユーザー制御の暗号化クラウドストレージを、モバイル端末用の専用アプリケーションとともにご提供いたします。他のクラウドストレージプロバイダとは異なり、あなたのデータはあなたのクライアント端末によってのみ暗号化され、復号されます（当社では決して行いません）。";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGAは、ボーナスを達成された、ご登録済みの全ユーザー様に50 GBの豊富な無料ストレージをご提供しております。また、上限がはるかに高い有料プランもご用意しております：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITEサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、400GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPRO Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、2TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPRO II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、8TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPRO IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、16TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
+"generalDescriptionParagraph5"="Pro Liteサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、400GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPro Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、2TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPro II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、8TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPro IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、16TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="詳細については、当社のウェブサイトをご覧ください：https://mega.nz/\nご利用規約：https://mega.nz/terms\nプライバシーポリシー：https://mega.nz/privacy";
@@ -1791,7 +1795,7 @@
 /* The header of a notification related to payments */
 "Payment info"="支払いに関して";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="PROメンバーシッププランが間もなく失効します";
+"PRO membership plan expiring soon"="Proメンバーシッププランが間もなく失効します";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="テイクダウン通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1851,13 +1855,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="%1プランのお支払いは受領できませんでした。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="あなたのPROメンバーシッププランは1日後に失効します。";
+"Your PRO membership plan will expire in 1 day."="あなたのProメンバーシッププランは1日後に失効します。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="あなたのPROメンバーシッププランは%1日後に失効します。";
+"Your PRO membership plan will expire in %1 days."="あなたのProメンバーシッププランは%1日後に失効します。";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="あなたのPROプランは1日前に失効しました";
+"Your PRO membership plan expired 1 day ago"="あなたのProプランは1日前に失効しました";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="あなたのPROプランは%1日前に失効しました";
+"Your PRO membership plan expired %1 days ago"="あなたのProプランは%1日前に失効しました";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="あなたの公開共有された%1（%2）は削除されました。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGAはあなたのデータにアクセスしませんが、貴組織の管理者様は、あなたのユーザーアカウントのカメラアップロードを管理し、表示することができます。";
 /* */
 "Something went wrong"="ちょと、うまく行かなかったようです。";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="ご利用内容";
 /* Title of the "Links" Shared Items. */
 "Links"="リンク";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2180,12 +2182,6 @@
 "Clear All"="全部をクリア";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="転送を再開しますか？";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGAカメラアップロードフォルダ";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="フォルダを選択";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="フォルダを選択";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="画質";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2390,3 +2386,33 @@
 "Unavailable"="利用できません";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="メールは既に送信されています。数分待ってから再試行してください。";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="あなたのファイルを検索";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGAカメラアップロードフォルダ";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="フォルダを選択";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="カメラアップロードフォルダをごみ箱に移動してもよろしいですか？　その場合、新しいフォルダがカメラアップロード用に自動的に生成されます。";
+/* Title for document explorer view */
+"Documents"="文書";
+/* Title for audio explorer view */
+"Audio"="音声";
+/* Title for video explorer view */
+"Videos"="動画";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="ドキュメントが見つかりません";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="音声ファイルが見つかりません";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="動画が見つかりません";
+/* Navigation title for the photo explorer view */
+"All Images"="すべての画像";
+/* Section title for the photo explorer view */
+"TODAY"="今日";
+/* Section title for the photo explorer view */
+"YESTERDAY"="昨日";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="画像が見つかりません";
+/* Accessibility label for Home section in tabbar item */
+"Home"="ホーム";

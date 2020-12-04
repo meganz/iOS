@@ -50,8 +50,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         delegate?.updateSearchResults()
     }
     
-    override func selectAllNodes() {
-        gridSource?.selectAllNodes()
+    override func toggleSelectAllNodes() {
+        gridSource?.toggleSelectAllNodes()
         configureToolbarButtons()
         delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
     }
@@ -60,6 +60,17 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         addSearchBarViewIfNeeded()
         searchBarView.addSubview(searchController.searchBar)
         searchController.searchBar.autoPinEdgesToSuperviewEdges()
+    }
+    
+    override func removeSearchController(_ searchController: UISearchController) {
+        guard let searchBar = searchBarView.subviews.first,
+              searchBar == searchController.searchBar else {
+            return
+        }
+        
+        searchController.searchBar.removeFromSuperview()
+        searchBarView.removeFromSuperview()
+        collectionView.autoPinEdge(toSuperviewEdge: .top)
     }
     
     override func setEditingMode() {
@@ -102,7 +113,9 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     // MARK: - Execute command
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {
-        case .reloadNodes(let nodes):
+        case .reloadNodes(let nodes, let searchText):
+            showSearchBarIfNeeded(withSearchText: searchText, nodes: nodes)
+            
             if isProgressViewBeingShown {
                 isProgressViewBeingShown = false
                 SVProgressHUD.dismiss()

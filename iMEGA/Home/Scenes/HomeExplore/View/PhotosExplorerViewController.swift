@@ -121,7 +121,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
-        listSource?.selectAllNodes()
+        listSource?.toggleSelectAllNodes()
         configureToolbarButtons()
         viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
     }
@@ -160,6 +160,13 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
 // MARK: Collection view delegate
 
 extension PhotosExplorerViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        listSource?.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let node = listSource?.nodeAtIndexPath(indexPath) else { return }
         if collectionView.allowsMultipleSelection {

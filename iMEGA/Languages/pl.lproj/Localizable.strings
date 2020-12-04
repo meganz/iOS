@@ -624,6 +624,8 @@
 "securityOptions"="Opcje bezpieczeństwa";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="O Nas";
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
+"language"="Język";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Wyślij opinię";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -913,8 +915,6 @@
 "uploadInUppercaseTransfers"="Transfery WGRYWANIA";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Transfery POBRAŃ";
-/* Title of My Account section. There you can see your account details */
-"myAccount"="Moje konto";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Zmień";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1404,6 +1404,10 @@
 "HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Nieznany błąd";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Po zmianie jezyka, należy zrestartować aplikację MEGA";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Język został zmieniony. Kliknij aby zrestartować.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA zapewnia kontrolowane przez użytkownika szyfrowane przechowywanie w chmurze za pośrednictwem standardowych przeglądarek internetowych wraz z dedykowanymi aplikacjami na urządzenia mobilne. W przeciwieństwie do innych dostawców usług przechowywania w chmurze, twoje dane są szyfrowane i odszyfrowywane tylko przez urządzenia klienckie, a nigdy przez nas.";
@@ -1416,7 +1420,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA oferuje hojne 50 GB bezpłatnej przestrzeni dyskowej dla wszystkich zarejestrowanych użytkowników z premiowymi osiągnięciami i oferuje płatne plany o znacznie wyższych limitach:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Subskrypcja PRO LITE: €4,99 (US$4,99) miesięcznie lub €49,99 (US$49,99) rocznie daje 200 GB przestrzeni dyskowej i 1 TB limitu transferu miesięcznie.\nSubskrypcja PRO I: €9,99 (US$9,99) miesięcznie lub €99,99 (US$99,99) rocznie daje 1 TB przestrzeni dyskowej i 2 TB limitu transferu miesięcznie. Subskrypcja\nPRO II: €19,99 (US$19,99) miesięcznie lub €199,99 (US$199,99) za rok daje 4 TB przestrzeni dyskowej i 8 TB limitu transferu miesięcznie. Subskrypcja\nPRO III: €29,99 (US$29,99) miesięcznie lub €299,99 (US$299,99) rocznie daje 8 TB przestrzeni dyskowej i 16 TB limitu transferu na miesiąc.";
+"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Po więcej informacji przejdź do strony: https://mega.nz/\nRegulamin: https://mega.nz/terms\nPolityka prywatności: https://mega.nz/privacy";
@@ -2048,8 +2052,6 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Chociaż MEGA nie ma dostępu do twoich danych, administratorzy Twojej organizacji mają możliwość kontrolowania i przeglądania plików z kamery na Twoim koncie użytkownika";
 /* */
 "Something went wrong"="Wystąpiły problemy";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Zużycie";
 /* Title of the "Links" Shared Items. */
 "Links"="Linki";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2180,12 +2182,6 @@
 "Clear All"="Wyczyść wszystko";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="Wznowić transfery?";
-/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="FOLDER DO PRZESYŁANIA ZDJĘĆ";
-/* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Wybierz katalog";
-/* Title of the folder selection screen for camera uploads */
-"Choose Folder"="Wybierz katalog";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Jakość obrazu";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2390,3 +2386,33 @@
 "Unavailable"="Niedostępne";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email już wysłany. Poczekaj kilka minut, zanim spróbujesz ponownie.";
+/* Search placeholder text in search bar on home screen*/
+"Search Your Files"="Search Your Files";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="FOLDER DO PRZESYŁANIA ZDJĘĆ";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Wybierz katalog";
+/* Message when to move Camera Uploads folder to Rubbish Bin */
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Title for document explorer view */
+"Documents"="Dokumenty";
+/* Title for audio explorer view */
+"Audio"="Audio";
+/* Title for video explorer view */
+"Videos"="Filmy";
+/* Photo Explorer Screen: No documents in the account */
+"No documents found"="No documents found";
+/* Audio Explorer Screen: No audio files in the account */
+"No audio files found"="No audio files found";
+/* Video Explorer Screen: No audio files in the account */
+"No videos found"="No videos found";
+/* Navigation title for the photo explorer view */
+"All Images"="All Images";
+/* Section title for the photo explorer view */
+"TODAY"="TODAY";
+/* Section title for the photo explorer view */
+"YESTERDAY"="YESTERDAY";
+/* Photo Explorer Screen: No images in the accoun t*/
+"No images found"="No images found";
+/* Accessibility label for Home section in tabbar item */
+"Home"="Home";

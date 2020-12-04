@@ -208,10 +208,13 @@
             break;
         }
             
-        case BrowserActionShareExtension: {
+        case BrowserActionShareExtension:
+        case BrowserActionNewHomeUpload: {
             [self setupDefaultElements];
             
-            self.navigationItem.rightBarButtonItem = nil;
+            if (self.browserAction == BrowserActionShareExtension) {
+                self.navigationItem.rightBarButtonItem = nil;
+            }
             self.toolBarSaveInMegaBarButtonItem.title = NSLocalizedString(@"upload", nil);
             [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
@@ -329,8 +332,11 @@
     
     if (self.isParentBrowser) {
         self.navigationItem.title = @"MEGA";
+
         if (self.browserAction == BrowserActionDocumentProvider) {
             self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+        } else if (self.browserAction == BrowserActionNewHomeUpload) {
+            self.navigationItem.title = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
         }
     } else {
         if (self.isChildBrowserFromIncoming) {
@@ -381,7 +387,8 @@
         self.navigationItem.prompt = promptString;
     } else if (self.browserAction != BrowserActionDocumentProvider
                && self.browserAction != BrowserActionShareExtension
-               && self.browserAction != BrowserActionSelectFolder) {
+               && self.browserAction != BrowserActionSelectFolder
+               && self.browserAction != BrowserActionNewHomeUpload) {
         self.navigationItem.prompt = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     }
 }
@@ -493,12 +500,14 @@
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
-    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    if (alertController) {
-        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
-        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
-        rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
+    if ([self.presentedViewController isKindOfClass:[UIAlertController class]]) {
+        UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+        if (alertController) {
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
+            UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+            rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
+        }
     }
 }
 
@@ -632,7 +641,7 @@
             
             [self dismissAndSelectNodesIfNeeded:NO];
         }
-    } else if (self.browserAction == BrowserActionShareExtension) {
+    } else if (self.browserAction == BrowserActionShareExtension || self.browserAction == BrowserActionNewHomeUpload) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
     }
 }

@@ -5,6 +5,7 @@
 #import "AVAsset+CameraUpload.h"
 #import "AVURLAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
+@import FirebaseCrashlytics;
 
 @interface VideoUploadOperation ()
 
@@ -179,7 +180,15 @@
                 session.shouldOptimizeForNetworkUse = YES;
             }
             
-            self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:extension];
+            NSError *error;
+            self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:extension error:&error];
+            if (error) {
+                MEGALogError(@"[Camera Upload] %@ error when to generate local unique file name %@", self, error);
+                [[FIRCrashlytics crashlytics] recordError:error];
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+                return;
+            }
+            
             session.outputURL = self.uploadInfo.fileURL;
             
             __weak __typeof__(self) weakSelf = self;
@@ -237,7 +246,15 @@
         return;
     }
     
-    self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:URL.pathExtension.lowercaseString];
+    NSError *fileNameError;
+    self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:URL.pathExtension.lowercaseString error:&fileNameError];
+    if (fileNameError) {
+        MEGALogError(@"[Camera Upload] %@ error when to generate local unique file name %@", self, fileNameError);
+        [[FIRCrashlytics crashlytics] recordError:fileNameError];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+    
     NSError *error;
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {

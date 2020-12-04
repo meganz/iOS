@@ -175,24 +175,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self configPreviewingRegistration];
 }
 
-- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
-    
-    [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
-            CGRect frame = [UIApplication sharedApplication].keyWindow.rootViewController.view.frame;
-            if (frame.size.width > frame.size.height) {
-                CGFloat oldWidth = frame.size.width;
-                frame.size.width = frame.size.height;
-                frame.size.height = oldWidth;
-                [UIApplication sharedApplication].keyWindow.rootViewController.view.frame = frame;
-            }
-        }
-    }];
-}
-
 #pragma mark - Layout
-
 
 - (void)determineViewMode {
     if (self.flavor == HomeScreen) {

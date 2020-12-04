@@ -51,8 +51,8 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     //MARK: - Interface methods
     
-    override func selectAllNodes() {
-        listSource?.selectAllNodes()
+    override func toggleSelectAllNodes() {
+        listSource?.toggleSelectAllNodes()
         configureToolbarButtons()
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
     }
@@ -60,6 +60,14 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     override func configureSearchController(_ searchController: UISearchController) {
         tableView.tableHeaderView = searchController.searchBar
         searchController.searchBar.barTintColor = .mnz_backgroundElevated(traitCollection)
+    }
+    
+    override func removeSearchController(_ searchController: UISearchController) {
+        guard tableView.tableHeaderView == searchController.searchBar else {
+            return
+        }
+        
+        tableView.tableHeaderView = nil
     }
     
     override func setEditingMode() {
@@ -82,7 +90,8 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     // MARK: - Execute command
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {
-        case .reloadNodes(let nodes):
+        case .reloadNodes(let nodes, let searchText):
+            showSearchBarIfNeeded(withSearchText: searchText, nodes: nodes)
             if isProgressViewBeingShown {
                 isProgressViewBeingShown = false
                 SVProgressHUD.dismiss()
