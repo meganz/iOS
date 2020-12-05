@@ -5,7 +5,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
 
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
-    unowned var tableView: UITableView
+    var tableView: UITableView
     weak var delegate: FilesExplorerListSourceDelegate?
     
     // MARK:- Initializers.
@@ -62,8 +62,8 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     }
     
     private func reloadCell(withNode node: MEGANode, afterDelay delay: Int) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-            self.reloadCell(withNode: node)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) { [weak self] in
+            self?.reloadCell(withNode: node)
         }
     }
 

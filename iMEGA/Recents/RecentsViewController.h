@@ -7,7 +7,7 @@
 
 - (void)showCustomActionsForNode:(MEGANode *)node fromSender:(id)sender;
 
-- (void)showSelectedNodeInViewController:(UIViewController *)viewController;
+- (void)showSelectedNodeInViewController:(nullable UIViewController *)viewController;
 
 @end
 

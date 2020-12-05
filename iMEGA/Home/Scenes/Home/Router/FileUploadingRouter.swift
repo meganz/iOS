@@ -71,7 +71,14 @@ final class FileUploadingRouter {
             return documentImportsDelegate
         }
 
-        documentMenuViewController.popoverPresentationController?.barButtonItem = homeViewController?.navigationItem.rightBarButtonItems?.first
+        if let popover = documentMenuViewController.popoverPresentationController {
+            guard let barItem = homeViewController?.navigationItem.rightBarButtonItems?.first else {
+                return
+            }
+            
+            popover.barButtonItem = barItem
+        }
+        
         documentMenuViewController.delegate = documentImportsDelegate
         navigationController?.present(documentMenuViewController, animated: true, completion: nil)
     }

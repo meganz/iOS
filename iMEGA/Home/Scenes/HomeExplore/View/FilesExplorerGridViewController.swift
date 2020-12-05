@@ -95,6 +95,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             collectionView.autoPinEdgesToSuperviewEdges()
         } else {
             collectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+            addSearchBarViewIfNeeded()
             collectionView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor).isActive = true
         }
     }

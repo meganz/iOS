@@ -1538,20 +1538,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        
+        UITabBar *tabBar = self.tabBarController.tabBar;
+        if (tabBar == nil) {
+            return;
+        }
         [self.toolbar setAlpha:0.0];
         [self.tabBarController.view addSubview:self.toolbar];
         self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         
         NSLayoutAnchor *bottomAnchor;
         if (@available(iOS 11.0, *)) {
-            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
         } else {
-            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            bottomAnchor = tabBar.bottomAnchor;
         }
         
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
+                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
+                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
                                                   [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
         
         [UIView animateWithDuration:0.33f animations:^ {
@@ -1842,7 +1847,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+        [self.cdTableView reloadRowAtIndexPath:self.nodesIndexPathMutableDictionary[base64Handle]];
     }
 }
 
