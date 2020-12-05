@@ -103,7 +103,7 @@
 #pragma mark - Public
 
 - (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath) {
+    if (indexPath && [self.tableView hasRowAt:indexPath]) {
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
