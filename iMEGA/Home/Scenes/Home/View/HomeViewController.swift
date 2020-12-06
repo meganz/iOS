@@ -452,8 +452,9 @@ extension HomeViewController: HomeRouting {
 
 extension HomeViewController: RecentNodeActionDelegate {
 
-    func showSelectedNode(in viewController: UIViewController!) {
-        navigationController?.present(viewController, animated: true, completion: nil)
+    func showSelectedNode(in viewController: UIViewController?) {
+        guard let controller = viewController else { return }
+        navigationController?.present(controller, animated: true, completion: nil)
     }
 
     func showCustomActions(for node: MEGANode!, fromSender sender: Any!) {

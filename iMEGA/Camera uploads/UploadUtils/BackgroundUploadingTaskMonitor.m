@@ -20,6 +20,10 @@ static const NSTimeInterval MonitorTimerTolerance = 7;
     }
     
     self.monitorTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(QOS_CLASS_UTILITY, 0));
+    if (self.monitorTimer == nil) {
+        return;
+    }
+    
     dispatch_source_set_timer(self.monitorTimer, dispatch_walltime(NULL, (int64_t)(MonitorTimerInterval * NSEC_PER_SEC)), (uint64_t)(MonitorTimerInterval * NSEC_PER_SEC), (uint64_t)(MonitorTimerTolerance * NSEC_PER_SEC));
     
     __weak __typeof__(self) weakSelf = self;
@@ -27,7 +31,7 @@ static const NSTimeInterval MonitorTimerTolerance = 7;
         [weakSelf monitorTimerFired];
     });
     
-    dispatch_resume(self.monitorTimer);
+    dispatch_activate(self.monitorTimer);
 }
 
 - (void)stopMonitoringBackgroundUploadingTasks {
@@ -46,6 +50,7 @@ static const NSTimeInterval MonitorTimerTolerance = 7;
     
     NSDictionary *info = @{MEGAHasUploadingTasksReachedMaximumCountUserInfoKey : @(uploadingTaskCount > MaximumBackgroundPendingTaskCount), MEGACurrentUploadingTasksCountUserInfoKey : @(uploadingTaskCount)};
     [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadUploadingTasksCountChangedNotification object:self userInfo:info];
+    MEGALogDebug(@"[Camera Upload] monitoring timer fired with info %@", info);
 }
 
 @end

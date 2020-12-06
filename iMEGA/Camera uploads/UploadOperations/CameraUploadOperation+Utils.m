@@ -119,13 +119,6 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 - (nullable NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension error:(NSError * __autoreleasing _Nullable *)error {
     NSString *originalFileName = [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia];
-    if (originalFileName == nil) {
-        if (error != NULL) {
-            *error = [NSError mnz_cameraUploadEmptyFileNameError];
-        }
-        
-        return nil;
-    }
     
     if ([self isKindOfClass:[LivePhotoUploadOperation class]]) {
         originalFileName = [originalFileName stringByAppendingPathExtension:CameraUploadLivePhotoExtension];
@@ -135,7 +128,15 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
     
     originalFileName = [originalFileName stringByAppendingPathExtension:extension];
     
-    return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
+    if (originalFileName == nil) {
+        if (error != NULL) {
+            *error = [NSError mnz_cameraUploadEmptyFileNameError];
+        }
+        
+        return nil;
+    } else {
+        return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
+    }
 }
 
 @end

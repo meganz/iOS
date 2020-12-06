@@ -111,7 +111,7 @@ static const void *base64HandleKey = &base64HandleKey;
         image = UIImage.mnz_defaultPhotoImage;
     } else {
         NSDictionary *fileTypesDictionary = [Helper fileTypesDictionary];
-        NSString *filetypeImage = [fileTypesDictionary valueForKey:extension];
+        NSString *filetypeImage = fileTypesDictionary[extension];
         if (filetypeImage && filetypeImage.length > 0) {
             image = [UIImage imageNamed:filetypeImage];
         } else {
