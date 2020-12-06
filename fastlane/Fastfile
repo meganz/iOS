@@ -164,7 +164,7 @@ platform :ios do
     
     upload_to_testflight(
       skip_submission: false,
-      username:"jn@mega.co.nz",
+      username:"hl@mega.co.nz",
       groups:["MEGA"],
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       changelog: lane_context[SharedValues::FL_CHANGELOG],

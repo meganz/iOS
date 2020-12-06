@@ -102,6 +102,10 @@
 
 - (NSArray<MOAssetUploadFileNameRecord *> *)searchSimilarNameRecordsByFileExtension:(NSString *)extension fileNamePrefix:(NSString *)prefix error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
+    if (prefix == nil) {
+        return fileNameRecords;
+    }
+    
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadFileNameRecord.fetchRequest;

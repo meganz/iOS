@@ -35,7 +35,7 @@ final class HomeScreenFactory: NSObject {
                 devicePermission: .live
             ),
             reachabilityUseCase: ReachabilityUseCase(),
-            router: FileUploadingRouter(navigationController: navigationController)
+            router: FileUploadingRouter(navigationController: navigationController, homeViewController: homeViewController)
         )
 
         homeViewController.accountViewModel = accountViewModel
