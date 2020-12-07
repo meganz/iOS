@@ -498,7 +498,7 @@ extension HomeViewController: RecentNodeActionDelegate {
 
             // MARK: - Share
             case .share:
-                router?.didTap(on: .share(node))
+                router?.didTap(on: .share(node, sender))
             case .shareFolder:
                 router?.didTap(on: .shareFolder(node))
             case .manageShare:
