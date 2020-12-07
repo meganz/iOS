@@ -7,13 +7,8 @@ protocol ExploreViewStackDelegate: AnyObject {
 final class ExploreViewStack: UIView, NibOwnerLoadable {
     
     @IBOutlet weak var fillEqualStackView: UIStackView!
-    @IBOutlet var cards: [ExploreView]!
+    @IBOutlet var cards: [ExplorerView]!
     weak var delegate: ExploreViewStackDelegate?
-    
-    // MARK: - Handlers
-    
-    var imageCardTappedHandler: (() -> Void)?
-
     
     // MARK: - Initialization
     
@@ -31,8 +26,8 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     
     // MARK: Actions
     
-    @IBAction func cardTapped(_ sender: ExploreView) {
-        if let index = cards.firstIndex(of: sender),
+    @IBAction func cardTapped(_ sender: UIButton) {
+        if let index = cards.firstIndex(where: { $0.subviews.contains(sender) }),
             let card = MEGAExploreViewStyle(rawValue: index) {
             delegate?.tappedCard(card)
         }
@@ -57,7 +52,9 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
         fillEqualStackView.spacing = 8
         
         (0..<cards.count).forEach {
-            setupCard(cards[$0], style: MEGAExploreViewStyle(rawValue: $0) ?? .images, trait: trait)
+           let exploreViewStyleFactory = ExploreViewStyleFactory(style: MEGAExploreViewStyle(rawValue: $0) ?? .images,
+                                                                 traitCollection: trait)
+            cards[$0].configuration = exploreViewStyleFactory.configuration
         }
     }
     
@@ -71,18 +68,6 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
             subviews.first?.backgroundColor = .mnz_grayF7F7F7()
         }
     }
-
-    private func setupCard(_ explorerView: ExploreView, style: MEGAExploreViewStyle, trait: UITraitCollection) {
-        let styler = trait.theme.exploreViewStyleFactory.styler(of: style)
-        styler(explorerView)
-    }
-    
-    // MARK: - Actions
-    @IBAction func imagesCardTapped(_ sender: ExploreView) {
-        if let handler = imageCardTappedHandler {
-            handler()
-        }
-    }    
 }
 
 // MARK: - TraitEnviromentAware

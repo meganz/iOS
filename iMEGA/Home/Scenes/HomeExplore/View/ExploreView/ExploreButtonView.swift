@@ -1,69 +1,66 @@
 import UIKit
 
-struct GradientConfiguration: Equatable {
-    struct GradientStep: Equatable {
-        let color: CGColor
-        let startPoint: CGPoint
-    }
+final class ExplorerView: UIView {
     
-    let steps: [GradientStep]
-}
-
-struct GradientBackground {
+    private let radius: CGFloat = 6.0
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
-    let backgroundLayer: CAGradientLayer
-    
-    func configure(with config: GradientConfiguration) {
-        guard let start = config.steps.first, let end = config.steps.last, start != end else {
-            fatalError("A configuration should have at least 2 points.")
-        }
-        
-        backgroundLayer.colors = config.steps.map(\.color)
-        backgroundLayer.startPoint = start.startPoint
-        backgroundLayer.endPoint = end.startPoint
-    }
-}
-
-final class ExploreView: UIButton {
-    
-    private lazy var gradientBackground = GradientBackground(backgroundLayer: layer as! CAGradientLayer)
-    
-    var gradientBackgroundConfiguration: GradientConfiguration? {
+    var configuration: ExplorerCardConfiguration? {
         didSet {
-            setupView(with: traitCollection)
+            guard let configuration = configuration else { return }
+            label.text = configuration.title
+//            imageView.image = configuration.image
+            borderGradientLayer.colors = configuration.borderGradientColors.map({$0.cgColor})
+            backgroundColorGradientLayer.colors = configuration.backgroundGradientColors.map({$0.cgColor})
+            foregroundGradientLayer.colors = configuration.foregroundGradientColors.map({$0.cgColor})
+
         }
     }
+
+    lazy var borderGradientLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(origin: .zero, size: frame.size)
+        gradientLayer.mask = borderShapeLayer
+        return gradientLayer
+    }()
     
-    // MARK: - Initialization
+    lazy var backgroundColorGradientLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(origin: .zero, size: frame.size)
+        return gradientLayer
+    }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView(with: traitCollection)
+    lazy var foregroundGradientLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(origin: .zero, size: frame.size)
+        gradientLayer.mask = borderShapeLayer
+        return gradientLayer
+    }()
+    
+    lazy var borderShapeLayer: CAShapeLayer = {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.lineWidth = 2
+        shapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 6.0).cgPath
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        return shapeLayer
+    }()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        layer.insertSublayer(backgroundColorGradientLayer, below: label.layer)
+        layer.insertSublayer(foregroundGradientLayer, below: label.layer)
+        layer.insertSublayer(borderGradientLayer, below: label.layer)
     }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView(with: traitCollection)
-    }
-    
-    // MARK: - Privates
-    
-    private func setupView(with trait: UITraitCollection) {
-        if let gradientBackgroundConfig = gradientBackgroundConfiguration {
-            gradientBackground.configure(with: gradientBackgroundConfig)
-        }
-        self.imageView?.contentMode = .scaleAspectFit
-        contentHorizontalAlignment = .fill
-        contentVerticalAlignment = .fill
-        imageEdgeInsets = .init(top: 8, left: 0, bottom: 8, right: 0)
-    }
-    
-    // MARK: - UIView overrides
-    
-    override class var layerClass: AnyClass { CAGradientLayer.self }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = 8
+        layer.cornerRadius = radius
+        borderShapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        borderGradientLayer.frame =  CGRect(origin: .zero, size: frame.size)
+        foregroundGradientLayer.frame = CGRect(origin: .zero, size: frame.size)
+        backgroundColorGradientLayer.frame = CGRect(origin: .zero, size: frame.size)
     }
+    
 }
