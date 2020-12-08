@@ -331,23 +331,6 @@ class ChatViewController: MessagesViewController {
            inputBar.voiceRecordingViewCanBeDismissed {
             inputBar.voiceRecordingViewEnabled = false
         }
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        hideJumpToBottomIfRequired()
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        hideJumpToBottomIfRequired()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            showOrHideJumpToBottom()
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         showOrHideJumpToBottom()
     }
     
