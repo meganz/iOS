@@ -144,7 +144,7 @@
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
     MEGANode *node = nodesArray.firstObject;
-    [self.thumbnailImageView mnz_setThumbnailByNode:node];
+    [self.thumbnailImageView mnz_imageForNode:node];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
