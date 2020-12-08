@@ -2420,3 +2420,5 @@
 "No images found"="No images found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
+/* Home Screen: Explorer view card title - Documents */
+"Docs" = "Docs";
