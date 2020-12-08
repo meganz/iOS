@@ -45,7 +45,7 @@
         tabBarItem.badgeColor = UIColor.clearColor;
         [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
-        switch (tabBarItem.tag) {
+        switch (i) {
             case CLOUD:
                 tabBarItem.accessibilityLabel = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
