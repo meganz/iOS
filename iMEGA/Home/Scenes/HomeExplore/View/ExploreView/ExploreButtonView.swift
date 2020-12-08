@@ -4,17 +4,19 @@ final class ExplorerView: UIView {
     
     private let radius: CGFloat = 6.0
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var iconBackgroundImageView: UIImageView!
+    @IBOutlet weak var iconForegroundImageView: UIImageView!
     
     var configuration: ExplorerCardConfiguration? {
         didSet {
             guard let configuration = configuration else { return }
             label.text = configuration.title
-//            imageView.image = configuration.image
+            iconForegroundImageView.image = configuration.iconForegroundImage
+            iconBackgroundImageView?.image = configuration.iconBackgroundImage
             borderGradientLayer.colors = configuration.borderGradientColors.map({$0.cgColor})
             backgroundColorGradientLayer.colors = configuration.backgroundGradientColors.map({$0.cgColor})
             foregroundGradientLayer.colors = configuration.foregroundGradientColors.map({$0.cgColor})
-
+            foregroundGradientLayer.opacity = configuration.foregroundGradientOpacity
         }
     }
 
@@ -40,7 +42,7 @@ final class ExplorerView: UIView {
     
     lazy var borderShapeLayer: CAShapeLayer = {
         let shapeLayer = CAShapeLayer()
-        shapeLayer.lineWidth = 2
+        shapeLayer.lineWidth = 4.0
         shapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 6.0).cgPath
         shapeLayer.strokeColor = UIColor.black.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
@@ -49,9 +51,14 @@ final class ExplorerView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.insertSublayer(backgroundColorGradientLayer, below: label.layer)
-        layer.insertSublayer(foregroundGradientLayer, below: label.layer)
-        layer.insertSublayer(borderGradientLayer, below: label.layer)
+
+        guard let bottomSubview = subviews.first else {
+            return
+        }
+        
+        layer.insertSublayer(backgroundColorGradientLayer, below: bottomSubview.layer)
+        layer.insertSublayer(foregroundGradientLayer, below: bottomSubview.layer)
+        layer.insertSublayer(borderGradientLayer, below: bottomSubview.layer)
     }
     
     override func layoutSubviews() {
