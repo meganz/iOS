@@ -15,6 +15,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGA-Swift.h"
+#import "MEGARecentActionBucket+MNZCategory.h"
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -26,10 +27,16 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    self.thumbnailViewerCollectionView.dataSource = self;
-    self.thumbnailViewerCollectionView.delegate = self;
     [self updateWithTrait: self.traitCollection];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.thumbnailViewerView.hidden = YES;
+    
+    self.thumbnailViewerCollectionView.dataSource = nil;
+    self.thumbnailViewerCollectionView.delegate = nil;
+    self.nodesArray = nil;
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
@@ -39,9 +46,22 @@
         self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
+    
+    if (recentActionBucket.mnz_isExpanded) {
+        self.indicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator"].imageByRotateRight90;
+        self.thumbnailViewerView.hidden = NO;
+        self.thumbnailViewerCollectionView.dataSource = self;
+        self.thumbnailViewerCollectionView.delegate = self;
+        self.nodesArray = nodesArray;
+        [self.thumbnailViewerCollectionView reloadData];
+    } else {
+        self.indicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator"];
+        self.thumbnailViewerView.hidden = YES;
+    }
+    
     NSUInteger numberOfPhotos = 0;
     NSUInteger numberOfVideos = 0;
-    NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     for (NSUInteger i = 0; i < nodesArray.count; i++) {
         MEGANode *node = [nodesArray objectAtIndex:i];
         if (node.name.mnz_imagePathExtension) {
@@ -104,9 +124,6 @@
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
     
     self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    
-    self.nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
-    [self.thumbnailViewerCollectionView reloadData];
 }
 
 #pragma mark - UICollectionViewDataSource
