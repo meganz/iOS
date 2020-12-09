@@ -122,6 +122,15 @@ class FilesExplorerContainerViewController: UIViewController {
         }
     }
     
+    
+    func showMoreButton(_ show: Bool) {
+        if show {
+            showMoreRightBarButton()
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     private func showMoreRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "moreSelected"),
