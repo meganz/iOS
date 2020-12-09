@@ -17,6 +17,7 @@
 #import "NodeTableViewCell.h"
 #import "RecentsTableViewHeaderFooterView.h"
 #import "ThumbnailViewerTableViewCell.h"
+#import "MEGARecentActionBucket+MNZCategory.h"
 #import "MEGA-Swift.h"
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
@@ -151,8 +152,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         cell = [ThumbnailViewerTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
     }
     [cell configureForRecentAction:recentActionBucket];
-    
+    @weakify(self);
     cell.showNodeAction = ^(UIViewController *viewController) {
+        @strongify(self);
         [self.delegate showSelectedNodeInViewController:viewController];
     };
     return cell;
@@ -201,7 +203,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     CGFloat heightForRow = 0;
     MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
     if (recentActionBucket.nodesList.size.integerValue > 1) {
-        if (recentActionBucket.isMedia) {
+        if (recentActionBucket.isMedia && recentActionBucket.mnz_isExpanded) {
             heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 178.0f : 198.0f;
         } else {
             heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 60.0f : 80.f;
@@ -209,7 +211,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     } else {
         heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 60.0f : 80.f;
     }
-
     return heightForRow;
 }
 
@@ -227,9 +228,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         }
     } else {
         if (recentActionBucket.isMedia) {
-            NSMutableArray<MEGANode *> *mediaNodesArray = [recentActionBucket.nodesList mnz_mediaNodesMutableArrayFromNodeList];
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
-            [self.delegate showSelectedNodeInViewController:photoBrowserVC];
+            recentActionBucket.mnz_isExpanded = !recentActionBucket.mnz_isExpanded;
+            [UIView performWithoutAnimation:^{
+                [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+            }];
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.nodes = recentActionBucket.nodesList;

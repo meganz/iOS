@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -207,6 +207,24 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJT-l6-IZK">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                                     <subviews>
+                                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myb-YJ-NqS">
+                                                            <rect key="frame" x="354" y="0.0" width="60" height="80"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="n6P-9J-47q">
+                                                                    <rect key="frame" x="16" y="26" width="28" height="28"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="28" id="03i-xT-mgB"/>
+                                                                        <constraint firstAttribute="width" constant="28" id="jhs-j0-WrY"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="80" id="2yw-4p-OK3"/>
+                                                                <constraint firstItem="n6P-9J-47q" firstAttribute="centerX" secondItem="myb-YJ-NqS" secondAttribute="centerX" id="FfF-UX-MeO"/>
+                                                                <constraint firstAttribute="width" constant="60" id="K3z-mv-ytx"/>
+                                                                <constraint firstItem="n6P-9J-47q" firstAttribute="centerY" secondItem="myb-YJ-NqS" secondAttribute="centerY" id="myz-97-Eby"/>
+                                                            </constraints>
+                                                        </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkU-Vu-5O5">
                                                             <rect key="frame" x="24" y="10" width="40" height="40"/>
                                                             <subviews>
@@ -300,46 +318,21 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7af-vD-jae">
-                                                            <rect key="frame" x="354" y="0.0" width="60" height="80"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="myb-YJ-NqS">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
-                                                                    <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="n6P-9J-47q">
-                                                                            <rect key="frame" x="16" y="26" width="28" height="28"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="28" id="03i-xT-mgB"/>
-                                                                                <constraint firstAttribute="width" constant="28" id="jhs-j0-WrY"/>
-                                                                            </constraints>
-                                                                        </imageView>
-                                                                    </subviews>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="60" id="2df-V8-TPP"/>
-                                                                        <constraint firstItem="n6P-9J-47q" firstAttribute="centerY" secondItem="myb-YJ-NqS" secondAttribute="centerY" id="B46-Yi-jeV"/>
-                                                                        <constraint firstItem="n6P-9J-47q" firstAttribute="centerX" secondItem="myb-YJ-NqS" secondAttribute="centerX" id="Lmb-rl-lGo"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
-                                                        </stackView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="wXi-qc-ifd" secondAttribute="bottom" constant="9" id="6Ni-0V-frj"/>
                                                         <constraint firstItem="vkU-Vu-5O5" firstAttribute="top" secondItem="pJT-l6-IZK" secondAttribute="top" constant="10" id="A2U-QK-v7E"/>
                                                         <constraint firstItem="rBb-S1-m3j" firstAttribute="leading" secondItem="vkU-Vu-5O5" secondAttribute="trailing" constant="10" id="BN0-te-F6u"/>
-                                                        <constraint firstItem="7af-vD-jae" firstAttribute="height" secondItem="pJT-l6-IZK" secondAttribute="height" id="Edp-Iz-BlL"/>
+                                                        <constraint firstAttribute="trailing" secondItem="myb-YJ-NqS" secondAttribute="trailing" id="BjG-Fp-I1Q"/>
                                                         <constraint firstItem="wXi-qc-ifd" firstAttribute="leading" secondItem="9NQ-28-VJe" secondAttribute="leading" id="F6g-7i-EkR"/>
-                                                        <constraint firstItem="7af-vD-jae" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rBb-S1-m3j" secondAttribute="trailing" constant="10" id="Gob-T0-IUA"/>
+                                                        <constraint firstItem="myb-YJ-NqS" firstAttribute="top" secondItem="pJT-l6-IZK" secondAttribute="top" id="Hr5-L1-lq4"/>
                                                         <constraint firstItem="9NQ-28-VJe" firstAttribute="top" secondItem="rBb-S1-m3j" secondAttribute="bottom" constant="4" id="J96-Z2-VRF"/>
                                                         <constraint firstItem="9NQ-28-VJe" firstAttribute="leading" secondItem="rBb-S1-m3j" secondAttribute="leading" id="NGh-0F-hhq"/>
                                                         <constraint firstItem="vkU-Vu-5O5" firstAttribute="leading" secondItem="pJT-l6-IZK" secondAttribute="leading" constant="24" id="TPv-Yd-TUE"/>
-                                                        <constraint firstItem="myb-YJ-NqS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wXi-qc-ifd" secondAttribute="trailing" constant="10" id="dFB-vL-Ipb"/>
-                                                        <constraint firstAttribute="trailing" secondItem="7af-vD-jae" secondAttribute="trailing" id="hcr-mq-B9Y"/>
-                                                        <constraint firstItem="7af-vD-jae" firstAttribute="centerY" secondItem="pJT-l6-IZK" secondAttribute="centerY" id="mmb-mc-xsD"/>
+                                                        <constraint firstItem="wXi-qc-ifd" firstAttribute="top" secondItem="9NQ-28-VJe" secondAttribute="bottom" constant="2.6699999999999999" id="aNG-jO-Hea"/>
                                                         <constraint firstItem="rBb-S1-m3j" firstAttribute="top" secondItem="vkU-Vu-5O5" secondAttribute="top" constant="2" id="t4o-Pi-sEK"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pZM-Z4-Vkp">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pZM-Z4-Vkp">
                                                     <rect key="frame" x="0.0" y="80" width="414" height="118"/>
                                                     <subviews>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Iva-4u-COG">
@@ -446,11 +439,13 @@
                                             <outlet property="addedByLabel" destination="9NQ-28-VJe" id="GxC-QX-oyZ"/>
                                             <outlet property="disclosureIndicatorView" destination="myb-YJ-NqS" id="Fyq-xo-Jvk"/>
                                             <outlet property="incomingOrOutgoingImageView" destination="SXM-a7-YvS" id="WuF-I9-krJ"/>
+                                            <outlet property="indicatorImageView" destination="n6P-9J-47q" id="S4l-Yo-KdM"/>
                                             <outlet property="infoLabel" destination="07w-Se-CSc" id="kFd-ZU-eMm"/>
                                             <outlet property="nameLabel" destination="rBb-S1-m3j" id="Wsd-Jg-jcU"/>
                                             <outlet property="thumbnailImageView" destination="4ai-Ya-yI2" id="z3w-2e-SL0"/>
                                             <outlet property="thumbnailPlayImageView" destination="XlC-lg-gXn" id="vtR-ni-9rk"/>
                                             <outlet property="thumbnailViewerCollectionView" destination="Iva-4u-COG" id="UBt-W2-SKG"/>
+                                            <outlet property="thumbnailViewerView" destination="pZM-Z4-Vkp" id="f3p-pR-Ojc"/>
                                             <outlet property="timeLabel" destination="60T-tJ-6Mb" id="Uol-on-Nty"/>
                                             <outlet property="uploadOrVersionImageView" destination="jDA-ye-SkB" id="B9e-EZ-jhE"/>
                                         </connections>
@@ -762,7 +757,7 @@
                                                         <constraint firstItem="F34-Lw-Ti3" firstAttribute="leading" secondItem="Nu9-mF-03P" secondAttribute="trailing" constant="10" id="pib-lb-Icg"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rqk-Pj-pyN">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rqk-Pj-pyN">
                                                     <rect key="frame" x="0.0" y="60" width="414" height="118"/>
                                                     <subviews>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dL4-1N-dSj">
@@ -868,6 +863,7 @@
                                         <connections>
                                             <outlet property="disclosureIndicatorView" destination="D3P-73-5gk" id="ITF-kN-jRD"/>
                                             <outlet property="incomingOrOutgoingImageView" destination="WJX-hQ-EBs" id="g9Z-sG-uSL"/>
+                                            <outlet property="indicatorImageView" destination="kOw-He-9rX" id="gMR-6L-H0d"/>
                                             <outlet property="infoLabel" destination="bfy-3X-gU9" id="i68-By-Rfo"/>
                                             <outlet property="nameLabel" destination="F34-Lw-Ti3" id="ZLK-uG-mdT"/>
                                             <outlet property="thumbnailImageView" destination="nL9-R4-EP0" id="hE3-gx-qMT"/>
@@ -899,7 +895,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XEh-jJ-ism" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4060" y="-3934.1829085457275"/>
+            <point key="canvasLocation" x="4059.420289855073" y="-3934.239130434783"/>
         </scene>
     </scenes>
     <resources>
