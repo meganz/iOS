@@ -10,8 +10,8 @@ final class NodeShareRouter: NSObject {
 
     // MARK: -
 
-    func showSharing(for node: MEGANode, sender: Any?) {
-        let activityViewController = UIActivityViewController(forNodes: [node], sender: sender)
+    func showSharing(for node: MEGANode) {
+        let activityViewController = UIActivityViewController.init(forNodes: [node], sender: nil)
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 

@@ -32,7 +32,7 @@ enum HomeRoutingSource {
     case copy(MEGANode)
     case move(MEGANode)
     case delete(MEGANode)
-    case share(MEGANode, Any?)
+    case share(MEGANode)
     case shareFolder(MEGANode)
     case manageShare(MEGANode)
     case setLabel(MEGANode)
@@ -121,8 +121,8 @@ final class HomeRouter: HomeRouterProtocol {
             nodeManageRouter.showLabelColorAction(for: node)
 
         // MARK: - Share
-        case .share(let node, let sender):
-            nodeShareRouter.showSharing(for: node, sender: sender)
+        case .share(let node):
+            nodeShareRouter.showSharing(for: node)
         case .shareFolder(let node):
             nodeShareRouter.showSharingFolder(for: node)
         case .manageShare(let node):
