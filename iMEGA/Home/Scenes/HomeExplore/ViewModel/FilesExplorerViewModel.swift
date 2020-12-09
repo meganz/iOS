@@ -96,9 +96,9 @@ final class FilesExplorerViewModel {
         useCase.search(string: text,
                        inNode: nil,
                        sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).megaSortOrderType,
-                       cancelPreviousSearchIfNeeded: true) { [weak self] nodes in
+                       cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
             DispatchQueue.main.async {
-                guard let self = self else { return }
+                guard let self = self, !isCancelled else { return }
                 self.updateListenerForFilesDownload(withNodes: nodes)
                 self.invokeCommand?(.reloadNodes(nodes: nodes, searchText: text))
             }

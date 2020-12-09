@@ -112,9 +112,9 @@ class PhotoExplorerViewModel: NSObject {
         fileSearchUseCase.search(string: nil,
                        inNode: nil,
                        sortOrderType: .modificationDesc,
-                       cancelPreviousSearchIfNeeded: true) { [weak self] nodes in
+                       cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
             DispatchQueue.main.async {
-                guard let self = self else { return }
+                guard let self = self, !isCancelled else { return }
                 self.nodes = nodes ?? []
                 self.populateMarkers()
                 self.invokeReloadDataCommand()
