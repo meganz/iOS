@@ -229,7 +229,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     } else {
         if (recentActionBucket.isMedia) {
             recentActionBucket.mnz_isExpanded = !recentActionBucket.mnz_isExpanded;
-            [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+            [UIView performWithoutAnimation:^{
+                [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+            }];
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.nodes = recentActionBucket.nodesList;
