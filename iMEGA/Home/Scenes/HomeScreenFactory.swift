@@ -88,8 +88,8 @@ final class HomeScreenFactory: NSObject {
             ),
             router: HomeSearchResultRouter(
                 navigationController: navigationController,
-                nodeActionHandler: NodeActionViewControllerGenericDelegate(
-                    viewController: navigationController
+                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController
                 )
             )
         )
