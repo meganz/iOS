@@ -12,7 +12,7 @@ struct HomeSearchResultFileViewModel {
 
     let thumbnail: ((@escaping (UIImage?) -> Void) -> Void)?
 
-    let moreAction: (MEGAHandle) -> Void
+    let moreAction: (MEGAHandle, UIButton) -> Void
 }
 
 extension HomeSearchResultFileViewModel {

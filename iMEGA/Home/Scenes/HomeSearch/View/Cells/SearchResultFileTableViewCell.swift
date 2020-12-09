@@ -7,13 +7,13 @@ class SearchResultFileTableViewCell: UITableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var moreActionButton: UIButton! {
         didSet {
-            moreActionButton.addTarget(self, action: #selector(didTapMoreActionButton), for: .touchUpInside)
+            moreActionButton.addTarget(self, action: #selector(didTapMoreActionButton(button:)), for: .touchUpInside)
         }
     }
     
     private var uuid: UUID = UUID()
     private var handle: MEGAHandle?
-    private var moreAction: ((MEGAHandle) -> Void)?
+    private var moreAction: ((MEGAHandle, UIButton) -> Void)?
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -37,8 +37,8 @@ class SearchResultFileTableViewCell: UITableViewCell {
         moreAction = fileModel.moreAction
     }
 
-    @objc private func didTapMoreActionButton() {
+    @objc private func didTapMoreActionButton(button: UIButton) {
         guard let handle = handle else { return }
-        moreAction?(handle)
+        moreAction?(handle, button)
     }
 }

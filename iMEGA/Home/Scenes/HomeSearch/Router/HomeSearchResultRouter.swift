@@ -4,25 +4,25 @@ final class HomeSearchResultRouter {
 
     private weak var navigationController: UINavigationController?
 
-    private var nodeActionHandler: NodeActionViewControllerDelegate
+    private var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate
 
     private lazy var nodeOpener = NodeOpener(navigationController: navigationController)
 
     init(
         navigationController: UINavigationController,
-        nodeActionHandler: NodeActionViewControllerDelegate
+        nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate
     ) {
         self.navigationController = navigationController
-        self.nodeActionHandler = nodeActionHandler
+        self.nodeActionViewControllerDelegate = nodeActionViewControllerDelegate
     }
 
-    func didTapMoreAction(on node: MEGAHandle) {
+    func didTapMoreAction(on node: MEGAHandle, button: UIButton) {
         guard let nodeActionViewController = NodeActionViewController(
             node: node,
-            delegate: nodeActionHandler,
+            delegate: nodeActionViewControllerDelegate,
             displayMode: .cloudDrive,
             isIncoming: false,
-            sender: self
+            sender: button
         ) else { return }
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
