@@ -37,6 +37,8 @@
     self.thumbnailViewerCollectionView.dataSource = nil;
     self.thumbnailViewerCollectionView.delegate = nil;
     self.nodesArray = nil;
+    [self.thumbnailViewerCollectionView scrollToLeftAnimated:NO];
+    [self.thumbnailViewerCollectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
