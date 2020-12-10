@@ -14,7 +14,6 @@ class FilesExplorerContainerViewController: UIViewController {
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
         sc.searchResultsUpdater = self
-        sc.delegate = self
         sc.obscuresBackgroundDuringPresentation = false
         sc.hidesNavigationBarDuringPresentation = false
         return sc
@@ -248,13 +247,6 @@ extension FilesExplorerContainerViewController: UISearchResultsUpdating {
         }
         
         currentState.updateSearchResults(for: searchText)
-    }
-}
-
-// MARK: - UISearchControllerDelegate
-extension FilesExplorerContainerViewController: UISearchControllerDelegate {
-    func willDismissSearchController(_ searchController: UISearchController) {
-        currentState.updateSearchResults(for: nil)
     }
 }
 
