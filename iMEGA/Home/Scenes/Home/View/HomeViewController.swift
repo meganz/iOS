@@ -96,16 +96,7 @@ final class HomeViewController: UIViewController {
             asyncOnMain {
                 if let badgeButton = self.badgeButton {
                     badgeButton.setBadgeText(output.notificationNumber)
-                    badgeButton.setBackgroundImage(resizedImage, for: .normal)
-                } else {
-                    let badgeButton = BadgeButton()
-                    self.badgeButton = badgeButton
-                    badgeButton.setBadgeText(output.notificationNumber)
-                    badgeButton.setBackgroundImage(resizedImage, for: .normal)
-                    badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
-
-                    let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
-                    self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+                    badgeButton.setImage(resizedImage, for: .normal)
                 }
             }
         }
@@ -172,6 +163,8 @@ final class HomeViewController: UIViewController {
 
     private func setupView() {
         setTitle(with: "MEGA")
+
+        setupLeftItems()
         setupRightItems()
         setupSearchBarView(searchBarView)
         setupSearchResultExtendedLayout()
@@ -202,6 +195,17 @@ final class HomeViewController: UIViewController {
         extendedLayoutIncludesOpaqueBars = true
     }
 
+    private func setupLeftItems() {
+        
+        let badgeButton = BadgeButton()
+        self.badgeButton = badgeButton
+        badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
+        
+        let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
+        self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+        
+    }
+    
     private func setupRightItems() {
         let startConversationItem = UIBarButtonItem(
             image: UIImage(named: "startChat"),

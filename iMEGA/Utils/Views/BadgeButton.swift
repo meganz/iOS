@@ -54,6 +54,8 @@ final class BadgeButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         let badgeLabel = setupBadgeLabel(with: trait)
         badgeLabel.isHidden = true
+        let backgroudImage = UIImage(color: UIColor.mnz_tertiaryGray(for: trait), size: CGSize(width: 28, height: 28))?.byRoundCornerRadius(14)
+        setBackgroundImage(backgroudImage, for: .normal)
         addSubview(badgeLabel)
 
         NSLayoutConstraint.activate([
