@@ -377,6 +377,14 @@
         if (transfer.path.mnz_isWebCodePathExtension) {
             [self presentWebCodeViewController];
         } else {
+            if (transfer.path.pathExtension.length == 0) {
+                NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentTransfer.path];
+                NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+                if (fileString.length) {
+                    [self presentWebCodeViewController];
+                    return;
+                }
+            }
             if (@available(iOS 11.0, *)) {
                 if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
                     [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];

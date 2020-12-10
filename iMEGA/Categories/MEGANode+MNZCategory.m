@@ -137,6 +137,13 @@
         } else if (previewDocumentPath.mnz_isWebCodePathExtension) {
             return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
         } else {
+            if (previewDocumentPath.pathExtension.length == 0) {
+                NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentPath];
+                NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+                if (fileString.length) {
+                    return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
+                }
+            }
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;

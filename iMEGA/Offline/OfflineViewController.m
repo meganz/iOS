@@ -832,6 +832,15 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
         [self presentViewController:navigationController animated:YES completion:nil];
     } else {
+        if (self.previewDocumentPath.pathExtension.length == 0) {
+            NSData *fileData = [NSData dataWithContentsOfFile:self.previewDocumentPath];
+            NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+            if (fileString.length) {
+                MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
+                [self presentViewController:navigationController animated:YES completion:nil];
+                return;
+            }
+        }
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
         [self presentViewController:previewController animated:YES completion:nil];
     }
@@ -1182,6 +1191,13 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
         return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
     } else {
+        if (self.previewDocumentPath.pathExtension.length == 0) {
+            NSData *fileData = [NSData dataWithContentsOfFile:self.previewDocumentPath];
+            NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+            if (fileString.length) {
+                return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
+            }
+        }
         return [self qlPreviewControllerForIndexPath:indexPath];
     }
     
