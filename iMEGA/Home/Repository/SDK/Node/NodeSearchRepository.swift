@@ -35,7 +35,7 @@ extension NodeSearchRepository {
                     parentNode: rootNode,
                     text: searchText,
                     cancelToken: cancelToken
-                ) { foundNodes in
+                ) { foundNodes, _ in
                     guard let foundNodes = foundNodes else {
                         completionAction([])
                         return

@@ -1311,7 +1311,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
         self.cancelToken = MEGACancelToken.alloc.init;
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound, BOOL isCancelled) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];

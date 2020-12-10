@@ -5,7 +5,7 @@ protocol FilesSearchRepositoryProtocol {
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
                 formatType: MEGANodeFormatType,
-                completionBlock: @escaping ([MEGANode]?) -> Void)
+                completionBlock: @escaping ([MEGANode]?, Bool) -> Void)
     func cancelSearch()
 }
 
@@ -28,10 +28,10 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
                 formatType: MEGANodeFormatType,
-                completionBlock: @escaping ([MEGANode]?) -> Void){
+                completionBlock: @escaping ([MEGANode]?, Bool) -> Void){
         
         guard let inNode = node ?? sdk.rootNode else {
-            return completionBlock(nil)
+            return completionBlock(nil, true)
         }
     
         cancelToken = MEGACancelToken()
