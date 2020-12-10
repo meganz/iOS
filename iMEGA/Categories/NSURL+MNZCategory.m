@@ -165,7 +165,7 @@
     if ([afterSlashesString containsString:@"addContact"]) {
         return URLTypeAddContact;
     }
-    
+
     return type;
 }
 

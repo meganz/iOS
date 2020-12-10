@@ -39,9 +39,7 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
         guard let contentview = loadedViewFromNibContent() else { return }
         contentview.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentview)
-        contentview.autoPinEdgesToSuperviewEdges(
-            with: .init(top: 0, left: 20, bottom: 0, right: 20)
-        )
+        contentview.autoPinEdgesToSuperviewEdges()
     }
 
     private func setupView(with trait: UITraitCollection) {

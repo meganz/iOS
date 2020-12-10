@@ -23,7 +23,14 @@ struct LightColorThemeFactory: ColorFactory {
         case .highlighted: return Color(red: 0, green: 168, blue: 134, alpha: 204)
 
         case .searchTextField: return Color(red: 232, green: 232, blue: 232)
-        case .navigationBar: return Color(red: 247, green: 247, blue: 247)
+        case .homeTopSide: return Color(red: 247, green: 247, blue: 247)
+        }
+    }
+
+    func tintColor(_ style: MEGAColor.Tint) -> Color {
+        switch style {
+        case .primary: return Color(red: 81, green: 81, blue: 81)
+        case .secondary: return Color(red: 196, green: 196, blue: 196)
         }
     }
 

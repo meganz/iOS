@@ -13,9 +13,14 @@ typealias ViewStyler = (UIView) -> Void
 
 enum MEGACustomViewStyle {
     case warning
+
+    // MARK: - Home Screen
     case searchController
     case slideIndicatorContainerView
     case slideIndicator
+    case homeBannerView
+    case homeCarouselCollectionView
+    case homeCarouselPageControl
 }
 
 protocol CustomViewStyleFactory {
@@ -45,7 +50,7 @@ private struct CustomViewStyleFactoryImpl: CustomViewStyleFactory {
             }
         case .searchController:
             return { view in
-                backgroundStyleFactory.backgroundStyle(of: .homeNavigationBar).applied(on: view)
+                backgroundStyleFactory.backgroundStyle(of: .homeTopSide).applied(on: view)
             }
         case .slideIndicatorContainerView:
             return { view in
@@ -57,6 +62,16 @@ private struct CustomViewStyleFactoryImpl: CustomViewStyleFactory {
                     .applied(on: cornerStyleFactory.cornerStyle(of: .twoAndHalf)
                         .applied(on: view))
             }
+        case .homeBannerView:
+            return { view in
+                backgroundStyleFactory.backgroundStyle(of: .homeTopSide).applied(on: view)
+            }
+        case .homeCarouselCollectionView:
+            return { view in
+                backgroundStyleFactory.backgroundStyle(of: .homeTopSide).applied(on: view)
+            }
+        case .homeCarouselPageControl:
+            fatalError()
         }
     }
 }

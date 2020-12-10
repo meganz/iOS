@@ -35,7 +35,13 @@ enum MEGAColor {
 
         // MARK: - Search Bar
 
-        case navigationBar
+        case homeTopSide
+
+    }
+
+    enum Tint: Hashable {
+        case primary
+        case secondary
     }
 
     enum Shadow: Hashable {
@@ -49,6 +55,7 @@ enum MEGAColor {
 
     enum Independent: Hashable {
         case bright
+        case dark
         case clear
         case warning
     }
