@@ -109,9 +109,12 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
 
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint,
                                       withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        guard let collectionView = collectionView , !collectionView.isPagingEnabled,
-            let layoutAttributes = self.layoutAttributesForElements(in: collectionView.bounds)
-            else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset) }
+        guard let collectionView = collectionView,
+              collectionView.isPagingEnabled,
+              let layoutAttributes = self.layoutAttributesForElements(in: collectionView.bounds)
+        else {
+            return super.targetContentOffset(forProposedContentOffset: proposedContentOffset)
+        }
 
         let midSide = collectionView.bounds.size.width / 2
         let proposedContentOffsetCenterOrigin = proposedContentOffset.x + midSide
@@ -128,7 +131,6 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
 
     override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)
-        print(attributes)
         if attributes?.alpha == 0 {
             delete = attributes
         } else {

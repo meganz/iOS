@@ -53,6 +53,12 @@ final class HomeScreenFactory: NSObject {
                 nodeFavouriteRepository: NodeFavouriteActionRepository()
             )
         )
+        homeViewController.bannerViewModel = HomeBannerViewModel(
+            userBannerUseCase: UserBannerUseCase(
+                userBannerRepository: BannerRepository(sdk: MEGASdkManager.sharedMEGASdk())
+            ),
+            router: HomeBannerRouter(navigationController: navigationController)
+        )
 
         navigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "home"), selectedImage: nil)
 

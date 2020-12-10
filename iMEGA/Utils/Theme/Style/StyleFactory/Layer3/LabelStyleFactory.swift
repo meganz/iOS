@@ -28,6 +28,12 @@ enum MEGALabelStyle {
     // MARK: - Notification Badge
 
     case badge
+
+    // MARK: - Cell Title
+
+    case title1 // Home Screen Banner Title
+    case homeBannerTitle
+    case homeBannerSubtitle
 }
 
 // MARK: - Themed Label Style Factory
@@ -51,6 +57,9 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
         case .note2: return subNoteStyler()
         case .multiline: return multilineStyler()
         case .badge: return badgeStyler()
+        case .title1: return title1Styler()
+        case .homeBannerTitle: return homeBannerStyler()
+        case .homeBannerSubtitle: return homeBannerSubtitleStyler()
         }
     }
 
@@ -108,6 +117,38 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
                         .applied(on: cornerStyler
                             .applied(on: paragraphStyler
                                 .applied(on: label)))))
+        }
+    }
+
+    private func title1Styler() -> LabelStyler {
+        let textColorStyler = colorFactory.textColor(.primary).asTextColorStyle
+        let titleMediumTextStyler = textStyleFactory.textStyle(of: .titleMedium)
+        return { label in
+            titleMediumTextStyler
+                .applied(on: textColorStyler
+                    .applied(on: label))
+        }
+    }
+
+    private func homeBannerStyler() -> LabelStyler {
+        let textColorStyler = colorFactory.independent(.dark).asTextColorStyle
+        let titleMediumTextStyler = textStyleFactory.textStyle(of: .titleSmall)
+        return { label in
+            titleMediumTextStyler
+                .applied(on: textColorStyler
+                    .applied(on: label))
+        }
+    }
+
+    private func homeBannerSubtitleStyler() -> LabelStyler {
+        let textColorStyler = colorFactory.independent(.dark).asTextColorStyle
+        let titleMediumTextStyler = textStyleFactory.textStyle(of: .subtitle1)
+        let multilineTextStyler = paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
+        return { label in
+            titleMediumTextStyler
+                .applied(on: textColorStyler
+                    .applied(on: multilineTextStyler
+                        .applied(on: label)))
         }
     }
 }

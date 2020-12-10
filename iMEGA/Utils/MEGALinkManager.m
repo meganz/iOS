@@ -442,7 +442,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [mainTBC showAddContact];
             }
             break;
-            
+
         default:
             break;
     }

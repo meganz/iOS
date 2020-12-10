@@ -189,18 +189,14 @@
                             </connections>
                         </view>
                     </subviews>
-                    <constraints>
-                        <constraint firstAttribute="width" priority="750" constant="504" id="Ps9-Du-lLZ"/>
-                    </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="e12-vS-93O"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="9P1-DX-aYL" firstAttribute="leading" secondItem="e12-vS-93O" secondAttribute="leading" id="BE3-nc-BPV"/>
                 <constraint firstItem="e12-vS-93O" firstAttribute="bottom" secondItem="9P1-DX-aYL" secondAttribute="bottom" constant="16" id="EHw-Vj-L4b"/>
-                <constraint firstItem="9P1-DX-aYL" firstAttribute="centerX" secondItem="0qg-zR-xIj" secondAttribute="centerX" id="Fmd-a2-lEI"/>
-                <constraint firstItem="9P1-DX-aYL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0qg-zR-xIj" secondAttribute="leading" id="GxP-5t-5Lx"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9P1-DX-aYL" secondAttribute="trailing" id="ccO-WW-TNF"/>
+                <constraint firstAttribute="trailing" secondItem="9P1-DX-aYL" secondAttribute="trailing" id="IX8-Tz-eTu"/>
                 <constraint firstItem="9P1-DX-aYL" firstAttribute="top" secondItem="0qg-zR-xIj" secondAttribute="top" constant="7" id="fui-Nn-Bxx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

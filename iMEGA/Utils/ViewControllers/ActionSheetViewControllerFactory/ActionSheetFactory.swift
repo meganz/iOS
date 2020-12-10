@@ -3,7 +3,7 @@ import Foundation
 protocol ActionSheetFactoryProtocol {
 
     func nodeLabelColorView(forNode nodeHandle: MEGAHandle,
-                            completion:((Result<ActionSheetViewController, NodeLabelActionError>) -> Void)?)
+                            completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?)
 }
 
 struct ActionSheetFactory: ActionSheetFactoryProtocol {
@@ -18,7 +18,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
     }
 
     func nodeLabelColorView(forNode nodeHandle: MEGAHandle,
-                            completion:((Result<ActionSheetViewController, NodeLabelActionError>) -> Void)?) {
+                            completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?) {
         nodeLabelColorActions(forNode: nodeHandle) { (actionsResult) in
             let viewControllerResult = actionsResult.map {
                 ActionSheetViewController(actions: $0, headerTitle: nil, dismissCompletion: nil, sender: nil)
@@ -29,12 +29,12 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
 
     private func nodeLabelColorActions(
         forNode nodeHandle: MEGAHandle,
-        completion:((Result<[BaseAction], NodeLabelActionError>) -> Void)?
+        completion:((Result<[BaseAction], NodeLabelActionDomainError>) -> Void)?
     ) {
         nodeLabelActionUseCase.nodeLabelColor(forNode: nodeHandle) { (colorResult) in
             switch colorResult {
             case .failure(let error):
-                completion?(.failure(NodeLabelActionError(error)))
+                completion?(.failure(error))
             case .success(let nodeCurrentColor):
                 let allLabelColors = nodeLabelActionUseCase.labelColors
                 let actionSheetActions = allLabelColors.map { (color) -> BaseAction in
@@ -78,23 +78,6 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
                     nodeLabelActionUseCase.setNodeLabelColor(labelColor, forNode: nodeHandle, completion: nil)
                 }
             )
-        }
-    }
-}
-
-enum NodeLabelActionError: Error {
-
-    case nodeNotFound
-
-    case unsupportedNodeLabelColorFound
-
-    case internalGeneric
-
-    init(_ domainError: NodeLabelActionDomainError) {
-        switch domainError {
-        case .nodeNotFound: self = .nodeNotFound
-        case .unsupportedNodeLabelColorFound: self = .unsupportedNodeLabelColorFound
-        case .sdkError: self = .internalGeneric
         }
     }
 }

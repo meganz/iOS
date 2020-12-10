@@ -20,6 +20,8 @@ final class HomeViewController: UIViewController {
 
     var recentsViewModel: HomeRecentActionViewModelType!
 
+    var bannerViewModel: HomeBannerViewModelType!
+
     // MARK: - Router
 
     var router: HomeRouter!
@@ -127,7 +129,22 @@ final class HomeViewController: UIViewController {
                 }
             }
         }
-        uploadViewModel.inputs.didLoadView()
+        uploadViewModel.inputs.viewIsReady()
+
+        bannerViewModel.notifyUpdate = { [weak self] bannerViewModelOutput in
+            guard let self = self else { return }
+            asyncOnMain {
+                self.bannerCollectionView.reloadBanners(bannerViewModelOutput.state.banners)
+                self.toggleBannerCollectionView(isOn: true)
+            }
+        }
+        bannerViewModel.inputs.viewIsReady()
+    }
+
+    private func toggleBannerCollectionView(isOn: Bool) {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: [], animations:  {
+            self.bannerCollectionView.isHidden = !isOn
+        }, completion: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -168,9 +185,7 @@ final class HomeViewController: UIViewController {
         setupRightItems()
         setupSearchBarView(searchBarView)
         setupSearchResultExtendedLayout()
-
-        // For this release, banner is hidden, hide the banner until when it's ready.
-        bannerCollectionView.isHidden = true
+        setupBannerCollection()
 
         slidePanelView.delegate = self
         exploreView.delegate = self
@@ -230,6 +245,11 @@ final class HomeViewController: UIViewController {
         searchBarView.delegate = self
         searchBarView.edittingDelegate = searchResultViewController
         searchResultViewController.searchHintSelectDelegate = searchBarView
+    }
+
+    private func setupBannerCollection() {
+        bannerCollectionView.isHidden = true
+        bannerCollectionView.delegate = self
     }
 
     private func addContentViewController() {
@@ -590,6 +610,23 @@ extension HomeViewController: MEGASearchBarViewDelegate {
         searchResultViewController.removeFromParent()
         searchResultContainerView.removeFromSuperview()
         searchResultContainerView = nil
+    }
+}
+
+// MARK: - MEGABannerViewDelegate
+
+extension HomeViewController: MEGABannerViewDelegate {
+
+    func didSelectMEGABanner(withBannerIdentifier bannerIdentifier: Int, actionURL: URL?) {
+        bannerViewModel.inputs.didSelectBanner(actionURL: actionURL)
+    }
+
+    func dismissMEGABanner(_ bannerView: MEGABannerView, withBannerIdentifier bannerIdentifier: Int) {
+        bannerViewModel.inputs.dismissBanner(withBannerId: bannerIdentifier)
+    }
+
+    func hideMEGABannerView(_ bannerView: MEGABannerView) {
+        toggleBannerCollectionView(isOn: false)
     }
 }
 
