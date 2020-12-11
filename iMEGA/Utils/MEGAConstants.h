@@ -49,6 +49,8 @@ extern NSString * const MEGACameraUploadTaskExpiredNotification;
 extern NSString * const MEGACameraUploadQueueUpNextAssetNotification;
 extern NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotification;
 extern NSString * const MEGACameraUploadTargetFolderChangedInRemoteNotification;
+extern NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification;
+extern NSString * const MEGACameraUploadNodeUploadCompleteNotification;
 
 #pragma mark - camera upload notification keys
 
@@ -57,10 +59,12 @@ extern NSString * const MEGAVideoConcurrentCountUserInfoKey;
 extern NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey;
 extern NSString * const MEGACurrentUploadingTasksCountUserInfoKey;
 extern NSString * const MEGAAssetMediaTypeUserInfoKey;
+extern NSString * const MEGANodeInfoKey;
 
 #pragma mark - camera upload constants
 
 extern NSString * const MEGACameraUploadsNodeName;
+extern NSString * const MEGACameraUploadsFolderPath;
 extern const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes;
 
 #pragma mark - file extension constants

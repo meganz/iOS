@@ -47,6 +47,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
+@property (strong, nonatomic) CameraUploadHeartbeat *heartbeat;
 
 @property (strong, nonatomic) dispatch_queue_t propertySerialQueue;
 
@@ -76,6 +77,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
         if (CameraUploadManager.isCameraUploadEnabled) {
             [self initializeCameraUpload];
         }
+        
+        _heartbeat = [[CameraUploadHeartbeat alloc] init];
     }
     return self;
 }
@@ -578,6 +581,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
     [self initializeCameraUpload];
+    [self.heartbeat registerHeartbeat];
     [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
         [self.uploadRecordsCollator collatePhotoUploadingRecordsByUploadTasks:uploadTasks];
     }];
@@ -617,6 +621,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     [self.concurrentCountCalculator stopCalculatingConcurrentCount];
     [self.backgroundUploadingTaskMonitor stopMonitoringBackgroundUploadingTasks];
+    [self.heartbeat unregisterHeartbeat];
     _photoUploadPaused = NO;
     _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];

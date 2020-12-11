@@ -154,3 +154,4 @@
 #import "CameraUploadManager+Settings.h"
 #import "MEGAPurchase.h"
 #import "UIImage+YYAdd.h"
+#import "CameraUploadManager.h"
