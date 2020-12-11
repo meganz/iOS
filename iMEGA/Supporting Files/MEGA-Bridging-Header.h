@@ -152,4 +152,5 @@
 #import "CloudDriveViewController.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
+#import "MEGAPurchase.h"
 #import "UIImage+YYAdd.h"
