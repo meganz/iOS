@@ -4,7 +4,7 @@
 #import "MEGANavigationController.h"
 #import "SendToViewController.h"
 
-@interface SendToChatActivity ()
+@interface SendToChatActivity () <SendToChatActivityDelegate>
 
 @property (strong, nonatomic) NSArray *nodes;
 @property (strong, nonatomic) NSString *text;
@@ -51,7 +51,7 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
     if (self.text) {
-        sendToViewController.text = self.text;
+        sendToViewController.sendToChatActivityDelegate = self;
         sendToViewController.sendMode = SendModeShareActivity;
     } else if (self.nodes) {
         sendToViewController.nodes = self.nodes;
@@ -63,6 +63,16 @@
 
 + (UIActivityCategory)activityCategory {
     return UIActivityCategoryAction;
+}
+
+#pragma mark - SendToChatActivityDelegate
+
+- (void)sendToViewController:(SendToViewController *)viewController didFinishActivity:(BOOL)completed {
+    [self activityDidFinish:completed];
+}
+
+- (NSString *)textToSend {
+    return self.text;
 }
 
 @end

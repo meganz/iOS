@@ -78,6 +78,7 @@
         case SendModeCloud:
         case SendModeForward:
         case SendModeFileAndFolderLink:
+        case SendModeShareActivity:
             self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
             break;
             
@@ -428,6 +429,11 @@
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
+    
+    if (self.sendMode == SendModeShareActivity) {
+        [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:NO];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -523,19 +529,20 @@
             case SendModeShareActivity: {
                 [self dismissViewControllerAnimated:YES completion:^{
                     for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                        [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatListItem.chatId message:self.text];
+                        [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatListItem.chatId message:[self.sendToChatActivityDelegate textToSend]];
                     }
                     
                     for (MEGAUser *user in self.selectedUsersMutableArray) {
                         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
                         if (chatRoom) {
-                            [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:self.text];
+                            [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
                         } else {
                             [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                                [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:self.text];
+                                [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
                             }];
                         }
                     }
+                    [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:YES];
                 }];
 
                 break;
