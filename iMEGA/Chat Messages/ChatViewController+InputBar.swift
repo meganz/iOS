@@ -412,6 +412,10 @@ extension ChatViewController {
 }
 
 extension ChatViewController: ChatInputBarDelegate {
+    func didPasteImage(_ image: UIImage) {
+        let router = PasteImagePreviewRouter(viewControllerToPresent: self, chatRoom: chatRoom)
+        router.start()
+    }
     
     func tappedAddButton(_ button: UIButton) {
         displayAddToChatViewController(button)

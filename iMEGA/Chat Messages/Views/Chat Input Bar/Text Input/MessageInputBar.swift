@@ -9,6 +9,7 @@ protocol MessageInputBarDelegate: class {
     func typing(withText text: String)
     func textDidEndEditing()
     func clearEditMessage()
+    func didPasteImage(_ image: UIImage)
 }
 
 class MessageInputBar: UIView {
@@ -111,6 +112,10 @@ class MessageInputBar: UIView {
             }
             
             self.expandCollapseButton.isHidden = !collapsedMaxHeightReached
+        }
+        
+        messageTextView.pasteAction = { [weak self] image in
+            self?.delegate?.didPasteImage(image)
         }
         
         registerKeyboardNotifications()

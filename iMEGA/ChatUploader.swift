@@ -17,6 +17,30 @@
         MEGASdkManager.sharedMEGASdk().add(self)
     }
     
+    @objc func upload(image: UIImage, chatRoomId: UInt64) {
+        MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder { parentNode in
+            if let data = image.jpegData(compressionQuality: CGFloat(0.7)) {
+                let fileName = "\(NSDate().mnz_formattedDefaultNameForMedia()).jpg"
+                let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
+                do {
+                    try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
+                    var appData = NSString().mnz_appData(toSaveCoordinates: tempPath.mnz_coordinatesOfPhotoOrVideo() ?? "")
+                    appData = ((appData) as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
+                    ChatUploader.sharedInstance.upload(filepath: tempPath,
+                                                       appData: appData,
+                                                       chatRoomId: chatRoomId,
+                                                       parentNode: parentNode,
+                                                       isSourceTemporary: false,
+                                                       delegate: MEGAStartUploadTransferDelegate(completion: nil))
+                    
+                } catch {
+                    MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
+                }
+                
+            }
+        }
+    }
+    
     @objc func upload(filepath: String,
                       appData: String,
                       chatRoomId: UInt64,
