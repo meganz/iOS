@@ -327,4 +327,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     }
 }
 
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (request.type == MEGARequestTypeFetchNodes) {
+        [self reloadUI];
+    }
+}
+
 @end
