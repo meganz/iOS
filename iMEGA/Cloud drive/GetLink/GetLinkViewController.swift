@@ -348,6 +348,30 @@ class GetLinkViewController: UIViewController {
         }, multipleLinks: false))
     }
     
+    private func showIncompleteShareLinkAlert(title: String, message: String, completion: @escaping (() -> Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("dismiss", comment: "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible)."), style: .default, handler: { _ in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("share", comment: "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected"), style: .default, handler: { _ in
+            completion()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func showShareActivity(_ sender: UIBarButtonItem, textToShare: String, completion: (() -> Void)?) {
+        let shareActivity = UIActivityViewController(activityItems: [textToShare], applicationActivities: [SendToChatActivity(text: textToShare)])
+        shareActivity.excludedActivityTypes = [.print, .assignToContact, .saveToCameraRoll, .addToReadingList, .airDrop]
+        shareActivity.popoverPresentationController?.barButtonItem = sender
+        shareActivity.completionWithItemsHandler = { _, completed, _, _ in
+            if completed {
+                guard let completion = completion else { return }
+                completion()
+            }
+        }
+        present(shareActivity, animated: true, completion: nil)
+    }
+    
     //MARK: - IBActions
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
@@ -371,15 +395,26 @@ class GetLinkViewController: UIViewController {
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
         let textToShare = getLinkVM.multilink ? nodes.map { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
-        let shareActivity = UIActivityViewController(activityItems: [textToShare], applicationActivities: [SendToChatActivity(text: textToShare)])
-        shareActivity.excludedActivityTypes = [.print, .assignToContact, .saveToCameraRoll, .addToReadingList, .airDrop]
-        shareActivity.popoverPresentationController?.barButtonItem = sender
-        shareActivity.completionWithItemsHandler = {activity, _, _, _ in
-            if activity?.rawValue == MEGAUIActivityTypeSendToChat {
-                shareActivity.dismissView()
+        
+        showShareActivity(sender, textToShare: textToShare) { [weak self] in
+            if self?.getLinkVM.separateKey ?? false {
+                self?.showIncompleteShareLinkAlert(title: NSLocalizedString("Decryption Key", comment: "Hint text to suggest that the user has to write the decryption key"), message: NSLocalizedString("This link was shared without a decryption key. Do you want to share its key?", comment: "Message shown when a link is shared with separated key")) {
+                    guard let key = self?.getLinkVM.key else {
+                        return
+                    }
+                    self?.showShareActivity(sender, textToShare: key, completion: nil)
+                }
+            }
+            
+            if self?.getLinkVM.passwordProtect ?? false {
+                self?.showIncompleteShareLinkAlert(title: NSLocalizedString("Link Password", comment: "Title for password protect link alert"), message: NSLocalizedString("Do you want to share the password for this link?", comment: "Message shown when a link is shared having a password")) {
+                    guard let password = self?.getLinkVM.password else {
+                        return
+                    }
+                    self?.showShareActivity(sender, textToShare: password, completion: nil)
+                }
             }
         }
-        present(shareActivity, animated: true, completion: nil)
     }
     
     @IBAction func copyKeyBarButtonTapped(_ sender: UIBarButtonItem) {

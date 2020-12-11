@@ -2422,3 +2422,9 @@
 "Home"="Home";
 /* Home Screen: Explorer view card title - Documents */
 "Docs" = "Docs";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+/* Title for password protect link alert */
+"Link Password"="Link Password";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="Do you want to share the password for this link?";
