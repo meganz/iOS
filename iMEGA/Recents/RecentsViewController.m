@@ -102,21 +102,11 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger numberOfSections = 0;
-    if (MEGAReachabilityManager.isReachable) {
-        numberOfSections = self.recentActionBucketArray.count;
-    }
-    
-    return numberOfSections;
+    return self.recentActionBucketArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    if (MEGAReachabilityManager.isReachable) {
-        numberOfRows = 1;
-    }
-    
-    return numberOfRows;
+    return self.recentActionBucketArray.count > 0 ? 1 : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
