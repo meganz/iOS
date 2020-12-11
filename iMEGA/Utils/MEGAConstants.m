@@ -50,6 +50,8 @@ NSString * const MEGACameraUploadTaskExpiredNotification = @"nz.mega.cameraUploa
 NSString * const MEGACameraUploadQueueUpNextAssetNotification = @"nz.mega.cameraUpload.queueUpNextAsset";
 NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotification = @"nz.mega.cameraUpload.allAssetsFinishedProcessing";
 NSString * const MEGACameraUploadTargetFolderChangedInRemoteNotification = @"nz.mega.cameraUpload.targetFolderChangedInRemote";
+NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification = @"nz.mega.cameraUpload.targetFolderUpdatedInMemory";
+NSString * const MEGACameraUploadNodeUploadCompleteNotification = @"nz.mega.cameraUpload.nodeUploadCompleteNotification";
 
 #pragma mark - camera upload notification keys
 
@@ -58,10 +60,12 @@ NSString * const MEGAVideoConcurrentCountUserInfoKey = @"nz.mega.videoConcurrent
 NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey = @"nz.mega.uploadingTasksReachedMaximumCountKey";
 NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUploadingTasksCountKey";
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
+NSString * const MEGANodeInfoKey = @"nz.mega.nodeInfoKey";
 
 #pragma mark - camera upload constants
 
 NSString * const MEGACameraUploadsNodeName = @"Camera Uploads";
+NSString * const MEGACameraUploadsFolderPath = @"/CameraRoll";
 const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes = 100 * 1024 * 1024;
 
 #pragma mark - file extension constants
