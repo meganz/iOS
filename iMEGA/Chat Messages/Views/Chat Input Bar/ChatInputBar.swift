@@ -10,6 +10,7 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func voiceRecordingStarted()
     func voiceRecordingEnded()
     func clearEditMessage()
+    func didPasteImage(_ image: UIImage)
 }
 
 class ChatInputBar: UIView {
@@ -447,6 +448,10 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 
 
 extension ChatInputBar: MessageInputBarDelegate {
+    func didPasteImage(_ image: UIImage) {
+        delegate?.didPasteImage(image)
+    }
+    
     func clearEditMessage() {
         delegate?.clearEditMessage()
     }

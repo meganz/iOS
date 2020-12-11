@@ -24,6 +24,8 @@
 		2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18DEF4245BD07E00E7EE27 /* ChatViewController+MessageCellDelegate.swift */; };
 		2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
+		2F26B3282578396E00486C40 /* PasteImagePreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F26B3272578396E00486C40 /* PasteImagePreviewViewModel.swift */; };
+		2F26B3322578467E00486C40 /* PasteImagePreviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F26B3312578467E00486C40 /* PasteImagePreviewRouter.swift */; };
 		2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */; };
 		2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */; };
 		2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */; };
@@ -85,6 +87,8 @@
 		2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */; };
 		2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */; };
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
+		2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */; };
+		2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		36A858ED6008E3DA0B78AFC1 /* Pods_iMEGA_MEGAPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4182D57C46F62F9FFCF743AD /* Pods_iMEGA_MEGAPicker.framework */; };
@@ -1702,6 +1706,8 @@
 		2F18DEE82458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCollectionViewCell+menus.swift"; sourceTree = "<group>"; };
 		2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Menus.swift"; sourceTree = "<group>"; };
 		2F18DEF4245BD07E00E7EE27 /* ChatViewController+MessageCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessageCellDelegate.swift"; sourceTree = "<group>"; };
+		2F26B3272578396E00486C40 /* PasteImagePreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewViewModel.swift; sourceTree = "<group>"; };
+		2F26B3312578467E00486C40 /* PasteImagePreviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewRouter.swift; sourceTree = "<group>"; };
 		2F28019C24455A4900C160D0 /* Karere.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Karere.xcodeproj; path = "Vendor/Karere/bindings/Objective-C/Karere.xcodeproj"; sourceTree = "<group>"; };
 		2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MEGASDK.xcodeproj; path = Vendor/SDK/bindings/ios/MEGASDK.xcodeproj; sourceTree = "<group>"; };
 		2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewMediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1765,6 +1771,8 @@
 		2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageQualityTableViewController.swift; sourceTree = "<group>"; };
 		2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatImageUploadQuality.h; sourceTree = "<group>"; };
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
+		2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewViewController.swift; sourceTree = "<group>"; };
+		2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewView.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
@@ -3856,6 +3864,17 @@
 				2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */,
 			);
 			path = Giphy;
+			sourceTree = "<group>";
+		};
+		2FD6A26925745B0A00C1997E /* PasteImagePreviewViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */,
+				2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */,
+				2F26B3272578396E00486C40 /* PasteImagePreviewViewModel.swift */,
+				2F26B3312578467E00486C40 /* PasteImagePreviewRouter.swift */,
+			);
+			path = PasteImagePreviewViewController;
 			sourceTree = "<group>";
 		};
 		2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */ = {
@@ -6320,6 +6339,7 @@
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2FD6A26925745B0A00C1997E /* PasteImagePreviewViewController */,
 				5D6092B5255E53B4005FA3E4 /* ActionSheetViewControllerFactory */,
 				5DAB28EF24875217004B5D5A /* OverDiskQuota */,
 				5BF4EEDC2432039C00D39415 /* CustomModalAlert */,
@@ -8719,6 +8739,7 @@
 				A86B9F3E2316D6AB00F35E7A /* FLEXNetworkTransactionTableViewCell.m in Sources */,
 				A86B9F5F2316D6AB00F35E7A /* FLEXObjectRef.m in Sources */,
 				A86B9F492316D6AB00F35E7A /* FLEXDefaultEditorViewController.m in Sources */,
+				2F26B3282578396E00486C40 /* PasteImagePreviewViewModel.swift in Sources */,
 				A86B9F762316D6AB00F35E7A /* FLEXRealmDatabaseManager.m in Sources */,
 				BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
 				B662B87724F75FEF0089376A /* CheckSMSUseCase.swift in Sources */,
@@ -8816,6 +8837,7 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A86B9F502316D6AB00F35E7A /* FLEXArgumentInputSwitchView.m in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
+				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,
 				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
 				A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */,
@@ -8870,6 +8892,7 @@
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				A86B9F602316D6AB00F35E7A /* FLEXWebViewController.m in Sources */,
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
+				2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */,
 				BFAB114B23CEA5C300BCE72D /* PhotoCarouselDelegate.swift in Sources */,
 				5D31674224FC9A1B0032492F /* UIResponder+ErrorHandling.swift in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
@@ -9161,6 +9184,7 @@
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */,
+				2F26B3322578467E00486C40 /* PasteImagePreviewRouter.swift in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,

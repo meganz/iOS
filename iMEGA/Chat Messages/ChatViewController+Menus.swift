@@ -5,9 +5,23 @@ extension ChatViewController {
     
     func copyMessage(_ message: ChatMessage) {
         let megaMessage = message.message
-        if let content = megaMessage.content {
-            UIPasteboard.general.string = content
-        }        
+        if megaMessage.type == .normal {
+            if let content = megaMessage.content {
+                UIPasteboard.general.string = content
+            }
+        } else if megaMessage.type == .attachment {
+            if megaMessage.nodeList.size.uintValue == 1,
+               let node = megaMessage.nodeList.node(at: 0),
+               node.name.mnz_isImagePathExtension {
+                let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+                let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+                if FileManager.default.fileExists(atPath: originalImagePath), let originalImage = UIImage(contentsOfFile: originalImagePath) {
+                    UIPasteboard.general.image = originalImage
+                } else if FileManager.default.fileExists(atPath: previewFilePath), let previewImage = UIImage(contentsOfFile: previewFilePath) {
+                    UIPasteboard.general.image = previewImage
+                }
+            }
+        }
     }
     
     func forwardMessage(_ message: ChatMessage) {
