@@ -36,7 +36,7 @@ enum SessionSectionRow: Int {
     case logout
 }
 
-@objc class ProfileViewController: UIViewController {
+@objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
@@ -78,7 +78,8 @@ enum SessionSectionRow: Int {
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
-        
+        MEGAPurchase.sharedInstance()?.pricingsDelegate = self
+
         updateAppearance()
     }
     
@@ -106,6 +107,11 @@ enum SessionSectionRow: Int {
                 updateAppearance()
             }
         }
+    }
+    
+    // MARK: - MEGAPurchasePricingDelegate
+    func pricingsReady() {
+        tableView.reloadData()
     }
     
     // MARK: - Private
@@ -486,6 +492,9 @@ extension ProfileViewController: UITableViewDataSource {
         case .plan:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             cell.nameLabel.text = NSLocalizedString("upgradeAccount", comment: "Button title which triggers the action to upgrade your MEGA account level")
+
+            cell.accessoryType = MEGAPurchase.sharedInstance()?.products.count ?? 0 > 0 ? .disclosureIndicator : .none
+
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return cell
             }
@@ -584,7 +593,7 @@ extension ProfileViewController: UITableViewDelegate {
             switch rowsForPlanSection()[indexPath.row] {
             default:
                 if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
-                    if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil) {
+                    if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil && MEGAPurchase.sharedInstance().products.count > 0) {
                         let upgradeViewController = UIStoryboard.init(name: "UpgradeAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
                         navigationController?.pushViewController(upgradeViewController, animated: true)
                     } else {
