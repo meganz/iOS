@@ -17,4 +17,8 @@
     return self.totalFilesCount - self.finishedFilesCount;
 }
 
+- (float)progress {
+    return (float)self.finishedFilesCount / (float)self.totalFilesCount;
+}
+
 @end

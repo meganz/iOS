@@ -8,6 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSUInteger totalFilesCount;
 @property (nonatomic) NSUInteger finishedFilesCount;
 @property (readonly) NSUInteger pendingFilesCount;
+@property (nonatomic) float progress;
 
 - (instancetype)initWithFinishedCount:(NSUInteger)finishedCount totalCount:(NSUInteger)totalCount;
 

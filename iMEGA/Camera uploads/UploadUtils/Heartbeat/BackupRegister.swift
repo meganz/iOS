@@ -22,7 +22,9 @@ final class BackupRegister {
     
     // MAKR: - Register backup
     func registerBackupIfNeeded() {
+        MEGALogDebug("[Camera Upload] heartbeat - start registering backup")
         guard cachedBackupId == nil else {
+            MEGALogDebug("[Camera Upload] heartbeat - find local cached backup \(cachedBackupId ?? 0)")
             return
         }
         
@@ -55,7 +57,9 @@ final class BackupRegister {
     
     // MARK: - Unregister backup
     func unregisterBackup() {
+        MEGALogDebug("[Camera Upload] heartbeat - start unregistering backup")
         guard let backupId = cachedBackupId else {
+            MEGALogDebug("[Camera Upload] heartbeat - skip unregistering as no local cached backup id")
             return
         }
         
@@ -74,7 +78,9 @@ final class BackupRegister {
     
     // MAKR: - Update backup registration
     private func updateBackup() {
+        MEGALogDebug("[Camera Upload] heartbeat - start updating backup")
         guard let backupId = cachedBackupId else {
+            MEGALogDebug("[Camera Upload] heartbeat - skip updating backup as no local cached backup id")
             return
         }
         

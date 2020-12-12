@@ -67,14 +67,15 @@ final class CameraUploadHeartbeat: NSObject {
         // we use absolute time here to achieve accuracy
         timer.schedule(deadline: .now() + Constants.activeTimerInterval, repeating: Constants.activeTimerInterval, leeway: .milliseconds(100))
         timer.setEventHandler { [weak self] in
-            self?.didActiveTimerFire()
+            self?.activeTimerDidFire()
         }
         timer.activate()
         activeTimer = timer
     }
     
-    private func didActiveTimerFire() {
+    private func activeTimerDidFire() {
         guard let backupId = register.cachedBackupId else {
+            MEGALogDebug("[Camera Upload] heartbeat - active timer skipped as no local cached backup id")
             return
         }
         
@@ -104,14 +105,15 @@ final class CameraUploadHeartbeat: NSObject {
         // we use wall time here as statue update gap is quite big
         timer.schedule(wallDeadline: .now() + Constants.statusTimerInterval, repeating: Constants.statusTimerInterval, leeway: .seconds(1))
         timer.setEventHandler { [weak self] in
-            self?.didStatusTimerFire()
+            self?.statusTimerDidFire()
         }
         timer.activate()
         statusTimer = timer
     }
     
-    private func didStatusTimerFire() {
+    private func statusTimerDidFire() {
         guard let backupId = register.cachedBackupId else {
+            MEGALogDebug("[Camera Upload] heartbeat - status timer skipped as no local cached backup id")
             return
         }
         
@@ -128,6 +130,7 @@ final class CameraUploadHeartbeat: NSObject {
     
     // MARK: - Send heartbeat
     private func sendHeartbeat(forBackupId backupId: MEGAHandle, lastNode: MEGANode, lastActionDate: Date) {
+        MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(backupId)")
         CameraUploadManager.shared().loadCurrentUploadStats { stats, error in
             guard let stats = stats else {
                 if let error = error {
@@ -145,7 +148,7 @@ final class CameraUploadHeartbeat: NSObject {
             } else if stats.totalFilesCount == 0 {
                 progress = 0
             } else {
-                progress = Int(stats.finishedFilesCount / stats.totalFilesCount)
+                progress = Int((stats.progress * 100).rounded())
             }
             
             self.sdk.sendBackupHeartbeat(backupId,
