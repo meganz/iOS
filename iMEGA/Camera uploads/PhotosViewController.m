@@ -251,7 +251,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)configUploadProgressByStats:(UploadStats *)uploadStats {
-    self.photosUploadedProgressView.progress = (float)uploadStats.finishedFilesCount / (float)uploadStats.totalFilesCount;
+    self.photosUploadedProgressView.progress = uploadStats.progress;
     
     NSString *progressText;
     if (uploadStats.pendingFilesCount == 1) {
