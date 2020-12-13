@@ -16,7 +16,7 @@
 
 #import "NSObject+Debounce.h"
 
-@interface MainTabBarController () <UITabBarControllerDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
@@ -73,7 +73,8 @@
     [self setDelegate:self];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    
+    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+
     self.progressView = ({
         ProgressIndicatorView *view = [ProgressIndicatorView.alloc initWithFrame:CGRectMake(0, 0, 70, 70)];
         view.userInteractionEnabled = YES;
@@ -320,5 +321,23 @@
         }        
     }
 }
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
+    switch (call.status) {
+        case MEGAChatCallStatusInProgress:
+            self.phoneBadgeImageView.hidden = NO;
+            break;
+            
+        case MEGAChatCallStatusDestroyed:
+            self.phoneBadgeImageView.hidden = ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0);
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 @end
