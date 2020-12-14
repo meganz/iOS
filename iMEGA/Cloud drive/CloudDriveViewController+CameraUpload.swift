@@ -60,11 +60,12 @@ extension CloudDriveViewController {
             return
         }
         
+        let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: selectedNodes.contentCounts().fileCount,
+                                               folders: selectedNodes.contentCounts().folderCount) {
+            self.setEditMode(false)
+        }
+        
         for node in selectedNodes {
-            let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: selectedNodes.contentCounts().fileCount,
-                                                   folders: selectedNodes.contentCounts().folderCount) {
-                self.setEditMode(false)
-            }
             MEGASdkManager.sharedMEGASdk().move(node, newParent: rubbish, delegate: delegate)
         }
     }
