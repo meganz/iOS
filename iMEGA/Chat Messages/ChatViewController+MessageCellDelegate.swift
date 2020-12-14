@@ -118,6 +118,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         let megaMessage = chatMessage.message
         
         switch megaMessage.type {
+        case .voiceClip:
+            guard let cell = cell as? AudioMessageCell else {
+                return
+            }
+            didTapPlayButton(in: cell)
+
         case .attachment:
             if megaMessage.nodeList.size.uintValue == 1 {
                 var node = megaMessage.nodeList.node(at: 0)
