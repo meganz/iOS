@@ -148,7 +148,7 @@ final class CameraUploadHeartbeat: NSObject {
             } else if stats.totalFilesCount == 0 {
                 progress = 0
             } else {
-                progress = Int((stats.progress * 100).rounded())
+                progress = Int(stats.progress * 100)
             }
             
             self.sdk.sendBackupHeartbeat(backupId,
