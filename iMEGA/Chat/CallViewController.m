@@ -272,7 +272,7 @@
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *interuptionDict = notification.userInfo;
-        const AVAudioSessionRouteChangeReason routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        const AVAudioSessionRouteChangeReason routeChangeReason = [interuptionDict[AVAudioSessionRouteChangeReasonKey] integerValue];
         MEGALogDebug(@"[Audio] Did session route changed, reason: %@, current route outputs %@", [AVAudioSession.sharedInstance stringForAVAudioSessionRouteChangeReason:routeChangeReason], [[[AVAudioSession sharedInstance] currentRoute] outputs]);
         if (routeChangeReason == AVAudioSessionRouteChangeReasonOverride) {
             if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
