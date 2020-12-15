@@ -354,7 +354,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
             
             [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
-            [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
+            [tempDictionary setValue:filePropertiesDictionary[NSFileModificationDate] forKey:kModificationDate];
             
             [self.offlineItems addObject:tempDictionary];
             
@@ -393,7 +393,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
             
             [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
-            [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
+            [tempDictionary setValue:filePropertiesDictionary[NSFileModificationDate] forKey:kModificationDate];
             
             [self.offlineSortedItems addObject:tempDictionary];
             
