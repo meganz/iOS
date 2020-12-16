@@ -36,8 +36,6 @@
 "microphonePermissions"="Пожалуйста, разрешите приложению MEGA использовать микрофон в меню настроек";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к библиотеке фотографий в настройках";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Вы не можете скачать пустую папку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ваша учётная запись активирована. Пожалуйста, авторизируйтесь.";
 /* */
@@ -624,8 +622,6 @@
 "securityOptions"="Параметры безопасности";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="О программе";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Язык";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Отправить отзыв";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="Искать GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="Изображения GIF не найдены";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="Достигнуто максимальное количество реакций на это сообщение: %d.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Чат";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="Ошибка HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Неизвестная ошибка";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Нужно перезапустить приложение после смены языка";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Язык изменён. Коснитесь для перезапуска.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA предоставляет услуги зашифрованного облачного хранения данных, управляемого пользователем, в обычных веб-браузерах и специальных приложениях для мобильных устройств. В отличие от других облачных хранилищ, здесь данные шифруют и расшифровывают только ваши устройства, а не мы.";
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Ваш аккаунт [B]приостановлен[/B]. Вы можете только просматривать данные.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Несмотря на то, что MEGA не имеет доступа к вашим данным, администраторы вашей организации могут контролировать и просматривать загрузки из камеры в вашем аккаунте.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Несмотря на то, что у MEGA нет доступа к вашим данным, администратор вашего бизнес-аккаунта может контролировать и просматривать загрузки из камеры в вашем аккаунте.";
 /* */
 "Something went wrong"="Что-то пошло не так";
 /* Title of the "Links" Shared Items. */
@@ -2386,6 +2382,8 @@
 "Unavailable"="Недоступно";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Письмо уже отправлено. Пожалуйста, подождите несколько минут, прежде чем попробовать снова.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="ПОДЕЛИТЬСЯ";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Искать в файлах";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="Выбрать папку";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в корзину? В этом случае будет автоматически создана новая папка для загрузок из камеры.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Загрузить файл";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Shortcuts";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
 "Documents"="Документы";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="Изображения не найдены";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Домой";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="Документы";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="Вы поделились ссылкой без ключа шифрования. Хотите поделиться её ключом?";
+/* Title for password protect link alert */
+"Link Password"="Пароль ссылки";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="Хотите поделиться паролем для этой ссылки?";

@@ -36,8 +36,6 @@
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="You can’t download an empty folder";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Your account has been activated. Please log in.";
 /* */
@@ -565,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Add from Contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Add contact";
+"addContact"="Add Contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
 /* Button title to 'Add' the contact to your contacts list */
@@ -1101,6 +1099,10 @@
 "Search GIPHY"="Search GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="No GIFs found";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="This message has reached the maximum limit of %d reactions.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1759,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ enabled encrypted key rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a chat link";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2043,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="While MEGA can not access to your data, your business account administrator does have the ability to control and view the Camera Uploads in your user account";
 /* */
 "Something went wrong"="Something went wrong";
 /* Title of the "Links" Shared Items. */
@@ -2380,6 +2382,8 @@
 "Unavailable"="Unavailable";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="SHARE";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Search Your Files";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2388,6 +2392,12 @@
 "Select Folder"="Select Folder";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Upload File";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Shortcuts";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
@@ -2410,3 +2420,11 @@
 "No images found"="No images found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="Docs";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+/* Title for password protect link alert */
+"Link Password"="Link Password";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="Do you want to share the password for this link?";

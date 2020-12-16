@@ -1102,7 +1102,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="This message has reached the maximum limit of %d reactions.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1761,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ enabled encrypted key rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a chat link";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2045,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="While MEGA can not access to your data, your business account administrator does have the ability to control and view the Camera Uploads in your user account";
 /* */
 "Something went wrong"="Something went wrong";
 /* Title of the "Links" Shared Items. */
@@ -2391,7 +2391,7 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Select Folder";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads." = "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Upload File";
 /* Text title for shortcuts, ie in the widget */
@@ -2421,7 +2421,7 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
 /* Home Screen: Explorer view card title - Documents */
-"Docs" = "Docs";
+"Docs"="Docs";
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
 /* Title for password protect link alert */
