@@ -1,5 +1,14 @@
 PODS:
   - CHTCollectionViewWaterfallLayout/Swift (0.9.8)
+  - DoraemonKit/Core (3.0.4):
+    - FMDB
+    - GCDWebServer
+    - GCDWebServer/WebDAV
+    - GCDWebServer/WebUploader
+  - DoraemonKit/WithGPS (3.0.4):
+    - DoraemonKit/Core
+  - DoraemonKit/WithLoad (3.0.4):
+    - DoraemonKit/Core
   - DZNEmptyDataSet (1.8.1)
   - Firebase/CoreOnly (7.1.0):
     - FirebaseCore (= 7.1.0)
@@ -27,6 +36,16 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
   - FlexLayout (1.3.20)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
+  - GCDWebServer/WebDAV (3.5.4):
+    - GCDWebServer/Core
+  - GCDWebServer/WebUploader (3.5.4):
+    - GCDWebServer/Core
   - GoogleDataTransport (8.0.1):
     - nanopb (~> 2.30906.0)
   - GoogleUtilities/Environment (7.1.0):
@@ -65,6 +84,9 @@ PODS:
 
 DEPENDENCIES:
   - CHTCollectionViewWaterfallLayout/Swift
+  - DoraemonKit/Core (~> 3.0.2)
+  - DoraemonKit/WithGPS (~> 3.0.2)
+  - DoraemonKit/WithLoad (~> 3.0.2)
   - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
   - Firebase/Crashlytics
   - FlexLayout
@@ -80,12 +102,15 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CHTCollectionViewWaterfallLayout
+    - DoraemonKit
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCrashlytics
     - FirebaseInstallations
     - FlexLayout
+    - FMDB
+    - GCDWebServer
     - GoogleDataTransport
     - GoogleUtilities
     - Haptica
@@ -126,6 +151,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   CHTCollectionViewWaterfallLayout: 5f241d2480ab4939aa0d1ad4981de9eef1fbe60d
+  DoraemonKit: b507a1500667024070f248d648632a3f7bbb6044
   DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
   Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
   FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
@@ -133,6 +159,8 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: c722e4ca283272eb90eb5bc245fdc6588e2f22c2
   FirebaseInstallations: 3de38553e86171b5f81d83cdeef63473d37bfdb0
   FlexLayout: 025dd153bd5618dcc9f93ef914106d7dc2a86fdc
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
   GoogleUtilities: f734da554aade8cc7928a31c2f3311897933a1bd
   Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
@@ -148,6 +176,6 @@ SPEC CHECKSUMS:
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: fd90d43b9df2c55886474c586a3f966aa2c7bbd6
+PODFILE CHECKSUM: cb246a1a8f44968b7bdaa67c85d1370328e84e93
 
 COCOAPODS: 1.10.0
