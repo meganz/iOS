@@ -36,8 +36,6 @@
 "microphonePermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre microphone dans vos réglages";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre médiathèque (Photos) dans Réglages";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Vous ne pouvez pas télécharger un dossier vide";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Votre compte a été activé. Veuillez vous connecter.";
 /* */
@@ -624,8 +622,6 @@
 "securityOptions"="Options de sécurité";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="À propos";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Langue";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Envoyer un commentaire";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="Chercher dans GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="Aucun GIF n’a été trouvé";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="Ce message a atteint la limite maximale de %d réactions.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Dialogue en ligne";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="Erreur HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Vous devrez redémarrer MEGA après avoir changer la langue";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="La langue a été changée. Touchez pour redémarrer.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA offre un service de stockage nuagique chiffré contrôlé par l’utilisateur, en utilisant des navigateurs Web normaux, mais aussi des applis dédiées pour les appareils mobiles. Contrairement aux autres fournisseurs de services de stockage nuagique, vos données ne sont chiffrées et déchiffrées que par vos appareils client et jamais par nous.";
@@ -2386,6 +2382,8 @@
 "Unavailable"="Non disponible";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Le courriel a déjà été envoyé. Veuillez patienter quelques minutes avant de réessayer.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="PARTAGER";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Cherchez dans vos fichiers";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="Sélectionner un dossier";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Voulez-vous vraiment déplacer le dossier des Téléversements de l’appareil photo vers la corbeille ? Si oui, un nouveau dossier sera automatiquement généré pour les Téléversements de l’appareil photo.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Téléverser le fichier";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Shortcuts";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="Aucune image n’a été trouvée";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Accueil";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="Docs";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+/* Title for password protect link alert */
+"Link Password"="Link Password";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="Do you want to share the password for this link?";
