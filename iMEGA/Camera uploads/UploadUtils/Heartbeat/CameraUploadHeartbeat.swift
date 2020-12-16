@@ -21,6 +21,8 @@ final class CameraUploadHeartbeat: NSObject {
         super.init()
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodeCurrentNotification), name: Notification.Name.MEGANodesCurrent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCameraUploadsCompleteNotification), name: Notification.Name.MEGACameraUploadComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveIsBeingLogoutNotification), name: Notification.Name.MEGAIsBeingLogout, object: nil)
     }
     
     // MARK: - Notification
@@ -30,11 +32,21 @@ final class CameraUploadHeartbeat: NSObject {
         }
     }
     
+    @objc private func didReceiveCameraUploadsCompleteNotification() {
+        MEGALogDebug("[Camera Upload] heartbeat - received camera uploads complete notification")
+        sendHeartbeat()
+    }
+    
+    @objc private func didReceiveIsBeingLogoutNotification() {
+        MEGALogDebug("[Camera Upload] heartbeat - received account is being logout notification")
+        unregisterHeartbeat()
+    }
+    
     // MARK: - Registration
     @objc func registerHeartbeat() {
-        setupHeartbeatTimers()
-        register.registerBackupIfNeeded()
         recorder.startRecordingBackupUpdate()
+        register.registerBackupIfNeeded()
+        setupHeartbeatTimers()
     }
     
     @objc func unregisterHeartbeat() {
@@ -103,7 +115,7 @@ final class CameraUploadHeartbeat: NSObject {
         
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .utility))
         // we use wall time here as statue update gap is quite big
-        timer.schedule(wallDeadline: .now() + Constants.statusTimerInterval, repeating: Constants.statusTimerInterval, leeway: .seconds(1))
+        timer.schedule(wallDeadline: .now() + 2, repeating: Constants.statusTimerInterval, leeway: .seconds(1))
         timer.setEventHandler { [weak self] in
             self?.statusTimerDidFire()
         }
@@ -112,23 +124,27 @@ final class CameraUploadHeartbeat: NSObject {
     }
     
     private func statusTimerDidFire() {
+        MEGALogDebug("[Camera Upload] heartbeat - status timer fired")
+        
+        sendHeartbeat()
+    }
+    
+    // MARK: - Send heartbeat
+    private func sendHeartbeat() {
         guard let backupId = register.cachedBackupId else {
-            MEGALogDebug("[Camera Upload] heartbeat - status timer skipped as no local cached backup id")
+            MEGALogDebug("[Camera Upload] heartbeat - skipped as no local cached backup id")
             return
         }
         
-        MEGALogDebug("[Camera Upload] heartbeat - status timer fired for backupId \(backupId)")
-        
         guard let lastRecord = recorder.fetchLastBackupRecord(),
               let lastNode = sdk.node(forHandle: lastRecord.nodeHandle) else {
-            MEGALogDebug("[Camera Upload] heartbeat - could not find last backup node")
+            MEGALogDebug("[Camera Upload] heartbeat - skipped as last backup node could not be found")
             return
         }
         
         sendHeartbeat(forBackupId: backupId, lastNode: lastNode, lastActionDate: lastRecord.date)
     }
     
-    // MARK: - Send heartbeat
     private func sendHeartbeat(forBackupId backupId: MEGAHandle, lastNode: MEGANode, lastActionDate: Date) {
         MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(backupId)")
         CameraUploadManager.shared().loadCurrentUploadStats { stats, error in
