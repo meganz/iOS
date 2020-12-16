@@ -26,7 +26,6 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         super.viewDidLoad()
         registerNibs()
         configureRightBarButton()
-        collectionView.emptyDataSetSource = self
         
         cellSize = collectionView.mnz_calculateCellSize(forInset: cellInset)
         
@@ -34,7 +33,6 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
             self?.excuteCommand(command)
         }
         
-        SVProgressHUD.show()
         viewModel.dispatch(.onViewReady)
     }
     
@@ -64,7 +62,6 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     private func excuteCommand(_ command: PhotoExplorerViewModel.Command) {
         switch command {
         case .reloadData(let nodesByDay):
-            SVProgressHUD.dismiss()
             listSource = PhotoExplorerListSource(
                 nodesByDay: nodesByDay,
                 collectionView: collectionView,
@@ -72,6 +69,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
                 allowMultipleSelection: listSource?.allowMultipleSelection ?? false
             )
             collectionView.dataSource = listSource
+            collectionView.emptyDataSetSource = self
             collectionView.reloadData()
         case .modified(nodes: let nodes, indexPaths: let indexPaths):
             guard !(collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking) else { return }
