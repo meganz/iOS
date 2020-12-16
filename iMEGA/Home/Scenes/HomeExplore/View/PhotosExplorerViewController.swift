@@ -10,7 +10,14 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     private var cellInset: CGFloat = 1.0
     private var listSource: PhotoExplorerListSource?
     private let viewModel: PhotoExplorerViewModel
-
+    
+    private lazy var selectAllBarButtonItem = UIBarButtonItem(
+        image: UIImage(named: "selectAll"),
+        style: .plain,
+        target: self,
+        action: #selector(selectButtonPressed(_:))
+    )
+    
     init(viewModel: PhotoExplorerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -26,6 +33,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         super.viewDidLoad()
         registerNibs()
         configureRightBarButton()
+        selectAllBarButtonItem.isEnabled = false
         
         cellSize = collectionView.mnz_calculateCellSize(forInset: cellInset)
         
@@ -71,6 +79,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
             collectionView.dataSource = listSource
             collectionView.emptyDataSetSource = self
             collectionView.reloadData()
+            selectAllBarButtonItem.isEnabled = !(listSource?.isDataSetEmpty() ?? true)
         case .modified(nodes: let nodes, indexPaths: let indexPaths):
             guard !(collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking) else { return }
             listSource?.update(nodes: nodes, atIndexPaths: indexPaths)
@@ -96,12 +105,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
                 action: #selector(cancelButtonPressed(_:))
             )
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: "selectAll"),
-                style: .plain,
-                target: self,
-                action: #selector(selectButtonPressed(_:))
-            )
+            navigationItem.rightBarButtonItem = selectAllBarButtonItem
         }
     }
     
