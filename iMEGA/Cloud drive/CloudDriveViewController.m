@@ -1010,6 +1010,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
+            self.moreMinimizedBarButtonItem.enabled = boolValue;
             self.moreBarButtonItem.enabled = boolValue;
             break;
         }
@@ -1273,6 +1274,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self.cdTableView.tableView reloadData];
     } else {
         [self.cdCollectionView.collectionView reloadData];
+    }
+    
+    [self setNavigationBarButtonItemsEnabled:![self isViewEmpty]];
+}
+
+- (BOOL)isViewEmpty {
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        return self.searchNodesArray.count == 0;
+    } else {
+        return self.nodes.size.integerValue == 0;
     }
 }
 

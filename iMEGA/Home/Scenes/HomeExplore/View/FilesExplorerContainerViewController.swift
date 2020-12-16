@@ -11,6 +11,12 @@ class FilesExplorerContainerViewController: UIViewController {
     private let viewModel: FilesExplorerViewModel
     private let viewPreference: ViewPreference
     
+    private lazy var selectAllBarButtonItem = UIBarButtonItem(
+        image: UIImage(named: "moreSelected"),
+        style: .plain,
+        target: self, action: #selector(moreButtonItemSelected(_:))
+    )
+    
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
         sc.searchResultsUpdater = self
@@ -102,19 +108,11 @@ class FilesExplorerContainerViewController: UIViewController {
     }
     
     func showMoreButton(_ show: Bool) {
-        if show {
-            showMoreRightBarButton()
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
+        selectAllBarButtonItem.isEnabled = show
     }
     
     private func showMoreRightBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "moreSelected"),
-            style: .plain,
-            target: self, action: #selector(moreButtonItemSelected(_:))
-        )
+        navigationItem.rightBarButtonItem = selectAllBarButtonItem
     }
     
     //MARK:- Actions
