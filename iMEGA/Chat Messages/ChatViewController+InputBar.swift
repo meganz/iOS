@@ -304,8 +304,30 @@ extension ChatViewController {
         SVProgressHUD.dismiss()
     }
     
+    private func postMessageSentAccessibilityNotification() {
+        postAccessibilityNotification(message: NSLocalizedString("message sent", comment: ""))
+    }
+    
+    private func postAccessibilityNotification(message: String) {
+        guard UIAccessibility.isVoiceOverRunning else { return }
+        UIAccessibility.post(notification: .announcement, argument: message)
+    }
+    
     private func createUploadTransferDelegate() -> MEGAStartUploadTransferDelegate {
-        return MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: nil, progress: nil, completion: nil)
+        return MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: nil, progress: nil) { [weak self] transfer in
+            guard let self = self, let state = transfer?.state else { return }
+            
+            switch state {
+            case .complete:
+                self.postMessageSentAccessibilityNotification()
+            case .failed:
+                self.postAccessibilityNotification(message: NSLocalizedString("failed to send the message", comment: ""))
+            case .cancelled:
+                self.postAccessibilityNotification(message: NSLocalizedString("message sending cancelled", comment: ""))
+            default:
+                break
+            }
+        }
     }
     
     private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String) {
@@ -448,6 +470,7 @@ extension ChatViewController: ChatInputBarDelegate {
                     index != NSNotFound {
                     chatRoomDelegate.chatMessages[index] = ChatMessage(message: message, chatRoom: chatRoom)
                     messagesCollectionView.reloadDataAndKeepOffset()
+                    postMessageSentAccessibilityNotification()
                 }
                 checkDialogs(message)
             }
@@ -457,6 +480,7 @@ extension ChatViewController: ChatInputBarDelegate {
             chatRoomDelegate.updateUnreadMessagesLabel(unreads: 0)
             chatRoomDelegate.insertMessage(message, scrollToBottom: true)
             checkDialogs(message)
+            postMessageSentAccessibilityNotification()
         }
     }
     
