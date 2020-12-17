@@ -37,6 +37,17 @@
     [self requestTransaction:transaction];
 }
 
+- (void)answerCall:(MEGAChatCall *)call {
+    MEGALogDebug(@"[CallKit] Answer call %@", call);
+    NSUUID *uuid = [self uuidForChatId:call.chatId callId:call.callId];
+    CXAnswerCallAction *answerCallAction = [CXAnswerCallAction.alloc initWithCallUUID:uuid];
+    [answerCallAction fulfillWithDateConnected:NSDate.date];
+    
+    CXTransaction *transaction = CXTransaction.new;
+    [transaction addAction:answerCallAction];
+    [self requestTransaction:transaction];
+}
+
 - (void)endCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
     MEGALogDebug(@"[CallKit] End call %@", uuid);
