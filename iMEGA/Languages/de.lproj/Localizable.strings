@@ -481,7 +481,7 @@
 /* Button title that skips the current action */
 "skipButton"="Überspringen";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to your Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="Automatisches Backup Ihrer Fotos und Videos in Ihr Cloud Drive.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Kamera-Uploads aktivieren";
 /* Success message shown when Camera Uploads has been enabled */
