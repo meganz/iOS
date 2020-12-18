@@ -3,6 +3,10 @@
 class ExplorerBaseViewController: UIViewController {
     private lazy var toolbar = UIToolbar()
     private var explorerToolbarConfigurator: ExplorerToolbarConfigurator?
+    
+    var isToolbarShown: Bool {
+        return toolbar.superview != nil
+    }
 
     func showToolbar() {
         guard let tabBarController = tabBarController, toolbar.superview == nil else { return }

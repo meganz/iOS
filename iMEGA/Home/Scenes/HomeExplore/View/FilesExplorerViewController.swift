@@ -48,7 +48,9 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     func configureView(withSearchText searchText: String?, nodes: [MEGANode]?) {
         showSearchBarIfNeeded(withSearchText: searchText, nodes: nodes)
-        delegate?.showMoreButton(nodes?.isEmpty == false)
+        if !isToolbarShown {
+            delegate?.showMoreButton(nodes?.isEmpty == false)
+        }
     }
         
     func toggleSelectAllNodes() {
