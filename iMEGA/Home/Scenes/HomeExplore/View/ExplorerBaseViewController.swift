@@ -8,6 +8,14 @@ class ExplorerBaseViewController: UIViewController {
         return toolbar.superview != nil
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if isToolbarShown {
+            endEditingMode()
+        }
+    }
+    
     func showToolbar() {
         guard let tabBarController = tabBarController, toolbar.superview == nil else { return }
         toolbar.alpha = 0.0
