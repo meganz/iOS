@@ -1102,7 +1102,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="Ce message a atteint la limite maximale de %d réactions.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="Vous avez atteint la limite maximale de %d réactions.";
 /* Chat section header */
 "chat"="Dialogue en ligne";
 /* Empty Conversations section */
@@ -1761,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="Observateurs";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ a activé la rotation de la clé chiffrée.";
+"%@ enabled Encrypted Key Rotation"="%@ a activé la rotation de la clé de chiffrement.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ a créé un lien de conversation";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2045,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Bien que MEGA n’ait pas accès à vos données, l’administrateur de votre compte MEGA à la possibilité de contrôler et de visualiser les téléversements de l’appareil photo dans votre compte utilisateur";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Bien que MEGA ne puisse pas accéder à vos données, l’administrateur de votre compte d’entreprise a la possibilité de contrôler et de visualiser les téléversements de l’appareil photo dans votre compte utilisateur";
 /* */
 "Something went wrong"="Un problème est survenu";
 /* Title of the "Links" Shared Items. */
@@ -2395,9 +2395,9 @@
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Téléverser le fichier";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="Raccourcis";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Lancez l’appli MEGA pour effectuer une action";
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
@@ -2421,10 +2421,10 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Accueil";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Docs";
+"Docs"="Documents";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+"This link was shared without a decryption key. Do you want to share its key?"="Ce lien a été partagé sans clé de déchiffrement. Voulez-vous partager sa clé ?";
 /* Title for password protect link alert */
-"Link Password"="Link Password";
+"Link Password"="Mot de passe du lien";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="Do you want to share the password for this link?";
+"Do you want to share the password for this link?"="Voulez-vous partager le mot de passe pour ce lien ?";
