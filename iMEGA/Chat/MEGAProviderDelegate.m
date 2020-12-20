@@ -273,6 +273,12 @@
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
     
     if (action.callUUID) {
+        if (@available(iOS 14.0, *)) {
+            if (call.status != MEGAChatCallStatusRingIn) {
+                [action fulfill];
+                return;
+            }
+        }
         uint64_t chatid = [self.megaCallManager chatIdForUUID:action.callUUID];
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatid];
         if (call == nil) {
@@ -419,6 +425,11 @@
             
         case MEGAChatCallStatusJoining:
             self.outgoingCall = NO;
+            if (@available(iOS 14.0, *)) {
+                if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
+                    [self.megaCallManager answerCall:call];
+                }
+            }
             break;
             
         case MEGAChatCallStatusInProgress: {

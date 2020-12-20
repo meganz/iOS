@@ -15,7 +15,6 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             frame: .zero,
             collectionViewLayout: gridFlowLayout
         )
-        collectionView.alwaysBounceVertical = true
         return collectionView
     }()
     
@@ -45,8 +44,6 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             self?.executeCommand(command)
         }
         
-        SVProgressHUD.show()
-        isProgressViewBeingShown = true
         viewModel.dispatch(.onViewReady)
         delegate?.updateSearchResults()
     }
@@ -117,10 +114,6 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         switch command {
         case .reloadNodes(let nodes, let searchText):
             configureView(withSearchText: searchText, nodes: nodes)
-            if isProgressViewBeingShown {
-                isProgressViewBeingShown = false
-                SVProgressHUD.dismiss()
-            }
             gridSource = FilesExplorerGridSource(
                 collectionView: collectionView,
                 nodes: nodes,
