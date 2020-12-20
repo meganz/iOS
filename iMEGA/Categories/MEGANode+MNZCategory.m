@@ -137,6 +137,13 @@
         } else if (previewDocumentPath.mnz_isWebCodePathExtension) {
             return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
         } else {
+            if (previewDocumentPath.pathExtension.length == 0) {
+                NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentPath];
+                NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+                if (fileString.length) {
+                    return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
+                }
+            }
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -153,8 +160,8 @@
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
             return megaAVViewController;
         } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:NSLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             return alertController;
         }
     } else {
@@ -200,40 +207,44 @@
 
 #pragma mark - Actions
 
+- (BOOL)mnz_downloadNode {
+    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
+}
+
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController {
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Red", @"A user can mark a folder or file with its own colour, in this case “Red”.") detail:nil accessoryView:(self.label == MEGANodeLabelRed ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Red"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Red", @"A user can mark a folder or file with its own colour, in this case “Red”.") detail:nil accessoryView:(self.label == MEGANodeLabelRed ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Red"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelRed) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelRed];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Orange", @"A user can mark a folder or file with its own colour, in this case “Orange”.") detail:nil accessoryView:(self.label == MEGANodeLabelOrange ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Orange"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Orange", @"A user can mark a folder or file with its own colour, in this case “Orange”.") detail:nil accessoryView:(self.label == MEGANodeLabelOrange ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Orange"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelOrange) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelOrange];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Yellow", @"A user can mark a folder or file with its own colour, in this case “Yellow”.") detail:nil accessoryView:(self.label == MEGANodeLabelYellow ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Yellow"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Yellow", @"A user can mark a folder or file with its own colour, in this case “Yellow”.") detail:nil accessoryView:(self.label == MEGANodeLabelYellow ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Yellow"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelYellow) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelYellow];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Green", @"A user can mark a folder or file with its own colour, in this case “Green”.") detail:nil accessoryView:(self.label == MEGANodeLabelGreen ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Green"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Green", @"A user can mark a folder or file with its own colour, in this case “Green”.") detail:nil accessoryView:(self.label == MEGANodeLabelGreen ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Green"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelGreen) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelGreen];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Blue", @"A user can mark a folder or file with its own colour, in this case “Blue”.") detail:nil accessoryView:(self.label == MEGANodeLabelBlue ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Blue"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Blue", @"A user can mark a folder or file with its own colour, in this case “Blue”.") detail:nil accessoryView:(self.label == MEGANodeLabelBlue ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Blue"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelBlue) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelBlue];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Purple", @"A user can mark a folder or file with its own colour, in this case “Purple”.") detail:nil accessoryView:(self.label == MEGANodeLabelPurple ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Purple"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Purple", @"A user can mark a folder or file with its own colour, in this case “Purple”.") detail:nil accessoryView:(self.label == MEGANodeLabelPurple ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Purple"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelPurple) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelPurple];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Grey", @"A user can mark a folder or file with its own colour, in this case “Grey”.") detail:nil accessoryView:(self.label == MEGANodeLabelGrey ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Grey"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Grey", @"A user can mark a folder or file with its own colour, in this case “Grey”.") detail:nil accessoryView:(self.label == MEGANodeLabelGrey ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Grey"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelGrey) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelGrey];
     }]];
     
     if (self.label != MEGANodeLabelUnknown) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
             [MEGASdkManager.sharedMEGASdk resetNodeLabel:self];
         }]];
     }
@@ -242,33 +253,24 @@
     [viewController presentViewController:labelsActionSheet animated:YES completion:nil];
 }
 
-- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
-    return [self mnz_downloadNodeOverwriting:overwrite api:[MEGASdkManager sharedMEGASdk]];
-}
-
-- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
-    if (offlineNodeExist) {
-        return YES;
-    } else {
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:overwrite];
-                return YES;
-            } else {
-                return NO;
-            }
+- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
+        if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink];
+            return YES;
         } else {
             return NO;
         }
+    } else {
+        return NO;
     }
 }
 
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
             NSString *temporaryFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:temporaryPath];
             if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
@@ -292,7 +294,7 @@
 
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:NSLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.text = self.name;
@@ -301,9 +303,9 @@
             [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         }];
         
-        [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [renameAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
@@ -311,14 +313,14 @@
                 
                 if (self.isFolder) {
                     if ([childrenNodeList mnz_existsFolderWithName:alertViewTextField.text]) {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
                     } else {
                         MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
                         [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
                     }
                 } else {
                     if ([childrenNodeList mnz_existsFileWithName:alertViewTextField.text]) {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
+                        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
                     } else {
                         MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
                         [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
@@ -354,14 +356,14 @@
 
 - (void)mnz_removeInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *alertTitle = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-        NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? AMLocalizedString(@"removeFolderToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 folder'") : AMLocalizedString(@"removeFileToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 file'");
+        NSString *alertTitle = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+        NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? NSLocalizedString(@"removeFolderToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 folder'") : NSLocalizedString(@"removeFileToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 file'");
         
         UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 void (^completion)(void) = nil;
                 if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
@@ -384,14 +386,14 @@
 
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *alertTitle = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
-        NSString *alertMessage = AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+        NSString *alertTitle = NSLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
+        NSString *alertMessage = NSLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
         
         UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 void (^completion)(void) = ^{
                     [viewController dismissViewControllerAnimated:YES completion:nil];
@@ -417,10 +419,10 @@
                 [outSharesForNodeMutableArray addObject:share];
             }
         }
-        NSString *alertMessage = outSharesForNodeMutableArray.count == 1 ? AMLocalizedString(@"removeOneShareOneContactMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), outSharesForNodeMutableArray.count];
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *alertMessage = outSharesForNodeMutableArray.count == 1 ? NSLocalizedString(@"removeOneShareOneContactMessage", nil) : [NSString stringWithFormat:NSLocalizedString(@"removeOneShareMultipleContactsMessage", nil), outSharesForNodeMutableArray.count];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
             for (MEGAShare *share in outSharesForNodeMutableArray) {
                 [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
@@ -441,7 +443,7 @@
 
 - (void)mnz_removeLink {
     MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
+        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
     } multipleLinks:NO];
     
     [MEGASdkManager.sharedMEGASdk disableExportNode:self delegate:requestDelegate];
@@ -482,7 +484,7 @@
 - (MEGANavigationController *)mnz_webCodeViewControllerWithFilePath:(NSString *)filePath {
     WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
     return navigationController;
 }
 
@@ -495,10 +497,10 @@
         }
 
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink shouldOverwrite:NO];
+            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink];
             
             [viewController dismissViewControllerAnimated:YES completion:^{
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
             }];
         } else {
             if (isFolderLink) {
@@ -769,7 +771,7 @@
     
     NSString *fileType = [fileTypesForExtension objectForKey:self.name.pathExtension];
     if (fileType.length == 0) {
-        fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension.uppercaseString, AMLocalizedString(@"File", @"Label to desing a file matching")];
+        fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension.uppercaseString, NSLocalizedString(@"File", @"Label to desing a file matching")];
     }
     
     return fileType;
@@ -992,7 +994,7 @@
         if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
             UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
             MEGALogError(@"The video can be saved to the Camera Roll album");
         }
     }
@@ -1007,10 +1009,10 @@
         } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
             [NSFileManager.defaultManager mnz_removeItemAtPath:path];
             if (nserror) {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
                 MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%td)", nserror.localizedDescription, nserror.domain, nserror.code);
             } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
             }
         }];
     }
@@ -1018,10 +1020,10 @@
 
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     if (error) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%td)", error.localizedDescription, error.domain, error.code);
     } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
         [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
     }
 }

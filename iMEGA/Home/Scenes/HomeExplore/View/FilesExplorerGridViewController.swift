@@ -15,6 +15,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             frame: .zero,
             collectionViewLayout: gridFlowLayout
         )
+        collectionView.alwaysBounceVertical = true
         return collectionView
     }()
     
@@ -115,8 +116,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {
         case .reloadNodes(let nodes, let searchText):
-            showSearchBarIfNeeded(withSearchText: searchText, nodes: nodes)
-            
+            configureView(withSearchText: searchText, nodes: nodes)
             if isProgressViewBeingShown {
                 isProgressViewBeingShown = false
                 SVProgressHUD.dismiss()

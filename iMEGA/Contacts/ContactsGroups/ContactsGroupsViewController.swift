@@ -16,8 +16,8 @@ class ContactsGroupsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = AMLocalizedString("Groups", "Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts")
-        newGroupChatLabel.text = AMLocalizedString("New Group Chat", "Text button for init a group chat")
+        title = NSLocalizedString("Groups", comment: "Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts")
+        newGroupChatLabel.text = NSLocalizedString("New Group Chat", comment: "Text button for init a group chat")
         
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         if #available(iOS 11.0, *) {
@@ -181,9 +181,9 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     
     private func titleForEmptyDataSet() -> String? {
         if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-            return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
+            return NSLocalizedString("noResults", comment: "Title shown when you make a search and there is 'No Results'")
         } else {
-            return AMLocalizedString("noConversations", "Empty Conversations section")
+            return NSLocalizedString("noConversations", comment: "Empty Conversations section")
         }
     }
 }

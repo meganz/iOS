@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -63,16 +63,16 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="103.5" height="38"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="uWx-he-zfF">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="19.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="22"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Asydlj jhiwl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vb-Bf-aE4">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="87.5" height="19.5"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="87.5" height="22"/>
                                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="linked" translatesAutoresizingMaskIntoConstraints="NO" id="3fR-MS-VaC">
-                                                                                    <rect key="frame" x="91.5" y="0.0" width="12" height="19.5"/>
+                                                                                    <rect key="frame" x="91.5" y="0.0" width="12" height="22"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="12" id="Tvw-qY-Krv"/>
                                                                                     </constraints>
@@ -80,16 +80,16 @@
                                                                             </subviews>
                                                                         </stackView>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-Df-inD">
-                                                                            <rect key="frame" x="0.0" y="23.5" width="103.5" height="14.5"/>
+                                                                            <rect key="frame" x="0.0" y="26" width="103.5" height="12"/>
                                                                             <subviews>
                                                                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="versioned" translatesAutoresizingMaskIntoConstraints="NO" id="VCe-TL-YQS">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="12" height="14.5"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="12" id="6MS-m7-ZUu"/>
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4td-al-hhx">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="14.5"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="12"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -99,16 +99,16 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kLY-yt-cie">
-                                                                    <rect key="frame" x="318" y="0.0" width="64" height="38"/>
+                                                                    <rect key="frame" x="319" y="0.0" width="63" height="38"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tp8-aV-Med">
-                                                                            <rect key="frame" x="0.0" y="3" width="64" height="32"/>
+                                                                            <rect key="frame" x="0.0" y="3" width="63" height="32"/>
                                                                             <color key="backgroundColor" red="0.0" green="0.6588235294" blue="0.52549019610000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="64" id="6AM-M1-qkq"/>
                                                                                 <constraint firstAttribute="height" constant="32" id="S2l-oP-QTX"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                                                             <state key="normal" title="SHARE"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -747,7 +747,7 @@
         <image name="downloadQueued" width="12" height="12"/>
         <image name="history" width="28" height="28"/>
         <image name="hudSharedFolder" width="28" height="28"/>
-        <image name="linked" width="12" height="12"/>
+        <image name="linked" width="24" height="24"/>
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>

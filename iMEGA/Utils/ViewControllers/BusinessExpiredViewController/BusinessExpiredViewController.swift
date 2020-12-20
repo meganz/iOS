@@ -15,14 +15,14 @@ class BusinessExpiredViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = AMLocalizedString("Your business account is expired", "A dialog title shown to users when their business account is expired.")
-        dismissButton.titleLabel?.text = AMLocalizedString("dismiss", "")
+        titleLabel.text = NSLocalizedString("Your business account is expired", comment: "A dialog title shown to users when their business account is expired.")
+        dismissButton.titleLabel?.text = NSLocalizedString("dismiss", comment: "")
         if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
             imageView.image = UIImage(named: "accountExpiredAdmin")
-            detailLabel.text = AMLocalizedString("There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", "Details shown when a Business account is expired. Details for the administrator of the Business account")
+            detailLabel.text = NSLocalizedString("There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", comment: "Details shown when a Business account is expired. Details for the administrator of the Business account")
         } else {
             imageView.image = UIImage(named: "accountExpiredUser")
-            detailLabel.text = AMLocalizedString("Your account is currently [B]suspended[/B]. You can only browse your data.", "A dialog message which is shown to sub-users of expired business accounts.").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + AMLocalizedString("Contact your business account administrator to resolve the issue and activate your account.", "A dialog message which is shown to sub-users of expired business accounts.");
+            detailLabel.text = NSLocalizedString("Your account is currently [B]suspended[/B]. You can only browse your data.", comment: "A dialog message which is shown to sub-users of expired business accounts.").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + NSLocalizedString("Contact your business account administrator to resolve the issue and activate your account.", comment: "A dialog message which is shown to sub-users of expired business accounts.");
         }
         
         updateAppearance()

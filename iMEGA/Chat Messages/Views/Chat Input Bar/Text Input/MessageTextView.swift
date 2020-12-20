@@ -5,6 +5,7 @@ class MessageTextView: UITextView {
 
     var numberOfLinesBeforeScroll: UInt = 4
     var collapsedMaxHeightReachedAction: ((Bool) -> Void)?
+    var pasteAction: ((UIImage) -> Void)?
     
     var placeholderText: String? {
         didSet {
@@ -42,7 +43,7 @@ class MessageTextView: UITextView {
         textView.font = font
         textView.isUserInteractionEnabled = false
         textView.isScrollEnabled = false
-        textView.text = AMLocalizedString("Message...", "Chat: This is the placeholder text for text view when keyboard is shown")
+        textView.text = NSLocalizedString("Message...", comment: "Chat: This is the placeholder text for text view when keyboard is shown")
 
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
@@ -164,6 +165,24 @@ class MessageTextView: UITextView {
             placeholderTextView.topAnchor.constraint(equalTo: topAnchor),
             placeholderTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    // MARK: - Image Paste Support
+    
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        
+        if action == NSSelectorFromString("paste:") && UIPasteboard.general.image != nil {
+            return true
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+    
+    open override func paste(_ sender: Any?) {
+        
+        guard let image = UIPasteboard.general.image else {
+            return super.paste(sender)
+        }
+        pasteAction?(image)
     }
     
     //MARK: - Deinit

@@ -16,6 +16,8 @@ protocol ColorFactory {
 
     func backgroundColor(_ style: MEGAColor.Background) -> Color
 
+    func tintColor(_ style: MEGAColor.Tint) -> Color
+
     func borderColor(_ style: MEGAColor.Border) -> Color
 
     func shadowColor(_ style: MEGAColor.Shadow) -> Color
@@ -38,6 +40,7 @@ extension ColorFactory {
     func independent(_ style: MEGAColor.Independent) -> Color {
         switch style {
         case .bright: return Color(red: 255, green: 255, blue: 255)
+        case .dark: return Color(red: 0, green: 0, blue: 0)
         case .clear: return Color(red: 255, green: 255, blue: 255, alpha: 0)
         case .warning: return Color(red: 255, green: 59, blue: 48)
         }

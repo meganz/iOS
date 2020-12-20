@@ -15,11 +15,11 @@ enum DocScanQuality: Float, CustomStringConvertible {
     var description: String {
         switch self {
         case .best:
-            return AMLocalizedString("best")
+            return NSLocalizedString("best", comment: "")
         case .medium:
-            return AMLocalizedString("medium")
+            return NSLocalizedString("medium", comment: "")
         case .low:
-            return AMLocalizedString("low")
+            return NSLocalizedString("low", comment: "")
         }
     }
 }
@@ -46,7 +46,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = AMLocalizedString("Save Settings", "Setting title for Doc scan view")
+        title = NSLocalizedString("Save Settings", comment: "Setting title for Doc scan view")
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
         let quality = UserDefaults.standard.string(forKey: keys.docScanQualityKey)
         if fileType == nil || quality == nil  {
@@ -54,7 +54,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             UserDefaults.standard.set(DocScanQuality.best.rawValue, forKey: keys.docScanQualityKey)
         }
         
-        sendButton.title = AMLocalizedString("send")
+        sendButton.title = NSLocalizedString("send", comment: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,7 +201,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case 0:
-            return AMLocalizedString("tapFileToRename")
+            return NSLocalizedString("tapFileToRename", comment: "")
         default:
             return nil
         }
@@ -217,9 +217,9 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 1:
-            return AMLocalizedString("settingsTitle")
+            return NSLocalizedString("settingsTitle", comment: "")
         case 2:
-            return AMLocalizedString("selectDestination")
+            return NSLocalizedString("selectDestination", comment: "")
         default:
             return nil
         }
@@ -230,7 +230,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                let alert = UIAlertController(title: nil, message: AMLocalizedString("File Type", "file type title, used in changing the export format of scaned doc"), preferredStyle: .actionSheet)
+                let alert = UIAlertController(title: nil, message: NSLocalizedString("File Type", comment: "file type title, used in changing the export format of scaned doc"), preferredStyle: .actionSheet)
                 let PDFAlertAction = UIAlertAction(title: "PDF", style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
                     tableView.reloadData()
@@ -248,12 +248,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                     popover.sourceRect = tableView.rectForRow(at: indexPath)
                 }
                 
-                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
                 
                 present(alert, animated: true, completion: nil)
             case 1:
                 let alert = UIAlertController(title: nil, message:
-                    AMLocalizedString("Quality", "Quality title, used in changing the export quality of scaned doc"), preferredStyle: .actionSheet)
+                    NSLocalizedString("Quality", comment: "Quality title, used in changing the export quality of scaned doc"), preferredStyle: .actionSheet)
                 let bestAlertAction = UIAlertAction(title: DocScanQuality.best.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.best.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
@@ -277,7 +277,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                     popover.sourceRect = tableView.rectForRow(at: indexPath)
                 }
                 
-                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
                 
                 present(alert, animated: true, completion: nil)
             default: break
@@ -351,7 +351,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                         }
                     }
                     if completionCounter == self.docs!.count - 1 {
-                        SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
+                        SVProgressHUD.showSuccess(withStatus: NSLocalizedString("Shared successfully", comment: "Success message shown when the user has successfully shared something"))
                     }
                     completionCounter = completionCounter + 1
                 }

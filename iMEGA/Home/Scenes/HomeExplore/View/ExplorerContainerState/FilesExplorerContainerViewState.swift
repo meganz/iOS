@@ -114,17 +114,21 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.showSearchBar(show)
     }
     
+    func showMoreButton(_ show: Bool) {
+        containerViewController.showMoreButton(show)
+    }
+    
     // MARK: - Private methods.
     
     func updateTitle(withNodesCount count: Int) {
         let title: String
         switch count {
         case 0:
-            title = AMLocalizedString("selectTitle", "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
+            title = NSLocalizedString("selectTitle", comment: "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
         case 1:
-            title = String(format: AMLocalizedString("oneItemSelected", "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), count)
+            title = String(format: NSLocalizedString("oneItemSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), count)
         default:
-            title = String(format: AMLocalizedString("itemsSelected", "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), count)
+            title = String(format: NSLocalizedString("itemsSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), count)
         }
         
         containerViewController.updateTitle(title)

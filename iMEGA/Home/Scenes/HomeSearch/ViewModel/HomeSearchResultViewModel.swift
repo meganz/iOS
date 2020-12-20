@@ -102,8 +102,8 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             )
         }
 
-        let moreAction: (MEGAHandle) -> Void = { handle in
-            self.router.didTapMoreAction(on: file.handle)
+        let moreAction: (MEGAHandle, UIButton) -> Void = { handle, button in
+            self.router.didTapMoreAction(on: file.handle, button: button)
         }
 
         return HomeSearchResultFileViewModel(

@@ -37,14 +37,14 @@ class AppearanceTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = AMLocalizedString("Appearance", "Title of one of the Settings sections where you can customise the 'Appearance' of the app.")
+        title = NSLocalizedString("Appearance", comment: "Title of one of the Settings sections where you can customise the 'Appearance' of the app.")
         
-        sortingAndViewModeLabel.text = AMLocalizedString("Sorting And View Mode", "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app.")
+        sortingAndViewModeLabel.text = NSLocalizedString("Sorting And View Mode", comment: "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app.")
         
-        defaultIconLabel.text = AMLocalizedString("Default", "Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible).")
-        dayIconLabel.text = AMLocalizedString("Day", "Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible).")
-        nightIconLabel.text = AMLocalizedString("Night", "Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible).")
-        minimalIconLabel.text = AMLocalizedString("Minimal", "Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible).")
+        defaultIconLabel.text = NSLocalizedString("Default", comment: "Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible).")
+        dayIconLabel.text = NSLocalizedString("Day", comment: "Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible).")
+        nightIconLabel.text = NSLocalizedString("Night", comment: "Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible).")
+        minimalIconLabel.text = NSLocalizedString("Minimal", comment: "Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible).")
         
         defaultIconLabel.textColor = UIColor.white
         dayIconLabel.textColor = UIColor.white
@@ -172,10 +172,10 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case AppearanceSection.layout.rawValue:
-            return AMLocalizedString("Layout", "Section title inside of Settings - Appearance, where you can change the app's layout distribution.")
+            return NSLocalizedString("Layout", comment: "Section title inside of Settings - Appearance, where you can change the app's layout distribution.")
             
         case AppearanceSection.appIcon.rawValue:
-            return AMLocalizedString("App Icon", "Section title inside of Settings - Appearance, where you can change the app's icon.")
+            return NSLocalizedString("App Icon", comment: "Section title inside of Settings - Appearance, where you can change the app's icon.")
             
         default:
             return nil
@@ -185,7 +185,7 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case AppearanceSection.layout.rawValue:
-            return AMLocalizedString("Configure sorting order and the default view (List or Thumbnail).", "Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section.")
+            return NSLocalizedString("Configure sorting order and the default view (List or Thumbnail).", comment: "Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section.")
             
         case AppearanceSection.appIcon.rawValue:
             return nil

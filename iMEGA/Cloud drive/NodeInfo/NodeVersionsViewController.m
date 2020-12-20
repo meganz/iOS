@@ -40,8 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
-    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+    self.title = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
+    self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
 
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
@@ -218,10 +218,10 @@
     versionsSize.textColor = UIColor.mnz_label;
     
     if (section == 0) {
-        titleSection.text = AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
+        titleSection.text = NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
         versionsSize.text = nil;
     } else {
-        titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
+        titleSection.text = NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
         versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
     }
     
@@ -247,7 +247,7 @@
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNodeOverwriting:YES];
+        [node mnz_downloadNode];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -291,12 +291,12 @@
     NSString *navigationTitle;
     if (self.tableView.isEditing) {
         if (self.selectedNodesArray.count == 0) {
-            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
         } else {
-            navigationTitle = (self.selectedNodesArray.count <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
+            navigationTitle = (self.selectedNodesArray.count <= 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
         }
     } else {
-        navigationTitle = AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
+        navigationTitle = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
     }
     
     self.navigationItem.title = navigationTitle;
@@ -309,7 +309,7 @@
     [self updateNavigationBarTitle];
     
     if (editing) {
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         [self.navigationController setToolbarHidden:NO animated:YES];
@@ -320,7 +320,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
 
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -393,9 +393,9 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     if (self.selectedNodesArray.count == 1) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
         
-        [self.selectedNodesArray.firstObject mnz_downloadNodeOverwriting:YES];
+        [self.selectedNodesArray.firstObject mnz_downloadNode];
         
         [self setEditing:NO animated:YES];
         
@@ -414,9 +414,9 @@
 }
 
 - (IBAction)removeAction:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"deleteVersion", @"Question to ensure user wants to delete file version") message:AMLocalizedString(@"permanentlyRemoved", @"Message to notify user the file version will be permanently removed") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"delete", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"deleteVersion", @"Question to ensure user wants to delete file version") message:NSLocalizedString(@"permanentlyRemoved", @"Message to notify user the file version will be permanently removed") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"delete", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         for (MEGANode *node in self.selectedNodesArray) {
             [[MEGASdkManager sharedMEGASdk] removeVersionNode:node];
         }
@@ -492,9 +492,8 @@
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-        
         MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [node mnz_downloadNodeOverwriting:YES];
+            [node mnz_downloadNode];
             return YES;
         }];
         downloadButton.tintColor = UIColor.whiteColor;
@@ -532,8 +531,8 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:YES];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [node mnz_downloadNode];
             break;
             
         case MegaNodeActionTypeRemove:
@@ -638,12 +637,12 @@
     if (error.type) {
         if (error.type == MEGAErrorTypeApiEAccess) {
             if (transfer.type ==  MEGATransferTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
         } else if (error.type == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

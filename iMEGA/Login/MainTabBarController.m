@@ -2,6 +2,7 @@
 #import "MainTabBarController.h"
 
 #import "ChatRoomsViewController.h"
+#import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MyAccountHallViewController.h"
@@ -44,25 +45,25 @@
         tabBarItem.badgeColor = UIColor.clearColor;
         [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
-        switch (tabBarItem.tag) {
+        switch (i) {
             case CLOUD:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case PHOTOS:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case CHAT:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"chat", @"Chat section header");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"chat", @"Chat section header");
                 break;
                 
             case SHARES:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
                 break;
                 
             case HOME:
-                tabBarItem.accessibilityLabel = AMLocalizedString(@"Home", @"Accessibility label of Home section in tabbar item");
+                tabBarItem.accessibilityLabel = NSLocalizedString(@"Home", @"Accessibility label of Home section in tabbar item");
                 break;
         }
     }
@@ -99,7 +100,7 @@
 - (void)tapProgressView {
     TransfersWidgetViewController *transferVC = [TransfersWidgetViewController sharedTransferViewController];
     MEGANavigationController *nav = [[MEGANavigationController alloc] initWithRootViewController:transferVC];
-    [nav addLeftDismissButtonWithText:AMLocalizedString(@"close", @"A button label.")];
+    [nav addLeftDismissButtonWithText:NSLocalizedString(@"close", @"A button label.")];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -224,6 +225,34 @@
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showOfflines];
+}
+
+- (void)showUploadFile {
+    self.selectedIndex = CLOUD;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+    [cloudDriveVC presentUploadAlertController];
+}
+
+- (void)showScanDocument {
+    self.selectedIndex = CLOUD;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+    [cloudDriveVC presentScanDocument];
+}
+
+- (void)showStartConversation {
+    self.selectedIndex = CHAT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    ChatRoomsViewController *chatRoomsViewController = navigationController.viewControllers.firstObject;
+    [chatRoomsViewController showStartConversation];
+}
+
+- (void)showAddContact {
+    InviteContactViewController *inviteContactVC = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+    MEGANavigationController *navigation = [MEGANavigationController.alloc initWithRootViewController:inviteContactVC];
+    [navigation addLeftDismissButtonWithText:NSLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")];
+    [self presentViewController:navigation animated:YES completion:nil];
 }
 
 #pragma mark - Private

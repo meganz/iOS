@@ -11,7 +11,7 @@ extension EmptyStateConfiguration {
         Self.init {
             EmptyStateView(
                 image: UIImage(named: "searchEmptyState")!,
-                title: AMLocalizedString("noResults", nil),
+                title: NSLocalizedString("noResults", comment: ""),
                 description: nil,
                 buttonTitle: nil
             )
@@ -22,7 +22,7 @@ extension EmptyStateConfiguration {
         Self.init {
             EmptyStateView(
                 image: UIImage(named: "searchEmptyState")!,
-                title: AMLocalizedString("noResults", nil),
+                title: NSLocalizedString("noResults", comment: ""),
                 description: nil,
                 buttonTitle: nil
             )

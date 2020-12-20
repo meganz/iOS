@@ -22,11 +22,11 @@ class DocScannerActionTableViewCell: UITableViewCell {
         switch cellType {
         case .upload:
             actionImageView.image = UIImage(named: "upload")
-            actionLabel.text = AMLocalizedString("uploadToMega")
+            actionLabel.text = NSLocalizedString("uploadToMega", comment: "")
         case .sendMessage:
             actionImageView.tintColor = .mnz_primaryGray(for: self.traitCollection)
             actionImageView.image = UIImage(named: "sendMessage")
-            actionLabel.text = AMLocalizedString("sendToContact")
+            actionLabel.text = NSLocalizedString("sendToContact", comment: "")
         }
     }
 }

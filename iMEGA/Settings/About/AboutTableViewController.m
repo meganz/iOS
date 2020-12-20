@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.versionLabel.text = AMLocalizedString(@"App Version", @"App means “Application”");
+    self.versionLabel.text = NSLocalizedString(@"App Version", @"App means “Application”");
     self.versionNumberLabel.text = [NSString stringWithFormat:@"%@ (%@)",
                                     [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
                                     [NSBundle.mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
@@ -37,16 +37,16 @@
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
-    self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
+    self.sdkVersionLabel.text = NSLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
     
     self.sdkVersionSHALabel.text = NSBundle.mainBundle.infoDictionary[@"SDK_GIT_COMMIT_HASH"];
     
-    self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
+    self.megachatSdkVersionLabel.text = NSLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
     self.megachatSdkSHALabel.text = NSBundle.mainBundle.infoDictionary[@"CHAT_SDK_GIT_COMMIT_HASH"];
     
-    self.viewSourceCodeLabel.text = AMLocalizedString(@"View Source Code", @"Link to the public code of the ap");
+    self.viewSourceCodeLabel.text = NSLocalizedString(@"View Source Code", @"Link to the public code of the ap");
     
-    [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
+    [self.acknowledgementsLabel setText:NSLocalizedString(@"acknowledgements", nil)];
     
     [self updateAppearance];
 }
@@ -54,7 +54,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"about", nil)];
+    [self.navigationItem setTitle:NSLocalizedString(@"about", nil)];
     
 }
 

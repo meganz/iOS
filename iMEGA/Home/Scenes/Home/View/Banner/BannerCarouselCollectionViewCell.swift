@@ -1,16 +1,63 @@
 import UIKit
 
-class BannerCarouselCollectionViewCell: UICollectionViewCell {
+final class BannerCarouselCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var bannerView: UIView!
+    @IBOutlet private weak var bannerView: UIView!
+
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var backgroundImageView: UIImageView!
+    @IBOutlet private weak var dismissButton: UIButton!
+
+    private var bannerIdentifier: Int?
+    private var dismissAction: ((Int) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        bannerView.layer.borderColor = UIColor.red.cgColor
-        bannerView.layer.borderWidth = 1
         bannerView.layer.cornerRadius = 10
         bannerView.layer.masksToBounds = true
+
+        dismissButton.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
 
+    func configure(with banner: MEGABannerView.Banner) {
+        iconImageView.yy_imageURL = banner.iconImage
+        backgroundImageView.yy_imageURL = banner.backgroundImage
+        titleLabel.text = banner.title
+        subtitleLabel.text = banner.detail
+        bannerIdentifier = banner.identifier
+        dismissAction = banner.dismissAction
+
+        style(with: traitCollection)
+    }
+
+    private func style(with trait: UITraitCollection) {
+        trait.theme.labelStyleFactory.styler(of: .homeBannerTitle)(titleLabel)
+        trait.theme.labelStyleFactory.styler(of: .homeBannerSubtitle)(subtitleLabel)
+    }
+
+    @objc fileprivate func didTapDismissButton() {
+        guard let bannerIdentifier = bannerIdentifier else { return }
+        dismissAction?(bannerIdentifier)
+    }
+}
+
+// MARK: - TraitEnviromentAware
+
+extension BannerCarouselCollectionViewCell: TraitEnviromentAware {
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        style(with: currentTrait)
+    }
+}
+
+private extension Selector {
+    static let didTapDismissButton = #selector(BannerCarouselCollectionViewCell.didTapDismissButton)
 }

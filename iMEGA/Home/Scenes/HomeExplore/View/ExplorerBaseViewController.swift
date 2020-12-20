@@ -3,7 +3,19 @@
 class ExplorerBaseViewController: UIViewController {
     private lazy var toolbar = UIToolbar()
     private var explorerToolbarConfigurator: ExplorerToolbarConfigurator?
+    
+    var isToolbarShown: Bool {
+        return toolbar.superview != nil
+    }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if isToolbarShown {
+            endEditingMode()
+        }
+    }
+    
     func showToolbar() {
         guard let tabBarController = tabBarController, toolbar.superview == nil else { return }
         toolbar.alpha = 0.0
@@ -55,9 +67,9 @@ class ExplorerBaseViewController: UIViewController {
         }
         
         SVProgressHUD.show(UIImage(named: "hudDownload")!,
-                           status: AMLocalizedString("downloadStarted"))
+                           status: NSLocalizedString("downloadStarted", comment: ""))
         selectedNodes.forEach { node in
-            if node.mnz_downloadNodeOverwriting(false) {
+            if node.mnz_downloadNode() {
                 downloadStarted(forNode: node)
             }
         }

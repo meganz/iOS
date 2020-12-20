@@ -17,4 +17,16 @@
     return self.totalFilesCount - self.finishedFilesCount;
 }
 
+- (BOOL)isUploadCompleted {
+    return self.pendingFilesCount == 0;
+}
+
+- (float)progress {
+    if (self.totalFilesCount == 0) {
+        return 1.0f;
+    } else {
+        return (float)self.finishedFilesCount / (float)self.totalFilesCount;
+    }
+}
+
 @end

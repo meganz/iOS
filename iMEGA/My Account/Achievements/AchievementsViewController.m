@@ -55,22 +55,22 @@
     self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     self.numberFormatter.maximumFractionDigits = 0;
     
-    self.navigationItem.title = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
+    self.navigationItem.title = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
-    self.inviteYourFriendsTitleLabel.text = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
+    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
     self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
-    self.unlockedBonusesLabel.text = AMLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
-    self.storageQuotaLabel.text = AMLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
-    self.transferQuotaLabel.text = AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
+    self.unlockedBonusesLabel.text = NSLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
+    self.storageQuotaLabel.text = NSLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
+    self.transferQuotaLabel.text = NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     
     [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
     
     if (self.enableCloseBarButton) { //For modal presentations
-        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action")
+        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"skipButton", @"Button title that skips the current action")
                                                                            style:UIBarButtonItemStyleDone
                                                                           target:self
                                                                           action:@selector(dismissViewController)];
@@ -205,7 +205,7 @@
     if (indexPath.row == 0 && self.haveReferralBonuses) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
+        cell.titleLabel.text = NSLocalizedString(@"referralBonuses", @"achievement type");
         
         [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
     } else {
@@ -219,22 +219,22 @@
         
         switch (achievementClass) {
             case MEGAAchievementWelcome: {
-                cell.titleLabel.text = AMLocalizedString(@"registrationBonus", @"achievement type");
+                cell.titleLabel.text = NSLocalizedString(@"registrationBonus", @"achievement type");
                 break;
             }
                 
             case MEGAAchievementDesktopInstall: {
-                cell.titleLabel.text = AMLocalizedString(@"installMEGASync", @"");
+                cell.titleLabel.text = NSLocalizedString(@"installMEGASync", @"");
                 break;
             }
                 
             case MEGAAchievementMobileInstall: {
-                cell.titleLabel.text = AMLocalizedString(@"installOurMobileApp", @"");
+                cell.titleLabel.text = NSLocalizedString(@"installOurMobileApp", @"");
                 break;
             }
                 
             case MEGAAchievementAddPhone: {
-                cell.titleLabel.text = AMLocalizedString(@"Add Phone Number", nil);
+                cell.titleLabel.text = NSLocalizedString(@"Add Phone Number", nil);
                 break;
             }
                 
@@ -243,7 +243,7 @@
         }
         
         NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
-        cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
+        cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? NSLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [NSLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
         cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
@@ -297,7 +297,7 @@
         
         NSString *inviteStorageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
         NSString *inviteTransferString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
-        NSString *inviteFriendsAndGetForEachReferral = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"title of the introduction for the achievements screen");
+        NSString *inviteFriendsAndGetForEachReferral = NSLocalizedString(@"inviteFriendsAndGetForEachReferral", @"title of the introduction for the achievements screen");
         inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%1$s" withString:inviteStorageString];
         inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%2$s" withString:inviteTransferString];
         self.inviteYourFriendsSubtitleLabel.text = inviteFriendsAndGetForEachReferral;

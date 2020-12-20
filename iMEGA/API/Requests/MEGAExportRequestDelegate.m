@@ -28,7 +28,7 @@
     [super onRequestStart:api request:request];
 
     if (request.access) {
-        NSString *status = self.multipleLinks ? AMLocalizedString(@"generatingLinks", @"Message shown when some links to files and/or folders are being generated") : AMLocalizedString(@"generatingLink", @"Message shown when some links to files and/or folders are being generated");
+        NSString *status = self.multipleLinks ? NSLocalizedString(@"generatingLinks", @"Message shown when some links to files and/or folders are being generated") : NSLocalizedString(@"generatingLink", @"Message shown when some links to files and/or folders are being generated");
         [SVProgressHUD showWithStatus:status];
     } else {
         [SVProgressHUD show];
@@ -42,7 +42,7 @@
         if (error.type == MEGAErrorTypeApiEBusinessPastDue) {
             [SVProgressHUD dismiss];
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
         }
         return;
     }

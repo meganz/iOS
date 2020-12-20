@@ -15,6 +15,10 @@ static NSInteger const SHARES       = 4;
 
 - (void)showAchievements;
 - (void)showOffline;
+- (void)showUploadFile;
+- (void)showScanDocument;
+- (void)showStartConversation;
+- (void)showAddContact;
 
 - (void)setBadgeValueForChats;
 

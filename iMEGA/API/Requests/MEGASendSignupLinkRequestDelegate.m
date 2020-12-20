@@ -23,29 +23,29 @@
         switch (error.type) {
             case MEGAErrorTypeApiEExist:
                 title = @"";
-                message = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
+                message = NSLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                 break;
                 
             case MEGAErrorTypeApiEFailed:
                 title = @"";
-                message = AMLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
+                message = NSLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
                 break;
                 
             default:
-                title = AMLocalizedString(@"error", nil);
-                message = [NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)];
+                title = NSLocalizedString(@"error", nil);
+                message = [NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)];
                 break;
         }
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         
         return;
     } else {
         [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
-        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
     }
 }
 

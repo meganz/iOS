@@ -24,7 +24,15 @@ struct DarkColorThemeFactory: ColorFactory {
 
         case .searchTextField: return Color(red: 41, green: 41, blue: 44)
 
-        case .navigationBar: return Color(red: 0, green: 0, blue: 0)
+        case .homeTopSide: return Color(red: 0, green: 0, blue: 0)
+        }
+    }
+
+
+    func tintColor(_ style: MEGAColor.Tint) -> Color {
+        switch style {
+        case .primary: return Color(red: 209, green: 209, blue: 209)
+        case .secondary: return Color(red: 64, green: 64, blue: 64)
         }
     }
 

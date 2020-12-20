@@ -36,8 +36,6 @@
 "microphonePermissions"="الرجاء منح تطبيق MEGA بالإذن لاستخدام  المايكروفون في إعدادات جهازك";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="يرجى إعطاء تطبيق MEGA إذن الوصول إلى مكتبة الصور في إعدادات";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="لا يمكن تحميل مجلد فارغ";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="تم تفعيل حسابك بالفعل. يُرجى تسجيل الدخول.";
 /* */
@@ -69,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="ميغا Mega غير قابل على الإتصال بشكل آمن عبر التراسل المشفر SSL. ربما تقوم باستخدام شبكة إتصال بالانترنت Wi-Fi عامة مع متطلبات إضافية.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي استخدمته على  الويب كلاينت web client على الهاتف المحمول.";
+"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الوصول إليه غير متوفر لهذا الحساب. يرجى محاولة تسجيل الدخول بنفس الحساب الموجود في عميل الويب للهاتف المحمول.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -565,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="إضافة من جهات الاتصال";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="إضافة متصّل";
+"addContact"="إدخال متصّل";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="عنوان البريد الإلكتروني";
 /* Button title to 'Add' the contact to your contacts list */
@@ -624,8 +622,6 @@
 "securityOptions"="خيارات الأمان";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="حول";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="اللغة";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="أرسل ملاحظات";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -894,7 +890,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="الكل";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="قيد الانجاز";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="اكتمل";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -1024,9 +1020,9 @@
 /*  */
 "chooseYourAccountType"="اختر نوع حسابك";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]السواقة السحابية ممتلئة تقريباً.[/S] [A]قم بترقية حسابك الآن[/A] الى حساب برو PRO و احصل [S]تصل حتى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
+"cloudDriveIsAlmostFull"="[S]السواقة السحابية الخاصة بك ممتلئة تقريباً.[/S] [A]قم بالترقية الآن[/A] إلى حساب Pro واحصل على [S]ما يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة التخزين السحابية.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]سواقتك السحابية ممتلئة.[/S] [A]قم بترقية حسابك الآن[/A] إلى حساب برو PRO و احصل على [S]يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
+"cloudDriveIsFull"="[S]السواقة السحابية الخاصة بك ممتلئة.[/S] [A]قم بالترقية الآن[/A] إلى حساب Pro واحصل على [S]ما يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة التخزين السحابية.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="التخزين";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="بحث GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="لم يتم العثور على أي GIF";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="وصلت هذه الرسالة إلى الحد الأقصى من ردود الفعل وهو %d.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="لقد وصلت إلى الحد الأقصى من التفاعلات وهو %d.";
 /* Chat section header */
 "chat"="المحادثة";
 /* Empty Conversations section */
@@ -1182,7 +1182,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="هل أنت متأكد أنك تريد مسح محفوظات الرسائل بالكامل لهذه المحادثة؟";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="تم محو سجل المحادثة";
 /* 'Next' button in a dialog */
 "continue"="استمرار";
 /* Title of the incoming shared folders of a user. */
@@ -1404,10 +1404,6 @@
 "HTTP error"="خطأ بروتوكول HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="تحتاج إلى إعادة تشغيل MEGA بعد تغيير اللغة";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="تم تغيير اللغة ،، اضغط لإعادة التشغيل";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="تقدم MEGA تخزين سحابي مشفر من طرف المستخدم باستخدام متصفح الانترنت وتطبيقات الموبايل. بخلاف خدمات التخزين السحابي الاخرى، معطياتك ستكون مشفرة وأجهزتك الشخصية ستكون الوحيدة القادرة على فك هذا التشفير حصرا، ونحن لن نكون قادرين على فك هذا التشفير.";
@@ -1420,7 +1416,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="تقدم MEGA مساحة تخزين مجانية بحجم 50 غيغا بايت لكل المشتركين بلاضافة الى مكافات على الانجازات. بالاضافة الى باقات مأجورة بمساحات تخزين اكبر.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
+"generalDescriptionParagraph5"="اشتراك Pro Lite برو لايت: 4.99 يورو (4.99 دولارًا أمريكيًا) شهريًا أو 49.99 يورو (49.99 دولارًا أمريكيًا) سنويًا يمنحك 400 غيغابايت من مساحة التخزين و 1 تيرابايت من حجم التراسل المتاح شهريًا.\nاشتراك Pro I برو 1: 9.99 يورو (9.99 دولارًا أمريكيًا) شهريًا أو 99.99 يورو (99.99 دولارًا أمريكيًا) سنويًا يمنحك 2 تيرابايت من مساحة التخزين و 2 تيرابايت من حجم التراسل المتاح شهريًا. \nاشتراك Pro II برو 2: 19.99 يورو (19.99 دولارًا أمريكيًا) شهريًا أو 199.99 يورو (199.99 دولارًا أمريكيًا) سنويًا يمنحك مساحة تخزين تبلغ 8 تيرابايت من مساحة التخزين و 8 تيرابايت من حجم التراسل المتاح شهريًا.\n اشتراك Pro III برو 3: 29.99 يورو (29.99 دولارًا أمريكيًا) شهريًا أو 299.99 يورو (299.99 دولارًا أمريكيًا) سنويًا يمنحك 16 تيرابايت من مساحة التخزين و 16 تيرابايت من حجم التراسل المتاح شهريًا.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="لمزيد من المعلومات يرجى زيارة موقعنا الالكتروني: https://mega.nz \n شروط استخدام الخدمة: https://mega.nz/terms \n سياسة الخصوصية: https://mega.nz/privacy";
@@ -1529,7 +1525,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="متابعة تسجيل الخروج";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="أنت على وشك تسجيل الخروج ، يرجى اختبار كلمة المرور الخاصة بك للتأكد من أنك تتذكرها. إذا فقدت كلمة المرور الخاصة بك، فستفقد الوصول إلى بيانات ميغا MEGA الخاصة بك.";
+"testPasswordLogoutText"="أنت على وشك تسجيل الخروج، يرجى اختبار كلمة المرور الخاصة بك للتأكد من تذكرها. إذا فقدت كلمة المرور الخاصة بك، فستفقد الوصول إلى بيانات ميغا MEGA الخاصة بك.";
 /* state previous to import a file */
 "loading"="جاري التحميل";
 /*   */
@@ -1765,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="المشاهدون";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ تم تمكين تدوير مفتاح مشفر.";
+"%@ enabled Encrypted Key Rotation"="قام %@ بتمكين تدوير المفتاح المشفر.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ قام بإنشاء رابط محادثة";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -1859,9 +1855,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="ستنتهي صلاحية اشتراك برو Pro الخاص بك في %1 يوم.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="لقد انتهت صلاحية إشتراك PRO الخاص بك منذ يوم واحد";
+"Your PRO membership plan expired 1 day ago"="انتهت صلاحية باقة برو قبل يوم واحد";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="لقد انتهت صلاحية إشتراك PRO الخاص بك منذ %1 يوم";
+"Your PRO membership plan expired %1 days ago"="لقد انتهت صلاحية إشتراك برو Pro الخاص بك منذ %1 يوم";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="لقد شاركت بشكل عام  %1 (%2)";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="حسابك [B]معلق[/B] حالياً. يمكنك فقط تصفح بياناتك.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="بينما لا تملك ميغا MEGA حق الوصول إلى بياناتك، فإن مشرفي مؤسستك لديهم القدرة على التحكم في تحميلات الكاميرا وعرضها في حساب المستخدم الخاص بك";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="بينما لا يمكن لميغا MEGA الوصول إلى بياناتك، فإن مسؤول حساب الأعمال الخاص بك لديه القدرة على التحكم في ترفيعات الكاميرا وعرضها في حساب المستخدم الخاص بك";
 /* */
 "Something went wrong"="حدث خطأ ما";
 /* Title of the "Links" Shared Items. */
@@ -2171,13 +2167,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن  أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="تجاوز حد التراسل المتاح";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="إلغاء التحديد";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="ايقاف مؤقت للجميع";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="استئناف للكل";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="مسح الكل";
 /* Alert header for asking permission to resume transfers*/
@@ -2386,6 +2382,8 @@
 "Unavailable"="غير متاحة";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="تم إرسال البريد الإلكتروني بالفعل. يرجى الانتظار بضع دقائق قبل المحاولة مرة أخرى.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="شارك";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="ابحث في ملفاتك";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2393,26 +2391,40 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="اختر مجلد";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="هل أنت متأكد أنك تريد نقل مجلد ترفيعات الكاميرا إلى سلة المهملات؟ إذا كان الأمر كذلك، فسيتم إنشاء مجلد جديد تلقائيًا لترفيعات الكاميرا.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="رفع ملف";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="اختصارات";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="قم بتشغيل تطبيق ميغا MEGA لتنفيذ الإجراء";
 /* Title for document explorer view */
 "Documents"="المستندات";
 /* Title for audio explorer view */
-"Audio"="Audio";
+"Audio"="صوتي";
 /* Title for video explorer view */
 "Videos"="مقاطع الفيديو";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="لم يتم العثور على أي مستندات";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="لم يتم العثور على أي ملفات صوتية";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="لم يتم العثور على أي ملفات فيديو";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="كل الصور";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="اليوم";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="البارحة";
 /* Photo Explorer Screen: No images in the accoun t*/
-"No images found"="No images found";
+"No images found"="لم يتم العثور على أي صور";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Home";
+"Home"="الصفحة الرئيسية";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="مستندات";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="تمت مشاركة هذا الرابط بدون مفتاح فك التشفير. هل تريد مشاركة مفتاحه؟";
+/* Title for password protect link alert */
+"Link Password"="كلمة مرور الرابط";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="هل تريد مشاركة كلمة المرور الخاصة بهذا الرابط؟";

@@ -19,7 +19,7 @@ extension ChatViewController: VNDocumentCameraViewControllerDelegate {
             vc.chatRoom = self.chatRoom
             let nav = MEGANavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
-            nav.addLeftDismissButton(withText: AMLocalizedString("cancel", nil))
+            nav.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
             self.present(viewController: nav)
         }
     }

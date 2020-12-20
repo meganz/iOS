@@ -38,6 +38,7 @@
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+    self.tableView.allowsMultipleSelectionDuringEditing = YES;
     
     
     [self updateAppearance];
@@ -49,9 +50,9 @@
     if (self.cloudDrive.recentActionBucket) {
         NSString *dateString;
         if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
-            dateString = AMLocalizedString(@"Today", @"").uppercaseString;
+            dateString = NSLocalizedString(@"Today", @"").uppercaseString;
         } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
-            dateString = AMLocalizedString(@"Yesterday", @"").uppercaseString;
+            dateString = NSLocalizedString(@"Yesterday", @"").uppercaseString;
         } else {
             dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
         }
@@ -225,6 +226,13 @@
     }
 
     if (tableView.isEditing) {
+        
+        for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
+            if (tempNode.handle == node.handle) {
+                return;
+            }
+        }
+        
         [self.cloudDrive.selectedNodesArray addObject:node];
         
         [self.cloudDrive updateNavigationBarTitle];
@@ -280,6 +288,14 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:YES animated:YES];
+}
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
@@ -333,7 +349,7 @@
         if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
             
             UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                if ([node mnz_downloadNodeOverwriting:NO]) {
+                if ([node mnz_downloadNode]) {
                     [self reloadRowAtIndexPath:[self.cloudDrive.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
                 }
                 
@@ -423,7 +439,7 @@
             if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
                 
                 MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                    [node mnz_downloadNodeOverwriting:NO];
+                    [node mnz_downloadNode];
                     return YES;
                 }];
                 [downloadButton iconTintColor:[UIColor whiteColor]];

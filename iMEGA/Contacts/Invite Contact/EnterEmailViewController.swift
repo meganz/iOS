@@ -20,10 +20,10 @@ class EnterEmailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = AMLocalizedString("Enter Email", "Text used as a section title or similar")
+        navigationItem.title = NSLocalizedString("Enter Email", comment: "Text used as a section title or similar")
         
-        descriptionLabel.text = AMLocalizedString("Select from phone contacts or enter multiple email addresses", "Text shown to explain how and where you can invite friends")
-        instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+        descriptionLabel.text = NSLocalizedString("Select from phone contacts or enter multiple email addresses", comment: "Text shown to explain how and where you can invite friends")
+        instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
         customizeTokenField()
 
         disableInviteContactsButton()
@@ -116,7 +116,7 @@ class EnterEmailViewController: UIViewController {
     }
 
     func disableInviteContactsButton() {
-        inviteContactsButton.setTitle(AMLocalizedString("invite", "A button on a dialog which invites a contact to join MEGA."), for: .normal)
+        inviteContactsButton.setTitle(NSLocalizedString("invite", comment: "A button on a dialog which invites a contact to join MEGA."), for: .normal)
         inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
 
@@ -125,8 +125,8 @@ class EnterEmailViewController: UIViewController {
         let inputText = tokenField.inputText()!
         let tokensNumber = tokens.count + (inputText.mnz_isValidEmail() ? 1 : 0)
         let inviteContactsString = tokensNumber == 1 ?
-            AMLocalizedString("Invite 1 contact", "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber)) :
-            AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber))
+            NSLocalizedString("Invite 1 contact", comment: "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber)) :
+            NSLocalizedString("Invite [X] contacts", comment: "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber))
         inviteContactsButton.setTitle(inviteContactsString, for: .normal)
     }
 
@@ -150,7 +150,7 @@ class EnterEmailViewController: UIViewController {
         tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_tertiaryBackgroundElevated(traitCollection)
         
         tokenField.delimiters = [",", " "];
-        tokenField.placeholderText = AMLocalizedString("insertYourFriendsEmails", "");
+        tokenField.placeholderText = NSLocalizedString("insertYourFriendsEmails", comment: "");
         tokenField.setColorScheme(UIColor.mnz_turquoise(for: traitCollection))
     }
 
@@ -159,7 +159,7 @@ class EnterEmailViewController: UIViewController {
         let inputText = tokenField.inputText()!
         if inputText.mnz_isValidEmail() {
             tokenField.inputTextFieldTextColor = UIColor.mnz_label()
-            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             tokens.append(inputText)
             tokenField.reloadData()
@@ -217,7 +217,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
 
         if text.mnz_isValidEmail() {
             tokenField.inputTextFieldTextColor = UIColor.mnz_label()
-            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             tokens.append(text)
             tokenField.reloadData()
@@ -226,7 +226,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
             }
         } else {
             tokenField.inputTextFieldTextColor = UIColor.mnz_red(for: traitCollection)
-            instructionsLabel.text = AMLocalizedString("theEmailAddressFormatIsInvalid", "Add contacts and share dialog error message when user try to add wrong email address")
+            instructionsLabel.text = NSLocalizedString("theEmailAddressFormatIsInvalid", comment: "Add contacts and share dialog error message when user try to add wrong email address")
         }
     }
 
@@ -234,7 +234,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
         tokens.remove(at: Int(index))
         tokenField.reloadData()
 
-        instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+        instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
 
         if tokens.count > 0 {
             enableInviteContactsButton()
@@ -246,7 +246,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
     func tokenField(_ tokenField: VENTokenField, didChangeText text: String?) {
         if text!.mnz_isValidEmail() || tokens.count > 0 {
             tokenField.inputTextFieldTextColor = UIColor.mnz_label()
-            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             enableInviteContactsButton()
         } else {
@@ -267,7 +267,7 @@ extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
             if !tokens.contains(email) {
                 tokens.append(email)
             }
-            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             
             if tokens.count == 0 {

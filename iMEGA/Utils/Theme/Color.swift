@@ -31,6 +31,14 @@ extension Color {
     var asBackgroundColorStyle: ColorStyle {
         ColorStyle(color: self, type: .background)
     }
+
+    var asTintColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .tint)
+    }
+
+    var asSelectedTintColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .selectedTint)
+    }
 }
 
 extension Color {

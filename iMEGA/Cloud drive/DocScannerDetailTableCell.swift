@@ -20,10 +20,10 @@ class DocScannerDetailTableCell: UITableViewCell {
         
         switch cellType {
         case .fileType:
-            textLabel?.text = AMLocalizedString("File Type", "file type title, used in changing the export format of scaned doc")
+            textLabel?.text = NSLocalizedString("File Type", comment: "file type title, used in changing the export format of scaned doc")
             detailTextLabel?.text = UserDefaults.standard.string(forKey: DocScannerSaveSettingTableViewController.keys.docScanExportFileTypeKey)
         case .Quality:
-            textLabel?.text = AMLocalizedString("Quality", "Quality title, used in changing the export quality of scaned doc")
+            textLabel?.text = NSLocalizedString("Quality", comment: "Quality title, used in changing the export quality of scaned doc")
             if let quality = DocScanQuality(rawValue:
                 UserDefaults.standard.float(forKey: DocScannerSaveSettingTableViewController.keys.docScanQualityKey)
                 ) {

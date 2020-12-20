@@ -58,7 +58,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs:
                 if ([request.email isEqualToString:api.myEmail]) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
                 }
                 break;
                 
@@ -67,7 +67,7 @@
                 if (user && user.visibility == MEGAUserVisibilityVisible) {
                     
                     [SVProgressHUD showErrorWithStatus:({
-                        [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:request.email];
+                        [NSLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:request.email];
                     })];
                     
                 } else {
@@ -82,7 +82,7 @@
                     }
                     if (isInOutgoingContactRequest) {
                         [SVProgressHUD showErrorWithStatus:({
-                            [AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                            [NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
                         })];
                     }
                     
@@ -92,7 +92,7 @@
             }
                 
             default:
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
                 break;
         }
         
@@ -105,18 +105,18 @@
         
         NSString *detailText;
         if (self.totalRequests > 1) {
-            detailText = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
+            detailText = NSLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
         } else {
-            detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
         }
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
-        customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+        customModalAlertVC.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = detailText;
         customModalAlertVC.boldInDetail = request.email;
-        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"close", nil);
+        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"close", nil);
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{

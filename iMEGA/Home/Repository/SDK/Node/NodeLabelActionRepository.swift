@@ -45,8 +45,8 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
         }
 
         let delegate = MEGAGenericRequestDelegate { (request, error) in
-            if let sdkError = error.sdkError {
-                completion?(.failure(.sdkError(sdkError)))
+            if let errorType = error.sdkError {
+                completion?(.failure(.sdkError(errorType)))
                 return
             }
             completion?(.success(()))
@@ -64,8 +64,8 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
             return
         }
         let delegate = MEGAGenericRequestDelegate { (request, error) in
-            if let sdkError = error.sdkError {
-                completion?(.failure(.sdkError(sdkError)))
+            if let errorType = error.sdkError {
+                completion?(.failure(.sdkError(errorType)))
                 return
             }
             completion?(.success(()))

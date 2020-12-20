@@ -48,7 +48,7 @@
     
     if (error.type) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
         return;
     }
     
@@ -59,25 +59,25 @@
             NSString *message;
             if (self.numberOfFiles == 0) {
                 if (self.numberOfFolders == 1) {
-                    message = AMLocalizedString(@"folderRemovedToRubbishBinMessage", @"Success message shown when 1 folder has been removed from MEGA");
+                    message = NSLocalizedString(@"folderRemovedToRubbishBinMessage", @"Success message shown when 1 folder has been removed from MEGA");
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"foldersRemovedToRubbishBinMessage", @"Success message shown when {1+} folders have been removed from MEGA"), self.numberOfFolders];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"foldersRemovedToRubbishBinMessage", @"Success message shown when {1+} folders have been removed from MEGA"), self.numberOfFolders];
                 }
             } else if (self.numberOfFiles == 1) {
                 if (self.numberOfFolders == 0) {
-                    message = AMLocalizedString(@"fileRemovedToRubbishBinMessage", @"Success message shown when 1 file has been removed from MEGA");
+                    message = NSLocalizedString(@"fileRemovedToRubbishBinMessage", @"Success message shown when 1 file has been removed from MEGA");
                 } else if (self.numberOfFolders == 1) {
-                    message = AMLocalizedString(@"fileFolderRemovedToRubbishBinMessage", @"Success message shown when 1 file and 1 folder have been removed from MEGA");
+                    message = NSLocalizedString(@"fileFolderRemovedToRubbishBinMessage", @"Success message shown when 1 file and 1 folder have been removed from MEGA");
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"fileFoldersRemovedToRubbishBinMessage", @"Success message shown when 1 file and {1+} folders have been removed from MEGA"), self.numberOfFolders];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"fileFoldersRemovedToRubbishBinMessage", @"Success message shown when 1 file and {1+} folders have been removed from MEGA"), self.numberOfFolders];
                 }
             } else {
                 if (self.numberOfFolders == 0) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"filesRemovedToRubbishBinMessage", @"Success message shown when {1+} files have been removed from MEGA"), self.numberOfFiles];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"filesRemovedToRubbishBinMessage", @"Success message shown when {1+} files have been removed from MEGA"), self.numberOfFiles];
                 } else if (self.numberOfFolders == 1) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderRemovedToRubbishBinMessage", @"Success message shown when {1+} files and 1 folder have been removed from MEGA"), self.numberOfFiles];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"filesFolderRemovedToRubbishBinMessage", @"Success message shown when {1+} files and 1 folder have been removed from MEGA"), self.numberOfFiles];
                 } else {
-                    message = AMLocalizedString(@"filesFoldersRemovedToRubbishBinMessage", @"Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA");
+                    message = NSLocalizedString(@"filesFoldersRemovedToRubbishBinMessage", @"Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA");
                     NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
                     NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
                     message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
@@ -88,9 +88,9 @@
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
         } else if (self.mode == DisplayModeSharedItem) {
             if (self.totalRequests > 1) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sharesLeft", @"Message shown when some shares have been left")];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sharesLeft", @"Message shown when some shares have been left")];
             } else {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", @"Message shown when a share has been left")];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"shareLeft", @"Message shown when a share has been left")];
             }
         }
         

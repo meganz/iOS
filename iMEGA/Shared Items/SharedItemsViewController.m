@@ -101,13 +101,15 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    self.tableView.allowsMultipleSelectionDuringEditing = YES;
+    
+    self.navigationItem.title = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
-    self.incomingLabel.text = AMLocalizedString(@"incoming", nil);
-    self.outgoingLabel.text = AMLocalizedString(@"outgoing", nil);
-    self.linksLabel.text = AMLocalizedString(@"Links", nil);
+    self.incomingLabel.text = NSLocalizedString(@"incoming", nil);
+    self.outgoingLabel.text = NSLocalizedString(@"outgoing", nil);
+    self.linksLabel.text = NSLocalizedString(@"Links", nil);
     
     self.incomingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.incomingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
@@ -130,6 +132,9 @@
         [self configPreviewingRegistration];
     }
     self.sortOrderType = [NSUserDefaults.standardUserDefaults integerForKey:@"SharedItemsSortOrderType"];
+    if (self.sortOrderType == MEGASortOrderTypeNone) {
+        self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -317,7 +322,7 @@
     }
 }
 
-- (void)toolbarItemsForSharedItems {
+- (void)configToolbarItemsForSharedItems {
     
     NSMutableArray *toolbarItemsMutableArray = NSMutableArray.alloc.init;
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -390,12 +395,12 @@
     NSString *navigationTitle;
     if (self.tableView.isEditing) {
         if (self.selectedNodesMutableArray.count == 0) {
-            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
         } else {
-            navigationTitle = (self.selectedNodesMutableArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableArray.count];
+            navigationTitle = (self.selectedNodesMutableArray.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableArray.count];
         }
     } else {
-        navigationTitle = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+        navigationTitle = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
     }
     
     self.navigationItem.title = navigationTitle;
@@ -469,7 +474,7 @@
     NSMutableArray *outSharesMutableArray = node.outShares;
     outSharesCount = outSharesMutableArray.count;
     if (outSharesCount > 1) {
-        userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
+        userName = [NSString stringWithFormat:NSLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
     } else {
         MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
         NSString *userDisplayName = user.mnz_displayName;
@@ -525,6 +530,13 @@
     self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
+- (void)shouldStartEditingModeAtIndex:(NSIndexPath *)indexPath {
+    [self setEditing:YES animated:YES];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    [self configToolbarItemsForSharedItems];
+    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -559,14 +571,14 @@
         UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
 
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
             NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
                 weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
                 weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
@@ -575,13 +587,13 @@
             ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
             [weakSelf presentViewController:sortByActionSheet animated:YES completion:nil];
         }]];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf setEditing:YES animated:YES];
             
             weakSelf.selectedNodesMutableArray = NSMutableArray.alloc.init;
             weakSelf.selectedSharesMutableArray = NSMutableArray.alloc.init;
             
-            [weakSelf toolbarItemsForSharedItems];
+            [weakSelf configToolbarItemsForSharedItems];
             [weakSelf toolbarItemsSetEnabled:NO];
         }]];
         
@@ -599,27 +611,30 @@
     
     if (editing) {
         self.editBarButtonItem.image = nil;
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.view addSubview:self.toolbar];
-        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         
-        NSLayoutAnchor *bottomAnchor;
-        if (@available(iOS 11.0, *)) {
-            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-        } else {
-            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-        }
-        
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
 
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
+        }
         
         for (SharedItemsTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = UIView.alloc.init;
@@ -735,10 +750,10 @@
             }
         }
         
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
         
         for (MEGANode *n in _selectedNodesMutableArray) {
-            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
         
         [self setEditing:NO animated:YES];
@@ -760,10 +775,10 @@
 
 - (IBAction)leaveShareAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"leaveFolder", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? NSLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : NSLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"leaveFolder", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self removeSelectedIncomingShares];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -808,16 +823,16 @@
         
         NSString *alertMessage;
         if ((usersMutableArray.count == 1) && (self.selectedNodesMutableArray.count == 1)) {
-            alertMessage = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
+            alertMessage = NSLocalizedString(@"removeOneShareOneContactMessage", nil);
         } else if ((usersMutableArray.count > 1) && (self.selectedNodesMutableArray.count == 1)) {
-            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), usersMutableArray.count];
+            alertMessage = [NSString stringWithFormat:NSLocalizedString(@"removeOneShareMultipleContactsMessage", nil), usersMutableArray.count];
         } else {
-            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), usersMutableArray.count];
+            alertMessage = [NSString stringWithFormat:NSLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), usersMutableArray.count];
         }
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self removeSelectedOutgoingShares];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -892,7 +907,7 @@
         
         [self updateNavigationBarTitle];
         
-        [self toolbarItemsForSharedItems];
+        [self configToolbarItemsForSharedItems];
         [self toolbarItemsSetEnabled:NO];
     }
 }
@@ -975,6 +990,13 @@
     }
     
     if (tableView.isEditing) {
+        
+        for (MEGANode *tempNode in self.selectedNodesMutableArray) {
+            if (tempNode.handle == node.handle) {
+                return;
+            }
+        }
+        
         if (node != nil) {
             [_selectedNodesMutableArray addObject:node];
         }
@@ -1047,6 +1069,14 @@
         
         return;
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self shouldStartEditingModeAtIndex:indexPath];
 }
 
 #pragma clang diagnostic push
@@ -1185,10 +1215,7 @@
                 }
             }
         } else {
-            [self setEditing:YES animated:YES];
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            [self toolbarItemsForSharedItems];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self shouldStartEditingModeAtIndex:indexPath];
         }
     }
     
@@ -1213,19 +1240,19 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+                text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
         } else {
             if (self.incomingButton.selected) {
-                text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", nil);
+                text = NSLocalizedString(@"noIncomingSharedItemsEmptyState_text", nil);
             } else if (self.outgoingButton.selected) {
-                text = AMLocalizedString(@"noOutgoingSharedItemsEmptyState_text", nil);
+                text = NSLocalizedString(@"noOutgoingSharedItemsEmptyState_text", nil);
             } else if (self.linksButton.selected) {
-                text = AMLocalizedString(@"No Public Links", @"Title for empty state view of 'Links' in Shared Items.");
+                text = NSLocalizedString(@"No Public Links", @"Title for empty state view of 'Links' in Shared Items.");
             }
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  nil);
+        text = NSLocalizedString(@"noInternetConnection",  nil);
     }
     
     return text;
@@ -1234,7 +1261,7 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -1268,7 +1295,7 @@
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;
@@ -1366,8 +1393,8 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [node mnz_downloadNodeOverwriting:NO];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
+            [node mnz_downloadNode];
             break;
             
         case MegaNodeActionTypeRename:

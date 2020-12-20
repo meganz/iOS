@@ -19,7 +19,7 @@
                 MEGALogInfo(@"URL opened on other app");
             } else {
                 MEGALogInfo(@"URL NOT opened");
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
             }
         }];
         return;
@@ -150,6 +150,22 @@
         return URLTypeChatPeerOptionsLink;
     }
     
+    if ([afterSlashesString containsString:@"uploadFile"]) {
+        return URLTypeUploadFile;
+    }
+    
+    if ([afterSlashesString containsString:@"scanDocument"]) {
+        return URLTypeScanDocument;
+    }
+    
+    if ([afterSlashesString containsString:@"startConversation"]) {
+        return URLTypeStartConversation;
+    }
+    
+    if ([afterSlashesString containsString:@"addContact"]) {
+        return URLTypeAddContact;
+    }
+
     return type;
 }
 

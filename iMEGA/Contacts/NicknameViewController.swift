@@ -114,7 +114,7 @@ class NicknameViewController: UIViewController {
 
                 self.updateHandler(withNickname: nickname)
             } else {
-                SVProgressHUD.showError(withStatus: request.requestString + " " + AMLocalizedString(error.name, nil))
+                SVProgressHUD.showError(withStatus: request.requestString + " " + NSLocalizedString(error.name, comment: ""))
             }
 
             self.dismissViewController()
@@ -142,14 +142,14 @@ class NicknameViewController: UIViewController {
         }
 
         title = (nickname != nil) ?
-            AMLocalizedString("Edit Nickname", "Contact details screen: Set the alias(nickname) for a user") :
-            AMLocalizedString("Set Nickname", "Contact details screen: Set the alias(nickname) for a user")
+            NSLocalizedString("Edit Nickname", comment: "Contact details screen: Set the alias(nickname) for a user") :
+            NSLocalizedString("Set Nickname", comment: "Contact details screen: Set the alias(nickname) for a user")
         removeNicknameButtonView.isHidden = (nickname == nil)
-        removeNicknameButton.setTitle(AMLocalizedString("Remove Nickname", "Edit nickname screen: Remove nickname button title"),
+        removeNicknameButton.setTitle(NSLocalizedString("Remove Nickname", comment: "Edit nickname screen: Remove nickname button title"),
                                       for: .normal)
-        cancelBarButtonItem.title = AMLocalizedString("cancel", "Cancels the add nickname screen")
-        saveBarButtonItem.title = AMLocalizedString("save", "Saves the new nickname")
-        nicknameLabel.text = AMLocalizedString("Alias/ Nickname", "Add nickname screen: This text appears above the alias(nickname) entry")
+        cancelBarButtonItem.title = NSLocalizedString("cancel", comment: "Cancels the add nickname screen")
+        saveBarButtonItem.title = NSLocalizedString("save", comment: "Saves the new nickname")
+        nicknameLabel.text = NSLocalizedString("Alias/ Nickname", comment: "Add nickname screen: This text appears above the alias(nickname) entry")
         
         updateAppearance()
     }

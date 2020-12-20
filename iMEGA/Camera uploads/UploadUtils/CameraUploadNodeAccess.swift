@@ -6,7 +6,13 @@ final class CameraUploadNodeAccess: NSObject {
     // MARK: - Private properties
     private let sdk: MEGASdk = MEGASdkManager.sharedMEGASdk()
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
-    private var handle: NodeHandle?
+    private var handle: NodeHandle? {
+        didSet {
+            if handle != oldValue && handle != nil {
+                NotificationCenter.default.post(name: NSNotification.Name.MEGACameraUploadTargetFolderUpdatedInMemory, object: nil)
+            }
+        }
+    }
     private var nodeLoadOperation: CameraUploadNodeLoadOperation?
     
     @objc static let shared = CameraUploadNodeAccess()

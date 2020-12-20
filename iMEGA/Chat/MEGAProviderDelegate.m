@@ -84,7 +84,7 @@
                                           callId:callId];
         } else {
             [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatId]
-                                      callerName:AMLocalizedString(@"connecting", nil)
+                                      callerName:NSLocalizedString(@"connecting", nil)
                                         hasVideo:NO
                                             uuid:uuid
                                           callId:callId];

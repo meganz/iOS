@@ -160,8 +160,8 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     }
 
     private func setupSegmentTitle() {
-        let recentsTitle = AMLocalizedString("Recents")
-        let offlineTitle = AMLocalizedString("offline")
+        let recentsTitle = NSLocalizedString("Recents", comment: "")
+        let offlineTitle = NSLocalizedString("offline", comment: "")
         titleView.setSegmentTitleViewModel(model: .init(titles: [
             .init(text: recentsTitle, index: 0),
             .init(text: offlineTitle, index: 1),

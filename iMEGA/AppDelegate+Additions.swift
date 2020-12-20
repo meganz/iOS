@@ -124,15 +124,15 @@ extension AppDelegate {
         } else {
             var message: String
             if suspensionType == .businessDisabled {
-                message = AMLocalizedString("Your account has been disabled by your administrator. Please contact your business account administrator for further details.", "Error message appears to sub-users of a business account when they try to login and they are disabled.")
+                message = NSLocalizedString("Your account has been disabled by your administrator. Please contact your business account administrator for further details.", comment: "Error message appears to sub-users of a business account when they try to login and they are disabled.")
             } else if suspensionType == .businessRemoved {
-                message = AMLocalizedString("Your account has been removed by your administrator. Please contact your business account administrator for further details.", "An error message which appears to sub-users of a business account when they try to login and they are deleted.")
+                message = NSLocalizedString("Your account has been removed by your administrator. Please contact your business account administrator for further details.", comment: "An error message which appears to sub-users of a business account when they try to login and they are deleted.")
             } else {
-                message = AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked")
+                message = NSLocalizedString("accountBlocked", comment: "Error message when trying to login and the account is blocked")
             }
             
-            let alert = UIAlertController(title: AMLocalizedString("error"), message:message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel) { _ in
+            let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message:message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel) { _ in
                 MEGASdkManager.sharedMEGASdk().logout()
             })
             UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)

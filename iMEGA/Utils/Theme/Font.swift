@@ -17,7 +17,13 @@ extension Font {
     static let title = Font(size: 17, weight: .bold)
 
     /// Size 15, Bold
-    static let titleSmall = Font(size: 15, weight: .bold)
+    static let titleMedium = Font(size: 15, weight: .bold)
+
+    /// Size 13, Bold
+    static let titleSmall = Font(size: 13, weight: .bold)
+
+    /// Size 11, Regular
+    static let subtitle1 = Font(size: 11, weight: .regular)
 
     /// Size 17, Semibold
     static let headline = Font(size: 17, weight: .semibold)

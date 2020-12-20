@@ -9,9 +9,11 @@ extension InterfaceStyle {
 
 enum MEGABackgroundStyle {
     case warning
-    case homeNavigationBar
+
+    case homeTopSide
     case slideIndicatorContainerView
     case slideIndicator
+    case bannerPageControl
 }
 
 protocol BackgroundStyleFactory {
@@ -27,12 +29,14 @@ private struct BackgroundStyleFactoryImpl: BackgroundStyleFactory {
         switch backgroundStyle {
         case .warning:
             return BackgroundStyle(backgroundColor: colorFactory.backgroundColor(.warning))
-        case .homeNavigationBar:
-            return BackgroundStyle(backgroundColor: colorFactory.backgroundColor(.navigationBar))
+        case .homeTopSide:
+            return BackgroundStyle(backgroundColor: colorFactory.backgroundColor(.homeTopSide))
         case .slideIndicatorContainerView:
             return BackgroundStyle(backgroundColor: colorFactory.backgroundColor(.primary))
         case .slideIndicator:
             return BackgroundStyle(backgroundColor: colorFactory.backgroundColor(.secondary))
+        case .bannerPageControl:
+            fatalError()
         }
     }
 }

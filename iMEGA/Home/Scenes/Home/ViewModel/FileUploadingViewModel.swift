@@ -2,7 +2,7 @@ import Foundation
 
 protocol HomeUploadingViewModelInputs {
 
-    func didLoadView()
+    func viewIsReady()
 
     func didTapUploadFromSourceItems() -> [FileUploadingSourceItem]
 
@@ -37,7 +37,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     // MARK: - HomeUploadingViewModelInputs
 
-    func didLoadView() {
+    func viewIsReady() {
         reachabilityUseCase.registerNetworkChangeListener { [weak self] _ in
             guard let self = self else { return }
             self.notifyUpdate?(self.outputs)

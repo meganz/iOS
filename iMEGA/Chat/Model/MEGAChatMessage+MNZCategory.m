@@ -125,7 +125,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     UIFont *textFontMediumFootnote = [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
 
     if (self.isDeleted) {
-        text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
+        text = NSLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
     } else if (self.isManagementMessage) {
         NSString *fullNameDidAction = [self fullNameDidAction];
         NSString *fullNameReceiveAction = [self fullNameReceiveAction];
@@ -135,7 +135,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 switch (self.privilege) {
                     case -1: {
                         if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
-                            NSString *wasRemovedFromTheGroupChatBy = AMLocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
+                            NSString *wasRemovedFromTheGroupChatBy = NSLocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
                             wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                             wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
                             text = wasRemovedFromTheGroupChatBy;
@@ -145,7 +145,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
-                            NSString *leftTheGroupChat = AMLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
+                            NSString *leftTheGroupChat = NSLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
                             leftTheGroupChat = [leftTheGroupChat stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                             text = leftTheGroupChat;
                             
@@ -158,7 +158,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                         
                     case -2: {
                         if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
-                            NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                            NSString *joinedTheGroupChatByInvitationFrom = NSLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
                             joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                             joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
                             text = joinedTheGroupChatByInvitationFrom;
@@ -168,7 +168,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
-                            NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
+                            NSString *joinedTheGroupChat = [NSString stringWithFormat:NSLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
                             text = joinedTheGroupChat;
                             
                             NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:joinedTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
@@ -184,7 +184,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 break;
                 
             case MEGAChatMessageTypeTruncate: {
-                NSString *clearedTheChatHistory = AMLocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
+                NSString *clearedTheChatHistory = NSLocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
                 clearedTheChatHistory = [clearedTheChatHistory stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameDidAction];
                 text = clearedTheChatHistory;
                 
@@ -195,20 +195,20 @@ static const void *richTitleTagKey = &richTitleTagKey;
             }
                 
             case MEGAChatMessageTypePrivilegeChange: {
-                NSString *wasChangedToBy = AMLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
+                NSString *wasChangedToBy = NSLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
                 wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                 NSString *privilige;
                 switch (self.privilege) {
                     case 0:
-                        privilige = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                        privilige = NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
                         break;
                         
                     case 2:
-                        privilige = AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
+                        privilige = NSLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
                         break;
                         
                     case 3:
-                        privilige = AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat");
+                        privilige = NSLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat");
                         break;
                         
                     default:
@@ -227,7 +227,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
             }
                 
             case MEGAChatMessageTypeChatTitle: {
-                NSString *changedGroupChatNameTo = AMLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
+                NSString *changedGroupChatNameTo = NSLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
                 changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameDidAction];
                 changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(self.content ? self.content : @" ")];
                 text = changedGroupChatNameTo;
@@ -240,7 +240,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
             }
                 
             case MEGAChatMessageTypePublicHandleCreate: {
-                NSString *publicHandleCreated = [NSString stringWithFormat:AMLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), fullNameReceiveAction];
+                NSString *publicHandleCreated = [NSString stringWithFormat:NSLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), fullNameReceiveAction];
                 text = publicHandleCreated;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:publicHandleCreated attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
@@ -251,7 +251,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
             }
                 
             case MEGAChatMessageTypePublicHandleDelete: {
-                NSString *publicHandleRemoved = [NSString stringWithFormat:AMLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), fullNameReceiveAction];
+                NSString *publicHandleRemoved = [NSString stringWithFormat:NSLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), fullNameReceiveAction];
                 text = publicHandleRemoved;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
@@ -262,13 +262,13 @@ static const void *richTitleTagKey = &richTitleTagKey;
             }
                 
             case MEGAChatMessageTypeSetPrivateMode: {
-                NSString *setPrivateMode = [NSString stringWithFormat:AMLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), fullNameReceiveAction];
-                NSString *keyRotationExplanation = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+                NSString *setPrivateMode = [NSString stringWithFormat:NSLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), fullNameReceiveAction];
+                NSString *keyRotationExplanation = NSLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
                 text = [NSString stringWithFormat:@"%@\n\n%@", setPrivateMode, keyRotationExplanation];
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
                 [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[text rangeOfString:fullNameReceiveAction]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:AMLocalizedString(@"Encrypted Key Rotation", nil)]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:NSLocalizedString(@"Encrypted Key Rotation", nil)]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_secondaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection] range:[text rangeOfString:keyRotationExplanation]];
                 
@@ -300,7 +300,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                                                                             color:textColor];
         
         if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
-            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.")] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1].italic, NSForegroundColorAttributeName:textColor}];
+            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", NSLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.")] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1].italic, NSForegroundColorAttributeName:textColor}];
             NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
             [attributedText appendAttributedString:edited];
             self.attributedText = attributedText;

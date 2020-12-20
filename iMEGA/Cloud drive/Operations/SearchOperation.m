@@ -13,13 +13,13 @@
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
 @property (assign, nonatomic) MEGASortOrderType sortOrderType;
 @property (assign, nonatomic) MEGANodeFormatType nodeFormatType;
-@property (copy, nonatomic) void (^completion)(NSArray <MEGANode *> *nodesFound);
+@property (copy, nonatomic) void (^completion)(NSArray <MEGANode *> *nodesFound, BOOL isCancelled);
 
 @end
 
 @implementation SearchOperation
 
-- (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken completion:(void (^)(NSArray  <MEGANode *> *_Nullable))completion {
+- (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken completion:(void (^)(NSArray  <MEGANode *> *_Nullable, BOOL))completion {
     return [self initWithParentNode:parentNode
                                text:text
                         cancelToken:cancelToken
@@ -33,7 +33,7 @@
                        cancelToken:(MEGACancelToken *)cancelToken
                      sortOrderType:(MEGASortOrderType)sortOrderType
                     nodeFormatType:(MEGANodeFormatType)nodeFormatType
-                        completion:(void (^)(NSArray<MEGANode *> * _Nullable))completion {
+                        completion:(void (^)(NSArray<MEGANode *> * _Nullable, BOOL))completion {
     self = super.init;
     if (self) {
         _parentNode = parentNode;
@@ -50,7 +50,7 @@
     if (self.isCancelled) {
         [self finishOperation];
         if (self.completion) {
-            self.completion(nil);
+            self.completion(nil, true);
         }
         return;
     }
@@ -82,11 +82,11 @@
 #else
             MEGALogInfo(@"[Search] canceled");
 #endif
-            self.completion(nil);
+            self.completion(nil, true);
         } else {
             NSArray *nodesFound = nodeListFound.mnz_nodesArrayFromNodeList;
             MEGALogInfo(@"[Search] %ld nodes found and added to the array", (long) nodesFound.count);
-            self.completion(nodesFound);
+            self.completion(nodesFound, false);
         }
     }
     

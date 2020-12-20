@@ -56,6 +56,7 @@
 @import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
+static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate> {
     
@@ -148,7 +149,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
-    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     _searchQueue = NSOperationQueue.new;
     self.searchQueue.name = @"searchQueue";
@@ -424,7 +425,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
     
     UIPreviewAction *saveForOfflineAction =
-    [UIPreviewAction actionWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder")
+    [UIPreviewAction actionWithTitle:NSLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder")
                                style:UIPreviewActionStyleDefault
                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                  CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
@@ -433,7 +434,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                  [self downloadAction:nil];
                              }];
     
-    UIPreviewAction *copyAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"copy", @"List option shown on the details of a file or folder")
+    UIPreviewAction *copyAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"copy", @"List option shown on the details of a file or folder")
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
@@ -446,13 +447,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
         MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
         if (shareType == MEGAShareTypeAccessOwner) {
-            deletePreviewActionTitle = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
+            deletePreviewActionTitle = NSLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
         }
     } else {
         if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeSharedItem) {
-            deletePreviewActionTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
+            deletePreviewActionTitle = NSLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
         } else if (self.displayMode == DisplayModeRubbishBin) {
-            deletePreviewActionTitle = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+            deletePreviewActionTitle = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
         }
     }
     UIPreviewAction *deleteAction =
@@ -508,16 +509,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             if (navigationController.viewControllers.lastObject.class == CloudDriveViewController.class) {
                 previewActions = (shareType == MEGAShareTypeAccessFull) ? @[saveForOfflineAction, copyAction, deleteAction] : @[saveForOfflineAction, copyAction];
             } else if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
-                UIPreviewAction *leaveShareAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the group conversation.")
+                UIPreviewAction *leaveShareAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"leave", @"A button label. The button allows the user to leave the group conversation.")
                                                                                style:UIPreviewActionStyleDestructive
                                                                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                                  CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
                                                                                  
-                                                                                 NSString *alertMessage = (cloudDriveVC.selectedNodesArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
-                                                                                 UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-                                                                                 [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                                                                                 NSString *alertMessage = (cloudDriveVC.selectedNodesArray.count > 1) ? NSLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : NSLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+                                                                                 UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+                                                                                 [leaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                                                                                  
-                                                                                 [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                                                 [leaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                                                                                      MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem files:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
                                                                                          [self setEditMode:NO];
                                                                                      }];
@@ -532,7 +533,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             
         case MEGAShareTypeAccessOwner: {
-            UIPreviewAction *shareAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ")
+            UIPreviewAction *shareAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ")
                                                                       style:UIPreviewActionStyleDefault
                                                                     handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                         CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
@@ -540,7 +541,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                         [rootViewController presentViewController:activityVC animated:YES completion:nil];
                                                                     }];
             
-            UIPreviewAction *moveAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder")
+            UIPreviewAction *moveAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"move", @"Title for the action that allows you to move a file or folder")
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
@@ -549,7 +550,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
             if (self.displayMode == DisplayModeCloudDrive) {
                 if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
-                    UIPreviewAction *shareFolderPreviewAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive")
+                    UIPreviewAction *shareFolderPreviewAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive")
                                                                                            style:UIPreviewActionStyleDefault
                                                                                          handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                                              CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
@@ -641,23 +642,23 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
 
         if (self.searchController.isActive) {
-            text = AMLocalizedString(@"noResults", nil);
+            text = NSLocalizedString(@"noResults", nil);
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        text = AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.");
+                        text = NSLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.");
                     } else {
-                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                        text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
                     break;
                 }
 
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
+                        text = NSLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
                     } else {
-                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                        text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
                     break;
 
@@ -666,7 +667,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
 
     return text;
@@ -675,7 +676,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
 
     return text;
@@ -736,7 +737,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if (!self.searchController.isActive) {
-                    text = AMLocalizedString(@"addFiles", nil);
+                    text = NSLocalizedString(@"addFiles", nil);
                 }
                 break;
             }
@@ -747,7 +748,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+            text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
 
@@ -776,16 +777,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)didSelectNode:(MEGANode *)node {
     if (node.isTakenDown) {
-        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
+        NSString *alertMessage = node.isFolder ? NSLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : NSLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
@@ -843,7 +844,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)loadPhotoAlbumBrowser {
-    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionText:AMLocalizedString(@"Upload (%d)", @"Used in Photos app browser view to send the photos from the view to the cloud.") selectionActionDisabledText:AMLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionText:NSLocalizedString(@"Upload (%d)", @"Used in Photos app browser view to send the photos from the view to the cloud.") selectionActionDisabledText:NSLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             for (PHAsset *asset in assets) {
                 [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
@@ -970,7 +971,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
         case DisplayModeRecents:
             self.navigationItem.rightBarButtonItems = @[];
-            self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", @"A button label.")
+            self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"close", @"A button label.")
                                                                                     style:UIBarButtonItemStylePlain
                                                                                    target:self
                                                                                    action:@selector(dismissSelf)];
@@ -1033,37 +1034,37 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.parentNode];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.parentNode];
         [self reloadUI];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeLabelAsc for:self.parentNode];
         [self reloadUI];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites") detail:nil accessoryView:sortType == MEGASortOrderTypeFavouriteAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"favourite"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites") detail:nil accessoryView:sortType == MEGASortOrderTypeFavouriteAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"favourite"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeFavouriteAsc for:self.parentNode];
         [self reloadUI];
     }]];
@@ -1086,10 +1087,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)presentUploadAlertController {
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") detail:nil image:[UIImage imageNamed:@"saveToPhotos"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") detail:nil image:[UIImage imageNamed:@"saveToPhotos"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") detail:nil image:[UIImage imageNamed:@"capture"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") detail:nil image:[UIImage imageNamed:@"capture"] style:UIAlertActionStyleDefault actionHandler:^{
         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
                 [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
@@ -1105,7 +1106,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
         }];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
         documentMenuViewController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
@@ -1117,19 +1118,29 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self presentViewController:uploadActions animated:YES completion:nil];
 }
 
+- (void)presentScanDocument {
+    if (@available(iOS 13.0, *)) {
+        [self presentViewController:({
+            VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+            scanVC.delegate = self;
+            scanVC;
+        }) animated:YES completion:nil];
+    }
+}
+
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         if (self.selectedNodesArray.count == 0) {
-            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
         } else {
-            navigationTitle = (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
+            navigationTitle = (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
         }
     } else {
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if (!self.parentNode) {
-                    navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                    navigationTitle = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 } else {
                     navigationTitle = [self.parentNode name];
                 }
@@ -1138,7 +1149,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                 
             case DisplayModeRubbishBin: {
                 if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    navigationTitle = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+                    navigationTitle = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
                 } else {
                     navigationTitle = [self.parentNode name];
                 }
@@ -1146,7 +1157,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
                 
             case DisplayModeRecents: {
-                NSString *itemsString =  AMLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
+                NSString *itemsString =  NSLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
                 navigationTitle = [NSString stringWithFormat:@"%td %@", self.nodes.size.integerValue, itemsString];
                 break;
             }
@@ -1165,7 +1176,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
     
     static BOOL alreadyPresented = NO;
-    if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+    
+    NSDate *accountCreationDate = MEGASdkManager.sharedMEGASdk.accountCreationDate;
+    NSInteger days = [NSCalendar.currentCalendar components:NSCalendarUnitDay
+                                                   fromDate:accountCreationDate
+                                                     toDate:NSDate.date
+                                                    options:NSCalendarWrapComponents].day;
+    
+    if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount] && days > kMinDaysToEncourageToUpgrade) {
         NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
         if (lastEncourageUpgradeDate) {
             NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
@@ -1293,7 +1311,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
         self.cancelToken = MEGACancelToken.alloc.init;
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound, BOOL isCancelled) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];
@@ -1338,37 +1356,37 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     NSString *message;
     if (numFilesAction == 0) {
         if (numFoldersAction == 1) {
-            message = AMLocalizedString(@"removeFolderToRubbishBinMessage", nil);
+            message = NSLocalizedString(@"removeFolderToRubbishBinMessage", nil);
         } else { //folders > 1
-            message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
+            message = [NSString stringWithFormat:NSLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
         }
     } else if (numFilesAction == 1) {
         if (numFoldersAction == 0) {
-            message = AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
+            message = NSLocalizedString(@"removeFileToRubbishBinMessage", nil);
         } else if (numFoldersAction == 1) {
-            message = AMLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
+            message = NSLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
         } else {
-            message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
+            message = [NSString stringWithFormat:NSLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
         }
     } else {
         if (numFoldersAction == 0) {
-            message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
+            message = [NSString stringWithFormat:NSLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
         } else if (numFoldersAction == 1) {
-            message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
+            message = [NSString stringWithFormat:NSLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
         } else {
-            message = AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
+            message = NSLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
             NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
             NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
             message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
             message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
         }
-        alertTitle = AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account");
+        alertTitle = NSLocalizedString(@"removeNodeFromRubbishBinTitle", @"Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account");
     }
     
     UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [removeAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [removeAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
             [self setEditMode:NO];
         }];
@@ -1418,38 +1436,34 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     __weak __typeof__(self) weakSelf = self;
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentUploadAlertController];
     }]];
     
     if (@available(iOS 13.0, *)) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-            [self presentViewController:({
-                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
-                scanVC.delegate = self;
-                scanVC;
-            }) animated:YES completion:nil];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self presentScanDocument];
         }]];
     }
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
-        UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
+        UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
         
         [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
+            textField.placeholder = NSLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
             [textField addTarget:weakSelf action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
             textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                 return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
             };
         }];
         
-        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *textField = [[newFolderAlertController textFields] firstObject];
                 MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:weakSelf.parentNode searchString:textField.text recursive:NO];
                 if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
                 } else {
                     MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
@@ -1462,25 +1476,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
     }]];
     if ([self numberOfRows]) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf changeViewModePreference];
         }]];
     }
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
         [weakSelf setEditMode:enableEditing];
         
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
         cloudDriveVC.displayMode = DisplayModeRubbishBin;
-        cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+        cloudDriveVC.title = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
         [weakSelf.navigationController pushViewController:cloudDriveVC animated:YES];
     }]];
     
@@ -1493,28 +1507,28 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf changeViewModePreference];
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
         [weakSelf setEditMode:enableEditing];
     }]];
     
     if (self.displayMode == DisplayModeRubbishBin) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     [MEGASdkManager.sharedMEGASdk cleanRubbishBin];
                 }]];
                 
@@ -1535,7 +1549,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self updateNavigationBarTitle];
     
     if (editing) {
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
@@ -1543,25 +1557,28 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         if (tabBar == nil) {
             return;
         }
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.view addSubview:self.toolbar];
-        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         
-        NSLayoutAnchor *bottomAnchor;
-        if (@available(iOS 11.0, *)) {
-            bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
-        } else {
-            bottomAnchor = tabBar.bottomAnchor;
+        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+            
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
-        
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
@@ -1585,10 +1602,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *node in self.selectedNodesArray) {
-        if ([node mnz_downloadNodeOverwriting:NO]) {
+        if ([node mnz_downloadNode]) {
             [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
         } else {
             return;
@@ -1710,7 +1727,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         
         // If file doesn't exist in MEGA then upload it
         if (node == nil) {
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"uploadStarted_Message", nil)];
             
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:NO];
@@ -1718,7 +1735,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             if (node.parentHandle == self.parentNode.handle) {
                 [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
                 
-                NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);
+                NSString *alertMessage = NSLocalizedString(@"fileExistAlertController_Message", nil);
                 
                 NSString *localNameString = [NSString stringWithFormat:@"%@", [url lastPathComponent]];
                 NSString *megaNameString = [NSString stringWithFormat:@"%@", node.name];
@@ -1730,7 +1747,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                           alertControllerWithTitle:nil
                                                           message:alertMessage
                                                           preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
                     [self presentViewController:alertController animated:YES completion:nil];
                 });
             } else {
@@ -1753,8 +1770,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if (request.type == MEGARequestTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:AMLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:NSLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
         }
@@ -1836,12 +1853,12 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if ([transfer type] ==  MEGATransferTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
         }
     }
     
@@ -1867,7 +1884,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         vc.docs = docs.copy;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
-            [nav addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
+            [nav addLeftDismissButtonWithText:NSLocalizedString(@"cancel", nil)];
             nav.modalPresentationStyle = UIModalPresentationFullScreen;
             nav;
         }) animated:YES completion:nil];
@@ -1879,8 +1896,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            if ([node mnz_downloadNodeOverwriting:NO]) {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            if ([node mnz_downloadNode]) {
                 [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
             }
             break;

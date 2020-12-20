@@ -30,11 +30,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.copyrightWarningNavigationItem.title = AMLocalizedString(@"copyrightWarning", @"A title for the Copyright Warning");
-    self.copyrightWarningLabel.text = AMLocalizedString(@"copyrightWarningToAll", @"A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service.");
-    self.copyrightMessageLabel.text = [NSString stringWithFormat:@"%@\n\n%@", AMLocalizedString(@"copyrightMessagePart1", nil), AMLocalizedString(@"copyrightMessagePart2", nil)];
-    self.agreeBarButtonItem.title = AMLocalizedString(@"agree", @"button caption text that the user clicks when he agrees");
-    self.disagreeBarButtonItem.title = AMLocalizedString(@"disagree", @"button caption text that the user clicks when he disagrees");
+    self.copyrightWarningNavigationItem.title = NSLocalizedString(@"copyrightWarning", @"A title for the Copyright Warning");
+    self.copyrightWarningLabel.text = NSLocalizedString(@"copyrightWarningToAll", @"A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service.");
+    self.copyrightMessageLabel.text = [NSString stringWithFormat:@"%@\n\n%@", NSLocalizedString(@"copyrightMessagePart1", nil), NSLocalizedString(@"copyrightMessagePart2", nil)];
+    self.agreeBarButtonItem.title = NSLocalizedString(@"agree", @"button caption text that the user clicks when he agrees");
+    self.disagreeBarButtonItem.title = NSLocalizedString(@"disagree", @"button caption text that the user clicks when he disagrees");
     
     [self updateAppearance];
 }

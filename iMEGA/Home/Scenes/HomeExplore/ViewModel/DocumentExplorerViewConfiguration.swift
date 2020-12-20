@@ -7,12 +7,12 @@ protocol FilesExplorerViewConfiguration {
 
 struct DocumentExplorerViewConfiguration: FilesExplorerViewConfiguration {
     var title: String {
-        return AMLocalizedString("Documents","Title for document explorer view")
+        return NSLocalizedString("Documents", comment: "Title for document explorer view")
     }
     
     var emptyStateViewModel: EmptyStateViewModel {
         return EmptyStateViewModel(image: UIImage(named: "documentsEmptyState")!,
-                                   title: AMLocalizedString("No documents found", "Photo Explorer Screen: No documents in the account"))
+                                   title: NSLocalizedString("No documents found", comment: "Photo Explorer Screen: No documents in the account"))
     }
     
     var listSourceType: FilesExplorerListSourceProtocol.Type {

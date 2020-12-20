@@ -65,7 +65,7 @@
 }
 
 - (void)setErrorState:(BOOL)error {
-    NSString *text = error ? AMLocalizedString(@"passwordWrong", @"Wrong password") : AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
+    NSString *text = error ? NSLocalizedString(@"passwordWrong", @"Wrong password") : NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     [self setErrorState:error withText:text];
 }
 
@@ -131,7 +131,7 @@
 #ifdef TARGET_INTERFACE_BUILDER
     self.topLabel.text = [[NSBundle bundleForClass:self.class] localizedStringForKey:self.topLabelTextKey value:nil table:nil];
 #else
-    self.topLabel.text = AMLocalizedString(self.topLabelTextKey, nil);
+    self.topLabel.text = NSLocalizedString(self.topLabelTextKey, nil);
 #endif
 }
 

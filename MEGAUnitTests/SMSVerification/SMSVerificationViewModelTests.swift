@@ -16,7 +16,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
     
     func testAction_onViewReady_addNumber_achievementError() {
         let errors: [AchievementErrorEntity] = [.achievementsDisabled, .generic]
-        let message = AMLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
+        let message = NSLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
         
         for error in errors {
             let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase())
@@ -129,11 +129,11 @@ final class SMSVerificationViewModelTests: XCTestCase {
     
     func testAction_sendCodeToLocalPhoneNumber_error() {
         let errorMessageDict: [CheckSMSErrorEntity: String] =
-            [.reachedDailyLimit: AMLocalizedString("You have reached the daily limit"),
-             .alreadyVerifiedWithCurrentAccount: AMLocalizedString("Your account is already verified"),
-             .alreadyVerifiedWithAnotherAccount: AMLocalizedString("This number is already associated with a Mega account"),
-             .wrongFormat: AMLocalizedString("Please enter a valid phone number"),
-             .generic: AMLocalizedString("Unknown error")]
+            [.reachedDailyLimit: NSLocalizedString("You have reached the daily limit"),
+             .alreadyVerifiedWithCurrentAccount: NSLocalizedString("Your account is already verified"),
+             .alreadyVerifiedWithAnotherAccount: NSLocalizedString("This number is already associated with a Mega account"),
+             .wrongFormat: NSLocalizedString("Please enter a valid phone number"),
+             .generic: NSLocalizedString("Unknown error")]
         
         for (error, message) in errorMessageDict {
             let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(),

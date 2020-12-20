@@ -1,9 +1,5 @@
 import Foundation
 
-func AMLocalizedString(_ key: String, _ comment: String? = nil) -> String {
-    return LocalizationSystem.sharedLocal().localizedString(forKey: key, value: comment)
-}
-
 func MEGALogFatal(_ message: String, _ file: String = #file, _ line: Int = #line) {
     MEGASdk.log(with: .fatal, message: "[iOS] " + message, filename: file, line: line)
 }

@@ -81,11 +81,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
-    [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+    [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+    self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
@@ -251,20 +251,20 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)configUploadProgressByStats:(UploadStats *)uploadStats {
-    self.photosUploadedProgressView.progress = (float)uploadStats.finishedFilesCount / (float)uploadStats.totalFilesCount;
+    self.photosUploadedProgressView.progress = uploadStats.progress;
     
     NSString *progressText;
     if (uploadStats.pendingFilesCount == 1) {
         if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = AMLocalizedString(@"Upload paused because of no WiFi, 1 file pending", nil);
+            progressText = NSLocalizedString(@"Upload paused because of no WiFi, 1 file pending", nil);
         } else {
-            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+            progressText = NSLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
         }
     } else {
         if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = [NSString stringWithFormat:AMLocalizedString(@"Upload paused because of no WiFi, %lu files pending", nil), uploadStats.pendingFilesCount];
+            progressText = [NSString stringWithFormat:NSLocalizedString(@"Upload paused because of no WiFi, %lu files pending", nil), uploadStats.pendingFilesCount];
         } else {
-            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+            progressText = [NSString stringWithFormat:NSLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
         }
     }
     self.photosUploadedLabel.text = progressText;
@@ -296,9 +296,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
     NSString *videoMessage;
     if (count == 1) {
-        videoMessage = AMLocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", nil);
+        videoMessage = NSLocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", nil);
     } else {
-        videoMessage = [NSString stringWithFormat:AMLocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", nil), (unsigned long)count];
+        videoMessage = [NSString stringWithFormat:NSLocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", nil), (unsigned long)count];
     }
     
     self.stateLabel.text = videoMessage;
@@ -318,7 +318,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
-            self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
+            self.stateLabel.text = NSLocalizedString(@"enableCameraUploadsButton", nil);
             self.enableCameraUploadsButton.hidden = NO;
             break;
         case MEGACameraUploadsStateUploading:
@@ -327,20 +327,20 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
         case MEGACameraUploadsStateCompleted:
-            self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
+            self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             break;
         case MEGACameraUploadsStateNoInternetConnection:
             if (self.photosByMonthYearArray.count == 0) {
                 self.stateView.hidden = YES;
             } else {
-                self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+                self.stateLabel.text = NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
             break;
         case MEGACameraUploadsStateEmpty:
             self.stateView.hidden = YES;
             break;
         case MEGACameraUploadsStateLoading:
-            self.stateLabel.text = AMLocalizedString(@"loading", nil);
+            self.stateLabel.text = NSLocalizedString(@"loading", nil);
             break;
         case MEGACameraUploadsStateEnableVideo:
             self.stateLabel.font = [UIFont systemFontOfSize:15.0];
@@ -397,9 +397,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self.photosCollectionView reloadData];
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
-        self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
+        self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
     } else {
-        self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+        self.navigationItem.title = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
 }
 
@@ -474,10 +474,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         }
         
         allNodesSelected = YES;
-        [self.navigationItem setTitle:[NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
+        [self.navigationItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
     } else {
         allNodesSelected = NO;
-        [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select title")];
+        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", @"Select title")];
     }
     
     if (self.selectedItemsDictionary.count == 0) {
@@ -498,9 +498,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         
-        [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
+        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
@@ -524,10 +524,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         
         allNodesSelected = NO;
-        self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+        self.navigationItem.title = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
@@ -555,7 +555,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
     }
     [self setEditing:NO animated:YES];
 }
@@ -719,13 +719,13 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         }
         
         if ([self.selectedItemsDictionary count]) {
-            NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
+            NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
             
             [self.navigationItem setTitle:message];
             
             [self setToolbarActionsEnabled:YES];
         } else {
-            [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
+            [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", @"Select items")];
             
             [self setToolbarActionsEnabled:NO];
         }
@@ -769,10 +769,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)showCameraUploadBoardingScreen {
     CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
-    boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    boardingAlertVC.detail = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
-    boardingAlertVC.firstButtonTitle = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
-    boardingAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
+    boardingAlertVC.viewTitle = NSLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+    boardingAlertVC.detail = NSLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
+    boardingAlertVC.firstButtonTitle = NSLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    boardingAlertVC.dismissButtonTitle = NSLocalizedString(@"notNow", nil);
     
     boardingAlertVC.firstCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:^{
@@ -888,15 +888,15 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
             if ([self.photosByMonthYearArray count] == 0) {
-                text = AMLocalizedString(@"cameraUploadsEnabled", nil);
+                text = NSLocalizedString(@"cameraUploadsEnabled", nil);
             } else {
                 return nil;
             }
         } else {
-            text = AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
+            text = NSLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return text;
@@ -905,9 +905,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
-        text = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
+        text = NSLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
     } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -934,11 +934,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (!CameraUploadManager.isCameraUploadEnabled) {
-            text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
+            text = NSLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         }
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+            text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
     

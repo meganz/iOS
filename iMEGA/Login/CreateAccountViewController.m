@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.tapGesture.delegate = self;
     [self.scrollView addGestureRecognizer:self.tapGesture];
     
-    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
     
     self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.firstNameInputView.inputTextField.delegate = self;
@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     }
     
-    [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
+    [self.createAccountButton setTitle:NSLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
 }
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", nil)];
+    [self.navigationController.navigationBar.topItem setTitle:NSLocalizedString(@"createAccount", nil)];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     if (!self.termsCheckboxButton.isSelected) {
         if (valid) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
         }
         
         valid = NO;
@@ -199,7 +199,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (!self.termsForLosingPasswordCheckboxButton.isSelected) {
         if (valid) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"]
-                              status:AMLocalizedString(@"termsForLosingPasswordCheckboxUnselected", nil)];
+                              status:NSLocalizedString(@"termsForLosingPasswordCheckboxUnselected", nil)];
         }
         
         valid = NO;
@@ -211,10 +211,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (BOOL)validateFirstName {
     self.firstNameInputView.inputTextField.text = self.firstNameInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.firstNameInputView.inputTextField.text.mnz_isEmpty) {
-        [self.firstNameInputView setErrorState:YES withText:AMLocalizedString(@"nameInvalidFormat", @"Error text shown when you have not entered a correct name")];
+        [self.firstNameInputView setErrorState:YES withText:NSLocalizedString(@"nameInvalidFormat", @"Error text shown when you have not entered a correct name")];
         return NO;
     } else {
-        [self.firstNameInputView setErrorState:NO withText:AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
+        [self.firstNameInputView setErrorState:NO withText:NSLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
         return YES;
     }
 }
@@ -222,10 +222,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (BOOL)validateLastName {
     self.lastNameInputView.inputTextField.text = self.lastNameInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.lastNameInputView.inputTextField.text.mnz_isEmpty) {
-        [self.lastNameInputView setErrorState:YES withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
+        [self.lastNameInputView setErrorState:YES withText:NSLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
         return NO;
     } else {
-        [self.lastNameInputView setErrorState:NO withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
+        [self.lastNameInputView setErrorState:NO withText:NSLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
         return YES;
     }
 }
@@ -233,33 +233,33 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (BOOL)validateEmail {
     self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.emailInputView.inputTextField.text.mnz_isValidEmail) {
-        [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
+        [self.emailInputView setErrorState:NO withText:NSLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
         return YES;
     } else {
-        [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
+        [self.emailInputView setErrorState:YES withText:NSLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
         return NO;
     }
 }
 
 - (BOOL)validatePassword {
     if (self.passwordView.passwordTextField.text.mnz_isEmpty) {
-        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
+        [self.passwordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
         return NO;
     } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
-        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"pleaseStrengthenYourPassword", nil)];
+        [self.passwordView setErrorState:YES withText:NSLocalizedString(@"pleaseStrengthenYourPassword", nil)];
         return NO;
     } else {
-        [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+        [self.passwordView setErrorState:NO withText:NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
         return YES;
     }
 }
 
 - (BOOL)validateRetypePassword {
     if ([self.retypePasswordView.passwordTextField.text isEqualToString:self.passwordView.passwordTextField.text]) {
-        [self.retypePasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+        [self.retypePasswordView setErrorState:NO withText:NSLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
         return YES;
     } else {
-        [self.retypePasswordView setErrorState:YES withText:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
+        [self.retypePasswordView setErrorState:YES withText:NSLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
         return NO;
     }
 }
@@ -301,7 +301,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (void)setTermsOfServiceAttributedTitle {
-    NSString *agreeWithTheMEGATermsOfService = AMLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
+    NSString *agreeWithTheMEGATermsOfService = NSLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
     NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href=\"terms\">" andString:@"</a>"];
     if (!termsOfServiceString) {
         termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href='terms'>" andString:@"</a>"];
@@ -319,7 +319,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (void)setTermsForLosingPasswordAttributedText {
-    NSString *agreementForLosingPasswordText = AMLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
+    NSString *agreementForLosingPasswordText = NSLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
 
     NSString *semiboldPrimaryGrayText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     NSString *greenText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[/S]" andString:@"</a>"];
@@ -413,7 +413,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                         [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
                     }];
                 } else {
-                    [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
+                    [self.emailInputView setErrorState:YES withText:NSLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                     [self.emailInputView.inputTextField becomeFirstResponder];
                 }
             }];
@@ -495,23 +495,23 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     switch (textField.tag) {
         case FirstNameTextFieldTag:
-            [self.firstNameInputView setErrorState:NO withText:AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
+            [self.firstNameInputView setErrorState:NO withText:NSLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
             break;
             
         case LastNameTextFieldTag:
-            [self.lastNameInputView setErrorState:NO withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
+            [self.lastNameInputView setErrorState:NO withText:NSLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
             break;
             
         case EmailTextFieldTag:
-            [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
+            [self.emailInputView setErrorState:NO withText:NSLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             break;
             
         case PasswordTextFieldTag:
-            [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+            [self.passwordView setErrorState:NO withText:NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
             break;
             
         case RetypeTextFieldTag:
-            [self.retypePasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+            [self.retypePasswordView setErrorState:NO withText:NSLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
             break;
             
         default:

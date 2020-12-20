@@ -63,9 +63,9 @@
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
-    [self.cloudDriveLabel setText:AMLocalizedString(@"cloudDrive", @"")];
-    [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"")];
-    [self.incomingSharesLabel setText:AMLocalizedString(@"incomingShares", @"")];
+    [self.cloudDriveLabel setText:NSLocalizedString(@"cloudDrive", @"")];
+    [self.rubbishBinLabel setText:NSLocalizedString(@"rubbishBinLabel", @"")];
+    [self.incomingSharesLabel setText:NSLocalizedString(@"incomingShares", @"")];
     
     [self reloadPieChart:self.usagePageControl.currentPage];
     
@@ -79,7 +79,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = AMLocalizedString(@"Storage", @"Navigate title for the storage information screen");
+    self.navigationItem.title = NSLocalizedString(@"Storage", @"Navigate title for the storage information screen");
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -194,7 +194,7 @@
             firstNumber = self.usedStorage;
             secondNumber = self.maxStorage;
             
-            tertiaryTextString = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+            tertiaryTextString = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
             break;
         }
             
@@ -202,7 +202,7 @@
             firstNumber = self.transferOwnUsed;
             secondNumber = self.transferMax;
             
-            tertiaryTextString = AMLocalizedString(@"Transfer", @"Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible).");
+            tertiaryTextString = NSLocalizedString(@"Transfer", @"Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible).");
             break;
         }
     }

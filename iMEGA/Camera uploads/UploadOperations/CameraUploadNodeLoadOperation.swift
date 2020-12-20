@@ -96,7 +96,7 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
             return
         }
         
-        let name = AMLocalizedString("cameraUploadsLabel", "Name of the auto-generated Camera Upload folder")
+        let name = NSLocalizedString("cameraUploadsLabel", comment: "Name of the auto-generated Camera Upload folder")
         sdk.createFolder(withName: name, parent: parent, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
             switch error.type {
             case .apiOk:

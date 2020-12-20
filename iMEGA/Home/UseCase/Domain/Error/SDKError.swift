@@ -1,6 +1,6 @@
 import Foundation
 
-enum MEGASDKErrorType {
+enum MEGASDKErrorType: Error {
 
     case ok
 

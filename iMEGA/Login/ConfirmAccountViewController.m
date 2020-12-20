@@ -51,20 +51,20 @@
     
     switch (self.urlType) {
         case URLTypeConfirmationLink:
-            self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
-            [self.confirmAccountButton setTitle:AMLocalizedString(@"Confirm account", @"Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+            self.confirmTextLabel.text = NSLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
+            [self.confirmAccountButton setTitle:NSLocalizedString(@"Confirm account", @"Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
             
             break;
         
         case URLTypeChangeEmailLink:
-            self.confirmTextLabel.text = AMLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
-            [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
+            self.confirmTextLabel.text = NSLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
+            [self.confirmAccountButton setTitle:NSLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
             
             break;
         
         case URLTypeCancelAccountLink:
-            self.confirmTextLabel.text = AMLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
-            [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
+            self.confirmTextLabel.text = NSLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
+            [self.confirmAccountButton setTitle:NSLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
             
             break;
             
@@ -72,7 +72,7 @@
             break;
     }
     
-    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
+    [self.cancelButton setTitle:NSLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
@@ -142,12 +142,12 @@
     [self.passwordView.passwordTextField resignFirstResponder];
 
     if (self.urlType == URLTypeConfirmationLink) {
-        NSString *message = AMLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
+        NSString *message = NSLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [MEGALinkManager resetLinkAndURLType];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [MEGALinkManager resetLinkAndURLType];
             
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
@@ -171,7 +171,7 @@
     if (validPassword) {
         [self.passwordView setErrorState:NO];
     } else {
-        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [self.passwordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [self.passwordView.passwordTextField becomeFirstResponder];
     }
     
@@ -244,15 +244,15 @@
             }
                 
             case MEGAErrorTypeApiEAccess: {
-                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"error", nil) message:NSLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
                 
                 [self presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 break;
             }
                 
             case MEGAErrorTypeApiEExist: {
-                [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
+                [self.emailInputView setErrorState:YES withText:NSLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                 break;
             }
                 
@@ -260,7 +260,7 @@
                 break;
                 
             default:
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", AMLocalizedString(error.name, nil), (long)error.type]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", NSLocalizedString(error.name, nil), (long)error.type]];
                 break;
         }
         
@@ -299,10 +299,10 @@
             [self.passwordView.passwordTextField resignFirstResponder];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"emailHasChanged" object:nil];
             [self dismissViewControllerAnimated:YES completion:^{
-                NSString *alertMessage = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-                UIAlertController *newEmailAddressAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+                NSString *alertMessage = [NSLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                UIAlertController *newEmailAddressAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
                 
-                [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
+                [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
                 
                 [UIApplication.mnz_presentingViewController presentViewController:newEmailAddressAlertController animated:YES completion:nil];
             }];
