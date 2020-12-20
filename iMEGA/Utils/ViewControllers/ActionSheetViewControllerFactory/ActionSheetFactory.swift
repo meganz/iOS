@@ -3,7 +3,7 @@ import Foundation
 protocol ActionSheetFactoryProtocol {
 
     func nodeLabelColorView(forNode nodeHandle: MEGAHandle,
-                            completion:((Result<ActionSheetViewController, NodeLabelActionError>) -> Void)?)
+                            completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?)
 }
 
 struct ActionSheetFactory: ActionSheetFactoryProtocol {
@@ -18,7 +18,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
     }
 
     func nodeLabelColorView(forNode nodeHandle: MEGAHandle,
-                            completion:((Result<ActionSheetViewController, NodeLabelActionError>) -> Void)?) {
+                            completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?) {
         nodeLabelColorActions(forNode: nodeHandle) { (actionsResult) in
             let viewControllerResult = actionsResult.map {
                 ActionSheetViewController(actions: $0, headerTitle: nil, dismissCompletion: nil, sender: nil)
@@ -29,12 +29,12 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
 
     private func nodeLabelColorActions(
         forNode nodeHandle: MEGAHandle,
-        completion:((Result<[BaseAction], NodeLabelActionError>) -> Void)?
+        completion:((Result<[BaseAction], NodeLabelActionDomainError>) -> Void)?
     ) {
         nodeLabelActionUseCase.nodeLabelColor(forNode: nodeHandle) { (colorResult) in
             switch colorResult {
             case .failure(let error):
-                completion?(.failure(NodeLabelActionError(error)))
+                completion?(.failure(error))
             case .success(let nodeCurrentColor):
                 let allLabelColors = nodeLabelActionUseCase.labelColors
                 let actionSheetActions = allLabelColors.map { (color) -> BaseAction in
@@ -82,23 +82,6 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
     }
 }
 
-enum NodeLabelActionError: Error {
-
-    case nodeNotFound
-
-    case unsupportedNodeLabelColorFound
-
-    case internalGeneric
-
-    init(_ domainError: NodeLabelActionDomainError) {
-        switch domainError {
-        case .nodeNotFound: self = .nodeNotFound
-        case .unsupportedNodeLabelColorFound: self = .unsupportedNodeLabelColorFound
-        case .sdkError: self = .internalGeneric
-        }
-    }
-}
-
 private extension NodeLabelColor {
 
     var iconImage: UIImage {
@@ -125,21 +108,21 @@ private extension NodeLabelColor {
     var localizedTitle: String {
         switch self {
         case .red:
-            return AMLocalizedString("Red", "A user can mark a folder or file with its own colour, in this case “Red”.")
+            return NSLocalizedString("Red", comment: "A user can mark a folder or file with its own colour, in this case “Red”.")
         case .orange:
-            return AMLocalizedString("Orange", "A user can mark a folder or file with its own colour, in this case “Orange”.")
+            return NSLocalizedString("Orange", comment: "A user can mark a folder or file with its own colour, in this case “Orange”.")
         case .yellow:
-            return AMLocalizedString("Yellow", "A user can mark a folder or file with its own colour, in this case “Yellow”.")
+            return NSLocalizedString("Yellow", comment: "A user can mark a folder or file with its own colour, in this case “Yellow”.")
         case .green:
-            return AMLocalizedString("Green", "A user can mark a folder or file with its own colour, in this case “Green”.")
+            return NSLocalizedString("Green", comment: "A user can mark a folder or file with its own colour, in this case “Green”.")
         case .blue:
-            return AMLocalizedString("Blue", "A user can mark a folder or file with its own colour, in this case “Blue”.")
+            return NSLocalizedString("Blue", comment: "A user can mark a folder or file with its own colour, in this case “Blue”.")
         case .purple:
-            return AMLocalizedString("Purple", "A user can mark a folder or file with its own colour, in this case “Purple”.")
+            return NSLocalizedString("Purple", comment: "A user can mark a folder or file with its own colour, in this case “Purple”.")
         case .grey:
-            return AMLocalizedString("Grey", "A user can mark a folder or file with its own colour, in this case “Grey”.")
+            return NSLocalizedString("Grey", comment: "A user can mark a folder or file with its own colour, in this case “Grey”.")
         case .unknown:
-            return AMLocalizedString("Remove Label", "Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label")
+            return NSLocalizedString("Remove Label", comment: "Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label")
         }
     }
 }

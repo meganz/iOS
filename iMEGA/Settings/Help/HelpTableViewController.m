@@ -27,12 +27,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = AMLocalizedString(@"help", @"Menu item");
+    self.navigationItem.title = NSLocalizedString(@"help", @"Menu item");
     
-    self.sendFeedbackLabel.text = AMLocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
-    self.helpCentreLabel.text = AMLocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
-    self.joinBetaLabel.text = AMLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
-    self.rateUsLabel.text = AMLocalizedString(@"rateUsLabel", @"Title to rate the app");
+    self.sendFeedbackLabel.text = NSLocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
+    self.helpCentreLabel.text = NSLocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
+    self.joinBetaLabel.text = NSLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
+    self.rateUsLabel.text = NSLocalizedString(@"rateUsLabel", @"Title to rate the app");
     
     [self updateAppearance];
 }
@@ -111,7 +111,7 @@
             NSString *shortAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
             NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
             
-            NSArray *languageArray = [NSLocale preferredLanguages];
+            NSArray *languageArray = NSBundle.mainBundle.preferredLocalizations;
             NSString *language = [NSLocale.currentLocale displayNameForKey:NSLocaleIdentifier value:languageArray.firstObject];
             
             NSString *connectionStatus = @"No internet connection";
@@ -125,7 +125,7 @@
             NSString *myEmail = [[MEGASdkManager sharedMEGASdk] myEmail];
             NSString *proLevel = [MEGAAccountDetails stringForAccountType:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.type];
             
-            NSString *messageBody = AMLocalizedString(@"pleaseWriteYourFeedback", @"Message body of the email that appears when the users tap on \"Send feedback\"");
+            NSString *messageBody = NSLocalizedString(@"pleaseWriteYourFeedback", @"Message body of the email that appears when the users tap on \"Send feedback\"");
             messageBody = [messageBody stringByAppendingFormat:@"\n\n\nApp Information:\nApp Name: %@\n", appName];
             messageBody = [messageBody stringByAppendingFormat:@"App Version: %@ (%@)\n\n", shortAppVersion, appVersion];
             
@@ -135,7 +135,7 @@
             
             [self presentViewController:mailComposeVC animated:YES completion:nil];
         } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"noEmailAccountConfigured", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"noEmailAccountConfigured", nil)];
         }
     }
 }

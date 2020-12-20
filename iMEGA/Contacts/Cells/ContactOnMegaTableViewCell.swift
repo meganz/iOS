@@ -36,7 +36,7 @@ class ContactOnMegaTableViewCell: UITableViewCell {
         nameLabel.text = contact.name
         emailLabel.text = contact.email
         avatarImageView.mnz_setImage(forUserHandle: contact.handle, name: contact.name)
-        addButton.setTitle(AMLocalizedString("addContactButton", "Button title to 'Add' the contact to your contacts list"), for: .normal)
+        addButton.setTitle(NSLocalizedString("addContactButton", comment: "Button title to 'Add' the contact to your contacts list"), for: .normal)
         cellDelegate = delegate
     }
 

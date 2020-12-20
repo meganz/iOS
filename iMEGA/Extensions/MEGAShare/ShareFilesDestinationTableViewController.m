@@ -34,7 +34,7 @@
     self.shareViewController = (ShareViewController *)self.navigationController.parentViewController;
     self.sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
 
-    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
+    self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
     
     // Add observers to get notified when the extension goes to background and comes back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
@@ -124,14 +124,14 @@
         cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         if (indexPath.row == 0) {
             imageView.image = [UIImage imageNamed:@"upload"];
-            label.text = AMLocalizedString(@"uploadToMega", nil);
+            label.text = NSLocalizedString(@"uploadToMega", nil);
             label.enabled = cell.userInteractionEnabled = YES;
             cell.accessoryView = nil;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 1) {
             imageView.image = [UIImage imageNamed:@"sendMessage"];
             imageView.tintColor = UIColor.grayColor;
-            label.text = AMLocalizedString(@"sendToContact", nil);
+            label.text = NSLocalizedString(@"sendToContact", nil);
             label.enabled = cell.userInteractionEnabled = self.isChatReady;
             
             if (self.isChatReady) {
@@ -174,9 +174,9 @@
     NSString *sectionTitle = @"";
     
     if (section == 0) {
-        sectionTitle = AMLocalizedString(@"selectDestination", nil);
+        sectionTitle = NSLocalizedString(@"selectDestination", nil);
     } else if (section == 1) {
-        NSString *format = [ShareAttachment attachmentsArray].count == 1 ? AMLocalizedString(@"oneFile", nil) : AMLocalizedString(@"files", nil);
+        NSString *format = [ShareAttachment attachmentsArray].count == 1 ? NSLocalizedString(@"oneFile", nil) : NSLocalizedString(@"files", nil);
         sectionTitle = [NSString stringWithFormat:format, [ShareAttachment attachmentsArray].count];
     }
     
@@ -187,7 +187,7 @@
     NSString *sectionFooter = @"";
     
     if (section == 1) {
-        sectionFooter = AMLocalizedString(@"tapFileToRename", nil);
+        sectionFooter = NSLocalizedString(@"tapFileToRename", nil);
     }
     
     return sectionFooter;

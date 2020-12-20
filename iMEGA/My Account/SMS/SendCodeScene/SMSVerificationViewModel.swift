@@ -106,10 +106,10 @@ final class SMSVerificationViewModel: ViewModelType {
         achievementUseCase.getAchievementStorage(by: .addPhone) { [weak self] in
             switch $0 {
             case .success(let storage):
-                let message = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
+                let message = String(format: NSLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", comment: ""), Helper.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
                 self?.invokeCommand?(.showLoadAchievementResult(.showStorage(message)))
             case .failure:
-                let message = AMLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
+                let message = NSLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", comment: "")
                 self?.invokeCommand?(.showLoadAchievementResult(.showError(message)))
             }
         }
@@ -127,15 +127,15 @@ final class SMSVerificationViewModel: ViewModelType {
                 let message: String
                 switch error {
                 case .reachedDailyLimit:
-                    message = AMLocalizedString("You have reached the daily limit")
+                    message = NSLocalizedString("You have reached the daily limit", comment: "")
                 case .alreadyVerifiedWithCurrentAccount:
-                    message = AMLocalizedString("Your account is already verified")
+                    message = NSLocalizedString("Your account is already verified", comment: "")
                 case .alreadyVerifiedWithAnotherAccount:
-                    message = AMLocalizedString("This number is already associated with a Mega account")
+                    message = NSLocalizedString("This number is already associated with a Mega account", comment: "")
                 case .wrongFormat:
-                    message = AMLocalizedString("Please enter a valid phone number")
+                    message = NSLocalizedString("Please enter a valid phone number", comment: "")
                 default:
-                    message = AMLocalizedString("Unknown error")
+                    message = NSLocalizedString("Unknown error", comment: "")
                 }
                 
                 self?.invokeCommand?(.sendCodeToPhoneNumberError(message: message))

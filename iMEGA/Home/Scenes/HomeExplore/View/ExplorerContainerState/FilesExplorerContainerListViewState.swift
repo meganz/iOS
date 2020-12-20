@@ -13,7 +13,7 @@ class FilesExplorerContainerListViewState: FilesExplorerContainerViewState {
     
     override func showPreferences(sender: UIBarButtonItem) {
         let viewPreferenceAction = ActionSheetAction(
-            title: AMLocalizedString("Thumbnail View", "Text shown for switching from list view to thumbnail view."),
+            title: NSLocalizedString("Thumbnail View", comment: "Text shown for switching from list view to thumbnail view."),
             detail: nil,
             image: UIImage(named: "thumbnailsThin"),
             style: .default) { [weak self] in

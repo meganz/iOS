@@ -6,7 +6,6 @@
 
 #import <QuickLook/QuickLook.h>
 
-#import "LocalizationSystem.h"
 #import "LTHPasscodeViewController.h"
 #import "MEGAPushNotificationSettings.h"
 #import "UIImage+GKContact.h"
@@ -46,6 +45,7 @@
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import "UITableView+MNZCategory.h"
 
+#import "SendToChatActivity.h"
 #import "SendToViewController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
@@ -152,3 +152,6 @@
 #import "CloudDriveViewController.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
+#import "MEGAPurchase.h"
+#import "UIImage+YYAdd.h"
+#import "CameraUploadManager.h"

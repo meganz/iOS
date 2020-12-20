@@ -12,75 +12,75 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     var sender: UIView?
-    lazy var forwardAction = ActionSheetAction(title: AMLocalizedString("forward"), detail: nil, image: UIImage(named: "forwardToolbar"), style: .default) {
+    lazy var forwardAction = ActionSheetAction(title: NSLocalizedString("forward", comment: ""), detail: nil, image: UIImage(named: "forwardToolbar"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.forwardMessage(chatMessage)
      }
     
-     lazy var editAction = ActionSheetAction(title: AMLocalizedString("edit"), detail: nil, image: UIImage(named: "rename"), style: .default) {
+     lazy var editAction = ActionSheetAction(title: NSLocalizedString("edit", comment: ""), detail: nil, image: UIImage(named: "rename"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.editMessage(chatMessage)
     }
     
-     lazy var copyAction = ActionSheetAction(title: AMLocalizedString("copy"), detail: nil, image: UIImage(named: "copy"), style: .default) {
+     lazy var copyAction = ActionSheetAction(title: NSLocalizedString("copy", comment: ""), detail: nil, image: UIImage(named: "copy"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.copyMessage(chatMessage)
     }
 
-    lazy var deleteAction = ActionSheetAction(title: AMLocalizedString("delete"), detail: nil, image: UIImage(named: "delete"), style: .destructive) {
+    lazy var deleteAction = ActionSheetAction(title: NSLocalizedString("delete", comment: ""), detail: nil, image: UIImage(named: "delete"), style: .destructive) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.deleteMessage(chatMessage)
     }
     
-    lazy var saveForOfflineAction = ActionSheetAction(title: AMLocalizedString("saveForOffline"), detail: nil, image: UIImage(named: "offline"), style: .default) {
+    lazy var saveForOfflineAction = ActionSheetAction(title: NSLocalizedString("saveForOffline", comment: ""), detail: nil, image: UIImage(named: "offline"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.downloadMessage(chatMessage)
     }
     
-    lazy var importAction = ActionSheetAction(title: AMLocalizedString("Import to Cloud Drive"), detail: nil, image: UIImage(named: "import"), style: .default) {
+    lazy var importAction = ActionSheetAction(title: NSLocalizedString("Import to Cloud Drive", comment: ""), detail: nil, image: UIImage(named: "import"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.importMessage(chatMessage)
     }
     
-    lazy var addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: UIImage(named: "addContact"), style: .default) {
+    lazy var addContactAction = ActionSheetAction(title: NSLocalizedString("addContact", comment: ""), detail: nil, image: UIImage(named: "addContact"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.addContactMessage(chatMessage)
     }
     
-    lazy var removeRichLinkAction = ActionSheetAction(title: AMLocalizedString("removePreview"), detail: nil, image: UIImage(named: "removeLink"), style: .default) {
+    lazy var removeRichLinkAction = ActionSheetAction(title: NSLocalizedString("removePreview", comment: ""), detail: nil, image: UIImage(named: "removeLink"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.removeRichPreview(chatMessage)
     }
     
-    lazy var saveToPhotosAction = ActionSheetAction(title: AMLocalizedString("Save to Photos"), detail: nil, image: UIImage(named: "saveToPhotos"), style: .default) {
+    lazy var saveToPhotosAction = ActionSheetAction(title: NSLocalizedString("Save to Photos", comment: ""), detail: nil, image: UIImage(named: "saveToPhotos"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.saveToPhotos(chatMessage)
     }
     
-    lazy var shareAction = ActionSheetAction(title: AMLocalizedString("share"), detail: nil, image: UIImage(named: "share"), style: .default) {
+    lazy var shareAction = ActionSheetAction(title: NSLocalizedString("share", comment: ""), detail: nil, image: UIImage(named: "share"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         guard let activityViewController = UIActivityViewController(for: [chatMessage.message], sender: self.sender) else {
-            SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
+            SVProgressHUD.showError(withStatus: NSLocalizedString("linkUnavailable", comment: ""))
             return
         }
         
@@ -89,7 +89,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
     }
     
-    lazy var selectAction = ActionSheetAction(title: AMLocalizedString("select"), detail: nil, image: UIImage(named: "select"), style: .default) {
+    lazy var selectAction = ActionSheetAction(title: NSLocalizedString("select", comment: ""), detail: nil, image: UIImage(named: "select"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
@@ -216,6 +216,9 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 let node = chatMessage.message.nodeList.node(at: 0),
                 (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 actions.append(saveToPhotosAction)
+                if node.name.mnz_isImagePathExtension {
+                    actions.append(copyAction)
+                }
             }
             
             //Your messages

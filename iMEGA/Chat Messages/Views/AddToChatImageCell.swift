@@ -24,11 +24,11 @@ class AddToChatImageCell: UICollectionViewCell {
     var cellType: CellType = .media {
         didSet {
             if cellType == .media {
-                foregoundLabel.text = AMLocalizedString("Send")
+                foregoundLabel.text = NSLocalizedString("Send", comment: "")
                 let sendImage = UIImage(named: "sendChatDisabled")?.withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = sendImage
             } else {
-                foregoundLabel.text = AMLocalizedString("more")
+                foregoundLabel.text = NSLocalizedString("more", comment: "")
                 let moreImage = UIImage(named: "moreSelected")?.withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = moreImage
                 selectionBackgroundView.isHidden = true

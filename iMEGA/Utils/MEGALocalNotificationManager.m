@@ -1,8 +1,6 @@
 
 #import "MEGALocalNotificationManager.h"
 
-#import "LocalizationSystem.h"
-
 #ifndef MNZ_APP_EXTENSION
 #import "AppDelegate.h"
 #import "Helper.h"
@@ -181,7 +179,7 @@
             
         case MEGAChatMessageTypeContainsMeta:
             if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+                body = [NSString stringWithFormat:@"📍 %@", NSLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
             } else {
                 body = self.message.content;
             }
@@ -189,7 +187,7 @@
             
         case MEGAChatMessageTypeNormal:
             if (self.message.isEdited) {
-                body = [NSString stringWithFormat:@"%@ %@", self.message.content, AMLocalizedString(@"edited", nil)];
+                body = [NSString stringWithFormat:@"%@ %@", self.message.content, NSLocalizedString(@"edited", nil)];
             } else {
                 body = self.message.content;
             }
@@ -202,7 +200,7 @@
             [sharedUserDefaults setInteger:badgeCount + 1 forKey:MEGAApplicationIconBadgeNumber];
             UIApplication.sharedApplication.applicationIconBadgeNumber = badgeCount + 1;
 #endif
-            body = AMLocalizedString(@"missedCall", @"Title of the notification for a missed call");
+            body = NSLocalizedString(@"missedCall", @"Title of the notification for a missed call");
             break;
         }
                     

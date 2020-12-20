@@ -32,10 +32,12 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
                 [self handleMEGARequestError:error];
             } else {
                 [self finishOperationWithStatus:CameraAssetUploadStatusDone];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeInfoKey : node}];
             }
         }]];
     } else {
         [self finishOperationWithStatus:CameraAssetUploadStatusDone];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeInfoKey : node}];
     }
 }
 

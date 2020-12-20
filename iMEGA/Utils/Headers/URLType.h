@@ -19,5 +19,9 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeHandleLink,
     URLTypeAchievementsLink,
     URLTypeChatPeerOptionsLink,
+    URLTypeUploadFile,
+    URLTypeScanDocument,
+    URLTypeStartConversation,
+    URLTypeAddContact,
     URLTypeTotal
 };

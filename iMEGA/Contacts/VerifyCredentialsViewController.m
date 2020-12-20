@@ -53,7 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
+    self.navigationItem.title = NSLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     
     self.userNameLabel.text = self.userName;
     self.userEmailLabel.text = self.user.email;
@@ -63,7 +63,7 @@
     
     MEGAGenericRequestDelegate *userCredentialsDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
         } else {
             NSString *userCredentials = request.password;
             if (userCredentials.length == 40) {
@@ -82,9 +82,9 @@
     }];
     [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
     
-    self.explanationLabel.text = AMLocalizedString(@"thisIsBestDoneInRealLife", @"'Verify user' dialog description");
+    self.explanationLabel.text = NSLocalizedString(@"thisIsBestDoneInRealLife", @"'Verify user' dialog description");
     
-    self.yourCredentialsLabel.text = AMLocalizedString(@"My credentials", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
+    self.yourCredentialsLabel.text = NSLocalizedString(@"My credentials", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
     NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
@@ -131,10 +131,10 @@
 
 - (void)updateVerifyOrResetButton {
     if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
-        [self.verifyOrResetButton setTitle:AMLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
+        [self.verifyOrResetButton setTitle:NSLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
     } else {
-        [self.verifyOrResetButton setTitle:AMLocalizedString(@"verify", @"Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+        [self.verifyOrResetButton setTitle:NSLocalizedString(@"verify", @"Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
     }
 }
@@ -145,7 +145,7 @@
     if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
         MEGAGenericRequestDelegate *resetCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
             } else {
                 [self updateVerifyOrResetButton];
             }
@@ -154,9 +154,9 @@
     } else {
         MEGAGenericRequestDelegate *verifyCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
             } else {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"verified", @"Button title")];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"verified", @"Button title")];
                 
                 [self updateVerifyOrResetButton];
             }

@@ -125,7 +125,7 @@ static const void *base64HandleKey = &base64HandleKey;
 - (void)mnz_imageForNode:(MEGANode *)node {
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
+            if ([node.name isEqualToString:NSLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
                 [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
                     if (node.handle == myChatFilesNode.handle) {
                         self.image = UIImage.mnz_folderMyChatFilesImage;

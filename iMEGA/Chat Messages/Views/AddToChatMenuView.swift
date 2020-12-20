@@ -19,7 +19,7 @@ class AddToChatMenuView: UIView {
             }
             
             imageView.image = UIImage(named: menu.imageKey)
-            label.text = AMLocalizedString(menu.nameKey)
+            label.text = NSLocalizedString(menu.nameKey, comment: "")
             imageBackgroundView.isHidden = false
         }
     }

@@ -136,7 +136,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
     }
     
-    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
     
     [self updateAppearance];
 }
@@ -295,15 +295,15 @@ static const CGFloat GapBetweenPages = 10.0;
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            subtitle = AMLocalizedString(@"fileLink", @"Title for the file link view");
+            subtitle = NSLocalizedString(@"fileLink", @"Title for the file link view");
             
             break;
             
         default: {
             if (self.mediaNodes.count == 1) {
-                subtitle = AMLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+                subtitle = NSLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
             } else {
-                subtitle = AMLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+                subtitle = NSLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
             }
             subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
             subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
@@ -887,8 +887,8 @@ static const CGFloat GapBetweenPages = 10.0;
             [self presentViewController:playerVC animated:YES completion:nil];
         }
     } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:NSLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.view layoutIfNeeded];
             [self reloadUI];
         }]];
@@ -1022,8 +1022,8 @@ static const CGFloat GapBetweenPages = 10.0;
                     break;
                     
                 default:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeOverwriting:NO api:self.api];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+                    [node mnz_downloadNodeWithApi:self.api];
                     break;
             }
             break;

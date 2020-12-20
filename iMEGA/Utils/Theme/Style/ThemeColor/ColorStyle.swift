@@ -42,6 +42,12 @@ extension ColorStyle {
         apply(style: self)(textField)
     }
 
+    // MARK: - UIPageControl Applier
+
+    @discardableResult
+    func applied(on pageControl: UIPageControl) -> UIPageControl {
+        apply(style: self)(pageControl)
+    }
 }
 
 fileprivate func apply(style: ColorStyle) -> (UILabel) -> UILabel {
@@ -86,5 +92,17 @@ fileprivate func apply(style: ColorStyle) -> (UITextField) -> UITextField {
         default: break
         }
         return textField
+    }
+}
+
+fileprivate func apply(style: ColorStyle) -> (UIPageControl) -> UIPageControl {
+    return { pageControl in
+        switch style.type {
+        case .background: pageControl.backgroundColor = style.color.uiColor
+        case .tint: pageControl.pageIndicatorTintColor = style.color.uiColor
+        case .selectedTint: pageControl.currentPageIndicatorTintColor = style.color.uiColor
+        default: break
+        }
+        return pageControl
     }
 }

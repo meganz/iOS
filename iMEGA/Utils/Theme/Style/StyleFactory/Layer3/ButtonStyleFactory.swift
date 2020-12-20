@@ -64,7 +64,7 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
         switch buttonStyle {
         case .segmentTitleButton:
             return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .titleSmall),
+                .normal: TextStyle(font: .titleMedium),
                 .highlighted: TextStyle(font: .title),
                 .selected: TextStyle(font: .title),
             ])

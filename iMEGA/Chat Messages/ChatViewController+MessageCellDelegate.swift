@@ -17,7 +17,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
         var actions = [ActionSheetAction]()
         
-        let infoAction = ActionSheetAction(title: AMLocalizedString("info"), detail: nil, image: nil, style: .default) { [weak self] in
+        let infoAction = ActionSheetAction(title: NSLocalizedString("info", comment: ""), detail: nil, image: nil, style: .default) { [weak self] in
             guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
                 return
             }
@@ -33,7 +33,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         
         let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail)
         if user == nil || user?.visibility != MEGAUserVisibility.visible {
-            let addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: nil, style: .default) {
+            let addContactAction = ActionSheetAction(title: NSLocalizedString("addContact", comment: ""), detail: nil, image: nil, style: .default) {
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
                 }
@@ -46,7 +46,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         
         if chatRoom.ownPrivilege == .moderator,
         chatRoom.isGroup {
-            let removeParticipantAction = ActionSheetAction(title: AMLocalizedString("removeParticipant"), detail: nil, image: nil, style: .default) {
+            let removeParticipantAction = ActionSheetAction(title: NSLocalizedString("removeParticipant", comment: ""), detail: nil, image: nil, style: .default) {
                 MEGASdkManager.sharedMEGAChatSdk()?.remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
             }
             actions.append(removeParticipantAction)
@@ -118,6 +118,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         let megaMessage = chatMessage.message
         
         switch megaMessage.type {
+        case .voiceClip:
+            guard let cell = cell as? AudioMessageCell else {
+                return
+            }
+            didTapPlayButton(in: cell)
+
         case .attachment:
             if megaMessage.nodeList.size.uintValue == 1 {
                 var node = megaMessage.nodeList.node(at: 0)

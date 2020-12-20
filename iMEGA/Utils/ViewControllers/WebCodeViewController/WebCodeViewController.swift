@@ -1,5 +1,4 @@
 import UIKit
-import WebKit
 
 @objc class WebCodeViewController: UIViewController {
 
@@ -22,7 +21,7 @@ import WebKit
                 let contents = try String(contentsOf: fileUrl, encoding: .isoLatin1)
                 textView.text = contents
             } catch {
-                textView.text = AMLocalizedString("It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.", "Error message shown when the user tries to open a file with an unsupported encoding")
+                textView.text = NSLocalizedString("It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.", comment: "Error message shown when the user tries to open a file with an unsupported encoding")
             }
         }
     }

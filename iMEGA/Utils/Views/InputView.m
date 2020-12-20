@@ -91,7 +91,7 @@
 #ifdef TARGET_INTERFACE_BUILDER
     self.topLabel.text = [[NSBundle bundleForClass:self.class] localizedStringForKey:self.topLabelTextKey value:nil table:nil];
 #else
-    self.topLabel.text = AMLocalizedString(self.topLabelTextKey, nil);
+    self.topLabel.text = NSLocalizedString(self.topLabelTextKey, nil);
 #endif
 }
 

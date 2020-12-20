@@ -48,15 +48,17 @@ class RichPreviewContentView: UIView {
                 descriptionLabel.text = richPreview.previewDescription
             }
             linkLabel.text = URL(string: richPreview.url)?.host
-            if richPreview.image != nil {
-                imageView.image = UIImage(data: Data(base64Encoded: richPreview.image, options: .ignoreUnknownCharacters)!)
+            if richPreview.image != nil,
+               let data = Data(base64Encoded: richPreview.image, options: .ignoreUnknownCharacters) {
+                imageView.image = UIImage(data: data)
                 imageViewContainer.isHidden = false
             } else {
                 imageViewContainer.isHidden = true
             }
             
-            if richPreview.icon != nil {
-                iconImageView.image = UIImage(data: Data(base64Encoded: richPreview.icon, options: .ignoreUnknownCharacters)!)
+            if richPreview.icon != nil,
+               let data = Data(base64Encoded: richPreview.icon, options: .ignoreUnknownCharacters) {
+                iconImageView.image = UIImage(data: data)
                 iconImageView.isHidden = false
             } else {
                 iconImageView.isHidden = true
@@ -84,7 +86,7 @@ class RichPreviewContentView: UIView {
                 
             case .publicChatLink:
                 titleLabel.text = message.richString
-                descriptionLabel.text = String(format: "%lld %@", message.richNumber?.int64Value ?? 0, AMLocalizedString("participants", "Label to describe the section where you can see the participants of a group chat"))
+                descriptionLabel.text = String(format: "%lld %@", message.richNumber?.int64Value ?? 0, NSLocalizedString("participants", comment: "Label to describe the section where you can see the participants of a group chat"))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = UIImage(named: "favicon")
                 imageView.image = UIImage(named: "groupChat")

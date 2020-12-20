@@ -58,8 +58,8 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     private func setupDetailLabel(_ detailLabel: UILabel, with trait: UITraitCollection) {
         let style = trait.styler(of: .note2)
         style(detailLabel)
-        detailLabel.text = AMLocalizedString("After that, your data is subject to deletion.",
-                                             "Warning message to tell user your data is about to be deleted.")
+        detailLabel.text = NSLocalizedString("After that, your data is subject to deletion.",
+                                             comment: "Warning message to tell user your data is about to be deleted.")
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {

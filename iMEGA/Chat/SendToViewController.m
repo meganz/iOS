@@ -78,7 +78,8 @@
         case SendModeCloud:
         case SendModeForward:
         case SendModeFileAndFolderLink:
-            self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        case SendModeShareActivity:
+            self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
             break;
             
         case SendModeShareExtension:
@@ -86,10 +87,10 @@
             break;
     }
     
-    self.sendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
+    self.sendBarButtonItem.title = NSLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
     [self.sendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightSemibold]} forState:UIControlStateNormal];
     
-    self.navigationItem.title = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
+    self.navigationItem.title = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.definesPresentationContext = YES;
@@ -235,9 +236,9 @@
     NSString *navigationTitle;
     NSInteger selectedItems = (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count);
     if (selectedItems == 0) {
-        navigationTitle = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
+        navigationTitle = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     } else {
-        navigationTitle = (selectedItems == 1) ? AMLocalizedString(@"1 selected", @"Title shown when multiselection is enabled and only one item has been selected.") : [NSString stringWithFormat:AMLocalizedString(@"xSelected", @"Title shown when multiselection is enabled and the user has more than one item selected."), selectedItems];
+        navigationTitle = (selectedItems == 1) ? NSLocalizedString(@"1 selected", @"Title shown when multiselection is enabled and only one item has been selected.") : [NSString stringWithFormat:NSLocalizedString(@"xSelected", @"Title shown when multiselection is enabled and the user has more than one item selected."), selectedItems];
     }
     
     self.navigationItem.title = navigationTitle;
@@ -272,15 +273,15 @@
     NSString *status;
     if (self.nodes.count == 1) {
         if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
-            status = AMLocalizedString(@"fileSentToChat", @"Toast text upon sending a single file to chat");
+            status = NSLocalizedString(@"fileSentToChat", @"Toast text upon sending a single file to chat");
         } else {
-            status = [NSString stringWithFormat:AMLocalizedString(@"fileSentToXChats", @"Success message when the attachment has been sent to a many chats"), (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) ];
+            status = [NSString stringWithFormat:NSLocalizedString(@"fileSentToXChats", @"Success message when the attachment has been sent to a many chats"), (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) ];
         }
     } else {
         if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
-            status = AMLocalizedString(@"filesSentToChat", @"Toast text upon sending multiple files to chat");
+            status = NSLocalizedString(@"filesSentToChat", @"Toast text upon sending multiple files to chat");
         } else {
-            status = [NSString stringWithFormat:AMLocalizedString(@"xfilesSentSuccesfully", @"success message when sending multiple files. Please do not modify the %d placeholder."), self.nodes.count];
+            status = [NSString stringWithFormat:NSLocalizedString(@"xfilesSentSuccesfully", @"success message when sending multiple files. Please do not modify the %d placeholder."), self.nodes.count];
         }
     }
     
@@ -344,7 +345,7 @@
 
 - (void)completeForwardingMessage:(MEGAChatMessage *)message toChat:(uint64_t)chatId {
     @synchronized(self.sentMessages) {
-        if (chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment && message.type != MEGAChatMessageTypeVoiceClip) {
+        if (message && chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment && message.type != MEGAChatMessageTypeVoiceClip) {
             [self.sentMessages addObject:message];
         }
         
@@ -428,6 +429,11 @@
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
+    
+    if (self.sendMode == SendModeShareActivity) {
+        [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:NO];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -517,6 +523,28 @@
                     }
                 }];
                 
+                break;
+            }
+                
+            case SendModeShareActivity: {
+                for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
+                    [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatListItem.chatId message:[self.sendToChatActivityDelegate textToSend]];
+                }
+                
+                for (MEGAUser *user in self.selectedUsersMutableArray) {
+                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                    if (chatRoom) {
+                        [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
+                    } else {
+                        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
+                        }];
+                    }
+                }
+                
+                [self showSuccessMessage];
+                [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:YES];
+
                 break;
             }
         }
@@ -674,13 +702,13 @@
     headerView.titleLabel.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
     switch (section) {
         case 0: {
-            headerView.titleLabel.text = self.searchController.isActive ? AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString : AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+            headerView.titleLabel.text = self.searchController.isActive ? NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString : NSLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
             
             return headerView;
         }
             
         case 1: {
-            headerView.titleLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+            headerView.titleLabel.text = NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
             return headerView;
         }
             
@@ -769,10 +797,10 @@
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length) {
-            text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+            text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
-        text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+        text = NSLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
     }
     
     return text;

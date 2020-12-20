@@ -139,30 +139,30 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         countryCodeLabel.text = nil
         descriptionTextView.text = nil
 
-        countryLabel.text = AMLocalizedString("Country")
-        phoneNumberLabel.text = AMLocalizedString("Your phone number")
-        nextButton.setTitle(AMLocalizedString("next"), for: .normal)
+        countryLabel.text = NSLocalizedString("Country", comment: "")
+        phoneNumberLabel.text = NSLocalizedString("Your phone number", comment: "")
+        nextButton.setTitle(NSLocalizedString("next", comment: ""), for: .normal)
         
         updateAppearance()
     }
     
     private func configViewForAddPhoneNumber() {
-        let cancelTitle = AMLocalizedString("cancel")
+        let cancelTitle = NSLocalizedString("cancel", comment: "")
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: cancelTitle, style: .plain, target: self, action: #selector(SMSVerificationViewController.didTapCancelButton))
-        title = AMLocalizedString("Add Phone Number")
+        title = NSLocalizedString("Add Phone Number", comment: "")
         titleLabel.text = title
         cancelButton.setTitle(cancelTitle, for: .normal)
         cancelButton.addTarget(self, action: #selector(SMSVerificationViewController.didTapCancelButton), for: .touchUpInside)
     }
     
     private func configViewForUnblockAccount() {
-        let logoutTitle = AMLocalizedString("logoutLabel")
+        let logoutTitle = NSLocalizedString("logoutLabel", comment: "")
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: logoutTitle, style: .plain, target: self, action: #selector(SMSVerificationViewController.didTapLogoutButton))
-        title = AMLocalizedString("Verify Your Account")
+        title = NSLocalizedString("Verify Your Account", comment: "")
         titleLabel.text = title
         cancelButton.setTitle(logoutTitle, for: .normal)
         cancelButton.addTarget(self, action: #selector(SMSVerificationViewController.didTapLogoutButton), for: .touchUpInside)
-        descriptionTextView.text = AMLocalizedString("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.")
+        descriptionTextView.text = NSLocalizedString("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.", comment: "")
     }
     
     private func updateAppearance() {

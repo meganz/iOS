@@ -54,7 +54,7 @@
     if (error.type) {
         if (error.type != MEGAErrorTypeApiEBusinessPastDue) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
         } else {
             [SVProgressHUD dismiss];
         }
@@ -67,19 +67,19 @@
         if (self.isChangingPermissions) {
             if (request.access == MEGAShareTypeAccessUnknown) {
                 if (self.totalRequests > 1) {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"sharesRemoved", @"Message shown when some shares have been removed")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"sharesRemoved", @"Message shown when some shares have been removed")];
                 } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", @"Message shown when a share have been removed")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"shareRemoved", @"Message shown when a share have been removed")];
                 }
             } else {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", @"Message shown when you have changed the permissions of a shared folder")];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"permissionsChanged", @"Message shown when you have changed the permissions of a shared folder")];
             }
         } else {
             if (self.totalRequests > 1) {
-                NSString *sharedFolders = [NSString stringWithFormat:AMLocalizedString(@"sharedFolders_success", @"Success message for sharing multiple files."), self.totalRequests];
+                NSString *sharedFolders = [NSString stringWithFormat:NSLocalizedString(@"sharedFolders_success", @"Success message for sharing multiple files."), self.totalRequests];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:sharedFolders];
             } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", @"Message shown when a folder have been shared")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:NSLocalizedString(@"sharedFolder_success", @"Message shown when a folder have been shared")];
             }
         }
         

@@ -68,17 +68,17 @@
     [_bandwidthSizeLabel setText:_bandwidthString];
     
     if (!self.isChoosingTheAccountType) {
-        UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
+        UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
         self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
     }
     
     [[MEGAPurchase sharedInstance] setDelegate:self];
     isPurchased = NO;
     
-    self.storageLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
-    self.bandwidthLabel.text = AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
-    [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
-    [_save17Label setText:AMLocalizedString(@"save17", nil)];
+    self.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+    self.bandwidthLabel.text = NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
+    [_selectMembershiptLabel setText:NSLocalizedString(@"selectMembership", nil)];
+    [_save17Label setText:NSLocalizedString(@"save17", nil)];
     
     [self updateAppearance];
 }
@@ -125,8 +125,8 @@
 
 - (void)presentProductUnavailableAlertController {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -140,10 +140,10 @@
     ProductDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productDetailCell" forIndexPath:indexPath];
     
     if (indexPath.row == 0) {
-        cell.periodLabel.text = AMLocalizedString(@"monthly", nil);
+        cell.periodLabel.text = NSLocalizedString(@"monthly", nil);
         cell.priceLabel.text = _priceMonthString;
     } else {
-        cell.periodLabel.text = AMLocalizedString(@"yearly", nil);
+        cell.periodLabel.text = NSLocalizedString(@"yearly", nil);
         cell.priceLabel.text = _priceYearlyString;
     }
     return cell;
@@ -176,8 +176,8 @@
         isPurchased = YES;
         
         if (isRestore) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"thankYou_title", nil)  message:AMLocalizedString(@"purchaseRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"thankYou_title", nil)  message:NSLocalizedString(@"purchaseRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 if (UIApplication.mnz_presentingViewController) {
                     [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:nil];
                 }
@@ -193,20 +193,20 @@
 }
 
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"failedPurchase_title", nil)  message:AMLocalizedString(@"failedPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedPurchase_title", nil)  message:NSLocalizedString(@"failedPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)incompleteRestore {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"incompleteRestore_title", nil)  message:AMLocalizedString(@"incompleteRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"incompleteRestore_title", nil)  message:NSLocalizedString(@"incompleteRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"failedRestore_title", nil)  message:AMLocalizedString(@"failedRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedRestore_title", nil)  message:NSLocalizedString(@"failedRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

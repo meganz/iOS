@@ -62,10 +62,10 @@
 - (void)setupAttachedContacts {
     self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+    self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
-    self.addBarButtonItem.title = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
+    self.addBarButtonItem.title = NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     [self.addBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[flexibleItem, self.addBarButtonItem]];
@@ -107,7 +107,7 @@
 - (void)setNavigationBarTitle {
     [self updatePromptTitle];
     
-    NSString *navigationTitle = AMLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
+    NSString *navigationTitle = NSLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
     navigationTitle = [navigationTitle stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.usersCount]];
     self.navigationItem.title = navigationTitle;
 }
@@ -124,11 +124,11 @@
 - (NSString *)titleForPromptWithCountOfContacts:(NSNumber *)count {
     NSString *promptString;
     if (count.unsignedIntegerValue == 0) {
-        promptString = AMLocalizedString(@"select", @"Button that allows you to select a given folder");
+        promptString = NSLocalizedString(@"select", @"Button that allows you to select a given folder");
     } else if (count.unsignedIntegerValue == 1) {
-        promptString = AMLocalizedString(@"oneContact", @"");
+        promptString = NSLocalizedString(@"oneContact", @"");
     } else {
-        promptString = AMLocalizedString(@"XContactsSelected", @"[X] will be replaced by a plural number, indicating the total number of contacts the user has");
+        promptString = NSLocalizedString(@"XContactsSelected", @"[X] will be replaced by a plural number, indicating the total number of contacts the user has");
         promptString = [promptString stringByReplacingOccurrencesOfString:@"[X]" withString:count.stringValue];
     }
     
@@ -139,10 +139,10 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.addBarButtonItem.enabled = NO;
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
+        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         self.addBarButtonItem.enabled = YES;
         
         [self.selectedUsersMutableArray removeAllObjects];
@@ -199,7 +199,7 @@
     
     [self updatePromptTitle];
     selectedUsersCount = self.selectedUsersMutableArray.count;
-    self.addBarButtonItem.title = (selectedUsersCount > 1) ? AMLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
+    self.addBarButtonItem.title = (selectedUsersCount > 1) ? NSLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     self.addBarButtonItem.enabled = (selectedUsersCount == 0) ? NO : YES;
     [self.tableView reloadData];
 }
@@ -238,7 +238,7 @@
     uint64_t userHandle = [self.message userHandleAtIndex:indexPath.row];
     NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
     if ([self.alreadyContactsMutableDictionary objectForKey:userBase64Handle] != nil) {
-        NSString *alreadyAContactString = AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.");
+        NSString *alreadyAContactString = NSLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.");
         cell.shareLabel.text = [alreadyAContactString stringByReplacingOccurrencesOfString:@"%s" withString:currentEmail];
         
         [self.alreadyContactsIndexPathMutableDictionary setObject:indexPath forKey:userBase64Handle];
@@ -279,7 +279,7 @@
         [self updatePromptTitle];
         
         NSUInteger selectedUsersCount = self.selectedUsersMutableArray.count;
-        self.addBarButtonItem.title = (selectedUsersCount > 1) ? AMLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
+        self.addBarButtonItem.title = (selectedUsersCount > 1) ? NSLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
         self.addBarButtonItem.enabled = (selectedUsersCount == 0) ? NO : YES;
         return;
     } else {
@@ -296,7 +296,7 @@
         }
         
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
             [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }]];
@@ -321,7 +321,7 @@
         [self updatePromptTitle];
         
         NSUInteger selectedUsersCount = self.selectedUsersMutableArray.count;
-        self.addBarButtonItem.title = (selectedUsersCount > 1) ? AMLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
+        self.addBarButtonItem.title = (selectedUsersCount > 1) ? NSLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
         self.addBarButtonItem.enabled = (selectedUsersCount == 0) ? NO : YES;
     }
 }

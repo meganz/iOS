@@ -195,7 +195,7 @@ extension DocAndAudioListSource {
     }
 
     private func download(node: MEGANode) {
-        if node.mnz_downloadNodeOverwriting(false),
+        if node.mnz_downloadNode(),
            let indexPath = indexPath(forNode: node) {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }

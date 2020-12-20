@@ -16,10 +16,10 @@ final class NodeActionViewControllerGenericDelegate:
             if let progressImage = UIImage(named: "hudDownload") {
                 SVProgressHUD.show(
                     progressImage,
-                    status: AMLocalizedString("downloadStarted", "Message shown when a download starts")
+                    status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
                 )
             }
-            node.mnz_downloadNodeOverwriting(false)
+            node.mnz_downloadNode()
         case .copy, .move:
             showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
 
@@ -27,6 +27,10 @@ final class NodeActionViewControllerGenericDelegate:
             node.mnz_renameNode(in: viewController)
         case .share:
             let activityViewController = UIActivityViewController(forNodes: [node], sender: viewController.view)
+            if let senderView = sender as? UIView {
+                activityViewController.popoverPresentationController?.sourceView = senderView
+                activityViewController.popoverPresentationController?.sourceRect = senderView.bounds
+            }
             viewController.present(activityViewController, animated: true, completion: nil)
 
         case .manageShare:

@@ -26,10 +26,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
-    self.autoAcceptLabel.text = AMLocalizedString(@"autoAccept", @"Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible.");
-    self.resetQRCodeLabel.text = AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user");
-    self.closeBarButtonItem.title = AMLocalizedString(@"close", nil);
+    self.navigationItem.title = NSLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
+    self.autoAcceptLabel.text = NSLocalizedString(@"autoAccept", @"Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible.");
+    self.resetQRCodeLabel.text = NSLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", nil);
     
     self.getContactLinksOptionDelegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         self.autoAcceptSwitch.on = request.flag;
@@ -68,11 +68,11 @@
     NSString *footer = @"";
     switch (section) {
         case 0:
-            footer = AMLocalizedString(@"autoAcceptFooter", @"Footer that explains the way Auto-Accept works for QR codes");
+            footer = NSLocalizedString(@"autoAcceptFooter", @"Footer that explains the way Auto-Accept works for QR codes");
             break;
             
         case 1:
-            footer = AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code");
+            footer = NSLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code");
             break;
             
         default:
@@ -90,7 +90,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==1 && indexPath.row == 0) {
         MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
         }];
 
         [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:delegate];

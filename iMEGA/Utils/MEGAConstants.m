@@ -46,10 +46,12 @@ NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotification = @"nz.meg
 NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotification = @"nz.mega.cameraUpload.photo.concurrentCountChanged";
 NSString * const MEGACameraUploadVideoConcurrentCountChangedNotification = @"nz.mega.cameraUpload.video.concurrentCountChanged";
 NSString * const MEGACameraUploadUploadingTasksCountChangedNotification = @"nz.mega.cameraUpload.uploadingTaskCountChanged";
-NSString * const MEGACameraUploadTaskExpiredNotification = @"nz.mega.cameraUpload.uploadTaskExpired";
 NSString * const MEGACameraUploadQueueUpNextAssetNotification = @"nz.mega.cameraUpload.queueUpNextAsset";
 NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotification = @"nz.mega.cameraUpload.allAssetsFinishedProcessing";
 NSString * const MEGACameraUploadTargetFolderChangedInRemoteNotification = @"nz.mega.cameraUpload.targetFolderChangedInRemote";
+NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification = @"nz.mega.cameraUpload.targetFolderUpdatedInMemory";
+NSString * const MEGACameraUploadNodeUploadCompleteNotification = @"nz.mega.cameraUpload.nodeUploadCompleteNotification";
+NSString * const MEGACameraUploadCompleteNotification = @"nz.mega.cameraUpload.completeNotification";
 
 #pragma mark - camera upload notification keys
 
@@ -58,10 +60,12 @@ NSString * const MEGAVideoConcurrentCountUserInfoKey = @"nz.mega.videoConcurrent
 NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey = @"nz.mega.uploadingTasksReachedMaximumCountKey";
 NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUploadingTasksCountKey";
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
+NSString * const MEGANodeInfoKey = @"nz.mega.nodeInfoKey";
 
 #pragma mark - camera upload constants
 
 NSString * const MEGACameraUploadsNodeName = @"Camera Uploads";
+NSString * const MEGACameraUploadsFolderPath = @"/CameraRoll";
 const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes = 100 * 1024 * 1024;
 
 #pragma mark - file extension constants
@@ -142,3 +146,8 @@ NSString * const MEGAApplicationIconBadgeNumber = @"MEGAApplicationIconBadgeNumb
 #pragma mark - Delay events
 
 const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;
+
+#pragma mark - Chat Reaction
+
+const NSInteger MEGAMaxReactionsPerMessagePerUser = 24;
+const NSInteger MEGAMaxReactionsPerMessage = 50;

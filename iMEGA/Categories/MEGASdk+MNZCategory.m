@@ -49,7 +49,7 @@ static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
             MEGANode *myChatFilesNode = [self nodeForPath:@"/My chat files"];
             if (myChatFilesNode) {
                 [self setMyChatFilesFolderWithHandle:myChatFilesNode.handle];
-                NSString *myChatFilesLocalizedString = AMLocalizedString(@"My chat files", @"Destination folder name of chat files");
+                NSString *myChatFilesLocalizedString = NSLocalizedString(@"My chat files", @"Destination folder name of chat files");
                 if (![myChatFilesLocalizedString isEqualToString:@"My chat files"]) {
                     [self renameNode:myChatFilesNode newName:myChatFilesLocalizedString];
                 }
@@ -58,7 +58,7 @@ static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
                     completion(myChatFilesNode);
                 }
             } else {
-                [self localizedFolderName:AMLocalizedString(@"My chat files", @"Destination folder name of chat files") completion:^(MEGANode *newNodeInRootPath) {
+                [self localizedFolderName:NSLocalizedString(@"My chat files", @"Destination folder name of chat files") completion:^(MEGANode *newNodeInRootPath) {
                     [self setMyChatFilesFolderWithHandle:newNodeInRootPath.handle];
                     if (completion) {
                         completion(newNodeInRootPath);
@@ -72,7 +72,7 @@ static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
                     completion(myChatFilesNode);
                 }
             } else {
-                [self localizedFolderName:AMLocalizedString(@"My chat files", @"Destination folder name of chat files") completion:^(MEGANode *newNodeInRootPath) {
+                [self localizedFolderName:NSLocalizedString(@"My chat files", @"Destination folder name of chat files") completion:^(MEGANode *newNodeInRootPath) {
                     [self setMyChatFilesFolderWithHandle:newNodeInRootPath.handle];
                     if (completion) {
                         completion(newNodeInRootPath);

@@ -47,6 +47,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
+@property (strong, nonatomic) CameraUploadHeartbeat *heartbeat;
 
 @property (strong, nonatomic) dispatch_queue_t propertySerialQueue;
 
@@ -76,6 +77,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
         if (CameraUploadManager.isCameraUploadEnabled) {
             [self initializeCameraUpload];
         }
+        
+        _heartbeat = [[CameraUploadHeartbeat alloc] init];
     }
     return self;
 }
@@ -141,7 +144,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveUploadingTaskCountChangedNotification:) name:MEGACameraUploadUploadingTasksCountChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveBackgroundTaskExpiredNotification:) name:MEGACameraUploadTaskExpiredNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveQueueUpNextAssetNotification:) name:MEGACameraUploadQueueUpNextAssetNotification object:nil];
 }
 
@@ -155,7 +157,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageOverQuotaNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadUploadingTasksCountChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadTaskExpiredNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadQueueUpNextAssetNotification object:nil];
 }
 
@@ -577,6 +578,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
+    [self.heartbeat registerHeartbeat];
     [self initializeCameraUpload];
     [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
         [self.uploadRecordsCollator collatePhotoUploadingRecordsByUploadTasks:uploadTasks];
@@ -611,6 +613,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)disableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = NO;
+    [self.heartbeat unregisterHeartbeat];
     [self stopVideoUpload];
     [self cancelAllPendingOperations];
     [self unregisterNotificationsForUpload];
@@ -844,11 +847,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
         MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uploading tasks count %lu", (unsigned long)currentUploadingCount);
         [self unsuspendCameraUploadQueues];
     }
-}
-
-- (void)didReceiveBackgroundTaskExpiredNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] did receive background task expired notification");
-    [self cancelAllPendingOperations];
 }
 
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {

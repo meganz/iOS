@@ -29,8 +29,8 @@ final class NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol
         }
 
         let requestDelegate = MEGAGenericRequestDelegate { (request, error) in
-            if let error = error.sdkError {
-                completion(.failure(.sdkError(error)))
+            if let errorType = error.sdkError {
+                completion(.failure(.sdkError(errorType)))
                 return
             }
             completion(.success(()))
@@ -45,8 +45,8 @@ final class NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol
         }
 
         let requestDelegate = MEGAGenericRequestDelegate { (request, error) in
-            if let error = error.sdkError {
-                completion(.failure(.sdkError(error)))
+            if let sdkError = error.sdkError {
+                completion(.failure(.sdkError(sdkError)))
                 return
             }
             completion(.success(()))

@@ -8,6 +8,12 @@ protocol ReactionEmojiViewDelegate: class {
     func addMorePressed(sender: UIView)
 }
 
+enum ReactionErrorType: Int {
+    case `default` = 0
+    case message = -1
+    case user = 1
+}
+
 class ReactionContainerView: UIView {
     fileprivate let rootFlexContainer = UIView()
     

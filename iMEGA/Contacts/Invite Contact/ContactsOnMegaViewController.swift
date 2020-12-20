@@ -18,8 +18,8 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = AMLocalizedString("On MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
-        inviteContactLabel.text = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
+        navigationItem.title = NSLocalizedString("On MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA")
+        inviteContactLabel.text = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
         
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         searchController.hidesNavigationBarDuringPresentation = false
@@ -187,7 +187,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        header.titleLabel.text = AMLocalizedString("CONTACTS ON MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
+        header.titleLabel.text = NSLocalizedString("CONTACTS ON MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA")
         
         return header
     }
@@ -273,12 +273,12 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     func titleForEmptyDataSet() -> String? {
         if (MEGAReachabilityManager.isReachable()) {
             if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
+                return NSLocalizedString("noResults", comment: "Title shown when you make a search and there is 'No Results'")
             } else {
                 return nil
             }
         } else {
-            return AMLocalizedString("noInternetConnection", "No Internet Connection")
+            return NSLocalizedString("noInternetConnection", comment: "No Internet Connection")
         }
     }
 }

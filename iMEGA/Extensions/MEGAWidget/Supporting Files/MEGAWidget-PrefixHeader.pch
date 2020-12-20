@@ -1,0 +1,9 @@
+#ifndef MEGAWidget_PrefixHeader_pch
+#define MEGAWidget_PrefixHeader_pch
+
+#ifdef __OBJC__
+    #import "MEGAConstants.h"
+    #import "MEGALogMacros.h"
+#endif
+
+#endif /* MEGAWidget_PrefixHeader_pch */

@@ -7,12 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Helper : NSObject
 
-#pragma mark - Languages
-
-+ (NSArray *)languagesSupportedIDs;
-+ (BOOL)isLanguageSupported:(NSString *)languageID;
-+ (NSString *)languageID:(NSUInteger)index;
-
 #pragma mark - Images
 
 + (NSDictionary *)fileTypesDictionary;
@@ -38,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
 
 + (NSMutableArray *)uploadingNodes;
 + (void)startPendingUploadTransferIfNeeded;

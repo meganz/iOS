@@ -67,7 +67,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self determineViewMode];
     
     if (self.folderPathFromOffline == nil) {
-        [self.navigationItem setTitle:AMLocalizedString(@"offline", @"Offline")];
+        [self.navigationItem setTitle:NSLocalizedString(@"offline", @"Offline")];
     } else {
         [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
@@ -79,11 +79,12 @@ static NSString *kisDirectory = @"kisDirectory";
     if (self.flavor == AccountScreen) {
         [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                                       action:@selector(longPress:)]];
+        self.offlineTableView.tableView.allowsMultipleSelectionDuringEditing = YES;
     }
     
     self.searchController.delegate = self;
 
-    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
@@ -622,7 +623,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (MEGANavigationController *)webCodeViewControllerWithFilePath:(NSString *)filePath {
     WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
     return navigationController;
 }
 
@@ -698,27 +699,27 @@ static NSString *kisDirectory = @"kisDirectory";
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
@@ -732,19 +733,19 @@ static NSString *kisDirectory = @"kisDirectory";
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf changeViewModePreference];
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.currentOfflinePath]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.currentOfflinePath]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf sortByTapped:self.sortByBarButtonItem];
     }]];
     
     if (self.offlineSortedItems.count) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf editTapped:self.editButtonItem];
         }]];
     }
@@ -831,6 +832,15 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
         [self presentViewController:navigationController animated:YES completion:nil];
     } else {
+        if (self.previewDocumentPath.pathExtension.length == 0) {
+            NSData *fileData = [NSData dataWithContentsOfFile:self.previewDocumentPath];
+            NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+            if (fileString.length) {
+                MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
+                [self presentViewController:navigationController animated:YES completion:nil];
+                return;
+            }
+        }
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
         [self presentViewController:previewController animated:YES completion:nil];
     }
@@ -840,31 +850,35 @@ static NSString *kisDirectory = @"kisDirectory";
     [self updateNavigationBarTitle];
     
     if (editing) {
-        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
         
         self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.view addSubview:self.toolbar];
-        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         
-        NSLayoutAnchor *bottomAnchor;
-        if (@available(iOS 11.0, *)) {
-            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-        } else {
-            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
+            
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+            
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
-        
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
         self.allItemsSelected = NO;
@@ -935,13 +949,13 @@ static NSString *kisDirectory = @"kisDirectory";
     NSString *navigationTitle;
     if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
         if (self.selectedItems.count == 0) {
-            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
         } else {
-            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
+            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
         }
     } else {
         if (self.folderPathFromOffline == nil) {
-            navigationTitle = AMLocalizedString(@"offline", @"Offline");
+            navigationTitle = NSLocalizedString(@"offline", @"Offline");
         } else {
             navigationTitle = self.folderPathFromOffline.lastPathComponent;
         }
@@ -973,16 +987,16 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(void (^ _Nullable)(void))cancelAction{
     NSString *message;
     if (self.selectedItems.count > 1) {
-        message = AMLocalizedString(@"removeItemsFromOffline", nil);
+        message = NSLocalizedString(@"removeItemsFromOffline", nil);
     } else {
-        message = AMLocalizedString(@"removeItemFromOffline", nil);
+        message = NSLocalizedString(@"removeItemFromOffline", nil);
     }
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         confirmAction();
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         if (cancelAction) {
             cancelAction();
         }
@@ -994,7 +1008,7 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
             [self removeOfflineNodeCell:itemPath];
         } andCancelAction:nil];
@@ -1003,7 +1017,7 @@ static NSString *kisDirectory = @"kisDirectory";
     BOOL isDirectory;
     BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (fileExistsAtPath && !isDirectory) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") detail:nil image:[UIImage imageNamed:@"share"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") detail:nil image:[UIImage imageNamed:@"share"] style:UIAlertActionStyleDefault actionHandler:^{
             NSMutableArray *activitiesMutableArray = NSMutableArray.alloc.init;
             
             OpenInActivity *openInActivity = [OpenInActivity.alloc initOnView:self.view];
@@ -1181,6 +1195,13 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
         return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
     } else {
+        if (self.previewDocumentPath.pathExtension.length == 0) {
+            NSData *fileData = [NSData dataWithContentsOfFile:self.previewDocumentPath];
+            NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+            if (fileString.length) {
+                return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
+            }
+        }
         return [self qlPreviewControllerForIndexPath:indexPath];
     }
     
@@ -1196,7 +1217,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
-    UIPreviewAction *deleteAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder")
+    UIPreviewAction *deleteAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder")
                                                                style:UIPreviewActionStyleDestructive
                                                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                  if ([self removeOfflineNodeCell:[self currentOfflinePath]]) {
@@ -1220,13 +1241,13 @@ static NSString *kisDirectory = @"kisDirectory";
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
-            text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+            text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
         if (self.folderPathFromOffline) {
-            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+            text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         } else {
-            text = AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
+            text = NSLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
         }
     }
     

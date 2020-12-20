@@ -4,9 +4,10 @@
 #import "MEGANavigationController.h"
 #import "SendToViewController.h"
 
-@interface SendToChatActivity ()
+@interface SendToChatActivity () <SendToChatActivityDelegate>
 
 @property (strong, nonatomic) NSArray *nodes;
+@property (strong, nonatomic) NSString *text;
 
 @end
 
@@ -21,12 +22,21 @@
     return self;
 }
 
+- (instancetype)initWithText:(NSString *)text {
+    self = [super init];
+    if (self) {
+        _text = text;
+    }
+    
+    return self;
+}
+
 - (NSString *)activityType {
     return MEGAUIActivityTypeSendToChat;
 }
 
 - (NSString *)activityTitle {
-    return AMLocalizedString(@"sendToContact", @"");
+    return NSLocalizedString(@"sendToContact", @"");
 }
 
 - (UIImage *)activityImage {
@@ -40,14 +50,29 @@
 - (UIViewController *)activityViewController {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
-    sendToViewController.nodes = self.nodes;
-    sendToViewController.sendMode = SendModeCloud;
+    if (self.text) {
+        sendToViewController.sendToChatActivityDelegate = self;
+        sendToViewController.sendMode = SendModeShareActivity;
+    } else if (self.nodes) {
+        sendToViewController.nodes = self.nodes;
+        sendToViewController.sendMode = SendModeCloud;
+    }
     
     return navigationController;
 }
 
 + (UIActivityCategory)activityCategory {
     return UIActivityCategoryAction;
+}
+
+#pragma mark - SendToChatActivityDelegate
+
+- (void)sendToViewController:(SendToViewController *)viewController didFinishActivity:(BOOL)completed {
+    [self activityDidFinish:completed];
+}
+
+- (NSString *)textToSend {
+    return self.text;
 }
 
 @end

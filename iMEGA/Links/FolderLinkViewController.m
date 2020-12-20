@@ -104,7 +104,7 @@
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    self.navigationItem.title = AMLocalizedString(@"folderLink", nil);
+    self.navigationItem.title = NSLocalizedString(@"folderLink", nil);
     
     self.moreBarButtonItem.title = nil;
     self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
@@ -113,7 +113,7 @@
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
     
-    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
         [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:self.publicLinkString];
@@ -127,7 +127,7 @@
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
-    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     [self updateAppearance];
 }
@@ -226,17 +226,17 @@
     if (self.tableView.isEditing) {
         self.navigationItem.titleView = nil;
         if (self.selectedNodesArray.count == 0) {
-            self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+            self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
         } else {
-            self.navigationItem.title= (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
+            self.navigationItem.title= (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
         }
     } else {
         if (self.parentNode.name && !self.isFolderLinkNotValid) {
-            UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
+            UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:NSLocalizedString(@"folderLink", nil)];
             label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
             self.navigationItem.titleView = label;
         } else {
-            self.navigationItem.title = AMLocalizedString(@"folderLink", nil);
+            self.navigationItem.title = NSLocalizedString(@"folderLink", nil);
         }
     }
 }
@@ -244,7 +244,7 @@
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     [SVProgressHUD dismiss];
     
-    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"folderLink", nil) subtitle:AMLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"folderLink", nil) subtitle:NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
     
     [self disableUIItems];
     
@@ -313,23 +313,23 @@
 }
 
 - (void)showDecryptionAlert {
-    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"decryptionKeyAlertTitle", nil) message:NSLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        textField.placeholder = NSLocalizedString(@"decryptionKey", nil);
         [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
             return !textField.text.mnz_isEmpty;
         };
     }];
     
-    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [[MEGASdkManager sharedMEGASdkFolder] logout];
         [decryptionAlertController.textFields.firstObject resignFirstResponder];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
-    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
         
         self.validatingDecryptionKey = YES;
@@ -345,8 +345,8 @@
 - (void)showDecryptionKeyNotValidAlert {
     self.validatingDecryptionKey = NO;
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self showDecryptionAlert];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -458,7 +458,7 @@
     [self setToolbarButtonsEnabled:!editing];
     
     if (editing) {
-        self.moreBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.moreBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.moreBarButtonItem.image = nil;
 
         [self.navigationItem setLeftBarButtonItem:_selectAllBarButtonItem];
@@ -574,16 +574,16 @@
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (self.selectedNodesArray.count) {
             for (MEGANode *node in self.selectedNodesArray) {
-                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES];
             }
         } else {
-            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES];
         }
         
         //FIXME: Temporal fix. This lets the SDK process some transfers before going back to the Transfers view (In case it is on the navigation stack)
         [SVProgressHUD show];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             [self dismissViewControllerAnimated:YES completion:nil];
         });
     } else {
@@ -838,19 +838,19 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (!self.isFetchNodesDone && self.isFolderRootNode) {
             if (self.isFolderLinkNotValid) {
-                text = AMLocalizedString(@"linkNotValid", nil);
+                text = NSLocalizedString(@"linkNotValid", nil);
             } else {
                 text = @"";
             }
         } else {
             if (self.searchController.isActive) {
-                text = AMLocalizedString(@"noResults", nil);
+                text = NSLocalizedString(@"noResults", nil);
             } else {
-                text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
             }
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return text;
@@ -859,7 +859,7 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -887,7 +887,7 @@
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

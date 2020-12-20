@@ -186,6 +186,13 @@ static NSString *kPath = @"kPath";
     
     if (tableView.isEditing) {
         NSURL *filePathURL = [[self.offline itemAtIndexPath:indexPath] objectForKey:kPath];
+        
+        for (NSURL *tempURL in self.offline.selectedItems) {
+            if (tempURL == filePathURL) {
+                return;
+            }
+        }
+        
         [self.offline.selectedItems addObject:filePathURL];
         
         [self.offline updateNavigationBarTitle];
@@ -219,6 +226,14 @@ static NSString *kPath = @"kPath";
         
         return;
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:YES animated:YES];
 }
 
 #pragma clang diagnostic push

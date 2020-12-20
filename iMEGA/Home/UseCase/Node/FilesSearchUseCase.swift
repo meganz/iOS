@@ -4,7 +4,7 @@ protocol FilesSearchUseCaseProtocol {
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
                 cancelPreviousSearchIfNeeded: Bool,
-                completionBlock: @escaping ([MEGANode]?) -> Void)
+                completionBlock: @escaping ([MEGANode]?, Bool) -> Void)
     func onNodesUpdate(with nodesUpdateHandler: @escaping ([MEGANode]) -> Void)
 }
 
@@ -28,9 +28,9 @@ final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
                 cancelPreviousSearchIfNeeded: Bool,
-                completionBlock: @escaping ([MEGANode]?) -> Void) {
+                completionBlock: @escaping ([MEGANode]?, Bool) -> Void) {
         guard let formatType = MEGANodeFormatType(rawValue: explorerType.rawValue) else {
-            completionBlock(nil)
+            completionBlock(nil, false)
             return
         }
         
