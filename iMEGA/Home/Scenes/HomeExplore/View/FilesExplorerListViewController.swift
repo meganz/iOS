@@ -30,9 +30,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
         }
-        
-        SVProgressHUD.show()
-        isProgressViewBeingShown = true
+
         viewModel.dispatch(.onViewReady)
         delegate?.updateSearchResults()
     }
@@ -92,10 +90,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         switch command {
         case .reloadNodes(let nodes, let searchText):
             configureView(withSearchText: searchText, nodes: nodes)
-            if isProgressViewBeingShown {
-                isProgressViewBeingShown = false
-                SVProgressHUD.dismiss()
-            }
             listSource = configuration?.listSourceType.init(
                 tableView: tableView,
                 nodes: nodes,

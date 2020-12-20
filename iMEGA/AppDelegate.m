@@ -55,6 +55,11 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
+
+#ifdef DEBUG
+#import <DoraemonKit/DoraemonManager.h>
+#endif
+
 @import Firebase;
 
 #import "MEGA-Swift.h"
@@ -134,7 +139,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
-    
+#ifdef DEBUG
+    [[DoraemonManager shareInstance] install];
+#endif
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {

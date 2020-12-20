@@ -6,6 +6,7 @@
 @interface MEGACallManager : NSObject
 
 - (void)startCall:(MEGAChatCall *)call;
+- (void)answerCall:(MEGAChatCall *)call;
 - (void)endCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId;
 - (void)muteUnmuteCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId muted:(BOOL)muted;
 
