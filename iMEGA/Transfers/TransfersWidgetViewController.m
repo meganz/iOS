@@ -510,15 +510,9 @@ static TransfersWidgetViewController* instance = nil;
     }
 }
 
-- (NSIndexPath *)indexPathForTransfer:(MEGATransfer *)transfer {
-    NSArray *list;
-    if (self.inProgressButton.selected) {
-        list = self.transfers;
-    } else {
-        list = self.completedTransfers;
-    }
-    for (int i = 0; i < list.count; i++) {
-        MEGATransfer *tempTransfer = list[i];
+- (NSIndexPath *)indexPathForPendingTransfer:(MEGATransfer *)transfer {
+    for (int i = 0; i < self.transfers.count; i++) {
+        MEGATransfer *tempTransfer = self.transfers[i];
         
         if (transfer.tag ==  tempTransfer.tag) {
             return [NSIndexPath indexPathForRow:i inSection:0];
@@ -602,7 +596,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
     
-    NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
+    NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
     
     if (self.inProgressButton.selected) {
         if (indexPath) {
@@ -842,7 +836,7 @@ static TransfersWidgetViewController* instance = nil;
     if (transfer.type == MEGATransferTypeUpload) {
         [self reloadView];
     } else if (transfer.type == MEGATransferTypeDownload) {
-        NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
+        NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
         if (indexPath) {
             [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
         }
@@ -850,8 +844,8 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
-    if (indexPath) {
+    NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
+    if (indexPath && self.inProgressButton.isSelected) {
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         if ([[self.tableView indexPathsForVisibleRows] containsObject:indexPath] && [cell isKindOfClass:TransferTableViewCell.class]) {
             if (transfer.state == MEGATransferStateActive && !self.areTransfersPaused) {
@@ -880,7 +874,7 @@ static TransfersWidgetViewController* instance = nil;
 #pragma mark - TransferTableViewCellDelegate
 
 - (void)pauseTransfer:(MEGATransfer *)transfer {
-    NSIndexPath *oldIndexPath = [self indexPathForTransfer:transfer];
+    NSIndexPath *oldIndexPath = [self indexPathForPendingTransfer:transfer];
     [self.transfers replaceObjectAtIndex:oldIndexPath.row withObject:transfer];
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
