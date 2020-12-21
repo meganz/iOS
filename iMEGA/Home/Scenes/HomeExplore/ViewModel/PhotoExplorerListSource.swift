@@ -76,6 +76,10 @@ class PhotoExplorerListSource: NSObject {
             }
         }
     }
+    
+    func isDataSetEmpty() -> Bool {
+        return nodesByDay.isEmpty
+    }
 }
 
 extension PhotoExplorerListSource: UICollectionViewDataSource {

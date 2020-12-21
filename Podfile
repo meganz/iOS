@@ -24,6 +24,10 @@ abstract_target 'iMEGA' do
     # Pods for MEGA
     pod 'Firebase/Crashlytics'
 
+    pod 'DoraemonKit/Core', '~> 3.0.2', :configurations => ['Debug'] #Required
+    pod 'DoraemonKit/WithGPS', '~> 3.0.2', :configurations => ['Debug'] #Optional
+    pod 'DoraemonKit/WithLoad', '~> 3.0.2', :configurations => ['Debug'] #Optional
+    
     target 'MEGAUnitTests' do
       inherit! :search_paths
       # Pods for testing

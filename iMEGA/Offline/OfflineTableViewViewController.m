@@ -153,7 +153,7 @@ static NSString *kPath = @"kPath";
             }
         }
         
-        NSDate *modificationDate = [[NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil] valueForKey:NSFileModificationDate];
+        NSDate *modificationDate = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil][NSFileModificationDate];
         
         unsigned long long size = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil].fileSize;
         
