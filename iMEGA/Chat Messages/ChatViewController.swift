@@ -901,8 +901,7 @@ class ChatViewController: MessagesViewController {
                     MEGASdkManager.destroySharedMEGAChatSdk()
                 }))
                 
-                if MEGALinkManager.selectedOption == .joinChatLink {
-                    let onboardingVC = UIApplication.mnz_visibleViewController() as! OnboardingViewController
+                if MEGALinkManager.selectedOption == .joinChatLink, let onboardingVC = UIApplication.mnz_visibleViewController() as? OnboardingViewController {
                     onboardingVC.presentLoginViewController()
                 }
             }
