@@ -36,8 +36,6 @@
 "microphonePermissions"="Per favore, dai a MEGA il permesso di accedere al tuo Microfono nelle tue Impostazioni";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Dai il permesso all'app MEGA di accedere alle foto in Impostazioni";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Non è possibile scaricare una cartella vuota";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Il tuo account è già stato attivato. Per favore, effettua il login.";
 /* */
@@ -624,8 +622,6 @@
 "securityOptions"="Opzioni di Sicurezza";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Info";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Lingua";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Invia un commento";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="Cerca su GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="Nessuna GIF trovata";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="Questo messaggio ha raggiunto il limite massimo di %d reazioni.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="Errore HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Dovrai riavviare MEGA dopo aver cambiato la lingua";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Lingua cambiata. Clicca per riavviare.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA fornisce uno spazio di archiviazione Cloud criptato controllato dall'utente attraverso i browser web, insieme ad applicazioni dedicate sui dispositivi mobili. Diversamente da altri provider di spazio di archiviazione cloud, i tuoi dati sono criptati e decriptati solo dai tuoi dispositivi e mai da noi.";
@@ -1693,7 +1689,7 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gestione file";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="Versioni dei file";
+"File versioning"="Salvataggio delle versioni dei file";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Attiva o disattiva le versioni dei file per il tuo account.\nDisabilitare le versioni dei file non esclude che i tuoi contatti creino nuove versioni nelle cartelle condivise.";
 /* A confirmation message when the user chooses to disable file versioning. */
@@ -1765,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="Osservatori";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ ha attivato la Rotazione della Chiave Criptata";
+"%@ enabled Encrypted Key Rotation"="%@ ha attivato la rotazione della chiave di criptazione";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ ha creato un link della chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Il tuo account è [B]sospeso[/B] al momento. Puoi solo sfogliare tra i tuoi dati.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Mentre MEGA non ha accesso ai tuoi dati, gli amministratori della tua organizzazione hanno l'abilità di controllare e vedere i Caricamenti da fotocamera nel tuo account utente.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Mentre MEGA non può accedere ai tuoi dati, l’amministratore della tua organizzazione ha l’abilità di controllare e vedere i Caricamenti da fotocamera nel tuo account utente";
 /* */
 "Something went wrong"="Qualcosa è andato storto";
 /* Title of the "Links" Shared Items. */
@@ -2386,6 +2382,8 @@
 "Unavailable"="Non disponibile";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email già inviata. Per favore, attendi un po' di minuti prima di riprovare nuovamente.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="CONDIVIDI";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Cerca i tuoi file";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2393,7 +2391,13 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Seleziona la cartella";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Sei sicuro di voler spostare la cartella dei Caricamenti da fotocamera nel Cestino? Se sì, una nuova cartella verrà creata in automatico per i Caricamenti da fotocamera.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Carica File";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Shortcuts";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
 "Documents"="Documenti";
 /* Title for audio explorer view */
@@ -2401,18 +2405,26 @@
 /* Title for video explorer view */
 "Videos"="Video";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="Nessun documento trovato";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="Nessun file audio trovato";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="Nessun video trovato";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="Tutte le immagini";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="OGGI";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="IERI";
 /* Photo Explorer Screen: No images in the accoun t*/
-"No images found"="No images found";
+"No images found"="Nessuna immagine trovata";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="Documenti";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="Questo link è stato condiviso senza una chiave di decriptazione. Vuoi condividere la sua chiave?";
+/* Title for password protect link alert */
+"Link Password"="Password del link";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="Vuoi condividere la password del link?";

@@ -322,7 +322,7 @@
     }
 }
 
-- (void)toolbarItemsForSharedItems {
+- (void)configToolbarItemsForSharedItems {
     
     NSMutableArray *toolbarItemsMutableArray = NSMutableArray.alloc.init;
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -530,6 +530,13 @@
     self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
+- (void)shouldStartEditingModeAtIndex:(NSIndexPath *)indexPath {
+    [self setEditing:YES animated:YES];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    [self configToolbarItemsForSharedItems];
+    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -586,7 +593,7 @@
             weakSelf.selectedNodesMutableArray = NSMutableArray.alloc.init;
             weakSelf.selectedSharesMutableArray = NSMutableArray.alloc.init;
             
-            [weakSelf toolbarItemsForSharedItems];
+            [weakSelf configToolbarItemsForSharedItems];
             [weakSelf toolbarItemsSetEnabled:NO];
         }]];
         
@@ -606,25 +613,28 @@
         self.editBarButtonItem.image = nil;
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.view addSubview:self.toolbar];
-        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         
-        NSLayoutAnchor *bottomAnchor;
-        if (@available(iOS 11.0, *)) {
-            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-        } else {
-            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-        }
-        
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
 
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
+        }
         
         for (SharedItemsTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = UIView.alloc.init;
@@ -897,7 +907,7 @@
         
         [self updateNavigationBarTitle];
         
-        [self toolbarItemsForSharedItems];
+        [self configToolbarItemsForSharedItems];
         [self toolbarItemsSetEnabled:NO];
     }
 }
@@ -1062,8 +1072,11 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    [self setEditing:YES animated:YES];
     return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self shouldStartEditingModeAtIndex:indexPath];
 }
 
 #pragma clang diagnostic push
@@ -1202,10 +1215,7 @@
                 }
             }
         } else {
-            [self setEditing:YES animated:YES];
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            [self toolbarItemsForSharedItems];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self shouldStartEditingModeAtIndex:indexPath];
         }
     }
     

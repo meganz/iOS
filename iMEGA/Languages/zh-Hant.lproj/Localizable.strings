@@ -36,8 +36,6 @@
 "microphonePermissions"="請於您的設定中授予MEGA應用程式使用您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="請在設置中允許 MEGA App 訪問您的照片庫。";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="您不能下載空的資料夾。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
 /* */
@@ -624,8 +622,6 @@
 "securityOptions"="安全選項";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="關於";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="語言";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="送出建議";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="搜尋GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="找不到GIF";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="此訊息已達到%d個回應的最大限制。";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="您已達到%d個回應的最大限制。";
 /* Chat section header */
 "chat"="聊天";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="HTTP錯誤";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的錯誤";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="變更語言設定後，您將會需要重啟MEGA";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="語言設定已變更。請點此以重新啟動。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA提供極為安全的雲端空間，若您是使用正常的網頁瀏覽器與手機應用程式，則可保證資料完全由使用者操控。不同於其他雲端空間供應商，您的資料僅由用戶端設備進行加密和解密，我們不會經手您的資料，以完整保障您的隱私權。";
@@ -1765,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="觀察員";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@啟用加密金鑰輪替";
+"%@ enabled Encrypted Key Rotation"="%@啟用加密金鑰輪替。";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@建立聊天室連結";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -1797,7 +1793,7 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="專業版會員即將到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="刪除通知";
+"Takedown notice"="移除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="移除已復原";
 /* Label shown inside an unseen notification */
@@ -2035,9 +2031,9 @@
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="此檔案接獲下架通知且已被移除";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="此資料夾接獲下架通知且已被移除";
+"This folder has been the subject of a takedown notice."="此資料夾已認定需被移除。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="爭議被刪除";
+"Dispute Takedown"="爭議移除";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="用戶管理只能在電腦版瀏覽器進行。";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]暫停使用[/B]。您只能瀏覽您的資料。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="儘管MEGA無權存取您的資料，但您的組織管理員是可以控制和檢視您使用者帳戶中的「相機上傳」。";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="儘管MEGA無權存取您的資料，但您的商業帳戶管理員是可以控制和檢視您使用者帳戶中的相機上傳。";
 /* */
 "Something went wrong"="出錯了";
 /* Title of the "Links" Shared Items. */
@@ -2386,6 +2382,8 @@
 "Unavailable"="無用的";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="電子郵件已發送。請等待幾分鐘，然後再重試。";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="共享";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="搜尋您的檔案";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="選擇資料夾";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將相片上傳資料夾移至垃圾桶嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="上傳檔案";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="捷徑";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="啟動MEGA應用程式以執行動作";
 /* Title for document explorer view */
 "Documents"="文檔";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="找不到圖片";
 /* Accessibility label for Home section in tabbar item */
 "Home"="首頁";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="文件";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="此共享連結沒有附帶解密密鑰。您要分享密鑰嗎？";
+/* Title for password protect link alert */
+"Link Password"="連結密碼";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="您要分享此連結的密碼嗎？";

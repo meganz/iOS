@@ -36,8 +36,6 @@
 "microphonePermissions"="Por favor permite que la aplicación de MEGA acceda a tu micrófono en Ajustes";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Por favor permite a la aplicación de MEGA que acceda a tus Fotos en Ajustes";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="No se pueden descargar carpetas vacías";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tu cuenta está activa. Por favor, inicia sesión.";
 /* */
@@ -565,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Añadir desde contactos";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Añadir contacto";
+"addContact"="Añadir Contacto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Correo electrónico del contacto";
 /* Button title to 'Add' the contact to your contacts list */
@@ -624,8 +622,6 @@
 "securityOptions"="Opciones de seguridad";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Acerca de";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Idioma";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar valoración";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -639,9 +635,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Reglamento de protección de datos";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="No";
+"off"="Desactivado";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="Sí";
+"on"="Activado";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opciones";
 /* A hint to show one option is recommended by MEGA */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="Buscar GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="No se han encontrado GIFs";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="Este mensaje ha alcanzado el límite máximo de %d reacciones.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="Ha alcanzado el límite máximo de %d reacciones.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="Error HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error desconocido";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Necesitarás reiniciar MEGA después de cambiar el idioma";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Idioma cambiado. Pulsa para abrir la aplicación.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA ofrece un servicio de almacenamiento en la nube cifrado y controlado por el usuario a través del navegador web y de la aplicación para dispositivos móviles. A diferencia de otros proveedores de almacenamiento en la nube, tus datos son cifrados y descifrados únicamente por tus dispositivos y nunca por nosotros.";
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tu cuenta está [B]suspendida[/B]. Solo puedes ver tus datos.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Si bien MEGA no tiene acceso a tus datos, el administrador de la cuenta puede controlar y ver las Subídas de la cámara en tu cuenta de usuario";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Si bien MEGA no tiene acceso a tus datos, el administrador de la cuenta Business puede controlar y ver las Subídas de la cámara en tu cuenta de usuario";
 /* */
 "Something went wrong"="Algo ha ido mal";
 /* Title of the "Links" Shared Items. */
@@ -2386,6 +2382,8 @@
 "Unavailable"="No disponible";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Correo electrónico ya enviado. Espera unos minutos antes de volver a intentarlo.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="COMPARTIR";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Buscar tus archivos";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="Seleccionar carpeta";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="¿Estás seguro de que quieres mover la carpeta Subidas de la cámara a la papelera? Si es así, se generará automáticamente una nueva carpeta Subidas de la cámara.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Subir archivo";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Accesos directos";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Inicia la aplicación de MEGA para realizar una acción";
 /* Title for document explorer view */
 "Documents"="Documentos";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="No se han encontrado imágenes";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Inicio";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="Documentos";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="Vas a compartir el enlace sin clave de cifrado. ¿Quieres compartir la clave?";
+/* Title for password protect link alert */
+"Link Password"="Contraseña del enlace";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="¿Quieres compartir la contraseña de este enlace?";
