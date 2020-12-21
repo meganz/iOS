@@ -852,8 +852,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath) {
-        if ([[self.tableView indexPathsForVisibleRows] containsObject:indexPath]) {
-            TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        if ([[self.tableView indexPathsForVisibleRows] containsObject:indexPath] && [cell isKindOfClass:TransferTableViewCell.class]) {
             if (transfer.state == MEGATransferStateActive && !self.areTransfersPaused) {
                 [cell reloadThumbnailImage];
                 [cell updatePercentAndSpeedLabelsForTransfer:transfer];
