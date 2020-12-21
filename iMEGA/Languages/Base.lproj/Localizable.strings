@@ -2428,3 +2428,9 @@
 "Link Password"="Link Password";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Do you want to share the password for this link?";
+/*  Accessibility message when a message is sent in chat */
+"message sent" = "message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message" = "failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled" = "message sending cancelled";
