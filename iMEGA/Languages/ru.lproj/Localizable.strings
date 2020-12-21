@@ -1024,7 +1024,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
-"Storage"="свободного места";
+"Storage"="Хранилище";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Ограничено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
