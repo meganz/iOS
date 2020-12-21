@@ -677,8 +677,6 @@
 		8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */; };
 		831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */; };
 		831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */; };
-		8318CE322562C5B300C97779 /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */; };
-		8318CE642562C89600C97779 /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */; };
 		8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */; };
 		83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1225556CD900344531 /* WidgetKit.framework */; };
 		83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1425556CDA00344531 /* SwiftUI.framework */; };
@@ -687,7 +685,6 @@
 		8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */; };
 		831B4911256FED6F0086002B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B4910256FED6F0086002B /* IntentHandler.swift */; };
 		831B4915256FED6F0086002B /* MEGAIntent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 831B490E256FED6F0086002B /* MEGAIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		831B4939256FEDF90086002B /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */; };
 		831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
 		831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
 		831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
@@ -712,6 +709,9 @@
 		83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */; };
 		8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */; };
+		8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
+		8334522F258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
+		83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
 		8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
 		83422B25255984C300D46907 /* MEGAWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83422B20255984C300D46907 /* MEGAWidget.swift */; };
@@ -2405,7 +2405,6 @@
 		8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsOnMegaManager.swift; sourceTree = "<group>"; };
 		831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPermissionBottomView.swift; sourceTree = "<group>"; };
 		831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsPermissionBottomView.xib; sourceTree = "<group>"; };
-		8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = ShortcutIntents.intentdefinition; sourceTree = "<group>"; };
 		8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWidget.swift; sourceTree = "<group>"; };
 		83199F1125556CD900344531 /* MEGAWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		83199F1225556CD900344531 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -2439,6 +2438,25 @@
 		83337CAA21009494000F40A7 /* ItemListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListModel.m; sourceTree = "<group>"; };
 		8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoPreviewTableViewCell.swift; sourceTree = "<group>"; };
+		83345231258CA2E00052DB3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/ShortcutIntents.intentdefinition; sourceTree = "<group>"; };
+		8334523E258CA2F20052DB3C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		83345240258CA2FE0052DB3C /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		83345242258CA3010052DB3C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		8334524C258CA3AB0052DB3C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ShortcutIntents.strings"; sourceTree = "<group>"; };
+		83345256258CA3B70052DB3C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ShortcutIntents.strings"; sourceTree = "<group>"; };
+		83345258258CA3CB0052DB3C /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		8334525A258CA3CE0052DB3C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		8334526C258CA3D60052DB3C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		8334526E258CA3E30052DB3C /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		83345278258CA3F50052DB3C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		83345282258CA3FB0052DB3C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/ShortcutIntents.strings"; sourceTree = "<group>"; };
+		83345284258CA3FF0052DB3C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		8334528E258CA4080052DB3C /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		83345298258CA4250052DB3C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		833452A2258CA4310052DB3C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		833452AC258CA4350052DB3C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		833452AE258CA4530052DB3C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		833452B0258CA45B0052DB3C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveCollectionViewController.h; sourceTree = "<group>"; };
 		83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveCollectionViewController.m; sourceTree = "<group>"; };
 		8337BC60256283F400F3A81A /* ShortcutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutDetail.swift; sourceTree = "<group>"; };
@@ -6013,7 +6031,7 @@
 			children = (
 				8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */,
 				8337BC60256283F400F3A81A /* ShortcutDetail.swift */,
-				8318CE312562C5B300C97779 /* ShortcutIntents.intentdefinition */,
+				83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */,
 			);
 			path = Shortcuts;
 			sourceTree = "<group>";
@@ -8192,6 +8210,7 @@
 				"pt-br",
 				vi,
 				fil,
+				"pt-BR",
 			);
 			mainGroup = 137361811A6664C300B740E8;
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
@@ -9473,7 +9492,7 @@
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				BF943E9B23554181001C18E0 /* PushNotificationControl.swift in Sources */,
-				8318CE642562C89600C97779 /* ShortcutIntents.intentdefinition in Sources */,
+				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */,
 				BFAAF70F252E6D170053A9BF /* VideoExplorerListSource.swift in Sources */,
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
@@ -9713,7 +9732,7 @@
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
 				8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */,
 				8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */,
-				8318CE322562C5B300C97779 /* ShortcutIntents.intentdefinition in Sources */,
+				8334522F258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9721,7 +9740,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831B4939256FEDF90086002B /* ShortcutIntents.intentdefinition in Sources */,
+				83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
 				831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */,
 			);
@@ -10076,6 +10095,32 @@
 			);
 			name = Localizable.strings;
 			path = ../Languages;
+			sourceTree = "<group>";
+		};
+		83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83345231258CA2E00052DB3C /* Base */,
+				8334523E258CA2F20052DB3C /* vi */,
+				83345240258CA2FE0052DB3C /* pl */,
+				83345242258CA3010052DB3C /* ru */,
+				8334524C258CA3AB0052DB3C /* zh-Hans */,
+				83345256258CA3B70052DB3C /* zh-Hant */,
+				83345258258CA3CB0052DB3C /* id */,
+				8334525A258CA3CE0052DB3C /* ja */,
+				8334526C258CA3D60052DB3C /* ko */,
+				8334526E258CA3E30052DB3C /* ro */,
+				83345278258CA3F50052DB3C /* nl */,
+				83345282258CA3FB0052DB3C /* pt-BR */,
+				83345284258CA3FF0052DB3C /* ar */,
+				8334528E258CA4080052DB3C /* th */,
+				83345298258CA4250052DB3C /* it */,
+				833452A2258CA4310052DB3C /* de */,
+				833452AC258CA4350052DB3C /* fr */,
+				833452AE258CA4530052DB3C /* es */,
+				833452B0258CA45B0052DB3C /* en */,
+			);
+			name = ShortcutIntents.intentdefinition;
 			sourceTree = "<group>";
 		};
 		9422550A1EDC04DC0074C51A /* MainInterface.storyboard */ = {
