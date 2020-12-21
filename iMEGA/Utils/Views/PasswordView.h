@@ -23,7 +23,7 @@ IB_DESIGNABLE
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecureButton;
 @property (nonatomic) IBOutlet UIView *bottomSeparatorView;
 
-@property (assign, nonatomic) IBOutlet id<PasswordViewDelegate> delegate;
+@property (weak, nonatomic) IBOutlet id<PasswordViewDelegate> delegate;
 
 @property (nonatomic, getter=isUsingDefaultBackgroundColor) BOOL usingDefaultBackgroundColor;
 
