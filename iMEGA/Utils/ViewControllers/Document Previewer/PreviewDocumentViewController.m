@@ -379,7 +379,7 @@
         } else {
             if (transfer.path.pathExtension.length == 0) {
                 NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentTransfer.path];
-                NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+                NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
                 if (fileString.length) {
                     [self presentWebCodeViewController];
                     return;

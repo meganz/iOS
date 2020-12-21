@@ -139,7 +139,7 @@
         } else {
             if (previewDocumentPath.pathExtension.length == 0) {
                 NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentPath];
-                NSString *fileString = [NSString stringWithUTF8String:fileData.bytes];
+                NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
                 if (fileString.length) {
                     return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
                 }
