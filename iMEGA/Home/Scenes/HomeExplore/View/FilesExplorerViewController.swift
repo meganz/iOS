@@ -4,7 +4,6 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
     func didScroll(scrollView: UIScrollView)
     func didSelectNodes(withCount count: Int)
     func configureNavigationBarToDefault()
-    func showSearchBar(_ show: Bool)
     func showMoreButton(_ show: Bool)
 }
 
@@ -12,7 +11,6 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     let viewModel: FilesExplorerViewModel
     var configuration: FilesExplorerViewConfiguration?
     weak var delegate: FilesExplorerViewControllerDelegate?
-    var isProgressViewBeingShown = false
     
     init(viewModel: FilesExplorerViewModel,
          delegate: FilesExplorerViewControllerDelegate) {
@@ -47,7 +45,6 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     }
     
     func configureView(withSearchText searchText: String?, nodes: [MEGANode]?) {
-        showSearchBarIfNeeded(withSearchText: searchText, nodes: nodes)
         if !isToolbarShown {
             delegate?.showMoreButton(nodes?.isEmpty == false)
         }
@@ -71,16 +68,6 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     override func endEditingMode() {
         delegate?.configureNavigationBarToDefault()
-    }
-    
-    // MARK:- Private methods
-    
-    private func showSearchBarIfNeeded(withSearchText searchText: String?, nodes: [MEGANode]?) {
-        if searchText == nil {
-            delegate?.showSearchBar(nodes?.isEmpty == false)
-        } else {
-            delegate?.showSearchBar(true)
-        }
     }
 }
 

@@ -110,10 +110,6 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.configureNavigationBarToDefault()
     }
     
-    func showSearchBar(_ show: Bool) {
-        containerViewController.showSearchBar(show)
-    }
-    
     func showMoreButton(_ show: Bool) {
         containerViewController.showMoreButton(show)
     }

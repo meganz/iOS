@@ -25,7 +25,7 @@ pipeline {
             steps {
                 injectEnvironments({
                     retry(3) {
-                        sh "sh $WORKSPACE/download_3rdparty.sh"
+                        sh "sh ./download_3rdparty.sh"
                     }
                     sh "bundle install"
                     sh "bundle exec pod repo update"
