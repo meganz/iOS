@@ -8,8 +8,8 @@
 
 @interface MEGAPurchase : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, MEGARequestDelegate>
 
-@property (assign) id<MEGAPurchaseDelegate>delegate;
-@property (assign) id<MEGAPurchasePricingDelegate>pricingsDelegate;
+@property (nonatomic, weak) id<MEGAPurchaseDelegate>delegate;
+@property (nonatomic, weak) id<MEGAPurchasePricingDelegate>pricingsDelegate;
 @property (nonatomic, strong) MEGAPricing *pricing;
 @property (nonatomic, strong) NSMutableArray *products;
 

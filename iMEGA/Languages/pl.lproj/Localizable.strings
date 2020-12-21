@@ -1102,7 +1102,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="Ta wiadomość osiągnęła maksymalny limit %d reakcji.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="Osiągnąłeś maksymalny limit %d reakcji.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -2395,9 +2395,9 @@
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Wgrywanie pliku";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="Skróty";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Uruchom aplikację MEGA, aby wykonać akcję";
 /* Title for document explorer view */
 "Documents"="Dokumenty";
 /* Title for audio explorer view */
