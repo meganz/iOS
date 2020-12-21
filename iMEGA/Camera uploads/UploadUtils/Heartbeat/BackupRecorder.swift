@@ -12,15 +12,18 @@ final class BackupRecorder: NSObject {
     }
     
     private var debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .utility))
+    private var hasCameraUploadsFinishedProcessing = false
     
     // MARK: - recoding update
     func startRecordingBackupUpdate() {
         stopRecordingBackupUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodeUploadCompleteNotification(_:)), name: NSNotification.Name.MEGACameraUploadNodeUploadComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCameraUploadsFinishProcessingNotification), name: NSNotification.Name.MEGACameraUploadAllAssetsFinishedProcessing, object: nil)
     }
     
     func stopRecordingBackupUpdate() {
         NotificationCenter.default.removeObserver(self)
+        hasCameraUploadsFinishedProcessing = false
     }
     
     @objc private func didReceiveNodeUploadCompleteNotification(_ notification: NSNotification) {
@@ -30,6 +33,25 @@ final class BackupRecorder: NSObject {
         
         debouncer.start {
             self.recordLastBackupNode(node)
+            if self.hasCameraUploadsFinishedProcessing {
+                self.checkUploadStats()
+            }
+        }
+    }
+    
+    @objc private func didReceiveCameraUploadsFinishProcessingNotification() {
+        MEGALogDebug("[Camera Upload] heartbeat - received camera uploads finishes processing notification")
+        hasCameraUploadsFinishedProcessing = true
+    }
+    
+    private func checkUploadStats() {
+        CameraUploadManager.shared().loadCurrentUploadStats { stats, error in
+            guard stats?.isUploadCompleted == true else {
+                return
+            }
+            
+            NotificationCenter.default.post(name: NSNotification.Name.MEGACameraUploadComplete, object: nil)
+            self.hasCameraUploadsFinishedProcessing = false
         }
     }
     

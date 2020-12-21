@@ -45,12 +45,12 @@ extern NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotification;
 extern NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotification;
 extern NSString * const MEGACameraUploadVideoConcurrentCountChangedNotification;
 extern NSString * const MEGACameraUploadUploadingTasksCountChangedNotification;
-extern NSString * const MEGACameraUploadTaskExpiredNotification;
 extern NSString * const MEGACameraUploadQueueUpNextAssetNotification;
 extern NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotification;
 extern NSString * const MEGACameraUploadTargetFolderChangedInRemoteNotification;
 extern NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification;
 extern NSString * const MEGACameraUploadNodeUploadCompleteNotification;
+extern NSString * const MEGACameraUploadCompleteNotification;
 
 #pragma mark - camera upload notification keys
 

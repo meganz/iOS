@@ -493,7 +493,7 @@ extension ProfileViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             cell.nameLabel.text = NSLocalizedString("upgradeAccount", comment: "Button title which triggers the action to upgrade your MEGA account level")
 
-            cell.accessoryType = MEGAPurchase.sharedInstance()?.products.count ?? 0 > 0 ? .disclosureIndicator : .none
+            cell.accessoryType = MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0 ? .disclosureIndicator : .none
 
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return cell

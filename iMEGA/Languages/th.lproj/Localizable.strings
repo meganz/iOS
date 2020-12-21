@@ -36,8 +36,6 @@
 "microphonePermissions"="กรุณาให้สิทธิ์แอป MEGA เพื่อเข้าถึงไมโครโฟนในการตั้งค่าของคุณ";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปถ่ายของคุณได้";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="คุณไม่สามารถดาวน์โหลดโฟลเดอร์เปล่าได้";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="บัญชีของคุณถูกเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ";
 /* */
@@ -624,8 +622,6 @@
 "securityOptions"="ตัวเลือกความปลอดภัย";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="เกี่ยวกับ";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="ภาษา";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="ส่งคำติชม";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="ค้นหาใน GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="ไม่พบ GIFs";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="ข้อความนี้แสดงความรู้สึกถึงขีดจำกัดสูงสุด %d ครั้งแล้ว";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="คุณได้แสดงความรู้ถึงขีดจำกัดสูงสุดที่ %d ครั้งแล้ว";
 /* Chat section header */
 "chat"="แชท";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="ข้อผิดพลาด HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="คุณต้องรีสตาร์ท MEGA หลังจากเปลี่ยนภาษา";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="เปลี่ยนภาษาแล้ว แตะเพื่อเริ่มต้นใหม่";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA ให้บริการจัดเก็บข้อมูลบนระบบคลาวด์ที่ผู้ใช้ควบคุมได้ด้วยตนเองผ่านมาตรฐานเว็บเบราว์เซอร์ รวมถึงแอปพลิเคชันเฉพาะสำหรับโทรศัพท์มือถือ ซึ่งแตกต่างจากผู้ให้บริการจัดเก็บข้อมูลบนคลาวด์รายอื่น โดยที่ข้อมูลของคุณจะถูกเข้ารหัสและถอดรหัสโดยอุปกรณ์ไคลเอ็นต์ของคุณเท่านั้นและเราจะไม่เข้าไปยุ่งเกี่ยวกับข้อมูลใด ๆ ของคุณ";
@@ -1745,15 +1741,15 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="เข้ารหัสการหมุนคีย์";
+"Encrypted Key Rotation"="การหมุนเวียนคีย์เข้ารหัส";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="เปิดใช้งานเข้ารหัสการหมุนคีย์";
+"Enable Encrypted Key Rotation"="เปิดใช้งานการหมุนเวียนคีย์เข้ารหัส";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="รับลิงก์แชท";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การหมุนคีย์ จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การหมุนเวียนคีย์ จะเพิ่มความปลอดภัยอีกเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="การเข้ารหัสการหมุนคีย์ถูกปิดใช้งาน เมื่อการสนทนามีผู้เข้าร่วมมากกว่า 100 คน";
+"Key rotation is disabled for conversations with more than 100 participants."="การหมุนเวียนคีย์เข้ารหัสถูกปิดใช้งาน เมื่อการสนทนามีผู้เข้าร่วมมากกว่า 100 คน";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="ในการสร้างลิงก์แชทคุณจะต้องตั้งชื่อกลุ่มก่อน";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1765,7 +1761,7 @@
 /* Users previewing a public chat */
 "Observers"="ผู้สังเกตการณ์";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งานเข้ารหัสการหมุนคีย์";
+"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งานการหมุนเวียนคีย์เข้ารหัสแล้ว";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ ได้สร้างลิงก์แชทแล้ว";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกระงับ[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="แม้ว่า MEGA จะไม่เข้าถึงข้อมูลของคุณ แต่ผู้ดูแลระบบองค์กรของคุณมีความสามารถในการควบคุมและดูการอัปโหลดจากกล้องในบัญชีผู้ใช้ของคุณได้";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="แม้ว่า MEGA จะไม่สามารถเข้าถึงข้อมูลของคุณได้ แต่ผู้ดูแลระบบบัญชีธุรกิจของคุณก็มีความสามารถในการควบคุมและดูการอัปโหลดจากกล้องในบัญชีผู้ใช้ของคุณได้";
 /* */
 "Something went wrong"="มีบางอย่างผิดพลาด";
 /* Title of the "Links" Shared Items. */
@@ -2386,6 +2382,8 @@
 "Unavailable"="ไม่พร้อมใช้งาน";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="ส่งอีเมลไปแล้ว กรุณารอสักครู่ก่อนที่จะลองใหม่อีกครั้ง";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="แชร์";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="ค้นหาไฟล์ของคุณ";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="เลือกโฟลเดอร์";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="แน่ใจหรือไม่ว่าต้องการย้ายโฟลเดอร์อัปโหลดจากกล้องไปที่ถังขยะ ในกรณีนี้โฟลเดอร์ใหม่สำหรับการอัปโหลดจากกล้องจะถูกสร้างขึ้นโดยอัตโนมัติ";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="อัปโหลดไฟล์";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="คำสั่งลัด";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="เปิดแอป MEGA เพื่อดำเนินการ";
 /* Title for document explorer view */
 "Documents"="เอกสาร";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="ไม่พบรูปภาพ";
 /* Accessibility label for Home section in tabbar item */
 "Home"="หน้าแรก";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="เอกสาร";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="ลิงก์นี้แชร์โดยไม่มีคีย์ถอดรหัสลับ คุณต้องการแชร์คีย์หรือไม่";
+/* Title for password protect link alert */
+"Link Password"="รหัสผ่านลิงก์";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="คุณต้องการแชร์รหัสผ่านสำหรับลิงก์นี้หรือไม่";

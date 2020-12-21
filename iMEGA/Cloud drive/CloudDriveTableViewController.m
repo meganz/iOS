@@ -289,8 +289,11 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    [self setTableViewEditing:YES animated:YES];
     return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:YES animated:YES];
 }
 
 #pragma clang diagnostic push

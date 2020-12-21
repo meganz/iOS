@@ -36,8 +36,6 @@
 "microphonePermissions"="Tolong beri izin aplikasi MEGA untuk mengakses Mikrofon Anda di Pengaturan Anda";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Harap berikan MEGA app permission untuk mengakses library foto anda melalui Settings";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Anda tidak dapat mendownload folder kosong";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Akun anda telah di-aktifasi. Silahkan masuk akun anda";
 /* */
@@ -624,8 +622,6 @@
 "securityOptions"="Pilihan keamanan";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Tentang";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Bahasa";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Kirim saran";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="Telusuri GIPHY";
 /* Empty Gifs section */
 "No GIFs found"="GIF tidak ditemukan";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="Pesan ini telah mencapai batas maksimum %d reaksi.";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="Kesalahan HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error tidak diketahui";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Anda harus me-restart MEGA setelah mengubah bahasa";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Bahasa terganti. Tap untuk merestart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA menyediakan cloud storage terenkripsi yang dikontrol pengguna melalui browser web standar, bersama dengan aplikasi khusus untuk perangkat seluler. Tidak seperti penyedia cloud storage lainnya, data Anda dienkripsi dan didekripsi oleh perangkat klien Anda saja dan tidak pernah oleh kami.";
@@ -2386,6 +2382,8 @@
 "Unavailable"="Tidak tersedia";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email sudah terkirim. Harap tunggu beberapa menit sebelum mencoba lagi.";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="BAGIKAN";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Cari File Anda";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="Pilih Folder";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah Anda yakin ingin memindahkan folder Unggahan Kamera ke Tong Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan Kamera.";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="Upload File";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="Shortcuts";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
 "Documents"="Document";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="Tidak ada gambar ditemukan";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Beranda";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="Docs";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+/* Title for password protect link alert */
+"Link Password"="Link Password";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="Do you want to share the password for this link?";

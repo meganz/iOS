@@ -36,8 +36,6 @@
 "microphonePermissions"="設定でMEGAアプリに、マイクにアクセスするための権限を与えてください。";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="設定でMEGAアプリがあなたのフォトライブラリーにアクセスできるよう、許可して下さい。";
-/* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="空のフォルダをダウンロードすることができません。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="あなたのアカウントは有効になっています。ログインしてください。";
 /* */
@@ -565,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="連絡先から追加";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="知り合いの追加";
+"addContact"="知り合い追加";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="知り合いのメールアドレス";
 /* Button title to 'Add' the contact to your contacts list */
@@ -624,8 +622,6 @@
 "securityOptions"="セキュリティオプション";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="概要";
-/* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="言語";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="フィードバックを送る";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1103,6 +1099,10 @@
 "Search GIPHY"="GIPHYを検索";
 /* Empty Gifs section */
 "No GIFs found"="GIFが見つかりません";
+/* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"This message has reached the maximum limit of %d reactions."="このメッセージは、反応の上限（%d）に達しました。";
+/* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
+"You have reached the maximum limit of %d reactions."="反応の上限(%d)に達しました。";
 /* Chat section header */
 "chat"="チャット";
 /* Empty Conversations section */
@@ -1404,10 +1404,6 @@
 "HTTP error"="HTTPエラー";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知のエラー";
-/* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="言語を変更後、MEGAを再起動する必要があります";
-/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="言語が変更されました。タップして再起動します。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGAは、標準のウェブブラウザを通じてユーザー制御の暗号化クラウドストレージを、モバイル端末用の専用アプリケーションとともにご提供いたします。他のクラウドストレージプロバイダとは異なり、あなたのデータはあなたのクライアント端末によってのみ暗号化され、復号されます（当社では決して行いません）。";
@@ -2049,7 +2045,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="あなたのアカウントは現在[B]凍結[/B]されています。あなたのデータの閲覧のみ可能です。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGAはあなたのデータにアクセスしませんが、貴組織の管理者様は、あなたのユーザーアカウントのカメラアップロードを管理し、表示することができます。";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGAはあなたのデータにアクセスしませんが、あなたのビジネスアカウントの管理者様は、あなたのユーザーアカウントのカメラアップロードを管理し、表示することができます。";
 /* */
 "Something went wrong"="ちょと、うまく行かなかったようです。";
 /* Title of the "Links" Shared Items. */
@@ -2386,6 +2382,8 @@
 "Unavailable"="利用できません";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="メールは既に送信されています。数分待ってから再試行してください。";
+/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
+"SHARE"="共有";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="あなたのファイルを検索";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2394,6 +2392,12 @@
 "Select Folder"="フォルダを選択";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="カメラアップロードフォルダをごみ箱に移動してもよろしいですか？　その場合、新しいフォルダがカメラアップロード用に自動的に生成されます。";
+/* Text to indicate the action of uploading a file to the cloud drive */
+"Upload File"="ファイルのアップロード";
+/* Text title for shortcuts, ie in the widget */
+"Shortcuts"="ショートカット";
+/* Text description leading the user to perform an action, ie the shortcuts widget */
+"Launch the MEGA app to perform an action"="MEGAアプリを起動してアクションを実行します";
 /* Title for document explorer view */
 "Documents"="文書";
 /* Title for audio explorer view */
@@ -2416,3 +2420,11 @@
 "No images found"="画像が見つかりません";
 /* Accessibility label for Home section in tabbar item */
 "Home"="ホーム";
+/* Home Screen: Explorer view card title - Documents */
+"Docs"="文書";
+/* Message shown when a link is shared with separated key */
+"This link was shared without a decryption key. Do you want to share its key?"="このリンクは、復号キーなしで共有されました。その鍵を共有しますか？";
+/* Title for password protect link alert */
+"Link Password"="リンクパスワード";
+/* Message shown when a link is shared having a password */
+"Do you want to share the password for this link?"="このリンクのパスワードを共有しますか？";

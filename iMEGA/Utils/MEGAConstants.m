@@ -46,12 +46,12 @@ NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotification = @"nz.meg
 NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotification = @"nz.mega.cameraUpload.photo.concurrentCountChanged";
 NSString * const MEGACameraUploadVideoConcurrentCountChangedNotification = @"nz.mega.cameraUpload.video.concurrentCountChanged";
 NSString * const MEGACameraUploadUploadingTasksCountChangedNotification = @"nz.mega.cameraUpload.uploadingTaskCountChanged";
-NSString * const MEGACameraUploadTaskExpiredNotification = @"nz.mega.cameraUpload.uploadTaskExpired";
 NSString * const MEGACameraUploadQueueUpNextAssetNotification = @"nz.mega.cameraUpload.queueUpNextAsset";
 NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotification = @"nz.mega.cameraUpload.allAssetsFinishedProcessing";
 NSString * const MEGACameraUploadTargetFolderChangedInRemoteNotification = @"nz.mega.cameraUpload.targetFolderChangedInRemote";
 NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification = @"nz.mega.cameraUpload.targetFolderUpdatedInMemory";
 NSString * const MEGACameraUploadNodeUploadCompleteNotification = @"nz.mega.cameraUpload.nodeUploadCompleteNotification";
+NSString * const MEGACameraUploadCompleteNotification = @"nz.mega.cameraUpload.completeNotification";
 
 #pragma mark - camera upload notification keys
 
