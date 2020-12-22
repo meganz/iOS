@@ -26,7 +26,7 @@
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
-static const NSUInteger PhotoUploadBatchCount = 5;
+static const NSUInteger PhotoUploadBatchCount = 7;
 static const NSUInteger VideoUploadBatchCount = 1;
 
 @interface CameraUploadManager () <CameraScannerDelegate>
@@ -550,7 +550,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
         [self queueUpIfNeededForOperation:operation inOperationQueue:self.photoUploadOperationQueue];
     } else if ([operation isKindOfClass:[LivePhotoUploadOperation class]]) {
         [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
-        [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
     } else if ([operation isKindOfClass:[VideoUploadOperation class]]) {
         [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
     }
