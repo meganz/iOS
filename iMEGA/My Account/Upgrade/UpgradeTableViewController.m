@@ -15,7 +15,14 @@
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
 
-@interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+typedef NS_ENUM(NSInteger, SubscriptionOrder) {
+    SubscriptionOrderLite = 0,
+    SubscriptionOrderProI,
+    SubscriptionOrderProII,
+    SubscriptionOrderProIII
+};
+
+@interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, MEGARestoreDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -39,16 +46,14 @@
 @property (weak, nonatomic) IBOutlet UIView *currentPlanBottomLineCellView;
 
 @property (weak, nonatomic) IBOutlet UIView *footerTopLineView;
+
+@property (weak, nonatomic) IBOutlet UILabel *customPlanLabel;
+@property (weak, nonatomic) IBOutlet UIButton *customPlanButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *twoMonthsFreeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *autorenewableDescriptionLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *skipBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIView *requestAPlanView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *requestAPlanLabelTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet UILabel *requestAPlanLabel;
-@property (weak, nonatomic) IBOutlet UILabel *requestAPlanDescriptionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *requestAPlanButton;
 
 @property (strong, nonatomic) NSMutableArray *proLevelsMutableArray;
 @property (strong, nonatomic) NSMutableDictionary *proLevelsIndexesMutableDictionary;
@@ -57,6 +62,7 @@
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
 @property (nonatomic, getter=shouldHideSkipButton) BOOL hideSkipButton;
+@property (nonatomic, getter=isPurchased) BOOL purchased;
 
 @end
 
@@ -67,6 +73,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    MEGAPurchase.sharedInstance.restoreDelegate = self;
+    self.purchased = NO;
+    
     self.numberFormatter = NSNumberFormatter.alloc.init;
     self.numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
     SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
@@ -74,7 +83,9 @@
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
-    self.title = (self.isChoosingTheAccountType) ? NSLocalizedString(@"chooseYourAccountType", nil) : NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+    NSString *navigationTitle = MEGASdkManager.sharedMEGASdk.mnz_isProAccount ? NSLocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+    self.title = (self.isChoosingTheAccountType) ? NSLocalizedString(@"chooseYourAccountType", nil) : navigationTitle;
+    
     self.chooseFromOneOfThePlansLabel.text = (self.isChoosingTheAccountType) ? NSLocalizedString(@"selectOneAccountType", @"") : NSLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
     self.chooseFromOneOfThePlansProLabel.text = NSLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
@@ -83,7 +94,6 @@
     
     _autorenewableDescriptionLabel.text = NSLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
-    
     if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
         self.hideSkipButton = NO;
         self.skipBarButtonItem.title = NSLocalizedString(@"skipButton", @"Button title that skips the current action");
@@ -91,7 +101,18 @@
         self.hideSkipButton = YES;
     }
     
-    self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType || self.shouldHideSkipButton) ? nil : self.skipBarButtonItem;
+    if (self.isChoosingTheAccountType) {
+        self.navigationItem.rightBarButtonItem = nil;
+    } else {
+        UIBarButtonItem *restoreBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restoreTouchUpInside)];
+        self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
+        if (self.shouldHideSkipButton) {
+            self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
+        } else {
+            self.navigationItem.leftBarButtonItem = restoreBarButtonItem;
+            self.navigationItem.rightBarButtonItem = self.skipBarButtonItem;
+        }
+    }
     
     [self getIndexPositionsForProLevels];
     
@@ -151,8 +172,6 @@
     
     [self setupTableViewHeaderAndFooter];
     
-    [self.requestAPlanButton mnz_setupPrimary:self.traitCollection];
-    
     [self setupToolbar];
 }
 
@@ -175,6 +194,14 @@
     
     self.footerTopLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
+    self.customPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    NSString *toUpgradeYourCurrentSubscriptionString = NSLocalizedString(@"To upgrade your current subscription, please contact support for a [A]custom plan[/A].", @"When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan.");
+    NSString *customPlanString = [toUpgradeYourCurrentSubscriptionString mnz_stringBetweenString:@"[A]" andString:@"[/A]"];
+    toUpgradeYourCurrentSubscriptionString = toUpgradeYourCurrentSubscriptionString.mnz_removeWebclientFormatters;
+    NSMutableAttributedString *customPlanMutableAttributedString = [NSMutableAttributedString.new initWithString:toUpgradeYourCurrentSubscriptionString attributes:@{NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    [customPlanMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]} range:[toUpgradeYourCurrentSubscriptionString rangeOfString:customPlanString]];
+    self.customPlanLabel.attributedText = customPlanMutableAttributedString;
+    
     self.twoMonthsFreeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:NSLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}];
@@ -194,47 +221,34 @@
         self.tableView.tableHeaderView = self.chooseFromOneOfThePlansPROHeaderView;
     }
     
+    self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeLite], [NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
+    
     switch (self.userProLevel) {
         case MEGAAccountTypeFree:
-            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeLite], [NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
-            
             if (self.isChoosingTheAccountType) {
                 [self.proLevelsMutableArray insertObject:[NSNumber numberWithInteger:MEGAAccountTypeFree] atIndex:0];
             }
             
             self.currentPlanLabelView.hidden = self.currentPlanCellView.hidden = YES;
             break;
-            
+        
         case MEGAAccountTypeLite:
-            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
+            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderLite];
             break;
             
         case MEGAAccountTypeProI:
-            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
+            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderProI];
             break;
             
         case MEGAAccountTypeProII:
-            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
+            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderProII];
             break;
             
-        case MEGAAccountTypeProIII: {
-            self.proLevelsMutableArray = nil;
+        case MEGAAccountTypeProIII:
+            self.customPlanLabel.hidden = self.customPlanButton.hidden = NO;
             
-            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            self.tableView.tableHeaderView = nil;
-            self.tableView.tableFooterView = nil;
-            
-            if ([[UIDevice currentDevice] iPhone4X]) {
-                self.requestAPlanLabelTopLayoutConstraint.constant = 20.0f;
-            }
-    
-            self.requestAPlanView.hidden = NO;
-            self.requestAPlanLabel.text = NSLocalizedString(@"requestAPlan", @"Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans.");
-            
-            NSString *requestAPlanDescriptionString = NSLocalizedString(@"thereAreNoPlansSuitableForYourCurrentUsage", @"Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.");
-            self.requestAPlanDescriptionLabel.text = [requestAPlanDescriptionString mnz_removeWebclientFormatters];
+            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderProIII];
             break;
-        }
             
         default:
             break;
@@ -386,10 +400,36 @@
                                           countStyle:NSByteCountFormatterCountStyleBinary];
 }
 
+- (void)pushProductDetailWithAccountType:(MEGAAccountType)accountType {
+    ProductDetailViewController *productDetailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductDetailViewControllerID"];
+    productDetailVC.chooseAccountType = self.isChoosingTheAccountType;
+    productDetailVC.currentAccountType = self.userProLevel;
+    productDetailVC.megaAccountType = accountType;
+    
+    NSNumber *proLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:accountType]];
+    SKProduct *monthlyProduct = [MEGAPurchase.sharedInstance.products objectOrNilAtIndex:proLevelIndexNumber.integerValue];
+    SKProduct *yearlyProduct = [MEGAPurchase.sharedInstance.products objectOrNilAtIndex:proLevelIndexNumber.integerValue+1];
+    NSString *storageFormattedString = [self storageAndUnitsByProduct:monthlyProduct];
+    NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:monthlyProduct];
+    
+    productDetailVC.storageString = storageFormattedString;
+    productDetailVC.bandwidthString = bandwidthFormattedString;
+    productDetailVC.priceMonthString = [self.numberFormatter stringFromNumber:monthlyProduct.price];
+    productDetailVC.priceYearlyString = [self.numberFormatter stringFromNumber:yearlyProduct.price];
+    productDetailVC.monthlyProduct = monthlyProduct;
+    productDetailVC.yearlyProduct = yearlyProduct;
+    
+    [self.navigationController pushViewController:productDetailVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)skipTouchUpInside:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)currentPlanTouchUpInside:(UITapGestureRecognizer *)sender {
+    [self pushProductDetailWithAccountType:self.userProLevel];
 }
 
 - (IBAction)requestAPlanTouchUpInside:(UIButton *)sender {
@@ -398,14 +438,17 @@
         mailComposeVC.mailComposeDelegate = self;
         mailComposeVC.toRecipients = @[@"support@mega.nz"];
         
-        mailComposeVC.subject = [NSString stringWithFormat:@"Request a plan"];
-        
-        //TODO: Add a message body to facilitate the transition to a custom plan.
+        mailComposeVC.subject = NSLocalizedString(@"Upgrade to a custom plan", @"Mail title to upgrade to a custom plan");
+        [mailComposeVC setMessageBody:NSLocalizedString(@"Ask us how you can upgrade to a custom plan:", @"Mail subject to upgrade to a custom plan") isHTML:NO];
         
         [self presentViewController:mailComposeVC animated:YES completion:nil];
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
     }
+}
+
+- (void)restoreTouchUpInside {
+    [MEGAPurchase.sharedInstance restorePurchase];
 }
     
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -474,27 +517,42 @@
         return;
     }
     
-    ProductDetailViewController *productDetailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductDetailViewControllerID"];
-    NSNumber *proPlanNumber = [self.proLevelsMutableArray objectOrNilAtIndex:indexPath.row];
-    productDetailVC.chooseAccountType = self.isChoosingTheAccountType;
-    productDetailVC.megaAccountType = proPlanNumber.integerValue;
-    
-    NSNumber *proLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:proPlanNumber];
-    
-    SKProduct *monthlyProduct = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:proLevelIndexNumber.integerValue];
-    SKProduct *yearlyProduct = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:proLevelIndexNumber.integerValue+1];
-    NSString *storageFormattedString = [self storageAndUnitsByProduct:monthlyProduct];
-    NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:monthlyProduct];
-    
-    productDetailVC.storageString = storageFormattedString;
-    productDetailVC.bandwidthString = bandwidthFormattedString;
-    productDetailVC.priceMonthString = [self.numberFormatter stringFromNumber:monthlyProduct.price];
-    productDetailVC.priceYearlyString = [self.numberFormatter stringFromNumber:yearlyProduct.price];
-    productDetailVC.monthlyProduct = monthlyProduct;
-    productDetailVC.yearlyProduct = yearlyProduct;
-    [self.navigationController pushViewController:productDetailVC animated:YES];
+    NSNumber *accountTypeNumber = [self.proLevelsMutableArray objectOrNilAtIndex:indexPath.row];
+    MEGAAccountType accountType = accountTypeNumber.integerValue;
+    [self pushProductDetailWithAccountType:accountType];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGARestoreDelegate
+
+- (void)successfulRestore:(MEGAPurchase *)megaPurchase {
+    if (!self.isPurchased) {
+        self.purchased = YES;
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"thankYou_title", nil)  message:NSLocalizedString(@"purchaseRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (UIApplication.mnz_presentingViewController) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)incompleteRestore {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"incompleteRestore_title", @"Alert title shown when a restore hasn't been completed correctly")  message:NSLocalizedString(@"incompleteRestore_message", @"Alert message shown when a restore hasn't been completed correctly") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedRestore_title", @"Alert title shown when the restoring process has stopped for some reason")  message:NSLocalizedString(@"failedRestore_message", @"Alert message shown when the restoring process has stopped for some reason") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end
