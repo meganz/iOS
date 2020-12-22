@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -166,9 +166,9 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="wTf-Cd-eno"/>
                                         <exclude reference="5s4-YK-dtQ"/>
                                         <exclude reference="Wyn-L4-ADe"/>
-                                        <exclude reference="wTf-Cd-eno"/>
                                         <exclude reference="Rxu-xJ-JDQ"/>
                                         <exclude reference="yg1-Qh-h2l"/>
                                         <exclude reference="1cF-Xy-bYT"/>
@@ -183,9 +183,9 @@
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="azc-m0-bHT"/>
-                                        <exclude reference="5s4-YK-dtQ"/>
                                         <exclude reference="sdH-Kc-EUP"/>
                                         <include reference="wTf-Cd-eno"/>
+                                        <exclude reference="5s4-YK-dtQ"/>
                                         <include reference="Rxu-xJ-JDQ"/>
                                         <exclude reference="x6M-pU-IvC"/>
                                         <exclude reference="yg1-Qh-h2l"/>
@@ -226,8 +226,8 @@
                         <viewLayoutGuide key="safeArea" id="wRT-tN-2aI"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="M4A-BK-sUd"/>
                                 <exclude reference="FZo-it-1Jn"/>
+                                <exclude reference="M4A-BK-sUd"/>
                                 <exclude reference="afb-MY-CFR"/>
                                 <exclude reference="db9-oR-YfF"/>
                                 <exclude reference="kjO-I7-3Uf"/>
@@ -238,11 +238,11 @@
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="M4A-BK-sUd"/>
-                                <exclude reference="tSq-st-CHy"/>
                                 <include reference="FZo-it-1Jn"/>
                                 <exclude reference="VxJ-Qg-XfE"/>
                                 <exclude reference="Wym-fO-v3b"/>
+                                <include reference="M4A-BK-sUd"/>
+                                <exclude reference="tSq-st-CHy"/>
                                 <exclude reference="FeN-v1-2vF"/>
                                 <exclude reference="Rd9-Sb-4mk"/>
                                 <include reference="afb-MY-CFR"/>
@@ -361,11 +361,19 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="8mB-9w-S7V"/>
                                                 </constraints>
                                             </view>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="dW0-su-4wN">
+                                                <rect key="frame" x="349" y="32" width="10" height="22"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="10" id="vdF-wK-q6D"/>
+                                                    <constraint firstAttribute="height" constant="22" id="ycX-vW-TUQ"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="MYs-Ul-v4e" secondAttribute="bottom" id="36A-Ue-qfb"/>
                                             <constraint firstItem="MIe-Rh-yPy" firstAttribute="top" secondItem="xSy-2E-wYn" secondAttribute="bottom" constant="5" id="5Xb-Fv-F1s"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MIe-Rh-yPy" secondAttribute="trailing" constant="32" id="80R-9z-Qc1"/>
+                                            <constraint firstItem="dW0-su-4wN" firstAttribute="centerY" secondItem="Dso-Lw-r72" secondAttribute="centerY" id="Awc-Kv-FIv"/>
                                             <constraint firstItem="gKR-W8-vVI" firstAttribute="centerY" secondItem="Dso-Lw-r72" secondAttribute="centerY" id="B90-f6-1Ue"/>
                                             <constraint firstAttribute="trailing" secondItem="MYs-Ul-v4e" secondAttribute="trailing" id="Isj-Tr-5MX"/>
                                             <constraint firstItem="xSy-2E-wYn" firstAttribute="top" secondItem="gKR-W8-vVI" secondAttribute="top" id="JiL-Ts-ia0"/>
@@ -374,10 +382,15 @@
                                             <constraint firstItem="RrN-75-nsw" firstAttribute="leading" secondItem="MIe-Rh-yPy" secondAttribute="leading" id="crY-Rb-hk7"/>
                                             <constraint firstItem="MIe-Rh-yPy" firstAttribute="leading" secondItem="xSy-2E-wYn" secondAttribute="leading" id="dPF-yI-ayU"/>
                                             <constraint firstItem="gKR-W8-vVI" firstAttribute="leading" secondItem="Dso-Lw-r72" secondAttribute="leading" constant="20" id="jPf-VY-iVc"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RrN-75-nsw" secondAttribute="trailing" constant="32" id="klZ-8q-giF"/>
+                                            <constraint firstItem="dW0-su-4wN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MIe-Rh-yPy" secondAttribute="trailing" constant="16" id="poS-hB-8N7"/>
                                             <constraint firstItem="MYs-Ul-v4e" firstAttribute="leading" secondItem="Dso-Lw-r72" secondAttribute="leading" id="tNt-Le-Rop"/>
+                                            <constraint firstAttribute="trailing" secondItem="dW0-su-4wN" secondAttribute="trailing" constant="16" id="wdt-i8-0Nu"/>
+                                            <constraint firstItem="dW0-su-4wN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RrN-75-nsw" secondAttribute="trailing" constant="16" id="xv1-Yt-1aa"/>
                                             <constraint firstItem="RrN-75-nsw" firstAttribute="top" secondItem="MIe-Rh-yPy" secondAttribute="bottom" constant="5" id="yXu-xB-Zgh"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="nO4-sb-Nqg" appends="YES" id="Eft-PG-s4f"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -421,31 +434,53 @@
                                                 <constraint firstAttribute="height" constant="0.5" id="e7c-jI-tEJ"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* Get two months free if you subscrible to a one-year PRO plan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ues-1R-JZP">
-                                            <rect key="frame" x="21" y="15.000000000000002" width="333" height="28.666666666666671"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="VuS-fU-CDp">
+                                            <rect key="frame" x="21" y="12" width="333" height="282"/>
+                                            <subviews>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To upgrade your current subscription, please contact support for a custom plan." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbb-IR-LSV">
+                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="0.0"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* An annual subscription is 17% cheaper than 12 monthly payments" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ues-1R-JZP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="28.666666666666668"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-s2-naO">
+                                                    <rect key="frame" x="0.0" y="39.666666666666671" width="333" height="155.33333333333331"/>
+                                                    <string key="text">Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.</string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jts-8B-Ovf">
+                                                    <rect key="frame" x="0.0" y="206" width="333" height="76"/>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmr-uE-Pbx" userLabel="Manage subscription">
+                                            <rect key="frame" x="21" y="12" width="333" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-s2-naO">
-                                            <rect key="frame" x="23" y="79.666666666666671" width="330" height="155.33333333333331"/>
-                                            <string key="text">Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                            <connections>
+                                                <action selector="requestAPlanTouchUpInside:" destination="K9A-Kk-YaD" eventType="touchUpInside" id="BJO-mS-vfS"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="oNa-s2-naO" firstAttribute="leading" secondItem="Qpm-D2-X2Y" secondAttribute="leading" constant="23" id="3rE-0q-pe1"/>
+                                        <constraint firstItem="VuS-fU-CDp" firstAttribute="top" secondItem="Qpm-D2-X2Y" secondAttribute="top" constant="12" id="2xl-uI-e3w"/>
                                         <constraint firstAttribute="trailing" secondItem="x0J-yD-czn" secondAttribute="trailing" id="55O-j1-qhB"/>
+                                        <constraint firstAttribute="trailing" secondItem="VuS-fU-CDp" secondAttribute="trailing" constant="21" id="7Wz-Qd-HQj"/>
                                         <constraint firstItem="x0J-yD-czn" firstAttribute="top" secondItem="Qpm-D2-X2Y" secondAttribute="top" id="8dg-Qw-TpB"/>
-                                        <constraint firstItem="Ues-1R-JZP" firstAttribute="leading" secondItem="Qpm-D2-X2Y" secondAttribute="leading" constant="21" id="BXl-yT-Z6S"/>
                                         <constraint firstItem="x0J-yD-czn" firstAttribute="leading" secondItem="Qpm-D2-X2Y" secondAttribute="leading" id="EDK-6I-v2C"/>
-                                        <constraint firstItem="Ues-1R-JZP" firstAttribute="top" secondItem="Qpm-D2-X2Y" secondAttribute="top" constant="15" id="IvP-VY-FUW"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oNa-s2-naO" secondAttribute="bottom" constant="38" id="a6Q-da-8ep"/>
-                                        <constraint firstAttribute="trailing" secondItem="oNa-s2-naO" secondAttribute="trailing" constant="22" id="jLz-85-oPJ"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ues-1R-JZP" secondAttribute="trailing" constant="21" id="k6h-3x-Vjs"/>
-                                        <constraint firstItem="oNa-s2-naO" firstAttribute="top" secondItem="Ues-1R-JZP" secondAttribute="bottom" constant="36" id="rpH-8f-Yax"/>
+                                        <constraint firstItem="bmr-uE-Pbx" firstAttribute="leading" secondItem="hbb-IR-LSV" secondAttribute="leading" id="dvl-QQ-9ZN"/>
+                                        <constraint firstAttribute="bottom" secondItem="VuS-fU-CDp" secondAttribute="bottom" constant="12" id="fsz-bI-eEY"/>
+                                        <constraint firstItem="bmr-uE-Pbx" firstAttribute="bottom" secondItem="hbb-IR-LSV" secondAttribute="bottom" id="ish-Fb-0w9"/>
+                                        <constraint firstItem="VuS-fU-CDp" firstAttribute="leading" secondItem="Qpm-D2-X2Y" secondAttribute="leading" constant="21" id="mh0-Dz-1dT"/>
+                                        <constraint firstItem="bmr-uE-Pbx" firstAttribute="top" secondItem="hbb-IR-LSV" secondAttribute="top" id="rhR-9h-HYd"/>
+                                        <constraint firstItem="bmr-uE-Pbx" firstAttribute="trailing" secondItem="hbb-IR-LSV" secondAttribute="trailing" id="zkO-hM-qab"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -639,53 +674,10 @@
                                     <outlet property="delegate" destination="K9A-Kk-YaD" id="xPa-lI-AG2"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDM-vM-nNz" userLabel="Request a Plan View">
-                                <rect key="frame" x="0.0" y="173" width="375" height="605"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request a plan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ST3-tX-W0I" userLabel="Request a Plan Label">
-                                        <rect key="frame" x="127.66666666666666" y="139" width="119.66666666666666" height="21.666666666666657"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no plans suitable for your current usage. Please contact support for a custom plan." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m60-sS-2Z7" userLabel="Request a Plan Description Label">
-                                        <rect key="frame" x="30" y="175.66666666666669" width="315" height="50.333333333333343"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kzi-Qg-hnA" userLabel="Request a Plan Button">
-                                        <rect key="frame" x="66.666666666666686" y="524" width="242" height="46"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="CIi-ie-vdV"/>
-                                            <constraint firstAttribute="width" constant="242" id="g4V-AQ-gbr"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <state key="normal" title="Request a plan"/>
-                                        <connections>
-                                            <action selector="requestAPlanTouchUpInside:" destination="K9A-Kk-YaD" eventType="touchUpInside" id="owd-Zs-3bN"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="ST3-tX-W0I" firstAttribute="top" secondItem="PDM-vM-nNz" secondAttribute="top" constant="139" id="4sQ-vV-Ncc"/>
-                                    <constraint firstAttribute="bottom" secondItem="kzi-Qg-hnA" secondAttribute="bottom" constant="35" id="7yO-pU-PQN"/>
-                                    <constraint firstItem="m60-sS-2Z7" firstAttribute="centerX" secondItem="ST3-tX-W0I" secondAttribute="centerX" id="8eY-X4-Mpx"/>
-                                    <constraint firstItem="m60-sS-2Z7" firstAttribute="top" secondItem="ST3-tX-W0I" secondAttribute="bottom" constant="15" id="AyX-aZ-qBi"/>
-                                    <constraint firstItem="kzi-Qg-hnA" firstAttribute="centerX" secondItem="m60-sS-2Z7" secondAttribute="centerX" id="GXu-iI-Wxk"/>
-                                    <constraint firstItem="ST3-tX-W0I" firstAttribute="centerX" secondItem="PDM-vM-nNz" secondAttribute="centerX" id="hjC-SS-aeO"/>
-                                    <constraint firstAttribute="trailing" secondItem="m60-sS-2Z7" secondAttribute="trailing" constant="30" id="pB4-OF-xZZ"/>
-                                    <constraint firstItem="m60-sS-2Z7" firstAttribute="leading" secondItem="PDM-vM-nNz" secondAttribute="leading" constant="30" id="x1U-iA-Eqb"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="apA-yH-zLa" firstAttribute="trailing" secondItem="PDM-vM-nNz" secondAttribute="trailing" id="04q-aa-8db"/>
-                            <constraint firstItem="PDM-vM-nNz" firstAttribute="top" secondItem="Klk-AQ-uII" secondAttribute="bottom" id="8UI-S4-TQS"/>
                             <constraint firstItem="apA-yH-zLa" firstAttribute="trailing" secondItem="Klk-AQ-uII" secondAttribute="trailing" id="CID-Ud-Wy1"/>
-                            <constraint firstItem="PDM-vM-nNz" firstAttribute="leading" secondItem="apA-yH-zLa" secondAttribute="leading" id="RJ3-du-94V"/>
                             <constraint firstAttribute="bottom" secondItem="0Py-ot-9iS" secondAttribute="bottom" id="Sa0-ec-3of"/>
-                            <constraint firstItem="apA-yH-zLa" firstAttribute="bottom" secondItem="PDM-vM-nNz" secondAttribute="bottom" id="aZ3-RX-yyX"/>
                             <constraint firstItem="apA-yH-zLa" firstAttribute="trailing" secondItem="0Py-ot-9iS" secondAttribute="trailing" id="hpa-Ve-9Dq"/>
                             <constraint firstItem="0Py-ot-9iS" firstAttribute="top" secondItem="Klk-AQ-uII" secondAttribute="bottom" id="hzh-w8-oxk"/>
                             <constraint firstItem="0Py-ot-9iS" firstAttribute="leading" secondItem="apA-yH-zLa" secondAttribute="leading" id="q1D-Bz-GPN"/>
@@ -712,12 +704,9 @@
                         <outlet property="currentPlanNameLabel" destination="V9K-nQ-Xbp" id="f1u-cD-SFI"/>
                         <outlet property="currentPlanNameView" destination="xSy-2E-wYn" id="bpb-SH-n9F"/>
                         <outlet property="currentPlanStorageLabel" destination="MIe-Rh-yPy" id="KLK-4m-tLA"/>
+                        <outlet property="customPlanButton" destination="bmr-uE-Pbx" id="Z3t-fA-IHq"/>
+                        <outlet property="customPlanLabel" destination="hbb-IR-LSV" id="Lb9-59-hA9"/>
                         <outlet property="footerTopLineView" destination="x0J-yD-czn" id="Vic-ro-gh8"/>
-                        <outlet property="requestAPlanButton" destination="kzi-Qg-hnA" id="UwX-Bp-EHj"/>
-                        <outlet property="requestAPlanDescriptionLabel" destination="m60-sS-2Z7" id="0mh-gW-6Qa"/>
-                        <outlet property="requestAPlanLabel" destination="ST3-tX-W0I" id="sLE-xo-DES"/>
-                        <outlet property="requestAPlanLabelTopLayoutConstraint" destination="4sQ-vV-Ncc" id="Ug2-ki-seN"/>
-                        <outlet property="requestAPlanView" destination="PDM-vM-nNz" id="Mdh-ay-ua0"/>
                         <outlet property="skipBarButtonItem" destination="UrL-pv-AsI" id="5e7-TB-gpd"/>
                         <outlet property="tableView" destination="0Py-ot-9iS" id="boC-2f-8QB"/>
                         <outlet property="twoMonthsFreeLabel" destination="Ues-1R-JZP" id="gnw-c4-ukw"/>
@@ -757,8 +746,16 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="xhu-9O-spc"/>
                 </view>
+                <tapGestureRecognizer id="nO4-sb-Nqg">
+                    <connections>
+                        <action selector="currentPlanTouchUpInside:" destination="K9A-Kk-YaD" id="7gr-P1-gmL"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2137" y="-285"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
+    </resources>
 </document>

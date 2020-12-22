@@ -144,7 +144,7 @@
                     [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
                 }
                 
-                [_delegate successfulPurchase:self restored:NO];
+                [_delegate successfulPurchase:self];
                 
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -156,7 +156,7 @@
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (shouldSubmitReceiptOnRestore) {
                     [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
-                    [_delegate successfulPurchase:self restored:YES];
+                    [self.restoreDelegate successfulRestore:self];
                     shouldSubmitReceiptOnRestore = NO;
                 }
                 
@@ -187,14 +187,14 @@
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
     if ([queue.transactions count] == 0) {
-        [_delegate incompleteRestore];
+        [self.restoreDelegate incompleteRestore];
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [_delegate failedRestore:error.code message:error.localizedDescription];
+    [self.restoreDelegate failedRestore:error.code message:error.localizedDescription];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -211,7 +211,10 @@
     }
     if (error.type) {
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:NSLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
+            //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.
+            if (error.type != MEGAErrorTypeApiEExist) {
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:NSLocalizedString(@"wrongPurchase", @"Error message shown when the purchase has failed"), error.name, (long)error.type]];
+            }
         }
         return;
     }
