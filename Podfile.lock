@@ -84,9 +84,9 @@ PODS:
 
 DEPENDENCIES:
   - CHTCollectionViewWaterfallLayout/Swift
-  - DoraemonKit/Core (~> 3.0.2)
-  - DoraemonKit/WithGPS (~> 3.0.2)
-  - DoraemonKit/WithLoad (~> 3.0.2)
+  - DoraemonKit/Core (= 3.0.4)
+  - DoraemonKit/WithGPS (= 3.0.4)
+  - DoraemonKit/WithLoad (= 3.0.4)
   - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
   - Firebase/Crashlytics
   - FlexLayout
@@ -176,6 +176,6 @@ SPEC CHECKSUMS:
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: cb246a1a8f44968b7bdaa67c85d1370328e84e93
+PODFILE CHECKSUM: dad4eddc1e57bdc832172aee93bbe1c679d4413e
 
 COCOAPODS: 1.10.0
