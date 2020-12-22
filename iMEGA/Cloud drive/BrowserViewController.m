@@ -731,7 +731,7 @@
     } else if (self.browserAction == BrowserActionDocumentProvider) {
         //TODO: Document Provider
     } else {
-        if (node.isFile) {
+        if (node.isFile || (self.browserAction == BrowserActionMove && [self.selectedNodesArray containsObject:node])) {
             [self setNodeTableViewCell:cell enabled:NO];
         } else {
             [self setNodeTableViewCell:cell enabled:YES];
