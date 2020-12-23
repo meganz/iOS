@@ -137,7 +137,7 @@
 }
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance {
-    for (AssetFetchResult *result in self.scannedFetchResults) {
+    for (AssetFetchResult *result in self.scannedFetchResults.copy) {
         PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:result.fetchResult];
         if (changes == nil) {
             return;
