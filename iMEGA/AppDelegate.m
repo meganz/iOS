@@ -102,6 +102,8 @@
 
 @property (nonatomic) MEGAChatInit chatLastKnownInitState;
 
+@property (nonatomic) NSNumber *openChatLater;
+
 @end
 
 @implementation AppDelegate
@@ -133,6 +135,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
+    UNUserNotificationCenter.currentNotificationCenter.delegate = self;
 
     return YES;
 }
@@ -839,7 +842,6 @@
 }
 
 - (void)registerForNotifications {
-    UNUserNotificationCenter.currentNotificationCenter.delegate = self;
     if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
         [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
@@ -1239,7 +1241,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
     
-    [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
+    if (self.mainTBC) {
+        [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
+    } else {
+        self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
+    }
     
     completionHandler();
 }
@@ -1621,6 +1627,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if (!isAccountFirstLogin) {
                 [self showMainTabBar];
+                if (self.openChatLater) {
+                    [self.mainTBC openChatRoomNumber:self.openChatLater];                    
+                }
                 [self showEnableTwoFactorAuthenticationIfNeeded];
             }
       
