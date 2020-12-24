@@ -1,7 +1,18 @@
 import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
-
+    
+    var currentNode: MEGANode?
+    lazy var transferDelegate: MEGAStartDownloadTransferDelegate = {
+        return MEGAStartDownloadTransferDelegate(progress: nil, completion: { [weak self] (transfer) in
+            if self?.currentNode?.handle == transfer?.nodeHandle {
+                if let transfer = transfer, transfer.path != nil, FileManager.default.fileExists(atPath: transfer.path) {
+                    self?.configureLoadedView()
+                }
+            }
+        }, onError: nil)
+    }()
+    
     open var waveView: UIImageView = {
 
         var imageData:[UIImage] = []
@@ -27,6 +38,16 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     }()
     
     // MARK: - Methods
+    
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        MEGASdkManager.sharedMEGASdk().add(transferDelegate)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupConstraints() {
         playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         playButton.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -76,30 +97,43 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         waveView.tintColor = textColor
         loadingIndicator.color = textColor
         
-        guard chatMessage.transfer != nil else {
-            guard let nodeList = megaMessage.nodeList, let node = nodeList.node(at: 0) else { return }
-                let duration = max(node.duration, 0)
-                durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
-                let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
-                if !FileManager.default.fileExists(atPath: nodePath) {
-                    MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: node, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
-                        let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                        guard visibleIndexPaths.contains(indexPath) else {
-                            return
-                        }
-                        
-                        messagesCollectionView.reloadItems(at: [indexPath])
-                    }, onError: nil))
-                }
-            
-            loadingIndicator.isHidden = true
-            loadingIndicator.stopAnimating()
-            playButton.isHidden = false
-            return
+        if chatMessage.transfer != nil {
+            configureLoadingView()
+        } else {
+            guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
+            let duration = max(currentNode.duration, 0)
+            durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+            let nodePath = currentNode.mnz_temporaryPath(forDownloadCreatingDirectories: true)
+            if !FileManager.default.fileExists(atPath: nodePath) {
+                MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: currentNode, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
+                    let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+                    guard visibleIndexPaths.contains(indexPath) else {
+                        return
+                    }
+                    
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                }, onError: nil))
+                configureLoadingView()
+            } else {
+                configureLoadedView()
+            }
         }
+    }
+    
+    private func configureLoadingView() {
         loadingIndicator.startAnimating()
         loadingIndicator.isHidden = false
         playButton.isHidden = true
+    }
+     
+    private func configureLoadedView() {
+        loadingIndicator.stopAnimating()
+        loadingIndicator.isHidden = true
+        playButton.isHidden = false
+    }
+    
+    deinit {
+        MEGASdkManager.sharedMEGASdk().remove(transferDelegate)
     }
 }
 
