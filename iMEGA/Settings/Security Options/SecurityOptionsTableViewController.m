@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *twoFactorAuthenticationRightDetailLabel;
 @property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
+@property (weak, nonatomic) IBOutlet UILabel *passcodeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passcodeDetailLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *qrCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *closeOtherSessionsLabel;
@@ -37,6 +40,9 @@
     self.twoFactorAuthenticationLabel.text = NSLocalizedString(@"twoFactorAuthentication", @"");
     self.twoFactorAuthenticationRightDetailLabel.text = @"";
     
+    self.passcodeLabel.text = NSLocalizedString(@"passcode", @"");
+    self.passcodeDetailLabel.text = @"";
+    
     self.qrCodeLabel.text = NSLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
     self.closeOtherSessionsLabel.text = NSLocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
@@ -48,6 +54,8 @@
     [super viewWillAppear:animated];
     
     [self twoFactorAuthenticationStatus];
+    
+    [self passcodeStatus];
     
     [self.tableView reloadData];
 }
@@ -70,7 +78,7 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.twoFactorAuthenticationRightDetailLabel.textColor = self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.closeOtherSessionsLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
 }
@@ -82,6 +90,10 @@
         [self.tableView reloadData];
     }];
     [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
+}
+
+- (void)passcodeStatus {
+    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil));
 }
 
 - (void)pushQRSettings {
@@ -115,10 +127,13 @@
         }
             
         case 1:
+            break;
+            
+        case 2:
             [self pushQRSettings];
             break;
             
-        case 2: { //Close other sessions
+        case 3: { //Close other sessions
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"Do you want to close all other sessions? This will log you out on all other active sessions except the current one.", @"Confirmation dialog for the button that logs the user out of all sessions except the current one.") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

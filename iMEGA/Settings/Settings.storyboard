@@ -266,6 +266,7 @@
                             <outlet property="delegate" destination="9Kd-ys-eJ4" id="zeM-pk-u2c"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="4wk-Ay-XO1"/>
                     <connections>
                         <outlet property="biometricsLabel" destination="AnW-qx-AM1" id="fFS-Yo-GgN"/>
                         <outlet property="biometricsSwitch" destination="Dfh-jE-dvr" id="8LB-pw-JRV"/>
@@ -436,6 +437,38 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="djt-YK-7sf">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ivd-mc-tcq" detailTextLabel="1dd-Uw-Ilc" style="IBUITableViewCellStyleValue1" id="snW-wk-lLS" userLabel="Right Detail Table View Cell">
+                                        <rect key="frame" x="0.0" y="123.66666793823242" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="snW-wk-lLS" id="y4F-6Y-H5G">
+                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ivd-mc-tcq">
+                                                    <rect key="frame" x="20" y="11.999999999999998" width="74" height="20.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1dd-Uw-Ilc">
+                                                    <rect key="frame" x="351.66666666666669" y="12.999999999999998" width="23" height="19.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                        <connections>
+                                            <segue destination="9Kd-ys-eJ4" kind="show" id="q1M-4h-fV6"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="" footerTitle="" id="ngR-d2-JR9">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ftc-Dy-Nzs" style="IBUITableViewCellStyleDefault" id="zCB-iT-z7k" userLabel="QR Table View Cell">
@@ -491,6 +524,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="closeOtherSessionsLabel" destination="6Dq-qt-Jc3" id="swv-M1-mpB"/>
+                        <outlet property="passcodeDetailLabel" destination="1dd-Uw-Ilc" id="Z9Y-Br-4bQ"/>
+                        <outlet property="passcodeLabel" destination="ivd-mc-tcq" id="P9x-1r-9a6"/>
                         <outlet property="qrCodeLabel" destination="ftc-Dy-Nzs" id="W3h-ZW-sbs"/>
                         <outlet property="twoFactorAuthenticationLabel" destination="ReP-3Y-IQ7" id="8gm-uo-g1N"/>
                         <outlet property="twoFactorAuthenticationRightDetailLabel" destination="pyq-cH-Ore" id="Ax6-xK-Cgd"/>
@@ -1304,37 +1339,9 @@
                             </tableViewSection>
                             <tableViewSection id="y2z-Ri-0Lf">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="36Y-Mf-F9u" detailTextLabel="dj2-83-5JY" style="IBUITableViewCellStyleValue1" id="vBr-qY-Zou" userLabel="Right Detail Table View Cell">
-                                        <rect key="frame" x="0.0" y="141.33333396911621" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vBr-qY-Zou" id="Zic-Lb-NgK">
-                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="36Y-Mf-F9u">
-                                                    <rect key="frame" x="20" y="11.999999999999998" width="74" height="20.333333333333332"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dj2-83-5JY">
-                                                    <rect key="frame" x="351.66666666666669" y="12.999999999999998" width="23" height="19.333333333333332"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                        <connections>
-                                            <segue destination="9Kd-ys-eJ4" kind="show" id="7KD-il-rmu"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="JOf-Vh-Ule" style="IBUITableViewCellStyleDefault" id="Lro-dd-lxq" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="185.33333396911621" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="0.0" y="141.33333396911621" width="414" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lro-dd-lxq" id="p3r-NV-0v1">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1549,8 +1556,6 @@
                         <outlet property="dataProtectionRegulationLabel" destination="dcb-NL-OWk" id="N8i-LW-O7u"/>
                         <outlet property="fileManagementLabel" destination="jlN-nd-aV9" id="udR-ZD-aV7"/>
                         <outlet property="helpLabel" destination="k5x-XK-ZEk" id="0cV-Fr-7aP"/>
-                        <outlet property="passcodeDetailLabel" destination="dj2-83-5JY" id="KF8-ZH-9Ck"/>
-                        <outlet property="passcodeLabel" destination="36Y-Mf-F9u" id="9p5-Nj-NrU"/>
                         <outlet property="privacyPolicyLabel" destination="r7p-pB-YmJ" id="T2Y-HG-nwA"/>
                         <outlet property="securityOptionsLabel" destination="JOf-Vh-Ule" id="Aa7-Yn-eXM"/>
                         <outlet property="termsOfServiceLabel" destination="xz4-Kn-Zs9" id="IMz-GO-626"/>
