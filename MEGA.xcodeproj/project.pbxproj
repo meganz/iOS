@@ -4082,7 +4082,6 @@
 			children = (
 				41FC83BC1AAE0559008FA551 /* Camera Uploads */,
 				E8534D481E1522D300911C40 /* Chat */,
-				41B3B82D1AD591A80093A88D /* Passcode */,
 				41AA1A191AC07EB900D32691 /* Security Options */,
 				5B00B6E52107457D0076D5BB /* File Management */,
 				5B727381240D14A6005816AB /* Appearance */,
@@ -4297,6 +4296,7 @@
 			isa = PBXGroup;
 			children = (
 				5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */,
+				41B3B82D1AD591A80093A88D /* Passcode */,
 				41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */,
 				41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */,
 				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
