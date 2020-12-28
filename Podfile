@@ -27,7 +27,9 @@ abstract_target 'iMEGA' do
     pod 'DoraemonKit/Core', '3.0.4', :configurations => ['Debug'] #Required
     pod 'DoraemonKit/WithGPS', '3.0.4', :configurations => ['Debug'] #Optional
     pod 'DoraemonKit/WithLoad', '3.0.4', :configurations => ['Debug'] #Optional
-    
+    pod 'GCDWebServer', :configurations => ['Debug']
+    pod 'FMDB', :configurations => ['Debug']
+
     target 'MEGAUnitTests' do
       inherit! :search_paths
       # Pods for testing
