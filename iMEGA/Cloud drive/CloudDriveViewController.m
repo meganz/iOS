@@ -884,7 +884,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case MEGAShareTypeAccessFull: {
-            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem];
+            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem];
             break;
         }
             
