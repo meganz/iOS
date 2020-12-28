@@ -10,6 +10,8 @@ protocol HomeRouting: NSObjectProtocol {
 
 final class HomeViewController: UIViewController {
 
+    @objc var homeQuickActionSearch: Bool = false
+
     // MARK: - View Model
     
     var accountViewModel: HomeAccountViewModelType!
@@ -88,6 +90,14 @@ final class HomeViewController: UIViewController {
         setupView()
         refreshView(with: traitCollection)
         setupViewModelEventListening()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if homeQuickActionSearch {
+            homeQuickActionSearch = false
+            activateSearch()
+        }
     }
 
     private func setupViewModelEventListening() {
@@ -321,6 +331,10 @@ final class HomeViewController: UIViewController {
         }
 
         router.didTap(on: .uploadButton, with: sourceActions)
+    }
+    
+    @objc func activateSearch() {
+        searchBarView.becomeFirstResponder()
     }
 }
 
