@@ -692,18 +692,20 @@
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
     if ([type isEqualToString:@"mega.ios.search"]) {
-        self.mainTBC.selectedIndex = CLOUD;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+        self.mainTBC.selectedIndex = HOME;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:HOME];
+        HomeViewController *homeVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [cloudDriveVC activateSearch]; // Cloud Drive already presented, so activate search bar
+                [homeVC activateSearch]; // Cloud Drive already presented, so activate search bar
             } else {
-                cloudDriveVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+                homeVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
             }
         } else {
-            [cloudDriveVC activateSearch];
+            [homeVC activateSearch];
         }
+        
+        
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
