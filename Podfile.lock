@@ -90,6 +90,8 @@ DEPENDENCIES:
   - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
   - Firebase/Crashlytics
   - FlexLayout
+  - FMDB
+  - GCDWebServer
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
@@ -176,6 +178,6 @@ SPEC CHECKSUMS:
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: dad4eddc1e57bdc832172aee93bbe1c679d4413e
+PODFILE CHECKSUM: 8b87a5d46e57cc20d06a385e0e78c06f823117f6
 
 COCOAPODS: 1.10.0
