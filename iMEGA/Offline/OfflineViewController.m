@@ -1212,10 +1212,6 @@ static NSString *kisDirectory = @"kisDirectory";
     if (viewControllerToCommit.class == OfflineViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
     } else {
-        if (viewControllerToCommit.isBeingPresented || viewControllerToCommit.presentingViewController != nil) {
-            return;
-        }
-        
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
 }
