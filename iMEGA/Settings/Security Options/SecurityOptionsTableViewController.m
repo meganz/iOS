@@ -55,7 +55,7 @@
     
     [self twoFactorAuthenticationStatus];
     
-    [self passcodeStatus];
+    [self configPasscodeView];
     
     [self.tableView reloadData];
 }
@@ -78,7 +78,8 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.twoFactorAuthenticationRightDetailLabel.textColor = self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.closeOtherSessionsLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
 }
@@ -92,7 +93,7 @@
     [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
 }
 
-- (void)passcodeStatus {
+- (void)configPasscodeView {
     self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil));
 }
 
