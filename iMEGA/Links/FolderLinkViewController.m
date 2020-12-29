@@ -590,6 +590,10 @@
         if (self.selectedNodesArray.count != 0) {
             [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
         } else {
+            if (self.parentNode == nil) {
+                return;
+            }
+            
             [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
         
