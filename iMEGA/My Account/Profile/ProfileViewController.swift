@@ -593,7 +593,7 @@ extension ProfileViewController: UITableViewDelegate {
             switch rowsForPlanSection()[indexPath.row] {
             default:
                 if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
-                    if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil && MEGAPurchase.sharedInstance().products.count > 0) {
+                    if (MEGASdkManager.sharedMEGASdk().mnz_accountDetails != nil && (MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0)) {
                         let upgradeViewController = UIStoryboard.init(name: "UpgradeAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
                         navigationController?.pushViewController(upgradeViewController, animated: true)
                     } else {
