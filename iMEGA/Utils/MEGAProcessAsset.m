@@ -561,10 +561,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
                 NSError *error;
                 if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
-                    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
-                    if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                        MEGALogError(@"[PA] Set attributes failed with error: %@", error);
+                    if (asset.creationDate != nil) {
+                        NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
+                        if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                            MEGALogError(@"[PA] Set attributes failed with error: %@", error);
+                        }
                     }
+                    
                     if (self.filePath) {
                         filePath = filePath.mnz_relativeLocalPath;
                         self.filePath(filePath);
