@@ -120,8 +120,11 @@
 
 - (BOOL)shouldConvertImageSource:(CGImageSourceRef)source toUTIType:(NSString *)UTIType {
     CFStringRef sourceType = CGImageSourceGetType(source);
-    CFStringRef newType = (__bridge CFStringRef)UTIType;
-    return UTIType.length > 0 && CFStringCompare(sourceType, newType, kCFCompareCaseInsensitive) != kCFCompareEqualTo;
+    if (sourceType == NULL) {
+        return UTIType.length > 0;
+    } else {
+        return UTIType.length > 0 && CFStringCompare(sourceType, (__bridge CFStringRef)UTIType, kCFCompareCaseInsensitive) != kCFCompareEqualTo;
+    }
 }
 
 - (BOOL)isHEVCOutputForImageSource:(CGImageSourceRef)source outputImageUTIType:(NSString *)UTIType {
