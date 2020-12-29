@@ -1,8 +1,6 @@
 
 #import "SettingsTableViewController.h"
 
-#import "LTHPasscodeViewController.h"
-
 #import "CameraUploadManager+Settings.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
@@ -14,8 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *passcodeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *passcodeDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *securityOptionsLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileManagementLabel;
@@ -71,8 +67,6 @@
     self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
     self.chatLabel.text = NSLocalizedString(@"chat", @"Chat section header");
     
-    self.passcodeLabel.text = NSLocalizedString(@"passcode", nil);
-    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil));
     self.securityOptionsLabel.text = NSLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
     
     self.fileManagementLabel.text = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
@@ -89,7 +83,7 @@
 }
 
 - (void)updateAppearance {
-    self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.cameraUploadsDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
