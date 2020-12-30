@@ -37,5 +37,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 - (void)didSelectNode:(MEGANode *)node;
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;
+- (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

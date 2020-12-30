@@ -44,8 +44,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
 
     NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
     [cell configureCellForNode:node];
@@ -54,7 +53,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     
     NodeCollectionViewCell *nodeCell = (NodeCollectionViewCell *)cell;
     
@@ -76,7 +75,10 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    if (node == nil) {
+        return;
+    }
     
     if (collectionView.allowsMultipleSelection) {
         [self.cloudDrive.selectedNodesArray addObject:node];
@@ -174,7 +176,10 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    if (node == nil) {
+        return;
+    }
     
     [self.cloudDrive showCustomActionsForNode:node sender:sender];
 }
