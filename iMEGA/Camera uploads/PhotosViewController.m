@@ -699,7 +699,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
     NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
-    MEGANode *node = [array objectAtIndex:indexPath.row];
+    MEGANode *node = [array objectOrNilAtIndex:indexPath.row];
+    if (node == nil) {
+        return;
+    }
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
