@@ -87,20 +87,6 @@
     [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
 }
 
-- (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL isInSearch = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
-    MEGANode *node;
-    if (isInSearch) {
-        if (self.cloudDrive.searchNodesArray.count > indexPath.row) {
-            node = self.cloudDrive.searchNodesArray[indexPath.row];
-        }
-    } else {
-        node = [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
-    }
-    
-    return node;
-}
-
 #pragma mark - Public
 
 - (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,7 +127,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     if (node != nil) {
         [self.cloudDrive showCustomActionsForNode:node sender:sender];
     }
@@ -163,7 +149,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     NodeTableViewCell *cell;
     
     if (node == nil) {
@@ -219,7 +205,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     if (node == nil) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
@@ -300,7 +286,7 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     if (node == nil || [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
@@ -399,7 +385,7 @@
     expansionSettings.threshold = 2;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     if (node == nil) {
         return nil;
     }

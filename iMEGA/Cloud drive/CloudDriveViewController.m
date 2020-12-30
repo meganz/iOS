@@ -794,6 +794,20 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
+- (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
+    BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
+    MEGANode *node;
+    if (isInSearch) {
+        if (self.searchNodesArray.count > indexPath.row) {
+            node = self.searchNodesArray[indexPath.row];
+        }
+    } else {
+        node = [self.nodes nodeAtIndex:indexPath.row];
+    }
+    
+    return node;
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
