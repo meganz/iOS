@@ -968,9 +968,9 @@ static NSString *kisDirectory = @"kisDirectory";
     NSDictionary *item = nil;
     if (indexPath) {
         if (self.searchController.isActive) {
-            item = [self.searchItemsArray objectAtIndex:indexPath.row];
+            item = [self.searchItemsArray objectOrNilAtIndex:indexPath.row];
         } else {
-            item = [self.offlineSortedItems objectAtIndex:indexPath.row];
+            item = [self.offlineSortedItems objectOrNilAtIndex:indexPath.row];
         }
     }
     return item;
