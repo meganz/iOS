@@ -394,7 +394,7 @@ class GetLinkViewController: UIViewController {
     }
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
-        let textToShare = getLinkVM.multilink ? nodes.map { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
+        let textToShare = getLinkVM.multilink ? nodes.compactMap { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
         
         showShareActivity(sender, textToShare: textToShare) { [weak self] in
             if self?.getLinkVM.separateKey ?? false {
