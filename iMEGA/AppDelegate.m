@@ -249,7 +249,7 @@
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
                                                                          withLogout:NO
                                                                      andLogoutTitle:nil];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
@@ -753,7 +753,7 @@
                 }
                 
                 if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
-                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
                                                                              withLogout:NO
                                                                          andLogoutTitle:nil];
                 }
