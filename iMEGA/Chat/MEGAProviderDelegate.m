@@ -212,6 +212,10 @@
 }
 
 - (void)callUpdateVideoForCall:(MEGAChatCall *)call {
+    if (call.uuid == nil) {
+        return;
+    }
+    
     CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
     callUpdate.hasVideo = NO;
     
