@@ -429,7 +429,9 @@
                     [self.pendingShareUsersArray addObject:share];
                 } else {
                     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:share.user];
-                    [self.visibleUsersArray addObject:user];
+                    if (user) {
+                        [self.visibleUsersArray addObject:user];
+                    }
                 }
             }
             
