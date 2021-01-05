@@ -697,9 +697,9 @@
         HomeViewController *homeVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [homeVC activateSearch]; // Cloud Drive already presented, so activate search bar
+                [homeVC activateSearch]; // Home already presented, so activate search bar
             } else {
-                homeVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+                homeVC.homeQuickActionSearch = YES; // Search will become active after the Home did appear
             }
         } else {
             [homeVC activateSearch];

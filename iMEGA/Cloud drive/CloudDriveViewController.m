@@ -183,11 +183,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
     [self encourageToUpgrade];
     
-    if (self.homeQuickActionSearch) {
-        self.homeQuickActionSearch = NO;
-        [self activateSearch];
-    }
-    
     [self requestReview];
 }
 
@@ -1224,11 +1219,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
         [self presentViewController:navigationController animated:YES completion:nil];
     }
-}
-
-- (void)activateSearch {
-    [self.searchController.searchBar becomeFirstResponder];
-    self.searchController.active = YES;
 }
 
 - (void)requestReview {
