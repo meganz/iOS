@@ -786,10 +786,14 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case UIGestureRecognizerStateChanged: {
-            if (ABS(verticalIncrement) > 0) {
-                CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / self.panGestureInitialFrame.size.height));
-                CGFloat horizontalPadding = self.panGestureInitialFrame.size.width * (1.0f - ratio);
-                self.targetImageView.frame = CGRectMake(self.panGestureInitialFrame.origin.x + (horizontalPadding / 2.0f), self.panGestureInitialFrame.origin.y + (verticalIncrement / 2.0f), self.panGestureInitialFrame.size.width * ratio, self.panGestureInitialFrame.size.height * ratio);
+            CGFloat initialHeight = CGRectGetHeight(self.panGestureInitialFrame);
+            if (ABS(verticalIncrement) > 0 && initialHeight != 0) {
+                CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / initialHeight));
+                CGFloat horizontalPadding = CGRectGetWidth(self.panGestureInitialFrame) * (1.0f - ratio);
+                self.targetImageView.frame = CGRectMake(self.panGestureInitialFrame.origin.x + (horizontalPadding / 2.0f),
+                                                        self.panGestureInitialFrame.origin.y + (verticalIncrement / 2.0f),
+                                                        CGRectGetWidth(self.panGestureInitialFrame) * ratio,
+                                                        CGRectGetHeight(self.panGestureInitialFrame) * ratio);
             }
             
             break;
