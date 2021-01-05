@@ -11,7 +11,7 @@ final class BackupRecorder: NSObject {
         static let recordCacheKey = "LastBackupRecordKey"
     }
     
-    private var debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .utility))
+    private let debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .utility))
     private var hasCameraUploadsFinishedProcessing = false
     
     // MARK: - recoding update
@@ -31,8 +31,11 @@ final class BackupRecorder: NSObject {
             return
         }
         
-        debouncer.start {
-            self.recordLastBackupNode(node)
+        let handle: MEGAHandle = node.handle
+        
+        debouncer.start { [weak self] in
+            guard let self = self else { return }
+            self.recordLastBackupNode(handle: handle)
             if self.hasCameraUploadsFinishedProcessing {
                 self.checkUploadStats()
             }
@@ -56,8 +59,8 @@ final class BackupRecorder: NSObject {
     }
     
     // MARK: - last backup node
-    private func recordLastBackupNode(_ node: MEGANode) {
-        let record = NodeBackupRecord(date: Date(), nodeHandle: node.handle)
+    private func recordLastBackupNode(handle: MEGAHandle) {
+        let record = NodeBackupRecord(date: Date(), nodeHandle: handle)
         do {
             let data = try JSONEncoder().encode(record)
             UserDefaults.standard.set(data, forKey: Constants.recordCacheKey)

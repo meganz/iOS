@@ -24,7 +24,7 @@ class PhotoExplorerViewModel: NSObject {
     
     // MARK: - Debouncer
     private static let REQUESTS_DELAY: TimeInterval = 0.35
-    private var debouncer = Debouncer(delay: REQUESTS_DELAY)
+    private let debouncer = Debouncer(delay: REQUESTS_DELAY)
 
     private var title: String {
         return NSLocalizedString("All Images", comment: "Navigation title for the photo explorer view")
