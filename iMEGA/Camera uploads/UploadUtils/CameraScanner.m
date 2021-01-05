@@ -36,7 +36,7 @@
         _cameraScanQueue = [[NSOperationQueue alloc] init];
         _cameraScanQueue.name = @"cameraScanQueue";
         _cameraScanQueue.maxConcurrentOperationCount = 1;
-        _cameraScanQueue.qualityOfService = NSQualityOfServiceBackground;
+        _cameraScanQueue.qualityOfService = NSQualityOfServiceUtility;
         _livePhotoScanner = [[LivePhotoScanner alloc] init];
         _scannedFetchResults = [NSMutableArray array];
     }
