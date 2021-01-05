@@ -91,7 +91,9 @@
 
 - (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath && [self.tableView hasRowAt:indexPath]) {
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [UIView performWithoutAnimation:^{
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }];
     }
 }
 
