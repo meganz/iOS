@@ -1,6 +1,6 @@
 import Foundation
 
-struct Debouncer {
+final class Debouncer {
 
     private var delay: TimeInterval
 
@@ -13,7 +13,7 @@ struct Debouncer {
         self.dispatchQueue = dispatchQueue
     }
 
-    mutating fileprivate func execute(_ action: @escaping () -> Void) {
+    fileprivate func execute(_ action: @escaping () -> Void) {
         let dispatchWork = DispatchWorkItem {
             action()
         }
@@ -21,7 +21,7 @@ struct Debouncer {
         dispatchQueue.asyncAfter(deadline: .now() + delay, execute: dispatchWork)
     }
 
-    mutating func start(action: @escaping () -> Void) {
+    func start(action: @escaping () -> Void) {
         guard let scheduleWork = dispatchWork else {
             execute(action)
             return
