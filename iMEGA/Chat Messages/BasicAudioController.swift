@@ -111,7 +111,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         if let transfer = chatMessage.transfer ,transfer.transferChatMessageType() == .voiceClip {
             path = transfer.path
         } else if chatMessage.message.type == .voiceClip, let node = chatMessage.message.nodeList.node(at: 0) {
-            path = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
+            path = node.mnz_voiceCachePath()
         } else {
             MEGALogInfo("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
             return
