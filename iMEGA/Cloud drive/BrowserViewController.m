@@ -628,7 +628,7 @@
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             NSError *error = nil;
             NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:self.localpath.lastPathComponent];
-            if ([[NSFileManager defaultManager] moveItemAtPath:self.localpath toPath:localFilePath error:&error]) {
+            if (self.localpath != nil && [[NSFileManager defaultManager] moveItemAtPath:self.localpath toPath:localFilePath error:&error]) {
                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"uploadStarted_Message", @"Message shown when uploading a file from the Open In Browser")];
                 
                 NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
