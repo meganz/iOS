@@ -281,7 +281,7 @@
     } else {
         if (self.node) {
             NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[self.node]];
-            if (checkFileExist.count) {
+            if (checkFileExist.count || self.node.isFolder) {
                 UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:sender];
                 [self presentViewController:activityVC animated:YES completion:nil];
             } else {
