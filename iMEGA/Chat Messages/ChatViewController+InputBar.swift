@@ -132,14 +132,18 @@ extension ChatViewController {
     
     // MARK: - Private methods.
     private func join(button: UIButton) {
-        if MEGASdkManager.sharedMEGAChatSdk()!.initState() == .anonymous {
+        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+            return
+        }
+        
+        if chatSDK.initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink
             MEGALinkManager.selectedOption = .joinChatLink
             dismissChatRoom()
         } else {
             let delegate = MEGAChatGenericRequestDelegate { (request, error) in
                 let chatViewController = ChatViewController()
-                chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk()!.chatRoom(forChatId: request.chatHandle)
+                chatViewController.chatRoom = chatSDK.chatRoom(forChatId: request.chatHandle)
                 self.closeChatRoom()
                 self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
                 button.isEnabled = true
@@ -147,8 +151,7 @@ extension ChatViewController {
                 self.updateJoinView()
 
             }
-            MEGASdkManager.sharedMEGAChatSdk()?.autojoinPublicChat(chatRoom.chatId,
-                                                                   delegate: delegate)
+            chatSDK.autojoinPublicChat(chatRoom.chatId, delegate: delegate)
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.add(handle)
             }
