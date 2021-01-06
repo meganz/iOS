@@ -447,7 +447,7 @@ static const CGFloat GapBetweenPages = 10.0;
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
+            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(YYAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
@@ -485,7 +485,7 @@ static const CGFloat GapBetweenPages = 10.0;
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
-            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
+            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                     imageView.yy_imageURL = [NSURL fileURLWithPath:temporaryImagePath];
             } else {

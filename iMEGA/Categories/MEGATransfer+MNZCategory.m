@@ -194,7 +194,7 @@
     if ([self.appData containsString:@"attachVoiceClipToChatID"]) {
         MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
         if (node) {
-            NSString *nodeFilePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+            NSString *nodeFilePath = [node mnz_voiceCachePath];
             [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
         }
     }
