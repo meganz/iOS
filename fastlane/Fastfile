@@ -66,6 +66,8 @@ platform :ios do
       xcodeproj: PROJECT
     )
     
+    match(type: "development", readonly: is_ci)
+
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
@@ -137,6 +139,8 @@ platform :ios do
       xcodeproj: PROJECT
     )
 
+    match(type: "appstore", readonly: is_ci)
+
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
@@ -183,6 +187,10 @@ platform :ios do
         },
         slack_url: APPCENTER_SLACK_URL
       )
+  end
+
+  lane :sync_all_development do
+    match(type: "development", readonly: is_ci)
   end
 
 end

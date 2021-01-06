@@ -46,6 +46,16 @@ build a app store release version
 fastlane ios upload_to_itunesconnect
 ```
 Upload to iTunesConnect
+### ios sync_all_development
+```
+fastlane ios sync_all_development
+```
+
+### ios sync_device_info
+```
+fastlane ios sync_device_info
+```
+
 
 ----
 
