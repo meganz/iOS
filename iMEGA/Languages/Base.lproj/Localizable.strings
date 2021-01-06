@@ -1744,6 +1744,8 @@
 "Save to Photos"="Save to Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Saving to Photos…";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */

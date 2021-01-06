@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - appData
 
+- (NSString *)mnz_appDataToSystemShareFile;
 - (NSString *)mnz_appDataToSaveInPhotosApp;
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
