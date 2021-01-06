@@ -91,7 +91,7 @@ final class CameraUploadHeartbeat: NSObject {
             return
         }
         
-        MEGALogDebug("[Camera Upload] heartbeat - active timer fired for backupId \(backupId)")
+        MEGALogDebug("[Camera Upload] heartbeat - active timer fired for backupId \(type(of: sdk).base64Handle(forHandle: backupId) ?? "")")
         
         guard let lastRecord = recorder.fetchLastBackupRecord(),
               let lastNode = sdk.node(forHandle: lastRecord.nodeHandle) else {
@@ -146,12 +146,12 @@ final class CameraUploadHeartbeat: NSObject {
     }
     
     private func sendHeartbeat(forBackupId backupId: MEGAHandle, lastNode: MEGANode, lastActionDate: Date) {
-        MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(backupId)")
-        CameraUploadManager.shared().loadCurrentUploadStats { stats, error in
+        MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(type(of: sdk).base64Handle(forHandle: backupId) ?? "")")
+        CameraUploadManager.shared().loadCurrentUploadStats { [sdk] stats, error in
             guard let stats = stats else {
                 if let error = error {
                     Crashlytics.crashlytics().record(error: error)
-                    MEGALogError("[Camera Upload] heartbeat - error when to load CU stats \(backupId) \(error)")
+                    MEGALogError("[Camera Upload] heartbeat - error when to load CU stats \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") \(error)")
                 }
                 
                 return
@@ -173,14 +173,14 @@ final class CameraUploadHeartbeat: NSObject {
                                          pendingUploadCount: stats.pendingFilesCount,
                                          lastActionDate: lastActionDate,
                                          lastBackupNode: lastNode,
-                                         delegate: HeartbeatRequestDelegate { [weak self] result in
+                                         delegate: HeartbeatRequestDelegate { [weak self, sdk = self.sdk] result in
                                             switch result {
                                             case .failure(let error):
                                                 Crashlytics.crashlytics().record(error: error)
-                                                MEGALogError("[Camera Upload] heartbeat - error when to send heartbeat \(backupId) \(error)")
+                                                MEGALogError("[Camera Upload] heartbeat - error when to send heartbeat \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") \(error)")
                                             case .success:
                                                 self?.lastHeartbeatNodeHandle = lastNode.handle
-                                                MEGALogDebug("[Camera Upload] heartbeat - send heartbeat to backup \(backupId) success")
+                                                MEGALogDebug("[Camera Upload] heartbeat - send heartbeat to backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") success")
                                             }
                                          })
         }
