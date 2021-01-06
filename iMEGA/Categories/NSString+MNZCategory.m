@@ -133,6 +133,10 @@ static NSString* const B = @"[B]";
 
 #pragma mark - appData
 
+- (NSString *)mnz_appDataToSystemShareFile {
+    return [self stringByAppendingString:@">SystemShareFile"];
+}
+
 - (NSString *)mnz_appDataToSaveInPhotosApp {
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }

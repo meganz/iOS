@@ -7,6 +7,9 @@
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIActivityViewController+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+#import "TransfersWidgetViewController.h"
 
 @implementation MEGATransfer (MNZCategory)
 
@@ -139,6 +142,16 @@
         }
         
     }];
+}
+
+- (void)mnz_showSystemShare {
+    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+    if (!node) {
+        node = [self publicNode];
+    }
+    
+    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:TransfersWidgetViewController.sharedTransferViewController.progressView];
+    [UIApplication.mnz_presentingViewController presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (void)mnz_saveInPhotosApp {

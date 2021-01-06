@@ -1008,11 +1008,16 @@ static const CGFloat GapBetweenPages = 10.0;
                     break;
                     
                 default: {
-                    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-                    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-                        [self reloadUI];
-                    };
-                    [self presentViewController:activityVC animated:YES completion:nil];
+                    NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
+                    if (checkFileExist.count) {
+                        UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+                        activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                            [self reloadUI];
+                        };
+                        [self presentViewController:activityVC animated:YES completion:nil];
+                    } else {
+                        [node mnz_downloadNodeAndShare];
+                    }
                     break;
                 }
             }

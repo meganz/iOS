@@ -14,6 +14,7 @@
 
 - (void)mnz_parseSavePhotosAndSetCoordinatesAppData;
 - (void)mnz_parseChatAttachmentAppData;
+- (void)mnz_showSystemShare;
 - (void)mnz_saveInPhotosApp;
 - (void)mnz_setNodeCoordinates;
 - (NSString *)mnz_extractChatIDFromAppData;
