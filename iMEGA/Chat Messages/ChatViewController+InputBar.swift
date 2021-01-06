@@ -516,7 +516,7 @@ extension ChatViewController: ChatInputBarDelegate {
                                                    appData: appData,
                                                    chatRoomId: self.chatRoom.chatId,
                                                    parentNode: voiceMessagesNode,
-                                                   isSourceTemporary: true,
+                                                   isSourceTemporary: false,
                                                    delegate: self.createUploadTransferDelegate())
             } else {
                 let requestDelegate: MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in

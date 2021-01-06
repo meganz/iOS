@@ -112,6 +112,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                                                                 in: messagesCollectionView) as? ChatMessage else { return }
         if chatMessage.transfer != nil {
             checkTransferPauseStatus()
+            if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
+                guard let cell = cell as? AudioMessageCell else {
+                    return
+                }
+                didTapPlayButton(in: cell)
+            }
             return
         }
         
