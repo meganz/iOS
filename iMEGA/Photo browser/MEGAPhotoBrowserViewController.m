@@ -688,11 +688,12 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[self.mediaNodes objectAtIndex:self.currentIndex].handle];
-    if (node) {
-        [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
     }
     
+    [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self.mediaNodes objectAtIndex:self.currentIndex] delegate:self displayMode:self.displayMode isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
