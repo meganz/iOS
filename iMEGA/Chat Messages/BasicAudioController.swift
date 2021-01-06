@@ -106,35 +106,40 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             return
         }
         
-        switch chatMessage.message.type {
-        case .voiceClip:
-            playingCell = audioCell
-            playingMessage = message
-            
-            let node = chatMessage.message.nodeList.node(at: 0)!
-            let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
-            guard FileManager.default.fileExists(atPath: nodePath),
-                let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: nodePath)) else {
-                    MEGALogInfo("Failed to create audio player for URL: \(nodePath)")
-                    return
-            }
-            audioCell.waveView.wml_startAnimating()
-            audioPlayer = player
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.delegate = self
-            audioPlayer?.play()
-            state = .playing
-            audioCell.playButton.isSelected = true  // show pause button on audio cell
-            startProgressTimer()
-            audioCell.delegate?.didStartAudio(in: audioCell)
-            setProximitySensorEnabled(true)
-            do {
-                try AVAudioSession.sharedInstance().setMode(.default)
-            } catch {
-                
-            }
-        default:
+        var path = ""
+        
+        if let transfer = chatMessage.transfer ,transfer.transferChatMessageType() == .voiceClip {
+            path = transfer.path
+        } else if chatMessage.message.type == .voiceClip, let node = chatMessage.message.nodeList.node(at: 0) {
+            path = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
+        } else {
             MEGALogInfo("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
+            return
+        }
+        
+        guard FileManager.default.fileExists(atPath: path),
+              let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path)) else {
+            MEGALogInfo("Failed to create audio player for URL: \(path)")
+            return
+        }
+        
+        playingCell = audioCell
+        playingMessage = message
+        
+        audioCell.waveView.wml_startAnimating()
+        audioPlayer = player
+        audioPlayer?.prepareToPlay()
+        audioPlayer?.delegate = self
+        audioPlayer?.play()
+        state = .playing
+        audioCell.playButton.isSelected = true  // show pause button on audio cell
+        startProgressTimer()
+        audioCell.delegate?.didStartAudio(in: audioCell)
+        setProximitySensorEnabled(true)
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+        } catch {
+            MEGALogInfo("Failed to set audio mode to default")
         }
         proximityChanged()
     }
