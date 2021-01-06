@@ -1933,7 +1933,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case MegaNodeActionTypeShare: {
             NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
-            if (checkFileExist.count) {
+            if (checkFileExist.count || node.isFolder) {
                 UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
                 [self presentViewController:activityVC animated:YES completion:nil];
             } else {

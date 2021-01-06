@@ -1010,7 +1010,7 @@ static const CGFloat GapBetweenPages = 10.0;
                     
                 default: {
                     NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
-                    if (checkFileExist.count) {
+                    if (checkFileExist.count || node.isFolder) {
                         UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
                         activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
                             [self reloadUI];
