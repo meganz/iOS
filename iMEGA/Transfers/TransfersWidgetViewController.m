@@ -877,7 +877,7 @@ static TransfersWidgetViewController* instance = nil;
     NSIndexPath *oldIndexPath = [self indexPathForPendingTransfer:transfer];
     [self.transfers replaceObjectAtIndex:oldIndexPath.row withObject:transfer];
     
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
 }
 
 - (void)cancelQueuedUploadTransfer:(NSString *)localIdentifier {
