@@ -1130,6 +1130,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)presentScanDocument {
     if (@available(iOS 13.0, *)) {
+        if (!VNDocumentCameraViewController.isSupported) {
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Document scanning is not available", @"A tooltip message which is shown when device does not support document scanning")];
+            return;
+        }
+        
         [self presentViewController:({
             VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
             scanVC.delegate = self;
