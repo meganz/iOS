@@ -10,6 +10,7 @@
 #import "UIActivityViewController+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "TransfersWidgetViewController.h"
+#import "SVProgressHUD.h"
 
 @implementation MEGATransfer (MNZCategory)
 
@@ -145,6 +146,7 @@
 }
 
 - (void)mnz_showSystemShare {
+    [SVProgressHUD dismiss];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
     if (!node) {
         node = [self publicNode];
