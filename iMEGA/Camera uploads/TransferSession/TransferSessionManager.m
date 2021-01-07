@@ -105,19 +105,13 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 #pragma mark - invalidate sessions
 
 - (void)invalidateAndCancelVideoSessions {
-    [_videoCellularAllowedUploadSession invalidateAndCancel];
-    _videoCellularAllowedUploadSession = nil;
-    
-    [_videoCellularDisallowedUploadSession invalidateAndCancel];
-    _videoCellularDisallowedUploadSession = nil;
+    [self invalidateAndCancelVideoCellularAllowedSession];
+    [self invalidateAndCancelVideoCellularDisallowedSession];
 }
 
 - (void)invalidateAndCancelPhotoSessions {
-    [_photoCellularAllowedUploadSession invalidateAndCancel];
-    _photoCellularAllowedUploadSession = nil;
-    
-    [_photoCellularDisallowedUploadSession invalidateAndCancel];
-    _photoCellularDisallowedUploadSession = nil;
+    [self invalidateAndCancelPhotoCellularAllowedSession];
+    [self invalidateAndCancelPhotoCellularDisallowedSession];
 }
 
 - (void)invalidateAndCancelPhotoCellularDisallowedSession {
@@ -261,15 +255,17 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     return [self backgroundUploadTaskInSession:videoSession withURL:requestURL fromFile:fileURL completion:completion];
 }
 
-- (NSURLSessionUploadTask *)backgroundUploadTaskInSession:(NSURLSession *)session withURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    request.HTTPMethod = @"POST";
-    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
-    NSURLSessionUploadTask *task = [session uploadTaskWithRequest:request fromFile:fileURL];
-    
-    [self addDelegateForTask:task inSession:session completion:completion];
-    
-    return task;
+- (nullable NSURLSessionUploadTask *)backgroundUploadTaskInSession:(NSURLSession *)session withURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
+    @try {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+        request.HTTPMethod = @"POST";
+        [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
+        NSURLSessionUploadTask *task = [session uploadTaskWithRequest:request fromFile:fileURL];
+        [self addDelegateForTask:task inSession:session completion:completion];
+        return task;
+    } @catch (NSException *exception) {
+        return nil;
+    }
 }
 
 - (void)addDelegateForTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session completion:(UploadCompletionHandler)completion {

@@ -267,11 +267,15 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    for (NSURLSessionUploadTask *task in uploadTasks) {
-        [task resume];
+    if (uploadTasks.count == 0) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+    } else {
+        for (NSURLSessionUploadTask *task in uploadTasks) {
+            [task resume];
+        }
+        
+        [self finishOperationWithStatus:CameraAssetUploadStatusUploading];
     }
-    
-    [self finishOperationWithStatus:CameraAssetUploadStatusUploading];
 }
 
 - (NSArray<NSURLSessionUploadTask *> *)createUploadTasksWithError:(NSError **)error {
@@ -287,8 +291,11 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             } else {
                 uploadTask = [TransferSessionManager.shared photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             }
-            uploadTask.taskDescription = self.uploadInfo.savedLocalIdentifier;
-            [uploadTasks addObject:uploadTask];
+            
+            if (uploadTask) {
+                uploadTask.taskDescription = self.uploadInfo.savedLocalIdentifier;
+                [uploadTasks addObject:uploadTask];
+            }
         } else {
             if (error != NULL) {
                 *error = [NSError mnz_cameraUploadChunkMissingError];
