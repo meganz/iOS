@@ -92,7 +92,6 @@
 
 @property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
 
-@property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 @property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
@@ -325,11 +324,6 @@
         [self beginBackgroundTaskWithName:@"PendingTasks"];
     }
     
-    if (self.backgroundTaskMutableDictionary.count == 0) {
-        self.appSuspended = YES;
-        MEGALogDebug(@"App suspended property = YES.");
-    }
-    
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -351,15 +345,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
     [self checkChatInitState];
-    
-    if (self.wasAppSuspended && !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
-        //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
-        [[MEGAReachabilityManager sharedManager] reconnect];
-    } else {
-        [[MEGAReachabilityManager sharedManager] retryOrReconnect];
-    }
-    self.appSuspended = NO;
-    MEGALogDebug(@"App suspended property = NO.");
+    [MEGAReachabilityManager.sharedManager retryOrReconnect];
     
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
@@ -635,10 +621,6 @@
         [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
         
         [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
-        if (self.backgroundTaskMutableDictionary.count == 0) {
-            self.appSuspended = YES;
-            MEGALogDebug(@"App suspended property = YES.");
-        }
     }
     MEGALogDebug(@"Ended all background tasks with name: %@", name);
 }
