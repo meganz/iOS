@@ -14,6 +14,7 @@
 #import "MEGAPicker-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
+@import Firebase;
 
 @interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 
@@ -36,6 +37,14 @@
 @implementation DocumentPickerViewController
 
 #pragma mark - Lifecycle
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [FIRApp configure];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

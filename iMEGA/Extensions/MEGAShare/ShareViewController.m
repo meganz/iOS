@@ -23,6 +23,7 @@
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
+@import Firebase;
 
 #define MNZ_ANIMATION_TIME 0.35
 
@@ -59,6 +60,14 @@
 @implementation ShareViewController
 
 #pragma mark - Lifecycle
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [FIRApp configure];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
