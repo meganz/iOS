@@ -98,7 +98,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         loadingIndicator.color = textColor
         
         if chatMessage.transfer != nil {
-            configureLoadedView()
+            configureLoadingView()
         } else {
             guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
             let duration = max(currentNode.duration, 0)
