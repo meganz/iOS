@@ -295,7 +295,7 @@
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Locație";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Voice Clip";
+"Voice Clip"="Clip vocal";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder nou";
 /* Hint text shown on the create folder alert. */
@@ -304,6 +304,8 @@
 "createFolderButton"="Creează";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Există deja un folder cu același nume";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Există deja un fișier cu același nume";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -1017,6 +1019,8 @@
 "incomingShares"="Partajări primite";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradează contul";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="Alege tipul contului tău";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1041,18 @@
 "selectOneAccountType"="Selectează un tip de cont:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Un abonament anual este cu 17% mai ieftin decât 12 plăți lunare";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan actual:";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Nu există planuri adecvate pentru utilizarea ta actuală. Te rugăm [A]să contactezi echipa de asistență[/A] pentru un plan personalizat.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selectează contul de membru:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1736,6 +1746,8 @@
 "Save to Photos"="Salvează în Poze";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Se salvează în Poze…";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvat(ă) în Poze";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2045,7 +2057,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Deși MEGA nu are acces la datele tale, administratorii organizației tale pot controla și vedea încărcările cameră din contul tău de utilizator";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Deși MEGA nu îți poate accesa datele, administratorul contului tău business poate controla și vedea încărcările cameră din contul tău de utilizator";
 /* */
 "Something went wrong"="Ceva a mers prost";
 /* Title of the "Links" Shared Items. */
@@ -2385,7 +2397,7 @@
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="SHARE";
 /* Search placeholder text in search bar on home screen*/
-"Search Your Files"="Search Your Files";
+"Search Your Files"="Caută fișiere";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2428,3 +2440,9 @@
 "Link Password"="Link Password";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Do you want to share the password for this link?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="message sending cancelled";

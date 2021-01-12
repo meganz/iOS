@@ -304,6 +304,8 @@
 "createFolderButton"="생성";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="이미 같은 이름을 가진 폴더가 존재합니다.";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다.";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -1017,6 +1019,8 @@
 "incomingShares"="들어오는 공유";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1041,18 @@
 "selectOneAccountType"="계정 유형 하나를 선택하세요:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="연간 구독이 12개월 결제보다 17% 저렴합니다";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="현재 요금제:";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="요금제 요청";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="현재 사용량에 맞는 요금제가 없습니다. 맞춤 요금제는 [A]지원에 연락[/A]하세요.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="멤버쉽 선택:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1736,6 +1746,8 @@
 "Save to Photos"="사진에 저장";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="사진에 저장중...";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="사진에 저장함";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2428,3 +2440,9 @@
 "Link Password"="링크 비밀번호";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="이 링크의 비밀번호를 공유하시겠습니까?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="message sending cancelled";

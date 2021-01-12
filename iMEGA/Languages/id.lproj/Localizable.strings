@@ -304,6 +304,8 @@
 "createFolderButton"="Buat";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Sudah ada folder dengan nama yang sama";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Sudah ada file dengan nama yang sama";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -1017,6 +1019,8 @@
 "incomingShares"="Berbagi Masuk";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade akun";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="Pilih tipe akun anda";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1041,18 @@
 "selectOneAccountType"="Pilih satu jenis akun:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Berlangganan tahunan adalah 17% lebih murah dari 12 pembayaran bulanan";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan saat ini:";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Request plan";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Tidak ada plan yang cocok untuk pemakaian anda sekarang. Harap [A]kontak support[/A] untuk custom plan.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Pilih membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1102,7 +1112,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="Pesan ini telah mencapai batas maksimum %d reaksi.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="Anda telah mencapai batas maksimum %d reaksi.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1736,6 +1746,8 @@
 "Save to Photos"="Simpan ke Foto";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Menyimpan ke Foto ...";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Disimpan ke Foto";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1761,7 +1773,7 @@
 /* Users previewing a public chat */
 "Observers"="Pengamat";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ diaktifkan Rotasi Kunci Terenkripsi";
+"%@ enabled Encrypted Key Rotation"="%@ mengaktifkan rotasi kunci terenkripsi.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ membuat tautan publik untuk obrolan.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2045,7 +2057,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Akun Anda saat ini [B]ditangguhkan[/B]. Anda hanya dapat menelusuri data Anda.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Meskipun MEGA tidak memiliki akses ke data anda, administrator organisasi anda memiliki kemampuan untuk mengontrol dan melihat Unggahan Kamera di akun pengguna anda";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Meskipun MEGA tidak dapat mengakses data anda, administrator akun bisnis anda memiliki kemampuan untuk mengontrol dan melihat Unggahan Kamera di akun pengguna anda";
 /* */
 "Something went wrong"="Ada yang salah";
 /* Title of the "Links" Shared Items. */
@@ -2395,9 +2407,9 @@
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Upload File";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="Shortcut";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Luncurkan aplikasi MEGA untuk melakukan tindakan";
 /* Title for document explorer view */
 "Documents"="Document";
 /* Title for audio explorer view */
@@ -2421,10 +2433,16 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Beranda";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Docs";
+"Docs"="Dokumen";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+"This link was shared without a decryption key. Do you want to share its key?"="Tautan ini dibagikan tanpa kunci dekripsi. Apakah anda ingin membagikan kuncinya?";
 /* Title for password protect link alert */
-"Link Password"="Link Password";
+"Link Password"="Tautan Kata Sandi";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="Do you want to share the password for this link?";
+"Do you want to share the password for this link?"="Apakah anda ingin membagikan kata sandi untuk tautan ini?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="message sending cancelled";

@@ -304,6 +304,8 @@
 "createFolderButton"="创建";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="已经有一个同名的文件夹";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已经有一个同名的文件";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -1017,6 +1019,8 @@
 "incomingShares"="传入的分享";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升级账户";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1041,18 @@
 "selectOneAccountType"="选择一个账户类型：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="年度订阅比12个月每月付款便宜17%";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="当前计划：";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽询定制专属方案";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="如果未找到适合您的专业版方案，请联系我们的[A]客服团队[/A]以协助您定制专属方案。";
 /* Header shown to help on the purchasin process */
 "selectMembership"="选择会员资格:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1100,9 +1110,9 @@
 /* Empty Gifs section */
 "No GIFs found"="无GIF动图";
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"This message has reached the maximum limit of %d reactions."="This message has reached the maximum limit of %d reactions.";
+"This message has reached the maximum limit of %d reactions."="此消息已达到%d个态度的最大上限。";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="您已达到%d个态度的最大上限。";
 /* Chat section header */
 "chat"="聊天";
 /* Empty Conversations section */
@@ -1182,7 +1192,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您确定要清除此对话的全部历史记录吗？";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat history has been cleared";
+"Chat History has Been Cleared"="聊天记录已清除";
 /* 'Next' button in a dialog */
 "continue"="继续";
 /* Title of the incoming shared folders of a user. */
@@ -1736,6 +1746,8 @@
 "Save to Photos"="保存至照片";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="正在保存至照片……";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="已保存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2167,13 +2179,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密码遭到泄露（包括且不限于MEGA帐户），您的帐户正在被他人登录和使用。";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="超出传输流量";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="清除已选项目";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="全部暂停";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="全部恢复";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
 /* Alert header for asking permission to resume transfers*/
@@ -2383,7 +2395,7 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="邮件已发送。请等待几分钟后再试。";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="SHARE";
+"SHARE"="共享";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="搜索您的文件";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2391,40 +2403,46 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="选择文件夹";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您确定要将相机上传文件夹移动至垃圾桶吗？如果是，系统将为您自动生成一个新的相机上传文件夹。";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="上传文件";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="快捷方式";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="启动MEGA App以执行操作";
 /* Title for document explorer view */
 "Documents"="文档";
 /* Title for audio explorer view */
-"Audio"="Audio";
+"Audio"="语音";
 /* Title for video explorer view */
 "Videos"="影片";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="无文档";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="无语音文件";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="无视频";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="所有图片";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="今天";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="昨天";
 /* Photo Explorer Screen: No images in the accoun t*/
-"No images found"="No images found";
+"No images found"="无图片";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Home";
+"Home"="主页";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Docs";
+"Docs"="文档";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+"This link was shared without a decryption key. Do you want to share its key?"="此链接共享时未包含解密密钥。您是否要共享密钥？";
 /* Title for password protect link alert */
-"Link Password"="Link Password";
+"Link Password"="链接密码";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="Do you want to share the password for this link?";
+"Do you want to share the password for this link?"="您是否要共享此链接的密码？";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="message sending cancelled";
