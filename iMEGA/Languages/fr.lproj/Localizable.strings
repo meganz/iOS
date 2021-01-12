@@ -151,7 +151,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA a besoin d’au moins %@. Libérez de l’espace en supprimant les applis que vous n’utilisez plus ou les fichiers vidéo volumineux dans votre galerie. Vous pouvez aussi gérer ce que MEGA enregistre sur votre appareil.";
 /* Title for the file link view */
-"fileLink"="Lien du fichier";
+"fileLink"="Lien de fichier";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Ouvrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -304,6 +304,8 @@
 "createFolderButton"="Créer";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Un dossier du même nom existe déjà";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Un fichier du même nom existe déjà";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -904,7 +906,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Annuler les transferts";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Souhaitez-vous annuler %@ ?";
+"cancelTransfersText"="Voulez-vous annuler TOUS les transferts ?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOUS les transferts";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1017,6 +1019,8 @@
 "incomingShares"="Partages entrants";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="Choisissez votre type de compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1041,18 @@
 "selectOneAccountType"="Sélectionner un type de compte :";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="L’abonnement annuel est 10 % moins cher que 12 mensualités";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Abonnement actuel :";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Demander un abonnement";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Aucun abonnement ne correspond à votre utilisation actuelle. Veuillez [A]contacter l’assistance[/A] pour obtenir un abonnement personnalisé.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Sélectionner un abonnement :";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1475,7 +1485,7 @@
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modifié";
 /* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
-"Added"="Ajoutés";
+"Added"="Ajouté";
 /* used for example when a folder is shared with 2 or more users */
 "users"="utilisateurs";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1736,14 +1746,16 @@
 "Save to Photos"="Enregistrer dans Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Enregistrement dans Photos…";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Enregistrée dans Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Impossible d’enregistrer l’élément";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Rotation de la clé chiffrée";
+"Encrypted Key Rotation"="Rotation de la clé de chiffrement";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Activer la rotation de la clé chiffrée";
+"Enable Encrypted Key Rotation"="Activer la rotation de la clé de chiffrement";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
@@ -2249,7 +2261,7 @@
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Le lien de dossier n’est pas disponible";
 /* Error message shown when opening a file link which doesn’t exist */
-"File link unavailable"="Lien de fichier non disponible";
+"File link unavailable"="Le lien de fichier est inaccessible";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Fichiers partagés";
 /* Over Disk Quota Screen Navigation Bar Title*/
@@ -2389,7 +2401,7 @@
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
 /* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Sélectionner un dossier";
+"Select Folder"="Sélectionner le dossier";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Voulez-vous vraiment déplacer le dossier des Téléversements de l’appareil photo vers la corbeille ? Si oui, un nouveau dossier sera automatiquement généré pour les Téléversements de l’appareil photo.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2428,3 +2440,9 @@
 "Link Password"="Mot de passe du lien";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Voulez-vous partager le mot de passe pour ce lien ?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="message sending cancelled";
