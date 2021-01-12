@@ -8,6 +8,7 @@ final class PSAViewModel: NSObject, ViewModelType {
     
     private let router: PSAViewRouter
     private let useCase: PSAUseCase
+    private var psaEntity: PSAEntity?
     
     enum Command: CommandType {
         case configView(PSAEntity)
@@ -23,14 +24,18 @@ final class PSAViewModel: NSObject, ViewModelType {
     func dispatch(_ action: PSAViewAction) {
         switch action {
         case .onViewReady:
+            if let psaEntity = psaEntity {
+                invokeCommand?(.configView(psaEntity))
+            }
             getPSA()
         }
     }
     
     func shouldShowView(completion: @escaping ((Bool) -> Void)) {
-        useCase.getPSA { result in
+        useCase.getPSA { [weak self] result in
             switch result {
-            case .success(_):
+            case .success(let psaEntity):
+                self?.psaEntity = psaEntity
                 completion(true)
             case .failure(_):
                 completion(false)
