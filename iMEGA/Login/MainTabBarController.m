@@ -100,9 +100,7 @@
     [self configurePhoneImageBadge];
 
     self.selectedViewController = homeViewController;
-    
-    self.psaRouter = [PSAViewRouter.alloc initWithTabBarController:self delegate:self];
-    [self.psaRouter start];
+    [self showPSAViewIfNeeded];
 }
 
 - (void)tapProgressView {
@@ -316,6 +314,15 @@
     return [HomeScreenFactory.new createHomeScreenFrom:self];
 }
 
+- (void)showPSAViewIfNeeded {
+    if (self.psaRouter != nil) {
+        return;
+    }
+    
+    self.psaRouter = [PSAViewRouter.alloc initWithTabBarController:self delegate:self];
+    [self.psaRouter start];
+}
+
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
@@ -346,6 +353,12 @@
     }
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if (tabBarController.selectedIndex == HOME) {
+        [self showPSAViewIfNeeded];
+    }
+}
+
 #pragma mark - MEGANavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController
@@ -356,6 +369,7 @@
         [self.psaRouter hidePSAView:false];
     }
 }
+
 
 #pragma mark - PSAViewRouterDelegate
 

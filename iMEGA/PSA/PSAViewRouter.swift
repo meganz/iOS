@@ -28,12 +28,15 @@ final class PSAViewRouter: NSObject {
                 let psaView = PSAView.instanceFromNib
                 psaView.viewModel = viewModel
                 psaView.delegate = self
+                psaView.isHidden = true
                 tabBarController.view.addSubview(psaView)
                 
                 psaView.autoPinEdge(toSuperviewEdge: .leading)
                 psaView.autoPinEdge(toSuperviewEdge: .trailing)
                 psaView.autoPinEdge(.bottom, to: .bottom, of: tabBarController.view, withOffset: -tabBarController.tabBar.bounds.height)
                 self.psaView = psaView
+                
+                self.hidePSAView(false)
             }
         }
     }
