@@ -1407,6 +1407,13 @@
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF3809E82577494700689A63 /* UITableView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3809E72577494700689A63 /* UITableView+Additions.swift */; };
+		BF46B7F225A68316008641BB /* PSARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B7F125A68316008641BB /* PSARepository.swift */; };
+		BF46B7FE25A6897D008641BB /* PSAEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B7FD25A6897D008641BB /* PSAEntity.swift */; };
+		BF46B80825A68A72008641BB /* PSAErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B80725A68A72008641BB /* PSAErrorEntity.swift */; };
+		BF46B81225A6A524008641BB /* PSARepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B81125A6A524008641BB /* PSARepositoryProtocol.swift */; };
+		BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B81B25A6B09A008641BB /* PSAUseCase.swift */; };
+		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
+		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
 		BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */; };
@@ -1539,6 +1546,8 @@
 		BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */; };
 		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
 		BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933F024A5864C00BC2A75 /* SingleTapView.swift */; };
+		BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */; };
+		BFCA9A1D25ABA33900D1F4E0 /* PSAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */; };
 		BFCB8105250081C70096BD57 /* PhotoExplorerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9457C524FE07A30048F82B /* PhotoExplorerCollectionCell.xib */; };
 		BFCB8106250081C80096BD57 /* PhotoExplorerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9457C524FE07A30048F82B /* PhotoExplorerCollectionCell.xib */; };
 		BFCB810A2501B1C80096BD57 /* PhotoExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB81092501B1C80096BD57 /* PhotoExplorerViewModel.swift */; };
@@ -3246,6 +3255,13 @@
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
 		BF3809E72577494700689A63 /* UITableView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Additions.swift"; sourceTree = "<group>"; };
+		BF46B7F125A68316008641BB /* PSARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSARepository.swift; sourceTree = "<group>"; };
+		BF46B7FD25A6897D008641BB /* PSAEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAEntity.swift; sourceTree = "<group>"; };
+		BF46B80725A68A72008641BB /* PSAErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAErrorEntity.swift; sourceTree = "<group>"; };
+		BF46B81125A6A524008641BB /* PSARepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSARepositoryProtocol.swift; sourceTree = "<group>"; };
+		BF46B81B25A6B09A008641BB /* PSAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAUseCase.swift; sourceTree = "<group>"; };
+		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
+		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
 		BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
 		BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExplorerGridCell.swift; sourceTree = "<group>"; };
@@ -3374,6 +3390,8 @@
 		BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageOptionsTableViewController.swift; sourceTree = "<group>"; };
 		BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapHandlerProtocol.swift; sourceTree = "<group>"; };
 		BFC933F024A5864C00BC2A75 /* SingleTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapView.swift; sourceTree = "<group>"; };
+		BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAView.swift; sourceTree = "<group>"; };
+		BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSAView.xib; sourceTree = "<group>"; };
 		BFCB81092501B1C80096BD57 /* PhotoExplorerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoExplorerViewModel.swift; sourceTree = "<group>"; };
 		BFCB810B250309620096BD57 /* PhotoExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoExplorerListSource.swift; sourceTree = "<group>"; };
 		BFCB810F2505A8D90096BD57 /* FilesExplorerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerListViewController.swift; sourceTree = "<group>"; };
@@ -3781,6 +3799,7 @@
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
 				E889C9DE1B55652B00ECEFDF /* My Account */,
 				41EABF181DA7C53A0087271C /* Chat */,
+				BF46B82525AB98F3008641BB /* PSA */,
 				9419B6BD1F20D18300FEBE31 /* Spotlight */,
 				5B5FBDDD20BD8C76000EE35B /* Two Factor Authentication */,
 				415226861A692ECC00EC7BB6 /* Utils */,
@@ -6984,6 +7003,7 @@
 				B63AEB0A2511BD74000B8517 /* GetSMSErrorEntity.swift */,
 				B63AEB0C2511BD96000B8517 /* CheckSMSErrorEntity.swift */,
 				B63AEB0E2511BDB9000B8517 /* AchievementErrorEntity.swift */,
+				BF46B80725A68A72008641BB /* PSAErrorEntity.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -7028,6 +7048,7 @@
 				B662B87424F70A570089376A /* GetSMSUseCase.swift */,
 				B662B87624F75FEF0089376A /* CheckSMSUseCase.swift */,
 				B6B278DD24E1E93000BB3E9A /* AchievementUseCase.swift */,
+				BF46B81B25A6B09A008641BB /* PSAUseCase.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -7063,6 +7084,7 @@
 			children = (
 				B6AADEA725188D77009A874C /* SMSRepository.swift */,
 				B6AADEBA251893FD009A874C /* AchievementRepository.swift */,
+				BF46B7F125A68316008641BB /* PSARepository.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -7090,6 +7112,7 @@
 			children = (
 				B6AADEAE25188F8D009A874C /* SMSRepositoryProtocol.swift */,
 				B6AADEC1251894C1009A874C /* AchievementRepositoryProtocol.swift */,
+				BF46B81125A6A524008641BB /* PSARepositoryProtocol.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -7270,6 +7293,7 @@
 				B662B87A24F76DAC0089376A /* AchievementTypeEntity.swift */,
 				B662B86224ED056B0089376A /* PreferenceKeyEntity.swift */,
 				B63AE684250EF66C000B8517 /* SMSStateEntity.swift */,
+				BF46B7FD25A6897D008641BB /* PSAEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -7530,6 +7554,17 @@
 				2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */,
 			);
 			path = "Chat Messages";
+			sourceTree = "<group>";
+		};
+		BF46B82525AB98F3008641BB /* PSA */ = {
+			isa = PBXGroup;
+			children = (
+				BF46B82625AB991F008641BB /* PSAViewModel.swift */,
+				BF46B83825AB99DE008641BB /* PSAViewRouter.swift */,
+				BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */,
+				BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */,
+			);
+			path = PSA;
 			sourceTree = "<group>";
 		};
 		BF5E34152559E39A0055395E /* ExplorerContainerState */ = {
@@ -8288,6 +8323,7 @@
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */,
 				2F528CAE24739053006DE5C2 /* LoadingMessageReusableView.xib in Resources */,
+				BFCA9A1D25ABA33900D1F4E0 /* PSAView.xib in Resources */,
 				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
 				2F3083BC2428169F0058DF91 /* Chat.storyboard in Resources */,
 				BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */,
@@ -8975,6 +9011,7 @@
 				A86B9F762316D6AB00F35E7A /* FLEXRealmDatabaseManager.m in Sources */,
 				BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
 				B662B87724F75FEF0089376A /* CheckSMSUseCase.swift in Sources */,
+				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
 				A86B9F282316D6AB00F35E7A /* FLEXCarouselCell.m in Sources */,
 				B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */,
@@ -8989,6 +9026,7 @@
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
+				BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */,
 				BFAB114323CEA5C300BCE72D /* PhotoSelectedMarkerView.swift in Sources */,
 				BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */,
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
@@ -9193,6 +9231,7 @@
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
 				5D31674D24FCA9880032492F /* UIViewController+DevicePermissionAlerting.swift in Sources */,
 				B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */,
+				BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
@@ -9371,6 +9410,7 @@
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
+				BF46B7F225A68316008641BB /* PSARepository.swift in Sources */,
 				BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */,
 				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,
 				5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */,
@@ -9385,6 +9425,7 @@
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
 				A86B9F2D2316D6AB00F35E7A /* FLEXBundleExplorerViewController.m in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
+				BF46B7FE25A6897D008641BB /* PSAEntity.swift in Sources */,
 				5D66F8C824E510510088E5FF /* PaddingLabel.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
@@ -9475,6 +9516,7 @@
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
+				BF46B80825A68A72008641BB /* PSAErrorEntity.swift in Sources */,
 				BFAB114523CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift in Sources */,
 				A86B9F2F2316D6AB00F35E7A /* FLEXDefaultsExplorerViewController.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
@@ -9511,6 +9553,7 @@
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				A86B9F512316D6AB00F35E7A /* FLEXArgumentInputStructView.m in Sources */,
+				BF46B81225A6A524008641BB /* PSARepositoryProtocol.swift in Sources */,
 				83C570E222E5BFCF00216896 /* MetadataTypes.swift in Sources */,
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
@@ -9602,6 +9645,7 @@
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				83C570E322E5BFCF00216896 /* MetadataParsing.swift in Sources */,
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
+				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
