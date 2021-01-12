@@ -1424,13 +1424,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self.selectedNodesArray removeAllObjects];
     
     if (!self.allNodesSelected) {
-        MEGANode *n = nil;
-        NSInteger nodeListSize = self.nodes.size.integerValue;
+        NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
         
-        for (NSInteger i = 0; i < nodeListSize; i++) {
-            n = [self.nodes nodeAtIndex:i];
-            [self.selectedNodesArray addObject:n];
-        }
+        self.selectedNodesArray = nodesArray.mutableCopy;
         
         self.allNodesSelected = YES;
         

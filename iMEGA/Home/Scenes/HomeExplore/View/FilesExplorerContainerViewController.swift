@@ -111,6 +111,15 @@ class FilesExplorerContainerViewController: UIViewController {
         selectAllBarButtonItem.isEnabled = show
     }
     
+    func showSelectButton(_ show: Bool) {
+        if show {
+            showSelectAllBarButton()
+            showCancelRightBarButton()
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     private func showMoreRightBarButton() {
         navigationItem.rightBarButtonItem = selectAllBarButtonItem
     }

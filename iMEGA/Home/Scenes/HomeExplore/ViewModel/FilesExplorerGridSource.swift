@@ -13,6 +13,7 @@ final class FilesExplorerGridSource: NSObject {
                 viewModel.markSelection = false
                 viewModel.allowsSelection = allowsMultipleSelection
             }
+            collectionView.allowsMultipleSelection = allowsMultipleSelection
         }
     }
     
@@ -42,6 +43,34 @@ final class FilesExplorerGridSource: NSObject {
             selectedNodes?.removeAll(where: { $0 == node })
         } else {
             selectedNodes?.append(node)
+        }
+    }
+    
+    func select(indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
+              let viewModel = cell.viewModel,
+              let node = nodes?[indexPath.item]  else {
+            return
+        }
+        
+        viewModel.markSelection = true
+        
+        if !(selectedNodes?.contains(node) ?? false) {
+            selectedNodes?.append(node)
+        }
+    }
+    
+    func deselect(indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
+              let viewModel = cell.viewModel,
+              let node = nodes?[indexPath.item]  else {
+            return
+        }
+        
+        viewModel.markSelection = false
+        
+        if selectedNodes?.contains(node) ?? false {
+            selectedNodes?.removeAll(where: { $0 == node })
         }
     }
     
@@ -102,6 +131,11 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
         }
         
         cell.viewModel = viewModel(forNode: nodes[indexPath.item], cell: cell)
+        
+        if cell.viewModel?.markSelection ?? false {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        }
+        
         return cell
     }
 }

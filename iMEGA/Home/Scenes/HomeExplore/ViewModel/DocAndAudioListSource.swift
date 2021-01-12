@@ -111,11 +111,24 @@ extension DocAndAudioListSource {
 
 extension DocAndAudioListSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        toggleSelection(at: indexPath)
+        select(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        toggleSelection(at: indexPath)
+        deselect(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        delegate?.shouldBeginMultipleSelectionInteraction()
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        delegate?.didBeginMultipleSelectionInteraction()
+    }
+    
+    func tableViewDidEndMultipleSelectionInteraction(_ tableView: UITableView) {
+        delegate?.didEndMultipleSelectionInteraction()
     }
 }
 

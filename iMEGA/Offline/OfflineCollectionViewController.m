@@ -13,6 +13,8 @@
 #import "OfflineViewController.h"
 #import "OpenInActivity.h"
 
+#import "MEGA-Swift.h"
+
 static NSString *kFileName = @"kFileName";
 static NSString *kPath = @"kPath";
 
@@ -41,16 +43,27 @@ static NSString *kPath = @"kPath";
 
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated {
     self.collectionView.allowsMultipleSelection = editing;
+    
+    if (@available(iOS 14.0, *)) {
+        self.collectionView.allowsMultipleSelectionDuringEditing = editing;
+    }
+    
     [self.offline setViewEditing:editing];
     
-    for (NodeCollectionViewCell *cell in self.collectionView.visibleCells) {
-        cell.selectImageView.hidden = !editing;
-        cell.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
-    }
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
 }
 
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath {
     [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+}
+
+#pragma mark - Private
+
+- (BOOL)shouldSelectIndexPath:(NSIndexPath * _Nonnull)indexPath {
+    NSArray *filteredArray = [self.offline.selectedItems filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return (NSURL*)evaluatedObject == [[self.offline itemAtIndexPath:indexPath] objectForKey:kPath];
+    }]];
+    return [filteredArray count] != 0;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -61,6 +74,18 @@ static NSString *kPath = @"kPath";
     return rows;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.collectionView.allowsMultipleSelection) {
+        BOOL shouldSelectActualCell = [self shouldSelectIndexPath:indexPath];
+        
+        if (shouldSelectActualCell) {
+            [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+        
+        [cell setSelected:shouldSelectActualCell];
+    }
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
@@ -69,9 +94,10 @@ static NSString *kPath = @"kPath";
     NSString *nameString = [[self.offline itemAtIndexPath:indexPath] objectForKey:kFileName];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
     
+    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
+    
     cell.nameLabel.text = nameString;
     
-    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
     NSString *handleString = [offNode base64Handle];
     
     cell.thumbnailPlayImageView.hidden = YES;
@@ -119,19 +145,7 @@ static NSString *kPath = @"kPath";
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     
-    if (self.collectionView.allowsMultipleSelection) {
-        cell.selectImageView.hidden = NO;
-        BOOL selected = NO;
-        for (NSURL *url in self.offline.selectedItems) {
-            if ([url.path isEqualToString:pathForItem]) {
-                selected = YES;
-                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-            }
-        }
-        [cell selectCell:selected];
-    } else {
-        cell.selectImageView.hidden = YES;
-    }
+    cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -145,18 +159,16 @@ static NSString *kPath = @"kPath";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView.allowsMultipleSelection) {
-        NSURL *filePathURL = [[self.offline itemAtIndexPath:indexPath] objectForKey:kPath];
-        [self.offline.selectedItems addObject:filePathURL];
+        [self.offline.selectedItems addObject:[[self.offline itemAtIndexPath:indexPath] objectForKey:kPath]];
         
         [self.offline updateNavigationBarTitle];
         [self.offline enableButtonsBySelectedItems];
         
         self.offline.allItemsSelected = (self.offline.selectedItems.count == self.offline.offlineSortedItems.count);
-        
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell selectCell:YES];
-        
+    
         return;
+    } else {
+        [collectionView clearSelectedItemsWithAnimated:NO];
     }
     
     NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -179,11 +191,16 @@ static NSString *kPath = @"kPath";
         
         self.offline.allItemsSelected = NO;
         
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell selectCell:NO];
-        
         return;
     }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return self.offline.flavor == AccountScreen;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setCollectionViewEditing:YES animated:YES];
 }
 
 #pragma mark - UIScrolViewDelegate
