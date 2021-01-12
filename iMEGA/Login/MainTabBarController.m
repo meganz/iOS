@@ -16,10 +16,12 @@
 
 #import "NSObject+Debounce.h"
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate, PSAViewRouterDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
+
+@property (nonatomic, strong) PSAViewRouter *psaRouter;
 
 @end
 
@@ -40,7 +42,9 @@
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController]];
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
-        UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        MEGANavigationController *navigationController = defaultViewControllersMutableArray[i];
+        navigationController.navigationDelegate = self;
+        UITabBarItem *tabBarItem = navigationController.tabBarItem;
         tabBarItem.title = nil;
         tabBarItem.badgeColor = UIColor.clearColor;
         [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
@@ -96,6 +100,9 @@
     [self configurePhoneImageBadge];
 
     self.selectedViewController = homeViewController;
+    
+    self.psaRouter = [PSAViewRouter.alloc initWithTabBarController:self delegate:self];
+    [self.psaRouter start];
 }
 
 - (void)tapProgressView {
@@ -339,5 +346,21 @@
     }
 }
 
+#pragma mark - MEGANavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController {
+    if (viewController.hidesBottomBarWhenPushed) {
+        [self.psaRouter hidePSAView:true];
+    } else {
+        [self.psaRouter hidePSAView:false];
+    }
+}
+
+#pragma mark - PSAViewRouterDelegate
+
+- (void)psaViewdismissed {
+    self.psaRouter = nil;
+}
 
 @end

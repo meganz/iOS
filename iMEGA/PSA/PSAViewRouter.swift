@@ -1,0 +1,65 @@
+
+@objc
+protocol PSAViewRouterDelegate: AnyObject {
+    func psaViewdismissed()
+}
+
+@objc
+final class PSAViewRouter: NSObject {
+    
+    private weak var tabBarController: UITabBarController?
+    private weak var psaView: PSAView?
+    private weak var delegate: PSAViewRouterDelegate?
+    
+    @objc init(tabBarController: UITabBarController, delegate: PSAViewRouterDelegate) {
+        self.tabBarController = tabBarController
+        self.delegate = delegate
+    }
+    
+    @objc func start() {
+        guard let tabBarController = tabBarController else { return }
+
+        let useCase = PSAUseCase(repo: PSARepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let viewModel = PSAViewModel(router: self, useCase: useCase)
+        
+        viewModel.shouldShowView { [weak self] show in
+            guard let self = self else { return }
+            if show {
+                let psaView = PSAView.instanceFromNib
+                psaView.viewModel = viewModel
+                psaView.delegate = self
+                tabBarController.view.addSubview(psaView)
+                
+                psaView.autoPinEdge(toSuperviewEdge: .leading)
+                psaView.autoPinEdge(toSuperviewEdge: .trailing)
+                psaView.autoPinEdge(.bottom, to: .bottom, of: tabBarController.view, withOffset: -tabBarController.tabBar.bounds.height)
+                self.psaView = psaView
+            }
+        }
+    }
+    
+    @objc func hidePSAView(_ hide: Bool) {
+        guard let psaView = psaView, psaView.isHidden != hide else { return }
+        
+        if !hide {
+            psaView.alpha = 0.0
+        }
+        
+        UIView.animate(withDuration: 0.4) {
+            psaView.alpha = hide ? 0.0 : 1.0
+        } completion: { _ in
+            psaView.isHidden = hide
+            if hide {
+                psaView.alpha = 1.0
+            }
+        }
+    }
+    
+}
+
+extension PSAViewRouter: PSAViewDelegate {
+    func dismiss(psaView: PSAView) {
+        psaView.removeFromSuperview()
+        delegate?.psaViewdismissed()
+    }
+}
