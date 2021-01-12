@@ -11,6 +11,8 @@
 #import "CloudDriveViewController.h"
 #import "NodeCollectionViewCell.h"
 
+#import "MEGA-Swift.h"
+
 @interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *searchView;
@@ -48,27 +50,24 @@
 
     NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
     [cell configureCellForNode:node];
+    cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
-    
-    NodeCollectionViewCell *nodeCell = (NodeCollectionViewCell *)cell;
-    
     if (self.collectionView.allowsMultipleSelection) {
-        nodeCell.selectImageView.hidden = NO;
-        BOOL selected = NO;
-        for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
-            if (tempNode.handle == node.handle) {
-                selected = YES;
-                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-            }
+        MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+
+        NSArray *filteredArray = [self.cloudDrive.selectedNodesArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return ((MEGANode*)evaluatedObject).handle == node.handle;
+        }]];
+        
+        if ([filteredArray count] != 0) {
+            [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         }
-        [nodeCell selectCell:selected];
-    } else {
-        nodeCell.selectImageView.hidden = YES;
+        
+        [cell setSelected:[filteredArray count] != 0];
     }
 }
 
@@ -81,6 +80,7 @@
     }
     
     if (collectionView.allowsMultipleSelection) {
+        
         [self.cloudDrive.selectedNodesArray addObject:node];
         
         [self.cloudDrive updateNavigationBarTitle];
@@ -91,10 +91,9 @@
         
         self.cloudDrive.allNodesSelected = (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size.integerValue);
         
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell selectCell:YES];
-        
         return;
+    } else {
+        [collectionView clearSelectedItemsWithAnimated:NO];
     }
     
     [self.cloudDrive didSelectNode:node];
@@ -128,10 +127,15 @@
         }
         
         self.cloudDrive.allNodesSelected = NO;
-        
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell selectCell:NO];
     }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setCollectionViewEditing:YES animated:YES];
 }
 
 #pragma mark - UIScrolViewDelegate
@@ -188,12 +192,14 @@
 
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated {
     self.collectionView.allowsMultipleSelection = editing;
+    
+    if (@available(iOS 14.0, *)) {
+        self.collectionView.allowsMultipleSelectionDuringEditing = editing;
+    }
+    
     [self.cloudDrive setViewEditing:editing];
     
-    for (NodeCollectionViewCell *cell in [self.collectionView visibleCells]) {
-        cell.selectImageView.hidden = !editing;
-        cell.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
-    }
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
 }
 
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath {

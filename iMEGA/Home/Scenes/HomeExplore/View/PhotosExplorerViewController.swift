@@ -133,12 +133,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     @objc private func selectButtonPressed(_ barButtonItem: UIBarButtonItem) {
-        collectionView.allowsMultipleSelection = true
-        listSource?.allowMultipleSelection = true
-        configureBarButtons()
-        configureToolbarButtons()
-        showToolbar()
-        viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
+        startEditingMode()
     }
     
     private func configureBarButtons() {
@@ -146,8 +141,27 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         configureLeftBarButton()
     }
     
+    private func startEditingMode() {
+        collectionView.allowsMultipleSelection = true
+        
+        if #available(iOS 14, *) {
+            collectionView.allowsMultipleSelectionDuringEditing = true;
+        }
+        
+        listSource?.allowMultipleSelection = true
+        configureBarButtons()
+        configureToolbarButtons()
+        showToolbar()
+        viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
+    }
+    
     override func endEditingMode() {
         collectionView.allowsMultipleSelection = false
+        
+        if #available(iOS 14, *) {
+            collectionView.allowsMultipleSelectionDuringEditing = false;
+        }
+        
         listSource?.allowMultipleSelection = false
         configureBarButtons()
         hideToolbar()
@@ -177,6 +191,7 @@ extension PhotosExplorerViewController: UICollectionViewDelegate {
             viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
         } else {
             viewModel.dispatch(.didSelectNode(node: node))
+            collectionView.clearSelectedItems()
         }
     }
     
@@ -186,6 +201,14 @@ extension PhotosExplorerViewController: UICollectionViewDelegate {
             configureToolbarButtons()
             viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        startEditingMode()
     }
 }
 

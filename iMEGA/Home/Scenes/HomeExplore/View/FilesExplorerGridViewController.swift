@@ -46,6 +46,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         
         viewModel.dispatch(.onViewReady)
         delegate?.updateSearchResults()
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
     }
     
     override func toggleSelectAllNodes() {
@@ -72,15 +74,33 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     }
     
     override func setEditingMode() {
-        gridSource?.allowsMultipleSelection = true
-        configureToolbarButtons()
-        showToolbar()
+        setEditing(true, animated: true)
     }
     
     override func endEditingMode() {
         super.endEditingMode()
-        gridSource?.allowsMultipleSelection = false
-        hideToolbar()
+        setEditing(false, animated: true)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        collectionView.allowsMultipleSelection = editing
+        
+        if #available(iOS 14, *) {
+            collectionView.allowsMultipleSelectionDuringEditing = editing;
+        }
+        
+        collectionView.alwaysBounceVertical = !editing
+        gridSource?.allowsMultipleSelection = editing
+        
+        if editing {
+            configureToolbarButtons()
+            showToolbar()
+        } else {
+            hideToolbar()
+            collectionView.clearSelectedItems()
+        }
+        
+        super.setEditing(editing, animated: animated)
     }
     
     override func selectedNodes() -> [MEGANode]? {
@@ -136,15 +156,24 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
 
 extension FilesExplorerGridViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
         if gridSource?.allowsMultipleSelection ?? false {
-            gridSource?.toggleIndexPathSelection(indexPath)
+            gridSource?.select(indexPath: indexPath)
             configureToolbarButtons()
             delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
         } else {
             if let nodes = gridSource?.nodes {
                 viewModel.dispatch(.didSelectNode(nodes[indexPath.item], nodes))
             }
+            
+            collectionView.clearSelectedItems(animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if gridSource?.allowsMultipleSelection ?? false {
+            gridSource?.deselect(indexPath: indexPath)
+            configureToolbarButtons()
+            delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
         }
     }
     
@@ -152,6 +181,19 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
         gridSource?.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        setEditingMode()
+        delegate?.showSelectButton(true)
+    }
+    
+    func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
+        collectionView.alwaysBounceVertical = true
     }
 }
 

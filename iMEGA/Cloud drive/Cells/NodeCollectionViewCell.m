@@ -17,6 +17,12 @@
 
 @implementation NodeCollectionViewCell
 
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    
+    self.selectImageView.image = selected ? [UIImage imageNamed:@"thumbnail_selected"] :[UIImage imageNamed:@"checkBoxUnselected"];
+}
+
 - (void)configureCellForNode:(MEGANode *)node {
     self.node = node;
     if (node.hasThumbnail) {
@@ -57,11 +63,6 @@
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
-}
-
-- (void)selectCell:(BOOL)selected {
-    self.selected = selected;
-    self.selectImageView.image = selected ? [UIImage imageNamed:@"thumbnail_selected"] :[UIImage imageNamed:@"checkBoxUnselected"];
 }
 
 @end

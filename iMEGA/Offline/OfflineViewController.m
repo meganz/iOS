@@ -638,10 +638,13 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.selectedItems removeAllObjects];
     
     if (!self.allItemsSelected) {
+        
+        NSArray *items = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchItemsArray : self.offlineSortedItems;
+        
         NSURL *filePathURL = nil;
         
-        for (NSInteger i = 0; i < self.offlineSortedItems.count; i++) {
-            filePathURL = [[self.offlineSortedItems objectAtIndex:i] objectForKey:kPath];
+        for (NSInteger i = 0; i < items.count; i++) {
+            filePathURL = [[items objectAtIndex:i] objectForKey:kPath];
             [self.selectedItems addObject:filePathURL];
         }
         
