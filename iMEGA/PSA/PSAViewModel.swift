@@ -32,9 +32,7 @@ final class PSAViewModel: NSObject, ViewModelType {
         switch action {
         case .onViewReady:
             lastPSAShownTimestampPreference = Date().timeIntervalSince1970
-            if let psaEntity = psaEntity {
-                invokeCommand?(.configView(psaEntity))
-            }
+            invokeConfigViewCommandIfNeeded()
             getPSA()
         }
     }
@@ -51,7 +49,11 @@ final class PSAViewModel: NSObject, ViewModelType {
             switch result {
             case .success(let psaEntity):
                 self?.psaEntity = psaEntity
-                completion(true)
+                if psaEntity.URLString != nil {
+                    self?.invokeConfigViewCommandIfNeeded()
+                } else {
+                    completion(true)
+                }
             case .failure(_):
                 completion(false)
             }
@@ -62,10 +64,26 @@ final class PSAViewModel: NSObject, ViewModelType {
         useCase.getPSA { result in
             switch result {
             case .success(let psaEntity):
-                self.invokeCommand?(.configView(psaEntity))
-            case .failure(let error):
-                dump(error)
+                guard psaEntity.identifier != psaEntity.identifier else {
+                    return
+                }
+                self.psaEntity = psaEntity
+                self.invokeConfigViewCommandIfNeeded()
+            default:
+                break
             }
+        }
+    }
+    
+    private func invokeConfigViewCommandIfNeeded() {
+        guard let psaEntity = psaEntity else {
+            return
+        }
+        
+        if let psaURLString = psaEntity.URLString {
+            router.openPSAURLString(psaURLString)
+        } else {
+            invokeCommand?(.configView(psaEntity))
         }
     }
 }
