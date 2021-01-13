@@ -6,5 +6,5 @@ struct PSAEntity {
     let imageURL: String?
     let positiveText: String?
     let positiveLink: String?
-    let URL: String?
+    let URLString: String?
 }

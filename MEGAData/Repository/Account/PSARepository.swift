@@ -15,7 +15,7 @@ struct PSARepository: PSARepositoryProtocol {
                           imageURL: "https://eu.static.mega.co.nz/3/images/mega/psa/psa1.png",
                           positiveText: "View Terms",
                           positiveLink: "https://mega.nz/updatedterms",
-                          URL: nil)
+                          URLString: nil)
             ))
 //            switch error.type {
 //            case .apiOk:
@@ -27,7 +27,7 @@ struct PSARepository: PSARepositoryProtocol {
 //                        imageURL: request.file,
 //                        positiveText: request.password,
 //                        positiveLink: request.link,
-//                        URL: request.email
+//                        URLString: request.email
 //                    )
 //                ))
 //            case .apiENoent:

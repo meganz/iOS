@@ -1,6 +1,7 @@
 import UIKit
 
 protocol PSAViewDelegate: AnyObject {
+    func openPSAURLString(_ urlString: String);
     func dismiss(psaView: PSAView)
 }
 
@@ -100,7 +101,7 @@ class PSAView: UIView {
     @IBAction func leftButtonTapped(_ sender: UIButton) {
         defer {
             if let positiveButtonLink = psaEntity?.positiveLink, psaEntity?.positiveText != nil {
-                NSURL(string: positiveButtonLink)?.mnz_presentSafariViewController()
+                delegate?.openPSAURLString(positiveButtonLink)
             }
         }
         delegate?.dismiss(psaView: self)

@@ -57,10 +57,13 @@ final class PSAViewRouter: NSObject {
             }
         }
     }
-    
 }
 
 extension PSAViewRouter: PSAViewDelegate {
+    func openPSAURLString(_ urlString: String) {
+        NSURL(string: urlString)?.mnz_presentSafariViewController()
+    }
+    
     func dismiss(psaView: PSAView) {
         psaView.removeFromSuperview()
         delegate?.psaViewdismissed()
