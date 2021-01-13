@@ -105,9 +105,11 @@
                 <outlet property="bottomBorderView" destination="6HK-CD-w47" id="Wvi-OG-Av5"/>
                 <outlet property="descriptionLabel" destination="tnZ-nk-cOK" id="FsB-ty-93l"/>
                 <outlet property="imageView" destination="4hm-kp-2i5" id="Uyt-yh-pWT"/>
+                <outlet property="imageViewWidthConstraint" destination="FN5-zf-hOb" id="P4e-Cv-KCw"/>
                 <outlet property="leftButton" destination="cqA-fG-pon" id="Uly-j9-jbk"/>
                 <outlet property="rightButton" destination="RGg-Vu-aJ9" id="UBv-kz-hAl"/>
                 <outlet property="titleLabel" destination="xxd-xJ-dMr" id="vaS-ae-n81"/>
+                <outlet property="titleLabelLeadingConstraint" destination="8mh-ij-5IL" id="Xds-p2-dz4"/>
                 <outlet property="topBorderView" destination="QEV-1y-rNl" id="Ytl-hW-ZHb"/>
             </connections>
             <point key="canvasLocation" x="-1276.0869565217392" y="95.424107142857139"/>

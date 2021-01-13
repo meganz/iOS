@@ -34,6 +34,11 @@ class PSAView: UIView {
             if let imageURLString = psaEntity.imageURL,
                let imageURL = URL(string: imageURLString) {
                 imageView.yy_imageURL = imageURL
+                imageViewWidthConstraint.constant = imageDefaultWidth
+                titleLabelLeadingConstraint.constant = titleLabelDefaultLeadingSpace
+            } else {
+                imageViewWidthConstraint.constant = 0.0
+                titleLabelLeadingConstraint.constant = 0.0
             }
             
             let closeButton: UIButton
@@ -44,7 +49,7 @@ class PSAView: UIView {
                 closeButton = rightButton
                 rightButton.isHidden = false
             } else {
-                closeButton = rightButton
+                closeButton = leftButton
                 rightButton.isHidden = true
             }
             
@@ -53,9 +58,14 @@ class PSAView: UIView {
             sizeToFit()
         }
     }
+    
+    private var imageDefaultWidth: CGFloat = 0.0
+    private var titleLabelDefaultLeadingSpace: CGFloat = 0.0
 
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -68,6 +78,9 @@ class PSAView: UIView {
         imageView.layer.cornerRadius = imageView.bounds.width / 2.0
         leftButton.layer.cornerRadius = 8.0
         rightButton.layer.cornerRadius = 8.0
+        
+        imageDefaultWidth = imageViewWidthConstraint.constant
+        titleLabelDefaultLeadingSpace = titleLabelLeadingConstraint.constant
     }
     
     private func setupView(with trait: UITraitCollection) {
@@ -86,7 +99,7 @@ class PSAView: UIView {
     
     @IBAction func leftButtonTapped(_ sender: UIButton) {
         defer {
-            if let positiveButtonLink = psaEntity?.positiveLink {
+            if let positiveButtonLink = psaEntity?.positiveLink, psaEntity?.positiveText != nil {
                 NSURL(string: positiveButtonLink)?.mnz_presentSafariViewController()
             }
         }
