@@ -104,11 +104,20 @@ class PSAView: UIView {
                 delegate?.openPSAURLString(positiveButtonLink)
             }
         }
+        
+        if let psaEntity = psaEntity {
+            viewModel.dispatch(.dismiss(psaEntity))
+        }
+        
         delegate?.dismiss(psaView: self)
     }
     
     
     @IBAction func rightButtonTapped(_ sender: UIButton) {
+        if let psaEntity = psaEntity {
+            viewModel.dispatch(.dismiss(psaEntity))
+        }
+        
         delegate?.dismiss(psaView: self)
     }
 }
