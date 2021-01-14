@@ -1,6 +1,7 @@
 
 enum PSAViewAction: ActionType {
     case onViewReady
+    case dismiss(PSAEntity)
 }
 
 @objc
@@ -34,6 +35,8 @@ final class PSAViewModel: NSObject, ViewModelType {
             lastPSAShownTimestampPreference = Date().timeIntervalSince1970
             invokeConfigViewCommandIfNeeded()
             getPSA()
+        case .dismiss(let entity):
+            useCase.setPSA(withIdentifier: entity.identifier)
         }
     }
     
