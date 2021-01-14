@@ -483,7 +483,10 @@ extension ChatViewController: ChatInputBarDelegate {
             chatRoomDelegate.updateUnreadMessagesLabel(unreads: 0)
             chatRoomDelegate.insertMessage(message, scrollToBottom: true)
             checkDialogs(message)
-            postMessageSentAccessibilityNotification()
+            // Message sent voice over message overlaps with the send button dimmed and stops announcing. So delaying the message sent message.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.postMessageSentAccessibilityNotification()
+            }
         }
     }
     
