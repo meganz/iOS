@@ -120,12 +120,17 @@
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(showPSAViewIfNeeded)
+                                               name:UIApplicationWillEnterForegroundNotification
+                                             object:nil];
     [self.view setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -320,7 +325,12 @@
     }
     
     self.psaRouter = [PSAViewRouter.alloc initWithTabBarController:self delegate:self];
-    [self.psaRouter start];
+    __weak typeof(self) weakself = self;
+    [self.psaRouter startWithCompletion:^(BOOL didShowView) {
+        if (!didShowView) {
+            weakself.psaRouter = nil;
+        }
+    }];
 }
 
 #pragma mark - MEGAChatDelegate

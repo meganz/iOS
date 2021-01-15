@@ -16,7 +16,7 @@ final class PSAViewRouter: NSObject {
         self.delegate = delegate
     }
     
-    @objc func start() {
+    @objc func start(completion: @escaping ((Bool) -> Void)) {
         guard let tabBarController = tabBarController else { return }
 
         let useCase = PSAUseCase(repo: PSARepository(sdk: MEGASdkManager.sharedMEGASdk()))
@@ -38,6 +38,7 @@ final class PSAViewRouter: NSObject {
                 
                 self.hidePSAView(false)
             }
+            completion(show)
         }
     }
     
