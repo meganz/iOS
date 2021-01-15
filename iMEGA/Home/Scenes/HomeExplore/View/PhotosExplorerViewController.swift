@@ -148,7 +148,10 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
             collectionView.allowsMultipleSelectionDuringEditing = true;
         }
         
-        listSource?.allowMultipleSelection = true
+        if (listSource?.allowMultipleSelection ?? false) == false {
+            listSource?.allowMultipleSelection = true
+        }
+        
         configureBarButtons()
         configureToolbarButtons()
         showToolbar()
