@@ -520,29 +520,39 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     if (editing) {
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         
-        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", @"Select items")];
+        NSString *message;
+        
+        if (self.selectedItemsDictionary.count == 0) {
+            message = NSLocalizedString(@"selectTitle", @"Select items");
+        } else {
+            message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
+        }
+        
+        [self.navigationItem setTitle:message];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.view addSubview:self.toolbar];
-        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        NSLayoutAnchor *bottomAnchor;
-        if (@available(iOS 11.0, *)) {
-            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-        } else {
-            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+            
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
-        
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         
