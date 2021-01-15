@@ -1,8 +1,11 @@
 import Foundation
 
 extension MEGAError {
-    func toHeartbeatError() -> NSError {
-        NSError(domain: "nz.mega.heartbeat", code: type.rawValue, userInfo: [NSLocalizedFailureReasonErrorKey : name ?? ""])
+    func toHeartbeatError(backupIdBase64String: String) -> NSError {
+        NSError(domain: "nz.mega.heartbeat",
+                code: type.rawValue,
+                userInfo: [NSLocalizedFailureReasonErrorKey : name ?? "",
+                           "BackupId" : backupIdBase64String])
     }
 }
 
@@ -20,7 +23,7 @@ final class HeartbeatRequestDelegate: NSObject, MEGARequestDelegate {
             if error.type == .apiOk {
                 self.completion(.success(request))
             } else {
-                self.completion(.failure(error.toHeartbeatError()))
+                self.completion(.failure(error.toHeartbeatError(backupIdBase64String: type(of: api).base64Handle(forHandle: request.parentHandle) ?? "")))
             }
         }
     }
