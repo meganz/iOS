@@ -250,7 +250,7 @@
 - (void)presentPasscode {
     LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
 
-    if (!self.passcodePresented && !passcodeVC.isBeingPresented) {
+    if (!self.passcodePresented && !passcodeVC.isBeingPresented && (passcodeVC.presentingViewController == nil)) {
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES
