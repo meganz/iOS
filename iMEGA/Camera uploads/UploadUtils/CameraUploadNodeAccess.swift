@@ -8,7 +8,7 @@ final class CameraUploadNodeAccess: NSObject {
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var handle: NodeHandle? {
         didSet {
-            if handle != oldValue && handle != nil {
+            if handle != oldValue && oldValue != nil {
                 NotificationCenter.default.post(name: NSNotification.Name.MEGACameraUploadTargetFolderUpdatedInMemory, object: nil)
             }
         }
