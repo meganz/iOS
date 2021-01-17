@@ -41,8 +41,9 @@ final class PSAViewModel: NSObject, ViewModelType {
     }
     
     func shouldShowView(completion: @escaping ((Bool) -> Void)) {
-        // Avoid showing PSA if it is shown already within 1 hour (3600) time span.
-        guard (lastPSAShownTimestampPreference <= 0 || (Date().timeIntervalSince1970 - lastPSAShownTimestampPreference) >= 3600) else {
+        // Avoid showing PSA if it is shown already within 1 hour (3600 seconds) time span.
+        guard (lastPSAShownTimestampPreference <= 0
+                || (Date().timeIntervalSince1970 - lastPSAShownTimestampPreference) >= 3600) else {
             MEGALogDebug("The PSA is already shown \(Date().timeIntervalSince1970 - lastPSAShownTimestampPreference) seconds back")
             completion(false)
             return
@@ -52,7 +53,7 @@ final class PSAViewModel: NSObject, ViewModelType {
             switch result {
             case .success(let psaEntity):
                 self?.psaEntity = psaEntity
-                if psaEntity.URLString != nil {
+                if let URLString = psaEntity.URLString, !URLString.isEmpty {
                     self?.invokeConfigViewCommandIfNeeded()
                 } else {
                     completion(true)
@@ -83,8 +84,10 @@ final class PSAViewModel: NSObject, ViewModelType {
             return
         }
         
-        if let psaURLString = psaEntity.URLString {
-            router.openPSAURLString(psaURLString)
+        if let URLString = psaEntity.URLString, !URLString.isEmpty {
+            lastPSAShownTimestampPreference = Date().timeIntervalSince1970
+            dispatch(.dismiss(psaEntity))
+            router.openPSAURLString(URLString)
         } else {
             invokeCommand?(.configView(psaEntity))
         }
