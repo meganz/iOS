@@ -114,6 +114,7 @@
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
+    [self adjustPSAFrameIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -331,6 +332,14 @@
             weakself.psaRouter = nil;
         }
     }];
+}
+
+- (void)adjustPSAFrameIfNeeded {
+    if (self.psaRouter == nil) {
+        return;
+    }
+    
+    [self.psaRouter adjustPSAViewFrame];
 }
 
 #pragma mark - MEGAChatDelegate

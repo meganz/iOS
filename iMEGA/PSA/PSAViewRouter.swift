@@ -9,6 +9,7 @@ final class PSAViewRouter: NSObject {
     
     private weak var tabBarController: UITabBarController?
     private weak var psaView: PSAView?
+    private weak var psaViewBottomConstraint: NSLayoutConstraint?
     private weak var delegate: PSAViewRouterDelegate?
     
     @objc init(tabBarController: UITabBarController, delegate: PSAViewRouterDelegate) {
@@ -33,13 +34,24 @@ final class PSAViewRouter: NSObject {
                 
                 psaView.autoPinEdge(toSuperviewEdge: .leading)
                 psaView.autoPinEdge(toSuperviewEdge: .trailing)
-                psaView.autoPinEdge(.bottom, to: .bottom, of: tabBarController.view, withOffset: -tabBarController.tabBar.bounds.height)
+                self.psaViewBottomConstraint = psaView.autoPinEdge(.bottom, to: .bottom, of: tabBarController.view, withOffset: -tabBarController.tabBar.bounds.height)
                 self.psaView = psaView
                 
                 self.hidePSAView(false)
             }
             completion(show)
         }
+    }
+    
+    @objc func adjustPSAViewFrame() {
+        guard let bottomConstraint = psaViewBottomConstraint,
+              let tabBar = tabBarController?.tabBar,
+              bottomConstraint.constant != -tabBar.bounds.height else {
+            return
+        }
+        
+        psaViewBottomConstraint?.constant = -tabBar.bounds.height
+        psaView?.layoutIfNeeded()
     }
     
     @objc func hidePSAView(_ hide: Bool) {
