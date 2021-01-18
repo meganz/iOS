@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="已经有一个同名的文件夹";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="无法进行文件扫描";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已经有一个同名的文件";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -465,7 +465,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A]个文件与[B]个文件夹已移到垃圾桶";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="未获得授权";
+"permissionTitle"="权限错误";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="请检查您被授予的权限";
 /* Message shown when a folder have been shared */
@@ -906,7 +906,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="取消传输";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="你要取消%@ 吗？";
+"cancelTransfersText"="您确定要取消所有传输吗？";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="所有传输";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1020,7 +1020,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升级账户";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="管理帐户";
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1042,15 +1042,15 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="年度订阅比12个月每月付款便宜17%";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="欲升级当前订阅，您可以联系支持了解[A]自定义会员方案[/A]。";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="当前计划：";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="当前方案";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="升级至自定义会员方案";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="询问我们如何升级至自定义会员方案：";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽询定制专属方案";
 /* Header shown to help on the purchasin process */
@@ -1747,7 +1747,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="正在保存至照片……";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="正在准备分享…";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="已保存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2441,8 +2441,8 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="您是否要共享此链接的密码？";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="消息已发出";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="发送消息失败";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="消息发送已取消";
