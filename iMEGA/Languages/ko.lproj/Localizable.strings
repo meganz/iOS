@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="이미 같은 이름을 가진 폴더가 존재합니다.";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="문서 스캔 이용 불가";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다.";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -906,7 +906,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="전송 취소";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="%@을 취소하시겠습니까?";
+"cancelTransfersText"="모든 전송을 취소하시겠습니까?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="모든 전송";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1020,7 +1020,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="계정 관리";
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1042,15 +1042,15 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="연간 구독이 12개월 결제보다 17% 저렴합니다";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="현재 구독을 업그레이드하려면, 고객 지원에 [A]맞춤 요금제[/A]를 요청하세요.";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="현재 요금제:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="현재 요금제";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="맞춤 요금제로 업그레이드";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="맞춤 요금제로 업그레이드하는 방법을 문의하세요:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="요금제 요청";
 /* Header shown to help on the purchasin process */
@@ -1747,7 +1747,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="사진에 저장중...";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="공유 준비중……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="사진에 저장함";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2441,8 +2441,8 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="이 링크의 비밀번호를 공유하시겠습니까?";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="메시지 발송됨";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="메시지 발송 실패";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="메시지 발송 취소";

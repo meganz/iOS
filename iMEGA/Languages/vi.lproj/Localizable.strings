@@ -906,7 +906,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Hủy các phiên truyền tải";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Bạn có muốn hủy %@ không?";
+"cancelTransfersText"="Bạn có muốn hủy TẤT CẢ truyền tải không?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TẤT CẢ mục truyền tải";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1773,7 +1773,7 @@
 /* Users previewing a public chat */
 "Observers"="Người theo dõi";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên mã khóa.";
+"%@ enabled Encrypted Key Rotation"="%@ đã bật Luân Phiên Mã Khóa.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết vào cuộc chát.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2051,7 +2051,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Đã có vấn đề xảy ra với việc thanh toán gần đây. Xin truy cập MEGA bằng trình duyệt web trên máy tính để biết thêm thông tin.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Tài khoản doanh nghiệp của quý khách đã hết hạn";
+"Your business account is expired"="Tài khoản doanh nghiệp đã hết hạn";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Đã có vấn đề xảy ra với việc xử lý thanh toán gần đây. Tài khoản sẽ bị giới hạn chức năng cho đến khi việc thanh toán được thực hiện giải quyết trên phiên bản nền web.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
