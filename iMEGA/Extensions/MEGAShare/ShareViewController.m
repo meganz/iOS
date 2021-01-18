@@ -333,12 +333,12 @@
 }
 
 - (void)presentPasscode {
-    if (!self.passcodePresented) {
+    LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+    if (!self.passcodePresented && !passcodeVC.isBeingPresented && passcodeVC.presentingViewController == nil) {
         if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
             [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         }
         
-        LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES
@@ -534,7 +534,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
-    for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
+    for (ShareAttachment *attachment in [[ShareAttachment attachmentsArray] copy]) {
         switch (attachment.type) {
             case ShareAttachmentTypeGIF: {
                 [self writeDataAndUpload:attachment toParentNode:parentNode];

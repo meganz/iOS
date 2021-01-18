@@ -147,12 +147,18 @@
 
 - (void)mnz_showSystemShare {
     [SVProgressHUD dismiss];
+    
+    UIView *transferWidget = (UIView *)TransfersWidgetViewController.sharedTransferViewController.progressView;
+    if (transferWidget == nil || [transferWidget isHidden]) {
+        return;
+    }
+    
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
     if (!node) {
         node = [self publicNode];
     }
     
-    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:TransfersWidgetViewController.sharedTransferViewController.progressView];
+    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:transferWidget];
     [UIApplication.mnz_presentingViewController presentViewController:activityVC animated:YES completion:nil];
 }
 
