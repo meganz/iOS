@@ -14,7 +14,7 @@ final class PSAViewModel: NSObject, ViewModelType {
     @PreferenceWrapper(key: .lastPSAShownTimestamp, defaultValue: -1.0)
     private var lastPSAShownTimestampPreference: TimeInterval
 
-    enum Command: CommandType {
+    enum Command: CommandType, Equatable {
         case configView(PSAEntity)
     }
     
@@ -55,6 +55,7 @@ final class PSAViewModel: NSObject, ViewModelType {
                 self?.psaEntity = psaEntity
                 if let URLString = psaEntity.URLString, !URLString.isEmpty {
                     self?.invokeConfigViewCommandIfNeeded()
+                    completion(false)
                 } else {
                     completion(true)
                 }
@@ -68,7 +69,7 @@ final class PSAViewModel: NSObject, ViewModelType {
         useCase.getPSA { result in
             switch result {
             case .success(let psaEntity):
-                guard psaEntity.identifier != psaEntity.identifier else {
+                guard self.psaEntity != psaEntity else {
                     return
                 }
                 self.psaEntity = psaEntity
