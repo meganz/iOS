@@ -1295,6 +1295,8 @@
 		B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C852517EABE00B40D89 /* CredentialRepositoryProtocol.swift */; };
 		B67A2C8D2517EE6600B40D89 /* L10nRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C8C2517EE6600B40D89 /* L10nRepository.swift */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
+		B6831C0A25B65C7D0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
+		B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
 		B6873A8A25A6C5E500BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873A8925A6C5DF00BBD15A /* GoogleService-Info.plist */; };
 		B6873A9325A6C5EB00BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873A8425A6C5A600BBD15A /* GoogleService-Info.plist */; };
@@ -3404,8 +3406,6 @@
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
 		C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Additions.swift"; sourceTree = "<group>"; };
-		C8621E0BA7DB84A28128B42C /* Pods-MEGAShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAShare.debug.xcconfig"; path = "Target Support Files/Pods-MEGAShare/Pods-MEGAShare.debug.xcconfig"; sourceTree = "<group>"; };
-		CF43288E486C6583B96E2474 /* Pods-MEGAPickerFileProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAPickerFileProvider.debug.xcconfig"; path = "Target Support Files/Pods-MEGAPickerFileProvider/Pods-MEGAPickerFileProvider.debug.xcconfig"; sourceTree = "<group>"; };
 		CB3754845CFE5EE4053A6C67 /* Pods-iMEGA-MEGAPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		DBA33BC8EB7660C3C0CBA26C /* Pods-iMEGA-MEGA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.debug.xcconfig"; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -8461,6 +8461,7 @@
 				B6873A8A25A6C5E500BBD15A /* GoogleService-Info.plist in Resources */,
 				5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
+				B6831C0A25B65C7D0072827F /* CustomModalAlertViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8481,6 +8482,7 @@
 				77E70DB82475760F00E74806 /* MegaAvatarView.xib in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
+				B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */,
 				BFCB8106250081C80096BD57 /* PhotoExplorerCollectionCell.xib in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
