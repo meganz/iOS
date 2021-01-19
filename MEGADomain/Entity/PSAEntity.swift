@@ -8,3 +8,9 @@ struct PSAEntity {
     let positiveLink: String?
     let URLString: String?
 }
+
+extension PSAEntity: Equatable {
+    static func ==(lhs: PSAEntity, rhs: PSAEntity) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
