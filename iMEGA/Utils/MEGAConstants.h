@@ -59,7 +59,7 @@ extern NSString * const MEGAVideoConcurrentCountUserInfoKey;
 extern NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey;
 extern NSString * const MEGACurrentUploadingTasksCountUserInfoKey;
 extern NSString * const MEGAAssetMediaTypeUserInfoKey;
-extern NSString * const MEGANodeInfoKey;
+extern NSString * const MEGANodeHandleKey;
 
 #pragma mark - camera upload constants
 

@@ -27,11 +27,9 @@ final class BackupRecorder: NSObject {
     }
     
     @objc private func didReceiveNodeUploadCompleteNotification(_ notification: NSNotification) {
-        guard let node = notification.userInfo?[MEGANodeInfoKey] as? MEGANode else {
+        guard let handle = (notification.userInfo?[MEGANodeHandleKey] as? NSNumber)?.uint64Value else {
             return
         }
-        
-        let handle: MEGAHandle = node.handle
         
         debouncer.start { [weak self] in
             guard let self = self else { return }
