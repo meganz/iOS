@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D8D4D1325B7C57500C7B7FE /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */; };
+		0D8DD97725B513830084FE6F /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8DD97625B513830084FE6F /* FolderContentStat.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
@@ -1696,6 +1698,8 @@
 /* Begin PBXFileReference section */
 		02601A984A44E36E65AFC537 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.debug.xcconfig"; sourceTree = "<group>"; };
 		095DCFBE3BFEE732CC33F35D /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Additions.swift"; sourceTree = "<group>"; };
+		0D8DD97625B513830084FE6F /* FolderContentStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentStat.swift; sourceTree = "<group>"; };
 		108BCCD8A01F4FA842CBACF9 /* Pods_iMEGA_MEGAWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -4150,6 +4154,7 @@
 				B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */,
 				8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */,
 				B654BF3824FF123700A3CBC8 /* MVVM-R.swift */,
+				0D8DD97625B513830084FE6F /* FolderContentStat.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4454,6 +4459,7 @@
 				BF3809E72577494700689A63 /* UITableView+Additions.swift */,
 				C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */,
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
+				0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -9125,6 +9131,7 @@
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				BFB463FB243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift in Sources */,
 				83FB1439219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
+				0D8DD97725B513830084FE6F /* FolderContentStat.swift in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				83C570ED22E5BFCF00216896 /* PhoneNumberKit.swift in Sources */,
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
@@ -9476,6 +9483,7 @@
 				B662B88124F8CB490089376A /* MEGAError+Addition.swift in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
 				A86B9F792316D6AB00F35E7A /* FLEXLibrariesTableViewController.m in Sources */,
+				0D8D4D1325B7C57500C7B7FE /* FileManager+Additions.swift in Sources */,
 				5D342A3D2537ED7600039273 /* PhotoExplorerCollectionCell.swift in Sources */,
 				5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,

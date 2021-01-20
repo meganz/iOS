@@ -2,18 +2,13 @@ import UIKit
 
 class FilesExplorerGridViewController: FilesExplorerViewController {
     
-    private lazy var gridFlowLayout: GridFlowLayout = {
-        let gridFlowLayout = GridFlowLayout()
-        gridFlowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        gridFlowLayout.minimumLineSpacing = 4
-        gridFlowLayout.minimumInteritemSpacing = 15
-        return gridFlowLayout
-    }()
+    private lazy var layout: CHTCollectionViewWaterfallLayout = CHTCollectionViewWaterfallLayout()
     
     private lazy var collectionView: UICollectionView = {
+        configureLayout()
         let collectionView = UICollectionView(
             frame: .zero,
-            collectionViewLayout: gridFlowLayout
+            collectionViewLayout: layout
         )
         return collectionView
     }()
@@ -129,6 +124,24 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         ).isActive = true
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        layout.columnCount = calculateColumnCount(containerWidth: size.width)
+        layout.invalidateLayout()
+    }
+
+    private func configureLayout() {
+        // Change individual layout attributes for the spacing between cells
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        layout.minimumColumnSpacing = 8
+        layout.minimumInteritemSpacing = 8
+        layout.columnCount = calculateColumnCount(containerWidth: UIScreen.main.bounds.width)
+    }
+
+    private func calculateColumnCount(containerWidth: CGFloat) -> Int {
+        return Int((containerWidth - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))
+    }
+    
     // MARK: - Execute command
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {
@@ -201,5 +214,14 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
 extension FilesExplorerGridViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.didScroll(scrollView: scrollView)
+    }
+}
+
+// MARK: - CollectionView Waterfall Layout Delegate Methods (Required)
+extension FilesExplorerGridViewController: CHTCollectionViewDelegateWaterfallLayout {
+    // ** Size for the cells in the Waterfall Layout */
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // create a cell size from the image size, and return the size
+        return CGSize(width: 150, height: 200)
     }
 }

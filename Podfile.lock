@@ -1,5 +1,7 @@
 PODS:
-  - CHTCollectionViewWaterfallLayout/Swift (0.9.8)
+  - CHTCollectionViewWaterfallLayout (0.9.8):
+    - CHTCollectionViewWaterfallLayout/ObjC (= 0.9.8)
+  - CHTCollectionViewWaterfallLayout/ObjC (0.9.8)
   - DoraemonKit/Core (3.0.4):
     - FMDB
     - GCDWebServer
@@ -83,7 +85,7 @@ PODS:
     - YYImage
 
 DEPENDENCIES:
-  - CHTCollectionViewWaterfallLayout/Swift
+  - CHTCollectionViewWaterfallLayout
   - DoraemonKit/Core (= 3.0.4)
   - DoraemonKit/WithGPS (= 3.0.4)
   - DoraemonKit/WithLoad (= 3.0.4)
@@ -178,6 +180,6 @@ SPEC CHECKSUMS:
   YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 21f37c5409c5d34261414fddc9c27da89ad527d5
+PODFILE CHECKSUM: 381b3924c1c28a53acdbc81e4e3d611c29fd28bb
 
 COCOAPODS: 1.10.0
