@@ -60,7 +60,7 @@ NSString * const MEGAVideoConcurrentCountUserInfoKey = @"nz.mega.videoConcurrent
 NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey = @"nz.mega.uploadingTasksReachedMaximumCountKey";
 NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUploadingTasksCountKey";
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
-NSString * const MEGANodeInfoKey = @"nz.mega.nodeInfoKey";
+NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 
 #pragma mark - camera upload constants
 

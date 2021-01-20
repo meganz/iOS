@@ -26,11 +26,7 @@ final class NodeActionViewControllerGenericDelegate:
         case .rename:
             node.mnz_renameNode(in: viewController)
         case .share:
-            let activityViewController = UIActivityViewController(forNodes: [node], sender: viewController.view)
-            if let senderView = sender as? UIView {
-                activityViewController.popoverPresentationController?.sourceView = senderView
-                activityViewController.popoverPresentationController?.sourceRect = senderView.bounds
-            }
+            let activityViewController = UIActivityViewController(forNodes: [node], sender: sender)
             viewController.present(activityViewController, animated: true, completion: nil)
 
         case .manageShare:
