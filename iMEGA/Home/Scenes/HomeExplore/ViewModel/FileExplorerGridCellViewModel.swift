@@ -50,6 +50,10 @@ final class FileExplorerGridCellViewModel {
         return (name as NSString).mnz_isVideoPathExtension
     }
     
+    var sizeDescription: String {
+        return Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
+    }
+    
     init(node: MEGANode,
          allowsSelection: Bool = false,
          markSelection: Bool = false,
