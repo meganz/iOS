@@ -29,7 +29,7 @@
 
 - (NSString *)mnz_displayName {
     MOUser *moUser = [MEGAStore.shareInstance fetchUserWithUserHandle:self.handle];
-    return moUser.displayName;
+    return moUser.displayName == nil ? @"" : moUser.displayName;
 }
 
 @end
