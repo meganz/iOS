@@ -3404,8 +3404,6 @@
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
 		C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Additions.swift"; sourceTree = "<group>"; };
-		C8621E0BA7DB84A28128B42C /* Pods-MEGAShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAShare.debug.xcconfig"; path = "Target Support Files/Pods-MEGAShare/Pods-MEGAShare.debug.xcconfig"; sourceTree = "<group>"; };
-		CF43288E486C6583B96E2474 /* Pods-MEGAPickerFileProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAPickerFileProvider.debug.xcconfig"; path = "Target Support Files/Pods-MEGAPickerFileProvider/Pods-MEGAPickerFileProvider.debug.xcconfig"; sourceTree = "<group>"; };
 		CB3754845CFE5EE4053A6C67 /* Pods-iMEGA-MEGAPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		DBA33BC8EB7660C3C0CBA26C /* Pods-iMEGA-MEGA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.debug.xcconfig"; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -10511,7 +10509,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -10574,7 +10572,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -10628,7 +10626,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -10685,7 +10683,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -10742,7 +10740,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
@@ -10797,7 +10795,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10835,7 +10833,7 @@
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
@@ -10873,7 +10871,7 @@
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10915,7 +10913,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPickerFileProvider";
@@ -10955,7 +10953,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPickerFileProvider";
@@ -11006,7 +11004,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -11061,7 +11059,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPicker";
@@ -11116,7 +11114,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAShare";
@@ -11170,7 +11168,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.6.1;
+				MARKETING_VERSION = 5.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAShare";
