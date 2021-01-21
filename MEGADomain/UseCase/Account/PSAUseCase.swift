@@ -11,7 +11,7 @@ struct PSAUseCase {
         repo.getPSA(completion: completion)
     }
     
-    func setPSA(withIdentifier identifier: PSAIdentifier) {
-        repo.setPSA(withIdentifier: identifier)
+    func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier) {
+        repo.markAsSeenForPSA(withIdentifier: identifier)
     }
 }

@@ -36,7 +36,7 @@ final class PSAViewModel: NSObject, ViewModelType {
             invokeConfigViewCommandIfNeeded()
             getPSA()
         case .dismiss(let entity):
-            useCase.setPSA(withIdentifier: entity.identifier)
+            useCase.markAsSeenForPSA(withIdentifier: entity.identifier)
         }
     }
     
