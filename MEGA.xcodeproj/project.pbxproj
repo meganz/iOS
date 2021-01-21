@@ -1435,6 +1435,7 @@
 		BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */; };
 		BF6E8D1B25B53F58003A125A /* MockPSARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D1A25B53F57003A125A /* MockPSARepository.swift */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
+		BF6E8DBB25B927F2003A125A /* MEGARequest+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+Additions.swift */; };
@@ -3284,6 +3285,7 @@
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
 		BF6E8D1A25B53F57003A125A /* MockPSARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPSARepository.swift; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
+		BF6E8DBA25B927F2003A125A /* MEGARequest+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGARequest+Additions.swift"; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF7D437225394BEA003DF1DA /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
@@ -7308,6 +7310,7 @@
 				B662B87024F332250089376A /* MEGAStringList+Mapper.swift */,
 				B662B88024F8CB490089376A /* MEGAError+Addition.swift */,
 				B63AE686250EFA3A000B8517 /* SMSState+Mapper.swift */,
+				BF6E8DBA25B927F2003A125A /* MEGARequest+Additions.swift */,
 			);
 			path = "Model Mapping";
 			sourceTree = "<group>";
@@ -9302,6 +9305,7 @@
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
 				5D87C1F424E922D600BB5AB0 /* SDKUserClient.swift in Sources */,
 				A86B9F252316D6AB00F35E7A /* FLEXTableViewController.m in Sources */,
+				BF6E8DBB25B927F2003A125A /* MEGARequest+Additions.swift in Sources */,
 				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,

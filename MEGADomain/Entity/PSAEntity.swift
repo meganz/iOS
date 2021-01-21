@@ -1,6 +1,7 @@
+typealias PSAIdentifier = Int
 
 struct PSAEntity {
-    let identifier: Int
+    let identifier: PSAIdentifier
     let title: String
     let description: String
     let imageURL: String?

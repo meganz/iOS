@@ -10,17 +10,7 @@ struct PSARepository: PSARepositoryProtocol {
         sdk.getURLPublicServiceAnnouncement(with: MEGAGenericRequestDelegate {  request, error in
             switch error.type {
             case .apiOk:
-                completion(.success(
-                    PSAEntity(
-                        identifier: request.number.intValue,
-                        title: request.name,
-                        description: request.text,
-                        imageURL: request.file,
-                        positiveText: request.password,
-                        positiveLink: request.link,
-                        URLString: request.email
-                    )
-                ))
+                completion(.success(request.psaEntity))
             case .apiENoent:
                 completion(.failure(PSAErrorEntity.noDataAvailable))
             default:
@@ -29,7 +19,7 @@ struct PSARepository: PSARepositoryProtocol {
         })
     }
     
-    func setPSA(withIdentifier identifier: Int) {
+    func setPSA(withIdentifier identifier: PSAIdentifier) {
         sdk.setPSAWithIdentifier(identifier)
     }
 }
