@@ -7397,6 +7397,7 @@
 		B6AADEDC2518A2E2009A874C /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				BF6E8D1A25B53F57003A125A /* MockPSARepository.swift */,
 				B6AADEEB2518A377009A874C /* MockSMSRepository.swift */,
 				B6AADEF72518A39D009A874C /* MockL10nRepository.swift */,
 				B6AADF112518BB67009A874C /* MockAchievementRepository.swift */,
@@ -7588,7 +7589,6 @@
 		BF6E8D1725B53F3C003A125A /* PSA */ = {
 			isa = PBXGroup;
 			children = (
-				BF6E8D1A25B53F57003A125A /* MockPSARepository.swift */,
 				BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */,
 			);
 			path = PSA;

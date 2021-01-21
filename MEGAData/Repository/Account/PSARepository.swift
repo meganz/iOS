@@ -19,7 +19,7 @@ struct PSARepository: PSARepositoryProtocol {
         })
     }
     
-    func setPSA(withIdentifier identifier: PSAIdentifier) {
+    func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier) {
         sdk.setPSAWithIdentifier(identifier)
     }
 }
