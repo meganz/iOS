@@ -32,8 +32,9 @@ final class PSAViewRouter: NSObject {
                 psaView.isHidden = true
                 tabBarController.view.addSubview(psaView)
                 
-                psaView.autoPinEdge(toSuperviewEdge: .leading)
-                psaView.autoPinEdge(toSuperviewEdge: .trailing)
+                psaView.translatesAutoresizingMaskIntoConstraints = false
+                psaView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor).isActive = true
+                psaView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor).isActive = true
                 self.psaViewBottomConstraint = psaView.autoPinEdge(.bottom, to: .bottom, of: tabBarController.view, withOffset: -tabBarController.tabBar.bounds.height)
                 self.psaView = psaView
                 
