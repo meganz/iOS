@@ -5,19 +5,13 @@ protocol PSAViewDelegate: AnyObject {
     func dismiss(psaView: PSAView)
 }
 
-class PSAView: UIView {
+final class PSAView: UIView, ViewType {
     
     var viewModel: PSAViewModel! {
         didSet {
-            viewModel.invokeCommand = { [weak self] command in
-                guard let self = self else { return }
-                
-                switch command {
-                case .configView(let psaEntity):
-                    self.psaEntity = psaEntity
-                }
+            viewModel.invokeCommand = {[weak self] command in
+                self?.executeCommand(command)
             }
-            
             viewModel.dispatch(.onViewReady)
         }
     }
@@ -82,6 +76,13 @@ class PSAView: UIView {
         
         imageDefaultWidth = imageViewWidthConstraint.constant
         titleLabelDefaultLeadingSpace = titleLabelLeadingConstraint.constant
+    }
+    
+    func executeCommand(_ command: PSAViewModel.Command) {
+        switch command {
+        case .configView(let psaEntity):
+            self.psaEntity = psaEntity
+        }
     }
     
     private func setupView(with trait: UITraitCollection) {
