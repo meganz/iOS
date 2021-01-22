@@ -70,6 +70,39 @@ extension AppDelegate {
             UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
         }))
     }
+    
+    @objc func showCookieDialogIfNeeded() {
+        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        
+        if cookieSettingsUseCase.cookieBannerEnabled() {
+            cookieSettingsUseCase.cookieSettings { [weak self] in
+                switch $0 {
+                case .success(_): break //Cookie settings already set
+                    
+                case .failure(let error):
+                    switch error {
+                    case .generic, .invalidBitmap: break
+                        
+                    case .bitmapNotSet:
+                        self?.showCookieDialog()
+                    }
+                }
+            }
+        }
+    }
+        
+    private func showCookieDialog() {
+        let visibleViewController = UIApplication.mnz_visibleViewController()
+        if visibleViewController is CustomModalAlertViewController ||
+           visibleViewController is BusinessExpiredViewController {
+            return
+        }
+        
+        let cookieDialogCustomModalAlert = CustomModalAlertViewController()
+        cookieDialogCustomModalAlert.configureForCookieDialog()
+
+        UIApplication.mnz_presentingViewController().present(cookieDialogCustomModalAlert, animated: true, completion: nil)
+    }
 
     @objc func fetchContactsNickname() {
         guard let megaStore = MEGAStore.shareInstance(),
@@ -140,6 +173,42 @@ extension AppDelegate {
                 MEGASdkManager.sharedMEGASdk().logout()
             })
             UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
+// MARK: - MEGAGlobalDelegate
+
+extension AppDelegate: MEGAGlobalDelegate {
+    public func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
+        guard let size = userList.size?.intValue else {
+            return
+        }
+        
+        for index in 0..<size {
+            let user = userList.user(at: index)
+            if (user?.changes != nil) {
+                if user?.isOwnChange == 0 { //If the change is external
+                    if user?.handle == MEGASdkManager.sharedMEGASdk().myUser?.handle {
+                        if ((user?.hasChangedType(.cookieSetting)) != nil) {
+                            configAppWithNewCookieSettings()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func configAppWithNewCookieSettings() {
+        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        cookieSettingsUseCase.cookieSettings { [weak self] in
+            switch $0 {
+            case .success(let bitmap):
+                let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
+                cookieSettingsUseCase.setCrashlyticsEnabled(cookiesBitmap.contains(.analytics))
+                
+            case .failure(_): break
+            }
         }
     }
 }

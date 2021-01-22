@@ -6,6 +6,14 @@
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
+typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
+    RegulationSectionPrivacyPolicy,
+    RegulationSectionCookiePolicy,
+    RegulationSectionCookieSettings,
+    RegulationSectionTermsOfService,
+    RegulationSectionDataProtectionRegulation,
+};
+
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
@@ -23,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *helpLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cookiePolicyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cookieSettingsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dataProtectionRegulationLabel;
 
@@ -78,6 +88,8 @@
     self.helpLabel.text = NSLocalizedString(@"help", @"Menu item");
     
     self.privacyPolicyLabel.text = NSLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
+    self.cookiePolicyLabel.text = NSLocalizedString(@"Cookie Policy", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy'");
+    self.cookieSettingsLabel.text = NSLocalizedString(@"Cookie Settings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
     self.termsOfServiceLabel.text = NSLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
     self.dataProtectionRegulationLabel.text = NSLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
@@ -106,17 +118,28 @@
         case 4: //Help
             break;
             
-        case 5: { //Privacy Policy, Terms of Service
+        case 5: {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                if (indexPath.row == 0) {
-                    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
-                    break;
-                } else if (indexPath.row == 1) {
-                    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
-                    break;
-                } else if (indexPath.row == 2) {
-                    [[NSURL URLWithString:@"https://mega.nz/gdpr"] mnz_presentSafariViewController];
-                    break;
+                switch (indexPath.row) {
+                    case RegulationSectionPrivacyPolicy:
+                        [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
+                        break;
+                        
+                    case RegulationSectionCookiePolicy:
+                        [[NSURL URLWithString:@"https://mega.nz/cookie"] mnz_presentSafariViewController];
+                        break;
+                        
+                    case RegulationSectionCookieSettings:
+                        [self.navigationController presentViewController:[CookieSettingsFactory.new createCookieSettingsNC] animated:YES completion:nil];
+                        break;
+                        
+                    case RegulationSectionTermsOfService:
+                        [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
+                        break;
+                        
+                    case RegulationSectionDataProtectionRegulation:
+                        [[NSURL URLWithString:@"https://mega.nz/gdpr"] mnz_presentSafariViewController];
+                        break;
                 }
             }
         }

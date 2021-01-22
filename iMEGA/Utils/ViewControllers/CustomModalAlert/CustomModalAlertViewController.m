@@ -62,7 +62,9 @@
     
     self.titleLabel.text = self.viewTitle;
     
-    if (self.boldInDetail) {
+    if (self.detailAttributed) {
+        self.detailLabel.attributedText = self.detailAttributed;
+    } else if (self.boldInDetail) {
         NSRange boldRange = [self.detail rangeOfString:self.boldInDetail];
         
         NSMutableAttributedString *detailAttributedString = [[NSMutableAttributedString alloc] initWithString:self.detail];
@@ -74,6 +76,11 @@
         self.detailLabel.attributedText = detailAttributedString;
     } else {
         self.detailLabel.text = self.detail;
+    }
+    
+    if (self.detailTapGestureRecognizer) {
+        self.detailLabel.userInteractionEnabled = YES;
+        [self.detailLabel addGestureRecognizer:self.detailTapGestureRecognizer];
     }
     
     if (self.firstButtonTitle) {
