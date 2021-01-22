@@ -16,12 +16,12 @@
 
 #import "NSObject+Debounce.h"
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate, PSAViewRouterDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
-@property (nonatomic, strong) PSAViewRouter *psaRouter;
+@property (nonatomic, strong) PSAViewModel *psaViewModel;
 
 @end
 
@@ -114,7 +114,10 @@
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
-    [self adjustPSAFrameIfNeeded];
+    
+    if (self.psaViewModel != nil) {
+        [self adjustPSAFrameIfNeededWithPsaViewModel:self.psaViewModel];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -321,25 +324,11 @@
 }
 
 - (void)showPSAViewIfNeeded {
-    if (self.psaRouter != nil) {
-        return;
+    if (self.psaViewModel == nil) {
+        self.psaViewModel = [self createPSAViewModel];
     }
     
-    self.psaRouter = [PSAViewRouter.alloc initWithTabBarController:self delegate:self];
-    __weak typeof(self) weakself = self;
-    [self.psaRouter startWithCompletion:^(BOOL didShowView) {
-        if (!didShowView) {
-            weakself.psaRouter = nil;
-        }
-    }];
-}
-
-- (void)adjustPSAFrameIfNeeded {
-    if (self.psaRouter == nil) {
-        return;
-    }
-    
-    [self.psaRouter adjustPSAViewFrame];
+    [self showPSAViewIfNeeded:self.psaViewModel];
 }
 
 #pragma mark - MEGAChatDelegate
@@ -382,18 +371,9 @@
 
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController {
-    if (viewController.hidesBottomBarWhenPushed) {
-        [self.psaRouter hidePSAView:true];
-    } else {
-        [self.psaRouter hidePSAView:false];
+    if (self.psaViewModel != nil) {
+        [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
     }
-}
-
-
-#pragma mark - PSAViewRouterDelegate
-
-- (void)psaViewdismissed {
-    self.psaRouter = nil;
 }
 
 @end

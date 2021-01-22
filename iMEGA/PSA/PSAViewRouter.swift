@@ -1,50 +1,44 @@
 
 @objc
-protocol PSAViewRouterDelegate: AnyObject {
-    func psaViewdismissed()
-}
-
-@objc
-final class PSAViewRouter: NSObject {
+final class PSAViewRouter: NSObject, Routing {
     
     private weak var tabBarController: UITabBarController?
-    private weak var psaView: PSAView?
     private weak var psaViewBottomConstraint: NSLayoutConstraint?
-    private weak var delegate: PSAViewRouterDelegate?
     
-    @objc init(tabBarController: UITabBarController, delegate: PSAViewRouterDelegate) {
+    @objc init(tabBarController: UITabBarController) {
         self.tabBarController = tabBarController
-        self.delegate = delegate
     }
     
-    @objc func start(completion: @escaping ((Bool) -> Void)) {
-        guard let tabBarController = tabBarController else { return }
-
-        let useCase = PSAUseCase(repo: PSARepository(sdk: MEGASdkManager.sharedMEGASdk()))
-        let viewModel = PSAViewModel(router: self, useCase: useCase)
+    func start() {
+        guard let tabBarController = tabBarController, isPSAViewAlreadyShown() == false else { return }
         
-        viewModel.shouldShowView { [weak self] show in
-            guard let self = self else { return }
-            if show {
-                let psaView = PSAView.instanceFromNib
-                psaView.viewModel = viewModel
-                psaView.delegate = self
-                psaView.isHidden = true
-                tabBarController.view.addSubview(psaView)
-                
-                psaView.translatesAutoresizingMaskIntoConstraints = false
-                psaView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor).isActive = true
-                psaView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor).isActive = true
-                self.psaViewBottomConstraint = psaView.autoPinEdge(.bottom, to: .bottom, of: tabBarController.view, withOffset: -tabBarController.tabBar.bounds.height)
-                self.psaView = psaView
-                
-                self.hidePSAView(false)
-            }
-            completion(show)
-        }
+        let psaView = PSAView.instanceFromNib
+        psaView.delegate = self
+        psaView.isHidden = true
+        tabBarController.view.addSubview(psaView)
+        
+        psaView.translatesAutoresizingMaskIntoConstraints = false
+        psaView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor).isActive = true
+        psaView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor).isActive = true
+        self.psaViewBottomConstraint = psaView.bottomAnchor.constraint(equalTo: tabBarController.view.bottomAnchor, constant: -tabBarController.tabBar.bounds.height)
+        self.psaViewBottomConstraint?.isActive = true
+        
+        self.hidePSAView(false)
     }
     
-    @objc func adjustPSAViewFrame() {
+    func build() -> UIViewController {
+        fatalError("PSA uses view instead of view controller")
+    }
+    
+    func psaView() -> PSAView? {
+        return tabBarController?.view.subviews.filter { $0 is PSAView }.first as? PSAView
+    }
+    
+    func isPSAViewAlreadyShown() -> Bool {
+        return psaView() != nil
+    }
+    
+    func adjustPSAViewFrame() {
         guard let bottomConstraint = psaViewBottomConstraint,
               let tabBar = tabBarController?.tabBar,
               bottomConstraint.constant != -tabBar.bounds.height else {
@@ -52,11 +46,11 @@ final class PSAViewRouter: NSObject {
         }
         
         psaViewBottomConstraint?.constant = -tabBar.bounds.height
-        psaView?.layoutIfNeeded()
+        psaView()?.layoutIfNeeded()
     }
     
-    @objc func hidePSAView(_ hide: Bool) {
-        guard let psaView = psaView, psaView.isHidden != hide else { return }
+    func hidePSAView(_ hide: Bool) {
+        guard let psaView = psaView(), psaView.isHidden != hide else { return }
         
         if !hide {
             psaView.alpha = 0.0
@@ -80,6 +74,5 @@ extension PSAViewRouter: PSAViewDelegate {
     
     func dismiss(psaView: PSAView) {
         psaView.removeFromSuperview()
-        delegate?.psaViewdismissed()
     }
 }

@@ -1436,6 +1436,7 @@
 		BF6E8D1B25B53F58003A125A /* MockPSARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D1A25B53F57003A125A /* MockPSARepository.swift */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
 		BF6E8DBB25B927F2003A125A /* MEGARequest+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Additions.swift */; };
+		BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+Additions.swift */; };
@@ -3286,6 +3287,7 @@
 		BF6E8D1A25B53F57003A125A /* MockPSARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPSARepository.swift; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
 		BF6E8DBA25B927F2003A125A /* MEGARequest+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGARequest+Additions.swift"; sourceTree = "<group>"; };
+		BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF7D437225394BEA003DF1DA /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
@@ -4474,6 +4476,7 @@
 				BFE6E55D25535DEB00050DCA /* UITableViewCell+Additions.swift */,
 				BF3809E72577494700689A63 /* UITableView+Additions.swift */,
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
+				BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -9679,6 +9682,7 @@
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
+				BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */,
 				5DD5D13025591C930078BC5E /* UITextField+LeftView.swift in Sources */,
 				BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */,
 				B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */,
