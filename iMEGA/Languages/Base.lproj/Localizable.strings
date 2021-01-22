@@ -877,8 +877,8 @@
 "simplePasscodeLabel"="Simple Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Erase Local Data";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
