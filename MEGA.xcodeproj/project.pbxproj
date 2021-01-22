@@ -181,6 +181,7 @@
 		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
 		5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */; };
+		5B1C6AB925B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1C6AB825B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift */; };
 		5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */; };
 		5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */; };
 		5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */; };
@@ -200,6 +201,9 @@
 		5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */; };
 		5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */; };
+		5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */; };
+		5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */; };
+		5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */; };
 		5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B367577204FFC150087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
@@ -256,15 +260,22 @@
 		5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */; };
 		5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		5B9F33672444907900E2A15B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
+		5B9F5D47259DD57700BADB11 /* CookieSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D44259DD57700BADB11 /* CookieSettingsUseCase.swift */; };
+		5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D50259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift */; };
+		5B9F5D5B259DD72700BADB11 /* CookieSettingsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D5A259DD72700BADB11 /* CookieSettingsErrorEntity.swift */; };
+		5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */; };
 		5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA53FE82462B26000D168B9 /* InviteContact.storyboard */; };
 		5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5BA81EA21FC2FF0600C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		5BAF2FEA25AF5C9100EBCA6B /* CustomModalAlertViewController+CookieDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */; };
 		5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
+		5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */; };
 		5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */; };
 		5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */; };
+		5BB8448B259CA85F008BDD2A /* CookieSettingsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB84488259CA85F008BDD2A /* CookieSettingsFactory.swift */; };
 		5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8A852243DF42D009FE957 /* Usage.storyboard */; };
 		5BC1276E2375A73000CCAF26 /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
 		5BC1276F2375A75600CCAF26 /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
@@ -1968,6 +1979,7 @@
 		5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveSharingActivity.m; sourceTree = "<group>"; };
 		5B1AB4AD20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAQuerySignupLinkRequestDelegate.h; path = API/Requests/MEGAQuerySignupLinkRequestDelegate.h; sourceTree = "<group>"; };
 		5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAQuerySignupLinkRequestDelegate.m; path = API/Requests/MEGAQuerySignupLinkRequestDelegate.m; sourceTree = "<group>"; };
+		5B1C6AB825B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyCookiesMoreInfoViewController.swift; sourceTree = "<group>"; };
 		5B1F74D12126E30B00F09A16 /* AwaitingEmailConfirmationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwaitingEmailConfirmationView.h; sourceTree = "<group>"; };
 		5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwaitingEmailConfirmationView.m; sourceTree = "<group>"; };
 		5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AwaitingEmailConfirmationView.xib; sourceTree = "<group>"; };
@@ -1996,6 +2008,9 @@
 		5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACopyRequestDelegate.m; path = API/Requests/MEGACopyRequestDelegate.m; sourceTree = "<group>"; };
 		5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferralBonusesTableViewController.h; sourceTree = "<group>"; };
 		5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferralBonusesTableViewController.m; sourceTree = "<group>"; };
+		5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CookieSettings.storyboard; sourceTree = "<group>"; };
+		5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsRouter.swift; sourceTree = "<group>"; };
+		5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsTableViewController.swift; sourceTree = "<group>"; };
 		5B367574204FFBF60087362D /* SendToChatActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendToChatActivity.m; sourceTree = "<group>"; };
 		5B367575204FFBF60087362D /* SendToChatActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendToChatActivity.h; sourceTree = "<group>"; };
 		5B3740CC2421600B00BA75EA /* MEGACD 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 5.xcdatamodel"; sourceTree = "<group>"; };
@@ -2058,14 +2073,21 @@
 		5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeCredentials.storyboard; sourceTree = "<group>"; };
 		5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UpgradeAccount.storyboard; sourceTree = "<group>"; };
 		5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactLinkQR.storyboard; sourceTree = "<group>"; };
+		5B9F5D44259DD57700BADB11 /* CookieSettingsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsUseCase.swift; sourceTree = "<group>"; };
+		5B9F5D50259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsRepositoryProtocol.swift; sourceTree = "<group>"; };
+		5B9F5D5A259DD72700BADB11 /* CookieSettingsErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsErrorEntity.swift; sourceTree = "<group>"; };
+		5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsRepository.swift; sourceTree = "<group>"; };
 		5BA53FE82462B26000D168B9 /* InviteContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InviteContact.storyboard; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
+		5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+CookieDialog.swift"; sourceTree = "<group>"; };
 		5BB50E071F20E840000CA24D /* MEGACreateFolderRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateFolderRequestDelegate.h; path = API/Requests/MEGACreateFolderRequestDelegate.h; sourceTree = "<group>"; };
 		5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateFolderRequestDelegate.m; path = API/Requests/MEGACreateFolderRequestDelegate.m; sourceTree = "<group>"; };
+		5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsViewModel.swift; sourceTree = "<group>"; };
 		5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordStrengthIndicatorView.h; sourceTree = "<group>"; };
 		5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordStrengthIndicatorView.m; sourceTree = "<group>"; };
 		5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordStrengthIndicatorView.xib; sourceTree = "<group>"; };
+		5BB84488259CA85F008BDD2A /* CookieSettingsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsFactory.swift; sourceTree = "<group>"; };
 		5BB8A852243DF42D009FE957 /* Usage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Usage.storyboard; sourceTree = "<group>"; };
 		5BC25723220080FB0098E781 /* NSDate+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+MNZCategory.h"; sourceTree = "<group>"; };
 		5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+MNZCategory.m"; sourceTree = "<group>"; };
@@ -4095,6 +4117,7 @@
 		415226821A692ECC00EC7BB6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				5B366C492576844600FD3806 /* CookiesSettingsScene */,
 				41FC83BC1AAE0559008FA551 /* Camera Uploads */,
 				E8534D481E1522D300911C40 /* Chat */,
 				41AA1A191AC07EB900D32691 /* Security Options */,
@@ -4722,6 +4745,19 @@
 			path = API/Transfers;
 			sourceTree = "<group>";
 		};
+		5B366C492576844600FD3806 /* CookiesSettingsScene */ = {
+			isa = PBXGroup;
+			children = (
+				5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */,
+				5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */,
+				5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */,
+				5BB84488259CA85F008BDD2A /* CookieSettingsFactory.swift */,
+				5B1C6AB825B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift */,
+				5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */,
+			);
+			path = CookiesSettingsScene;
+			sourceTree = "<group>";
+		};
 		5B48F8001F4C73D0001E3A29 /* Achievements */ = {
 			isa = PBXGroup;
 			children = (
@@ -4941,6 +4977,7 @@
 		5BF4EEDC2432039C00D39415 /* CustomModalAlert */ = {
 			isa = PBXGroup;
 			children = (
+				5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */,
 				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
@@ -6992,6 +7029,7 @@
 		B63AEB092511BD45000B8517 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				5B9F5D5A259DD72700BADB11 /* CookieSettingsErrorEntity.swift */,
 				B63AEB0A2511BD74000B8517 /* GetSMSErrorEntity.swift */,
 				B63AEB0C2511BD96000B8517 /* CheckSMSErrorEntity.swift */,
 				B63AEB0E2511BDB9000B8517 /* AchievementErrorEntity.swift */,
@@ -7035,6 +7073,7 @@
 		B645BC2C252FAF4000D1D7CF /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				5B9F5D44259DD57700BADB11 /* CookieSettingsUseCase.swift */,
 				B6B278DB24E1E89C00BB3E9A /* SMSUseCase.swift */,
 				B662B87424F70A570089376A /* GetSMSUseCase.swift */,
 				B662B87624F75FEF0089376A /* CheckSMSUseCase.swift */,
@@ -7072,6 +7111,7 @@
 		B645BC32252FAF8200D1D7CF /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */,
 				B6AADEA725188D77009A874C /* SMSRepository.swift */,
 				B6AADEBA251893FD009A874C /* AchievementRepository.swift */,
 			);
@@ -7099,6 +7139,7 @@
 		B645BC35252FAFCC00D1D7CF /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				5B9F5D50259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift */,
 				B6AADEAE25188F8D009A874C /* SMSRepositoryProtocol.swift */,
 				B6AADEC1251894C1009A874C /* AchievementRepositoryProtocol.swift */,
 			);
@@ -8413,6 +8454,7 @@
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */,
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
+				5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */,
 				BFC933E324A453B400BC2A75 /* EmojiReactionCollectionCell.xib in Resources */,
 				BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */,
 				834EFDC224D9B373004BFECA /* Node.storyboard in Resources */,
@@ -8985,6 +9027,7 @@
 				A86B9F5F2316D6AB00F35E7A /* FLEXObjectRef.m in Sources */,
 				A86B9F492316D6AB00F35E7A /* FLEXDefaultEditorViewController.m in Sources */,
 				2F26B3282578396E00486C40 /* PasteImagePreviewViewModel.swift in Sources */,
+				5B9F5D5B259DD72700BADB11 /* CookieSettingsErrorEntity.swift in Sources */,
 				A86B9F762316D6AB00F35E7A /* FLEXRealmDatabaseManager.m in Sources */,
 				BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
 				B662B87724F75FEF0089376A /* CheckSMSUseCase.swift in Sources */,
@@ -8996,6 +9039,7 @@
 				A86B9F882316D6AB00F35E7A /* FLEXColor.m in Sources */,
 				B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */,
+				5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */,
 				83C570E922E5BFCF00216896 /* NSRegularExpression+Swift.swift in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
@@ -9255,6 +9299,7 @@
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
 				A815EE1923630BB2009B8D59 /* WebCodeViewController.swift in Sources */,
+				5BB8448B259CA85F008BDD2A /* CookieSettingsFactory.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
 				B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */,
@@ -9287,6 +9332,7 @@
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
+				5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */,
 				B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
@@ -9351,6 +9397,7 @@
 				BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */,
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
 				5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */,
+				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
 				5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				2F9F111F2508A3F400896DFF /* Services.swift in Sources */,
@@ -9523,6 +9570,7 @@
 				A86B9F642316D6AB00F35E7A /* FLEXKeychainQuery.m in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				BF6D30AA25390BBA00BD4653 /* FilesSearchUseCase.swift in Sources */,
+				5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */,
 				B63AEB0B2511BD74000B8517 /* GetSMSErrorEntity.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
@@ -9565,6 +9613,7 @@
 				C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
 				A86B9F5D2316D6AB00F35E7A /* FLEXGlobalsEntry.m in Sources */,
+				5BAF2FEA25AF5C9100EBCA6B /* CustomModalAlertViewController+CookieDialog.swift in Sources */,
 				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
 				B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */,
@@ -9606,6 +9655,7 @@
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
 				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
+				5B9F5D47259DD57700BADB11 /* CookieSettingsUseCase.swift in Sources */,
 				BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
 				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
@@ -9829,6 +9879,7 @@
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
+				5B1C6AB925B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,
 				5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */,
 				83C570E422E5BFCF00216896 /* ParseManager.swift in Sources */,
@@ -9842,6 +9893,7 @@
 				2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */,
 				A86B9F632316D6AB00F35E7A /* FLEXKeychain.m in Sources */,
 				2F3B13D42471F5E60026DE64 /* ChatViewController+Toolbar.swift in Sources */,
+				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				B6E7A8E12503622200CD6AC2 /* PreferenceRepository.swift in Sources */,
 				8330A9F322F41F470059B39C /* Array+Additions.swift in Sources */,

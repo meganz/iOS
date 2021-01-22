@@ -374,7 +374,7 @@
                             <tableViewSection headerTitle="" footerTitle="" id="ngR-d2-JR9">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ftc-Dy-Nzs" style="IBUITableViewCellStyleDefault" id="zCB-iT-z7k" userLabel="QR Table View Cell">
-                                        <rect key="frame" x="0.0" y="135.33333396911621" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="214.66666793823242" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zCB-iT-z7k" id="pOq-Hs-3AP">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -396,7 +396,7 @@
                             <tableViewSection headerTitle="" footerTitle="" id="iCu-Aj-k5u">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="6Dq-qt-Jc3" style="IBUITableViewCellStyleDefault" id="cNw-4r-zFD" userLabel="Close other sessions Table View Cell">
-                                        <rect key="frame" x="0.0" y="231" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="310.33333396911621" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cNw-4r-zFD" id="gMr-ld-HPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1243,7 +1243,7 @@
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="JOf-Vh-Ule" style="IBUITableViewCellStyleDefault" id="Lro-dd-lxq" userLabel="Basic Picker Table View Cell">
                                         <rect key="frame" x="0.0" y="141.33333396911621" width="414" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lro-dd-lxq" id="p3r-NV-0v1">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1267,7 +1267,7 @@
                             <tableViewSection id="4Lp-JS-KR9">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="jlN-nd-aV9" style="IBUITableViewCellStyleDefault" id="Jix-sh-Ore" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="264.66666793823242" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="220.66666793823242" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jix-sh-Ore" id="FOk-rP-5qf">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1288,7 +1288,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="xvd-Pf-yQw" style="IBUITableViewCellStyleDefault" id="sSk-Y1-eYr" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="308.66666793823242" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="264.66666793823242" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sSk-Y1-eYr" id="LTF-ja-kLi">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1309,7 +1309,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="o7M-ae-oQl" style="IBUITableViewCellStyleDefault" id="e0C-xR-LW3" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="352.66666793823242" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="308.66666793823242" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e0C-xR-LW3" id="Wyh-Wi-CCf">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1334,7 +1334,7 @@
                             <tableViewSection id="JWC-5z-ezC">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="5MV-e0-Aba" style="IBUITableViewCellStyleDefault" id="Y0E-Lq-XEa" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="432.00000190734863" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="388.00000190734863" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y0E-Lq-XEa" id="edq-OA-StD">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1359,7 +1359,7 @@
                             <tableViewSection id="k6X-E7-KLp">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="k5x-XK-ZEk" style="IBUITableViewCellStyleDefault" id="rrr-nM-E7Y" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="511.33333587646484" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="467.33333587646484" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rrr-nM-E7Y" id="Fjx-TN-hWq">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1384,7 +1384,7 @@
                             <tableViewSection id="4MV-fi-OEM">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="r7p-pB-YmJ" style="IBUITableViewCellStyleDefault" id="t88-C7-D9G" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="590.66666984558105" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="546.66666984558105" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t88-C7-D9G" id="FV1-rw-1xM">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1401,8 +1401,44 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="xz4-Kn-Zs9" style="IBUITableViewCellStyleDefault" id="mDp-kW-NOH" userLabel="Basic Picker Table View Cell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Hfd-Hc-6KI" style="IBUITableViewCellStyleDefault" id="uz8-Dg-9JQ" userLabel="Basic Picker Table View Cell">
+                                        <rect key="frame" x="0.0" y="590.66666984558105" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uz8-Dg-9JQ" id="0dO-vh-6io">
+                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Cookie Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hfd-Hc-6KI" userLabel="Cookie Policy">
+                                                    <rect key="frame" x="20" y="0.0" width="354.66666666666669" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="B7T-MW-ZnZ" style="IBUITableViewCellStyleDefault" id="Nyz-FI-fbL" userLabel="Basic Picker Table View Cell">
                                         <rect key="frame" x="0.0" y="634.66666984558105" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nyz-FI-fbL" id="DcF-cj-Fx9">
+                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Cookie Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B7T-MW-ZnZ">
+                                                    <rect key="frame" x="20" y="0.0" width="354.66666666666669" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="xz4-Kn-Zs9" style="IBUITableViewCellStyleDefault" id="mDp-kW-NOH" userLabel="Basic Picker Table View Cell">
+                                        <rect key="frame" x="0.0" y="678.66666984558105" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mDp-kW-NOH" id="crn-Vj-Hn9">
                                             <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
@@ -1420,14 +1456,14 @@
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="dcb-NL-OWk" style="IBUITableViewCellStyleDefault" id="6SR-zs-4gS" userLabel="Basic Picker Table View Cell">
-                                        <rect key="frame" x="0.0" y="678.66666984558105" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="722.66666984558105" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6SR-zs-4gS" id="RgH-TU-1ek">
-                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Data Protection Regulation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dcb-NL-OWk">
-                                                    <rect key="frame" x="20" y="0.0" width="354.66666666666669" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="371.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1455,6 +1491,8 @@
                         <outlet property="cameraUploadsDetailLabel" destination="W7m-kX-aEa" id="LDv-nb-BtP"/>
                         <outlet property="cameraUploadsLabel" destination="Dj8-7E-Gro" id="su0-Gy-Ukf"/>
                         <outlet property="chatLabel" destination="oP2-a6-gNh" id="VCa-bq-2zF"/>
+                        <outlet property="cookiePolicyLabel" destination="Hfd-Hc-6KI" id="YDs-QR-Pyb"/>
+                        <outlet property="cookieSettingsLabel" destination="B7T-MW-ZnZ" id="9yV-un-VfH"/>
                         <outlet property="dataProtectionRegulationLabel" destination="dcb-NL-OWk" id="N8i-LW-O7u"/>
                         <outlet property="fileManagementLabel" destination="jlN-nd-aV9" id="udR-ZD-aV7"/>
                         <outlet property="helpLabel" destination="k5x-XK-ZEk" id="0cV-Fr-7aP"/>

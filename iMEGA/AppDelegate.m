@@ -744,10 +744,6 @@
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
-            if (MEGALinkManager.nodeToPresentBase64Handle) {
-                [MEGALinkManager presentNode];
-            }
-            
             if (isAccountFirstLogin) {
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
@@ -761,11 +757,10 @@
                 }
         
                 [MEGALinkManager processSelectedOptionOnLink];
+                [self showCookieDialogIfNeeded];
+            } else {
+                [self processActionsAfterSetRootVC];
             }
-            
-            [self showLink:MEGALinkManager.linkURL];
-            
-            [self manageQuickActionType:self.quickActionType];
         }
     }
     
@@ -774,6 +769,19 @@
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
+}
+
+- (void)processActionsAfterSetRootVC {
+    
+    if (MEGALinkManager.nodeToPresentBase64Handle) {
+        [MEGALinkManager presentNode];
+    }
+    
+    [self manageQuickActionType:self.quickActionType];
+    
+    [self showCookieDialogIfNeeded];
+    
+    [self showEnableTwoFactorAuthenticationIfNeeded];
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -1186,14 +1194,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self.window setRootViewController:_mainTBC];
     } else {
         [self showLink:MEGALinkManager.linkURL];
-        
-        if (MEGALinkManager.nodeToPresentBase64Handle) {
-            [MEGALinkManager presentNode];
-        }
-        
-        [self manageQuickActionType:self.quickActionType];
-        
-        [self showEnableTwoFactorAuthenticationIfNeeded];
+
+        [self processActionsAfterSetRootVC];
     }
 }
 
@@ -1292,6 +1294,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)readyToShowRecommendations {
     [self presentBusinessExpiredViewIfNeeded];
+    [self showCookieDialogIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
@@ -1643,7 +1646,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (self.openChatLater) {
                     [self.mainTBC openChatRoomNumber:self.openChatLater];                    
                 }
-                [self showEnableTwoFactorAuthenticationIfNeeded];
             }
       
             [MEGAIndexer.sharedIndexer reindexSpotlightIfNeeded];
