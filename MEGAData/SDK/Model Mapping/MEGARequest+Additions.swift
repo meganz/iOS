@@ -1,6 +1,6 @@
 
 extension MEGARequest {
-    var psaEntity: PSAEntity {
+    var toPSAEntity: PSAEntity {
         return PSAEntity(
             identifier: number.intValue,
             title: name,
