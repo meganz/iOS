@@ -16,10 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *turnOnOffPasscodeLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *turnOnOffPasscodeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *changePasscodeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *simplePasscodeLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *simplePasscodeSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *eraseLocalDataLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *eraseLocalDataSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *biometricsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *biometricsSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *requirePasscodeLabel;
@@ -37,7 +33,6 @@
     [self.navigationItem setTitle:NSLocalizedString(@"passcode", nil)];
     [self.turnOnOffPasscodeLabel setText:NSLocalizedString(@"passcode", nil)];
     [self.changePasscodeLabel setText:NSLocalizedString(@"changePasscodeLabel", @"Section title where you can change the app's passcode")];
-    [self.simplePasscodeLabel setText:NSLocalizedString(@"simplePasscodeLabel", @"Title to describe a simple (four digit) passcode")];
     self.requirePasscodeLabel.text = NSLocalizedString(@"Require Passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
 
     self.biometricsLabel.text = @"Touch ID";
@@ -51,8 +46,6 @@
             }
         }
     }
-
-    [self.eraseLocalDataLabel setText:NSLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
@@ -91,27 +84,21 @@
     BOOL doesPasscodeExist = [LTHPasscodeViewController doesPasscodeExist];
     [self.turnOnOffPasscodeSwitch setOn:doesPasscodeExist];
     if (doesPasscodeExist) {
-        [self.simplePasscodeSwitch setOn:[[LTHPasscodeViewController sharedUser] isSimple]];
         [self.biometricsSwitch setOn:[[LTHPasscodeViewController sharedUser] allowUnlockWithBiometrics]];
         
         if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-            [self.eraseLocalDataSwitch setOn:YES];
             [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         } else {
-            [self.eraseLocalDataSwitch setOn:NO];
-            
             if (!wasPasscodeAlreadyEnabled) {
                 [NSUserDefaults.standardUserDefaults setBool:YES forKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
-                [self.eraseLocalDataSwitch setOn:YES];
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 wasPasscodeAlreadyEnabled = YES;
             }
         }
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : NSLocalizedString(@"Immediately", nil);
     } else {
-        [self.simplePasscodeSwitch setOn:NO];
         [self.biometricsSwitch setOn:NO];
-        [self.eraseLocalDataSwitch setOn:NO];
     }
     
     [self.tableView reloadData];
@@ -124,17 +111,6 @@
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
-}
-
-- (void)eraseLocalData {
-    BOOL eraseLocalDataEnaled = [NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
-    
-    if (eraseLocalDataEnaled) {
-        [self.eraseLocalDataSwitch setOn:YES];
-        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-    } else {
-        [self.eraseLocalDataSwitch setOn:NO];
-    }
 }
 
 - (BOOL)isTouchIDAvailable {
@@ -151,22 +127,9 @@
     } else {
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
     }
-}
-
-- (IBAction)simplePasscodeSwitchValueChanged:(UISwitch *)sender {
-    [[LTHPasscodeViewController sharedUser] setIsSimple:self.simplePasscodeSwitch.isOn inViewController:self asModal:YES];
-}
-
-- (IBAction)eraseLocalDataSwitchValueChanged:(UISwitch *)sender {
-    BOOL isEraseLocalData = ![NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
     
+    BOOL isEraseLocalData = ![NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
     [NSUserDefaults.standardUserDefaults setBool:isEraseLocalData forKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
-    if (isEraseLocalData) {
-        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        [self.eraseLocalDataSwitch setOn:YES animated:YES];
-    } else {
-        [self.eraseLocalDataSwitch setOn:NO animated:YES];
-    }
 }
 
 - (IBAction)biometricsSwitchValueChanged:(UISwitch *)sender {
@@ -178,16 +141,12 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     BOOL doesPasscodeExist = [LTHPasscodeViewController doesPasscodeExist];
     [self.changePasscodeLabel setEnabled:doesPasscodeExist];
-    [self.simplePasscodeLabel setEnabled:doesPasscodeExist];
-    [self.simplePasscodeSwitch setEnabled:doesPasscodeExist];
-    [self.eraseLocalDataLabel setEnabled:doesPasscodeExist];
-    [self.eraseLocalDataSwitch setEnabled:doesPasscodeExist];
     [self.biometricsSwitch setEnabled:doesPasscodeExist];
     [self.biometricsLabel setEnabled:doesPasscodeExist];
     self.requirePasscodeLabel.enabled = doesPasscodeExist;
     self.requirePasscodeDetailLabel.enabled = doesPasscodeExist;
 
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -196,24 +155,14 @@
     switch (section) {
         case 0:
             if ([self isTouchIDAvailable]) {
-                numberOfRows = 4;
-            } else {
                 numberOfRows = 3;
+            } else {
+                numberOfRows = 2;
             }
             break;
     }
     
     return numberOfRows;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSString *titleForFooter = @"";
-    
-    if (section == 1) {
-        titleForFooter = NSLocalizedString(@"failedAttempstSectionTitle", @"Log out and erase all local data on MEGA’s app after 10 failed passcode attempts");
-    }
-    
-    return titleForFooter;
 }
 
 #pragma mark - UITableViewDelegate
@@ -229,7 +178,7 @@
         }
     }
     
-    if (indexPath.section == 2) {
+    if (indexPath.section == 1) {
         if (LTHPasscodeViewController.doesPasscodeExist) {
             PasscodeTimeDurationTableViewController *passcodeTimeDurationTableViewController = [PasscodeTimeDurationTableViewController.alloc initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:passcodeTimeDurationTableViewController animated:YES];

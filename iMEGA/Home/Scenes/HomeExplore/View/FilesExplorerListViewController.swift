@@ -70,16 +70,20 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     override func setEditingMode() {
         tableView.setEditing(true, animated: true)
+        tableView.allowsMultipleSelectionDuringEditing = true
         tableView.visibleCells.forEach {
             $0.setSelectedBackgroundView(withColor: .clear)
         }
         configureToolbarButtons()
         showToolbar()
-        listSource?.setEditingMode()
+        if listSource?.selectedNodes == nil {
+            listSource?.setEditingMode()
+        }
     }
     
     override func endEditingMode() {
         super.endEditingMode()
+        tableView.allowsMultipleSelectionDuringEditing = true
         tableView.setEditing(false, animated: true)
         hideToolbar()
         listSource?.endEditingMode()
@@ -134,8 +138,20 @@ extension FilesExplorerListViewController: FilesExplorerListSourceDelegate {
         guard tableView.isEditing else {
             return
         }
-        
         configureToolbarButtons()
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
+    }
+    
+    func shouldBeginMultipleSelectionInteraction() {
+        delegate?.showSelectButton(true)
+    }
+    
+    func didBeginMultipleSelectionInteraction() {
+        setEditingMode()
+        tableView.alwaysBounceVertical = false
+    }
+    
+    func didEndMultipleSelectionInteraction() {
+        tableView.alwaysBounceVertical = true
     }
 }

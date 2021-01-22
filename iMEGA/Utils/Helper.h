@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
 
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
-+ (void)resetSearchControllerFrame:(UISearchController *)searchController;
++ (void)resetFrameForSearchController:(UISearchController *)searchController;
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;

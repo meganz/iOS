@@ -10,12 +10,29 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
-
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 
 - (void)configureCellForNode:(MEGANode *)node;
-- (void)selectCell:(BOOL)selected;
+- (void)setupAppearance;
 
 @end
+
+typedef NS_ENUM(NSUInteger, ThumbnailSection) {
+    ThumbnailSectionFolder = 0,
+    ThumbnailSectionFile = 1,
+    ThumbnailSectionCount = 2
+};
+
+typedef NS_ENUM(NSUInteger, ThumbnailSize) {
+    ThumbnailSizeHeightFile = 190,
+    ThumbnailSizeHeightFolder = 40,
+    ThumbnailSizeWidth = 150
+};
+
+typedef NS_ENUM(NSUInteger, FileType) {
+    FileTypeFile,
+    FileTypeFolder
+};
 
 NS_ASSUME_NONNULL_END

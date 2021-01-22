@@ -3,6 +3,9 @@ protocol FilesExplorerListSourceDelegate: UIViewController {
     func showMoreOptions(forNode node: MEGANode, sender: UIView)
     func didSelect(node: MEGANode, atIndexPath indexPath: IndexPath, allNodes: [MEGANode])
     func didDeselect(node: MEGANode, atIndexPath indexPath: IndexPath, allNodes: [MEGANode])
+    func shouldBeginMultipleSelectionInteraction()
+    func didBeginMultipleSelectionInteraction()
+    func didEndMultipleSelectionInteraction()
 }
 
 protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDelegate {
@@ -23,6 +26,8 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
     func setEditingMode()
     func endEditingMode()
     func toggleSelectAllNodes()
+    func select(indexPath: IndexPath)
+    func deselect(indexPath: IndexPath)
 }
 
 extension FilesExplorerListSourceProtocol {
@@ -73,6 +78,31 @@ extension FilesExplorerListSourceProtocol {
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
             delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
+        }
+    }
+    
+    func select(indexPath: IndexPath) {
+        guard let nodes = nodes else { return }
+        let node = nodes[indexPath.row]
+        if tableView.isEditing {
+            if !(selectedNodes?.contains(node) ?? false) {
+                selectedNodes?.append(node)
+                delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
+            }
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
+        }
+    }
+    
+    func deselect(indexPath: IndexPath) {
+        guard let nodes = nodes else { return }
+        let node = nodes[indexPath.row]
+        if tableView.isEditing {
+            if selectedNodes?.contains(node) ?? false {
+                selectedNodes?.removeAll(where: { $0 == node })
+                delegate?.didDeselect(node: node, atIndexPath: indexPath, allNodes: nodes)
+            }
         }
     }
     

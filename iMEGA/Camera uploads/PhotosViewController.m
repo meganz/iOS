@@ -428,6 +428,20 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return nil;
 }
 
+- (MEGANode *)nodeFromIndexPath:(NSIndexPath * _Nonnull)indexPath {
+    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSString *key = dict.allKeys.firstObject;
+    NSArray *array = [dict objectForKey:key];
+    return [array objectOrNilAtIndex:indexPath.row];
+}
+
+- (BOOL)shouldSelectIndexPath:(NSIndexPath * _Nonnull)indexPath {
+    
+    MEGANode *node = [self nodeFromIndexPath:indexPath];
+
+    return [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] != nil;
+}
+
 #pragma mark - notifications
 
 - (void)didReceiveCameraUploadStatsChangedNotification {
@@ -497,32 +511,48 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    self.photosCollectionView.allowsMultipleSelection = editing;
+    
+    if (@available(iOS 14.0, *)) {
+        self.photosCollectionView.allowsMultipleSelectionDuringEditing = editing;
+    }
+    
     if (editing) {
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         
-        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", @"Select items")];
+        NSString *message;
+        
+        if (self.selectedItemsDictionary.count == 0) {
+            message = NSLocalizedString(@"selectTitle", @"Select items");
+        } else {
+            message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
+        }
+        
+        [self.navigationItem setTitle:message];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.view addSubview:self.toolbar];
-        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        NSLayoutAnchor *bottomAnchor;
-        if (@available(iOS 11.0, *)) {
-            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-        } else {
-            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+            
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
-        
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         
@@ -620,18 +650,25 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return [array count];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.photosCollectionView.allowsSelection) {
+        BOOL shouldSelectActualCell = [self shouldSelectIndexPath:indexPath];
+        
+        if (shouldSelectActualCell) {
+            [self.photosCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+        
+        [cell setSelected:shouldSelectActualCell];
+    }
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"photoCellId";
     
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    MEGANode *node = nil;
-    
-    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *key = dict.allKeys.firstObject;
-    NSArray *array = [dict objectForKey:key];
-    
-    node = [array objectAtIndex:indexPath.row];
+    MEGANode *node = [self nodeFromIndexPath:indexPath];
     
     if ([node hasThumbnail]) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
@@ -642,7 +679,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     cell.nodeHandle = [node handle];
     
     cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection].CGColor;
-    cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
     
     cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
     cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
@@ -696,16 +732,14 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *key = dict.allKeys.firstObject;
-    NSArray *array = [dict objectForKey:key];
-    MEGANode *node = [array objectOrNilAtIndex:indexPath.row];
+    MEGANode *node = [self nodeFromIndexPath:indexPath];
     if (node == nil) {
         return;
     }
     
+    PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[self.photosCollectionView cellForItemAtIndexPath:indexPath];
+    
     if (![self.photosCollectionView allowsMultipleSelection]) {
-        UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
         MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
@@ -713,13 +747,30 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         photoBrowserVC.delegate = self;
         
         [self presentViewController:photoBrowserVC animated:YES completion:nil];
+        
+        [collectionView clearSelectedItemsWithAnimated:NO];
     } else {
-        if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
-            [self.selectedItemsDictionary removeObjectForKey:[NSNumber numberWithLongLong:node.handle]];
+        [self.selectedItemsDictionary setObject:node forKey:[NSNumber numberWithLongLong:node.handle]];
+        
+        NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
+        
+        [self.navigationItem setTitle:message];
+        
+        [self setToolbarActionsEnabled:YES];
+        
+        if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
+            allNodesSelected = YES;
+        } else {
+            allNodesSelected = NO;
         }
-        else {
-            [self.selectedItemsDictionary setObject:node forKey:[NSNumber numberWithLongLong:node.handle]];
-        }
+    }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode * node = [self nodeFromIndexPath:indexPath];
+    
+    if ([self.photosCollectionView allowsMultipleSelection]) {
+        [self.selectedItemsDictionary removeObjectForKey:[NSNumber numberWithLongLong:node.handle]];
         
         if ([self.selectedItemsDictionary count]) {
             NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
@@ -732,14 +783,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             
             [self setToolbarActionsEnabled:NO];
         }
-        
-        if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
-            allNodesSelected = YES;
-        } else {
-            allNodesSelected = NO;
-        }
-        
-        [self.photosCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]]];
     }
 }
 
@@ -747,6 +790,14 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     if (@available(iOS 11.0, *)) {
         view.layer.zPosition = 0.0;
     }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setEditing:YES animated:YES];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -837,6 +888,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         } else {
             [self setEditing:YES animated:YES];
             [self collectionView:self.photosCollectionView didSelectItemAtIndexPath:indexPath];
+            [self.photosCollectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
         }
     }
 }

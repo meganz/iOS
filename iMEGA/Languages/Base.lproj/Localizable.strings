@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Oldest";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capture";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -465,7 +465,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="Permissions error";
+"permissionTitle"="Permission error";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Check your permissions on this folder";
 /* Message shown when a folder have been shared */
@@ -877,8 +877,8 @@
 "simplePasscodeLabel"="Simple Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Erase Local Data";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -906,7 +906,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Cancel transfers";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Do you want to cancel %@?";
+"cancelTransfersText"="Do you want to cancel ALL transfers?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="ALL transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1753,9 +1753,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="Encryption Key Rotation";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="Enable Encryption Key Rotation";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Get chat link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
@@ -1773,7 +1773,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled encrypted key rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encryption key rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a chat link";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2051,7 +2051,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Your business account is expired";
+"Your business account is expired"="Your business account has expired";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2441,8 +2441,8 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Do you want to share the password for this link?";
 /*  Accessibility message when a message is sent in chat */
-"message sent" = "message sent";
+"message sent"="message sent";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message" = "failed to send the message";
+"failed to send the message"="failed to send the message";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled" = "message sending cancelled";
+"message sending cancelled"="message sending cancelled";

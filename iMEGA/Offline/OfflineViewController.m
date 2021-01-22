@@ -29,6 +29,7 @@ static NSString *kIndex = @"kIndex";
 static NSString *kPath = @"kPath";
 static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
+static NSString *kDuration = @"kDuration";
 static NSString *kisDirectory = @"kisDirectory";
 
 @interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate>
@@ -82,6 +83,7 @@ static NSString *kisDirectory = @"kisDirectory";
         self.offlineTableView.tableView.allowsMultipleSelectionDuringEditing = YES;
     }
     
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
 
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
@@ -149,10 +151,10 @@ static NSString *kisDirectory = @"kisDirectory";
         if (self.searchController.active) {
             if (UIDevice.currentDevice.iPad) {
                 if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetSearchControllerFrame:self.searchController];
+                    [Helper resetFrameForSearchController:self.searchController];
                 }
             } else {
-                [Helper resetSearchControllerFrame:self.searchController];
+                [Helper resetFrameForSearchController:self.searchController];
             }
         }
     } completion:nil];
@@ -275,11 +277,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView.tableView.emptyDataSetSource = self;
     self.offlineTableView.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 
-    if (self.flavor == AccountScreen) {
-        self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-        self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
-        self.offlineTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-    } else if(self.flavor == HomeScreen) {
+    if(self.flavor == HomeScreen) {
         self.offlineTableView.tableView.bounces = NO;
     }
 }
@@ -301,10 +299,6 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
     self.offlineCollectionView.collectionView.emptyDataSetSource = self;
-
-    if (self.flavor == AccountScreen) {
-        self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    }
 }
 
 - (void)changeViewModePreference {
@@ -323,6 +317,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)reloadUI {
     self.offlineSortedItems = [[NSMutableArray alloc] init];
+    self.offlineSortedFileItems = [[NSMutableArray alloc] init];
     self.offlineFiles = [[NSMutableArray alloc] init];
     self.offlineMultimediaFiles = [[NSMutableArray alloc] init];
     self.offlineItems = [[NSMutableArray alloc] init];
@@ -398,10 +393,12 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineSortedItems addObject:tempDictionary];
             
             if (!isDirectory) {
+                [self.offlineSortedFileItems addObject:tempDictionary];
                 if (fileName.mnz_isMultimediaPathExtension) {
                     AVURLAsset *asset = [AVURLAsset assetWithURL:fileURL];
                     if (asset.playable) {
                         [self.offlineMultimediaFiles addObject:[fileURL path]];
+                        [tempDictionary setValue:[NSNumber numberWithDouble:CMTimeGetSeconds(asset.duration)] forKey:kDuration];
                     } else {
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
@@ -414,12 +411,9 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
-    if ([self.offlineSortedItems count] == 0) {
-        self.offlineTableView.tableView.tableHeaderView = nil;
-    } else {
-        if (!self.offlineTableView.tableView.tableHeaderView && self.flavor == AccountScreen) {
-            self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
-        }
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
     }
     
     self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
@@ -428,6 +422,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self reloadData];
 }
+
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
     
@@ -572,8 +567,8 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-    
-    NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+    NSMutableArray *items = self.viewModePreference == ViewModePreferenceThumbnail ? self.offlineSortedFileItems : self.offlineSortedItems;
+    NSInteger selectedIndexFile = [[[items objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
     previewController.currentPreviewItemIndex = selectedIndexFile;
     
     [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -587,7 +582,7 @@ static NSString *kisDirectory = @"kisDirectory";
     if (self.viewModePreference == ViewModePreferenceList) {
         [self.offlineTableView.tableView reloadData];
     } else {
-        [self.offlineCollectionView.collectionView reloadData];
+        [self.offlineCollectionView reloadData];
     }
 }
 
@@ -614,7 +609,7 @@ static NSString *kisDirectory = @"kisDirectory";
     if (self.viewModePreference == ViewModePreferenceList) {
         numberOfRows = [self.offlineTableView.tableView numberOfRowsInSection:0];
     } else {
-        numberOfRows = [self.offlineCollectionView.collectionView numberOfItemsInSection:0];
+        numberOfRows = [self.offlineCollectionView.collectionView mnz_totalRows];
     }
     
     return numberOfRows;
@@ -638,10 +633,13 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.selectedItems removeAllObjects];
     
     if (!self.allItemsSelected) {
+        
+        NSArray *items = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchItemsArray : self.offlineSortedItems;
+        
         NSURL *filePathURL = nil;
         
-        for (NSInteger i = 0; i < self.offlineSortedItems.count; i++) {
-            filePathURL = [[self.offlineSortedItems objectAtIndex:i] objectForKey:kPath];
+        for (NSInteger i = 0; i < items.count; i++) {
+            filePathURL = [[items objectAtIndex:i] objectForKey:kPath];
             [self.selectedItems addObject:filePathURL];
         }
         
@@ -1084,7 +1082,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
     if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetSearchControllerFrame:searchController];
+        [Helper resetFrameForSearchController:searchController];
     }
 }
 

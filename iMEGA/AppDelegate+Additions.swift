@@ -58,6 +58,10 @@ extension AppDelegate {
                 return
             }
             
+            if LTHPasscodeViewController.doesPasscodeExist() && LTHPasscodeViewController.sharedUser().isLockscreenPresent() {
+                return
+            }
+            
             let enable2FACustomModalAlert = CustomModalAlertViewController()
             enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
 

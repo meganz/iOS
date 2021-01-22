@@ -4,5 +4,6 @@
 @interface UICollectionView (MNZCategory)
 
 - (CGSize)mnz_calculateCellSizeForInset:(CGFloat)inset;
+- (NSInteger)mnz_totalRows;
 
 @end

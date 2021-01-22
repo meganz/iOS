@@ -304,6 +304,8 @@
 "createFolderButton"="Crea";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="C'è già una cartella con lo stesso nome";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="C'è già un file con lo stesso nome";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -1017,6 +1019,8 @@
 "incomingShares"="Condivisioni in arrivo";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Fai l'upgrade dell'account";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1041,18 @@
 "selectOneAccountType"="Seleziona un tipo di account:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="L'abbonamento annuale è il 17% meno costosi di 12 abbonamenti mensili";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Piano corrente:";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Richiedi un piano";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Non ci sono piani adatti per il tuo uso corrente. Si prega di [A]contattare il supporto[/A] per un piano personalizzato.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Scegli il tipo di abbonamento:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1102,7 +1112,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="Questo messaggio ha raggiunto il limite massimo di %d reazioni.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="Hai raggiunto il massimo di %d reazioni.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1736,6 +1746,8 @@
 "Save to Photos"="Salva nella Galleria";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Salvataggio nella Galleria...";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Preparing to share……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvata nella Galleria";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2395,9 +2407,9 @@
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Carica File";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="Scorciatoie";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Avvia l’app di MEGA per effettuare un’azione";
 /* Title for document explorer view */
 "Documents"="Documenti";
 /* Title for audio explorer view */
@@ -2428,3 +2440,9 @@
 "Link Password"="Password del link";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Vuoi condividere la password del link?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="message sent";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="failed to send the message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="message sending cancelled";
