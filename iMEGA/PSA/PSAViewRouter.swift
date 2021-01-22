@@ -1,6 +1,13 @@
 
+protocol PSAViewRouting: PSAViewDelegate, Routing {
+    func psaView() -> PSAView?
+    func isPSAViewAlreadyShown() -> Bool
+    func adjustPSAViewFrame()
+    func hidePSAView(_ hide: Bool)
+}
+
 @objc
-final class PSAViewRouter: NSObject, Routing {
+final class PSAViewRouter: NSObject, PSAViewRouting {
     
     private weak var tabBarController: UITabBarController?
     private weak var psaViewBottomConstraint: NSLayoutConstraint?
@@ -25,11 +32,11 @@ final class PSAViewRouter: NSObject, Routing {
         
         self.hidePSAView(false)
     }
-    
+
     func build() -> UIViewController {
         fatalError("PSA uses view instead of view controller")
     }
-    
+
     func psaView() -> PSAView? {
         return tabBarController?.view.subviews.filter { $0 is PSAView }.first as? PSAView
     }
@@ -65,9 +72,9 @@ final class PSAViewRouter: NSObject, Routing {
             }
         }
     }
-}
 
-extension PSAViewRouter: PSAViewDelegate {
+    // MARK:- PSAViewDelegate
+    
     func openPSAURLString(_ urlString: String) {
         NSURL(string: urlString)?.mnz_presentSafariViewController()
     }
