@@ -77,7 +77,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Reset Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hWr-9R-q7M">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Change Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hWr-9R-q7M">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -88,55 +88,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Dk7-Vg-hyy" userLabel="Simple Passcode Table View Cell">
-                                        <rect key="frame" x="0.0" y="106" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Dk7-Vg-hyy" id="yA6-uh-4UH">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2c-dr-838">
-                                                    <rect key="frame" x="20" y="12" width="130" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWU-ov-XJM">
-                                                    <rect key="frame" x="345" y="6.6666666666666679" width="51" height="31.000000000000004"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="OWO-tg-4g7"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="simplePasscodeSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="ymv-W9-dSB"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="B2c-dr-838" firstAttribute="leading" secondItem="yA6-uh-4UH" secondAttribute="leadingMargin" constant="7" id="0V3-Z8-nAj"/>
-                                                <constraint firstItem="B2c-dr-838" firstAttribute="leading" secondItem="yA6-uh-4UH" secondAttribute="leadingMargin" constant="7" id="3Xx-fI-IMA"/>
-                                                <constraint firstItem="HWU-ov-XJM" firstAttribute="centerY" secondItem="yA6-uh-4UH" secondAttribute="centerY" id="9Fl-m2-QBy"/>
-                                                <constraint firstItem="B2c-dr-838" firstAttribute="leading" secondItem="yA6-uh-4UH" secondAttribute="leadingMargin" constant="15" id="9SA-Xz-h0P"/>
-                                                <constraint firstItem="HWU-ov-XJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="B2c-dr-838" secondAttribute="trailing" constant="8" id="RKT-OP-wSr"/>
-                                                <constraint firstItem="B2c-dr-838" firstAttribute="leading" secondItem="yA6-uh-4UH" secondAttribute="leadingMargin" constant="15" id="RfJ-O2-eP9"/>
-                                                <constraint firstItem="B2c-dr-838" firstAttribute="centerY" secondItem="yA6-uh-4UH" secondAttribute="centerY" id="UuG-JX-yCn"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="HWU-ov-XJM" secondAttribute="trailing" id="aCT-Jg-wfZ"/>
-                                                <constraint firstItem="HWU-ov-XJM" firstAttribute="trailing" secondItem="yA6-uh-4UH" secondAttribute="trailingMargin" constant="15" id="dMS-8t-MLE"/>
-                                                <constraint firstItem="B2c-dr-838" firstAttribute="leading" secondItem="yA6-uh-4UH" secondAttribute="leadingMargin" id="rRe-V8-xIo"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="0V3-Z8-nAj"/>
-                                                    <exclude reference="3Xx-fI-IMA"/>
-                                                    <exclude reference="9SA-Xz-h0P"/>
-                                                    <exclude reference="RfJ-O2-eP9"/>
-                                                    <exclude reference="dMS-8t-MLE"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Yux-Cc-xqi" userLabel="Biometrics Table View Cell">
-                                        <rect key="frame" x="0.0" y="150" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="106" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Yux-Cc-xqi" id="dbd-Us-eZz">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -184,53 +137,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="Log out and delete local data of the app after 10 failed passcode attempts" id="91f-Ih-KcR">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="inf-aX-HAP" userLabel="Erase Local Data Table View Cell">
-                                        <rect key="frame" x="0.0" y="229.33333396911621" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="inf-aX-HAP" id="TeB-Ow-QEG">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erase local data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-W1-w1Z">
-                                                    <rect key="frame" x="20" y="12" width="121" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPu-Yh-6d1">
-                                                    <rect key="frame" x="345" y="6.6666666666666679" width="51" height="31.000000000000004"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="Lob-dy-qtQ"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="eraseLocalDataSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="799-xq-Olc"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="leading" secondItem="TeB-Ow-QEG" secondAttribute="leadingMargin" id="BUb-F1-xSc"/>
-                                                <constraint firstItem="gPu-Yh-6d1" firstAttribute="trailing" secondItem="TeB-Ow-QEG" secondAttribute="trailingMargin" id="CNH-gC-bms"/>
-                                                <constraint firstItem="gPu-Yh-6d1" firstAttribute="centerY" secondItem="TeB-Ow-QEG" secondAttribute="centerY" id="GIH-ob-hsa"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="gPu-Yh-6d1" secondAttribute="trailing" id="P5j-jf-i3g"/>
-                                                <constraint firstItem="gPu-Yh-6d1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7ey-W1-w1Z" secondAttribute="trailing" constant="8" id="ex3-9p-PgD"/>
-                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="leading" secondItem="TeB-Ow-QEG" secondAttribute="leadingMargin" id="gRW-Ih-FWf"/>
-                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="trailing" secondItem="TeB-Ow-QEG" secondAttribute="trailingMargin" id="h1R-YT-HMt"/>
-                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="centerY" secondItem="TeB-Ow-QEG" secondAttribute="centerY" id="iws-AA-zbG"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="BUb-F1-xSc"/>
-                                                    <exclude reference="h1R-YT-HMt"/>
-                                                    <exclude reference="CNH-gC-bms"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection footerTitle="The duration that needs to pass while the app is in background for the lock to be displayed" id="9bD-ir-ckC">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="nIX-uY-YMs" detailTextLabel="6Hc-c9-8Bj" style="IBUITableViewCellStyleValue1" id="h7l-qG-VHw" userLabel="Passcode timer Table View Cell">
@@ -271,12 +177,8 @@
                         <outlet property="biometricsLabel" destination="AnW-qx-AM1" id="fFS-Yo-GgN"/>
                         <outlet property="biometricsSwitch" destination="Dfh-jE-dvr" id="8LB-pw-JRV"/>
                         <outlet property="changePasscodeLabel" destination="hWr-9R-q7M" id="NwD-A0-zzs"/>
-                        <outlet property="eraseLocalDataLabel" destination="7ey-W1-w1Z" id="rBM-8P-saB"/>
-                        <outlet property="eraseLocalDataSwitch" destination="gPu-Yh-6d1" id="1VR-bt-rKZ"/>
                         <outlet property="requirePasscodeDetailLabel" destination="6Hc-c9-8Bj" id="wf8-xo-7Kn"/>
                         <outlet property="requirePasscodeLabel" destination="nIX-uY-YMs" id="q6o-ur-Lg0"/>
-                        <outlet property="simplePasscodeLabel" destination="B2c-dr-838" id="sfi-gc-9SZ"/>
-                        <outlet property="simplePasscodeSwitch" destination="HWU-ov-XJM" id="AOT-Ni-YUs"/>
                         <outlet property="turnOnOffPasscodeLabel" destination="SuP-oK-n1S" id="tHN-f6-IP0"/>
                         <outlet property="turnOnOffPasscodeSwitch" destination="4Zx-og-zQM" id="g4u-AJ-9a5"/>
                     </connections>
