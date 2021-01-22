@@ -704,7 +704,7 @@ static MEGAIndexer *indexer;
     return searchController;
 }
 
-+ (void)resetSearchControllerFrame:(UISearchController *)searchController {
++ (void)resetFrameForSearchController:(UISearchController *)searchController {
     searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, searchController.view.frame.size.width, searchController.view.frame.size.height);
     searchController.searchBar.superview.frame = CGRectMake(0, 0, searchController.searchBar.superview.frame.size.width, searchController.searchBar.superview.frame.size.height);
     searchController.searchBar.frame = CGRectMake(0, 0, searchController.searchBar.frame.size.width, searchController.searchBar.frame.size.height);

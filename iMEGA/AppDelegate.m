@@ -1192,6 +1192,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [self manageQuickActionType:self.quickActionType];
+        
+        [self showEnableTwoFactorAuthenticationIfNeeded];
     }
 }
 

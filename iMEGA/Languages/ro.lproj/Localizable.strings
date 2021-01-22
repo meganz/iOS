@@ -906,7 +906,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Anulează transferurile";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Vrei să anulezi %@?";
+"cancelTransfersText"="Vrei să anulezi TOATE transferurile?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOATE transferurile";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1753,9 +1753,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nu s-a putut salva elementul.";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Rotația cheii criptate";
+"Encrypted Key Rotation"="Rotația cheii de criptare";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Activează rotația cheii criptate";
+"Enable Encrypted Key Rotation"="Activează rotația cheii de criptare";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obține linkul chatului";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
@@ -1773,7 +1773,7 @@
 /* Users previewing a public chat */
 "Observers"="Observatori";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ a activat rotația cheii criptate.";
+"%@ enabled Encrypted Key Rotation"="%@ a activat rotația cheii de criptare.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ a creat un link al chatului";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */

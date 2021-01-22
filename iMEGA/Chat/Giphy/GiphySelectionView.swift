@@ -1,4 +1,3 @@
-import CHTCollectionViewWaterfallLayout
 import FlexLayout
 import PinLayout
 import UIKit

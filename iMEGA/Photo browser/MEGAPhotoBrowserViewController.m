@@ -71,7 +71,7 @@ static const CGFloat GapBetweenPages = 10.0;
     NSUInteger index = preferredIndex;
     if (node) {
         for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
-            MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+            MEGANode *mediaNode = [mediaNodesArray objectOrNilAtIndex:i];
             if (mediaNode.handle == node.handle) {
                 index = i;
                 break;
@@ -274,7 +274,7 @@ static const CGFloat GapBetweenPages = 10.0;
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
-        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectOrNilAtIndex:self.currentIndex]];
     }
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
         [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
@@ -338,7 +338,7 @@ static const CGFloat GapBetweenPages = 10.0;
         MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
         return;
     }
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
     if (node.name.mnz_isVideoPathExtension) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
         if (zoomableView) {
@@ -412,7 +412,7 @@ static const CGFloat GapBetweenPages = 10.0;
             [self reloadTitle];
             [self airplayDisplayCurrentImage];
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
-                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectOrNilAtIndex:self.currentIndex]];
             }
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
                 [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
@@ -445,7 +445,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     if (scrollView.tag != 1) {
-        MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+        MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
@@ -462,7 +462,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     if (scrollView.tag != 1) {
-        MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+        MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
@@ -484,7 +484,7 @@ static const CGFloat GapBetweenPages = 10.0;
             YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            MEGANode *node = [self.mediaNodes objectAtIndex:i];
+            MEGANode *node = [self.mediaNodes objectOrNilAtIndex:i];
             NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                     imageView.yy_imageURL = [NSURL fileURLWithPath:temporaryImagePath];
@@ -694,12 +694,15 @@ static const CGFloat GapBetweenPages = 10.0;
     }
     
     [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self.mediaNodes objectAtIndex:self.currentIndex] delegate:self displayMode:self.displayMode isIncoming:NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
@@ -720,7 +723,10 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (IBAction)didPressRightToolbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
@@ -755,7 +761,10 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (IBAction)didPressCenterToolbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
@@ -825,7 +834,7 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
     if (node.name.mnz_isVideoPathExtension) {
         return;
     }
@@ -883,7 +892,11 @@ static const CGFloat GapBetweenPages = 10.0;
 #pragma mark - Targets
 
 - (void)playVideo:(UIButton *)sender {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
+    
     if (node.mnz_isPlayable) {
         if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
@@ -906,7 +919,7 @@ static const CGFloat GapBetweenPages = 10.0;
 - (void)airplayDisplayCurrentImage {
     if ([[UIScreen screens] count] > 1) {
         if (!self.secondWindow) {
-            UIScreen *secondScreen = [[UIScreen screens] objectAtIndex:1];
+            UIScreen *secondScreen = [[UIScreen screens] objectOrNilAtIndex:1];
             CGRect screenBounds = secondScreen.bounds;
             self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
             self.secondWindow.screen = secondScreen;
@@ -1039,7 +1052,11 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case MegaNodeActionTypeInfo: {
-            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:[self.mediaNodes objectAtIndex:self.currentIndex] delegate:self];
+            MEGANode *currentNode = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+            if (!currentNode) {
+                return;
+            }
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:currentNode delegate:self];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }

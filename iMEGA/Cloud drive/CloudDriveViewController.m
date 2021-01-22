@@ -162,6 +162,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
     [warningVC showStorageAlertIfNeeded];
+    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -300,9 +304,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self.cdCollectionView removeFromParentViewController];
     self.cdCollectionView = nil;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
     self.viewModePreference = ViewModePreferenceList;
     
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
@@ -312,7 +313,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self.cdTableView didMoveToParentViewController:self];
     
     self.cdTableView.cloudDrive = self;
-    [self addSearchBar];
     self.cdTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cdTableView.tableView.emptyDataSetDelegate = self;
     self.cdTableView.tableView.emptyDataSetSource = self;
@@ -324,9 +324,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self.cdTableView removeFromParentViewController];
     self.cdTableView = nil;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
     self.viewModePreference = ViewModePreferenceThumbnail;
     
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
@@ -813,7 +810,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
-            
+
             break;
         }
             
@@ -835,8 +832,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
-    
-    (self.nodes.size.unsignedIntegerValue == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchIfNotActive] : [self addSearchBar];
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    }
     
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
     for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
@@ -993,26 +992,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)dismissSelf {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)addSearchBar {
-    if (self.viewModePreference == ViewModePreferenceList) {
-        if (self.searchController && !self.cdTableView.tableView.tableHeaderView) {
-            self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-            self.cdTableView.tableView.tableHeaderView = ((self.displayMode == DisplayModeRecents) || !MEGAReachabilityManager.isReachable) ? nil : self.searchController.searchBar; //We have to check isReachable here to avoid re-adding the search bar when there is no internet connection and you change between 'Cloud Drive' and 'Recents' sections.
-        }
-    }
-    //In the case of ViewModePreferenceThumbnail is not necessary to re-add the search bar.
-}
-
-- (void)hideSearchIfNotActive {
-    if (!self.searchController.isActive) {
-        if (self.viewModePreference == ViewModePreferenceList) {
-            self.cdTableView.tableView.tableHeaderView = nil;
-        } else {
-            [self.cdCollectionView resetSearchBarPosition];
-        }
-    }
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -1282,17 +1261,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.viewModePreference == ViewModePreferenceList) {
         [self.cdTableView.tableView reloadData];
     } else {
-        [self.cdCollectionView.collectionView reloadData];
-    }
-    
-    [self setNavigationBarButtonItemsEnabled:![self isViewEmpty]];
-}
-
-- (BOOL)isViewEmpty {
-    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
-        return self.searchNodesArray.count == 0;
-    } else {
-        return self.nodes.size.integerValue == 0;
+        [self.cdCollectionView reloadData];
     }
 }
 
@@ -1319,7 +1288,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.viewModePreference == ViewModePreferenceList) {
         numberOfRows = [self.cdTableView.tableView numberOfRowsInSection:0];
     } else {
-        numberOfRows = [self.cdCollectionView.collectionView numberOfItemsInSection:0];
+        numberOfRows = [self.cdCollectionView.collectionView mnz_totalRows];
     }
     
     return numberOfRows;
@@ -1497,15 +1466,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf changeViewModePreference];
         }]];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf presentSortByActionSheet];
+        }]];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+            BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
+            [weakSelf setEditMode:enableEditing];
+            
+        }]];
     }
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf presentSortByActionSheet];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-        BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
-        [weakSelf setEditMode:enableEditing];
-        
-    }]];
+    
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
@@ -1686,14 +1656,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
-    
-    if (!MEGAReachabilityManager.isReachable) {
-        if (self.viewModePreference == ViewModePreferenceList) {
-            self.cdTableView.tableView.tableHeaderView = nil;
-        } else {
-            [self.cdCollectionView resetSearchBarPosition];
-        }
-    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
@@ -1712,7 +1674,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
     if (UIDevice.currentDevice.iPhoneDevice && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
-        self.searchController.searchBar.superview.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+        [Helper resetFrameForSearchController:searchController];
     }
 }
 

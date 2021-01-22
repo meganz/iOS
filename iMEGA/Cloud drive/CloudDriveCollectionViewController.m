@@ -10,13 +10,14 @@
 
 #import "CloudDriveViewController.h"
 #import "NodeCollectionViewCell.h"
-
+#import "CHTCollectionViewWaterfallLayout.h"
 #import "MEGA-Swift.h"
 
-@interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 
-@property (weak, nonatomic) IBOutlet UIView *searchView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewTopConstraint;
+@property (nonatomic, strong) NSArray<MEGANode *> *fileList;
+@property (nonatomic, strong) NSArray<MEGANode *> *folderList;
+@property (strong, nonatomic) CHTCollectionViewWaterfallLayout *layout;
 
 @end
 
@@ -26,38 +27,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupCollectionView];
+}
 
-    [self.searchView addSubview:self.cloudDrive.searchController.searchBar];
-    self.cloudDrive.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        self.layout.columnCount = [self calculateColumnCount];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
+}
+
+#pragma mark - CollectionView UI Setup
+
+- (void)setupCollectionView {
+    self.layout = CHTCollectionViewWaterfallLayout.alloc.init;
+    self.layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    self.layout.minimumColumnSpacing = 8;
+    self.layout.minimumInteritemSpacing = 8;
+    self.layout.columnCount = [self calculateColumnCount];
+    
+    self.collectionView.collectionViewLayout = self.layout;
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
-            numberOfRows = self.cloudDrive.searchNodesArray.count;
-        } else {
-            numberOfRows = self.cloudDrive.nodes.size.integerValue;
-        }
-    }
-    return numberOfRows;
+    return section == ThumbnailSectionFile ? self.fileList.count : self.folderList.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return ThumbnailSectionCount;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
-
-    NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
+    MEGANode *node = [self getNodeAtIndexPath:indexPath];
+    NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
     [cell configureCellForNode:node];
     cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
-    
+    cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.collectionView.allowsMultipleSelection) {
-        MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+        MEGANode *node = [self getNodeAtIndexPath:indexPath];
 
         NSArray *filteredArray = [self.cloudDrive.selectedNodesArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             return ((MEGANode*)evaluatedObject).handle == node.handle;
@@ -74,7 +87,7 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    MEGANode *node = [self getNodeAtIndexPath:indexPath];
     if (node == nil) {
         return;
     }
@@ -105,7 +118,7 @@
     }
     
     if (collectionView.allowsMultipleSelection) {
-        MEGANode *node = [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+        MEGANode *node = [self getNodeAtIndexPath:indexPath];
 
         NSMutableArray *tempArray = [self.cloudDrive.selectedNodesArray copy];
         for (MEGANode *tempNode in tempArray) {
@@ -138,36 +151,10 @@
     [self setCollectionViewEditing:YES animated:YES];
 }
 
-#pragma mark - UIScrolViewDelegate
+#pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    //keep the search view next to collection view offset when scroll and adjust collection insets to the offset simulating that the search bar is embed into the collection
-    self.searchViewTopConstraint.constant = - scrollView.contentOffset.y - 50;
-    self.collectionView.contentInset = UIEdgeInsetsMake(MAX(0, MIN(-scrollView.contentOffset.y, 50)), 0, 0, 0);
-    
-    if (self.cloudDrive.searchController.isActive) {
-        [self.cloudDrive.searchController.searchBar resignFirstResponder];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView.contentOffset.y > -50 && scrollView.contentOffset.y < 0) { //Search bar is partially visible when end dragging
-        if ([scrollView.panGestureRecognizer velocityInView:scrollView].y < 0) { //Hide search bar if scrolling up
-            [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                self.searchViewTopConstraint.constant = -50;
-                self.collectionView.contentOffset = CGPointZero;
-                self.collectionView.contentInset = UIEdgeInsetsZero;
-                [self.view layoutIfNeeded];
-            } completion:nil];
-        } else { //Show search bar if scrolling down
-            [UIView animateWithDuration:.2 animations:^{
-                self.collectionView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
-                self.searchViewTopConstraint.constant = 0;
-                self.collectionView.contentOffset = CGPointMake(0, -50);
-                [self.view layoutIfNeeded];
-            }];
-        }
-    }
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section == ThumbnailSectionFile ? CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFile) : CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFolder);
 }
 
 #pragma mark - Actions
@@ -180,7 +167,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    MEGANode *node = [self getNodeAtIndexPath:indexPath];
     if (node == nil) {
         return;
     }
@@ -206,8 +193,56 @@
     [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
 }
 
-- (void)resetSearchBarPosition {
-    self.collectionView.contentInset = UIEdgeInsetsZero;
+- (void)reloadData {
+    self.fileList = nil;
+    self.folderList = nil;
+    [self.collectionView reloadData];
+}
+
+#pragma mark - Private methods
+
+- (nullable MEGANode *)getNodeAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section == ThumbnailSectionFile ? [self.fileList objectOrNilAtIndex:indexPath.row] : [self.folderList objectOrNilAtIndex:indexPath.row];
+}
+
+- (NSInteger)calculateColumnCount {
+    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds);
+    return (NSInteger) ((containerWidth - self.layout.sectionInset.left - self.layout.sectionInset.right) / ThumbnailSizeWidth);
+}
+
+- (NSArray *)buildListFor:(FileType) fileOrFolder {
+    NSMutableArray *list = NSMutableArray.alloc.init;
+    if (self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        for (MEGANode *tempNode in self.cloudDrive.searchNodesArray) {
+            if ((fileOrFolder == FileTypeFile && tempNode.isFile) || (fileOrFolder == FileTypeFolder && tempNode.isFolder)) {
+                [list addObject:tempNode];
+            }
+        }
+    } else {
+        for (int index = 0; index < [self.cloudDrive.nodes.size intValue]; index++) {
+            MEGANode *tempNode = [self.cloudDrive.nodes nodeAtIndex:index];
+            if ((fileOrFolder == FileTypeFile && tempNode.isFile) || (fileOrFolder == FileTypeFolder && tempNode.isFolder)) {
+                [list addObject:tempNode];
+            }
+        }
+    }
+    return list.copy;
+}
+
+#pragma mark - getters
+
+- (NSArray *)folderList {
+    if (!_folderList) {
+        _folderList = [self buildListFor:FileTypeFolder];
+    }
+    return _folderList;
+}
+
+- (NSArray *)fileList {
+    if (!_fileList) {
+        _fileList = [self buildListFor:FileTypeFile];
+    }
+    return _fileList;
 }
 
 @end

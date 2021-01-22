@@ -15,7 +15,6 @@
 #import "MEGA-Swift.h"
 #endif
 
-static int _MEGAWebImageSetterKey;
 static const void *base64HandleKey = &base64HandleKey;
 
 @implementation UIImageView (MNZCategory)

@@ -412,7 +412,7 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare:
-            [self shareAction:nil];
+            [self shareAction:sender];
             break;
             
         case MegaNodeActionTypeDownload:

@@ -129,4 +129,8 @@ final class FilesExplorerViewModel {
             self.invokeCommand?(.onTransferCompleted(node))
         }
     }
+    
+    func getExplorerType() -> ExplorerTypeEntity {
+        return self.explorerType
+    }
 }
