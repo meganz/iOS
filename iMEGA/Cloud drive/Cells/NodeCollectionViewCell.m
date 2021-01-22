@@ -19,14 +19,11 @@
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    if (self.moreButton.hidden) {
-        if (selected) {
-            self.selectImageView.image = [UIImage imageNamed:@"thumbnail_selected"];
-            self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"00A886"].CGColor;
-        } else {
-            self.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
-        }
+    if (self.moreButton.hidden && selected) {
+        self.selectImageView.image = [UIImage imageNamed:@"thumbnail_selected"];
+        self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"00A886"].CGColor;
     } else {
+        self.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
         if (@available(iOS 12.0, *)) {
             switch (self.traitCollection.userInterfaceStyle) {
                 case UIUserInterfaceStyleUnspecified:
@@ -78,12 +75,15 @@
         }
     }
     
-    self.thumbnailPlayImageView.hidden = self.durationLabel.hidden = !node.name.mnz_isVideoPathExtension;
-    self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+    self.durationLabel.hidden = !node.name.mnz_isVideoPathExtension;
+    if (!self.durationLabel.hidden) {
+        self.durationLabel.layer.cornerRadius = 4;
+        self.durationLabel.layer.masksToBounds = true;
+        self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+    }
 
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     [self setupAppearance];
 }
