@@ -1,5 +1,8 @@
 
 enum PSAViewAction: ActionType {
+    case showPSAViewIfNeeded
+    case setPSAViewHidden(_ hide: Bool)
+    case adjustPSAFrameIfNeeded
     case onViewReady
     case dismiss(PSAEntity)
 }
@@ -19,7 +22,7 @@ final class PSAViewModel: NSObject, ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
-    
+        
     init(router: PSAViewRouter,
          useCase: PSAUseCase,
          preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
@@ -31,6 +34,18 @@ final class PSAViewModel: NSObject, ViewModelType {
     
     func dispatch(_ action: PSAViewAction) {
         switch action {
+        case .showPSAViewIfNeeded:
+            guard router.isPSAViewAlreadyShown() == false else { return }
+            shouldShowView { [weak self] show in
+                guard let self = self, show else { return }
+                
+                self.router.start()
+                self.router.psaView()?.viewModel = self
+            }
+        case .setPSAViewHidden(let hide):
+            router.hidePSAView(hide)
+        case .adjustPSAFrameIfNeeded:
+            router.adjustPSAViewFrame()
         case .onViewReady:
             lastPSAShownTimestampPreference = Date().timeIntervalSince1970
             invokeConfigViewCommandIfNeeded()
@@ -40,7 +55,9 @@ final class PSAViewModel: NSObject, ViewModelType {
         }
     }
     
-    func shouldShowView(completion: @escaping ((Bool) -> Void)) {
+    // MARK: - Private methods.
+    
+    private func shouldShowView(completion: @escaping ((Bool) -> Void)) {
         // Avoid showing PSA if it is shown already within 1 hour (3600 seconds) time span.
         guard (lastPSAShownTimestampPreference <= 0
                 || (Date().timeIntervalSince1970 - lastPSAShownTimestampPreference) >= 3600) else {
