@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
 
 - (void)configureCellForNode:(MEGANode *)node;
 - (void)setupAppearance;
@@ -26,8 +25,8 @@ typedef NS_ENUM(NSUInteger, ThumbnailSection) {
 };
 
 typedef NS_ENUM(NSUInteger, ThumbnailSize) {
-    ThumbnailSizeHeightFile = 200,
-    ThumbnailSizeHeightFolder = 50,
+    ThumbnailSizeHeightFile = 190,
+    ThumbnailSizeHeightFolder = 40,
     ThumbnailSizeWidth = 150
 };
 

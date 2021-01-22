@@ -222,6 +222,6 @@ extension FilesExplorerGridViewController: CHTCollectionViewDelegateWaterfallLay
     // ** Size for the cells in the Waterfall Layout */
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // create a cell size from the image size, and return the size
-        return CGSize(width: 150, height: 200)
+        return CGSize(width: CGFloat(ThumbnailSize.width.rawValue), height: CGFloat(ThumbnailSize.heightFile.rawValue))
     }
 }

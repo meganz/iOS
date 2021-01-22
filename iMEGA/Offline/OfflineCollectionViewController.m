@@ -117,8 +117,6 @@ static NSString *kPath = @"kPath";
     
     NSString *handleString = [offNode base64Handle];
     
-    cell.thumbnailPlayImageView.hidden = YES;
-    
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
@@ -175,14 +173,15 @@ static NSString *kPath = @"kPath";
     
     cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
     cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
-    cell.thumbnailPlayImageView.hidden = !nameString.mnz_isVideoPathExtension;
     cell.durationLabel.hidden = !nameString.mnz_isVideoPathExtension;
-
-    cell.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
+    if (!cell.durationLabel.hidden) {
+        cell.durationLabel.layer.cornerRadius = 4;
+        cell.durationLabel.layer.masksToBounds = true;
+        cell.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
+    }
 
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     [cell setupAppearance];
     
