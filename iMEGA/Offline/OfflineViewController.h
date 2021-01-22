@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
 
 @property (nonatomic, strong) NSMutableArray *selectedItems;
 @property (nonatomic, strong) NSMutableArray *offlineSortedItems;
+@property (nonatomic, strong) NSMutableArray *offlineSortedFileItems;
 @property (nonatomic) NSMutableArray *searchItemsArray;
 @property (nonatomic) UISearchController *searchController;
 @property (nonatomic) OfflineViewControllerFlavor flavor;

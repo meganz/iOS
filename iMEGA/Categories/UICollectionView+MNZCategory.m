@@ -12,4 +12,13 @@
     return CGSizeMake(cellSquareSize, cellSquareSize);
 }
 
+- (NSInteger)mnz_totalRows {
+    NSInteger totalSections = self.numberOfSections;
+    NSInteger numberOfRows = 0;
+    for (int section = 0; section < totalSections; section++) {
+        numberOfRows += [self numberOfItemsInSection:section];
+    }
+    return numberOfRows;
+}
+
 @end

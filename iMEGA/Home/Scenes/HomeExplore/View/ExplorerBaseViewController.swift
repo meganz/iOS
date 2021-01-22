@@ -18,21 +18,24 @@ class ExplorerBaseViewController: UIViewController {
     
     func showToolbar() {
         guard let tabBarController = tabBarController, toolbar.superview == nil else { return }
-        toolbar.alpha = 0.0
-        tabBarController.view.addSubview(toolbar)
-        toolbar.autoPinEdge(.top, to: .top, of: tabBarController.tabBar)
-        let bottomAnchor: NSLayoutYAxisAnchor
-        if #available(iOS 11.0, *) {
-            bottomAnchor = tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor
-        } else {
-            bottomAnchor = tabBarController.tabBar.bottomAnchor
-        }
-        toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        toolbar.autoPinEdge(.leading, to: .leading, of: tabBarController.tabBar)
-        toolbar.autoPinEdge(.trailing, to: .trailing, of: tabBarController.tabBar)
         
-        UIView.animate(withDuration: 0.3) {
-            self.toolbar.alpha = 1.0
+        if !tabBarController.view.subviews.contains(toolbar) {
+            toolbar.alpha = 0.0
+            tabBarController.view.addSubview(toolbar)
+            toolbar.autoPinEdge(.top, to: .top, of: tabBarController.tabBar)
+            let bottomAnchor: NSLayoutYAxisAnchor
+            if #available(iOS 11.0, *) {
+                bottomAnchor = tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor
+            } else {
+                bottomAnchor = tabBarController.tabBar.bottomAnchor
+            }
+            toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+            toolbar.autoPinEdge(.leading, to: .leading, of: tabBarController.tabBar)
+            toolbar.autoPinEdge(.trailing, to: .trailing, of: tabBarController.tabBar)
+            
+            UIView.animate(withDuration: 0.3) {
+                self.toolbar.alpha = 1.0
+            }
         }
     }
     

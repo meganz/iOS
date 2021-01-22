@@ -114,6 +114,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.showMoreButton(show)
     }
     
+    func showSelectButton(_ show: Bool) {
+        containerViewController.showSelectButton(show)
+    }
+    
     // MARK: - Private methods.
     
     func updateTitle(withNodesCount count: Int) {

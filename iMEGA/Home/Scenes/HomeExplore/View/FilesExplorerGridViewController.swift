@@ -2,18 +2,13 @@ import UIKit
 
 class FilesExplorerGridViewController: FilesExplorerViewController {
     
-    private lazy var gridFlowLayout: GridFlowLayout = {
-        let gridFlowLayout = GridFlowLayout()
-        gridFlowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        gridFlowLayout.minimumLineSpacing = 4
-        gridFlowLayout.minimumInteritemSpacing = 15
-        return gridFlowLayout
-    }()
+    private lazy var layout: CHTCollectionViewWaterfallLayout = CHTCollectionViewWaterfallLayout()
     
     private lazy var collectionView: UICollectionView = {
+        configureLayout()
         let collectionView = UICollectionView(
             frame: .zero,
-            collectionViewLayout: gridFlowLayout
+            collectionViewLayout: layout
         )
         return collectionView
     }()
@@ -46,6 +41,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         
         viewModel.dispatch(.onViewReady)
         delegate?.updateSearchResults()
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
     }
     
     override func toggleSelectAllNodes() {
@@ -72,15 +69,33 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     }
     
     override func setEditingMode() {
-        gridSource?.allowsMultipleSelection = true
-        configureToolbarButtons()
-        showToolbar()
+        setEditing(true, animated: true)
     }
     
     override func endEditingMode() {
         super.endEditingMode()
-        gridSource?.allowsMultipleSelection = false
-        hideToolbar()
+        setEditing(false, animated: true)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        collectionView.allowsMultipleSelection = editing
+        
+        if #available(iOS 14, *) {
+            collectionView.allowsMultipleSelectionDuringEditing = editing;
+        }
+        
+        collectionView.alwaysBounceVertical = !editing
+        gridSource?.allowsMultipleSelection = editing
+        
+        if editing {
+            configureToolbarButtons()
+            showToolbar()
+        } else {
+            hideToolbar()
+            collectionView.clearSelectedItems()
+        }
+        
+        super.setEditing(editing, animated: animated)
     }
     
     override func selectedNodes() -> [MEGANode]? {
@@ -107,6 +122,24 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             multiplier: 0,
             constant: 50
         ).isActive = true
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        layout.columnCount = calculateColumnCount(containerWidth: size.width)
+        layout.invalidateLayout()
+    }
+
+    private func configureLayout() {
+        // Change individual layout attributes for the spacing between cells
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        layout.minimumColumnSpacing = 8
+        layout.minimumInteritemSpacing = 8
+        layout.columnCount = calculateColumnCount(containerWidth: UIScreen.main.bounds.width)
+    }
+
+    private func calculateColumnCount(containerWidth: CGFloat) -> Int {
+        return Int((containerWidth - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))
     }
     
     // MARK: - Execute command
@@ -136,15 +169,24 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
 
 extension FilesExplorerGridViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
         if gridSource?.allowsMultipleSelection ?? false {
-            gridSource?.toggleIndexPathSelection(indexPath)
+            gridSource?.select(indexPath: indexPath)
             configureToolbarButtons()
             delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
         } else {
             if let nodes = gridSource?.nodes {
                 viewModel.dispatch(.didSelectNode(nodes[indexPath.item], nodes))
             }
+            
+            collectionView.clearSelectedItems(animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if gridSource?.allowsMultipleSelection ?? false {
+            gridSource?.deselect(indexPath: indexPath)
+            configureToolbarButtons()
+            delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
         }
     }
     
@@ -153,11 +195,33 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
                         forItemAt indexPath: IndexPath) {
         gridSource?.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        setEditingMode()
+        delegate?.showSelectButton(true)
+    }
+    
+    func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
+        collectionView.alwaysBounceVertical = true
+    }
 }
 
 // MARK:- Scrollview delegate
 extension FilesExplorerGridViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.didScroll(scrollView: scrollView)
+    }
+}
+
+// MARK: - CollectionView Waterfall Layout Delegate Methods (Required)
+extension FilesExplorerGridViewController: CHTCollectionViewDelegateWaterfallLayout {
+    // ** Size for the cells in the Waterfall Layout */
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // create a cell size from the image size, and return the size
+        return CGSize(width: CGFloat(ThumbnailSize.width.rawValue), height: CGFloat(ThumbnailSize.heightFile.rawValue))
     }
 }
