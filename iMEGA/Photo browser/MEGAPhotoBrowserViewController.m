@@ -1,7 +1,6 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
-#import "UIImage+YYWebImage.h"
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
 
@@ -449,7 +448,7 @@ static const CGFloat GapBetweenPages = 10.0;
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(YYAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
             if (!self.interfaceHidden) {
                 [self singleTapGesture:nil];
@@ -481,13 +480,13 @@ static const CGFloat GapBetweenPages = 10.0;
                 continue;
             }
             
-            YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectOrNilAtIndex:i];
             NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                    imageView.yy_imageURL = [NSURL fileURLWithPath:temporaryImagePath];
+                    [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath]];
             } else {
                 NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
@@ -542,7 +541,7 @@ static const CGFloat GapBetweenPages = 10.0;
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(YYAnimatedImageView *)imageView withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -562,10 +561,9 @@ static const CGFloat GapBetweenPages = 10.0;
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-            [imageView yy_setImageWithURL:[NSURL fileURLWithPath:transfer.path]
-                              placeholder:imageView.image
-                                  options:YYWebImageOptionProgressiveBlur
-                               completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
+            [imageView sd_setImageWithURL:[NSURL fileURLWithPath:transfer.path]
+                         placeholderImage:imageView.image
+                                completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 [self resizeImageView:imageView];
                 }
              ];
@@ -1198,7 +1196,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (UIImageView *)placeholderCurrentImageView {
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
-    YYAnimatedImageView *animatedImageView  = zoomableView.subviews.firstObject;
+    UIImageView *animatedImageView  = zoomableView.subviews.firstObject;
     
     UIImageView *imageview = UIImageView.new;
     imageview.backgroundColor = self.view.backgroundColor;

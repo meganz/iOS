@@ -1,4 +1,5 @@
 import MessageKit
+import MapKit
 
 extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     

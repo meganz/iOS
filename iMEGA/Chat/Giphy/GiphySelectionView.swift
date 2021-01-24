@@ -168,7 +168,7 @@ extension GiphySelectionView: CHTCollectionViewDelegateWaterfallLayout, UICollec
         let gif = datasource[indexPath.item]
 
         // Add image to cell
-        cell.image.yy_setImage(with: URL(string: gif.webp))
+        cell.image.sd_setImage(with: URL(string: gif.webp))
         cell.image.backgroundColor = UIColor(patternImage: UIImage(named: "giphyCellBackground")!)
         return cell
     }
