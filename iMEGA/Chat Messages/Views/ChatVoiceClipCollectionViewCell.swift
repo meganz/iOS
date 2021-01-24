@@ -19,7 +19,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         for i in 0...59 {
             let name = "waveform_000\(i)"
             guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate) else {
-                return YYAnimatedImageView()
+                return UIImageView()
             }
             imageData.append(data)
         }

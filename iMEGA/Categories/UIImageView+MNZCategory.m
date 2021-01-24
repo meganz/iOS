@@ -7,7 +7,7 @@
 #import "UIImage+GKContact.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
-#import <YYWebImage/YYWebImage.h>
+#import <SDWebImage/SDWebImage.h>
 #import <objc/runtime.h>
 #import "MEGASdk+MNZCategory.h"
 
@@ -67,10 +67,10 @@ static const void *base64HandleKey = &base64HandleKey;
     if (node.hasThumbnail) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            self.yy_imageURL = [NSURL fileURLWithPath:path];
+            [self sd_setImageWithURL:[NSURL fileURLWithPath:path]];
         } else {
             MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.yy_imageURL = [NSURL fileURLWithPath:request.file];
+                [self sd_setImageWithURL:[NSURL fileURLWithPath:request.file]];
             }];
             [self mnz_imageForNode:node];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:path delegate:delegate];
@@ -86,9 +86,9 @@ static const void *base64HandleKey = &base64HandleKey;
         NSString *originalPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
     
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            self.yy_imageURL = [NSURL fileURLWithPath:path];
+            [self sd_setImageWithURL:[NSURL fileURLWithPath:path]];
         } else if ([[NSFileManager defaultManager] fileExistsAtPath:originalPath]) {
-            self.yy_imageURL = [NSURL fileURLWithPath:originalPath];
+            [self sd_setImageWithURL:[NSURL fileURLWithPath:originalPath]];
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (completion) {

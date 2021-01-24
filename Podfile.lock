@@ -61,6 +61,15 @@ PODS:
     - InputBarAccessoryView/Core (= 4.3.3)
   - InputBarAccessoryView/Core (4.3.3)
   - ISEmojiView (0.2.6)
+  - libwebp (1.1.0):
+    - libwebp/demux (= 1.1.0)
+    - libwebp/mux (= 1.1.0)
+    - libwebp/webp (= 1.1.0)
+  - libwebp/demux (1.1.0):
+    - libwebp/webp
+  - libwebp/mux (1.1.0):
+    - libwebp/demux
+  - libwebp/webp (1.1.0)
   - MessageKit (3.1.0):
     - InputBarAccessoryView (~> 4.3.0)
   - nanopb (2.30906.0):
@@ -71,18 +80,13 @@ PODS:
   - PanModal (1.2.7)
   - PinLayout (1.9.2)
   - PromisesObjC (1.2.12)
-  - YYCache (1.0.4)
+  - SDWebImage/Core (5.10.2)
+  - SDWebImageWebPCoder (0.8.1):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.10)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
-  - YYImage (1.0.4):
-    - YYImage/Core (= 1.0.4)
-  - YYImage/Core (1.0.4)
-  - YYImage/WebP (1.0.4):
-    - YYImage/Core
-  - YYWebImage (1.0.5):
-    - YYCache
-    - YYImage
 
 DEPENDENCIES:
   - CHTCollectionViewWaterfallLayout
@@ -99,9 +103,8 @@ DEPENDENCIES:
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
+  - SDWebImageWebPCoder
   - YYCategories
-  - YYImage/WebP (from `https://github.com/sundayfun/YYImage.git`)
-  - YYWebImage
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -119,13 +122,14 @@ SPEC REPOS:
     - GoogleUtilities
     - Haptica
     - InputBarAccessoryView
+    - libwebp
     - nanopb
     - PanModal
     - PinLayout
     - PromisesObjC
-    - YYCache
+    - SDWebImage
+    - SDWebImageWebPCoder
     - YYCategories
-    - YYWebImage
 
 EXTERNAL SOURCES:
   DZNEmptyDataSet:
@@ -136,8 +140,6 @@ EXTERNAL SOURCES:
     :tag: 0.2.6
   MessageKit:
     :git: https://github.com/lhr000lhrmega/MessageKit.git
-  YYImage:
-    :git: https://github.com/sundayfun/YYImage.git
 
 CHECKOUT OPTIONS:
   DZNEmptyDataSet:
@@ -149,9 +151,6 @@ CHECKOUT OPTIONS:
   MessageKit:
     :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
     :git: https://github.com/lhr000lhrmega/MessageKit.git
-  YYImage:
-    :commit: df226ee3e693ec216196d164966d6582490fed88
-    :git: https://github.com/sundayfun/YYImage.git
 
 SPEC CHECKSUMS:
   CHTCollectionViewWaterfallLayout: 5f241d2480ab4939aa0d1ad4981de9eef1fbe60d
@@ -170,16 +169,16 @@ SPEC CHECKSUMS:
   Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
   InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
+  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PinLayout: 0d96022e46e8b80468d819f182a393b97ca038da
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
+  SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
-  YYImage: 6db68da66f20d9f169ceb94dfb9947c3867b9665
-  YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 381b3924c1c28a53acdbc81e4e3d611c29fd28bb
+PODFILE CHECKSUM: a2821477ac478b6726b3c8c381f8777da9731882
 
 COCOAPODS: 1.10.0
