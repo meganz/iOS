@@ -510,46 +510,72 @@ static MEGAIndexer *indexer;
 }
 
 + (void)changeApiURL {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
-        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
-        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+    NSString *alertTitle = NSLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
+    NSString *alertMessage = NSLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
+    
+    UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Production", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Helper setApiURL:MEGAAPIEnvProduction];
         [Helper apiURLChanged];
-    } else {
-        NSString *alertTitle = NSLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
-        NSString *alertMessage = NSLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
-        
-        UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    }]];
+    
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"staging", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Helper setApiURL:MEGAAPIEnvStaging];
+        [Helper apiURLChanged];
+    }]];
+    
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Staging:444" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Helper setApiURL:MEGAAPIEnvStaging444];
+        [Helper apiURLChanged];
+    }]];
+    
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Sandbox3" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Helper setApiURL:MEGAAPIEnvSandbox3];
+        [Helper apiURLChanged];
+    }]];
+    
+    [UIApplication.mnz_visibleViewController presentViewController:changeApiServerAlertController animated:YES completion:nil];
+}
+
++ (void)setApiURL:(MEGAAPIEnv)envType {
+    switch (envType) {
+        case MEGAAPIEnvProduction:
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+            break;
+        case MEGAAPIEnvStaging:
             [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-            [Helper apiURLChanged];
-        }]];
-        
-        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Staging:444" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            break;
+        case MEGAAPIEnvStaging444:
             [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
             [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
-            [Helper apiURLChanged];
-        }]];
-        
-        [UIApplication.mnz_visibleViewController presentViewController:changeApiServerAlertController animated:YES completion:nil];
+            break;
+        case MEGAAPIEnvSandbox3:
+            [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+            [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+            break;
+            
+        default:
+            break;
     }
+    [NSUserDefaults.standardUserDefaults setInteger:envType forKey:@"MEGAAPIEnv"];
 }
 
 + (void)apiURLChanged {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"pointToStaging"];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"pointToStaging"];
-    }
-    
     [SVProgressHUD showSuccessWithStatus:@"API URL changed"];
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
         [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
     }
+}
+
++ (void)restoreAPISetting {
+    MEGAAPIEnv APItype = [NSUserDefaults.standardUserDefaults integerForKey:@"MEGAAPIEnv"];
+    [Helper setApiURL:APItype];
 }
 
 + (void)cannotPlayContentDuringACallAlert {

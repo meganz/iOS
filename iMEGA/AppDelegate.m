@@ -163,11 +163,7 @@
     
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
-        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-    }
-    
+    [Helper restoreAPISetting];
     [ChatUploader.sharedInstance setup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
