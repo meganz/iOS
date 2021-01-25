@@ -21,7 +21,7 @@ final class PSAView: UIView, ViewType {
             descriptionLabel.text = psaEntity.description
             if let imageURLString = psaEntity.imageURL,
                let imageURL = URL(string: imageURLString) {
-                imageView.yy_imageURL = imageURL
+                imageView.sd_setImage(with: imageURL)
                 imageViewWidthConstraint.constant = imageDefaultWidth
                 titleLabelLeadingConstraint.constant = titleLabelDefaultLeadingSpace
             } else {
