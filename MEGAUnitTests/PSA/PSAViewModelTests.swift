@@ -120,7 +120,7 @@ final class MockPSAViewRouter: PSAViewRouting {
         psaViewShown = true
     }
     
-    func psaView() -> PSAView? {
+    func currentPSAView() -> PSAView? {
         return nil
     }
     

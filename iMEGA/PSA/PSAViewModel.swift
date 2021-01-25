@@ -4,7 +4,8 @@ enum PSAViewAction: ActionType {
     case setPSAViewHidden(_ hide: Bool)
     case adjustPSAFrameIfNeeded
     case onViewReady
-    case dismiss(PSAEntity)
+    case openPSAURLString(_ urlString: String)
+    case dimiss(psaView: PSAView, psaEntity: PSAEntity)
 }
 
 @objc
@@ -37,10 +38,10 @@ final class PSAViewModel: NSObject, ViewModelType {
         case .showPSAViewIfNeeded:
             guard router.isPSAViewAlreadyShown() == false else { return }
             shouldShowView { [weak self] show in
-                guard let self = self, show else { return }
+                guard let self = self, !self.router.isPSAViewAlreadyShown(), show else { return }
                 
                 self.router.start()
-                self.router.psaView()?.viewModel = self
+                self.router.currentPSAView()?.viewModel = self
             }
         case .setPSAViewHidden(let hide):
             router.hidePSAView(hide)
@@ -50,8 +51,11 @@ final class PSAViewModel: NSObject, ViewModelType {
             lastPSAShownTimestampPreference = Date().timeIntervalSince1970
             invokeConfigViewCommandIfNeeded()
             getPSA()
-        case .dismiss(let entity):
-            useCase.markAsSeenForPSA(withIdentifier: entity.identifier)
+        case .openPSAURLString(let urlString):
+            router.openPSAURLString(urlString)
+        case .dimiss(let psaView, let psaEntity):
+            useCase.markAsSeenForPSA(withIdentifier: psaEntity.identifier)
+            router.dismiss(psaView: psaView)
         }
     }
     
@@ -104,7 +108,7 @@ final class PSAViewModel: NSObject, ViewModelType {
         
         if let URLString = psaEntity.URLString, !URLString.isEmpty {
             lastPSAShownTimestampPreference = Date().timeIntervalSince1970
-            dispatch(.dismiss(psaEntity))
+            useCase.markAsSeenForPSA(withIdentifier: psaEntity.identifier)
             router.openPSAURLString(URLString)
         } else {
             invokeCommand?(.configView(psaEntity))
