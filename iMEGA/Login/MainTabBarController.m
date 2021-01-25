@@ -16,10 +16,12 @@
 
 #import "NSObject+Debounce.h"
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
+
+@property (nonatomic, strong) PSAViewModel *psaViewModel;
 
 @end
 
@@ -40,7 +42,9 @@
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController]];
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
-        UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        MEGANavigationController *navigationController = defaultViewControllersMutableArray[i];
+        navigationController.navigationDelegate = self;
+        UITabBarItem *tabBarItem = navigationController.tabBarItem;
         tabBarItem.title = nil;
         tabBarItem.badgeColor = UIColor.clearColor;
         [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
@@ -96,6 +100,7 @@
     [self configurePhoneImageBadge];
 
     self.selectedViewController = homeViewController;
+    [self showPSAViewIfNeeded];
 }
 
 - (void)tapProgressView {
@@ -109,18 +114,27 @@
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
+    
+    if (self.psaViewModel != nil) {
+        [self adjustPSAFrameIfNeededWithPsaViewModel:self.psaViewModel];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(showPSAViewIfNeeded)
+                                               name:UIApplicationWillEnterForegroundNotification
+                                             object:nil];
     [self.view setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -309,6 +323,14 @@
     return [HomeScreenFactory.new createHomeScreenFrom:self];
 }
 
+- (void)showPSAViewIfNeeded {
+    if (self.psaViewModel == nil) {
+        self.psaViewModel = [self createPSAViewModel];
+    }
+    
+    [self showPSAViewIfNeeded:self.psaViewModel];
+}
+
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
@@ -339,5 +361,19 @@
     }
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if (tabBarController.selectedIndex == HOME) {
+        [self showPSAViewIfNeeded];
+    }
+}
+
+#pragma mark - MEGANavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController {
+    if (self.psaViewModel != nil) {
+        [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
+    }
+}
 
 @end
