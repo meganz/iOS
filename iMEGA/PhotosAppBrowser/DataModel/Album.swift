@@ -63,30 +63,26 @@ final class Album: NSObject {
 
 extension Album: PHPhotoLibraryChangeObserver {
     func photoLibraryDidChange(_ changeInstance: PHChange) {
-        if let changeDetails = changeInstance.changeDetails(for: fetchResult) {
-            fetchResult = changeDetails.fetchResultAfterChanges
-            updatedFetchResultsHandler(self)
+        OperationQueue.main.addOperation { [weak self] in
+            guard let self = self else { return }
             
-            if changeDetails.hasIncrementalChanges == false
-                || changeDetails.hasMoves {
-                invokeDelegateDidResetFetchResult()
-            } else {
-                let removedIndexPaths = changeDetails.removedIndexes?.indexPaths(withSection: 0)
-                let insertedIndexPaths = changeDetails.insertedIndexes?.indexPaths(withSection: 0)
-                let changedIndexPaths = changeDetails.changedIndexes?.indexPaths(withSection: 0)
+            if let changeDetails = changeInstance.changeDetails(for: self.fetchResult) {
+                self.fetchResult = changeDetails.fetchResultAfterChanges
+                self.updatedFetchResultsHandler(self)
                 
-                OperationQueue.main.addOperation { [weak self] in
-                    self?.delegate?.didChange(removedIndexPaths: removedIndexPaths,
-                                              insertedIndexPaths: insertedIndexPaths,
-                                              changedIndexPaths: changedIndexPaths)
+                if changeDetails.hasIncrementalChanges == false
+                    || changeDetails.hasMoves {
+                    self.delegate?.didResetFetchResult()
+                } else {
+                    let removedIndexPaths = changeDetails.removedIndexes?.indexPaths(withSection: 0)
+                    let insertedIndexPaths = changeDetails.insertedIndexes?.indexPaths(withSection: 0)
+                    let changedIndexPaths = changeDetails.changedIndexes?.indexPaths(withSection: 0)
+                    
+                    self.delegate?.didChange(removedIndexPaths: removedIndexPaths,
+                                             insertedIndexPaths: insertedIndexPaths,
+                                             changedIndexPaths: changedIndexPaths)
                 }
             }
-        }
-    }
-    
-    private func invokeDelegateDidResetFetchResult() {
-        OperationQueue.main.addOperation { [weak self] in
-            self?.delegate?.didResetFetchResult()
         }
     }
 }
