@@ -407,7 +407,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)showClearChatHistoryConfirmationAlert {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:NSLocalizedString(@"clearChatHistoryConfirmation", @"Message show when the history of a chat has been successfully deleted")];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:NSLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted")];
 }
 
 - (void)showArchiveChatAlertAtIndexPath {
