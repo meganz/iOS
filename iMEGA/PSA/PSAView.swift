@@ -1,10 +1,5 @@
 import UIKit
 
-protocol PSAViewDelegate: AnyObject {
-    func openPSAURLString(_ urlString: String);
-    func dismiss(psaView: PSAView)
-}
-
 final class PSAView: UIView, ViewType {
     
     var viewModel: PSAViewModel! {
@@ -15,9 +10,7 @@ final class PSAView: UIView, ViewType {
             viewModel.dispatch(.onViewReady)
         }
     }
-    
-    weak var delegate: PSAViewDelegate?
-    
+        
     private var psaEntity: PSAEntity? {
         didSet {
             guard let psaEntity = psaEntity else {
@@ -103,24 +96,26 @@ final class PSAView: UIView, ViewType {
     @IBAction func leftButtonTapped(_ sender: UIButton) {
         defer {
             if let positiveButtonLink = psaEntity?.positiveLink, psaEntity?.positiveText != nil {
-                delegate?.openPSAURLString(positiveButtonLink)
+                viewModel.dispatch(.openPSAURLString(positiveButtonLink))
             }
         }
         
-        if let psaEntity = psaEntity {
-            viewModel.dispatch(.dismiss(psaEntity))
+        guard let psaEntity = psaEntity else {
+            MEGALogDebug("PSA Entity was nil")
+            return
         }
         
-        delegate?.dismiss(psaView: self)
+        viewModel.dispatch(.dimiss(psaView: self, psaEntity: psaEntity))
     }
     
     
     @IBAction func rightButtonTapped(_ sender: UIButton) {
-        if let psaEntity = psaEntity {
-            viewModel.dispatch(.dismiss(psaEntity))
+        guard let psaEntity = psaEntity else {
+            MEGALogDebug("PSA Entity was nil")
+            return
         }
         
-        delegate?.dismiss(psaView: self)
+        viewModel.dispatch(.dimiss(psaView: self, psaEntity: psaEntity))
     }
 }
 

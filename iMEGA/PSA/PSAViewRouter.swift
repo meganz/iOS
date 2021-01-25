@@ -1,9 +1,11 @@
 
-protocol PSAViewRouting: PSAViewDelegate, Routing {
-    func psaView() -> PSAView?
+protocol PSAViewRouting: Routing {
+    func currentPSAView() -> PSAView?
     func isPSAViewAlreadyShown() -> Bool
     func adjustPSAViewFrame()
     func hidePSAView(_ hide: Bool)
+    func openPSAURLString(_ urlString: String)
+    func dismiss(psaView: PSAView)
 }
 
 @objc
@@ -17,10 +19,9 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     }
     
     func start() {
-        guard let tabBarController = tabBarController, isPSAViewAlreadyShown() == false else { return }
+        guard let tabBarController = tabBarController else { return }
         
         let psaView = PSAView.instanceFromNib
-        psaView.delegate = self
         psaView.isHidden = true
         tabBarController.view.addSubview(psaView)
         
@@ -37,12 +38,12 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         fatalError("PSA uses view instead of view controller")
     }
 
-    func psaView() -> PSAView? {
+    func currentPSAView() -> PSAView? {
         return tabBarController?.view.subviews.filter { $0 is PSAView }.first as? PSAView
     }
     
     func isPSAViewAlreadyShown() -> Bool {
-        return psaView() != nil
+        return currentPSAView() != nil
     }
     
     func adjustPSAViewFrame() {
@@ -53,11 +54,11 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         }
         
         psaViewBottomConstraint?.constant = -tabBar.bounds.height
-        psaView()?.layoutIfNeeded()
+        currentPSAView()?.layoutIfNeeded()
     }
     
     func hidePSAView(_ hide: Bool) {
-        guard let psaView = psaView(), psaView.isHidden != hide else { return }
+        guard let psaView = currentPSAView(), psaView.isHidden != hide else { return }
         
         if !hide {
             psaView.alpha = 0.0
