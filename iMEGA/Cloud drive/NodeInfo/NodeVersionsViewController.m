@@ -267,7 +267,11 @@
     UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [self removeAction:nil];
     }];
-    removeAction.image = [UIImage imageNamed:@"delete"];
+    if (@available(iOS 13.0, *)) {
+        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    } else {
+        removeAction.image = [UIImage imageNamed:@"delete"];
+    }
     removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     [rightActions addObject:removeAction];
     
