@@ -229,12 +229,11 @@ static NSString *kPath = @"kPath";
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.offline.flavor == AccountScreen) {
-        [self setTableViewEditing:YES animated:YES];
-        return YES;
-    } else {
-        return NO;
-    }
+    return self.offline.flavor == AccountScreen;
+}
+
+- (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:YES animated:YES];
 }
 
 #pragma clang diagnostic push
