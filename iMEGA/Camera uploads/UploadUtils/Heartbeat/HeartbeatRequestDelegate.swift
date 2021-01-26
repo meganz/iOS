@@ -19,12 +19,10 @@ final class HeartbeatRequestDelegate: NSObject, MEGARequestDelegate {
     }
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        DispatchQueue.global(qos: .utility).async {
-            if error.type == .apiOk {
-                self.completion(.success(request))
-            } else {
-                self.completion(.failure(error.toHeartbeatError(backupIdBase64String: type(of: api).base64Handle(forHandle: request.parentHandle) ?? "")))
-            }
+        if error.type == .apiOk {
+            self.completion(.success(request))
+        } else {
+            self.completion(.failure(error.toHeartbeatError(backupIdBase64String: type(of: api).base64Handle(forHandle: request.parentHandle) ?? "")))
         }
     }
 }
