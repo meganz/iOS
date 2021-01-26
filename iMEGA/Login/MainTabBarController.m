@@ -362,9 +362,7 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if (tabBarController.selectedIndex == HOME) {
-        [self showPSAViewIfNeeded];
-    }
+    [self showPSAViewIfNeeded];
 }
 
 #pragma mark - MEGANavigationControllerDelegate
