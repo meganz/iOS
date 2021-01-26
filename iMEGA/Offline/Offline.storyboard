@@ -282,13 +282,6 @@
                                                         <constraint firstAttribute="width" constant="80" id="tEH-fn-zLe"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video_list" translatesAutoresizingMaskIntoConstraints="NO" id="qVA-3B-GrX">
-                                                    <rect key="frame" x="66.5" y="66.5" width="40" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="Q4N-qO-zJ2"/>
-                                                        <constraint firstAttribute="width" constant="40" id="ShQ-Nh-i0M"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkBoxUnselected" translatesAutoresizingMaskIntoConstraints="NO" id="0h8-Vf-dhI">
                                                     <rect key="frame" x="141" y="178" width="24" height="24"/>
                                                     <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -324,13 +317,11 @@
                                                 <constraint firstAttribute="bottom" secondItem="DTM-0d-tuw" secondAttribute="bottom" constant="12" id="3y5-Rz-Hoy"/>
                                                 <constraint firstItem="bvJ-EN-7Kb" firstAttribute="top" secondItem="aWL-Vf-gjZ" secondAttribute="bottom" constant="8" id="4Xi-fm-URM"/>
                                                 <constraint firstItem="Fbv-Sm-jB0" firstAttribute="centerY" secondItem="aWL-Vf-gjZ" secondAttribute="centerY" id="9XI-0o-Rzw"/>
-                                                <constraint firstItem="qVA-3B-GrX" firstAttribute="centerX" secondItem="aWL-Vf-gjZ" secondAttribute="centerX" id="D9y-K9-mZP"/>
                                                 <constraint firstAttribute="trailing" secondItem="DTM-0d-tuw" secondAttribute="trailing" constant="8" id="F9G-2u-qYf"/>
                                                 <constraint firstItem="aWL-Vf-gjZ" firstAttribute="leading" secondItem="fxj-M8-OmD" secondAttribute="leading" id="Gtp-Nb-9Hb"/>
                                                 <constraint firstItem="DTM-0d-tuw" firstAttribute="leading" secondItem="bvJ-EN-7Kb" secondAttribute="trailing" constant="8" id="JwQ-u8-ZG4"/>
                                                 <constraint firstItem="bvJ-EN-7Kb" firstAttribute="leading" secondItem="fxj-M8-OmD" secondAttribute="leading" constant="8" id="Ldk-pp-ZtT"/>
                                                 <constraint firstItem="OYC-jF-vqA" firstAttribute="leading" secondItem="fxj-M8-OmD" secondAttribute="leading" constant="8" id="NAO-Yd-5Td"/>
-                                                <constraint firstItem="qVA-3B-GrX" firstAttribute="centerY" secondItem="aWL-Vf-gjZ" secondAttribute="centerY" id="PLF-Dm-tYr"/>
                                                 <constraint firstAttribute="trailing" secondItem="aWL-Vf-gjZ" secondAttribute="trailing" id="Ucj-mY-mZt"/>
                                                 <constraint firstAttribute="bottom" secondItem="OYC-jF-vqA" secondAttribute="bottom" constant="8" id="Wrx-pp-UMb"/>
                                                 <constraint firstItem="aWL-Vf-gjZ" firstAttribute="top" secondItem="fxj-M8-OmD" secondAttribute="top" id="Yks-nt-wZm"/>
@@ -362,7 +353,6 @@
                                             <outlet property="selectImageView" destination="0h8-Vf-dhI" id="tPI-Xp-tXm"/>
                                             <outlet property="thumbnailIconView" destination="Fbv-Sm-jB0" id="bxp-dL-RKD"/>
                                             <outlet property="thumbnailImageView" destination="aWL-Vf-gjZ" id="JIh-Ue-eWx"/>
-                                            <outlet property="thumbnailPlayImageView" destination="qVA-3B-GrX" id="Qdt-Rx-9iY"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NodeCollectionFolderID" id="xnM-hF-hAz" customClass="NodeCollectionViewCell">
