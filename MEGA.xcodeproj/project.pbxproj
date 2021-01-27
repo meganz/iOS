@@ -1324,6 +1324,7 @@
 		B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */; };
 		B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */; };
+		B69D6B3725C0D211002A96ED /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69D6B3625C0D211002A96ED /* RequestDelegate.swift */; };
 		B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */; };
 		B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */; };
 		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
@@ -3146,6 +3147,7 @@
 		B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundRefreshPerformer.h; sourceTree = "<group>"; };
 		B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundRefreshPerformer.m; sourceTree = "<group>"; };
 		B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSNavigationViewController.swift; sourceTree = "<group>"; };
+		B69D6B3625C0D211002A96ED /* RequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
 		B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewController.swift; sourceTree = "<group>"; };
 		B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SMSVerification.storyboard; sourceTree = "<group>"; };
 		B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAError+MNZCategory.h"; sourceTree = "<group>"; };
@@ -6981,6 +6983,7 @@
 				5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */,
 				8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */,
 				8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */,
+				B69D6B3625C0D211002A96ED /* RequestDelegate.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -9499,6 +9502,7 @@
 				5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				5D568207252FEA8C00FE7F9C /* Aggregatable.swift in Sources */,
+				B69D6B3725C0D211002A96ED /* RequestDelegate.swift in Sources */,
 				BF7EBD34244FA92B0015255F /* AddToChatCameraCollectionCell.swift in Sources */,
 				BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */,
 				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
