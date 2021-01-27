@@ -32,4 +32,10 @@ extension String {
     func append(pathComponent: String) -> String {
         return URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
     }
+    
+    func calculateWidth(usingFont font: UIFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.width
+    }
 }
