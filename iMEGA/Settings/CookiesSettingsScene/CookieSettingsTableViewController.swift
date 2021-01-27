@@ -70,10 +70,10 @@ class CookieSettingsTableViewController: UITableViewController {
     func executeCommand(_ command: CookieSettingsViewModel.Command) {
         switch command {
         case .configCookieSettings(let cookiesBitmap):
-            preferenceCookiesSwitch.setOn(cookiesBitmap.contains(.preference), animated: true)
-            performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: true)
-            advertisingCookiesSwitch.setOn(cookiesBitmap.contains(.ads), animated: true)
-            thirdPartyCookiesSwitch.setOn(cookiesBitmap.contains(.thirdparty), animated: true)
+            preferenceCookiesSwitch.setOn(cookiesBitmap.contains(.preference), animated: false)
+            performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
+            advertisingCookiesSwitch.setOn(cookiesBitmap.contains(.ads), animated: false)
+            thirdPartyCookiesSwitch.setOn(cookiesBitmap.contains(.thirdparty), animated: false)
             
             acceptCookiesSwitch.isOn = preferenceCookiesSwitch.isOn && performanceAndAnalyticsSwitch.isOn && advertisingCookiesSwitch.isOn && thirdPartyCookiesSwitch.isOn
         

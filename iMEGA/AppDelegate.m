@@ -675,8 +675,8 @@
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
     if ([type isEqualToString:@"mega.ios.search"]) {
-        self.mainTBC.selectedIndex = HOME;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:HOME];
+        self.mainTBC.selectedIndex = TabTypeHome;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeHome];
         HomeViewController *homeVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -690,8 +690,8 @@
         
         
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
-        self.mainTBC.selectedIndex = CLOUD;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
+        self.mainTBC.selectedIndex = TabTypeCloudDrive;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
@@ -804,15 +804,15 @@
     NSUInteger tabTag = 0;
     switch (self.megatype) {
         case 1:
-            tabTag = SHARES;
+            tabTag = TabTypeSharedItems;
             break;
             
         case 2:
-            tabTag = CHAT;
+            tabTag = TabTypeChat;
             break;
             
         case 3:
-            tabTag = HOME;
+            tabTag = TabTypeHome;
             break;
             
         default:

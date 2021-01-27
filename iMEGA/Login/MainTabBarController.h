@@ -2,11 +2,7 @@
 
 #import "MEGASdkManager.h"
 
-static NSInteger const CLOUD        = 0;
-static NSInteger const PHOTOS       = 1;
-static NSInteger const HOME         = 2;
-static NSInteger const CHAT         = 3;
-static NSInteger const SHARES       = 4;
+@class Tab;
 
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 

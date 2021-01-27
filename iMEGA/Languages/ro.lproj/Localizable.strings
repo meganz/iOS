@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Te rugăm să încerci să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Cele mai vechi";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Alege";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturează";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Există deja un folder cu același nume";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="Scanarea de documente nu este disponibilă";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Există deja un fișier cu același nume";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politica de confidențialitate";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie Policy";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie Settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="Cod de acces simplu";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Șterge datele locale";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Deconectează-te și șterge datele locale după 10 încercări eșuate pentru codul de acces";
 /* Menu item */
 "help"="Ajutor";
@@ -1020,7 +1024,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradează contul";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="Gestionează contul";
 /*  */
 "chooseYourAccountType"="Alege tipul contului tău";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1046,11 +1050,11 @@
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan actual:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="Planul actual";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="Upgradează la un plan personalizat";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un plan personalizat";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
 /* Header shown to help on the purchasin process */
@@ -1110,7 +1114,7 @@
 /* Empty Gifs section */
 "No GIFs found"="Niciun GIF găsit";
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"This message has reached the maximum limit of %d reactions."="This message has reached the maximum limit of %d reactions.";
+"This message has reached the maximum limit of %d reactions."="Acest mesaj a atins limita maximă de %d reacții.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
 /* Chat section header */
@@ -1288,7 +1292,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cotă de transfer insuficientă";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Descărcarea în coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.";
+"depletedTransferQuota_message"="Descărcarea din coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Vezi planurile";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1535,7 +1539,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Continuă pentru a te deconecta";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to log out, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="Ești pe cale să te deconectezi, te rugăm să îți testezi parola pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale MEGA.";
 /* state previous to import a file */
 "loading"="Se încarcă...";
 /*   */
@@ -1747,7 +1751,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Se salvează în Poze…";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="Se pregătește partajarea……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvat(ă) în Poze";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2069,7 +2073,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partajează cu";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Contact your business account administrator to resolve the issue and activate your account."="Contactează administratorul contului business pentru a rezolva problema și pentru a-ți activa contul.";
+"Contact your business account administrator to resolve the issue and activate your account."="Contactează administratorul contului business pentru a rezolva problema și a-ți activa contul.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
 "Until this morning"="Până în această dimineață";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
@@ -2179,13 +2183,13 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Transfer peste cotă";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Șterge elementele selectate";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Pause All";
+"Pause All"="Pune pe pauză toate";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Reia toate";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Șterge toate";
 /* Alert header for asking permission to resume transfers*/
@@ -2218,8 +2222,10 @@
 "Message..."="Scrie un mesaj…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Trage în stânga pentru a anula, eliberează pentru a trimite";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Înfățișare";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Interfața utilizatorului";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mod de sortare și vizualizare";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="Noapte";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Aspect";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Pictograma aplicației";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configurează ordinea de sortare și modul de vizualizare implicit (listă sau miniaturi).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2395,7 +2405,7 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail trimis deja. Te rugăm să aștepți câteva minute înainte de a încerca din nou.";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="SHARE";
+"SHARE"="PARTAJEAZĂ";
 /* Search placeholder text in search bar on home screen*/
 "Search Your Files"="Caută fișiere";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2441,8 +2451,40 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Do you want to share the password for this link?";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="mesaj trimis";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="eșec la trimiterea mesajului";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="s-a anulat trimiterea mesajului";
+/* Cookie dialog header */
+"Before You Continue"="Before You Continue";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+/* Cookie dialog button label. */
+"Accept Cookies"="Accept Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Essential Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Preference Cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Advertising Cookies";
+/* Cookie settings dialog text. */
+"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Third Party Cookies";
+/* Cookie settings dialog text. */
+"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More information"="More information";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";
