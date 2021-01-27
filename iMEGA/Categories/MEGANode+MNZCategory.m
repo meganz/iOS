@@ -45,11 +45,11 @@
     MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
     
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
-        mainTBC.selectedIndex = SHARES;
-        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
+        mainTBC.selectedIndex = TabTypeSharedItems;
+        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[TabTypeSharedItems].childViewControllers.firstObject;
         [sharedItemsVC selectSegment:0]; // Incoming
     } else {
-        mainTBC.selectedIndex = CLOUD;
+        mainTBC.selectedIndex = TabTypeCloudDrive;
     }
     
     UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];

@@ -126,7 +126,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         playingCell = audioCell
         playingMessage = message
         
-        audioCell.waveView.wml_startAnimating()
+        audioCell.waveView.startAnimating()
         audioPlayer = player
         audioPlayer?.prepareToPlay()
         audioPlayer?.delegate = self
@@ -160,7 +160,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         setProximitySensorEnabled(false)
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
-            audioCell.waveView.wml_stopAnimating()
+            audioCell.waveView.stopAnimating()
         }
     }
 
@@ -173,7 +173,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             guard let audioCell = cell as? ChatVoiceClipCollectionViewCell else {
                 return
             }
-            audioCell.waveView.wml_stopAnimating()
+            audioCell.waveView.stopAnimating()
             
             cell.progressView.progress = 0.0
             cell.playButton.isSelected = false
@@ -203,12 +203,12 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         startProgressTimer()
         cell.playButton.isSelected = true // show pause button on audio cell
         cell.delegate?.didStartAudio(in: cell)
-        cell.waveView.wml_startAnimating()
+        cell.waveView.startAnimating()
     }
 
     // MARK: - Fire Methods
     @objc private func didFireProgressTimer(_ timer: Timer) {
-        guard let player = audioPlayer, let collectionView = messageCollectionView, let cell = playingCell else {
+        guard let player = audioPlayer, let collectionView = messageCollectionView, let cell = playingCell as? ChatVoiceClipCollectionViewCell else {
             return
         }
         // check if can update playing cell
@@ -224,6 +224,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
                     fatalError("MessagesDisplayDelegate has not been set.")
                 }
                 cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.currentTime), for: cell, in: collectionView)
+                cell.waveView.startAnimating()
             } else {
                 // if the current message is not the same with playing message stop playing sound
                 stopAnyOngoingPlaying()

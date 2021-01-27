@@ -25,7 +25,9 @@ def injectEnvironments(Closure body) {
 
 pipeline {
    agent any
-
+   options {
+        timeout(time: 3, unit: 'HOURS') 
+   }
    stages {
       stage('Submodule update') {
          steps {

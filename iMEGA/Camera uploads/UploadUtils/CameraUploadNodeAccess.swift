@@ -101,12 +101,12 @@ final class CameraUploadNodeAccess: NSObject {
         
         nodeAccessSemaphore.wait()
         
-        sdk.setCameraUploadsFolderWithHandle(node.handle, delegate: MEGAGenericRequestDelegate { request, error in
-            switch error.type {
-            case .apiOk:
+        sdk.setCameraUploadsFolderWithHandle(node.handle, delegate: RequestDelegate { result in
+            switch result {
+            case .success:
                 self.handle = node.handle
                 completion?(node, nil)
-            default:
+            case .failure(let error):
                 completion?(nil, error)
             }
             

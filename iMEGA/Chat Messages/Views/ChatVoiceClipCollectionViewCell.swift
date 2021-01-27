@@ -14,17 +14,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     }()
     
     open var waveView: UIImageView = {
-
-        var imageData:[UIImage] = []
-        for i in 0...59 {
-            let name = "waveform_000\(i)"
-            guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate) else {
-                return UIImageView()
-            }
-            imageData.append(data)
-        }
         let waveView = UIImageView(image: UIImage(named: "waveform_0000"))
-        waveView.animationImages = imageData
         waveView.animationDuration = 1
         waveView.frame = CGRect(x: 0, y: 0, width: 42, height: 25)
         return waveView
@@ -94,7 +84,16 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         messageContainerView.tintColor = textColor
         durationLabel.textColor = textColor
         progressView.trackTintColor = .lightGray
-        waveView.tintColor = textColor
+        var imageData:[UIImage] = []
+        for i in 0...59 {
+            let name = "waveform_000\(i)"
+            guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate).byTintColor(textColor) else {
+                return
+            }
+            imageData.append(data)
+        }
+        waveView.animationImages = imageData
+        
         loadingIndicator.color = textColor
         
         if chatMessage.transfer != nil {
