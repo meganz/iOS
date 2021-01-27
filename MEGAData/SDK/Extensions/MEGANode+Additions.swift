@@ -52,7 +52,7 @@ extension MEGANode {
             return nil
         }
         
-        var path = filePath(in: sdk, withDelimiter: delimiter, excludingRootFolder: true, excludingFileName: true)
+        var path = filePath(in: sdk, withDelimiter: delimiter, excludingRootFolder: !isInShare(), excludingFileName: true)
         
         guard !path.isEmpty else {
             return filePath(in: sdk, withDelimiter: delimiter, excludingFileName: true)
@@ -64,16 +64,17 @@ extension MEGANode {
             return path
         }
         
-        path = "\(delimiter) ... \(delimiter) \(parentName)"
-        totalWidthRequired = path.calculateWidth(usingFont: font)
-        
-        guard totalWidthRequired > maxAvailableWidth, parentName.count > 6 else {
-            return path
+        if !isInShare() {
+            path = "\(delimiter) ... \(delimiter) \(parentName)"
+            totalWidthRequired = path.calculateWidth(usingFont: font)
+            
+            guard totalWidthRequired > maxAvailableWidth, parentName.count > 6 else {
+                return path
+            }
         }
         
         let firstThreeLettersOfFileName = String(parentName[...parentName.index(parentName.startIndex, offsetBy: 2)])
         let lastThreeLettersOfFileName = String(parentName[parentName.index(parentName.endIndex, offsetBy: -3)...])
-        
         
         switch numberOfLevelsFromRootNode(in: sdk) {
         case 0:
