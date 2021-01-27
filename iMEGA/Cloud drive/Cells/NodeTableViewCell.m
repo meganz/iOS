@@ -236,6 +236,7 @@
 }
 
 - (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
+    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;
     }
