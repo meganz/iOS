@@ -7,6 +7,35 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Default Tab Table View Controller-->
+        <scene sceneID="faI-Bl-9g5">
+            <objects>
+                <tableViewController id="bST-eZ-4ZW" customClass="DefaultTabTableViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="IXC-Hd-SlD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewCell" id="EOT-Xu-68c">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EOT-Xu-68c" id="x9K-bE-KkQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bST-eZ-4ZW" id="AX4-Dm-ovL"/>
+                            <outlet property="delegate" destination="bST-eZ-4ZW" id="z8t-ID-dcR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="OOf-wp-acI"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pjF-iJ-cyd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-426" y="-3762"/>
+        </scene>
         <!--Sorting And View Mode Table View Controller-->
         <scene sceneID="XKI-OJ-FHc">
             <objects>
@@ -218,6 +247,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
+                            <tableViewSection headerTitle="LAUNCH" footerTitle="Show Home section when you launch the app." id="4ss-Dc-j21" userLabel="Launch">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="iCr-pu-7zH" detailTextLabel="LfL-yV-hes" style="IBUITableViewCellStyleValue1" id="De6-CW-7ee" userLabel="Default Tab Table View Cell">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="De6-CW-7ee" id="T02-gS-Vh8">
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Default Tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iCr-pu-7zH" userLabel="Default Tab Label">
+                                                    <rect key="frame" x="16" y="12" width="87" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LfL-yV-hes" userLabel="Default Tab Detail Label">
+                                                    <rect key="frame" x="294.5" y="12" width="45.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                        <connections>
+                                            <segue destination="bST-eZ-4ZW" kind="show" id="Vcf-eV-dpt"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Layout" footerTitle="Configure sorting order and the default view (List or Thumbnail)" id="Ok0-4q-E92">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Uba-ld-RVV" style="IBUITableViewCellStyleDefault" id="coT-zR-7SR" userLabel="Sorting and view mode Table View Cell">
@@ -539,6 +600,8 @@
                         <outlet property="defaultIconButton" destination="Ym4-wo-imA" id="Nrx-JY-aG2"/>
                         <outlet property="defaultIconContainerView" destination="xsZ-wr-12w" id="w66-6n-yFL"/>
                         <outlet property="defaultIconLabel" destination="pdu-4e-JgB" id="7fJ-36-fPm"/>
+                        <outlet property="defaultTabDetailLabel" destination="LfL-yV-hes" id="mcW-wI-Igp"/>
+                        <outlet property="defaultTabLabel" destination="iCr-pu-7zH" id="hRp-bh-jXN"/>
                         <outlet property="minimalIconButton" destination="AtM-IH-gAt" id="Abj-9U-qMc"/>
                         <outlet property="minimalIconContainerView" destination="eVc-mM-5zu" id="pcj-uQ-2d5"/>
                         <outlet property="minimalIconLabel" destination="0lY-Pw-1xK" id="YVY-nC-EeQ"/>

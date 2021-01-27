@@ -4,4 +4,5 @@ enum PreferenceKeyEntity: String {
     case dontShowAgainAddPhoneNumber
     case backupHeartbeatRegistrationId
     case lastPSAShownTimestamp
+    case launchTab
 }

@@ -187,7 +187,7 @@
 /* */
 "folderLinkUnavailableText4"="The folder link has been disabled by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="No internet connection";
+"noInternetConnection"="No Internet connection";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Empty Folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -2222,8 +2222,10 @@
 "Message..."="Message…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="User Interface";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorting And View Mode";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2234,10 +2236,14 @@
 "Night"="Night";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Layout";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2449,7 +2455,7 @@
 /* Accessibility message when a message sending fails in chat */
 "failed to send the message"="failed to send the message";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled" = "message sending cancelled";
+"message sending cancelled"="message sending cancelled";
 /* Cookie dialog header */
 "Before You Continue"="Before You Continue";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */

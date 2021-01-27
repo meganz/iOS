@@ -49,27 +49,7 @@
         tabBarItem.badgeColor = UIColor.clearColor;
         [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
-        switch (i) {
-            case CLOUD:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-                break;
-                
-            case PHOTOS:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-                break;
-                
-            case CHAT:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"chat", @"Chat section header");
-                break;
-                
-            case SHARES:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
-                break;
-                
-            case HOME:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"Home", @"Accessibility label of Home section in tabbar item");
-                break;
-        }
+        tabBarItem.accessibilityLabel = [[Tab alloc] initWithTabType:i].title;
     }
     
     self.viewControllers = defaultViewControllersMutableArray;
@@ -98,8 +78,8 @@
     
     [self setBadgeValueForChats];
     [self configurePhoneImageBadge];
-
-    self.selectedViewController = homeViewController;
+    
+    self.selectedViewController = [defaultViewControllersMutableArray objectAtIndex:[TabManager getPreferenceTab].tabType];
     [self showPSAViewIfNeeded];
 }
 
@@ -194,8 +174,8 @@
 
 - (void)openChatRoomNumber:(NSNumber *)chatNumber {
     if (chatNumber) {
-        self.selectedIndex = CHAT;
-        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+        self.selectedIndex = TabTypeChat;
+        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
         
         UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
@@ -210,8 +190,8 @@
 }
 
 - (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatID {
-    self.selectedIndex = CHAT;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    self.selectedIndex = TabTypeChat;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
     ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
 
     UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
@@ -229,36 +209,36 @@
         return;
     }
 
-    self.selectedIndex = HOME;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
+    self.selectedIndex = TabTypeHome;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showAchievements];
 }
 
 - (void)showOffline {
-    self.selectedIndex = HOME;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
+    self.selectedIndex = TabTypeHome;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showOfflines];
 }
 
 - (void)showUploadFile {
-    self.selectedIndex = CLOUD;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    self.selectedIndex = TabTypeCloudDrive;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
     CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
     [cloudDriveVC presentUploadAlertController];
 }
 
 - (void)showScanDocument {
-    self.selectedIndex = CLOUD;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    self.selectedIndex = TabTypeCloudDrive;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
     CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
     [cloudDriveVC presentScanDocument];
 }
 
 - (void)showStartConversation {
-    self.selectedIndex = CHAT;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    self.selectedIndex = TabTypeChat;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
     ChatRoomsViewController *chatRoomsViewController = navigationController.viewControllers.firstObject;
     [chatRoomsViewController showStartConversation];
 }
@@ -298,7 +278,7 @@
     } else {
         badgeValue = unreadChats ? @"⦁" : nil;
     }
-    [self setBadgeValue:badgeValue tabPosition:CHAT];
+    [self setBadgeValue:badgeValue tabPosition:TabTypeChat];
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
