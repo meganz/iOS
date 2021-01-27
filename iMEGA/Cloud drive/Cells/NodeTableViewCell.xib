@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -143,7 +143,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="oBe-Z8-tyL">
-                                <rect key="frame" x="62" y="33" width="44" height="15"/>
+                                <rect key="frame" x="62" y="33" width="257" height="15"/>
                                 <subviews>
                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="versioned" translatesAutoresizingMaskIntoConstraints="NO" id="hKh-6E-mfl">
                                         <rect key="frame" x="-12" y="1.5" width="12" height="12"/>
@@ -153,7 +153,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtP-ek-nrg">
-                                        <rect key="frame" x="0.0" y="0.5" width="44" height="14.5"/>
+                                        <rect key="frame" x="0.0" y="0.5" width="257" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -176,7 +176,7 @@
                             <constraint firstItem="NEJ-77-LUr" firstAttribute="top" secondItem="Vdr-45-fGF" secondAttribute="top" constant="10" id="hR2-lh-9XK"/>
                             <constraint firstItem="7fy-Dd-TmU" firstAttribute="leading" secondItem="NEJ-77-LUr" secondAttribute="trailing" constant="10" id="iIN-GR-da9"/>
                             <constraint firstItem="oBe-Z8-tyL" firstAttribute="top" secondItem="7fy-Dd-TmU" secondAttribute="bottom" constant="3" id="rSh-0c-ot5"/>
-                            <constraint firstItem="OhI-W3-En8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oBe-Z8-tyL" secondAttribute="trailing" constant="10" id="utx-dZ-bFM"/>
+                            <constraint firstItem="OhI-W3-En8" firstAttribute="leading" secondItem="oBe-Z8-tyL" secondAttribute="trailing" constant="10" id="utx-dZ-bFM"/>
                             <constraint firstAttribute="bottom" secondItem="NEJ-77-LUr" secondAttribute="bottom" constant="9.5" id="vxV-fK-9st"/>
                         </constraints>
                     </view>
