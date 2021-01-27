@@ -39,14 +39,16 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
     
     // MARK: - Load from remote
     private func loadNodeFromRemote() {
-        sdk.getCameraUploadsFolder(with: MEGAGenericRequestDelegate { [weak self] request, error in
-            switch error.type {
-            case .apiOk:
+        sdk.getCameraUploadsFolder(with: RequestDelegate { [weak self] result in
+            switch result {
+            case .success(let request):
                 self?.validateLoadedHandle(request.nodeHandle)
-            case .apiENoent:
-                self?.checkLocalCacheForBackwardsCompatibility()
-            default:
-                self?.finishOperation(node: nil, error: error)
+            case .failure(let error):
+                if error.type == .apiENoent {
+                    self?.checkLocalCacheForBackwardsCompatibility()
+                } else {
+                    self?.finishOperation(node: nil, error: error)
+                }
             }
         })
     }
@@ -97,11 +99,11 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
         }
         
         let name = NSLocalizedString("cameraUploadsLabel", comment: "Name of the auto-generated Camera Upload folder")
-        sdk.createFolder(withName: name, parent: parent, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
-            switch error.type {
-            case .apiOk:
+        sdk.createFolder(withName: name, parent: parent, delegate: RequestDelegate { [weak self] result in
+            switch result {
+            case .success(let request):
                 self?.setCameraUploadTargetFolder(forHandle: request.nodeHandle)
-            default:
+            case .failure(let error):
                 self?.finishOperation(node: nil, error: error)
             }
         })
@@ -109,12 +111,12 @@ final class CameraUploadNodeLoadOperation: MEGAOperation {
     
     // MARK: - Set a node handle to be the target folder
     private func setCameraUploadTargetFolder(forHandle handle: NodeHandle) {
-        sdk.setCameraUploadsFolderWithHandle(handle, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
-            switch error.type {
-            case .apiOk:
+        sdk.setCameraUploadsFolderWithHandle(handle, delegate: RequestDelegate { [weak self] result in
+            switch result {
+            case .success:
                 self?.validateLoadedHandle(handle)
                 self?.clearLocalCache()
-            default:
+            case .failure(let error):
                 self?.finishOperation(node: nil, error: error)
             }
         })
