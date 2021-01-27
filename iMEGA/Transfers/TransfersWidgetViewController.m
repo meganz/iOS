@@ -923,6 +923,9 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)pauseTransfer:(MEGATransfer *)transfer {
     NSIndexPath *oldIndexPath = [self indexPathForPendingTransfer:transfer];
+    if (!transfer) {
+        return;
+    }
     [self.transfers replaceObjectAtIndex:oldIndexPath.row withObject:transfer];
     
     [self.tableView reloadData];
