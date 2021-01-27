@@ -39,7 +39,7 @@ extension CustomModalAlertViewController {
                 let cookieSettingsFactory = CookieSettingsFactory()
                 let cookieSettingsNC = cookieSettingsFactory.createCookieSettingsNC()
                 
-                UIApplication.mnz_visibleViewController().navigationController?.present(cookieSettingsNC, animated: true, completion: nil)
+                UIApplication.mnz_presentingViewController().navigationController?.present(cookieSettingsNC, animated: true, completion: nil)
             })
         }
     }
