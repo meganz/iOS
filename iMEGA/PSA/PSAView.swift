@@ -41,7 +41,7 @@ final class PSAView: UIView, ViewType {
                 rightButton.isHidden = true
             }
             
-            closeButton.setTitle(NSLocalizedString("close", comment: ""), for: .normal)
+            closeButton.setTitle(NSLocalizedString("dismiss", comment: ""), for: .normal)
             setupView(with: traitCollection)
             sizeToFit()
         }
