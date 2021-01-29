@@ -77,7 +77,13 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     // MARK:- PSAViewDelegate
     
     func openPSAURLString(_ urlString: String) {
-        NSURL(string: urlString)?.mnz_presentSafariViewController()
+        guard let url = URL(string: urlString) else {
+            MEGALogDebug("The url \(urlString) could not be opened")
+            return
+        }
+        
+        MEGALinkManager.linkURL = url
+        MEGALinkManager.processLinkURL(url)
     }
     
     func dismiss(psaView: PSAView) {
