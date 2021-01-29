@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Oudste";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Kies";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Vastleggen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="Geen email account ingesteld op uw device";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Privacybeleid";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie beleid";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie-instellingen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Algemene Voorwaarden";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="Simpel Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Uitloggen en lokale gegevens wissen na 10 mislukte passcode pogingen";
 /* Menu item */
 "help"="Help";
@@ -2218,8 +2222,10 @@
 "Message..."="Bericht..";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Sleep naar links om te annuleren, laat los om te verzenden";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Verschijning";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Gebruikers Interface";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorteer- en Weergavemodus";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="Nacht";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimaal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Indeling";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Applicatie-pictogram";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configureer de sorteervolgorde en de standaardweergave (Lijst of Miniatuur).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="kon het bericht niet verzenden";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="verzenden van berichten geannuleerd";
+/* Cookie dialog header */
+"Before you continue"="Voordat U verder gaat";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We gebruiken cookies en vergelijkbare technologieën (‘Cookies’) om u onze diensten aan te bieden, uw ervaring met onze diensten te verbeteren en de advertenties die u ziet aan te passen, ook via derden. Accepteer ons gebruik van cookies vanaf het begin van uw bezoek of pas cookies aan in Cookie-instellingen. Lees meer in ons [A]Cookiebeleid[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Accepteer cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Essentiële Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essentieel om u belangrijke functionaliteit en veilige toegang tot onze diensten te bieden. Om deze reden hebben ze geen toestemming nodig.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Voorkeur cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Sta ons toe om bepaalde weergave- en opmaakinstellingen die u kiest te onthouden. Als u deze cookies niet accepteert, kunnen we sommige dingen niet voor u onthouden, zoals uw favoriete schermindeling.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Prestatie- en Analyse Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help ons te begrijpen hoe u onze services gebruikt en verstrek ons ​​gegevens die we kunnen gebruiken om verbeteringen aan te brengen. Als u deze cookies niet accepteert, hebben we minder gegevens tot onze beschikking om het ontwerp te verbeteren.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Advertentie Cookies";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Gebruikt door ons en onze goedgekeurde advertentiepartners om de advertenties die u op onze diensten en op andere websites ziet, aan te passen op basis van uw browsegeschiedenis. Als u deze Cookies niet accepteert, kunnen we advertenties laten zien die minder relevant zijn.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Cookies van derden";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Dit zijn cookies die worden beheerd door iemand anders dan wij; we gebruiken deze Cookies om de soorten functionaliteit te bieden die hierboven zijn beschreven. Het niet accepteren van deze Cookies heeft verschillende gevolgen, afhankelijk van het type Cookie dat elke Cookie van een derde partij is. Klik op ‘Meer informatie’ hieronder voor details over alle Cookies van derden die we gebruiken.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Meer Informatie";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

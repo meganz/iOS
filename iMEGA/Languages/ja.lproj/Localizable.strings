@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="古いものから";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="選ぶ";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="キャプチャ";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="デバイス上にメールアカウントなし";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="プライバシーポリシー";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="クッキーポリシー";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="クッキーの設定";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="利用規約";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="シンプルなパスコード";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを消去";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
 /* Menu item */
 "help"="ヘルプ";
@@ -2218,8 +2222,10 @@
 "Message..."="メッセージ…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="左にドラッグしてキャンセルし、離して送信します";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="外観";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="ユーザーインターフェイス";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="並べ替えと表示モード";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="夜";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="最小";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="レイアウト";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="アプリアイコン";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="並べ替え順序とデフォルトビュー（リストまたはサムネイル）を構成します。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="メッセージの送信に失敗しました";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="メッセージの送信がキャンセルされました";
+/* Cookie dialog header */
+"Before you continue"="続行する前に";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="当社は、クッキーおよび同様のテクノロジー（「クッキー」）を使用して、お客様にサービスをご提供し、当社サービスのエクスペリエンスを向上させ、サードパーティを介して表示される広告を含め、お客様がご覧になる広告をカスタマイズいたします。ご訪問の最初から当社によるクッキーの使用を受け入れるか、クッキーの設定でクッキーをカスタマイズしてください。詳細については、当社の[A]クッキーポリシー[/A]をご覧ください。";
+/* Cookie dialog button label. */
+"Accept Cookies"="クッキーを受け入れる";
+/* Cookie settings dialog text. */
+"Essential Cookies"="必須クッキー";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="必須クッキーは、重要な機能と当社サービスへの安全なアクセスをご提供するのに不可欠なクッキーです。このため、同意は必要ありません。";
+/* Cookie settings dialog text. */
+"Preference Cookies"="お好みのクッキー";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="ご選択された特定の表示とフォーマット設定を当社が覚えておけるようにするクッキーです。これらのクッキーを受け入れない場合、ご希望の画面レイアウトなど、当社は覚えておくことができません。";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="パフォーマンスとアナリティクスのクッキー";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="お客様が当社サービスをどのようにご使用になられているのかを理解し、改善に使用できるデータをご提供いただくのに役立つクッキーです。これらのクッキーを受け入れない場合、当社が設計を改善するのに役立つデータが少なくなります。";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="広告クッキー";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="当社および当社が承認した広告パートナーが、閲覧履歴に基づいて、当社サービスおよび他のウェブサイトに表示される広告をカスタマイズするために使用いたします。これらのクッキーを受け入れない場合、関連性の低い広告が表示される可能性があります。";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="サードパーティのクッキー";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="これらは、当社以外の者が管理するクッキーです。これらのクッキーを使用して、上記の種類の機能をご提供いたします。これらのクッキーを受け入れない場合、各サードパーティのクッキーの種類に応じて異なる影響が生じます。当社が使用するサードパーティの全クッキーの詳細については、以下の「詳細情報」をクリックしてください。";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="詳細情報";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

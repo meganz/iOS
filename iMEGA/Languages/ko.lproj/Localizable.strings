@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="오래된 순";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="선택";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="캡쳐";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="개인정보 보호정책";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="쿠키 정책";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="쿠키 설정";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="단순 암호";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="비밀번호를 10번 틀리면 로그아웃하고 로컬 데이터를 삭제";
 /* Menu item */
 "help"="도움말";
@@ -2218,8 +2222,10 @@
 "Message..."="메시지...";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="외관";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="유저 인터페이스";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="정렬과 보기 모드";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="밤";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="최소";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="레이아웃";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="앱 아이콘";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="메시지 발송 실패";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="메시지 발송 취소";
+/* Cookie dialog header */
+"Before you continue"="진행하기 전에";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="우리는 당신에게 서비스를 제공하고, 당신의 경험을 향상시키고 제3자를 통한 것을 포함하여, 당신이 보는 광고를 개인화하기 위하여 쿠키 그리고 이와 유사한 기술 (‘쿠키’)를 사용합니다. 방문 초기에 우리의 쿠키 사용에 동의하거나 쿠키 설정에서 쿠키를 개인화 할 수 있습니다. 자세한 내용은 우리의 [A]쿠키 정책[/A]에서 읽어보세요.";
+/* Cookie dialog button label. */
+"Accept Cookies"="쿠키 허용";
+/* Cookie settings dialog text. */
+"Essential Cookies"="필수 쿠키";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="필수 사항은 우리 서비스에 대한 안전한 접근과 중요한 기능을 제공하기 위함입니다. 이러한 이유로, 동의가 필요하지 않습니다.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="선호 사항 쿠키";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="당신이 선택한 어떠한 표기나 형식 설정을 기억하도록 허용합니다. 이 쿠키를 허용하지 않으면 당신이 선호하는 화면 배치 등을 저장할 수 없습니다.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="성능과 분석 쿠키";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="당신이 우리의 서비스를 어떻게 이용하는지 이해하도록 돕고 우리가 향상시킬 수 있도록 데이터를 제공해주세요. 이 쿠키를 허용하지 않는다면 설계를 향상시킬 수 있는 데이터가 우리에게 덜 제공됩니다.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="광고 쿠키";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="당신의 브라우징 기록을 우리 또는 우리의 승인된 광고 파트너들이 활용하여 당신이 우리 서비스와 다른 웹사이트에서 보는 광고를 개인화 하도록 합니다. 이 쿠키를 허용하지 않는다면 덜 관련있는 광고를 보게 됩니다.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="제3자 쿠키";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="이것들은 우리가 아닌 다른 이들에 의해 통제되는 쿠키입니다; 우리는 위에 설명한 기능 유형들을 제공하기 위해 이 쿠키를 사용합니다. 이 쿠키를 허용하지 않는다면 각 제3자 쿠키가 어떤 것이냐에 따라 서로 다른 영향을 받게 됩니다. 우리가 사용하는 제3자 쿠키가 어떤 것인지 자세히 보려면 ‘자세한 정보’를 클릭하세요.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="자세한 정보";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

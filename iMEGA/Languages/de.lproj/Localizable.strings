@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Älteste";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Auswahl";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Aufnehmen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="Auf Ihrem Gerät ist kein E-Mail-Account eingerichtet";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Datenschutzerklärung";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie-Richtlinien";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie-Einstellungen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Allgemeinen Geschäftsbedingungen zu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="Einfacher Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
 /* Menu item */
 "help"="Hilfe";
@@ -2218,8 +2222,10 @@
 "Message..."="Message…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Benutzeroberfläche";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorting And View Mode";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="Night";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Layout";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="failed to send the message";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="message sending cancelled";
+/* Cookie dialog header */
+"Before you continue"="Moment!";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Wir verwenden Cookies und verwandte Technologien (‘Cookies’) zur technischen Realisierung unserer Dienstleistungen, zu deren komfortableren Nutzung und um Ihnen passende Werbung anzuzeigen. Sie können die Nutzung von Cookies durch uns generell gestatten oder detailliert konfigurieren. Weitere Informationen in unseren [A]Cookie-Richtlinien[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Cookies akzeptieren";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Cookies für Grundfunktionalität";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essentiell für die Bereitstellung unserer Dienstleistungen. Diese sind immer aktiv.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Cookies für Benutzereinstellungen";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Anzeige- und Fomatierungseinstellungen. Diese gehen ohne diese Cookies verloren, wenn Sie den Browser schließen.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Performance/Analytics-Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Sie können uns dabei helfen, unsere Produkte zu verbessern, indem Sie diese Cookies zulassen.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Cookies zu Werbezwecken";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Sie erlauben uns und unseren akkreditierten Werbepartnern, bei uns und bei Drittanbietern Werbung einzublenden, die Sie wahrscheinlich interessiert. Sollten Sie diese Cookies deaktivieren, wird die angezeigte Werbung für Sie weniger relevant.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Cookies von Drittanbietern";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Diese Cookies werden von Drittanbietern kontrolliert - wir nutzen sie, um die beschriebene Leistung zu erbringen. Die Deaktivierung dieser Cookies hat anbieterspezifische Konsequenzen. Klicken Sie auf “Weitere Informationen”, um Details zu allen von uns verwendeten Drittanbietercookies zu erhalten.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Weitere Informationen";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

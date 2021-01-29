@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="старейшие";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Выберите";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Съёмка";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="На вашем устройстве не найдено ни одной учётной записи с адресом эл. почты";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Политика использования файлов cookie";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Настройки куки";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия предоставления услуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="Простой код доступа";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Удалить локальные данные";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля";
 /* Menu item */
 "help"="Помощь";
@@ -2218,8 +2222,10 @@
 "Message..."="Сообщение…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Передвиньте влево для отмены, отпустите для отправки";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Отображение";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Пользовательский интерфейс";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Сортировка и вид";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="Ночь";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Минимализм";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Макет";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Значок приложения";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Настройте порядок сортировки и вид по умолчанию (список или эскизы).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="не удалось отправить сообщение";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="отправка сообщения отменена";
+/* Cookie dialog header */
+"Before you continue"="Прежде чем вы продолжите";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем куки-файлы и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Принять куки";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Основные куки-файлы";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Необходимы для предоставления вам важных функций и безопасного доступа к нашим услугам. По этой причине согласие на них не требуется.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Куки отображения";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Позвольте нам запомнить определенные выбранные вами настройки отображения и форматирования. Непринятие этих куки-файлов будет означать, что мы не сможем запомнить для вас некоторые вещи, такие как предпочтительный макет экрана.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Куки производительности и аналитики";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Помогите нам понять, как вы используете наши услуги, и предоставьте нам данные, которые мы можем использовать для улучшения. Непринятие этих файлов cookie будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Рекламные куки";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Используется нами и нашими утверждёнными рекламными партнерами для настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах на основе вашей истории просмотров. Непринятие этих куки, что мы можем показывать менее актуальную рекламу.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Сторонние куки";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Это куки, которые контролируются кем-то, кроме нас; мы используем эти куки для предоставления функций, описанных выше. Непринятие этих куки будет иметь различные последствия в зависимости от того, какой тип у каждого стороннего куки-файла. Нажмите «Дополнительная информация» ниже, чтобы получить подробную информацию обо всех сторонних файлах cookie, которые мы используем.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Дополнительная информация";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

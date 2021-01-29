@@ -3,7 +3,7 @@ import Foundation
 extension CustomModalAlertViewController {
     @objc func configureForCookieDialog() {
         image = UIImage(named: "cookie")
-        viewTitle = NSLocalizedString("Before You Continue", comment: "")
+        viewTitle = NSLocalizedString("Before you continue", comment: "")
         detailAttributed = detailTextAttributedString()
         
         let detailTapGR = UITapGestureRecognizer(target: self, action: #selector(cookiePolicyTouchUpInside))
@@ -45,7 +45,7 @@ extension CustomModalAlertViewController {
     }
     
     private func detailTextAttributedString() -> NSAttributedString {
-        var detailText = NSLocalizedString("We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].", comment: "") as NSString
+        var detailText = NSLocalizedString("Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)...", comment: "") as NSString
         let cookiePolicy = detailText.mnz_stringBetweenString("[A]", andString: "[/A]")
         detailText = detailText.mnz_removeWebclientFormatters() as NSString
         

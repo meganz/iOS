@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="从旧到新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="选择";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍摄";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="您在该设备中尚未登录";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="隐私政策";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie政策";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie设置";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服务条款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="简易密码";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地数据";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="输入10次密码失败后登出并清除本地数据";
 /* Menu item */
 "help"="帮助";
@@ -2218,8 +2222,10 @@
 "Message..."="输入文字……";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖动即可取消，松手发送";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="外观";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="用户界面设置";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和视图模式";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="夜间模式";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="最小化";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="布局";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App图标";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="配置排序顺序和默认视图（列表或缩略图）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="发送消息失败";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="消息发送已取消";
+/* Cookie dialog header */
+"Before you continue"="我们的Cookie政策";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用Cookie和类似技术(‘Cookies’)为您提供服务，增强您的服务体验并定制您看到的广告，包括第三方。请在开始访问时接受我们的Cookie使用政策，或在Cookie设置中自定义Cookie。您可以在我们的[A]Cookie政策[/A]中了解更多信息。";
+/* Cookie dialog button label. */
+"Accept Cookies"="接受Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="基本Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="基本Cookie为您提供重要功能以及对我们服务的安全访问。因此，无需经过同意。";
+/* Cookie settings dialog text. */
+"Preference Cookies"="偏好Cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="我们将记住您选择的某些显示与格式设置。不接受这些Cookies意味着我们无法记住您的偏好，例如您偏好的屏幕布局。";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="性能与分析Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="帮助我们了解您如何使用我们的服务，并向我们提供可用于改进的数据。不接受这些Cookies意味着我们无法获得较多的数据以帮助改进设计。";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="广告Cookies";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="我们和我们认可的广告合作商将根据您的浏览历史记录来自定义您在我们的服务和其他网站上显示的广告。不接受这些Cookies意味着我们可能会显示不相关的广告。";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="第三方Cookies";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="这些Cookies并非由我们控制，我们使用它来提供上述功能类别。根据每个第三方Cookie的类别，不接受这些Cookies会产生不同含义。请点击下方的“更多信息”获取我们使用的所有第三方Cookie详细信息。";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="更多信息";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";
