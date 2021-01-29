@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Más antiguo";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Seleccionar";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="No hay una cuenta de correo electrónico configurada";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Política de privacidad";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Política de cookies";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Ajustes de Cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Términos de servicio";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,7 +881,7 @@
 "simplePasscodeLabel"="Código de acceso simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Borrar los datos locales";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Cerrar sesión y borrar los datos locales tras 10 intentos fallidos";
 /* Menu item */
 "help"="Ayuda";
@@ -2218,8 +2222,10 @@
 "Message..."="Mensaje...";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Arrastra hacia la izquierda para cancelar, suelta para enviar";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Apariencia";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Interfaz de usuario";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Preferencias de ordenado y vista";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2236,14 @@
 "Night"="Noche";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimalista";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Diseño";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Ícono de la app";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configurar las preferencias de ordenado y de vista por defecto (Lista o miniatura)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2456,35 @@
 "failed to send the message"="No se ha podido envíar el mensaje";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="El envío del mensaje se ha cancelado";
+/* Cookie dialog header */
+"Before you continue"="Antes de continuar";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Utilizamos cookies y tecnologías similares (“Cookies”) para ofrecerte nuestros servicios, mejorar tu experiencia al usarlos y personalizar los anuncios que ves, incluso a través de terceros. Acepta el uso de Cookies o personalizalo en los ajustes. Encuentra más información al respecto en nuestra [A]Política de cookies[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Aceptar Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Cookies esenciales";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Esenciales para el funcionamiento de nuestros servicios y para un acceso seguro. Por esta razón, no requieren consentimiento.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Cookies funcionales";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Permiten recordar tus ajustes de pantalla y de formato. Si no aceptas estas Cookies, no podremos recordar algunas cosas, como tu formato de pantalla preferido.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Cookies de análisis y rendimiento";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Sirven para entender cómo utilizas nuestros servicios y nos proporcionan datos que podemos utilizar para realizar mejoras. No aceptar estas Cookies significará que tendremos menos datos disponibles para mejorar el servicio.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Cookies publicitarias";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Utilizadas por nosotros y nuestros socios publicitarios para personalizar los anuncios que ves en nuestros servicios y en otros sitios web en función de tu historial de navegación. No aceptar estas Cookies significa que mostraremos anuncios menos relevantes.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Cookies de terceros";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Controladas por terceros, las usamos para proporcionar las funcionalidades descritas anteriormente. No aceptar estas Cookies tendrá distintas implicaciones en función del tipo de Cookie de terceros. Haz clic en “Más información” a continuación para obtener detalles sobre todas las Cookies de terceros que utilizamos.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Más información";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";
