@@ -169,6 +169,8 @@ final class NodeActionBuilder {
                     if isIncomingShareChildView {
                         nodeActions.append(NodeAction.leaveSharingAction())
                     }
+                } else if accessLevel == .accessReadWrite && isChildVersion {
+                    nodeActions.append(NodeAction.revertVersionAction())
                 }
                 
             case .accessFull:
