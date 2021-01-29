@@ -204,13 +204,22 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
     }
     
-    func testFolderLink() {
+    func testFolderLinkList() {
         actions = NodeActionBuilder()
             .setDisplayMode(.folderLink)
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share, .thumbnail]))
+    }
+    
+    func testFolderLinkThumbnail() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.folderLink)
+            .setIsFile(false)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share, .list]))
     }
     
     func testFolderLinkChildMediaFile() {

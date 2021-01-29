@@ -846,6 +846,8 @@
 		83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */; };
 		83FB143D219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1437219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m */; };
 		83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1437219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m */; };
+		83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */; };
+		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		83FF5030247E86F600EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		842A2BDD4DEF84C08E11566D /* Pods_iMEGA_MEGAPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEAD82908C1128A089968676 /* Pods_iMEGA_MEGAPicker.framework */; };
@@ -2633,6 +2635,8 @@
 		83FB1436219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOOfflineFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		83FB1437219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
 		83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
+		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
+		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
 		925CDE2575F5BE7F55EBD685 /* Pods_iMEGA_MEGAPickerFileProvider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPickerFileProvider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		934264B7600276F886F2EB54 /* Pods-iMEGA-MEGAPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.release.xcconfig"; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
@@ -7921,6 +7925,8 @@
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
+				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
+				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
 				E85044C41A6D84620064B675 /* FileLinkViewController.h */,
 				E85044C51A6D84620064B675 /* FileLinkViewController.m */,
 				E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */,
@@ -9035,6 +9041,7 @@
 				BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
+				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
 				A86B9F662316D6AB00F35E7A /* FLEXFileBrowserSearchOperation.m in Sources */,
@@ -9416,6 +9423,7 @@
 				BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */,
 				BFB463F32434296000FB90B9 /* IndexPath+Additions.swift in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
+				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
 				5D2AF57F24F4A711000B2F29 /* UploadFromAlbum.swift in Sources */,
 				A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */,
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
