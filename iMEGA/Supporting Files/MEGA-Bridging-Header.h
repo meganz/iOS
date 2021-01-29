@@ -92,6 +92,7 @@
 #import "InitialLaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
+#import "NodeCollectionViewCell.h"
 #import "NodeVersionsViewController.h"
 #import "OnboardingViewController.h"
 #import "ChatImageUploadQuality.h"

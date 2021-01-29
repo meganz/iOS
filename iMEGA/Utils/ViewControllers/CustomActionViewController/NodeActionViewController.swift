@@ -11,7 +11,8 @@ class NodeActionViewController: ActionSheetViewController {
     private var displayMode: DisplayMode
     var delegate: NodeActionViewControllerDelegate
     var sender: Any
-    
+    private var viewMode: ViewModePreference?
+
     let nodeImageView = UIImageView.newAutoLayout()
     let titleLabel = UILabel.newAutoLayout()
     let subtitleLabel = UILabel.newAutoLayout()
@@ -53,7 +54,23 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsOutshare(node.isOutShare())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .build()
-
+    }
+    
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, sender: Any) {
+        self.node = node
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.viewMode = viewMode
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setViewMode(viewMode)
+            .build()
     }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, sender: Any) {
@@ -73,6 +90,10 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .build()
+    }
+    
+    @objc func addAction(_ action: BaseAction) {
+        self.actions.append(action)
     }
     
     required init?(coder aDecoder: NSCoder) {

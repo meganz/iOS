@@ -15,7 +15,8 @@ final class NodeActionBuilder {
     private var isExported: Bool = false
     private var isOutShare: Bool = false
     private var isChildVersion: Bool = false
-    
+    private var viewMode: ViewModePreference = .list
+
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
         return self
@@ -86,6 +87,11 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setViewMode(_ viewMode: ViewModePreference?) -> NodeActionBuilder {
+        self.viewMode = viewMode ?? .list
+        return self
+    }
+    
     func build() -> [NodeAction] {
         
         var nodeActions = [NodeAction]()
@@ -100,6 +106,11 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.sendToChatAction())
             nodeActions.append(NodeAction.selectAction())
             nodeActions.append(NodeAction.shareAction())
+            if viewMode == .list {
+                nodeActions.append(NodeAction.thumbnailAction())
+            } else {
+                nodeActions.append(NodeAction.listAction())
+            }
         } else if displayMode == .fileLink {
             nodeActions.append(NodeAction.importAction())
             nodeActions.append(NodeAction.downloadAction())
