@@ -89,6 +89,10 @@
         self.firstButton.hidden = YES;
     }
     
+    if (self.dismissButtonStyle == MEGACustomButtonStyleNone) {
+        self.dismissButtonStyle = MEGACustomButtonStyleCancel;
+    }
+    
     if (self.dismissButtonTitle) {
         [self.dismissButton setTitle:self.dismissButtonTitle forState:UIControlStateNormal];
     } else {
@@ -128,9 +132,15 @@
     
     self.linkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
+#ifdef MAIN_APP_TARGET
+    if (self.detailAttributed) {
+        self.detailLabel.attributedText = [self detailTextAttributedString];
+    }
+#endif
+    
     [self.firstButton mnz_setupPrimary:self.traitCollection];
     [self.secondButton mnz_setupDestructive:self.traitCollection];
-    [self.dismissButton mnz_setupCancel:self.traitCollection];
+    [self.dismissButton mnz_setup:self.dismissButtonStyle traitCollection:self.traitCollection];
 }
 
 - (void)configUIAppearance {
