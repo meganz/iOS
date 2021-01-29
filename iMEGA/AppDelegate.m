@@ -772,6 +772,7 @@
 }
 
 - (void)processActionsAfterSetRootVC {
+    [self showLink:MEGALinkManager.linkURL];
     
     if (MEGALinkManager.nodeToPresentBase64Handle) {
         [MEGALinkManager presentNode];
