@@ -2488,3 +2488,11 @@
 "More information"="More information";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="No Third Party Cookies in use";
+/* Text shown when the creation of a version as a new file was successful */
+"Version created as a new file successfully."="Version created as a new file successfully.";
+/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
+"Permissions error"="Permissions error";
+/* Text shown for the action create new file */
+"Create new file"="Create new file";
+/* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
