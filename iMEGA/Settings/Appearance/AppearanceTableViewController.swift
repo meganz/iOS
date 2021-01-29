@@ -198,7 +198,7 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch AppearanceSection(rawValue: section) {
         case .launch:
-            return NSLocalizedString("Show Home section when you launch the app.", comment: "Footer text to explain what you could do in the Settings - User Interface - Default Tab section.")
+            return NSLocalizedString("Configure default launch section.", comment: "Footer text to explain what you could do in the Settings - User Interface - Default Tab section.")
         
         case .layout:
             return NSLocalizedString("Configure sorting order and the default view (List or Thumbnail).", comment: "Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section.")
