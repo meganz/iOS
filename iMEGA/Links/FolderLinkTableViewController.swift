@@ -171,4 +171,12 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             folderLink.areAllNodesSelected = false
         }
     }
+    
+    func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        setTableViewEditing(true, animated: true)
+    }
 }

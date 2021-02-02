@@ -66,6 +66,10 @@ class FolderLinkCollectionViewController: UIViewController  {
     @objc func setCollectionViewEditing(_ editing: Bool, animated: Bool) {
         collectionView.allowsMultipleSelection = editing
         
+        if #available(iOS 14, *) {
+            collectionView.allowsMultipleSelectionDuringEditing = editing;
+        }
+        
         folderLink.setViewEditing(editing)
         
         collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
@@ -170,6 +174,14 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             
             cell.isSelected = isSelected
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        setCollectionViewEditing(true, animated: true)
     }
 }
 
