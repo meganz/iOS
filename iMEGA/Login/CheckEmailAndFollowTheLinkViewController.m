@@ -95,6 +95,14 @@
     }
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if (UIDevice.currentDevice.iPhoneDevice) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
+    return UIInterfaceOrientationMaskAll;
+}
+
 #pragma mark - Private
 
 - (void)dismissKeyboard {
