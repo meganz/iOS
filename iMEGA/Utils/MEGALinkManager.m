@@ -574,6 +574,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)showFolderLinkView {
     MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+    folderNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     
     FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
     
