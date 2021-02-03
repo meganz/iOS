@@ -252,10 +252,10 @@
         BOOL shouldIncludeRootFolder = self.node.isInShare
         || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
         self.infoLabel.text = shouldIncludeRootFolder ? @"" : @"> ";
-        self.infoStringRightLabel.text = [[self.node filePathWithDelimeter:@" > "
+        self.infoStringRightLabel.text = [self.node filePathWithDelimeter:@" > "
                                                             sdk:MEGASdkManager.sharedMEGASdk
                                           includeRootFolderName:shouldIncludeRootFolder
-                                                excludeFileName:YES] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                                                excludeFileName:YES];
         self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
         self.versionedImageView.hidden = NO;
     }
