@@ -110,26 +110,23 @@
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
         MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
-        NSString *infoLabelString;
         switch (self.cellFlavor) {
             case NodeTableViewCellFlavorVersions:
             case NodeTableViewCellFlavorRecentAction:
             case NodeTableViewCellFlavorCloudDrive:
-                infoLabelString =
+                self.infoLabel.text =
                     self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
                     [Helper sizeAndModicationDateForNode:node api:megaSDK];
                 self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
                 break;
             case NodeTableViewCellFlavorSharedLink:
-                infoLabelString = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
+                self.infoLabel.text = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
                 self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
                 break;
             case NodeTableViewCellExplorerView:
                 [self updateInfo];
                 break;
         }
-
-        self.infoLabel.text = infoLabelString;
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
         self.versionedImageView.hidden = YES;
@@ -243,17 +240,15 @@
     self.backgroundColor = [UIColor mnz_homeRecentsCellBackgroundForTraitCollection:currentTraitCollection];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    [self updateInfo];
-}
-
 - (void)updateInfo {
     if (self.cellFlavor == NodeTableViewCellExplorerView && self.node != nil) {
-        self.infoLabel.text = [self.node filePathDisplayStringIn:MEGASdkManager.sharedMEGASdk
-                                                        withFont:self.infoLabel.font
-                                                       delimiter:@">"
-                                               maxAvailableWidth:self.infoLabel.frame.size.width];
+        self.infoLabel.lineBreakMode = NSLineBreakByTruncatingHead;
+        BOOL shouldIncludeRootFolder = self.node.isInShare
+        || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
+        self.infoLabel.text = [[self.node filePathWithDelimeter:@" > "
+                                                            sdk:MEGASdkManager.sharedMEGASdk
+                                          includeRootFolderName:shouldIncludeRootFolder
+                                                excludeFileName:YES] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
         self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
         self.versionedImageView.hidden = NO;
     }
