@@ -19,6 +19,12 @@
 #import "MEGA-Swift.h"
 #endif
 
+@interface NodeTableViewCell()
+
+@property (weak, nonatomic) IBOutlet UILabel *infoStringRightLabel;
+
+@end
+
 @implementation NodeTableViewCell
 
 - (void)awakeFromNib {
@@ -242,13 +248,14 @@
 
 - (void)updateInfo {
     if (self.cellFlavor == NodeTableViewCellExplorerView && self.node != nil) {
-        self.infoLabel.lineBreakMode = NSLineBreakByTruncatingHead;
+        self.infoStringRightLabel.lineBreakMode = NSLineBreakByTruncatingHead;
         BOOL shouldIncludeRootFolder = self.node.isInShare
         || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
-        self.infoLabel.text = [[self.node filePathWithDelimeter:@" > "
+        self.infoLabel.text = shouldIncludeRootFolder ? @"" : @"> ";
+        self.infoStringRightLabel.text = [[self.node filePathWithDelimeter:@" > "
                                                             sdk:MEGASdkManager.sharedMEGASdk
                                           includeRootFolderName:shouldIncludeRootFolder
-                                                excludeFileName:YES] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
+                                                excludeFileName:YES] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
         self.versionedImageView.hidden = NO;
     }
