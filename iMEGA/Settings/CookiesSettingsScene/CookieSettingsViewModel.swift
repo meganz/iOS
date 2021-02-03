@@ -54,6 +54,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     private var cookiesConfigArray: Array<Bool> = [true, false, false, false, false] //[essential, preference, analytics, ads, thirdparty]
     private var currentCookiesConfigArray: Array<Bool> = [true, false, false, false, false]
+    private var cookieSettingsSet: Bool = true
     
     // MARK: - Init
     
@@ -116,6 +117,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
                 case .generic, .invalidBitmap: break
                     
                 case .bitmapNotSet:
+                    self?.cookieSettingsSet = false
                     self?.cookiesConfigArray = [true, false, false, false, false]
                     self?.currentCookiesConfigArray = self!.cookiesConfigArray
                     self?.invokeCommand?(.configCookieSettings(CookiesBitmap.essential))
@@ -176,6 +178,10 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     private func didCookieSettingsChange() -> Bool {
+        if !cookieSettingsSet {
+            return true
+        }
+        
         for (index, value) in currentCookiesConfigArray.enumerated() {
             if cookiesConfigArray[index] != value {
                 return true
