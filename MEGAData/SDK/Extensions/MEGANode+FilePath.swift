@@ -17,7 +17,7 @@ extension MEGANode {
                                    excludeFileName: false)
         
         if let name = name, !excludeFileName {
-            path += "\(delimeter)\(name)"
+            path += path.isEmpty ? name : "\(delimeter)\(name)"
         }
         
         return path
