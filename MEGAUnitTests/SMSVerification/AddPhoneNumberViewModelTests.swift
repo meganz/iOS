@@ -6,7 +6,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
     func testAction_onViewReady_achievementSuccess() {
         let hideDontShowAgains = [true, false]
         
-        let text = String(format: NSLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: 1000))
+        let text = String(format: NSLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", comment: ""), Helper.memoryStyleString(fromByteCount: 1000))
 
         for flag in hideDontShowAgains {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
@@ -21,7 +21,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
     
     func testAction_onViewReady_achievementError() {
         let errors: [AchievementErrorEntity] = [.generic, .achievementsDisabled]
-        let message = NSLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
+        let message = NSLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", comment: "")
         
         for error in errors {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
