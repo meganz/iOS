@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="più vecchio";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="Scegli da Foto";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Scatta";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -882,7 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Cancella dati locali";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Effettua il logout e cancella i dati locali dopo 10 tentativi falliti";
+"failedAttempstSectionTitle"="I tuoi file locali verranno eliminati e verrà effettuato il tuo log out dopo 10 tentativi falliti";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="Aiuto";
 /* Title of the section to access MEGA's help centre */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="Interfaccia utente";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="Pagina predefinita";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Modalità di elencazione e di vista";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,13 +2245,13 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="Apri";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Layout";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icona dell'app";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Configura la sezione predefinita di apertura.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configura l'ordine di elenco e la vista di default (lista o anteprime";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */

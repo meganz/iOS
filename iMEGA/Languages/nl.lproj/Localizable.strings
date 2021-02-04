@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Oudste";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="Kies uit Foto’s";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Vastleggen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -882,7 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Uitloggen en lokale gegevens wissen na 10 mislukte passcode pogingen";
+"failedAttempstSectionTitle"="Uw lokale bestanden worden verwijderd en u wordt uitgelogd na 10 mislukte pogingen";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="Gebruikers Interface";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="Standaard Tabblad";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorteer- en Weergavemodus";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,13 +2245,13 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimaal";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="Lancering";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Indeling";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Applicatie-pictogram";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Configureer de standaard startsectie.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configureer de sorteervolgorde en de standaardweergave (Lijst of Miniatuur).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
