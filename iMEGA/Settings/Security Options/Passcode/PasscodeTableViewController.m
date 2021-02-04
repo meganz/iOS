@@ -126,6 +126,7 @@
         [LTHPasscodeViewController saveTimerDuration:RequirePasscodeAfterThirtySeconds];
     } else {
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
+        _requirePasscodeDetailLabel.text = @"";
     }
     
     BOOL isEraseLocalData = ![NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];

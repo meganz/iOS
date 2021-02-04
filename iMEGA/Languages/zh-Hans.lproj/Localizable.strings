@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="从旧到新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="从照片中选择";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍摄";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -882,7 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地数据";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="输入10次密码失败后登出并清除本地数据";
+"failedAttempstSectionTitle"="您的本地文件将被删除，您将在10次尝试失败后注销";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="帮助";
 /* Title of the section to access MEGA's help centre */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="用户界面设置";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="默认窗口";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和视图模式";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,13 +2245,13 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="最小化";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="启动";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="布局";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App图标";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="配置默认启动部分。";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="配置排序顺序和默认视图（列表或缩略图）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
