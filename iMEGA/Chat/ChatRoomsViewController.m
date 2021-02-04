@@ -1124,8 +1124,8 @@
             
             if (chatRoom.unreadCount != 0) {
                 UIAction *markAsReadAction = [UIAction actionWithTitle:NSLocalizedString(@"Mark as Read",@"A button label. The button allows the user to mark a conversation as read.") image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                            [chatViewController setLastMessageAsSeen];
-                        }];
+                    [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
+                }];
                 [menus addObject:markAsReadAction];
             }
             
