@@ -1404,6 +1404,7 @@
 		BF08A9F525CA12A0009DE3D2 /* MEGANode+FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF08A9F425CA12A0009DE3D2 /* MEGANode+FilePath.swift */; };
 		BF08AA0025CA28AD009DE3D2 /* MEGANode+FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF08A9F425CA12A0009DE3D2 /* MEGANode+FilePath.swift */; };
 		BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF08A9F425CA12A0009DE3D2 /* MEGANode+FilePath.swift */; };
+		BF08AA1425CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF08AA1325CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift */; };
 		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -3274,6 +3275,7 @@
 		BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		BF06E3E1243192EB00B30FB7 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF08A9F425CA12A0009DE3D2 /* MEGANode+FilePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+FilePath.swift"; sourceTree = "<group>"; };
+		BF08AA1325CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+FilePaths_Tests.swift"; sourceTree = "<group>"; };
 		BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputTextBackgroundView.swift; sourceTree = "<group>"; };
 		BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatListItem+Additions.swift"; sourceTree = "<group>"; };
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
@@ -7517,6 +7519,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				BF08AA1225CB58A0009DE3D2 /* MEGANodeExtensions */,
 				BF6E8D1725B53F3C003A125A /* PSA */,
 				5D52C744250C4EED00286A43 /* Mock */,
 				5DFC8DC324ECF35C00DDA006 /* NewHome */,
@@ -7630,6 +7633,14 @@
 				2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */,
 			);
 			path = "Chat Messages";
+			sourceTree = "<group>";
+		};
+		BF08AA1225CB58A0009DE3D2 /* MEGANodeExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				BF08AA1325CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift */,
+			);
+			path = MEGANodeExtensions;
 			sourceTree = "<group>";
 		};
 		BF46B82525AB98F3008641BB /* PSA */ = {
@@ -10359,6 +10370,7 @@
 				5D62093624ED0F03004648A1 /* HomeAvatarViewModelTests.swift in Sources */,
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
+				BF08AA1425CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				B66BA2472514DD2C009787BD /* MockPreferenceUseCase.swift in Sources */,
