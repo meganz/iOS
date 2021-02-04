@@ -177,8 +177,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                     let lastMessageId = (chatMessages.last as? ChatMessage)?.message.messageId, let chatViewController = chatViewController {
                     chatMessages.insert(ChatNotificationMessage(type: .unreadMessage(chatRoom.unreadCount)),
                                         at: chatMessages.count - chatRoom.unreadCount)
-                    if !chatViewController.previewMode {
-                        MEGASdkManager.sharedMEGAChatSdk()!.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
+                    if !chatViewController.previewMode, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() {
+                        chatSDK.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
                     }
                     
                     chatViewController.messagesCollectionView.reloadData()
@@ -414,12 +414,16 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     func openChatRoom() {
-        guard isChatRoomOpen == false else {
-            MEGALogDebug("openChatRoom: Trying to open already opened chat room")
+        guard isChatRoomOpen == false, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+            MEGALogDebug("openChatRoom: Trying to open already opened chat room - \(isChatRoomOpen)")
             return
         }
-
-        isChatRoomOpen = MEGASdkManager.sharedMEGAChatSdk()!.openChatRoom(chatRoom.chatId, delegate: self)
+        closeChatRoom()
+        
+        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
+        
+        isChatRoomOpen = chatSDK.openChatRoom(chatRoom.chatId, delegate: self)
         if isChatRoomOpen {
             loadingState = true
             chatViewController?.messagesCollectionView.reloadEmptyDataSet()
@@ -430,14 +434,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     func closeChatRoom() {
-        if isChatRoomOpen {
-            isChatRoomOpen = false
-            chatMessages = []
-            chatViewController?.messagesCollectionView.reloadData()
-            MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom(chatRoom.chatId, delegate: self)
-            MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
-            MEGASdkManager.sharedMEGASdk().remove(self)
-        }
+        isChatRoomOpen = false
+        chatMessages = []
+        chatViewController?.messagesCollectionView.reloadData()
+        MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom(chatRoom.chatId, delegate: self)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
+        MEGASdkManager.sharedMEGASdk().remove(self)
     }
     
 
@@ -543,11 +545,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     private func loadMessages(count: Int = 32) {
+        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+            return
+        }
+        
         if !isChatRoomOpen || awaitingLoad {
             MEGALogWarning("[Chat Links Scalability] avoid loadMessages because of an ongoing load")
             return
         }
-        switch MEGASdkManager.sharedMEGAChatSdk()!.loadMessages(forChat: chatRoom.chatId, count: count) {
+        switch chatSDK.loadMessages(forChat: chatRoom.chatId, count: count) {
         case .error:
             MEGALogDebug("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
         case .none:

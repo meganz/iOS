@@ -243,43 +243,48 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeForIndexPath:indexPath];
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
+    NSMutableArray *rightActions = [NSMutableArray new];
+    
+    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] >= MEGAShareTypeAccessFull) {
+        UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self removeAction:nil];
+        }];
+        if (@available(iOS 13.0, *)) {
+            removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+        } else {
+            removeAction.image = [UIImage imageNamed:@"delete"];
+        }
+        removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        [rightActions addObject:removeAction];
+    }
+    
+    if (indexPath.section != 0 && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] >= MEGAShareTypeAccessReadWrite) {
+        UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self revertAction:nil];
+        }];
+        
+        if (@available(iOS 13.0, *)) {
+            revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:UIColor.whiteColor];
+        }
+        else {
+            revertAction.image = [UIImage imageNamed:@"history"];
+        }
+        revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        [rightActions addObject:revertAction];
+    }
+        
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        MEGANode *node = [self nodeForIndexPath:indexPath];
         [node mnz_downloadNode];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
     downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [rightActions addObject:downloadAction];
     
-    return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
-}
-
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull) {
-        return [UISwipeActionsConfiguration configurationWithActions:@[]];
-    }
-    self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
-    
-    NSMutableArray *rightActions = [NSMutableArray new];
-    
-    UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self removeAction:nil];
-    }];
-    removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
-    [rightActions addObject:removeAction];
-    
-    if (indexPath.section != 0) {
-        UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [self revertAction:nil];
-        }];
-        revertAction.image = [UIImage imageNamed:@"history"];
-        revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-        [rightActions addObject:revertAction];
-    }
-
     return [UISwipeActionsConfiguration configurationWithActions:rightActions];
 }
 
@@ -342,7 +347,7 @@
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = self.selectedNodesArray.count == 1 ? boolValue : NO;
-    self.revertBarButtonItem.enabled = (self.selectedNodesArray.count == 1 && self.selectedNodesArray.firstObject.handle != self.node.handle && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] >= MEGAShareTypeAccessFull) ? boolValue : NO;
+    self.revertBarButtonItem.enabled = (self.selectedNodesArray.count == 1 && self.selectedNodesArray.firstObject.handle != self.node.handle && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] >= MEGAShareTypeAccessReadWrite) ? boolValue : NO;
     self.removeBarButtonItem.enabled = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull ? NO : boolValue;
 }
 
@@ -407,8 +412,22 @@
     if (self.selectedNodesArray.count != 1) {
         return;
     }
+    MEGANode *node = self.selectedNodesArray.firstObject;
     
-    [[MEGASdkManager sharedMEGASdk] restoreVersionNode:[self.selectedNodesArray firstObject]];
+    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:node] == MEGAShareTypeAccessReadWrite) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Permissions error", @"Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions") message:NSLocalizedString(@"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?", @"Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share.") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Create new file", @"Text shown for the action create new file") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [MEGASdkManager.sharedMEGASdk restoreVersionNode:node delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                if (error.type == MEGAErrorTypeApiOk) {
+                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Version created as a new file successfully.", @"Text shown when the creation of a version as a new file was successful")];
+                }
+            }]];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        [MEGASdkManager.sharedMEGASdk restoreVersionNode:node];
+    }
     
     [self setEditing:NO animated:YES];
 }
@@ -463,7 +482,7 @@
 
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
-    if (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull) {
+    if (direction == MGSwipeDirectionLeftToRight || (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull)) {
         return NO;
     }
     return !self.isEditing;

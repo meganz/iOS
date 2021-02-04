@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGALoginToFolderLinkRequestDelegate : MEGABaseRequestDelegate
+@interface MEGALoginToFolderLinkRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion;
 

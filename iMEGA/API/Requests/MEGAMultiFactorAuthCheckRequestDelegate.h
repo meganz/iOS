@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGAMultiFactorAuthCheckRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAMultiFactorAuthCheckRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (id)init NS_UNAVAILABLE;
 

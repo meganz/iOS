@@ -260,7 +260,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [[ShareAttachment attachmentsArray] objectAtIndex:textField.tag].name = textField.text;
+    if ([ShareAttachment attachmentsArray].count > textField.tag) {
+        ([ShareAttachment attachmentsArray][textField.tag]).name = textField.text;
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -277,7 +279,7 @@
     BOOL wasChatReady = self.chatReady;
     self.chatReady = newState == MEGAChatInitOnlineSession && MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
     if (wasChatReady != self.isChatReady) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadData];
     }
 }
 
@@ -298,7 +300,7 @@
     }
     
     if (shouldReload) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadData];
     }
 }
 

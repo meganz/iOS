@@ -12,17 +12,18 @@
 #import "NodeCollectionViewCell.h"
 #import "OfflineViewController.h"
 #import "OpenInActivity.h"
+#import "CHTCollectionViewWaterfallLayout.h"
+#import "MEGA-Swift.h"
 
 static NSString *kFileName = @"kFileName";
+static NSString *kFileSize = @"kFileSize";
+static NSString *kDuration = @"kDuration";
 static NSString *kPath = @"kPath";
 
-@interface OfflineCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
-
-@property (weak, nonatomic) IBOutlet UIView *searchView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewTopConstraint;
-
-@property (assign, nonatomic, getter=isSearchViewVisible) BOOL searchViewVisible;
+@interface OfflineCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
+@property (nonatomic, strong) NSArray *fileList;
+@property (nonatomic, strong) NSArray *folderList;
+@property (strong, nonatomic) CHTCollectionViewWaterfallLayout *layout;
 
 @end
 
@@ -30,57 +31,108 @@ static NSString *kPath = @"kPath";
 
 #pragma mark - Lifecycle
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupCollectionView];
     
-    [self.searchView addSubview:self.offline.searchController.searchBar];
-    self.offline.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        self.layout.columnCount = [self calculateColumnCount];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
+}
+
+#pragma mark - CollectionView UI Setup
+
+- (void)setupCollectionView {
+    self.layout = CHTCollectionViewWaterfallLayout.alloc.init;
+    self.layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    self.layout.minimumColumnSpacing = 8;
+    self.layout.minimumInteritemSpacing = 8;
+    self.layout.columnCount = [self calculateColumnCount];
+    
+    self.collectionView.collectionViewLayout = self.layout;
 }
 
 #pragma mark - Public
 
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated {
     self.collectionView.allowsMultipleSelection = editing;
+    
+    if (@available(iOS 14.0, *)) {
+        self.collectionView.allowsMultipleSelectionDuringEditing = editing;
+    }
+    
     [self.offline setViewEditing:editing];
     
-    for (NodeCollectionViewCell *cell in self.collectionView.visibleCells) {
-        cell.selectImageView.hidden = !editing;
-        cell.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
-    }
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
 }
 
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath {
     [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
 }
 
+- (void)reloadData {
+    self.fileList = nil;
+    self.folderList = nil;
+    [self.collectionView reloadData];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger rows = self.offline.searchController.isActive ? self.offline.searchItemsArray.count : self.offline.offlineSortedItems.count;
     [self.offline enableButtonsByNumberOfItems];
-    return rows;
+    return section == ThumbnailSectionFile ? [self.fileList count] : [self.folderList count];
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return ThumbnailSectionCount;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.collectionView.allowsMultipleSelection) {
+        BOOL shouldSelectActualCell = [self shouldSelectIndexPath:indexPath];
+        
+        if (shouldSelectActualCell) {
+            [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+        
+        [cell setSelected:shouldSelectActualCell];
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
+    NodeCollectionViewCell *cell = indexPath.section == ThumbnailSectionFile ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
     
-    NSString *directoryPathString = [self.offline currentOfflinePath];
-    NSString *nameString = [[self.offline itemAtIndexPath:indexPath] objectForKey:kFileName];
-    NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
+    NSDictionary *item = [self getItemAtIndexPath:indexPath];
+    NSString *nameString = item[kFileName];
+    NSString *pathForItem = [[self.offline currentOfflinePath] stringByAppendingPathComponent:nameString];
+    
+    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
     
     cell.nameLabel.text = nameString;
     
-    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
     NSString *handleString = [offNode base64Handle];
-    
-    cell.thumbnailPlayImageView.hidden = YES;
     
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
-        cell.thumbnailImageView.image = UIImage.mnz_folderImage;
+        cell.thumbnailIconView.image = UIImage.mnz_folderImage;
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^(void){
+            // heavy non-UI work
+            FolderContentStat *folderContentStat = [[NSFileManager defaultManager] mnz_folderContentStatWithPathForItem:pathForItem];
+            NSInteger files = folderContentStat.fileCount;
+            NSInteger folders = folderContentStat.folderCount;
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                // update UI
+                cell.infoLabel.text = [NSString mnz_stringByFiles:files andFolders:folders];
+            });
+        });
     } else {
+        cell.infoLabel.text = [Helper memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
         NSString *extension = nameString.pathExtension.lowercaseString;
         
         if (!handleString) {
@@ -101,42 +153,37 @@ static NSString *kPath = @"kPath";
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage) {
                 cell.thumbnailImageView.image = thumbnailImage;
-                if (nameString.mnz_isVideoPathExtension) {
-                    cell.thumbnailPlayImageView.hidden = NO;
-                }
             }
-            
+            cell.thumbnailIconView.hidden = YES;
         } else {
             if (nameString.mnz_isImagePathExtension) {
                 if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
                     [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
                 }
+                cell.thumbnailIconView.hidden = YES;
             } else {
-                [cell.thumbnailImageView mnz_setImageForExtension:extension];
+                cell.thumbnailIconView.hidden = NO;
+                [cell.thumbnailIconView mnz_setImageForExtension:extension];
+                cell.thumbnailImageView.image = nil;
             }
         }
     
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     
-    if (self.collectionView.allowsMultipleSelection) {
-        cell.selectImageView.hidden = NO;
-        BOOL selected = NO;
-        for (NSURL *url in self.offline.selectedItems) {
-            if ([url.path isEqualToString:pathForItem]) {
-                selected = YES;
-                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-            }
-        }
-        [cell selectCell:selected];
-    } else {
-        cell.selectImageView.hidden = YES;
+    cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
+    cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
+    cell.durationLabel.hidden = !nameString.mnz_isVideoPathExtension;
+    if (!cell.durationLabel.hidden) {
+        cell.durationLabel.layer.cornerRadius = 4;
+        cell.durationLabel.layer.masksToBounds = true;
+        cell.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
     }
-    
+
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
+    [cell setupAppearance];
     
     return cell;
 }
@@ -145,18 +192,16 @@ static NSString *kPath = @"kPath";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView.allowsMultipleSelection) {
-        NSURL *filePathURL = [[self.offline itemAtIndexPath:indexPath] objectForKey:kPath];
-        [self.offline.selectedItems addObject:filePathURL];
+        [self.offline.selectedItems addObject:[[self getItemAtIndexPath:indexPath] objectForKey:kPath]];
         
         [self.offline updateNavigationBarTitle];
         [self.offline enableButtonsBySelectedItems];
         
         self.offline.allItemsSelected = (self.offline.selectedItems.count == self.offline.offlineSortedItems.count);
         
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell selectCell:YES];
-        
         return;
+    } else {
+        [collectionView clearSelectedItemsWithAnimated:NO];
     }
     
     NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -165,7 +210,7 @@ static NSString *kPath = @"kPath";
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView.allowsMultipleSelection) {
-        NSURL *filePathURL = [[self.offline itemAtIndexPath:indexPath] objectForKey:kPath];
+        NSURL *filePathURL = [self getItemAtIndexPath:indexPath][kPath];
         
         NSMutableArray *tempArray = self.offline.selectedItems.copy;
         for (NSURL *url in tempArray) {
@@ -179,73 +224,22 @@ static NSString *kPath = @"kPath";
         
         self.offline.allItemsSelected = NO;
         
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell selectCell:NO];
-        
         return;
     }
 }
 
-#pragma mark - UIScrolViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.isSearchViewVisible) {
-        self.searchViewTopConstraint.constant = - scrollView.contentOffset.y;
-        if (scrollView.contentOffset.y > 50 && !self.offline.searchController.isActive) { //hide search view when collection offset up is higher than search view height
-            self.searchViewVisible = NO;
-            self.collectionViewTopConstraint.constant = 0;
-        }
-    } else {
-        if (scrollView.contentOffset.y < 0) { //keep the search view next to collection view offset when scroll down
-            self.searchViewTopConstraint.constant = - scrollView.contentOffset.y - 50;
-        }
-    }
-    
-    if (self.offline.searchController.isActive) {
-        [self.offline.searchController.searchBar resignFirstResponder];
-    }
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    return self.offline.flavor == AccountScreen;
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    if (scrollView.contentOffset.y < -50) { //show search view when collection offset down is higher than search view height
-        self.searchViewVisible = YES;
-        [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            self.collectionViewTopConstraint.constant = 50;
-            self.collectionView.contentOffset = CGPointMake(0, 0);
-            
-            [self.view layoutIfNeeded];
-        } completion:nil];
-    }
+- (void)collectionView:(UICollectionView *)collectionView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    [self setCollectionViewEditing:YES animated:YES];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (self.searchViewVisible) {
-        if (scrollView.contentOffset.y > 0) {
-            if (scrollView.contentOffset.y < 20) { //simulate that search bar is inside collection view and offset items to show search bar and items at top of scroll
-                [UIView animateWithDuration:.2 animations:^{
-                    self.collectionView.contentOffset = CGPointMake(0, 0);
-                    [self.view layoutIfNeeded];
-                }];
-            } else if (scrollView.contentOffset.y < 50) { //hide search bar when offset collection up between 20 and 50 points of the search view
-                self.searchViewVisible = NO;
-                [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                    self.collectionViewTopConstraint.constant = 0;
-                    self.collectionView.contentOffset = CGPointMake(0, 0);
-                    self.searchViewTopConstraint.constant = -50;
-                    [self.view layoutIfNeeded];
-                } completion:nil];
-            }
-        }
-    } else {
-        if (scrollView.contentOffset.y < 0) { //show search bar when drag collection view down
-            self.searchViewVisible = YES;
-            self.searchViewTopConstraint.constant = 0 - scrollView.contentOffset.y;
-            [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                self.collectionViewTopConstraint.constant = 50;
-                [self.view layoutIfNeeded];
-            } completion:nil];
-        }
-    }
+#pragma mark - CHTCollectionViewDelegateWaterfallLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section == ThumbnailSectionFile ? CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFile) : CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFolder);
 }
 
 #pragma mark - Actions
@@ -262,6 +256,56 @@ static NSString *kPath = @"kPath";
     NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.nameLabel.text];
     
     [self.offline showInfoFilePath:itemPath at:indexPath from:sender];
+}
+
+#pragma mark - Private
+
+- (BOOL)shouldSelectIndexPath:(NSIndexPath * _Nonnull)indexPath {
+    NSArray *filteredArray = [self.offline.selectedItems filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return (NSURL*)evaluatedObject == [[self getItemAtIndexPath:indexPath] objectForKey:kPath];
+    }]];
+    return [filteredArray count] != 0;
+}
+
+- (nullable NSDictionary *)getItemAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section == ThumbnailSectionFile ? [self.fileList objectOrNilAtIndex:indexPath.row] : [self.folderList objectOrNilAtIndex:indexPath.row];
+}
+
+- (NSInteger)calculateColumnCount {
+    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds);
+    return (NSInteger) ((containerWidth - self.layout.sectionInset.left - self.layout.sectionInset.right) / ThumbnailSizeWidth);
+}
+
+- (NSArray *)buildListFor:(FileType) fileOrFolder {
+    NSMutableArray *list = NSMutableArray.alloc.init;
+    NSArray *items = self.offline.searchController.isActive ? self.offline.searchItemsArray : self.offline.offlineSortedItems;
+    NSString *directoryPathString = [self.offline currentOfflinePath];
+    for (NSDictionary *tempItem in items) {
+        NSString *nameString = tempItem[kFileName];
+        NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
+        BOOL isDirectory;
+        [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
+        if ((fileOrFolder == FileTypeFile && !isDirectory) || (fileOrFolder == FileTypeFolder && isDirectory)) {
+            [list addObject:tempItem];
+        }
+    }
+    return list.copy;
+}
+
+#pragma mark - getters
+
+- (NSArray *)folderList {
+    if (!_folderList) {
+        _folderList = [self buildListFor:FileTypeFolder];
+    }
+    return _folderList;
+}
+
+- (NSArray *)fileList {
+    if (!_fileList) {
+        _fileList = [self buildListFor:FileTypeFile];
+    }
+    return _fileList;
 }
 
 @end

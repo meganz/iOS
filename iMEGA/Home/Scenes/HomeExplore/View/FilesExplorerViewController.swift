@@ -5,6 +5,7 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
     func didSelectNodes(withCount count: Int)
     func configureNavigationBarToDefault()
     func showMoreButton(_ show: Bool)
+    func showSelectButton(_ show: Bool)
 }
 
 class FilesExplorerViewController: ExplorerBaseViewController {

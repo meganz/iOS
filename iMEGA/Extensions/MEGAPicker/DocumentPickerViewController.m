@@ -14,6 +14,7 @@
 #import "MEGAPicker-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
+@import Firebase;
 
 @interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 
@@ -36,6 +37,14 @@
 @implementation DocumentPickerViewController
 
 #pragma mark - Lifecycle
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [FIRApp configure];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -202,7 +211,11 @@
     NSString *key = [[NSURL fileURLWithPath:path].URLByResolvingSymlinksInPath absoluteString];
     [mySharedDefaults setObject:base64Handle forKey:key];
     
-    [self dismissGrantingAccessToURL:[NSURL fileURLWithPath:path]];
+    if ([NSFileManager.defaultManager fileExistsAtPath:path]) {
+        [self dismissGrantingAccessToURL:[NSURL fileURLWithPath:path]];
+    } else {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Read error", @"")];
+    }
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
@@ -239,8 +252,9 @@
 }
 
 - (void)presentPasscode {
-    if (!self.passcodePresented) {
-        LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+    LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+
+    if (!self.passcodePresented && !passcodeVC.isBeingPresented && (passcodeVC.presentingViewController == nil)) {
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES

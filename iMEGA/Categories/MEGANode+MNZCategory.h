@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Actions
 
+- (void)mnz_downloadNodeAndShare;
 - (BOOL)mnz_downloadNode;
 - (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
@@ -43,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
-- (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
+- (NSString *)mnz_voiceCachePath;
 - (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
 
 #pragma mark - Shares

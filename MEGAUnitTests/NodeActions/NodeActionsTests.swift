@@ -204,13 +204,22 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
     }
     
-    func testFolderLink() {
+    func testFolderLinkList() {
         actions = NodeActionBuilder()
             .setDisplayMode(.folderLink)
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share, .thumbnail]))
+    }
+    
+    func testFolderLinkThumbnail() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.folderLink)
+            .setIsFile(false)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share, .thumbnail]))
     }
     
     func testFolderLinkChildMediaFile() {
@@ -411,5 +420,41 @@ class NodeActionsTests: XCTestCase {
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.download, .remove]))
+    }
+    
+    
+    // MARK: - Versions in Incoming Shared Items tests
+    
+    func testNodeVersionFileIncomingFullSharedFolder() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeVersions)
+            .setAccessLevel(.accessFull)
+            .setIsFile(true)
+            .setIsChildVersion(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .revertVersion, .remove]))
+    }
+    
+    func testNodeVersionFileIncomingReadWriteSharedFolder() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeVersions)
+            .setAccessLevel(.accessReadWrite)
+            .setIsFile(true)
+            .setIsChildVersion(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .revertVersion]))
+    }
+    
+    func testNodeVersionFileIncomingReadOnlySharedFolder() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeVersions)
+            .setAccessLevel(.accessRead)
+            .setIsFile(true)
+            .setIsChildVersion(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download]))
     }
 }

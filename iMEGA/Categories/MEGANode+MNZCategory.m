@@ -45,11 +45,11 @@
     MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
     
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
-        mainTBC.selectedIndex = SHARES;
-        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
+        mainTBC.selectedIndex = TabTypeSharedItems;
+        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[TabTypeSharedItems].childViewControllers.firstObject;
         [sharedItemsVC selectSegment:0]; // Incoming
     } else {
-        mainTBC.selectedIndex = CLOUD;
+        mainTBC.selectedIndex = TabTypeCloudDrive;
     }
     
     UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
@@ -206,6 +206,15 @@
 }
 
 #pragma mark - Actions
+
+- (void)mnz_downloadNodeAndShare {
+    [SVProgressHUD showImage:[UIImage imageNamed:@"share"] status:NSLocalizedString(@"Preparing to share…", @"Text shown when starting the process to share a filee to other app")];
+    
+    NSString *downloadsDirectory = Helper.relativePathForOffline;
+    NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
+    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+    [MEGASdkManager.sharedMEGASdk startDownloadNode:[[MEGASdkManager sharedMEGASdk] authorizeNode:self] localPath:localPath appData:[[NSString string] mnz_appDataToSystemShareFile]];
+}
 
 - (BOOL)mnz_downloadNode {
     return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
@@ -842,16 +851,9 @@
     return supportedShortFormat || supportedVideoCodecId;
 }
 
-- (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories {
-    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle];
-    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.name];
+- (NSString *)mnz_voiceCachePath {
     
-    NSError *error;
-    if (creatingDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
-        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path failed with error: %@", error);
-        }
-    }
+    NSString *nodeFilePath = [Helper pathForNode:self inSharedSandboxCacheDirectory:@"voiceCaches"];
     
     return nodeFilePath;
 }

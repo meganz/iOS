@@ -151,7 +151,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA a besoin d’au moins %@. Libérez de l’espace en supprimant les applis que vous n’utilisez plus ou les fichiers vidéo volumineux dans votre galerie. Vous pouvez aussi gérer ce que MEGA enregistre sur votre appareil.";
 /* Title for the file link view */
-"fileLink"="Lien du fichier";
+"fileLink"="Lien de fichier";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Ouvrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -161,7 +161,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Le lien n’est pas disponible";
 /* */
-"fileLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
+"fileLinkUnavailableText1"="Les raisons suivantes pourraient en être la cause :";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Le fichier a été retiré en raison du non-respect des CGU/PUA.";
 /* */
@@ -179,7 +179,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Le dossier « %@ » ne peut pas être créé";
 /* */
-"folderLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
+"folderLinkUnavailableText1"="Les raisons suivantes pourraient en être la cause :";
 /* */
 "folderLinkUnavailableText2"="Le lien de dossier a été supprimé en raison du non-respect des CGU/PUA.";
 /* */
@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Du plus ancien";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choisir";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Prendre une photo";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -304,6 +304,8 @@
 "createFolderButton"="Créer";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Un dossier du même nom existe déjà";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="La numérisation de documents n’est pas proposée";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Un fichier du même nom existe déjà";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -630,6 +632,10 @@
 "noEmailAccountConfigured"="Aucun compte courriel n’est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie Policy";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie Settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Conditions générales d’utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -875,7 +881,7 @@
 "simplePasscodeLabel"="Code d’accès simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d’accès.";
 /* Menu item */
 "help"="Aide";
@@ -904,7 +910,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Annuler les transferts";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Souhaitez-vous annuler %@ ?";
+"cancelTransfersText"="Voulez-vous annuler TOUS les transferts ?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOUS les transferts";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1017,6 +1023,8 @@
 "incomingShares"="Partages entrants";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
+/* account management button title in business account’s landing page */
+"Manage Account"="Gérer le compte";
 /*  */
 "chooseYourAccountType"="Choisissez votre type de compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,18 +1045,24 @@
 "selectOneAccountType"="Sélectionner un type de compte :";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="L’abonnement annuel est 10 % moins cher que 12 mensualités";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Pour surclasser votre abonnement actuel, veuillez contacter notre équipe d’assistance pour obtenir un [A]abonnement personnalisé[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Abonnement actuel :";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Abonnement actuel";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Passer à un abonnement personnalisé";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Demandez-nous comment passer à un abonnement personnalisé :";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Demander un abonnement";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Aucun abonnement ne correspond à votre utilisation actuelle. Veuillez [A]contacter l’assistance[/A] pour obtenir un abonnement personnalisé.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Sélectionner un abonnement :";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Économisez 17 %";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="L'ACHAT A ÉCHOUÉ  %@ (%ld)";
+"wrongPurchase"="L’ACHAT A ÉCHOUÉ  %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans les réglages d’iOS";
 /* Error message shown when the selected product doesn't exist */
@@ -1070,7 +1084,7 @@
 /* Alert message shown when a purchase was restored succesfully */
 "purchaseRestore_message"="Votre achat a été restauré";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="L'achat est interrompu";
+"failedPurchase_title"="L’achat est interrompu";
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
@@ -1475,7 +1489,7 @@
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modifié";
 /* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
-"Added"="Ajoutés";
+"Added"="Ajouté";
 /* used for example when a folder is shared with 2 or more users */
 "users"="utilisateurs";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1736,14 +1750,16 @@
 "Save to Photos"="Enregistrer dans Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Enregistrement dans Photos…";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Préparation au partage…";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Enregistrée dans Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Impossible d’enregistrer l’élément";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Rotation de la clé chiffrée";
+"Encrypted Key Rotation"="Rotation de la clé de chiffrement";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Activer la rotation de la clé chiffrée";
+"Enable Encrypted Key Rotation"="Activer la rotation de la clé de chiffrement";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
@@ -2047,7 +2063,7 @@
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Bien que MEGA ne puisse pas accéder à vos données, l’administrateur de votre compte d’entreprise a la possibilité de contrôler et de visualiser les téléversements de l’appareil photo dans votre compte utilisateur";
 /* */
-"Something went wrong"="Un problème est survenu";
+"Something went wrong"="Quelque chose a mal tourné";
 /* Title of the "Links" Shared Items. */
 "Links"="Liens";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2123,7 +2139,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Afficher dans le dossier";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Ce lien n'est pas associé à ce compte. Veuillez vous connecter avec le bon compte.";
+"This link is not related to this account. Please log in with the correct account."="Ce lien n’est pas associé à ce compte. Veuillez vous connecter avec le bon compte.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invitez des contacts maintenant";
 /* Text showing the user one contact would be invited */
@@ -2206,8 +2222,10 @@
 "Message..."="Écrivez un message…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer.";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Apparence";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Interface utilisateur";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tri et mode d’affichage";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2218,10 +2236,14 @@
 "Night"="Nuit";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2249,7 +2271,7 @@
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Le lien de dossier n’est pas disponible";
 /* Error message shown when opening a file link which doesn’t exist */
-"File link unavailable"="Lien de fichier non disponible";
+"File link unavailable"="Le lien de fichier est inaccessible";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Fichiers partagés";
 /* Over Disk Quota Screen Navigation Bar Title*/
@@ -2389,7 +2411,7 @@
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
 /* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Sélectionner un dossier";
+"Select Folder"="Sélectionner le dossier";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Voulez-vous vraiment déplacer le dossier des Téléversements de l’appareil photo vers la corbeille ? Si oui, un nouveau dossier sera automatiquement généré pour les Téléversements de l’appareil photo.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2428,3 +2450,41 @@
 "Link Password"="Mot de passe du lien";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Voulez-vous partager le mot de passe pour ce lien ?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="Le message a été envoyé";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="Échec d’envoi du message";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="L’envoi du message a été annulé";
+/* Cookie dialog header */
+"Before You Continue"="Before You Continue";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+/* Cookie dialog button label. */
+"Accept Cookies"="Accept Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Essential Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Preference Cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Advertising Cookies";
+/* Cookie settings dialog text. */
+"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Third Party Cookies";
+/* Cookie settings dialog text. */
+"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More information"="More information";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

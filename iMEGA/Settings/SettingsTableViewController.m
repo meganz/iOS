@@ -1,12 +1,18 @@
 
 #import "SettingsTableViewController.h"
 
-#import "LTHPasscodeViewController.h"
-
 #import "CameraUploadManager+Settings.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
+
+typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
+    RegulationSectionPrivacyPolicy,
+    RegulationSectionCookiePolicy,
+    RegulationSectionCookieSettings,
+    RegulationSectionTermsOfService,
+    RegulationSectionDataProtectionRegulation,
+};
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -14,8 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *passcodeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *passcodeDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *securityOptionsLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileManagementLabel;
@@ -27,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *helpLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cookiePolicyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cookieSettingsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dataProtectionRegulationLabel;
 
@@ -71,8 +77,6 @@
     self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
     self.chatLabel.text = NSLocalizedString(@"chat", @"Chat section header");
     
-    self.passcodeLabel.text = NSLocalizedString(@"passcode", nil);
-    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil));
     self.securityOptionsLabel.text = NSLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
     
     self.fileManagementLabel.text = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
@@ -84,12 +88,14 @@
     self.helpLabel.text = NSLocalizedString(@"help", @"Menu item");
     
     self.privacyPolicyLabel.text = NSLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
+    self.cookiePolicyLabel.text = NSLocalizedString(@"Cookie Policy", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy'");
+    self.cookieSettingsLabel.text = NSLocalizedString(@"Cookie Settings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
     self.termsOfServiceLabel.text = NSLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
     self.dataProtectionRegulationLabel.text = NSLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
 - (void)updateAppearance {
-    self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.cameraUploadsDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
@@ -112,17 +118,28 @@
         case 4: //Help
             break;
             
-        case 5: { //Privacy Policy, Terms of Service
+        case 5: {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                if (indexPath.row == 0) {
-                    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
-                    break;
-                } else if (indexPath.row == 1) {
-                    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
-                    break;
-                } else if (indexPath.row == 2) {
-                    [[NSURL URLWithString:@"https://mega.nz/gdpr"] mnz_presentSafariViewController];
-                    break;
+                switch (indexPath.row) {
+                    case RegulationSectionPrivacyPolicy:
+                        [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
+                        break;
+                        
+                    case RegulationSectionCookiePolicy:
+                        [[NSURL URLWithString:@"https://mega.nz/cookie"] mnz_presentSafariViewController];
+                        break;
+                        
+                    case RegulationSectionCookieSettings:
+                        [self.navigationController presentViewController:[CookieSettingsFactory.new createCookieSettingsNC] animated:YES completion:nil];
+                        break;
+                        
+                    case RegulationSectionTermsOfService:
+                        [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
+                        break;
+                        
+                    case RegulationSectionDataProtectionRegulation:
+                        [[NSURL URLWithString:@"https://mega.nz/gdpr"] mnz_presentSafariViewController];
+                        break;
                 }
             }
         }

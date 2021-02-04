@@ -1,9 +1,6 @@
-
 #import "MEGAStoreStack.h"
-
-#ifdef MAIN_APP_TARGET
-@import FirebaseCrashlytics;
-#endif
+@import Firebase;
+@import SQLite3;
 
 @interface MEGAStoreStack ()
 
@@ -28,7 +25,7 @@
 
 - (NSPersistentContainer *)persistentContainer {
     if (_persistentContainer == nil) {
-        _persistentContainer = [self newPersistentContainer];
+        _persistentContainer = [self newPersistentContainerByConfigFileProtection:NO];
     }
     
     return _persistentContainer;
@@ -41,24 +38,37 @@
  
  @return a new NSPersistentContainer object
  */
-- (NSPersistentContainer *)newPersistentContainer {
-    NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:self.modelName];
+- (NSPersistentContainer *)newPersistentContainerByConfigFileProtection:(BOOL)shouldConfigFileProtection {
+    __block NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:self.modelName];
+    NSPersistentStoreDescription *storeDescription;
     if (self.storeURL) {
-        NSPersistentStoreDescription *storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:self.storeURL];
+        storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:self.storeURL];
+        [storeDescription setOption:NSFileProtectionCompleteUntilFirstUserAuthentication forKey:NSPersistentStoreFileProtectionKey];
         container.persistentStoreDescriptions = @[storeDescription];
+        
+        if (shouldConfigFileProtection) {
+            [self removeProtectionFromURL:self.storeURL];
+        }
     }
     
     [container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription * _Nonnull storeDescription, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"error when to create core data stack %@", error);
-            
-#ifdef MAIN_APP_TARGET
             [[FIRCrashlytics crashlytics] recordError:error];
-#endif
             
-            abort();
+            if (shouldConfigFileProtection) {
+                [self addProtectionToURL:self.storeURL];
+                abort();
+            } else {
+                if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
+                    container = [self newPersistentContainerByConfigFileProtection:YES];
+                } else {
+                    abort();
+                }
+            }
         }
     }];
+
     return container;
 }
 
@@ -80,6 +90,26 @@
         MEGALogError(@"[Camera Upload] error when deleting camera upload store %@", error);
     }
     _persistentContainer = nil;
+}
+
+#pragma mark - store file protection
+
+- (void)removeProtectionFromURL:(NSURL *)url {
+    NSError *error;
+    [url setResourceValue:NSURLFileProtectionNone forKey:NSURLFileProtectionKey error:&error];
+    if (error) {
+        MEGALogError(@"error when to remove file protection %@", error);
+        [[FIRCrashlytics crashlytics] recordError:error];
+    }
+}
+
+- (void)addProtectionToURL:(NSURL *)url {
+    NSError *error;
+    [url setResourceValue:NSURLFileProtectionCompleteUntilFirstUserAuthentication forKey:NSURLFileProtectionKey error:&error];
+    if (error) {
+        MEGALogError(@"error when to add file protection %@", error);
+        [[FIRCrashlytics crashlytics] recordError:error];
+    }
 }
 
 @end

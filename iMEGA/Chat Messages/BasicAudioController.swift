@@ -106,35 +106,40 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             return
         }
         
-        switch chatMessage.message.type {
-        case .voiceClip:
-            playingCell = audioCell
-            playingMessage = message
-            
-            let node = chatMessage.message.nodeList.node(at: 0)!
-            let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
-            guard FileManager.default.fileExists(atPath: nodePath),
-                let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: nodePath)) else {
-                    MEGALogInfo("Failed to create audio player for URL: \(nodePath)")
-                    return
-            }
-            audioCell.waveView.wml_startAnimating()
-            audioPlayer = player
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.delegate = self
-            audioPlayer?.play()
-            state = .playing
-            audioCell.playButton.isSelected = true  // show pause button on audio cell
-            startProgressTimer()
-            audioCell.delegate?.didStartAudio(in: audioCell)
-            setProximitySensorEnabled(true)
-            do {
-                try AVAudioSession.sharedInstance().setMode(.default)
-            } catch {
-                
-            }
-        default:
+        var path = ""
+        
+        if let transfer = chatMessage.transfer ,transfer.transferChatMessageType() == .voiceClip {
+            path = transfer.path
+        } else if chatMessage.message.type == .voiceClip, let node = chatMessage.message.nodeList.node(at: 0) {
+            path = node.mnz_voiceCachePath()
+        } else {
             MEGALogInfo("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
+            return
+        }
+        
+        guard FileManager.default.fileExists(atPath: path),
+              let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path)) else {
+            MEGALogInfo("Failed to create audio player for URL: \(path)")
+            return
+        }
+        
+        playingCell = audioCell
+        playingMessage = message
+        
+        audioCell.waveView.startAnimating()
+        audioPlayer = player
+        audioPlayer?.prepareToPlay()
+        audioPlayer?.delegate = self
+        audioPlayer?.play()
+        state = .playing
+        audioCell.playButton.isSelected = true  // show pause button on audio cell
+        startProgressTimer()
+        audioCell.delegate?.didStartAudio(in: audioCell)
+        setProximitySensorEnabled(true)
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+        } catch {
+            MEGALogInfo("Failed to set audio mode to default")
         }
         proximityChanged()
     }
@@ -155,7 +160,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         setProximitySensorEnabled(false)
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
-            audioCell.waveView.wml_stopAnimating()
+            audioCell.waveView.stopAnimating()
         }
     }
 
@@ -168,7 +173,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             guard let audioCell = cell as? ChatVoiceClipCollectionViewCell else {
                 return
             }
-            audioCell.waveView.wml_stopAnimating()
+            audioCell.waveView.stopAnimating()
             
             cell.progressView.progress = 0.0
             cell.playButton.isSelected = false
@@ -198,12 +203,12 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         startProgressTimer()
         cell.playButton.isSelected = true // show pause button on audio cell
         cell.delegate?.didStartAudio(in: cell)
-        cell.waveView.wml_startAnimating()
+        cell.waveView.startAnimating()
     }
 
     // MARK: - Fire Methods
     @objc private func didFireProgressTimer(_ timer: Timer) {
-        guard let player = audioPlayer, let collectionView = messageCollectionView, let cell = playingCell else {
+        guard let player = audioPlayer, let collectionView = messageCollectionView, let cell = playingCell as? ChatVoiceClipCollectionViewCell else {
             return
         }
         // check if can update playing cell
@@ -219,6 +224,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
                     fatalError("MessagesDisplayDelegate has not been set.")
                 }
                 cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.currentTime), for: cell, in: collectionView)
+                cell.waveView.startAnimating()
             } else {
                 // if the current message is not the same with playing message stop playing sound
                 stopAnyOngoingPlaying()

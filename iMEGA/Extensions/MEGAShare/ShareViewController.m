@@ -23,6 +23,7 @@
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
+@import Firebase;
 
 #define MNZ_ANIMATION_TIME 0.35
 
@@ -59,6 +60,14 @@
 @implementation ShareViewController
 
 #pragma mark - Lifecycle
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [FIRApp configure];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -324,12 +333,12 @@
 }
 
 - (void)presentPasscode {
-    if (!self.passcodePresented) {
+    LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+    if (!self.passcodePresented && !passcodeVC.isBeingPresented && passcodeVC.presentingViewController == nil) {
         if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
             [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         }
         
-        LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES
@@ -525,7 +534,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
-    for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
+    for (ShareAttachment *attachment in [[ShareAttachment attachmentsArray] copy]) {
         switch (attachment.type) {
             case ShareAttachmentTypeGIF: {
                 [self writeDataAndUpload:attachment toParentNode:parentNode];

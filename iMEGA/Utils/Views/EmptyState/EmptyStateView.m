@@ -24,10 +24,20 @@
 
 #pragma mark - Init
 
++ (UINib *)nib {
+    static UINib *_nib;
+    
+    if (_nib == nil) {
+        _nib = [UINib nibWithNibName:@"EmptyStateView" bundle:[NSBundle bundleForClass:[self class]]];
+    }
+    
+    return _nib;
+}
+
 - (UIView *)initWithImage:(nullable UIImage *)image title:(nullable NSString *)title description:(nullable NSString *)description buttonTitle:(nullable NSString *)buttonTitle {
     self = [super init];
     if (self) {
-        self = [NSBundle.mainBundle loadNibNamed:@"EmptyStateView" owner:self options:nil].firstObject;
+        self = [[EmptyStateView nib] instantiateWithOwner:nil options:nil].firstObject;
         
         self.imageView.image = image;
         self.titleLabel.text = title;

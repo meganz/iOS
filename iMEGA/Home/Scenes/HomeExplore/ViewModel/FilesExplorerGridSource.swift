@@ -13,6 +13,7 @@ final class FilesExplorerGridSource: NSObject {
                 viewModel.markSelection = false
                 viewModel.allowsSelection = allowsMultipleSelection
             }
+            collectionView.allowsMultipleSelection = allowsMultipleSelection
         }
     }
     
@@ -45,6 +46,34 @@ final class FilesExplorerGridSource: NSObject {
         }
     }
     
+    func select(indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
+              let viewModel = cell.viewModel,
+              let node = nodes?[indexPath.item]  else {
+            return
+        }
+        
+        viewModel.markSelection = true
+        
+        if !(selectedNodes?.contains(node) ?? false) {
+            selectedNodes?.append(node)
+        }
+    }
+    
+    func deselect(indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
+              let viewModel = cell.viewModel,
+              let node = nodes?[indexPath.item]  else {
+            return
+        }
+        
+        viewModel.markSelection = false
+        
+        if selectedNodes?.contains(node) ?? false {
+            selectedNodes?.removeAll(where: { $0 == node })
+        }
+    }
+    
     func toggleSelectAllNodes() {
         selectedNodes = Set(selectedNodes ?? []) == Set(nodes ?? []) ? [] : nodes
         collectionView.reloadData()
@@ -53,7 +82,11 @@ final class FilesExplorerGridSource: NSObject {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        guard let gridCell = cell as? FileExplorerGridCell else { return }
+        guard let gridCell = cell as? FileExplorerGridCell,
+              let node = nodes?[indexPath.item]
+              else { return }
+        gridCell.viewModel?.allowsSelection = allowsMultipleSelection
+        gridCell.viewModel?.markSelection = selectedNodes?.contains(node) ?? false
         gridCell.viewModel?.updateSelection()
     }
     
@@ -102,6 +135,11 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
         }
         
         cell.viewModel = viewModel(forNode: nodes[indexPath.item], cell: cell)
+        
+        if cell.viewModel?.markSelection ?? false {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        }
+        
         return cell
     }
 }

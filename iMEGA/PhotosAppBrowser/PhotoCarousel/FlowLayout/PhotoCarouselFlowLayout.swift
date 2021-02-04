@@ -124,7 +124,7 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
                 
         var allAttributes: [UICollectionViewLayoutAttributes] = []
         for itemIndex in 0 ..< cellCount {
-            if rect.intersects(cellEstimatedFrames[itemIndex]) {
+            if cellEstimatedFrames.count > itemIndex && rect.intersects(cellEstimatedFrames[itemIndex]) {
                 let indexPath = IndexPath(item: itemIndex, section: 0)
                 guard let attributes = layoutAttributesForItem(at: indexPath) else {
                     fatalError("Should contain attributes for index path \(indexPath)")

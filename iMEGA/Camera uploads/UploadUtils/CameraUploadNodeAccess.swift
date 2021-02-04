@@ -8,7 +8,7 @@ final class CameraUploadNodeAccess: NSObject {
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var handle: NodeHandle? {
         didSet {
-            if handle != oldValue && handle != nil {
+            if handle != oldValue && oldValue != nil {
                 NotificationCenter.default.post(name: NSNotification.Name.MEGACameraUploadTargetFolderUpdatedInMemory, object: nil)
             }
         }
@@ -88,6 +88,11 @@ final class CameraUploadNodeAccess: NSObject {
     }
     
     // MARK: - Switch node
+    
+    /// Set a new node as the Camera Uploads target folder node
+    /// - Parameters:
+    ///   - node: The given node to be set to be Camera Uploads target folder node
+    ///   - completion: A callback closure when set node completes. It will be called on an arbitrary dispatch queue. Please dispatch to Main queue if need to update UI.
     @objc func setNode(_ node: MEGANode, completion: NodeLoadCompletion? = nil) {
         guard node.handle != handle else {
             completion?(node, nil)
@@ -96,12 +101,12 @@ final class CameraUploadNodeAccess: NSObject {
         
         nodeAccessSemaphore.wait()
         
-        sdk.setCameraUploadsFolderWithHandle(node.handle, delegate: MEGAGenericRequestDelegate { request, error in
-            switch error.type {
-            case .apiOk:
+        sdk.setCameraUploadsFolderWithHandle(node.handle, delegate: RequestDelegate { result in
+            switch result {
+            case .success:
                 self.handle = node.handle
                 completion?(node, nil)
-            default:
+            case .failure(let error):
                 completion?(nil, error)
             }
             

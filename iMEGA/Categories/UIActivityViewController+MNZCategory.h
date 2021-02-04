@@ -10,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
++ (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

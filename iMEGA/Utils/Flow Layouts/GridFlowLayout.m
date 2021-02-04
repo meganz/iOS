@@ -8,7 +8,7 @@
     
     CGSize contentSize = self.collectionViewContentSize;
     CGFloat originalMinimunInteritemSpacing = self.minimumInteritemSpacing;
-    CGSize itemSize = CGSizeMake(110, 180);
+    CGSize itemSize = CGSizeMake(150, 200);
 
     NSInteger numberOfItemsPerLine = (contentSize.width - self.sectionInset.left - self.sectionInset.right) / itemSize.width;
     CGFloat interitemSpacing = contentSize.width - self.sectionInset.left - self.sectionInset.right - itemSize.width * numberOfItemsPerLine;

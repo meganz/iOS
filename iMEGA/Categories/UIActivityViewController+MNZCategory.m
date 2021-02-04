@@ -17,6 +17,8 @@
 #import "OpenInActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#import "UIApplication+MNZCategory.h"
+@import Firebase;
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
@@ -140,13 +142,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
     
-    if ([[sender class] isEqual:UIBarButtonItem.class]) {
-        activityVC.popoverPresentationController.barButtonItem = sender;
-    } else if (sender != nil) {
-        UIView *presentationView = (UIView *)sender;
-        activityVC.popoverPresentationController.sourceView = presentationView;
-        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
-    }
+    [self configPopoverForActivityViewController:activityVC sender:sender];
     
     return activityVC;
 }
@@ -222,15 +218,31 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
     
-    if ([[sender class] isEqual:UIBarButtonItem.class]) {
-        activityVC.popoverPresentationController.barButtonItem = sender;
-    } else {
-        UIView *presentationView = (UIView *)sender;
-        activityVC.popoverPresentationController.sourceView = presentationView;
-        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
-    }
+    [self configPopoverForActivityViewController:activityVC sender:sender];
     
     return activityVC;
+}
+
++ (void)configPopoverForActivityViewController:(UIActivityViewController *)activityVC sender:(id _Nullable)sender {
+    if (activityVC.popoverPresentationController == nil) {
+        return;
+    }
+
+    if ([sender isKindOfClass:UIBarButtonItem.class]) {
+        activityVC.popoverPresentationController.barButtonItem = sender;
+    } else if ([sender isKindOfClass:UIView.class]) {
+        [self configPopoverForActivityViewController:activityVC senderView:sender];
+    } else {
+        NSError *error = [NSError errorWithDomain:@"activity.nz.mega" code:0 userInfo:@{@"callStack": [NSThread callStackSymbols]}];
+        [[FIRCrashlytics crashlytics] recordError:error];
+        
+        [self configPopoverForActivityViewController:activityVC senderView:UIApplication.sharedApplication.keyWindow];
+    }
+}
+
++ (void)configPopoverForActivityViewController:(UIActivityViewController *)activityVC senderView:(UIView *)view {
+    activityVC.popoverPresentationController.sourceView = view;
+    activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, view.frame.size.width/2, view.frame.size.height/2);
 }
 
 + (NodesAre)checkPropertiesForSharingNodes:(NSArray *)nodesArray {

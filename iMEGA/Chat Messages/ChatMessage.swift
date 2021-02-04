@@ -67,8 +67,9 @@ extension ChatMessage: SenderType {
         if message.isManagementMessage {
             return "0"
         }
-        if transfer != nil {
-            return String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk()!.myUserHandle)
+        
+        if transfer != nil, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() {
+            return String(format: "%llu", chatSDK.myUserHandle)
         }
         
         return String(format: "%llu", message.userHandle)

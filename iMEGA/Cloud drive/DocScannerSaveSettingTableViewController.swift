@@ -369,8 +369,7 @@ extension DocScannerSaveSettingTableViewController {
         else {
             return nil
         }
-        
-        return image.yy_imageByResize(to: CGSize(width: image.size.width * CGFloat(quality.rawValue), height: image.size.height * CGFloat(quality.rawValue)))
+        return image.resize(to: CGSize(width: image.size.width * CGFloat(quality.rawValue), height: image.size.height * CGFloat(quality.rawValue)))
         
     }
 

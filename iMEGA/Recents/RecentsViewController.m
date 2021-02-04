@@ -91,8 +91,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
+    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:indexPath.section];
+    if (!recentActionBucket) {
+        return;
+    }
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     MEGANode *node = nodesArray.firstObject;
     
@@ -110,7 +112,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
+    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:indexPath.section];
+    if (!recentActionBucket) {
+        return UITableViewCell.new;
+    }
     if (recentActionBucket.nodesList.size.integerValue > 1) {
         if (recentActionBucket.isMedia) {
             return [self thumbnailViewerTableViewCellForIndexPath:indexPath recentActionBucket:recentActionBucket];
@@ -120,8 +125,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     } else {
         return [self nodeTableViewCellForIndexPath:indexPath recentActionBucket:recentActionBucket];
     }
-    
-    return UITableViewCell.new;
 }
 
 - (NodeTableViewCell *)nodeTableViewCellForIndexPath:(NSIndexPath *)indexPath recentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
@@ -156,9 +159,15 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     static NSString *reuseIdentifier = @"RecentsHeaderFooterView";
     RecentsTableViewHeaderFooterView *recentsTVHFV = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
     
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:section];
+    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:section];
+    if (!recentActionBucket) {
+        return nil;
+    }
     if (section > 0) {
-        MEGARecentActionBucket *previousRecentActionBucket = [self.recentActionBucketArray objectAtIndex:(section - 1)];
+        MEGARecentActionBucket *previousRecentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:(section - 1)];
+        if (!previousRecentActionBucket) {
+            return nil;
+        }
         if ([previousRecentActionBucket.timestamp isSameDay:recentActionBucket.timestamp]) {
             recentsTVHFV.dateLabel.text = @"";
             return recentsTVHFV;
@@ -178,9 +187,15 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:section];
+    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:section];
+    if (!recentActionBucket) {
+        return 0;
+    }
     if (section > 0) {
-        MEGARecentActionBucket *previousRecentActionBucket = [self.recentActionBucketArray objectAtIndex:(section - 1)];
+        MEGARecentActionBucket *previousRecentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:(section - 1)];
+        if (!previousRecentActionBucket) {
+            return 0;
+        }
         if ([previousRecentActionBucket.timestamp isSameDay:recentActionBucket.timestamp]) {
             return 0;
         }
@@ -191,7 +206,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow = 0;
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
+    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:indexPath.section];
+    if (!recentActionBucket) {
+        return 0;
+    }
     if (recentActionBucket.nodesList.size.integerValue > 1) {
         if (recentActionBucket.isMedia && recentActionBucket.mnz_isExpanded) {
             heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 178.0f : 198.0f;
@@ -205,7 +223,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
+    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:indexPath.section];
+    if (!recentActionBucket) {
+        return;
+    }
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     if (nodesArray.count == 1) {
         MEGANode *node = nodesArray.firstObject;

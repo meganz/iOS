@@ -32,7 +32,7 @@ extension UploadFromURL {
                     withLocalPath: localFilePath,
                     parent: parentNode,
                     appData: appData,
-                    isSourceTemporary: true
+                    isSourceTemporary: false
                 )
                 return
             }

@@ -43,7 +43,7 @@ class FilesExplorerContainerViewController: UIViewController {
         self.viewModel = viewModel
         self.viewPreference = viewPreference
         super.init(nibName: nil, bundle: nil)
-        if UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue, viewPreference != .list {
+        if self.viewModel.getExplorerType() == .document, UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue, viewPreference != .list {
             currentState = states[FilesExplorerContainerGridViewState.identifier]!
         } else {
             currentState = states[FilesExplorerContainerListViewState.identifier]!
@@ -111,6 +111,15 @@ class FilesExplorerContainerViewController: UIViewController {
         selectAllBarButtonItem.isEnabled = show
     }
     
+    func showSelectButton(_ show: Bool) {
+        if show {
+            showSelectAllBarButton()
+            showCancelRightBarButton()
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     private func showMoreRightBarButton() {
         navigationItem.rightBarButtonItem = selectAllBarButtonItem
     }
@@ -141,7 +150,7 @@ class FilesExplorerContainerViewController: UIViewController {
     
     //MARK:- Action sheet methods
     
-    func showPreferences(withViewPreferenceAction viewPreferenceAction: ActionSheetAction, sender: UIBarButtonItem) {
+    func showPreferences(withViewPreferenceAction viewPreferenceAction: ActionSheetAction?, sender: UIBarButtonItem) {
         let sortPreferenceAction = ActionSheetAction(
             title: NSLocalizedString("sortTitle", comment: "Section title of the 'Sort by'"),
             detail: NSString.localizedSortOrderType(Helper.sortType(for: nil)),
@@ -159,6 +168,11 @@ class FilesExplorerContainerViewController: UIViewController {
             self?.currentState.setEditingMode()
         }
         
+        var actionList = [sortPreferenceAction, selectAction]
+        if let action = viewPreferenceAction {
+            actionList.insert(action, at: 0)
+        }
+        
         let actionSheetVC: ActionSheetViewController
         
         if viewPreference == .list {
@@ -170,7 +184,7 @@ class FilesExplorerContainerViewController: UIViewController {
             )
         } else {
             actionSheetVC = ActionSheetViewController(
-                actions: [viewPreferenceAction, sortPreferenceAction, selectAction],
+                actions: actionList,
                 headerTitle: nil,
                 dismissCompletion: nil,
                 sender: sender

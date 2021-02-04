@@ -132,14 +132,18 @@ extension ChatViewController {
     
     // MARK: - Private methods.
     private func join(button: UIButton) {
-        if MEGASdkManager.sharedMEGAChatSdk()!.initState() == .anonymous {
+        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+            return
+        }
+        
+        if chatSDK.initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink
             MEGALinkManager.selectedOption = .joinChatLink
             dismissChatRoom()
         } else {
             let delegate = MEGAChatGenericRequestDelegate { (request, error) in
                 let chatViewController = ChatViewController()
-                chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk()!.chatRoom(forChatId: request.chatHandle)
+                chatViewController.chatRoom = chatSDK.chatRoom(forChatId: request.chatHandle)
                 self.closeChatRoom()
                 self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
                 button.isEnabled = true
@@ -147,8 +151,7 @@ extension ChatViewController {
                 self.updateJoinView()
 
             }
-            MEGASdkManager.sharedMEGAChatSdk()?.autojoinPublicChat(chatRoom.chatId,
-                                                                   delegate: delegate)
+            chatSDK.autojoinPublicChat(chatRoom.chatId, delegate: delegate)
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.add(handle)
             }
@@ -480,7 +483,10 @@ extension ChatViewController: ChatInputBarDelegate {
             chatRoomDelegate.updateUnreadMessagesLabel(unreads: 0)
             chatRoomDelegate.insertMessage(message, scrollToBottom: true)
             checkDialogs(message)
-            postMessageSentAccessibilityNotification()
+            // Message sent voice over message overlaps with the send button dimmed and stops announcing. So delaying the message sent message.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.postMessageSentAccessibilityNotification()
+            }
         }
     }
     
@@ -516,7 +522,7 @@ extension ChatViewController: ChatInputBarDelegate {
                                                    appData: appData,
                                                    chatRoomId: self.chatRoom.chatId,
                                                    parentNode: voiceMessagesNode,
-                                                   isSourceTemporary: true,
+                                                   isSourceTemporary: false,
                                                    delegate: self.createUploadTransferDelegate())
             } else {
                 let requestDelegate: MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in

@@ -229,7 +229,7 @@ static NSString *kPath = @"kPath";
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return self.offline.flavor == AccountScreen;
 }
 
 - (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
