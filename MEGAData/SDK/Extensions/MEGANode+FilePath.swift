@@ -8,7 +8,7 @@ extension MEGANode {
                   includeRootFolderName: Bool,
                   excludeFileName: Bool) -> String {
         guard let parent = sdk.parentNode(for: self) else {
-            return includeRootFolderName ? name : ""
+            return (includeRootFolderName && !excludeFileName) ? name : ""
         }
         
         var path = parent.filePath(withDelimeter: delimeter,
