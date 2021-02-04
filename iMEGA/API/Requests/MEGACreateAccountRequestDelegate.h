@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGACreateAccountRequestDelegate : MEGABaseRequestDelegate
+@interface MEGACreateAccountRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (instancetype)initWithCompletion:(void (^)(MEGAError *error))completion;
 

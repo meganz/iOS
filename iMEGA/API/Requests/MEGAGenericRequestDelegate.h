@@ -1,9 +1,9 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MEGAGenericRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAGenericRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (id)init NS_UNAVAILABLE;
 
