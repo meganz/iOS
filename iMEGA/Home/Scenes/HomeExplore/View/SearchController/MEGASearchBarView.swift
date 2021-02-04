@@ -121,6 +121,10 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
             subviews.first?.backgroundColor = .mnz_grayF7F7F7()
         }
     }
+    
+    override func becomeFirstResponder() -> Bool {
+        return searchField.becomeFirstResponder()
+    }
 }
 
 // MARK: - TraitEnviromentAware

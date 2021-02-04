@@ -429,7 +429,9 @@
                     [self.pendingShareUsersArray addObject:share];
                 } else {
                     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:share.user];
-                    [self.visibleUsersArray addObject:user];
+                    if (user) {
+                        [self.visibleUsersArray addObject:user];
+                    }
                 }
             }
             
@@ -704,21 +706,22 @@
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         [self.addBarButtonItem setEnabled:NO];
         
-        if (self.tabBarController) {
+        UITabBar *tabBar = self.tabBarController.tabBar;
+        if (tabBar && ![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
-                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+                bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             } else {
-                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+                bottomAnchor = tabBar.bottomAnchor;
             }
             
-            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
                                                       [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
             
             [UIView animateWithDuration:0.33f animations:^ {
@@ -762,15 +765,17 @@
     }
 }
 
-- (MEGAUser *)getUserAndSetIndexPath:(NSIndexPath *)indexPath {
+- (nullable MEGAUser *)getUserAndSetIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self userAtIndexPath:indexPath];
-    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-    [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
+    if (user) {
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+        [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
+    }
     
     return user;
 }
 
-- (MEGAUser *)userAtIndexPath:(NSIndexPath *)indexPath {
+- (nullable MEGAUser *)userAtIndexPath:(NSIndexPath *)indexPath {
     if (!indexPath) {
         return nil;
     }
@@ -779,7 +784,7 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual:@""]) {
-                user = [self.searchVisibleUsersArray objectAtIndex:indexPath.row];
+                user = [self.searchVisibleUsersArray objectOrNilAtIndex:indexPath.row];
             } else {
                 if (indexPath.section == 0) {
                     user = self.recentlyAddedUsersArray[indexPath.row];
@@ -793,7 +798,7 @@
            
         case ContactsModeFolderSharedWith: {
             if (indexPath.section == 0 && indexPath.row > 0) {
-                user = [self.visibleUsersArray objectAtIndex:indexPath.row - 1];
+                user = [self.visibleUsersArray objectOrNilAtIndex:indexPath.row - 1];
             }
             break;
         }
@@ -802,16 +807,16 @@
             if (indexPath.row == self.selectedUsersArray.count) {
                 user = MEGASdkManager.sharedMEGASdk.myUser;
             } else {
-                user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+                user = [self.selectedUsersArray objectOrNilAtIndex:indexPath.row];
             }
             break;
         }
             
         default: { //ContactsModeShareFoldersWith, ContactsModeChatStartConversation, ContactsModeChatAddParticipant, ContactsModeChatAttachParticipant and ContactsModeChatCreateGroup
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual:@""]) {
-                user = [self.searchVisibleUsersArray objectAtIndex:indexPath.row];
+                user = [self.searchVisibleUsersArray objectOrNilAtIndex:indexPath.row];
             } else {
-                user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+                user = [self.visibleUsersArray objectOrNilAtIndex:indexPath.row];
             }
             break;
         }
@@ -1050,6 +1055,10 @@
 
 - (void)openChatRoomForIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self userAtIndexPath:indexPath];
+    if (user == nil) {
+        return;
+    }
+    
     MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:user.handle];
     if (chatRoom) {
         [self openChatRoom:chatRoom];

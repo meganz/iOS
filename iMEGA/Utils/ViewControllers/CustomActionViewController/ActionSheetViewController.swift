@@ -220,6 +220,9 @@ extension ActionSheetViewController {
 extension ActionSheetViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard modalPresentationStyle != .popover else {
+            return
+        }
         if scrollView.contentOffset.y <= 0 {
             top?.constant = max(top!.constant - scrollView.contentOffset.y, 0)
             scrollView.setContentOffset(.zero, animated: false)
@@ -233,6 +236,9 @@ extension ActionSheetViewController: UITableViewDelegate {
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard modalPresentationStyle != .popover else {
+            return
+        }
         var constant = CGFloat()
 
         let offset = scrollView.panGestureRecognizer.translation(in: view).y
@@ -256,6 +262,9 @@ extension ActionSheetViewController: UITableViewDelegate {
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard modalPresentationStyle != .popover else {
+            return
+        }
         var constant = CGFloat()
         if decelerate {
             return
@@ -381,7 +390,6 @@ extension ActionSheetViewController: UIPopoverPresentationControllerDelegate {
     func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
         let height = CGFloat(actions.count * 60) + (headerView?.bounds.height ?? 0)
         top?.constant = 0.0
-        tableView.isScrollEnabled = false
         backgroundView.backgroundColor = .clear
         preferredContentSize = CGSize(width: 320, height: height)
     }

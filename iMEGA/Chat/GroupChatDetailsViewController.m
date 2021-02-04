@@ -319,11 +319,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     customModalAlertVC.firstCompletion = ^{
         [weakCustom dismissViewControllerAnimated:YES completion:^{            
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-            if (UIDevice.currentDevice.iPadDevice) {
+            if (activityVC.popoverPresentationController != nil) {
                 activityVC.popoverPresentationController.sourceView = self.view;
-                activityVC.popoverPresentationController.sourceRect = self.view.frame;
-                
+                activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.height/2);
             }
+            
             [self presentViewController:activityVC animated:YES completion:nil];
         }];
     };

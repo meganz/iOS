@@ -46,7 +46,7 @@ final class FilesExplorerViewModel {
     
     // MARK: - Debouncer
     private static let REQUESTS_DELAY: TimeInterval = 0.35
-    private var debouncer: Debouncer = Debouncer(delay: REQUESTS_DELAY)
+    private let debouncer = Debouncer(delay: REQUESTS_DELAY)
     
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
@@ -128,5 +128,9 @@ final class FilesExplorerViewModel {
             guard let self = self else { return }
             self.invokeCommand?(.onTransferCompleted(node))
         }
+    }
+    
+    func getExplorerType() -> ExplorerTypeEntity {
+        return self.explorerType
     }
 }

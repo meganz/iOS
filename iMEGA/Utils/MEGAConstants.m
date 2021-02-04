@@ -60,7 +60,7 @@ NSString * const MEGAVideoConcurrentCountUserInfoKey = @"nz.mega.videoConcurrent
 NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey = @"nz.mega.uploadingTasksReachedMaximumCountKey";
 NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUploadingTasksCountKey";
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
-NSString * const MEGANodeInfoKey = @"nz.mega.nodeInfoKey";
+NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 
 #pragma mark - camera upload constants
 
@@ -92,8 +92,8 @@ NSString * const MEGAShareExtensionStorageFolder = @"Share Extension Storage";
 NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
 NSString * const MEGAExtensionLogsFolder = @"logs";
 NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
-NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
-NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Cache/NSE";
+NSString * const MEGAExtensionCacheFolder = @"Library/Caches/";
+NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Caches/NSE";
 
 #pragma mark - MEGA Activity Types
 

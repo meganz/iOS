@@ -8,6 +8,7 @@
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"
+@import Firebase;
 
 @interface FileProvider () <MEGARequestDelegate, MEGATransferDelegate>
 
@@ -28,6 +29,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        [FIRApp configure];
+        
         [self.fileCoordinator coordinateWritingItemAtURL:NSFileProviderManager.defaultManager.documentStorageURL options:0 error:nil byAccessor:^(NSURL *newURL) {
             // ensure the documentStorageURL actually exists
             NSError *error = nil;

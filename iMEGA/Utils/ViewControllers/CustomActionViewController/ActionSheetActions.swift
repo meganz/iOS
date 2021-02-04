@@ -201,4 +201,12 @@ extension NodeAction {
         
         return NodeAction(title: NSLocalizedString("Label...", comment: "Context menu item which allows to mark folders with own color label"), detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: UIImage(named: "label"), type: .label)
     }
+    
+    class func listAction() -> NodeAction {
+        return NodeAction(title: NSLocalizedString("List View", comment: "Text shown for switching from thumbnail view to list view."), detail: nil, image: UIImage(named: "gridThin"), type: .list)
+    }
+    
+    class func thumbnailAction() -> NodeAction {
+        return NodeAction(title: NSLocalizedString("Thumbnail View", comment: "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .thumbnail)
+    }
 }

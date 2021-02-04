@@ -179,7 +179,7 @@ class GetLinkViewController: UIViewController {
                 UIPasteboard.general.string = nodes[index].publicLink
                 SVProgressHUD.show(copyImage, status: NSLocalizedString("Link Copied to Clipboard", comment: "Message shown when the link has been copied to the Clipboard"))
             } else {
-                UIPasteboard.general.string = nodes.map { $0.publicLink }.joined(separator: " ")
+                UIPasteboard.general.string = nodes.compactMap { $0.publicLink }.joined(separator: " ")
                 SVProgressHUD.show(copyImage, status: NSLocalizedString("Links Copied to Clipboard", comment: "Message shown when the links have been copied to the Clipboard"))
             }
         } else {
@@ -394,7 +394,7 @@ class GetLinkViewController: UIViewController {
     }
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
-        let textToShare = getLinkVM.multilink ? nodes.map { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
+        let textToShare = getLinkVM.multilink ? nodes.compactMap { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
         
         showShareActivity(sender, textToShare: textToShare) { [weak self] in
             if self?.getLinkVM.separateKey ?? false {

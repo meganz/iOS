@@ -133,7 +133,7 @@
             MEGALogDebug(@"[Camera Upload] put node %@ succeeded for %@", node.name, uploadInfo.savedLocalIdentifier);
             [AttributeUploadManager.shared uploadLocalAttribute:attributeInfo forNode:node];
             [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeInfoKey : node}];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeHandleKey : @(node.handle)}];
         }
     }]];
     
@@ -152,12 +152,12 @@
                 [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
             } else {
                 [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeInfoKey : node}];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeHandleKey : @(node.handle)}];
             }
         }]];
     } else {
         [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeInfoKey : node}];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeHandleKey : @(node.handle)}];
     }
 }
 

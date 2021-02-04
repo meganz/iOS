@@ -17,29 +17,50 @@
 
 @implementation NodeCollectionViewCell
 
-- (void)configureCellForNode:(MEGANode *)node {
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    if (self.moreButton.hidden && selected) {
+        self.selectImageView.image = [UIImage imageNamed:@"thumbnail_selected"];
+        self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"00A886"].CGColor;
+    } else {
+        self.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
+        if (@available(iOS 12.0, *)) {
+            switch (self.traitCollection.userInterfaceStyle) {
+                case UIUserInterfaceStyleUnspecified:
+                case UIUserInterfaceStyleLight: {
+                    self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"F7F7F7"].CGColor;
+                }
+                    break;
+                case UIUserInterfaceStyleDark: {
+                    self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"545458"].CGColor;
+                }
+            }
+        } else {
+            self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"F7F7F7"].CGColor;
+        }
+    }
+}
+
+- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
             self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
         } else {
             MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (request.nodeHandle == self.node.handle) {
-                    self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
                     self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
                 }
             }];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+            [api getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView mnz_imageForNode:node];
         }
-        self.thumbnailImageView.hidden = NO;
         self.thumbnailIconView.hidden = YES;
     } else {
         self.thumbnailIconView.hidden = NO;
         [self.thumbnailIconView mnz_imageForNode:node];
-        self.thumbnailImageView.hidden = YES;
+        self.thumbnailImageView.image = nil;
     }
     
     if (node.isTakenDown) {
@@ -47,21 +68,43 @@
         self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
+        if (node.isFile) {
+            self.infoLabel.text = [Helper sizeForNode:node api:api];
+        } else if (node.isFolder) {
+            self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
+        }
     }
     
-    if (!node.name.mnz_isVideoPathExtension) {
-        self.thumbnailPlayImageView.hidden = YES;
+    self.durationLabel.hidden = !node.name.mnz_isVideoPathExtension;
+    if (!self.durationLabel.hidden) {
+        self.durationLabel.layer.cornerRadius = 4;
+        self.durationLabel.layer.masksToBounds = true;
+        self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
     }
 
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
+    [self setupAppearance];
 }
 
-- (void)selectCell:(BOOL)selected {
-    self.selected = selected;
-    self.selectImageView.image = selected ? [UIImage imageNamed:@"thumbnail_selected"] :[UIImage imageNamed:@"checkBoxUnselected"];
+- (void)setupAppearance {
+    [self setSelected:NO];
+    
+    if (@available(iOS 12.0, *)) {
+        switch (self.traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
+            }
+                break;
+            case UIUserInterfaceStyleDark: {
+                self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"1C1C1E"];
+            }
+        }
+    } else {
+        self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
+    }
 }
 
 @end

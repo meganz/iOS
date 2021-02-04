@@ -8,6 +8,12 @@
     [self updateAppearance];
 }
 
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    
+    self.thumbnailSelectionOverlayView.hidden = !selected;
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
 

@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="เก่าสุด";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="เลือก";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="จับภาพ";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -304,6 +304,8 @@
 "createFolderButton"="สร้าง";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="มีโฟลเดอร์ชื่อเดียวกันอยู่แล้ว";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="สแกนเอกสารยังไม่พร้อมใช้งาน";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="มีไฟล์ชื่อเดียวกันอยู่แล้ว";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -630,6 +632,10 @@
 "noEmailAccountConfigured"="บัญชีอีเมลยังไม่มีในการตั้งค่าบนอุปกรณ์ของคุณ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="นโยบายสิทธิส่วนบุคคล";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie Policy";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie Settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="เงื่อนไขการให้บริการ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -875,7 +881,7 @@
 "simplePasscodeLabel"="รหัสแบบง่าย";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลในเครื่องหลังจากใส่รหัสผ่านไม่ถูกต้องเกิน 10 ครั้ง";
 /* Menu item */
 "help"="ช่วยเหลือ";
@@ -1017,6 +1023,8 @@
 "incomingShares"="แชร์ขาเข้า";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="อัปเกรดบัญชี";
+/* account management button title in business account’s landing page */
+"Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="เลือกประเภทบัญชีของคุณ";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1045,18 @@
 "selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="การสมัครสมาชิกรายปีคือ 17% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="แผนปัจจุบัน:";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Current plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Upgrade to a custom plan";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="ส่งคำขอแผน";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="ยังไม่มีแผนที่เหมาะสมกับการใช้งานปัจจุบันของคุณ กรุณา [A]ติดต่อฝ่ายสนับสนุน[/A] เพื่อกำหนดแผนของคุณเอง";
 /* Header shown to help on the purchasin process */
 "selectMembership"="เลือกประเภทสมาชิก:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1736,6 +1750,8 @@
 "Save to Photos"="บันทึกลงในรูปถ่าย";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="กำลังบันทึกไปยังรูปภาพ...";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="กำลังเตรียมการแชร์…";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="บันทึกไปยังรูปภาพแล้ว";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2206,8 +2222,10 @@
 "Message..."="พิมพ์ข้อความ…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="ลากไปทางซ้ายเพื่อยกเลิก หรือปล่อยเพื่อส่ง";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="การแสดงผล";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="หน้าจอผู้ใช้";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="เรียงลําดับและโหมดมุมมอง";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2218,10 +2236,14 @@
 "Night"="กลางคืน";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="เรียบง่าย";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="เค้าโครง";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="ไอคอนแอป";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="กำหนดค่าลำดับการเรียงและมุมมองเริ่มต้น (รายการหรือรูปขนาดย่อ)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2428,3 +2450,41 @@
 "Link Password"="รหัสผ่านลิงก์";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="คุณต้องการแชร์รหัสผ่านสำหรับลิงก์นี้หรือไม่";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="ข้อความที่ส่งแล้ว";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="ส่งข้อความไม่สำเร็จ";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="ยกเลิกการส่งข้อความแล้ว";
+/* Cookie dialog header */
+"Before You Continue"="Before You Continue";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+/* Cookie dialog button label. */
+"Accept Cookies"="Accept Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Essential Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Preference Cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Advertising Cookies";
+/* Cookie settings dialog text. */
+"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Third Party Cookies";
+/* Cookie settings dialog text. */
+"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More information"="More information";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

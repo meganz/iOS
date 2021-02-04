@@ -14,7 +14,11 @@ class AudioRecorder: NSObject {
     private var meterTable = MeterTable()
 
     private var isCallActive: Bool {
-        return MEGASdkManager.sharedMEGAChatSdk()!.mnz_existsActiveCall
+        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+            return false
+        }
+        
+        return chatSDK.mnz_existsActiveCall
     }
     
     private var destinationURL: URL {

@@ -1,4 +1,5 @@
 import UserNotifications
+import Firebase
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
@@ -16,6 +17,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var waitingForThumbnail = false
     private var waitingForUserAttributes = false
+    
+    override init() {
+        super.init()
+        FirebaseApp.configure()
+    }
 
     // MARK: - UNNotificationServiceExtension
 

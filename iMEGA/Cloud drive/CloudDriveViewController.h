@@ -13,7 +13,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
-@property (nonatomic) BOOL homeQuickActionSearch;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *searchNodesArray;
@@ -26,7 +25,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 @property (assign, nonatomic) BOOL allNodesSelected;
 
-- (void)activateSearch;
 - (void)presentUploadAlertController;
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
@@ -37,5 +35,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 - (void)didSelectNode:(MEGANode *)node;
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;
+- (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

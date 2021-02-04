@@ -55,6 +55,8 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
+#import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
+#import <SDWebImage/SDWebImage.h>
 
 #ifdef DEBUG
 #import <DoraemonKit/DoraemonManager.h>
@@ -92,7 +94,6 @@
 
 @property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
 
-@property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 @property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
@@ -145,12 +146,15 @@
 #ifdef DEBUG
     [[DoraemonManager shareInstance] install];
 #endif
+    [self migrateExtensionCachesLocation];
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
         _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
     }
     
+    SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
+    [[SDImageCodersManager sharedManager] addCoder:webPCoder];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
     [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
@@ -159,11 +163,7 @@
     
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
-        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-    }
-    
+    [Helper restoreAPISetting];
     [ChatUploader.sharedInstance setup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -249,7 +249,7 @@
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
                                                                          withLogout:NO
                                                                      andLogoutTitle:nil];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
@@ -324,11 +324,6 @@
         [self beginBackgroundTaskWithName:@"PendingTasks"];
     }
     
-    if (self.backgroundTaskMutableDictionary.count == 0) {
-        self.appSuspended = YES;
-        MEGALogDebug(@"App suspended property = YES.");
-    }
-    
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -350,15 +345,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
     [self checkChatInitState];
-    
-    if (self.wasAppSuspended && !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
-        //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
-        [[MEGAReachabilityManager sharedManager] reconnect];
-    } else {
-        [[MEGAReachabilityManager sharedManager] retryOrReconnect];
-    }
-    self.appSuspended = NO;
-    MEGALogDebug(@"App suspended property = NO.");
+    [MEGAReachabilityManager.sharedManager retryOrReconnect];
     
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
@@ -634,10 +621,6 @@
         [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
         
         [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
-        if (self.backgroundTaskMutableDictionary.count == 0) {
-            self.appSuspended = YES;
-            MEGALogDebug(@"App suspended property = YES.");
-        }
     }
     MEGALogDebug(@"Ended all background tasks with name: %@", name);
 }
@@ -692,21 +675,23 @@
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
     if ([type isEqualToString:@"mega.ios.search"]) {
-        self.mainTBC.selectedIndex = CLOUD;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+        self.mainTBC.selectedIndex = TabTypeHome;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeHome];
+        HomeViewController *homeVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [cloudDriveVC activateSearch]; // Cloud Drive already presented, so activate search bar
+                [homeVC activateSearch]; // Home already presented, so activate search bar
             } else {
-                cloudDriveVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+                homeVC.homeQuickActionSearch = YES; // Search will become active after the Home did appear
             }
         } else {
-            [cloudDriveVC activateSearch];
+            [homeVC activateSearch];
         }
+        
+        
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
-        self.mainTBC.selectedIndex = CLOUD;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
+        self.mainTBC.selectedIndex = TabTypeCloudDrive;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
@@ -751,7 +736,7 @@
                 }
                 
                 if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
-                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
                                                                              withLogout:NO
                                                                          andLogoutTitle:nil];
                 }
@@ -759,10 +744,6 @@
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
-            if (MEGALinkManager.nodeToPresentBase64Handle) {
-                [MEGALinkManager presentNode];
-            }
-            
             if (isAccountFirstLogin) {
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
@@ -776,11 +757,10 @@
                 }
         
                 [MEGALinkManager processSelectedOptionOnLink];
+                [self showCookieDialogIfNeeded];
+            } else {
+                [self processActionsAfterSetRootVC];
             }
-            
-            [self showLink:MEGALinkManager.linkURL];
-            
-            [self manageQuickActionType:self.quickActionType];
         }
     }
     
@@ -789,6 +769,19 @@
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
+}
+
+- (void)processActionsAfterSetRootVC {
+    
+    if (MEGALinkManager.nodeToPresentBase64Handle) {
+        [MEGALinkManager presentNode];
+    }
+    
+    [self manageQuickActionType:self.quickActionType];
+    
+    [self showCookieDialogIfNeeded];
+    
+    [self showEnableTwoFactorAuthenticationIfNeeded];
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -811,15 +804,15 @@
     NSUInteger tabTag = 0;
     switch (self.megatype) {
         case 1:
-            tabTag = SHARES;
+            tabTag = TabTypeSharedItems;
             break;
             
         case 2:
-            tabTag = CHAT;
+            tabTag = TabTypeChat;
             break;
             
         case 3:
-            tabTag = HOME;
+            tabTag = TabTypeHome;
             break;
             
         default:
@@ -849,6 +842,32 @@
             }
         }];
     }
+}
+
+- (void)migrateExtensionCachesLocation {
+    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+    NSURL *oldDestinationURL = [containerURL URLByAppendingPathComponent:@"Library/Cache/" isDirectory:YES];
+    NSURL *newDestinationURL = [containerURL URLByAppendingPathComponent:MEGAExtensionCacheFolder isDirectory:YES];
+    
+    NSError *error;
+    
+    NSArray *files = [NSFileManager.defaultManager contentsOfDirectoryAtPath:oldDestinationURL.path error:&error];
+    
+    if (error) {
+        MEGALogError(@"Failed to locate/create Library/Cache/ with error: %@", error);
+    }
+    
+    for (NSString *file in files) {
+        [NSFileManager.defaultManager moveItemAtPath:[oldDestinationURL.path stringByAppendingPathComponent:file]
+                    toPath:[newDestinationURL.path stringByAppendingPathComponent:file]
+                     error:&error];
+        if (error) {
+            MEGALogError(@"Contents of directory at path failed with error: %@", error);
+        }
+    }
+    
+    [NSFileManager.defaultManager removeItemAtURL:oldDestinationURL error:&error];
+    
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1175,12 +1194,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self.window setRootViewController:_mainTBC];
     } else {
         [self showLink:MEGALinkManager.linkURL];
-        
-        if (MEGALinkManager.nodeToPresentBase64Handle) {
-            [MEGALinkManager presentNode];
-        }
-        
-        [self manageQuickActionType:self.quickActionType];
+
+        [self processActionsAfterSetRootVC];
     }
 }
 
@@ -1279,6 +1294,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)readyToShowRecommendations {
     [self presentBusinessExpiredViewIfNeeded];
+    [self showCookieDialogIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
@@ -1630,7 +1646,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (self.openChatLater) {
                     [self.mainTBC openChatRoomNumber:self.openChatLater];                    
                 }
-                [self showEnableTwoFactorAuthenticationIfNeeded];
             }
       
             [MEGAIndexer.sharedIndexer reindexSpotlightIfNeeded];
@@ -1948,6 +1963,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_setNodeCoordinates];
+        
+        if ([transfer.appData containsString:@"SystemShareFile"]) {
+            [transfer mnz_showSystemShare];
+        }
     }
 }
 

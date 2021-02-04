@@ -5,26 +5,15 @@
 #import "CameraScanner.h"
 #import "CameraUploadRecordManager.h"
 
-static const NSTimeInterval BackgroundRefreshMaximumDuration = 25;
-static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;
+static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @interface BackgroundRefreshPerformer ()
 
-@property (strong, nonatomic) dispatch_source_t monitorTimer;
-@property (strong, nonatomic) dispatch_queue_t notificationProcessingSerialQueue;
+@property (strong, nonatomic) dispatch_block_t monitorWorkItem;
 
 @end
 
 @implementation BackgroundRefreshPerformer
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _notificationProcessingSerialQueue = dispatch_queue_create("nz.mega.backgroundRefresh.notificationProcessingSerialQueue", DISPATCH_QUEUE_SERIAL);
-    }
-    
-    return self;
-}
 
 #pragma mark - background refresh
 
@@ -67,38 +56,34 @@ static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;
     
     [CameraUploadManager.shared startCameraUploadIfNeeded];
     
-    [self setupMonitorTimerWithBackgroundRefreshCompletionHandler:completion];
+    [self monitorBackgroundRefreshWithCompletionHandler:completion];
 }
 
-#pragma mark - background refresh monitor timer
+#pragma mark - timer management
 
-- (void)setupMonitorTimerWithBackgroundRefreshCompletionHandler:(void (^)(UIBackgroundFetchResult))completion {
-    self.monitorTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(QOS_CLASS_UTILITY, 0));
-    dispatch_source_set_timer(self.monitorTimer, dispatch_time(DISPATCH_TIME_NOW, (uint64_t)(BackgroundRefreshMaximumDuration * NSEC_PER_SEC)), (uint64_t)(BackgroundRefreshMaximumDuration * NSEC_PER_SEC), (uint64_t)(BackgroundRefreshDurationTolerance * NSEC_PER_SEC));
-    dispatch_source_set_event_handler(self.monitorTimer, ^{
-        [self cancelMonitorTimerIfNeeded];
-    });
-    
-    dispatch_source_set_cancel_handler(self.monitorTimer, ^{
-        [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
+- (void)monitorBackgroundRefreshWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completion {
+    __weak typeof(self) weakSelf = self;
+    self.monitorWorkItem = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
+        if (weakSelf) {
+            [NSNotificationCenter.defaultCenter removeObserver:weakSelf name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
+        }
+        
         completion(UIBackgroundFetchResultNewData);
     });
     
-    dispatch_resume(self.monitorTimer);
-}
-
-- (void)cancelMonitorTimerIfNeeded {
-    if (self.monitorTimer && dispatch_testcancel(self.monitorTimer) == 0) {
-        dispatch_source_cancel(self.monitorTimer);
+    if (self.monitorWorkItem) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BackgroundRefreshDuration * NSEC_PER_SEC)),
+                       dispatch_get_global_queue(QOS_CLASS_UTILITY, 0),
+                       self.monitorWorkItem);
     }
 }
 
 #pragma mark - notifications
 
 - (void)didReceiveCameraUploadAllAssetsFinishedProcessingNotification {
-    dispatch_async(self.notificationProcessingSerialQueue, ^{
-        [self cancelMonitorTimerIfNeeded];
-    });
+    if (self.monitorWorkItem) {
+        dispatch_block_cancel(self.monitorWorkItem);
+    }
 }
 
 @end

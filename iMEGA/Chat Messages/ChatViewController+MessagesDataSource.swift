@@ -12,7 +12,7 @@ extension ChatViewController: MessagesDataSource {
 
     public func messageForItem(at indexPath: IndexPath,
                                in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
+        return messages[safe: indexPath.section] ?? ConcreteMessageType(sender: User(senderId: "", displayName: "") , messageId: "", sentDate: Date(), kind: .text(""))
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {

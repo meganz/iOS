@@ -1209,7 +1209,7 @@
             }
             if (self.selectedNodesMutableArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesMutableArray.firstObject;
-                MEGANode *nodePressed = self.incomingButton.selected ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+                MEGANode *nodePressed = self.incomingButton.selected ? [self.incomingNodesMutableArray objectOrNilAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectOrNilAtIndex:indexPath.row];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditing:NO animated:YES];
                 }

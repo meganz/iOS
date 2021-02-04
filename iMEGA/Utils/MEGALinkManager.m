@@ -371,7 +371,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot]) {
                 if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
                     MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
-                    mainTBC.selectedIndex = CHAT;
+                    mainTBC.selectedIndex = TabTypeChat;
                 }
             }
             break;
@@ -574,6 +574,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)showFolderLinkView {
     MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+    folderNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     
     FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
     
@@ -768,7 +769,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         
         
         MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
-        mainTBC.selectedIndex = CHAT;
+        mainTBC.selectedIndex = TabTypeChat;
         
         if (mainTBC.presentedViewController) {
             [mainTBC dismissViewControllerAnimated:NO completion:^{

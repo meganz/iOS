@@ -5,6 +5,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
+    MEGAAPIEnvProduction,
+    MEGAAPIEnvStaging,
+    MEGAAPIEnvStaging444,
+    MEGAAPIEnvSandbox3
+};
+
 @interface Helper : NSObject
 
 #pragma mark - Images
@@ -46,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
 + (void)changeApiURL;
-
++ (void)restoreAPISetting;
 + (void)cannotPlayContentDuringACallAlert;
 
 + (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction;
@@ -74,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
 
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
-+ (void)resetSearchControllerFrame:(UISearchController *)searchController;
++ (void)resetFrameForSearchController:(UISearchController *)searchController;
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;

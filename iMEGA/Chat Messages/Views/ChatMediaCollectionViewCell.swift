@@ -21,8 +21,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     let autoDownloadThresholdSize = 5.0 * 1024 * 1024
 
-    open var imageView: YYAnimatedImageView = {
-        let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    open var imageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -126,7 +126,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             playIconView.isHidden = true
             downloadGifIcon.isHidden = true
             let path = NSHomeDirectory().append(pathComponent: transfer.path)
-            imageView.yy_imageURL = URL(fileURLWithPath: path)
+            imageView.sd_setImage(with: URL(fileURLWithPath: path))
             return
         }
 
@@ -170,7 +170,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         if name.pathExtension == "gif" || name.pathExtension == "webp" {
             let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
-                imageView.yy_imageURL = URL(fileURLWithPath: originalImagePath)
+                imageView.sd_setImage(with: URL(fileURLWithPath: originalImagePath))
+                
                 downloadGifIcon.isHidden = true
             } else if node.size.doubleValue < autoDownloadThresholdSize {
                 MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
@@ -195,7 +196,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
         if currentNode?.handle == transfer.nodeHandle {
             if transfer.path != nil, FileManager.default.fileExists(atPath: transfer.path) {
-                imageView.yy_imageURL = URL(fileURLWithPath: transfer.path)
+                imageView.sd_setImage(with: URL(fileURLWithPath: transfer.path))
                 downloadGifIcon.isHidden = true
 
             }

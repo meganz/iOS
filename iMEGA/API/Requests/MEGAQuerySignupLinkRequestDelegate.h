@@ -1,9 +1,9 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
 #import "URLType.h"
 
-@interface MEGAQuerySignupLinkRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAQuerySignupLinkRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (id)init NS_UNAVAILABLE;
 

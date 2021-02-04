@@ -23,8 +23,8 @@ final class BannerCarouselCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(with banner: MEGABannerView.Banner) {
-        iconImageView.yy_imageURL = banner.iconImage
-        backgroundImageView.yy_imageURL = banner.backgroundImage
+        iconImageView.sd_setImage(with: banner.iconImage)
+        backgroundImageView.sd_setImage(with: banner.backgroundImage)
         titleLabel.text = banner.title
         subtitleLabel.text = banner.detail
         bannerIdentifier = banner.identifier

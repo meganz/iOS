@@ -24,7 +24,7 @@ final class BackupRegister {
     func registerBackupIfNeeded() {
         MEGALogDebug("[Camera Upload] heartbeat - start registering backup")
         guard cachedBackupId == nil else {
-            MEGALogDebug("[Camera Upload] heartbeat - find local cached backup \(cachedBackupId ?? 0)")
+            MEGALogDebug("[Camera Upload] heartbeat - find local cached backup \(type(of: sdk).base64Handle(forHandle: (cachedBackupId ?? 0)) ?? "")")
             return
         }
         
@@ -42,14 +42,14 @@ final class BackupRegister {
                                     folderPath: MEGACameraUploadsFolderPath,
                                     name: NSLocalizedString("cameraUploadsLabel", comment: ""),
                                     state: .active,
-                                    delegate: HeartbeatRequestDelegate { [weak self] result in
+                                    delegate: HeartbeatRequestDelegate { [weak self, sdk = self.sdk] result in
                                         switch result {
                                         case .failure(let error):
                                             Crashlytics.crashlytics().record(error: error)
                                             MEGALogError("[Camera Upload] heartbeat - error when to register backup \(error)")
                                         case .success(let request):
                                             self?.cachedBackupId = request.parentHandle
-                                            MEGALogDebug("[Camera Upload] heartbeat - register backup \(request.parentHandle) success")
+                                            MEGALogDebug("[Camera Upload] heartbeat - register backup \(type(of: sdk).base64Handle(forHandle: request.parentHandle) ?? "") success")
                                         }
                                     })
         }
@@ -65,13 +65,13 @@ final class BackupRegister {
         
         $cachedBackupId.remove()
         
-        sdk.unregisterBackup(backupId, delegate: HeartbeatRequestDelegate { result in
+        sdk.unregisterBackup(backupId, delegate: HeartbeatRequestDelegate { [sdk] result in
             switch result {
             case .failure(let error):
                 Crashlytics.crashlytics().record(error: error)
-                MEGALogError("[Camera Upload] heartbeat - error when to unregister backup \(backupId)")
+                MEGALogError("[Camera Upload] heartbeat - error when to unregister backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "")")
             case .success:
-                MEGALogDebug("[Camera Upload] heartbeat - unregister backup \(backupId) success")
+                MEGALogDebug("[Camera Upload] heartbeat - unregister backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") success")
             }
         })
     }
@@ -98,13 +98,13 @@ final class BackupRegister {
                                   targetNode: node,
                                   folderPath: MEGACameraUploadsFolderPath,
                                   state: .active,
-                                  delegate: HeartbeatRequestDelegate { result in
+                                  delegate: HeartbeatRequestDelegate { [sdk = self.sdk] result in
                                     switch result {
                                     case .failure(let error):
                                         Crashlytics.crashlytics().record(error: error)
-                                        MEGALogError("[Camera Upload] heartbeat - error when to update backup \(backupId) \(error)")
+                                        MEGALogError("[Camera Upload] heartbeat - error when to update backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") \(error)")
                                     case .success:
-                                        MEGALogDebug("[Camera Upload] heartbeat - update backup \(backupId) success")
+                                        MEGALogDebug("[Camera Upload] heartbeat - update backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") success")
                                     }
                                   })
             

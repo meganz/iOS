@@ -215,6 +215,10 @@
 }
 
 - (void)import {
+    if (self.node == nil) {
+        return;
+    }
+    
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
@@ -276,8 +280,13 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         if (self.node) {
-            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
-            [self presentViewController:activityVC animated:YES completion:nil];
+            NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[self.node]];
+            if (checkFileExist.count || self.node.isFolder) {
+                UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:sender];
+                [self presentViewController:activityVC animated:YES completion:nil];
+            } else {
+                [self.node mnz_downloadNodeAndShare];
+            }
         } else {
             if (self.filePath) {
                 UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:self.filePath]] applicationActivities:nil];
@@ -403,7 +412,7 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare:
-            [self shareAction:nil];
+            [self shareAction:sender];
             break;
             
         case MegaNodeActionTypeDownload:

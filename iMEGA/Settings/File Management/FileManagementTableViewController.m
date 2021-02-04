@@ -115,11 +115,11 @@
         self.offlineSizeString = [Helper memoryStyleStringFromByteCount:offlineSize];
         self.offlineSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.offlineSizeString];
         
-        unsigned long long thumbnailsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-        unsigned long long previewsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
+        unsigned long long cachesFolderSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
+
         unsigned long long temporaryDirectory = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSTemporaryDirectory()];
         unsigned long long groupDirectory = [NSFileManager.defaultManager mnz_groupSharedDirectorySize];
-        unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory + groupDirectory;
+        unsigned long long cacheSize = cachesFolderSize + temporaryDirectory + groupDirectory;
         
         self.cacheSizeString = [Helper memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.cacheSizeString];
@@ -270,15 +270,11 @@
         }
             
         case 1: { //On your device - Clear cache
-            NSString *thumbnailsPathString = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            NSString *previewsPathString = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
-            
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:thumbnailsPathString];
-                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:previewsPathString];
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
                 [self removeGroupSharedDirectoryContents];
                 
                 dispatch_async(dispatch_get_main_queue(), ^(void){

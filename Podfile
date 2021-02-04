@@ -6,9 +6,8 @@ workspace 'iMEGA'
 
 abstract_target 'iMEGA' do
   use_frameworks!
-  pod 'YYWebImage'
-  # In iOS 14 there is this issue of image not being displayed 'YYAnimatedImageView'. The below repo fixes this issue. Please delete the below line of code once the issue is fixed in the main repository.
-  pod 'YYImage/WebP', :git => 'https://github.com/sundayfun/YYImage.git'
+  pod 'SDWebImageWebPCoder'
+  pod 'Firebase/Crashlytics'
 
   target 'MEGA' do
     # Pods for MEGA
@@ -19,15 +18,17 @@ abstract_target 'iMEGA' do
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
     pod 'Haptica'
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
-    pod 'CHTCollectionViewWaterfallLayout/Swift'
-    pod 'YYCategories'
-    # Pods for MEGA
-    pod 'Firebase/Crashlytics'
+    pod 'CHTCollectionViewWaterfallLayout'
 
+    pod 'YYCategories'
+    
+    # Pods for MEGA
     pod 'DoraemonKit/Core', '3.0.4', :configurations => ['Debug'] #Required
     pod 'DoraemonKit/WithGPS', '3.0.4', :configurations => ['Debug'] #Optional
     pod 'DoraemonKit/WithLoad', '3.0.4', :configurations => ['Debug'] #Optional
-    
+    pod 'GCDWebServer', :configurations => ['Debug']
+    pod 'FMDB', :configurations => ['Debug']
+
     target 'MEGAUnitTests' do
       inherit! :search_paths
       # Pods for testing
@@ -54,6 +55,16 @@ abstract_target 'iMEGA' do
   target 'MEGAShare' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAShare
+
+  end
+  
+  target 'MEGAWidgetExtension' do
+    # Pods for MEGAWidgetExtension
+
+  end
+  
+  target 'MEGAIntent' do
+    # Pods for MEGAPickerFileProvider
 
   end
 

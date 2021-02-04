@@ -7,7 +7,6 @@
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
-#import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"

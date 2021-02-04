@@ -121,27 +121,27 @@ struct MediumShortcutsWidgetView: View {
         
         VStack {
             HStack(alignment: .top, spacing: 8) {
-                if let firstShortcut = shortcuts[0] {
-                    Link(destination: URL(string: firstShortcut.link)!, label: {
-                        ShortcutView(shortcut: firstShortcut)
+                if let url = URL(string: shortcuts[0].link) {
+                    Link(destination: url, label: {
+                        ShortcutView(shortcut: shortcuts[0])
                     })
                 }
-                if let secondShortcut = shortcuts[1] {
-                    Link(destination: URL(string: secondShortcut.link)!, label: {
-                        ShortcutView(shortcut: secondShortcut)
+                if let url = URL(string: shortcuts[1].link) {
+                    Link(destination: url, label: {
+                        ShortcutView(shortcut: shortcuts[1])
                     })
                 }
             }
             
             HStack(alignment: .top, spacing: 8) {
-                if let thirdShortcut = shortcuts[2] {
-                    Link(destination: URL(string: thirdShortcut.link)!, label: {
-                        ShortcutView(shortcut: thirdShortcut)
+                if let url = URL(string: shortcuts[2].link) {
+                    Link(destination: url, label: {
+                        ShortcutView(shortcut: shortcuts[2])
                     })
                 }
-                if let fourthShortcut = shortcuts[3] {
-                    Link(destination: URL(string: fourthShortcut.link)!, label: {
-                        ShortcutView(shortcut: fourthShortcut)
+                if let url = URL(string: shortcuts[3].link) {
+                    Link(destination: url, label: {
+                        ShortcutView(shortcut: shortcuts[3])
                     })
                 }
             }

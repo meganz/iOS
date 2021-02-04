@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="najstarsze";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Wybierz";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Zrób zdjęcie";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -304,6 +304,8 @@
 "createFolderButton"="Utwórz";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Istnieje już katalog o takiej nazwie";
+/* A tooltip message which is shown when device does not support document scanning */
+"Document scanning is not available"="Skanowanie dokumentów nie jest dostępne";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Istnieje już plik o takiej nazwie";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -630,6 +632,10 @@
 "noEmailAccountConfigured"="Nie ustawiono adresu email na Twoim urządzeniu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Polityka Prywatności";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie Policy";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie Settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Regulamin serwisu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -875,7 +881,7 @@
 "simplePasscodeLabel"="Prosty kod dostępu";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Usuń dane lokalne";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
+/* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Wyloguj się i usuń dane lokalne po 10 nieudanych próbach podania hasła";
 /* Menu item */
 "help"="Pomoc";
@@ -904,7 +910,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Anuluj transfer";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Czy chcesz anulować %@?";
+"cancelTransfersText"="Chcesz anulować WSZYSTKIE transfery?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="WSZYSTKIE transfery";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1017,6 +1023,8 @@
 "incomingShares"="Udostępnienia";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Zmień konto";
+/* account management button title in business account’s landing page */
+"Manage Account"="Zarządzać kontem";
 /*  */
 "chooseYourAccountType"="Wybierz rodzaj konta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1037,12 +1045,18 @@
 "selectOneAccountType"="Wybierz jeden rodzaj konta";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Roczna subskrypcja jest o 17% tańsza niż 12 pojedynczych płatności";
+/* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Aby zaktualizować swoją obecną subskrypcję, skontaktuj się z pomocą techniczną w sprawie [A]planu niestandardowego[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Aktualny plan:";
+/* A label which shows the user's current PRO plan. */
+"Current plan"="Obecny plan";
+/* Mail title to upgrade to a custom plan */
+"Upgrade to a custom plan"="Przejdź na plan niestandardowy";
+/* Mail subject to upgrade to a custom plan */
+"Ask us how you can upgrade to a custom plan:"="Zapytaj nas, jak możesz przejść na plan niestandardowy:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Zmień konto";
-/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Aktualnie nie ma odpowiednich kont zgodnych z Twoim aktualnym planem. [A]Skontaktuj[/A] się z nami.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Wybierz konto:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1232,7 +1246,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Rozmowa z";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po storonie użytkownika.";
+"chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po stronie użytkownika.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Poufność.[/S] Tylko autor i odbiorcy są upoważnieni do przeglądania zawartości.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1736,14 +1750,16 @@
 "Save to Photos"="Zapisz w Zdjęciach";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Zapisywanie do zdjęć...";
+/* Text shown when starting the process to share a filee to other app */
+"Preparing to share…"="Przygotowuję do udostępnienia……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Zapisano w Zdjęciach";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nie można zapisać elementu";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Szyfrowanie zaszyfrowanych kluczy";
+"Encrypted Key Rotation"="Rotacja klucza szyfrowania";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Włącz szyfrowanie zaszyfrowanych kluczy";
+"Enable Encrypted Key Rotation"="Włącz rotację klucza szyfrowania";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Uzyskaj link do czatu";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
@@ -1761,7 +1777,7 @@
 /* Users previewing a public chat */
 "Observers"="Obserwatorzy";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ włączono rotację zaszyfrowanych kluczy.";
+"%@ enabled Encrypted Key Rotation"="%@ włączona Rotacja kluczy szyfrowania.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ utworzył link do czatu";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2039,7 +2055,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Wystąpił problem z ostatnią płatnością. Proszę uzyskać dostęp do MEGA za pomocą przeglądarki na pulpicie, aby uzyskać więcej informacji.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Twoje konto biznesowe wygasło";
+"Your business account is expired"="Twoje konto firmowe wygasło";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Wystąpił problem z przetwarzaniem Twojej płatności. Wyświetlanie MEGA jest ograniczone tylko do momentu rozwiązania tego problemu w przeglądarce internetowej na komputerze.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2206,8 +2222,10 @@
 "Message..."="Wiadomość…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Przeciągnij w lewo, aby anulować, zwolnij, aby wysłać";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Wygląd";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Interfejs";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tryb sortowania i przeglądania";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2218,10 +2236,14 @@
 "Night"="Night";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Układ";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Skonfiguruj porządek sortowania i domyślny widok (Lista lub Miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2428,3 +2450,41 @@
 "Link Password"="Hasło do linka";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Czy chcesz udostępnić hasło do tego linku?";
+/*  Accessibility message when a message is sent in chat */
+"message sent"="wiadomość wysłana";
+/* Accessibility message when a message sending fails in chat */
+"failed to send the message"="nie udało się wysłać wiadomości";
+/*  Accessibility message when a message is cancelled in chat */
+"message sending cancelled"="wysyłanie wiadomości anulowane";
+/* Cookie dialog header */
+"Before You Continue"="Before You Continue";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+/* Cookie dialog button label. */
+"Accept Cookies"="Accept Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Essential Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Preference Cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Advertising Cookies";
+/* Cookie settings dialog text. */
+"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Third Party Cookies";
+/* Cookie settings dialog text. */
+"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More information"="More information";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";
