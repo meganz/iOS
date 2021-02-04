@@ -1,9 +1,7 @@
 
-#import <Foundation/Foundation.h>
+#import "MEGARequestDelegate.h"
 
-#import "MEGABaseRequestDelegate.h"
-
-@interface MEGALoginRequestDelegate : MEGABaseRequestDelegate
+@interface MEGALoginRequestDelegate : NSObject <MEGARequestDelegate>
 
 @property (nonatomic, copy) void (^errorCompletion)(MEGAError *error);
 

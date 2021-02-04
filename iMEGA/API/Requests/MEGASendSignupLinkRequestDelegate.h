@@ -1,6 +1,6 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGASendSignupLinkRequestDelegate : MEGABaseRequestDelegate
+@interface MEGASendSignupLinkRequestDelegate : NSObject <MEGARequestDelegate>
 
 @end

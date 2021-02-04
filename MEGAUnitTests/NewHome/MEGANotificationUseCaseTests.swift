@@ -25,6 +25,8 @@ extension SDKUserAlertsClient {
 
         }, incomingContactRequestUpdate: { _ in
 
+        }, cleanup: {
+            
         })
     }
 
@@ -54,8 +56,10 @@ extension SDKUserAlertsClient {
             ]
         }, userAlertsUpdate: { (callback) in
 
-        }, incomingContactRequestUpdate: { (callback) in
+        }, incomingContactRequestUpdate: { _ in
 
+        }, cleanup: {
+        
         })
     }
 }

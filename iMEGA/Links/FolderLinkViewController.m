@@ -30,34 +30,32 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate>
+@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
-@property (nonatomic, getter=isFolderLinkNotValid) BOOL folderLinkNotValid;
 @property (nonatomic, getter=isValidatingDecryptionKey) BOOL validatingDecryptionKey;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
-@property (strong, nonatomic) UISearchController *searchController;
-
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
-@property (nonatomic, strong) NSArray *nodesArray;
-@property (nonatomic, strong) NSArray *searchNodesArray;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
-@property (nonatomic, strong) NSMutableArray *selectedNodesArray;
-@property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
+
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (nonatomic, strong) FolderLinkTableViewController *flTableView;
+@property (nonatomic, strong) FolderLinkCollectionViewController *flCollectionView;
+
+@property (nonatomic, assign) ViewModePreference viewModePreference;
 
 @end
 
@@ -69,15 +67,6 @@
     [super viewDidLoad];
     [MEGASdkManager.sharedMEGASdkFolder addMEGAGlobalDelegate:self];
     [MEGASdkManager.sharedMEGASdkFolder addMEGARequestDelegate:self];
-    
-    //White background for the view behind the table view
-    self.tableView.backgroundView = UIView.alloc.init;
-    
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.emptyDataSetDelegate = self;
-    
-    self.tableView.estimatedRowHeight = 44.0;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
@@ -123,6 +112,7 @@
         [self setActionButtonsEnabled:NO];
     } else {
         [self reloadUI];
+        [self determineViewMode];
     }
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
@@ -157,7 +147,7 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (self.isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
-            [self.tableView reloadEmptyDataSet];
+            [self.flTableView.tableView reloadEmptyDataSet];
         }
         
         if (self.searchController.active) {
@@ -181,7 +171,7 @@
             
             [self updateAppearance];
             
-            [self.tableView reloadData];
+            [self reloadData];
         }
     }
 }
@@ -213,17 +203,17 @@
     
     self.nodesArray = tempArray;
     
-    [self.tableView reloadData];
+    [self reloadData];
     
     if (self.nodeList.size.unsignedIntegerValue == 0) {
-        [_tableView setTableHeaderView:nil];
+        [self.flTableView.tableView setTableHeaderView:nil];
     } else {
         [self addSearchBar];
     }
 }
 
 - (void)setNavigationBarTitleLabel {
-    if (self.tableView.isEditing) {
+    if (self.flTableView.tableView.isEditing || self.flCollectionView.collectionView.allowsMultipleSelection) {
         self.navigationItem.titleView = nil;
         if (self.selectedNodesArray.count == 0) {
             self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
@@ -266,15 +256,19 @@
             [unavailableLinkView configureInvalidFolderLinkByUserCopyrightSuspension];
             break;
     }
-    [self.tableView setBackgroundView:unavailableLinkView];
+    if (self.viewModePreference == ViewModePreferenceList) {
+        [self.flTableView.tableView setBackgroundView:unavailableLinkView];
+    } else {
+        [self.flCollectionView.collectionView setBackgroundView:unavailableLinkView];
+    }
 }
 
 - (void)disableUIItems {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
-    [self.tableView setSeparatorColor:[UIColor clearColor]];
-    [self.tableView setBounces:NO];
-    [self.tableView setScrollEnabled:NO];
+    self.flTableView.tableView.emptyDataSetSource = nil;
+    self.flTableView.tableView.emptyDataSetDelegate = nil;
+    [self.flTableView.tableView setSeparatorColor:[UIColor clearColor]];
+    [self.flTableView.tableView setBounces:NO];
+    [self.flTableView.tableView setScrollEnabled:NO];
     
     [self setActionButtonsEnabled:NO];
 }
@@ -290,7 +284,7 @@
     
     boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
     
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue {
@@ -300,18 +294,18 @@
 }
 
 - (void)addSearchBar {
-    if (self.searchController && !self.tableView.tableHeaderView) {
-        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-        self.tableView.tableHeaderView = self.searchController.searchBar;
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
     }
 }
 
 - (void)hideSearchBarIfNotActive {
-    if (!self.searchController.isActive) {
-        self.tableView.tableHeaderView = nil;
+    if (@available(iOS 11.0, *)) {
+        self.searchController.active = false;
+        self.navigationItem.searchController = nil;
     }
 }
-
+    
 - (void)showDecryptionAlert {
     UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"decryptionKeyAlertTitle", nil) message:NSLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     
@@ -403,22 +397,80 @@
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
-- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
-    [self.tableView setEditing:editing animated:animated];
-    
-    if (editing) {
-        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
-            UIView *view = [[UIView alloc] init];
-            view.backgroundColor = UIColor.clearColor;
-            cell.selectedBackgroundView = view;
-        }
+- (void)reloadData {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        [self.flTableView.tableView reloadData];
     } else {
-        for (NodeTableViewCell *cell in self.tableView.visibleCells){
-            cell.selectedBackgroundView = nil;
-        }
+        [self.flCollectionView reloadData];
     }
 }
+#pragma mark - Layout
 
+- (void)determineViewMode {
+    NSInteger nodesWithThumbnail = 0;
+    NSInteger nodesWithoutThumbnail = 0;
+
+    for (MEGANode *node in self.nodesArray) {
+        if (node.hasThumbnail) {
+            nodesWithThumbnail = nodesWithThumbnail + 1;
+        } else {
+            nodesWithoutThumbnail = nodesWithoutThumbnail + 1;
+        }
+    }
+    
+    if (nodesWithThumbnail > nodesWithoutThumbnail) {
+        [self initCollection];
+    } else {
+        [self initTable];
+    }
+}
+    
+- (void)initTable {
+    [self.flCollectionView willMoveToParentViewController:nil];
+    [self.flCollectionView.view removeFromSuperview];
+    [self.flCollectionView removeFromParentViewController];
+    self.flCollectionView = nil;
+    
+    self.viewModePreference = ViewModePreferenceList;
+    
+    self.flTableView = [FolderLinkTableViewController instantiateWithFolderLink:self];
+    [self addChildViewController:self.flTableView];
+    self.flTableView.view.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.flTableView.view];
+    [self. flTableView didMoveToParentViewController:self];
+    
+    self.flTableView.tableView.emptyDataSetSource = self;
+    self.flTableView.tableView.emptyDataSetDelegate = self;
+}
+    
+- (void)initCollection {
+    [self.flTableView willMoveToParentViewController:nil];
+    [self.flTableView.view removeFromSuperview];
+    [self.flTableView removeFromParentViewController];
+    self.flTableView = nil;
+
+    self.viewModePreference = ViewModePreferenceThumbnail;
+
+    self.flCollectionView = [FolderLinkCollectionViewController instantiateWithFolderLink:self];
+    [self addChildViewController:self.flCollectionView];
+    self.flCollectionView.view.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.flCollectionView.view];
+    [self.flCollectionView didMoveToParentViewController:self];
+
+    self.flCollectionView.collectionView.emptyDataSetDelegate = self;
+    self.flCollectionView.collectionView.emptyDataSetSource = self;
+}
+    
+- (void)changeViewModePreference {
+    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
+    
+    if (self.viewModePreference == ViewModePreferenceThumbnail) {
+        [self initCollection];
+    } else {
+        [self initTable];
+    }
+}
+    
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -432,27 +484,23 @@
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
-    if (self.tableView.isEditing) {
-        [self setEditing:NO animated:YES];
+    if (self.flTableView.tableView.isEditing || self.flCollectionView.collectionView.allowsMultipleSelection) {
+        [self setEditMode:NO];
         return;
     }
     
     if (self.parentNode.name) {
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink isIncoming:NO sender:sender];
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference sender:sender];
         [self presentViewController:nodeActions animated:YES completion:nil];
     }
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
-    BOOL enableEditing = !self.tableView.isEditing;
-    [self setEditing:enableEditing animated:YES];
+    BOOL enableEditing = self.viewModePreference == ViewModePreferenceList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
+    [self setEditMode:enableEditing];
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    [super setEditing:editing animated:animated];
-    
-    [self setTableViewEditing:editing animated:YES];
-    
+- (void)setViewEditing:(BOOL)editing {    
     [self setNavigationBarTitleLabel];
 
     [self setToolbarButtonsEnabled:!editing];
@@ -461,23 +509,23 @@
         self.moreBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.moreBarButtonItem.image = nil;
 
-        [self.navigationItem setLeftBarButtonItem:_selectAllBarButtonItem];
+        [self.navigationItem setLeftBarButtonItem:self.selectAllBarButtonItem];
     } else {
         self.moreBarButtonItem.title = nil;
         self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
 
         [self setAllNodesSelected:NO];
-        _selectedNodesArray = nil;
+        self.selectedNodesArray = nil;
 
         if (self.isFolderRootNode) {
-            [self.navigationItem setLeftBarButtonItem:_closeBarButtonItem];
+            [self.navigationItem setLeftBarButtonItem:self.closeBarButtonItem];
         } else {
             [self.navigationItem setLeftBarButtonItem:nil];
         }
     }
     
-    if (!_selectedNodesArray) {
-        _selectedNodesArray = [NSMutableArray new];
+    if (!self.selectedNodesArray) {
+        self.selectedNodesArray = [NSMutableArray new];
     }
 }
 
@@ -501,17 +549,7 @@
     
     [self setNavigationBarTitleLabel];
     
-    [_tableView reloadData];
-}
-
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
-        
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [self reloadData];
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
@@ -561,7 +599,7 @@
     if (self.selectedNodesArray.count != 0) {
         for (MEGANode *node in _selectedNodesArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
-                [self setEditing:NO animated:YES];
+                [self setEditMode:NO];
                 return;
             }
         }
@@ -622,101 +660,15 @@
     [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - Public
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive) {
-            numberOfRows = self.searchNodesArray.count;
-        } else {
-            if (self.isFolderLinkNotValid) {
-                numberOfRows = 0;
-            } else {
-                numberOfRows = self.nodeList.size.integerValue;
-            }
-        }
-    }
-    
-    return numberOfRows;
+- (void)showActionsForNode:(MEGANode *)node from:(UIButton *)sender {
+     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
     
-    NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
-    if (cell == nil) {
-        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
-    }
-    
-    if (node.isFile) {
-        if (node.hasThumbnail) {
-            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdkFolder] cell:cell];
-        } else {
-            [cell.thumbnailImageView mnz_imageForNode:node];
-        }
-        
-        cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-    } else if (node.isFolder) {
-        [cell.thumbnailImageView mnz_imageForNode:node];
-        
-        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-    }
-    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
-    
-    cell.nameLabel.text = node.name;
-    
-    cell.node = node;
-    
-    if (tableView.isEditing) {
-        for (MEGANode *n in _selectedNodesArray) {
-            if (n.handle == node.handle) {
-                [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            }
-        }
-        
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        cell.selectedBackgroundView = view;
-    } else {
-        cell.selectedBackgroundView = nil;
-    }
-    
-    cell.separatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-    cell.separatorView.layer.borderWidth = 0.5;
-    
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    }
-    
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
-    
-    if (tableView.isEditing) {
-        [_selectedNodesArray addObject:node];
-        
-        [self setNavigationBarTitleLabel];
-
-        [self setToolbarButtonsEnabled:YES];
-        
-        if ([_selectedNodesArray count] == [_nodeList.size integerValue]) {
-            [self setAllNodesSelected:YES];
-        } else {
-            [self setAllNodesSelected:NO];
-        }
-        
-        return;
-    }
-
-    switch ([node type]) {
+- (void)didSelectNode:(MEGANode *)node {
+    switch (node.type) {
         case MEGANodeTypeFolder: {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:[NSBundle bundleForClass:self.class]];
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
@@ -739,28 +691,13 @@
         default:
             break;
     }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [_nodeList nodeAtIndex:indexPath.row];
-    
-    if (tableView.isEditing) {
-        NSMutableArray *tempArray = [_selectedNodesArray copy];
-        for (MEGANode *n in tempArray) {
-            if (n.handle == node.handle) {
-                [_selectedNodesArray removeObject:n];
-            }
-        }
-        
-        [self setNavigationBarTitleLabel];
-        
-        (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
-        
-        [self setAllNodesSelected:NO];
-        
-        return;
+- (void)setEditMode:(BOOL)editMode {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        [self.flTableView setTableViewEditing:editMode animated:YES];
+    } else {
+        [self.flCollectionView setCollectionViewEditing:editMode animated:YES];
     }
 }
 
@@ -770,7 +707,7 @@
     self.searchNodesArray = nil;
     
     if (!MEGAReachabilityManager.isReachable) {
-        self.tableView.tableHeaderView = nil;
+        self.flTableView.tableView.tableHeaderView = nil;
     }
 }
 
@@ -784,7 +721,7 @@
         NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
         self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 #pragma mark - UISearchControllerDelegate
@@ -798,31 +735,51 @@
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-        
-        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
+    UIView *view = self.flTableView ? self.flTableView.tableView : self.flCollectionView.collectionView;
+    CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
+
+    NSIndexPath *indexPath;
+
+    if (self.viewModePreference == ViewModePreferenceList) {
+        indexPath = [self.flTableView.tableView indexPathForRowAtPoint:touchPoint];
+        if (!indexPath || ![self.flTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return;
         }
-        
-        if (self.isEditing) {
+    } else {
+        indexPath = [self.flCollectionView.collectionView indexPathForItemAtPoint:touchPoint];
+        if (!indexPath || ![self.flCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
+            return;
+        }
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        BOOL editing = self.flTableView ? self.flTableView.tableView.isEditing : self.flCollectionView.collectionView.allowsMultipleSelection;
+        if (editing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesArray.count == 0) {
-                [self setEditing:NO animated:YES];
+                [self setEditMode:NO];
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
                 MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
                 if (nodeSelected.handle == nodePressed.handle) {
-                    [self setEditing:NO animated:YES];
+                    [self setEditMode:NO];
                 }
             }
         } else {
-            [self setEditing:YES animated:YES];
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self setEditMode:YES];
+            [self selectIndexPath:indexPath];
         }
+    }
+}
+
+- (void)selectIndexPath:(NSIndexPath *)indexPath {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        [self.flTableView tableViewSelectIndexPath:indexPath];
+        [self.flTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    } else {
+        [self.flCollectionView collectionViewSelectIndexPath:indexPath];
+        [self.flCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
 }
 
@@ -1018,6 +975,8 @@
             
             [self reloadUI];
             
+            [self determineViewMode];
+            
             NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
             if (componentsArray.count == 4) {
                 [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
@@ -1039,7 +998,7 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
+            for (NodeTableViewCell *nodeTableViewCell in self.flTableView.tableView.visibleCells) {
                 if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:NO];
@@ -1070,8 +1029,8 @@
             break;
             
         case MegaNodeActionTypeSelect: {
-            BOOL enableEditing = !self.tableView.isEditing;
-            [self setEditing:enableEditing animated:YES];
+            BOOL enableEditing = self.viewModePreference == ViewModePreferenceList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
+            [self setEditMode:enableEditing];
             break;
         }
             
@@ -1085,6 +1044,11 @@
             
         case MegaNodeActionTypeSendToChat:
             [self sendFolderLinkToChat];
+            break;
+            
+        case MegaNodeActionTypeList:
+        case MegaNodeActionTypeThumbnail:
+            [self changeViewModePreference];
             break;
             
         default:

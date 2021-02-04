@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 
-- (void)configureCellForNode:(MEGANode *)node;
+- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api;
 - (void)setupAppearance;
 
 @end
