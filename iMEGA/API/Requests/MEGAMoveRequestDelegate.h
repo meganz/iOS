@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGAMoveRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAMoveRequestDelegate : NSObject <MEGARequestDelegate>
 
 @property (nonatomic) BOOL restore;
 

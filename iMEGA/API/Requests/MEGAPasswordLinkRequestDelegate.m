@@ -37,8 +37,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    [super onRequestStart:api request:request];
-    
     if (!self.forDecryption) {
         NSString *status = self.multipleLinks ? NSLocalizedString(@"generatingLinks", nil) : NSLocalizedString(@"generatingLink", nil);
         [SVProgressHUD showWithStatus:status];
@@ -46,8 +44,6 @@
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [super onRequestFinish:api request:request error:error];
-    
     if ([error type] && !self.forDecryption) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
         return;
