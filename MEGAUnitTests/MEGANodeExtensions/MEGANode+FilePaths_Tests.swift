@@ -100,7 +100,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
 }
 
 
-final class MockSDK: MEGASdk {
+final private class MockSDK: MEGASdk {
     let nodes: [MockNode]
     
     init(withNodes nodes: [MockNode]) {
@@ -117,7 +117,7 @@ final class MockSDK: MEGASdk {
     }
 }
 
-final class MockNode: MEGANode {
+final private class MockNode: MEGANode {
     let _name: String
     let _handle: Int
     let _parentHandle: Int
