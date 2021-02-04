@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, ThumbnailSection) {
 };
 
 typedef NS_ENUM(NSUInteger, ThumbnailSize) {
-    ThumbnailSizeHeightFile = 190,
+    ThumbnailSizeHeightFile = 200,
     ThumbnailSizeHeightFolder = 40,
     ThumbnailSizeWidth = 150
 };
