@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGAGetFolderInfoRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAGetFolderInfoRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (id)init NS_UNAVAILABLE;
 

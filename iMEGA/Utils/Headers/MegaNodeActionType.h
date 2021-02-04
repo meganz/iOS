@@ -29,5 +29,7 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeViewInFolder,
     MegaNodeActionTypeClear,
     MegaNodeActionTypeRetry,
-    MegaNodeActionTypeSearch
+    MegaNodeActionTypeSearch,
+    MegaNodeActionTypeList,
+    MegaNodeActionTypeThumbnail,
 };

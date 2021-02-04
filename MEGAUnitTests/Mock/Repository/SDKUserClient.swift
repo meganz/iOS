@@ -12,20 +12,19 @@ extension SDKUserClient {
 
     static var foundUser: Self {
         return Self(currentUser: {
-            return UserDomain.mockUser
+            return UserSDKEntity.mockUser
         }, userForSharedNode: { _ in
-            return UserDomain.mockUser
+            return UserSDKEntity.mockUser
         })
     }
 }
 
-extension UserDomain {
-
+extension UserSDKEntity {
     static var mockUser: Self {
-        return UserDomain(emai: "user@mock.com",
-                          handle: UInt64(),
-                          base64Handle: "",
-                          change: nil,
-                          contact: nil)
+        return UserSDKEntity(email: "user@mock.com",
+                             handle: UInt64(),
+                             base64Handle: "",
+                             change: nil,
+                             contact: nil)
     }
 }
