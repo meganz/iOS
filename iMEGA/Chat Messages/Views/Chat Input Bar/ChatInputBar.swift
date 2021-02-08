@@ -46,7 +46,6 @@ class ChatInputBar: UIView {
     private var voiceClipInputBar: VoiceClipInputBar!
     private var initialTranslation: SIMD2<Double>?
     private var storedMessageInputBarHeight: CGFloat = 0.0
-    private var voiceToTextSwitching = false
     private var animationDuration: TimeInterval = 0.4
     private var voiceClipInputBarRegularHeight: CGFloat = 320.0
     private var keyboardFrameChangeObserver: NSObjectProtocol!
@@ -249,14 +248,11 @@ class ChatInputBar: UIView {
     }
     
     private func voiceInputBarToTextInputSwitch(completionBlock: (() -> Void)? = nil) {
-        if voiceToTextSwitching || audioRecordingInputBar.superview == nil {
+        if audioRecordingInputBar.superview == nil {
             return
         }
-        
-        voiceToTextSwitching = true
-        
+                
         messageInputBar.alpha = 0.0
-        addMessageInputBar()
         
         if audioRecordingInputBar.placeholderViewTopConstraint != nil {
             audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
@@ -271,7 +267,6 @@ class ChatInputBar: UIView {
         }) { _ in
             self.audioRecordingInputBar.removeFromSuperview()
             self.audioRecordingInputBar = nil
-            self.voiceToTextSwitching = false
             
             if let handler = completionBlock {
                 handler()
@@ -296,12 +291,7 @@ class ChatInputBar: UIView {
         UIView.animate(withDuration: 0.2, animations: {
             self.audioRecordingInputBar.alpha = 1.0
             self.messageInputBar.alpha = 0.0
-        }) { _ in
-            if !self.voiceToTextSwitching {
-                self.messageInputBar.removeFromSuperview()
-                self.messageInputBar.alpha = 1.0
-            }
-        }
+        })
     }
         
     private func stopRecordingAndSwitchToTextInput() {

@@ -70,9 +70,7 @@ class MessageInputBar: UIView {
     // MARK:- Private properties
     private let kMEGAUIKeyInputCarriageReturn = "\r"
 
-    private var keyboardWillShowObserver: NSObjectProtocol?
     private var keyboardShowObserver: NSObjectProtocol?
-    private var keyboardHideObserver: NSObjectProtocol?
     
     private var expanded: Bool = false
     private var minTopPaddingWhenExpanded: CGFloat = 20.0
@@ -302,15 +300,11 @@ class MessageInputBar: UIView {
     }
     
     private func registerKeyboardNotifications() {
-        keyboardHideObserver = keyboardHideNotification()
         keyboardShowObserver = keyboardShowNotification()
-        keyboardWillShowObserver = keyboardWillShowNotification()
     }
     
     private func removeKeyboardNotifications() {
-        remove(observer: keyboardWillShowObserver)
         remove(observer: keyboardShowObserver)
-        remove(observer: keyboardHideObserver)
     }
     
     private func remove(observer: NSObjectProtocol?) {
@@ -398,21 +392,6 @@ class MessageInputBar: UIView {
         expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
-    private func keyboardWillShowNotification() -> NSObjectProtocol {
-        return NotificationCenter.default.addObserver(
-            forName: UIResponder.keyboardWillShowNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] notification in
-            guard let `self` = self,
-                  self.messageTextView.isFirstResponder else {
-                return
-            }
-            
-            self.showSendButtonUI()
-        }
-    }
-    
     private func keyboardShowNotification() -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardDidShowNotification,
@@ -439,37 +418,6 @@ class MessageInputBar: UIView {
                 let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
                 messageTextViewExpanadedHeight != self.expandedHeight {
                 self.messageTextView.expandedHeight = self.expandedHeight
-            }
-            
-            if self.messageTextView.isFirstResponder && !self.backgroundViewTrailingButtonConstraint.isActive {
-                
-                self.micButton.isHidden = true
-                self.micButton.alpha = 1.0
-                
-                self.sendButton.isHidden = false
-                self.sendButton.alpha = 1.0
-                
-                self.backgroundViewTrailingTextViewConstraint.isActive = false
-                self.backgroundViewTrailingButtonConstraint.isActive = true
-                self.layoutIfNeeded()
-            }
-        }
-    }
-    
-    private func keyboardHideNotification() -> NSObjectProtocol {
-        return NotificationCenter.default.addObserver(
-            forName: UIResponder.keyboardWillHideNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-                        
-            MEGALogDebug("[MessageInputBar] Keyboard will hide notification triggered")
-
-            if self.messageTextView.text.isEmpty {
-                self.showMicButtonUI()
             }
         }
     }
@@ -530,13 +478,13 @@ class MessageInputBar: UIView {
     }
     
     private func updateTextUI() {
-        guard let delegate = delegate,
-            let text = messageTextView.text else {
-            return
-        }
+        delegate?.typing(withText: messageTextView.text)
         
-        sendButton.isEnabled = !text.mnz_isEmpty()
-        delegate.typing(withText: text)
+        if messageTextView.text.isEmpty {
+            showMicButtonUI()
+        } else {
+            showSendButtonUI()
+        }
     }
     
     
