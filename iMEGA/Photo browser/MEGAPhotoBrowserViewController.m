@@ -352,6 +352,10 @@ static const CGFloat GapBetweenPages = 10.0;
             [self.delegate didDismissPhotoBrowser:self];
         }
         
+        if (self.displayMode == DisplayModeFileLink) {
+            MEGALinkManager.secondaryLinkURL = nil;
+        }
+        
         if (completion) {
             completion();
         }
