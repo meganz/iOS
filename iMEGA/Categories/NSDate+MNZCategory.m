@@ -3,6 +3,18 @@
 
 #import "NSDate+DateTools.h"
 
+const NSInteger secondsInAMinute = 60;
+const NSInteger secondsInAHour = 60 * 60;
+const NSInteger secondsInADay = 3600 * 24;
+const NSInteger secondsInAWeek = 86400 * 7;
+const NSInteger secondsInAMonth_28 = 86400 * 28;
+const NSInteger secondsInAMonth_29 = 86400 * 29;
+const NSInteger secondsInAMonth_30 = 86400 * 30;
+const NSInteger secondsInAMonth_31 = 86400 * 31;
+const long long secondsInAYear = 86400 * 365;
+const long long secondsInAGregorianYear = 86400 * 365.2425;
+const long long secondsInAJulianYear = 86400 * 365.25;
+
 @implementation NSDate (MNZCategory)
 
 - (NSString *)mnz_formattedDefaultNameForMedia {
