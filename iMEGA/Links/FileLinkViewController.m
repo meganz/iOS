@@ -108,6 +108,16 @@
     }
 }
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [super dismissViewControllerAnimated:flag completion:^{
+        MEGALinkManager.secondaryLinkURL = nil;
+        
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
 #pragma mark - Private
 
 - (void)updateAppearance {

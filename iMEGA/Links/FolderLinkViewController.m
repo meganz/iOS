@@ -134,6 +134,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
@@ -174,6 +175,16 @@
             [self reloadData];
         }
     }
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [super dismissViewControllerAnimated:flag completion:^{
+        MEGALinkManager.secondaryLinkURL = nil;
+        
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 #pragma mark - Private
