@@ -328,6 +328,65 @@ static NSString* const B = @"[B]";
     return endCallReasonString;
 }
 
++ (NSString *)mnz_hoursDaysWeeksMonthsOrYearFrom:(NSUInteger)seconds {
+    NSUInteger hoursModulo = seconds % secondsInAHour;
+    NSUInteger daysModulo = seconds % secondsInADay;
+    NSUInteger weeksModulo = seconds % secondsInAWeek;
+    NSUInteger monthsModulo = seconds % secondsInAMonth_30;
+    NSUInteger yearModulo = seconds % secondsInAYear;
+    
+    if (yearModulo == 0) {
+        return NSLocalizedString(@"1 year", @"");
+    }
+    
+    if (monthsModulo == 0) {
+        NSUInteger months = seconds / secondsInAMonth_30;
+        if (months == 1) {
+            return NSLocalizedString(@"1 month", @"");
+        } else {
+            NSString *string = NSLocalizedString(@"%1 months", @"The number of months e.g. 2 months, 5 months etc.");
+            
+            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)months];
+            return [string stringByReplacingOccurrencesOfString:@"%1" withString:numberOf];
+        }
+    }
+    
+    if (weeksModulo == 0) {
+        NSUInteger weeks = seconds / secondsInAWeek;
+        if (weeks == 1) {
+            return NSLocalizedString(@"1 week", @"");
+        } else {
+            NSString *string = NSLocalizedString(@"%1 weeks", @"The number of weeks e.g. 2 weeks, 5 weeks etc.");
+            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)weeks];
+            return [string stringByReplacingOccurrencesOfString:@"%1" withString:numberOf];
+        }
+    }
+    
+    if (daysModulo == 0) {
+        NSUInteger days = seconds / secondsInADay;
+        if (days == 1) {
+            return NSLocalizedString(@"1 day", @"");
+        } else {
+            NSString *string = NSLocalizedString(@"%d days", @"");
+            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)days];
+            return [string stringByReplacingOccurrencesOfString:@"%d" withString:numberOf];
+        }
+    }
+    
+    if (hoursModulo == 0) {
+        NSUInteger hours = seconds / secondsInAHour;
+        if (hours == 1) {
+            return NSLocalizedString(@"1 hour", @"");
+        } else {
+            NSString *string = NSLocalizedString(@"xHours", @"");
+            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)hours];
+            return [string stringByReplacingOccurrencesOfString:@"%d" withString:numberOf];
+        }
+    }
+    
+    return @"";
+}
+
 + (NSString *)localizedSortOrderType:(MEGASortOrderType)sortOrderType {
     switch (sortOrderType) {
         case MEGASortOrderTypeDefaultDesc:
@@ -387,6 +446,8 @@ static NSString* const B = @"[B]";
     NSString *string;
     string = [self stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[B]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[/B]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[C]" withString:@""];

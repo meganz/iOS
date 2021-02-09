@@ -225,6 +225,35 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 break;
             }
                 
+            case MEGAChatMessageTypeSetRetentionTime: {
+                if (self.retentionTime <= 0) {
+                    text = NSLocalizedString(@"[A]%1$s[/A][B] disabled message clearing.[/B]", @"System message that is shown to all chat participants upon disabling the Retention history.");
+                    
+                    text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
+                    text = text.mnz_removeWebclientFormatters;
+                    
+                    NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
+                    [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium} range:[text rangeOfString:fullNameDidAction]];
+                    
+                    self.attributedText = mutableAttributedString;
+                } else {
+                    text = NSLocalizedString(@"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]", @"System message displayed to all chat participants when one of them enables retention history");
+                    
+                    text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
+                    
+                    NSString *retentionTimeString = [NSString mnz_hoursDaysWeeksMonthsOrYearFrom:self.retentionTime];
+                    text = [text stringByReplacingOccurrencesOfString:@"%2$s" withString:retentionTimeString];
+                    
+                    text = text.mnz_removeWebclientFormatters;
+                    
+                    NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
+                    [mutableAttributedString addAttributes:@{NSFontAttributeName: textFontMedium} range:[text rangeOfString:fullNameDidAction]];
+                    [mutableAttributedString addAttributes:@{NSFontAttributeName: textFontMedium} range:[text rangeOfString:retentionTimeString]];
+                    self.attributedText = mutableAttributedString;
+                }
+                break;
+            }
+                
             case MEGAChatMessageTypeChatTitle: {
                 NSString *changedGroupChatNameTo = NSLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
                 changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameDidAction];
