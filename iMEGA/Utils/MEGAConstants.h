@@ -17,8 +17,6 @@ extern NSString * const MEGASortingPreferenceType;
 
 extern NSString * const MEGAViewModePreference;
 
-extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
-
 extern uint64_t const MEGAInvalidHandle;
 
 extern NSString * const MEGAVoiceMessagesFolderName;
