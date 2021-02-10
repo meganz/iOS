@@ -3,7 +3,7 @@ import Foundation
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
         image = UIImage(named: "cookie")
-        viewTitle = NSLocalizedString("Before you continue", comment: "")
+        viewTitle = NSLocalizedString("Before You Continue", comment: "")
         detailAttributed = detailTextAttributedString()
         
         let detailTapGR = UITapGestureRecognizer(target: self, action: #selector(cookiePolicyTouchUpInside))
