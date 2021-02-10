@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Haal gesprekslink";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Sleutel rotatie is iets veiliger, maar u kunt geen koppeling naar het gesprek creëren en nieuwe deelnemers kunnen geen berichten uit het verleden zien.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Het omwisselen van de coderingssleutel is iets veiliger, maar u kunt geen chatlink maken en nieuwe deelnemers zullen geen eerdere berichten zien.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Sleutel rotatie is uitgeschakeld voor gesprekken met meer dan 100 deelnemers.";
+"Key rotation is disabled for conversations with more than 100 participants."="Roulatie van coderingssleutel is uitgeschakeld voor gesprekken met meer dan 100 deelnemers.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Om een gespreklink te creëren moet u de groep een naam geven.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2467,13 +2467,13 @@
 /* Cookie dialog header */
 "Before you continue"="Voordat U verder gaat";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We gebruiken cookies en vergelijkbare technologieën (‘Cookies’) om u onze diensten aan te bieden, uw ervaring met onze diensten te verbeteren en de advertenties die u ziet aan te passen, ook via derden. Accepteer ons gebruik van cookies vanaf het begin van uw bezoek of pas cookies aan in Cookie-instellingen. Lees meer in ons [A]Cookiebeleid[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We gebruiken lokale opslag en vergelijkbare technologieën (‘cookies’) om u onze services te bieden, uw ervaring met onze services te verbeteren en de advertenties die u ziet, aan te passen, ook via derden. Accepteer ons gebruik van cookies vanaf het begin van uw bezoek of pas cookies aan in Cookie-instellingen. Lees meer in ons [A]Cookiebeleid[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Accepteer cookies";
 /* Cookie settings dialog text. */
 "Essential Cookies"="Essentiële Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Altijd aan";
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essentieel om u belangrijke functionaliteit en veilige toegang tot onze diensten te bieden. Om deze reden hebben ze geen toestemming nodig.";
 /* Cookie settings dialog text. */
@@ -2495,4 +2495,4 @@
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Meer Informatie";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Er worden geen cookies van derden gebruikt";

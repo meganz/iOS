@@ -884,13 +884,13 @@
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="試行が10回失敗後、あなたのローカルファイルが削除され、あなたはログアウトされます。";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="パスコードオプション";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4桁の数値コード";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6桁の数値コード";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="カスタム英数字コード";
 /* Menu item */
 "help"="ヘルプ";
 /* Title of the section to access MEGA's help centre */
@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="チャットリンクを取得";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="キーローテーションでは安全性が少し高まりますが、チャットリンクを作成できず、新規参加者は過去のメッセージを見れません。";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="暗号化キーローテーションでは安全性が少し高まりますが、チャットリンクを作成できず、新規参加者は過去のメッセージを見れません。";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="キーローテーションは、100人を超える参加者との会話では無効になっています。";
+"Key rotation is disabled for conversations with more than 100 participants."="暗号化キーローテーションは、100人を超える参加者との会話では無効になっています。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="チャットリンクを作成するには、グループに名前を付ける必要があります。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2467,13 +2467,13 @@
 /* Cookie dialog header */
 "Before you continue"="続行する前に";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="当社は、クッキーおよび同様のテクノロジー（「クッキー」）を使用して、お客様にサービスをご提供し、当社サービスのエクスペリエンスを向上させ、サードパーティを介して表示される広告を含め、お客様がご覧になる広告をカスタマイズいたします。ご訪問の最初から当社によるクッキーの使用を受け入れるか、クッキーの設定でクッキーをカスタマイズしてください。詳細については、当社の[A]クッキーポリシー[/A]をご覧ください。";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="当社は、ローカルストレージおよび同様のテクノロジー（「クッキー」）を使用して、お客様にサービスをご提供し、当社サービスのエクスペリエンスを向上させ、サードパーティを介して表示される広告を含め、お客様がご覧になる広告をカスタマイズいたします。ご訪問の最初から当社によるクッキーの使用を受け入れるか、クッキーの設定でクッキーをカスタマイズしてください。詳細については、当社の[A]クッキーポリシー[/A]をご覧ください。";
 /* Cookie dialog button label. */
 "Accept Cookies"="クッキーを受け入れる";
 /* Cookie settings dialog text. */
 "Essential Cookies"="必須クッキー";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="常にオン";
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="必須クッキーは、重要な機能と当社サービスへの安全なアクセスをご提供するのに不可欠なクッキーです。このため、同意は必要ありません。";
 /* Cookie settings dialog text. */
@@ -2495,4 +2495,4 @@
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="詳細情報";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="サードパーティのクッキーは使用されていません";

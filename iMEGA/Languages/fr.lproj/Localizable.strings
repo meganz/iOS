@@ -365,7 +365,7 @@
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Définir une date d’expiration";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="Définir la protection par mot de passe";
+"setPasswordProtection"="Définir une protection par mot de passe";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="Chiffrer";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -950,7 +950,7 @@
 /*  */
 "howItWorksSecondary"="Vous pouvez contacter votre ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre ami avant qu’il ne s’inscrive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu'un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
+"howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu’un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Primes déverrouillées :";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé de chiffrement est un peu plus sûre, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="La rotation de clé est désactivée pour les conversations de plus de 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="La rotation de clé de chiffrement est désactivée pour les conversations de plus de 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Pour créer un lien de conversation, vous devez donner un nom au groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2253,7 +2253,7 @@
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
 "Configure default launch section."="Configurez la section de lancement par défaut";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes)";
+"Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Par dossier";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
@@ -2263,7 +2263,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utilisez le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
@@ -2431,7 +2431,7 @@
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
-"Audio"="Son";
+"Audio"="Sons";
 /* Title for video explorer view */
 "Videos"="Vidéos";
 /* Photo Explorer Screen: No documents in the account */
@@ -2467,13 +2467,13 @@
 /* Cookie dialog header */
 "Before you continue"="Avant que vous ne poursuiviez";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Nous utilisons des Témoins de navigation et des technologies semblables (« cookies ») pour vous fournir nos services, améliorer votre expérience d’utilisation de nos services et personnaliser les publicités que vous voyez, dont celles provenant de tiers. Acceptez dès le début de votre visite notre utilisation de Témoins ou personnalisez les Témoins dans les paramètres des Témoins de navigation. Apprenez davantage dans notre [A]Politique sur les Témoins de navigation[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Nous utilisons la mémoire locale et des technologies semblables (« cookies ») pour vous fournir nos services, améliorer votre expérience d’utilisation de nos services et personnaliser les publicités que vous voyez, dont celles provenant de tiers. Acceptez dès le début de votre visite notre utilisation de Témoins ou personnalisez les Témoins dans les paramètres des Témoins de navigation. Apprenez-en davantage dans notre [A]Politique sur les Témoins de navigation[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Accepter les Témoins de navigation";
 /* Cookie settings dialog text. */
 "Essential Cookies"="Témoins essentiels";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Toujours activés";
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Ils sont essentiels pour une fonction importante et pour un accès sécurisé à nos services. Pour cette raison, ils ne demandent pas de consentement.";
 /* Cookie settings dialog text. */
@@ -2495,4 +2495,4 @@
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Plus de précisions";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Aucun témoin tiers n’est utilisé";

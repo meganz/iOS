@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Ссылка на чат";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей шифрования немного безопаснее, но не позволяет создавать ссылку на чат, и новые участники не будут видеть прошлые сообщения.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Чередование ключей отключено для разговоров с более чем 100 участниками.";
+"Key rotation is disabled for conversations with more than 100 participants."="Чередование ключей шифрования отключено для разговоров с более чем 100 участниками.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Для создания ссылки на чат нужно назвать группу.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2467,13 +2467,13 @@
 /* Cookie dialog header */
 "Before you continue"="Прежде чем вы продолжите";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем куки-файлы и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем локальное хранилище и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Принять куки";
 /* Cookie settings dialog text. */
 "Essential Cookies"="Основные куки-файлы";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Всегда включены";
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Необходимы для предоставления вам важных функций и безопасного доступа к нашим услугам. По этой причине согласие на них не требуется.";
 /* Cookie settings dialog text. */
@@ -2495,4 +2495,4 @@
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Дополнительная информация";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Сторонние файлы cookie не используются";

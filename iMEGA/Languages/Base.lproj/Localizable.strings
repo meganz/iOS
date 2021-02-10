@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Get chat link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Encryption key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Encryption key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1785,7 +1785,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encryption key rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ enabled encryption key rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a chat link";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2467,7 +2467,7 @@
 /* Cookie dialog header */
 "Before you continue"="Before you continue";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use Cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customise the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Accept Cookies";
 /* Cookie settings dialog text. */
