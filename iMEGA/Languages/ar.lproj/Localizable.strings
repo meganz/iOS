@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="محو البيانات المحلية";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="سيتم حذف الملفات المحلية وسيتم تسجيل خروجك بعد 10 محاولات فاشلة";
+"failedAttempstSectionTitle"="قم بتسجيل الخروج ومسح البيانات المحلية بعد 10 محاولات فاشلة لإدخال رمز المرور";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1977,7 +1977,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="لا وجود لأي نشاط مؤخراً";
 /* Plural of items which contains a folder. 2 items */
-"items"="items";
+"items"="عناصر";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="رابط الدردشة غير متوفر";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */

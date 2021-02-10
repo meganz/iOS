@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus;
 + (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration isGroup:(BOOL)isGroup;
++ (NSString *)mnz_hoursDaysWeeksMonthsOrYearFrom:(NSUInteger)seconds;
 
 - (BOOL)mnz_isValidEmail;
 

@@ -86,14 +86,9 @@
     if (doesPasscodeExist) {
         [self.biometricsSwitch setOn:[[LTHPasscodeViewController sharedUser] allowUnlockWithBiometrics]];
         
-        if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        } else {
-            if (!wasPasscodeAlreadyEnabled) {
-                [NSUserDefaults.standardUserDefaults setBool:YES forKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
-                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                wasPasscodeAlreadyEnabled = YES;
-            }
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        if (!wasPasscodeAlreadyEnabled) {
+            wasPasscodeAlreadyEnabled = YES;
         }
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : NSLocalizedString(@"Immediately", nil);
@@ -129,8 +124,6 @@
         _requirePasscodeDetailLabel.text = @"";
     }
     
-    BOOL isEraseLocalData = ![NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
-    [NSUserDefaults.standardUserDefaults setBool:isEraseLocalData forKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
 }
 
 - (IBAction)biometricsSwitchValueChanged:(UISwitch *)sender {

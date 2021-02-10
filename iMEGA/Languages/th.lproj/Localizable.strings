@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="ไฟล์ภายในเครื่องของคุณจะถูกลบและคุณจะถูกออกจากระบบหลังจากที่กรอกรหัสผิดเกิน 10 ครั้ง";
+"failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลในเครื่องหลังจากใส่รหัสผ่านไม่ถูกต้องเกิน 10 ครั้ง";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */

@@ -41,7 +41,7 @@
     }
 }
 
-- (void)configureCellForNode:(MEGANode *)node {
+- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
@@ -53,7 +53,7 @@
                     self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
                 }
             }];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+            [api getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView mnz_imageForNode:node];
         }
         self.thumbnailIconView.hidden = YES;
@@ -69,9 +69,9 @@
     } else {
         self.nameLabel.text = node.name;
         if (node.isFile) {
-            self.infoLabel.text = [Helper sizeForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            self.infoLabel.text = [Helper sizeForNode:node api:api];
         } else if (node.isFolder) {
-            self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+            self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
         }
     }
     

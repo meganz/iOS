@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Todos os seus dados locais serão deletados e você será deslogado depois de 10 tentativas incorretas";
+"failedAttempstSectionTitle"="Fazer logout e apagar os dados locais depois de digitar 10 vezes o código incorreto";
 /* Button text to change the passcode type. */
 "Passcode Options"="Opções de código de acesso";
 /* Action text to change to 4-Digit Numeric passcode type. */

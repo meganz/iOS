@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Xóa Dữ Liệu Được Lưu";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Tất cả các dữ liệu có liên quan đến ứng dụng MEGA trong điện thoại sẽ bị xóa sau 10 lần nhập sai mã số";
+"failedAttempstSectionTitle"="Tự động đăng xuất và dọn sạch dữ liệu có liên quan đến MEGA trong điện thoại sau 10 lần nhập sai mã";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */

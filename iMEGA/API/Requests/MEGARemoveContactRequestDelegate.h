@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGARemoveContactRequestDelegate : MEGABaseRequestDelegate
+@interface MEGARemoveContactRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (instancetype)initWithCompletion:(void (^)(void))completion;
 

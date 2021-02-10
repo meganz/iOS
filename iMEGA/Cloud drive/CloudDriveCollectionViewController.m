@@ -62,7 +62,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self getNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-    [cell configureCellForNode:node];
+    [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
     cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
     cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
     return cell;

@@ -1,9 +1,9 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MEGAInviteContactRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAInviteContactRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests;
 - (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;

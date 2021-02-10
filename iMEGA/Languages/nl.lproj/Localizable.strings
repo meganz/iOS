@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Uw lokale bestanden worden verwijderd en u wordt uitgelogd na 10 mislukte pogingen";
+"failedAttempstSectionTitle"="Uitloggen en lokale gegevens wissen na 10 mislukte passcode pogingen";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */

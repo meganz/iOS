@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
 
-@interface MEGAPauseTransferRequestDelegate : MEGABaseRequestDelegate
+
+@interface MEGAPauseTransferRequestDelegate : NSObject
 
 - (id)init NS_UNAVAILABLE;
 

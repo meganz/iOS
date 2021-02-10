@@ -5,6 +5,7 @@
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
+#import "MEGASdk+MNZCategory.h"
 
 #import "Helper.h"
 #import "LaunchViewController.h"
@@ -73,6 +74,7 @@
     [super viewDidLoad];
     
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
@@ -335,9 +337,7 @@
 - (void)presentPasscode {
     LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
     if (!self.passcodePresented && !passcodeVC.isBeingPresented && passcodeVC.presentingViewController == nil) {
-        if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        }
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
@@ -840,6 +840,22 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+            
+        case MEGARequestTypeLogout: {
+      
+            if (request.paramType != MEGAErrorTypeApiESSL) {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
@@ -861,6 +877,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else {
                 [self onePendingLess];
             }
+            break;
+        }
+            
+        case MEGARequestTypeLogout: {
+            [Helper logout];
+            
+            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+            [self didBecomeActive];
+            
             break;
         }
             
@@ -923,13 +948,16 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
+    [self dismissViewControllerAnimated:YES completion:^{
         [[MEGASdkManager sharedMEGASdk] logout];
-    }
+    }];
 }
 
 - (void)logoutButtonWasPressed {
-    [[MEGASdkManager sharedMEGASdk] logout];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[MEGASdkManager sharedMEGASdk] logout];
+    }];
 }
+
 
 @end
