@@ -573,7 +573,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
+"theUserHasBeenInvited"="Пользователь приглашён. Он появится в вашем списке контактов, если согласится.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Пользователи приглашены. Они появятся в вашем списке контактов, если согласятся.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля";
+"failedAttempstSectionTitle"="После 10 неудачных попыток локальные файлы будут удалены, а вы выйдете из системы";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Настройки кода доступа";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4-значный цифровой код";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6-значный цифровой код";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Пользовательский буквенно-цифровой код";
 /* Menu item */
 "help"="Помощь";
 /* Title of the section to access MEGA's help centre */
@@ -1204,6 +1204,8 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Действительно удалить всю историю этого разговора?";
 /* Message show when the history of a chat has been successfully deleted. */
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="История чата очищена";
 /* 'Next' button in a dialog */
 "continue"="Продолжить";
@@ -1977,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Нет недавней активности";
 /* Plural of items which contains a folder. 2 items */
-"items"="элем.";
+"items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Ссылка на чат недоступна";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2251,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Значок приложения";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Configure default launch section."="Настройте раздел запуска по умолчанию.";
+"Show Home section when you launch the app."="Show Home section when you launch the app.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Настройте порядок сортировки и вид по умолчанию (список или эскизы).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2412,6 +2414,62 @@
 "Unavailable"="Недоступно";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Письмо уже отправлено. Пожалуйста, подождите несколько минут, прежде чем попробовать снова.";
+/* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
+"Manage Chat History"="Manage Chat History";
+/* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
+"History Clearing"="History Clearing";
+/* Text show under the setting 'History Retention' to explain what will happen if enabled */
+"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
+"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
+"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
+"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+/* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
+"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+/* Text show under the setting 'Clear Chat History' to explain what will happen if used */
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+/* Title show on the sheet to configure default values of the 'History Retention' setting */
+"Clear Messages Older Than"="Clear Messages Older Than";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Day"="One Day";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Week"="One Week";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Month"="One Month";
+/* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
+"Custom..."="Custom…";
+/* System message displayed to all chat participants when one of them enables retention history */
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+/* System message that is shown to all chat participants upon disabling the Retention history. */
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+/*  */
+"hour"="час";
+/*  */
+"hours"="часы";
+/*  */
+"day"="day";
+/*  */
+"1 day"="1 day";
+/*  */
+"week"="week";
+/*  */
+"weeks"="weeks";
+/*  */
+"1 week"="1 week";
+/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
+"%1 weeks"="%1 weeks";
+/*  */
+"month"="month";
+/*  */
+"1 month"="1 month";
+/* The number of months e.g. 2 months, 5 months etc. */
+"%1 months"="%1 months";
+/* */
+"1 year"="1 year";
+/*  */
+"year"="year";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="ПОДЕЛИТЬСЯ";
 /* Search placeholder text in search bar on home screen*/
@@ -2465,7 +2523,7 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="отправка сообщения отменена";
 /* Cookie dialog header */
-"Before you continue"="Прежде чем вы продолжите";
+"Before You Continue"="Прежде чем вы продолжите";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем локальное хранилище и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
 /* Cookie dialog button label. */
@@ -2496,3 +2554,13 @@
 "More Information"="Дополнительная информация";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="Сторонние файлы cookie не используются";
+/* Text shown when the creation of a version as a new file was successful */
+"Version created as a new file successfully."="Version created as a new file successfully.";
+/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
+"Permissions error"="Permissions error";
+/* Text shown for the action create new file */
+"Create new file"="Create new file";
+/* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
+"Pro Lite"="Pro Lite";

@@ -573,7 +573,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="There’s no need to add your own email address";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="The user [X] has been invited and will appear in your contact list once accepted.";
+"theUserHasBeenInvited"="The user has been invited and will appear in your contact list once accepted.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="The users have been invited and will appear in your contact list once accepted.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Erase Local Data";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
+"failedAttempstSectionTitle"="Your local files will be deleted and you will be logged out after 10 failed attempts";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chat History has Been Cleared";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Continue";
 /* Title of the incoming shared folders of a user. */
@@ -2439,7 +2439,7 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="One Month";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom...";
+"Custom..."="Custom…";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2523,7 +2523,7 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="message sending cancelled";
 /* Cookie dialog header */
-"Before you continue"="Before you continue";
+"Before You Continue"="Before you continue";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
