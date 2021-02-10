@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="najstarsze";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="Wybierz spośród zdjęć";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Zrób zdjęcie";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -633,9 +633,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Polityka Prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie Policy";
+"Cookie Policy"="Polityka Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cookie Settings";
+"Cookie Settings"="Ustawienia plików cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Regulamin serwisu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -883,6 +883,14 @@
 "eraseAllLocalDataLabel"="Usuń dane lokalne";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Wyloguj się i usuń dane lokalne po 10 nieudanych próbach podania hasła";
+/* Button text to change the passcode type. */
+"Passcode Options"="Opcje kodu dostępu";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-cyfrowy kod numeryczny";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-cyfrowy kod numeryczny";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Niestandardowy kod alfanumeryczny";
 /* Menu item */
 "help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
@@ -1763,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Uzyskaj link do czatu";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotacja klucza jest nieco bezpieczniejsza, ale nie pozwala utworzyć łącza do czatu, a nowi uczestnicy nie będą widzieć poprzednich wiadomości.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Limit rozmiaru nie może być aObrót klucza szyfrowania jest nieco bezpieczniejszy, ale nie pozwala na utworzenie łącza do czatu, a nowi uczestnicy nie zobaczą poprzednich wiadomości.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Rotacja kluczy jest wyłączona w rozmowach z ponad 100 uczestnikami.";
+"Key rotation is disabled for conversations with more than 100 participants."="Rotacja klucza szyfrowania jest wyłączona dla wątków z więcej niż 100 uczestnikami.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Aby utworzyć link do czatu, musisz nazwać grupę.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1777,7 +1785,7 @@
 /* Users previewing a public chat */
 "Observers"="Obserwatorzy";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ włączona Rotacja kluczy szyfrowania.";
+"%@ enabled Encrypted Key Rotation"="%@ włączona rotacja klucza szyfrowania.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ utworzył link do czatu";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="Interfejs";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="Zakładka domyślna";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tryb sortowania i przeglądania";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,13 +2245,13 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="Uruchamianie";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Układ";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App Icon";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Skonfiguruj domyślną sekcję uruchamiania.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Skonfiguruj porządek sortowania i domyślny widok (Lista lub Miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2457,34 +2465,34 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="wysyłanie wiadomości anulowane";
 /* Cookie dialog header */
-"Before You Continue"="Before You Continue";
+"Before you continue"="Zanim przejdziesz dalej";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Korzystamy z lokalnej pamięci masowej i podobnych technologii (“pliki cookie”), aby świadczyć nasze usługi na rzecz użytkownika, poprawić jakość korzystania z naszych usług i dostosować reklamy, które użytkownik widzi, w tym za pośrednictwem stron trzecich. Zaakceptuj wykorzystanie przez nas plików cookie od początku wizyty lub dostosuj pliki cookie w Ustawieniach plików cookie. Przeczytaj więcej w naszej [A]Polityce plików cookie[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accept Cookies";
+"Accept Cookies"="Akceptuję ciasteczka";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Essential Cookies";
+"Essential Cookies"="Niezbędne pliki cookie";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Zawsze włączone";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Niezbędne do zapewnienia ważnych funkcji i bezpiecznego dostępu do naszych usług. Z tego powodu nie wymagają zgody.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preference Cookies";
+"Preference Cookies"="Preferencyjne pliki cookie";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Pozwól nam zapamiętać wybrane przez Ciebie ustawienia wyświetlania i formatowania. Brak akceptacji tych plików cookie oznacza, że nie będziemy w stanie zapamiętać niektórych rzeczy, takich jak preferowany układ ekranu.";
 /* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+"Performance and Analytics Cookies"="Pliki cookie dotyczące wydajności i analizy";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Pomóż nam zrozumieć, w jaki sposób korzystasz z naszych usług i podaj nam dane, których możemy użyć do wprowadzenia ulepszeń. Brak akceptacji tych plików cookie oznacza, że będziemy mieć mniej dostępnych danych, aby pomóc w projektowaniu ulepszeń.";
 /* Cookie settings dialog text. */
-"Advertising Cookies"="Advertising Cookies";
+"Advertising Cookies"="Reklamowe pliki cookie";
 /* Cookie settings dialog text. */
-"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Używane przez nas i naszych zatwierdzonych partnerów reklamowych do dostosowywania reklam, które widzisz w naszych usługach i na innych stronach internetowych na podstawie historii przeglądania. Brak akceptacji tych plików cookie oznacza, że możemy wyświetlać reklamy, które są mniej istotne.";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="Third Party Cookies";
+"Third Party Cookies"="Pliki cookie stron trzecich";
 /* Cookie settings dialog text. */
-"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Są to pliki cookie, które są kontrolowane przez kogoś innego niż my; używamy tych plików cookie w celu zapewnienia typów funkcjonalności opisanych powyżej. Brak akceptacji tych plików cookie będzie miał różne konsekwencje w zależności od typu pliku cookie każdego pliku cookie strony trzeciej. Kliknij „Więcej informacji” poniżej, aby uzyskać szczegółowe informacje na temat wszystkich używanych przez nas plików cookie stron trzecich.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More information"="More information";
+"More Information"="Więcej informacji";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Nie są używane żadne pliki cookie stron trzecich";

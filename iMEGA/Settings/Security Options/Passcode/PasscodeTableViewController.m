@@ -121,6 +121,7 @@
         [LTHPasscodeViewController saveTimerDuration:RequirePasscodeAfterThirtySeconds];
     } else {
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
+        _requirePasscodeDetailLabel.text = @"";
     }
     
 }

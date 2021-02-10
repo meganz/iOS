@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="старейшие";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="Выбрать из фотографий";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Съёмка";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -633,9 +633,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie Policy";
+"Cookie Policy"="Политика использования файлов cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cookie Settings";
+"Cookie Settings"="Настройки куки";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия предоставления услуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -883,6 +883,14 @@
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="Помощь";
 /* Title of the section to access MEGA's help centre */
@@ -1763,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Ссылка на чат";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей шифрования немного безопаснее, но не позволяет создавать ссылку на чат, и новые участники не будут видеть прошлые сообщения.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Чередование ключей отключено для разговоров с более чем 100 участниками.";
+"Key rotation is disabled for conversations with more than 100 participants."="Чередование ключей шифрования отключено для разговоров с более чем 100 участниками.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Для создания ссылки на чат нужно назвать группу.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="Пользовательский интерфейс";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="Вкладка по умолчанию";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Сортировка и вид";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,13 +2245,13 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Минимализм";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="Запуск";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Макет";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Значок приложения";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Настройте раздел запуска по умолчанию.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Настройте порядок сортировки и вид по умолчанию (список или эскизы).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2457,34 +2465,34 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="отправка сообщения отменена";
 /* Cookie dialog header */
-"Before You Continue"="Before You Continue";
+"Before you continue"="Прежде чем вы продолжите";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем локальное хранилище и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accept Cookies";
+"Accept Cookies"="Принять куки";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Essential Cookies";
+"Essential Cookies"="Основные куки-файлы";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Всегда включены";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Необходимы для предоставления вам важных функций и безопасного доступа к нашим услугам. По этой причине согласие на них не требуется.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preference Cookies";
+"Preference Cookies"="Куки отображения";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Позвольте нам запомнить определенные выбранные вами настройки отображения и форматирования. Непринятие этих куки-файлов будет означать, что мы не сможем запомнить для вас некоторые вещи, такие как предпочтительный макет экрана.";
 /* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+"Performance and Analytics Cookies"="Куки производительности и аналитики";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Помогите нам понять, как вы используете наши услуги, и предоставьте нам данные, которые мы можем использовать для улучшения. Непринятие этих файлов cookie будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
 /* Cookie settings dialog text. */
-"Advertising Cookies"="Advertising Cookies";
+"Advertising Cookies"="Рекламные куки";
 /* Cookie settings dialog text. */
-"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Используется нами и нашими утверждёнными рекламными партнерами для настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах на основе вашей истории просмотров. Непринятие этих куки, что мы можем показывать менее актуальную рекламу.";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="Third Party Cookies";
+"Third Party Cookies"="Сторонние куки";
 /* Cookie settings dialog text. */
-"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Это куки, которые контролируются кем-то, кроме нас; мы используем эти куки для предоставления функций, описанных выше. Непринятие этих куки будет иметь различные последствия в зависимости от того, какой тип у каждого стороннего куки-файла. Нажмите «Дополнительная информация» ниже, чтобы получить подробную информацию обо всех сторонних файлах cookie, которые мы используем.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More information"="More information";
+"More Information"="Дополнительная информация";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Сторонние файлы cookie не используются";

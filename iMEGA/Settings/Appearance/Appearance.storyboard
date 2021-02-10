@@ -247,7 +247,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="LAUNCH" footerTitle="Show Home section when you launch the app." id="4ss-Dc-j21" userLabel="Launch">
+                            <tableViewSection headerTitle="LAUNCH" footerTitle="Configure default launch section." id="4ss-Dc-j21" userLabel="Launch">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="iCr-pu-7zH" detailTextLabel="LfL-yV-hes" style="IBUITableViewCellStyleValue1" id="De6-CW-7ee" userLabel="Default Tab Table View Cell">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>

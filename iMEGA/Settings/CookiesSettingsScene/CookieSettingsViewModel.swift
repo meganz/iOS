@@ -54,6 +54,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     private var cookiesConfigArray: Array<Bool> = [true, false, false, false, false] //[essential, preference, analytics, ads, thirdparty]
     private var currentCookiesConfigArray: Array<Bool> = [true, false, false, false, false]
+    private var cookieSettingsSet: Bool = true
     
     // MARK: - Init
     
@@ -116,6 +117,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
                 case .generic, .invalidBitmap: break
                     
                 case .bitmapNotSet:
+                    self?.cookieSettingsSet = false
                     self?.cookiesConfigArray = [true, false, false, false, false]
                     self?.currentCookiesConfigArray = self!.cookiesConfigArray
                     self?.invokeCommand?(.configCookieSettings(CookiesBitmap.essential))
@@ -131,8 +133,8 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         footersArray.append(NSLocalizedString("Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.", comment: ""))
         footersArray.append(NSLocalizedString("Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.", comment: ""))
         footersArray.append(NSLocalizedString("Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.", comment: ""))
-        footersArray.append(NSLocalizedString("Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant.", comment: ""))
-        footersArray.append(NSLocalizedString("These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use.", comment: "Cookie settings dialog text."))
+        footersArray.append(NSLocalizedString("Cookie settings dialog text -- Used by us and our approved advertising partners...", comment: ""))
+        footersArray.append(NSLocalizedString("Cookie settings dialog text -- These are Cookies which are controlled by...", comment: "Cookie settings dialog text."))
         
         self.invokeCommand?(.updateFooters(footersArray))
     }
@@ -176,6 +178,10 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     private func didCookieSettingsChange() -> Bool {
+        if !cookieSettingsSet {
+            return true
+        }
+        
         for (index, value) in currentCookiesConfigArray.enumerated() {
             if cookiesConfigArray[index] != value {
                 return true
