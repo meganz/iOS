@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Mais antigo";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Selecionar";
+"choosePhotoVideo"="Selecionar a partir de Fotos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Já existe uma pasta com o mesmo nome";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="A digitalização de documentos não está disponível";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Já existe um arquivo com o mesmo nome";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="Não há uma conta de email configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Política de privacidade";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Política de cookies";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Configurações de cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termos de serviço";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,8 +881,16 @@
 "simplePasscodeLabel"="Código de acesso simples";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Fazer logout e apagar os dados locais depois de digitar 10 vezes o código incorreto";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="Todos os seus dados locais serão deletados e você será deslogado depois de 10 tentativas incorretas";
+/* Button text to change the passcode type. */
+"Passcode Options"="Opções de código de acesso";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="Código numérico de 4 dígitos";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="Código numérico de 6 dígitos";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Código alfanumérico personalizado";
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
@@ -906,7 +918,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Transferências canceladas";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Quer cancelar  %@?";
+"cancelTransfersText"="Você quer cancelar TODAS as transferências?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TODAS as transferências";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1020,7 +1032,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="Gerenciamento da conta";
 /*  */
 "chooseYourAccountType"="Escolha o seu tipo de conta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1042,15 +1054,15 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Uma assinatura anual é 17% mais barata do que 12 pagamentos mensais";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Para fazer o upgrade do seu plano atual, entre em contato com a nossa equipe de suporte e solicite um [A]plano personalizado[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plano atual:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="Plano atual";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="Fazer upgrade a um plano personalizado";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="Pergunte-nos como você pode fazer o upgrade a um plano personalizado:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicitar um plano";
 /* Header shown to help on the purchasin process */
@@ -1747,7 +1759,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Salvando no Fotos…";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="Preparando para compartilhar...";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvo no Fotos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1759,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obter o link do chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="A rotação de chaves é um pouco mais segura, mas não permite criar um link do chat, e os novos participantes não verão as mensagens anteriores.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="A rotação da chave de criptografia é um pouco mais segura, mas não permite que você crie um link do chat, e os novos participantes não verão as mensagens anteriores.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="A rotação de chaves está desativada nos chats com mais de 100 participantes.";
+"Key rotation is disabled for conversations with more than 100 participants."="A rotação da chave de criptografia está desativada nos chats com mais de 100 participantes.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Você precisa nomear o grupo para poder criar um link de chat.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2218,8 +2230,10 @@
 "Message..."="Mensagem...";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Arraste para a esquerda para cancelar, solte para enviar";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Aparência";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Interface do usuário";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Aba predeterminada";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Classificação e tipo de visualização";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2244,14 @@
 "Night"="Noturno";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Mínimo";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Abrir em";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Layout";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Ícone do aplicativo";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Configure default launch section."="Escolha a área a ser mostrada ao abrir o aplicativo";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Escolha a ordem de classificação e tipo de visualização predeterminados (lista ou miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2359,7 +2377,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Definir uma senha";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Exportar a chave de decodificação do link separadamente.";
+"Export the link and decryption key separately."="Exportar o link e a chave de decodificação por separado.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Mais informações";
 /* Text indicating the date until a link will be valid */
@@ -2441,8 +2459,40 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Quer compartilhar a senha deste link?";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="mensagem enviada";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="não foi possível enviar a mensagem";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="o envio da mensagem foi cancelado";
+/* Cookie dialog header */
+"Before you continue"="Antes de continuar";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Usamos armazenamento local e tecnologias semelhantes (“cookies”) para levar os nossos serviços a você, melhorar a sua experiência com os nossos serviços e personalizar os anúncios que você visualiza, inclusive por meio de terceiros. Você pode aceitar o nosso uso dos cookies desde o início da sua visita ou personalizar os cookies nas Configurações de cookies. Para mais informações, acesse a nossa [A]Política de cookies[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Aceitar cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Cookies essenciais";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Sempre ativo";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="São essenciais para poder proporcionar funções importantes e acesso seguro aos nossos serviços. Por este motivo, não requerem consentimento.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Cookies de preferência";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Permitem que nós lembremos de certas configurações de visualização e formatação que você escolher. Não aceitar esses cookies fará com que não sejamos capazes de lembrar algumas coisas, como o seu layout de tela preferido.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Cookies de desempenho e análise";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Ajudam que nós possamos entender como você usa os nossos serviços, e nos proporciona dados que poderão ser usados para fazer aprimoramentos. Não aceitar esses cookies fará com que tenhamos menos dados disponíveis para ajudar a desenvolver melhorias.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Cookies de publicidade";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="São usados por nós e pelos nossos parceiros de publicidade oficiais para personalizar os anúncios que você vê nos nossos serviços e em outros sites, com base no seu histórico de navegação. Não aceitar esses cookies significa que os anúncios mostrados poderão ser menos relevantes.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Cookies de terceiros";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Esses são cookies controlados por outras pessoas diferentes de nós; usamos esses cookies para fornecer os tipos de funções descritos acima. Não aceitar esses cookies poderá ter implicações diferentes, dependendo do tipo de cada cookie de terceiros. Clique em “Mais informações” abaixo para obter detalhes sobre todos os cookies de terceiros que usamos.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Mais informações";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="Não estão sendo usados cookies de terceiros";

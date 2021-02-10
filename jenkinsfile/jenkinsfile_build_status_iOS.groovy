@@ -11,7 +11,9 @@ def injectEnvironments(Closure body) {
 
 pipeline {
    agent any
-
+   options {
+        timeout(time: 1, unit: 'HOURS') 
+   }
    stages {
       stage('Submodule update') {
          steps {
@@ -48,7 +50,7 @@ pipeline {
         stage('Generating Executable (IPA)') {
             steps {
                 injectEnvironments({
-                    sh "bundle exec fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER"
+                    sh "arch -x86_64 bundle exec fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER"
                 })
             }
         }

@@ -2,8 +2,9 @@
 import UIKit
 
 enum AppearanceSection: Int {
-    case layout = 0
-    case appIcon = 1
+    case launch = 0
+    case layout = 1
+    case appIcon = 2
 }
 
 enum IconName: String {
@@ -15,6 +16,8 @@ enum IconName: String {
 class AppearanceTableViewController: UITableViewController {
     
     @IBOutlet weak var sortingAndViewModeLabel: UILabel!
+    @IBOutlet weak var defaultTabLabel: UILabel!
+    @IBOutlet weak var defaultTabDetailLabel: UILabel!
     
     @IBOutlet weak var defaultIconContainerView: UIView!
     @IBOutlet weak var defaultIconButton: UIButton!
@@ -39,6 +42,8 @@ class AppearanceTableViewController: UITableViewController {
         
         title = NSLocalizedString("Appearance", comment: "Title of one of the Settings sections where you can customise the 'Appearance' of the app.")
         
+        defaultTabLabel.text = NSLocalizedString("Default Tab", comment: "Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.")
+        
         sortingAndViewModeLabel.text = NSLocalizedString("Sorting And View Mode", comment: "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app.")
         
         defaultIconLabel.text = NSLocalizedString("Default", comment: "Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible).")
@@ -59,6 +64,11 @@ class AppearanceTableViewController: UITableViewController {
         }
         
         updateAppearance()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        defaultTabDetailLabel.text = TabManager.getPreferenceTab().title
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -170,11 +180,14 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case AppearanceSection.layout.rawValue:
+        switch AppearanceSection(rawValue: section) {
+        case .launch:
+            return NSLocalizedString("Launch", comment: "Section title inside of Settings - User Interface, where you can change the default tab when launch the app.")
+            
+        case .layout:
             return NSLocalizedString("Layout", comment: "Section title inside of Settings - Appearance, where you can change the app's layout distribution.")
             
-        case AppearanceSection.appIcon.rawValue:
+        case .appIcon:
             return NSLocalizedString("App Icon", comment: "Section title inside of Settings - Appearance, where you can change the app's icon.")
             
         default:
@@ -183,11 +196,14 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        switch section {
-        case AppearanceSection.layout.rawValue:
+        switch AppearanceSection(rawValue: section) {
+        case .launch:
+            return NSLocalizedString("Configure default launch section.", comment: "Footer text to explain what you could do in the Settings - User Interface - Default Tab section.")
+        
+        case .layout:
             return NSLocalizedString("Configure sorting order and the default view (List or Thumbnail).", comment: "Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section.")
             
-        case AppearanceSection.appIcon.rawValue:
+        case .appIcon:
             return nil
             
         default:

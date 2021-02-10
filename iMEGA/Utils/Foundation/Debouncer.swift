@@ -18,14 +18,7 @@ final class Debouncer {
     }
 
     func start(action: @escaping () -> Void) {
-        guard let scheduleWork = dispatchWork else {
-            execute(action)
-            return
-        }
-
-        if !scheduleWork.isCancelled {
-            scheduleWork.cancel()
-        }
+        cancel()
         execute(action)
     }
 

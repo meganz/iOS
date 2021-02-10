@@ -82,7 +82,11 @@ final class FilesExplorerGridSource: NSObject {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        guard let gridCell = cell as? FileExplorerGridCell else { return }
+        guard let gridCell = cell as? FileExplorerGridCell,
+              let node = nodes?[indexPath.item]
+              else { return }
+        gridCell.viewModel?.allowsSelection = allowsMultipleSelection
+        gridCell.viewModel?.markSelection = selectedNodes?.contains(node) ?? false
         gridCell.viewModel?.updateSelection()
     }
     

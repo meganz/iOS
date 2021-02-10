@@ -62,7 +62,9 @@
     
     self.titleLabel.text = self.viewTitle;
     
-    if (self.boldInDetail) {
+    if (self.detailAttributed) {
+        self.detailLabel.attributedText = self.detailAttributed;
+    } else if (self.boldInDetail) {
         NSRange boldRange = [self.detail rangeOfString:self.boldInDetail];
         
         NSMutableAttributedString *detailAttributedString = [[NSMutableAttributedString alloc] initWithString:self.detail];
@@ -76,10 +78,19 @@
         self.detailLabel.text = self.detail;
     }
     
+    if (self.detailTapGestureRecognizer) {
+        self.detailLabel.userInteractionEnabled = YES;
+        [self.detailLabel addGestureRecognizer:self.detailTapGestureRecognizer];
+    }
+    
     if (self.firstButtonTitle) {
         [self.firstButton setTitle:self.firstButtonTitle forState:UIControlStateNormal];
     } else {
         self.firstButton.hidden = YES;
+    }
+    
+    if (self.dismissButtonStyle == MEGACustomButtonStyleNone) {
+        self.dismissButtonStyle = MEGACustomButtonStyleCancel;
     }
     
     if (self.dismissButtonTitle) {
@@ -121,9 +132,15 @@
     
     self.linkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
+#ifdef MAIN_APP_TARGET
+    if (self.detailAttributed) {
+        self.detailLabel.attributedText = [self detailTextAttributedString];
+    }
+#endif
+    
     [self.firstButton mnz_setupPrimary:self.traitCollection];
     [self.secondButton mnz_setupDestructive:self.traitCollection];
-    [self.dismissButton mnz_setupCancel:self.traitCollection];
+    [self.dismissButton mnz_setup:self.dismissButtonStyle traitCollection:self.traitCollection];
 }
 
 - (void)configUIAppearance {

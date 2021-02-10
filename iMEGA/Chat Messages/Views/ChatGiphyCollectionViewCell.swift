@@ -1,8 +1,8 @@
 import MessageKit
 
 class ChatGiphyCollectionViewCell: MessageContentCell {
-    open var imageView: YYAnimatedImageView = {
-        let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    open var imageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -46,9 +46,9 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
         loadingIndicator.startAnimating()
         let url = webpSrc.replacingOccurrences(of: ServiceManager.shared.GIPHY_URL, with: ServiceManager.shared.BASE_URL)
         
-        imageView.yy_setImage(with: URL(string: url), placeholder: nil, options: .progressive, completion: { _, _, _, _, _ in
+        imageView.sd_setImage(with: URL(string: url)) { (_, _, _, _) in
             self.loadingIndicator.stopAnimating()
-        })
+        }
     }
 }
 

@@ -260,7 +260,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [[ShareAttachment attachmentsArray] objectAtIndex:textField.tag].name = textField.text;
+    if ([ShareAttachment attachmentsArray].count > textField.tag) {
+        ([ShareAttachment attachmentsArray][textField.tag]).name = textField.text;
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -298,7 +300,7 @@
     }
     
     if (shouldReload) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadData];
     }
 }
 

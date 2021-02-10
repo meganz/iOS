@@ -55,6 +55,8 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
+#import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
+#import <SDWebImage/SDWebImage.h>
 
 #ifdef DEBUG
 #import <DoraemonKit/DoraemonManager.h>
@@ -151,6 +153,8 @@
         _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
     }
     
+    SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
+    [[SDImageCodersManager sharedManager] addCoder:webPCoder];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
     [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
@@ -159,11 +163,7 @@
     
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
-        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-    }
-    
+    [Helper restoreAPISetting];
     [ChatUploader.sharedInstance setup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -675,8 +675,8 @@
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
     if ([type isEqualToString:@"mega.ios.search"]) {
-        self.mainTBC.selectedIndex = HOME;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:HOME];
+        self.mainTBC.selectedIndex = TabTypeHome;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeHome];
         HomeViewController *homeVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -690,8 +690,8 @@
         
         
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
-        self.mainTBC.selectedIndex = CLOUD;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
+        self.mainTBC.selectedIndex = TabTypeCloudDrive;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
@@ -744,10 +744,6 @@
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
-            if (MEGALinkManager.nodeToPresentBase64Handle) {
-                [MEGALinkManager presentNode];
-            }
-            
             if (isAccountFirstLogin) {
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
@@ -761,11 +757,10 @@
                 }
         
                 [MEGALinkManager processSelectedOptionOnLink];
+                [self showCookieDialogIfNeeded];
+            } else {
+                [self processActionsAfterSetRootVC];
             }
-            
-            [self showLink:MEGALinkManager.linkURL];
-            
-            [self manageQuickActionType:self.quickActionType];
         }
     }
     
@@ -774,6 +769,20 @@
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
+}
+
+- (void)processActionsAfterSetRootVC {
+    [self showLink:MEGALinkManager.linkURL];
+    
+    if (MEGALinkManager.nodeToPresentBase64Handle) {
+        [MEGALinkManager presentNode];
+    }
+    
+    [self manageQuickActionType:self.quickActionType];
+    
+    [self showCookieDialogIfNeeded];
+    
+    [self showEnableTwoFactorAuthenticationIfNeeded];
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -796,15 +805,15 @@
     NSUInteger tabTag = 0;
     switch (self.megatype) {
         case 1:
-            tabTag = SHARES;
+            tabTag = TabTypeSharedItems;
             break;
             
         case 2:
-            tabTag = CHAT;
+            tabTag = TabTypeChat;
             break;
             
         case 3:
-            tabTag = HOME;
+            tabTag = TabTypeHome;
             break;
             
         default:
@@ -1186,12 +1195,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self.window setRootViewController:_mainTBC];
     } else {
         [self showLink:MEGALinkManager.linkURL];
-        
-        if (MEGALinkManager.nodeToPresentBase64Handle) {
-            [MEGALinkManager presentNode];
-        }
-        
-        [self manageQuickActionType:self.quickActionType];
+
+        [self processActionsAfterSetRootVC];
     }
 }
 
@@ -1290,6 +1295,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)readyToShowRecommendations {
     [self presentBusinessExpiredViewIfNeeded];
+    [self showCookieDialogIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
@@ -1641,7 +1647,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (self.openChatLater) {
                     [self.mainTBC openChatRoomNumber:self.openChatLater];                    
                 }
-                [self showEnableTwoFactorAuthenticationIfNeeded];
             }
       
             [MEGAIndexer.sharedIndexer reindexSpotlightIfNeeded];

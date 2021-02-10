@@ -418,7 +418,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             MEGALogDebug("openChatRoom: Trying to open already opened chat room - \(isChatRoomOpen)")
             return
         }
-
+        closeChatRoom()
+        
+        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
+        
         isChatRoomOpen = chatSDK.openChatRoom(chatRoom.chatId, delegate: self)
         if isChatRoomOpen {
             loadingState = true
@@ -430,14 +434,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     func closeChatRoom() {
-        if isChatRoomOpen {
-            isChatRoomOpen = false
-            chatMessages = []
-            chatViewController?.messagesCollectionView.reloadData()
-            MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom(chatRoom.chatId, delegate: self)
-            MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
-            MEGASdkManager.sharedMEGASdk().remove(self)
-        }
+        isChatRoomOpen = false
+        chatMessages = []
+        chatViewController?.messagesCollectionView.reloadData()
+        MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom(chatRoom.chatId, delegate: self)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
+        MEGASdkManager.sharedMEGASdk().remove(self)
     }
     
 

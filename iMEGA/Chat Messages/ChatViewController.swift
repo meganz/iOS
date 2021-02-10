@@ -829,7 +829,7 @@ class ChatViewController: MessagesViewController {
                 return
             }
             self.unreadNewMessagesCount = 0
-            self.messagesCollectionView.scrollToBottom(animated: true)
+            self.messagesCollectionView.scrollToLastItem()
             self.hideJumpToBottomIfRequired()
         }
         view.addSubview(chatBottomInfoScreen)
