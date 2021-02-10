@@ -39,7 +39,6 @@
 #import "MEGATransferList+MNZCategory.h"
 #import "AVAudioSession+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "UIImageView+WMLTemplatedAnimation.h"
 #import "NSURL+MNZCategory.h"
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
@@ -120,7 +119,7 @@
 #import <PureLayout/PureLayout.h>
 #import "UIImage+GKContact.h"
 #import "NSAttributedString+MNZCategory.h"
-#import <YYWebImage/YYWebImage.h>
+#import <SDWebImage/SDWebImage.h>
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAProcessAsset.h"
 #import "ShareLocationViewController.h"
@@ -137,6 +136,7 @@
 #import "UIImage+GKContact.h"
 #import "MEGAUserAlert.h"
 #import "NodeTableViewCell.h"
+#import "NodeCollectionViewCell.h"
 #import "MyAccountHallViewController.h"
 #import "RecentsViewController.h"
 #import "CopyrightWarningViewController.h"
@@ -152,6 +152,7 @@
 #import "CloudDriveViewController.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
+#import "CHTCollectionViewWaterfallLayout.h"
 #import "MEGAPurchase.h"
 #import "UIImage+YYAdd.h"
 #import "CameraUploadManager.h"

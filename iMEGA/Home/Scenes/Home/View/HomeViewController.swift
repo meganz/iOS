@@ -334,7 +334,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func activateSearch() {
-        searchBarView.becomeFirstResponder()
+        let _ = searchBarView.becomeFirstResponder()
     }
 }
 

@@ -1,5 +1,36 @@
 
+@objc enum MEGACustomButtonStyle: Int {
+    case none
+    case basic
+    case primary
+    case primaryDisabled
+    case destructive
+    case cancel
+}
+
 extension UIButton {
+    
+    @objc func mnz_setup(_ style : MEGACustomButtonStyle, traitCollection: UITraitCollection) {
+        switch style {
+        case .basic:
+            mnz_setupBasic(traitCollection)
+            
+        case .primary:
+            mnz_setupPrimary(traitCollection)
+            
+        case .primaryDisabled:
+            mnz_setupPrimary_disabled(traitCollection)
+            
+        case .destructive:
+            mnz_setupDestructive(traitCollection)
+            
+        case .cancel:
+            mnz_setupCancel(traitCollection)
+            
+        default:
+            mnz_setupBasic(traitCollection)
+        }
+    }
     
     // MARK: - Buttons
     

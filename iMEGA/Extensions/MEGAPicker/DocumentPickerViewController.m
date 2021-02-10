@@ -211,7 +211,11 @@
     NSString *key = [[NSURL fileURLWithPath:path].URLByResolvingSymlinksInPath absoluteString];
     [mySharedDefaults setObject:base64Handle forKey:key];
     
-    [self dismissGrantingAccessToURL:[NSURL fileURLWithPath:path]];
+    if ([NSFileManager.defaultManager fileExistsAtPath:path]) {
+        [self dismissGrantingAccessToURL:[NSURL fileURLWithPath:path]];
+    } else {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Read error", @"")];
+    }
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {

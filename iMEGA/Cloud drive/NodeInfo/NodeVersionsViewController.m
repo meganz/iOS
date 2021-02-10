@@ -243,19 +243,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeForIndexPath:indexPath];
-    
-    UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNode];
-        [self setEditing:NO animated:YES];
-    }];
-    downloadAction.image = [UIImage imageNamed:@"infoDownload"];
-    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    
-    return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
-}
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull) {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
@@ -267,7 +254,11 @@
     UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [self removeAction:nil];
     }];
-    removeAction.image = [UIImage imageNamed:@"delete"];
+    if (@available(iOS 13.0, *)) {
+        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    } else {
+        removeAction.image = [UIImage imageNamed:@"delete"];
+    }
     removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     [rightActions addObject:removeAction];
     
@@ -279,7 +270,16 @@
         revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         [rightActions addObject:revertAction];
     }
-
+        
+    UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        MEGANode *node = [self nodeForIndexPath:indexPath];
+        [node mnz_downloadNode];
+        [self setEditing:NO animated:YES];
+    }];
+    downloadAction.image = [UIImage imageNamed:@"infoDownload"];
+    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [rightActions addObject:downloadAction];
+    
     return [UISwipeActionsConfiguration configurationWithActions:rightActions];
 }
 
@@ -463,7 +463,7 @@
 
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
-    if (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull) {
+    if (direction == MGSwipeDirectionLeftToRight || (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull)) {
         return NO;
     }
     return !self.isEditing;

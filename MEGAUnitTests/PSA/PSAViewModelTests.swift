@@ -1,0 +1,147 @@
+
+import XCTest
+@testable import MEGA
+
+final class PSAViewModelTests: XCTestCase {
+    
+    func testAction_onViewReady_fetchPSAEntity() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
+        let router = PSAViewRouter(tabBarController: UITabBarController())
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+        test(viewModel: viewModel, action: .onViewReady, expectedCommands: [.configView(mocPSAEntity())])
+    }
+    
+    func testAction_shouldShowPSAView_SuccessScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertTrue(router.psaViewShown)
+    }
+
+    func testAction_shouldShowPSAView_genericErrorScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .failure(.generic)))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertFalse(router.psaViewShown)
+    }
+
+    func testAction_shouldShowPSAView_noDataAvailableScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .failure(.noDataAvailable)))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertFalse(router.psaViewShown)
+    }
+
+    func testAction_shouldShowPSAView_PSAAlreadyShownScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
+        let mockPreference = MockPreferenceUseCase()
+        mockPreference.dict[.lastPSAShownTimestamp] = Date().timeIntervalSince1970
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mockPreference)
+
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertFalse(router.psaViewShown)
+    }
+
+    func testAction_shouldShowPSAView_PSAURLScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertTrue(router.didOpenPSAURLString)
+    }
+    
+    func testAction_adjustPSAViewFrameScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .adjustPSAFrameIfNeeded, expectedCommands: [])
+        XCTAssertTrue(router.didAdjustPSAViewFrame)
+    }
+    
+    func testAction_hidePSAViewScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .setPSAViewHidden(true), expectedCommands: [])
+        XCTAssertFalse(router.psaViewShown)
+    }
+    
+    func testAction_showPSAViewScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
+        let router = MockPSAViewRouter()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+
+        test(viewModel: viewModel, action: .setPSAViewHidden(false), expectedCommands: [])
+        XCTAssertTrue(router.psaViewShown)
+    }
+
+    //MARK:- Private methods
+
+    private func mocPSAEntity() -> PSAEntity {
+        return PSAEntity(identifier: 400,
+                         title: "Terms of service update",
+                         description: "Our revised Terms of service, Privacy and data policy, and taken down guidence policy apply from Jan 18th January 2021",
+                         imageURL: "https://eu.static.mega.co.nz/3/images/mega/psa/psa1.png",
+                         positiveText: "View Terms",
+                         positiveLink: "https://mega.nz/updatedterms",
+                         URLString: nil
+        )
+    }
+
+    private func mocURLPSAEntity() -> PSAEntity {
+        return PSAEntity(identifier: 400,
+                         title: "Terms of service update",
+                         description: "Our revised Terms of service, Privacy and data policy, and taken down guidence policy apply from Jan 18th January 2021",
+                         imageURL: "https://eu.static.mega.co.nz/3/images/mega/psa/psa1.png",
+                         positiveText: "View Terms",
+                         positiveLink: "https://mega.nz/updatedterms",
+                         URLString: "https://mega.nz/updatedterms"
+        )
+    }
+}
+
+
+final class MockPSAViewRouter: PSAViewRouting {
+    var psaViewShown = false
+    var didOpenPSAURLString = false
+    var didAdjustPSAViewFrame = false
+    
+    func start() {
+        psaViewShown = true
+    }
+    
+    func currentPSAView() -> PSAView? {
+        return nil
+    }
+    
+    func isPSAViewAlreadyShown() -> Bool {
+        return psaViewShown
+    }
+    
+    func adjustPSAViewFrame() {
+        didAdjustPSAViewFrame = true
+    }
+    
+    func hidePSAView(_ hide: Bool) {
+        psaViewShown = !hide
+    }
+    
+    func openPSAURLString(_ urlString: String) {
+        didOpenPSAURLString = true
+    }
+    
+    func dismiss(psaView: PSAView) {
+        psaViewShown = false
+    }
+    
+}

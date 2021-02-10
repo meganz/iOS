@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Älteste";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Auswahl";
+"choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Aufnehmen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -499,9 +499,9 @@
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="Upload mangels WLAN-Verbindung gestoppt, %lu Dateien in der Warteschlange";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Alle Fotos hochgeladen, Video-Uploads deaktiviert; 1 Video nicht hochgeladen";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Alle Fotos hochgeladen, Video-Uploads deaktiviert; %lu Videos nicht hochgeladen";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d von %2$d Datei";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="Auf Ihrem Gerät ist kein E-Mail-Account eingerichtet";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Datenschutzerklärung";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie-Richtlinien";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie-Einstellungen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Allgemeinen Geschäftsbedingungen zu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -643,57 +647,57 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Optionen";
 /* A hint to show one option is recommended by MEGA */
-"(Recommended)"="(Recommended)";
+"(Recommended)"="(Empfohlen)";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="Save HEIC photos as";
+"SAVE HEIC PHOTOS AS"="Speicherformat für HEIC-Fotos";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="We recommend JPG, as it is the most compatible format for photos.";
+"We recommend JPG, as its the most compatible format for photos."="Wir empfehlen aus Kompatibilitätsgründen JPG";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
-"SAVE HEVC VIDEOS AS"="Save HEVC videos as";
+"SAVE HEVC VIDEOS AS"="Speicherformat für HEVC-Videos";
 /* Footer for HEVC format section */
-"We recommend H.264, as its the most compatible format for videos."="We recommend H.264, as it is the most compatible format for videos.";
+"We recommend H.264, as its the most compatible format for videos."="Wir empfehlen aus Kompatibilitätsgründen H.264.";
 /* Footer for video compression quality */
-"Compression quality when to transcode HEVC videos to H.264 format."="Compression quality when HEVC videos are transcoded to H.264 format.";
+"Compression quality when to transcode HEVC videos to H.264 format."="Kompressionsqualität bei HEVC-H.264-Transkodierung";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Videos uploaden";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
-"When enabled, photos will be uploaded."="When enabled, photos will be uploaded.";
+"When enabled, photos will be uploaded."="Wenn aktiviert, werden Fotos automatisch hochgeladen";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to the Camera Uploads folder.";
+"Photos will be uploaded to Camera Uploads folder."="Hochgeladene Fotos werden im Ordner Camera Uploads gespeichert.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to the Camera Uploads folder.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Hochgeladene Fotos und Videos werden im Ordner Camera Uploads gespeichert.";
 /* Title to show for upload in background */
-"Upload in Background"="Upload in Background";
+"Upload in Background"="Upload im Hintergrund";
 /* Title for the location based background upload message */
-"Enable location services for background upload"="Enable location services for background upload";
+"Enable location services for background upload"="Aktivieren Sie für den Upload im Hintergrund Ihren Standort";
 /* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA can periodically start camera uploads in the background when your location changes.";
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA kann bei jedem Standortwechsel einige Fotos und Videos hochladen.";
 /* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Please select “Always” at your Location page in Settings, so that MEGA can periodically start camera uploads in background when your location changes.";
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Wählen Sie “Immer” als Option für den Standort, sodass MEGA bei Standortwechsel das Hochladen von Fotos und Videos fortsetzen kann.";
 /* Title for turn on a feature */
-"Turn On"="Turn On";
+"Turn On"="Aktivieren";
 /* Title for turn on a feature in settings */
-"Turn On in Settings"="Turn On in Settings";
+"Turn On in Settings"="In den Einstellungen aktivieren";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Videos will be uploaded to the Camera Uploads folder.";
+"Videos will be uploaded to the Camera Uploads folder."="Videos werden im Ordner Camera Uploads gespeichert.";
 /* Footer for video uploads switch section when disabled */
-"When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
+"When enabled, videos will be uploaded."="Wenn aktiviert, werden Videos hochgeladen.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Uploads Options!";
+"New Camera Upload!"="Neue Optionen für Camera Uploads!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sie können jetzt optional HEIC/HEVC Fotos und Videos automatisch in die verbreiteteren Formate JPEG und H.264 konvertieren.";
 /* Title for an action to use most compatible formats */
-"Use Most Compatible Formats"="Use Most Compatible Formats";
+"Use Most Compatible Formats"="Kompatible Formate verwenden";
 /* Title for custom settings */
-"Custom Settings"="Custom Settings";
+"Custom Settings"="Spezielle Einstellungen";
 /* Title to show when device local storage is full */
-"%@ Storage Full"="%@ Storage Full";
+"%@ Storage Full"="%@ Speicher voll";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage for further camera uploads. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Sie haben für weitere Camera Uploads nicht genügend freien Speicherplatz. Bitte löschen Sie Apps, Videos oder Musik, die Sie nicht mehr benötigen. Sie können Ihren Speicherplatz in %@ verwalten.";
 /* Navigation path for Storage settings in iOS */
-"Settings > General > %@ Storage"="Settings > General > %@ Storage";
+"Settings > General > %@ Storage"="Einstellungen > Allgemein > %@ Speicher";
 /* Title of the switch to config whether to upload videos for Live Photos */
 "Upload Videos for Live Photos"="Upload Videos for Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
@@ -877,8 +881,16 @@
 "simplePasscodeLabel"="Einfacher Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="Nach zehn Fehlversuchen werden Ihre lokalen Dateien gelöscht und Ihre Sitzung beendet.";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="Hilfe";
 /* Title of the section to access MEGA's help centre */
@@ -966,13 +978,13 @@
 /* Add Phone Number title  */
 "Add Phone Number"="Add Phone Number";
 /* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Sie haben %1$s Speicherplatz und %2$s Transfervolumen als Verifikationsbonus erhalten.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Erleichtern Sie es Ihren Freunden und Bekannten, Sie auf MEGA zu finden! Erweitern Sie Ihren MEGA-Account um Ihre Mobilnummer.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been locked temporarily due to potential abuse. Please verify your phone number to unlock your account.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Ihr Account wurde wegen Missbrauchsverdachts vorübergehend gesperrt. Bitte bestätigen Sie zum Entsperren Ihre Telefonnummer.";
 /* Verify your account title */
 "Verify Your Account"="Verify Your Account";
 /* Add your phone number title */
@@ -1385,11 +1397,11 @@
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Dieses Programm ist gesperrt";
 /* Error shown when terms of service are breached during download. */
-"Terms of Service breached"="Terms of Service breached";
+"Terms of Service breached"="Verletzung unserer Nutzungsbedingungen";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transfer wegen Verzeichnisrekursion fehlgeschlagen";
 /* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
+"Not accessible due to ToS/AUP violation"="Wegen Verletzung unser Nutzungsbedingungen nicht verfügbar";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL-Prüfung fehlgeschlagen";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1689,7 +1701,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon und Kamera aktivieren";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To send voice messages and make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Zum Versenden von Sprachnachrichten und für verschlüsselte Audio- und Videogespräche benötigt MEGA Zugriff auf Ihre Kamera und Ihr Mikrofon.";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Benachrichtigungen";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1759,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Chatlink erstellen";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Schlüsselrotation ist etwas sicherer, jedoch können Sie keine Chatlinks exportieren, und alte Nachrichten bleiben neuen Teilnehmern unzugänglich.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Schlüsselrotation ist etwas sicherer. Allerdings ist durch ihre Aktivierung die Benutzung von Chatlinks nicht mehr möglich. Auch sehen neu hinzugekommene Teilnehmer nicht mehr den gesamten Chatverlauf.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Key rotation is disabled for conversations with more than 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="Encryption key rotation is disabled for conversations with more than 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Link-Export ist nur für Chats mit gesetztem Titel erlaubt.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1773,7 +1785,7 @@
 /* Users previewing a public chat */
 "Observers"="Beobachter";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encryption key rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ hat Schlüsselrotation aktiviert.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ hat einen Chatlink erstellt.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -1867,7 +1879,7 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Ihr PRO-Status läuft in %1 Tagen ab.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Ihr PRO-Status ist gestern abgelaufen";
+"Your PRO membership plan expired 1 day ago"="Ihr Pro-Status ist gestern abgelaufen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Ihr PRO-Status ist vor %1 Tagen abgelaufen";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1875,7 +1887,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Die Löschung von %1 (%2)  wurde rückgängig gemacht.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="Sprachnachricht";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Ihr verfügbarer Speicherplatz reicht nicht aus";
 /* uploads over storage quota warning dialog title */
@@ -1895,15 +1907,15 @@
 /* Title of the button to share a location in a chat */
 "Send This Location"="Diesen Ort senden";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Karteneinstellungen";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="Satellitenbild";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "Hybrid"="Hybrid";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Auf %d Meter genau";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "Send Location"="Standort senden";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1915,9 +1927,9 @@
 /* Singular of participant. 1 participant */
 "%d participant"="%d Teilnehmer";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< Abbrechen";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="Gedrückt halten %@ zur Aufnahme, loslassen zum Absenden";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Sie können während eines laufenden Gesprächs keine Sprachnachricht aufzeichnen";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
@@ -1965,7 +1977,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Keine Aktivität";
 /* Plural of items which contains a folder. 2 items */
-"items"="Elemente";
+"items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -1977,17 +1989,17 @@
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Kein Chatlink verfügbar.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="Bitte erlauben Sie den Zugriff";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Bitte öffnen Sie die Privatsphäreneinstellungen und erlauben Sie der MEGA-App Zugriff auf Ihren Standort.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="Mobildatenzugang ist gesperrt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="Mobildatenzugang aktivieren";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in the device’s Settings.";
+"You can turn on mobile data for this app in Settings."="Sie können der App die Nutzung des mobilen Datenzugangs erlauben.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Auf den Testserver wechseln?";
 /* text of the alert dialog when the user is changing the API URL to staging */
@@ -1999,7 +2011,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Discover your contacts on MEGA";
+"See who's already on MEGA"="Entdecken Sie Ihre Kontakte auf MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2117,7 +2129,7 @@
 /* */
 "Active"="Aktiv";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
-"Role:"="Rolle";
+"Role:"="Rolle:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Include Location Tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2143,13 +2155,13 @@
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Bitte geben Sie eine gültige Telefonnummer an.";
 /* Error message that will show to user when user reached the sms verification daily limit */
-"You have reached the daily limit"="You have reached the daily limit";
+"You have reached the daily limit"="Sie haben Ihr Limit für heute erreicht.";
 /* Error message that will be shown when the code introduced do not match with the one you received */
-"The verification code doesn't match."="The verification code doesn’t match.";
+"The verification code doesn't match."="Der Verifikationscode ist nicht korrekt.";
 /* Error message that will show to user when user entered invalid verification code */
-"Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
+"Wrong code. Please try again or resend."="Falscher Code. Bitte geben Sie ihn erneut ein oder fordern Sie einen neuen an.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="This number is already associated with a MEGA account.";
+"This number is already associated with a Mega account"="Diese Telefonnummer ist bereits mit einem MEGA-Account assoziiert.";
 /* Country label for a button, title, etc. */
 "Country"="Land";
 /* Error message that will show to user its account is already verified */
@@ -2159,11 +2171,11 @@
 /* Text related to verified phone number. Used as title or cell description.  */
 "Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Please enter the verification code sent to";
+"Please type the verification code sent to"="Bitte geben Sie den Code ein";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive a code?";
+"You didn't receive a code?"="Keinen Code empfangen?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Your phone number has been verified successfully";
+"Your phone number has been verified successfully"="Ihre Telefonnummer wurde bestätigt";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Your account has been temporarily locked for your safety.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2195,11 +2207,11 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Verkleinerte Bilder per Mobildaten und Originalgröße per WLAN";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimiert";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+"Send smaller size images optimised for lower data consumption"="Verkleinerte Bilder zur Optimierung Ihres Datenverbrauchs";
 /* Description of High Image Quality option */
 "Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
@@ -2218,22 +2230,28 @@
 "Message..."="Message…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="Benutzeroberfläche";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorting And View Mode";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Default";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="Day";
+"Day"="Tag";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Night";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Layout";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Configure default launch section."="Configure default launch section.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2446,3 +2464,35 @@
 "failed to send the message"="failed to send the message";
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="message sending cancelled";
+/* Cookie dialog header */
+"Before you continue"="Moment!";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Cookies akzeptieren";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Cookies für Grundfunktionalität";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Always On";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essentiell für die Bereitstellung unserer Dienstleistungen. Diese sind immer aktiv.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Cookies für Benutzereinstellungen";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Anzeige- und Fomatierungseinstellungen. Diese gehen ohne diese Cookies verloren, wenn Sie den Browser schließen.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Performance/Analytics-Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Sie können uns dabei helfen, unsere Produkte zu verbessern, indem Sie diese Cookies zulassen.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Cookies zu Werbezwecken";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Sie erlauben uns und unseren akkreditierten Werbepartnern, bei uns und bei Drittanbietern Werbung einzublenden, die Sie wahrscheinlich interessiert. Sollten Sie diese Cookies deaktivieren, wird die angezeigte Werbung für Sie weniger relevant.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Cookies von Drittanbietern";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Diese Cookies werden von Drittanbietern kontrolliert - wir nutzen sie, um die beschriebene Leistung zu erbringen. Die Deaktivierung dieser Cookies hat anbieterspezifische Konsequenzen. Klicken Sie auf “Weitere Informationen”, um Details zu allen von uns verwendeten Drittanbietercookies zu erhalten.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Weitere Informationen";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="No Third Party Cookies in use";

@@ -276,6 +276,13 @@ extension PhotoCarouselViewController: AlbumDelegate {
                    insertedIndexPaths: [IndexPath]?,
                    changedIndexPaths: [IndexPath]?) {
         
+        if let removedIndexPaths = removedIndexPaths,
+              let changedIndexPaths = changedIndexPaths,
+              !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
+            collectionView.reloadData()
+            return
+        }
+        
         var newIndexPath: IndexPath?
         var snapshotView: UIView?
         

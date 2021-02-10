@@ -75,6 +75,10 @@ static TransfersWidgetViewController* instance = nil;
     self.uploadTransfersQueued = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
     self.completedTransfers = [MEGASdkManager.sharedMEGASdk completedTransfers];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
+    
     self.editBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") style:UIBarButtonItemStylePlain target:self action:@selector(switchEdit)];
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
 
@@ -750,6 +754,50 @@ static TransfersWidgetViewController* instance = nil;
     [self presentViewController:cancelTransfersAlert animated:YES completion:nil];
 }
 
+#pragma mark - DZNEmptyDataSetSource
+
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:@"" buttonTitle:@""];    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
+    NSString *text;
+    switch (self.transfersSelected) {
+        case TransfersWidgetSelectedAll:
+            if (self.areTransfersPaused) {
+                text = NSLocalizedString(@"transfersEmptyState_titlePaused", nil);
+            } else {
+                text = NSLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
+            }
+            break;
+        case TransfersWidgetSelectedCompleted:
+            text = NSLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
+            break;
+    }
+  
+    return text;
+}
+
+- (UIImage *)imageForEmptyState {
+    UIImage *image;
+    switch (self.transfersSelected) {
+        case TransfersWidgetSelectedAll:
+            if (self.areTransfersPaused) {
+                image = [UIImage imageNamed:@"pausedTransfersEmptyState"];
+            } else {
+                image = [UIImage imageNamed:@"transfersEmptyState"];
+            }
+            break;
+        case TransfersWidgetSelectedCompleted:
+            image = [UIImage imageNamed:@"transfersEmptyState"];
+            break;
+    }
+    return image;
+}
+
 #pragma mark - MGSwipeTableCellDelegate
 
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
@@ -875,6 +923,9 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)pauseTransfer:(MEGATransfer *)transfer {
     NSIndexPath *oldIndexPath = [self indexPathForPendingTransfer:transfer];
+    if (!transfer) {
+        return;
+    }
     [self.transfers replaceObjectAtIndex:oldIndexPath.row withObject:transfer];
     
     [self.tableView reloadData];

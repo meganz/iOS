@@ -55,11 +55,11 @@
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="잘못된 해독 키";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
-"To access this link, you will need its password."="이 링크에 접근하려면, 비밀번호가 필요합니다.";
+"To access this link, you will need its password."="이 링크에 접근하려면, 암호가 필요합니다.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
-"If you do not have the password, contact the creator of the link."="비밀번호가 없으면, 링크를 만든 사람에게 연락하세요.";
+"If you do not have the password, contact the creator of the link."="암호가 없다면, 링크를 만든 사람에게 연락하세요.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="비밀번호를 입력하세요";
+"Enter the password"="암호를 입력하세요";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="로그아웃됨";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -85,7 +85,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="계정 생성";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="잘못된 이메일 또는 비밀번호입니다. 다시 시도하세요";
+"invalidMailOrPassword"="잘못된 이메일 또는 암호입니다. 다시 시도하세요";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="로그인 시도를 너무 많이 했습니다. %@까지 기다렸다가 다시 시도하세요.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -97,13 +97,13 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="이메일 주소 형식이 올바르지 않습니다";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="올바른 비밀번호를 입력하세요";
+"passwordInvalidFormat"="올바른 암호를 입력하세요";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="이메일";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="비밀번호";
+"passwordPlaceholder"="암호";
 /*  */
-"pleaseStrengthenYourPassword"="더 강력한 비밀번호를 입력하세요.";
+"pleaseStrengthenYourPassword"="당신의 암호를 강화하세요.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="매우 약함";
 /*  */
@@ -129,7 +129,7 @@
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="비밀번호가 일치하지 않습니다";
+"passwordsDoNotMatch"="암호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
@@ -139,11 +139,11 @@
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="이메일 확인 기다리는 중";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="계정을 확인하려면 비밀번호를 입력하세요";
+"confirmText"="계정을 확인하려면 암호를 입력하세요";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="계정 확인";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="잘못된 비밀번호";
+"passwordWrong"="잘못된 암호";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="오류. 이 이메일 주소는 이미 사용중입니다.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="오래된 순";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="선택";
+"choosePhotoVideo"="사진에서 선택";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="캡쳐";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="이미 같은 이름을 가진 폴더가 존재합니다.";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="문서 스캔 이용 불가";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다.";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -365,7 +365,7 @@
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="만료일 설정";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="비밀번호 보호 설정";
+"setPasswordProtection"="암호 보호 설정";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="암호화";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="개인정보 보호정책";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="쿠키 정책";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="쿠키 설정";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -733,7 +737,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="복구 키";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="비밀번호 변경";
+"changePasswordLabel"="암호 변경";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하는 것은 데이터 손실 없이 새 비밀번호를 설정할 수 있도록 해줍니다.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -815,17 +819,17 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGA에서 파일 [A]개와 폴더 [B]개가 삭제됨";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="새 비밀번호";
+"newPassword"="새 암호";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="비밀번호 확인";
+"confirmPassword"="암호 확인";
 /* Success message shown when the password has been changed */
-"passwordChanged"="비밀번호가 변경되었습니다.";
+"passwordChanged"="암호가 변경되었습니다.";
 /* An option to reset the password. */
-"forgotPassword"="비밀번호를 잊었나요?";
+"forgotPassword"="암호를 잊었나요?";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="이 복구 링크는 만료된 것으로 보입니다. 다시 시도하세요.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="비밀번호 재설정";
+"passwordReset"="암호 재설정";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="복구 키를 입력하세요";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -864,7 +868,7 @@
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
 "emailIsChanging_description"="수신함에 가서 새 이메일 주소의 확인 링크를 클릭하세요.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="이메일 주소를 승인하려면 비밀번호를 입력하세요";
+"verifyYourEmailAddress_description"="이메일 주소를 승인하려면 암호를 입력하세요";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="축하합니다, 이 MEGA 계정에 대한 새 이메일 주소는 다음입니다: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -877,8 +881,16 @@
 "simplePasscodeLabel"="단순 암호";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="비밀번호를 10번 틀리면 로그아웃하고 로컬 데이터를 삭제";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="10번의 실패 이후 모든 로컬 파일이 삭제되고 로그아웃 됩니다";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="도움말";
 /* Title of the section to access MEGA's help centre */
@@ -906,7 +918,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="전송 취소";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="%@을 취소하시겠습니까?";
+"cancelTransfersText"="모든 전송을 취소하시겠습니까?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="모든 전송";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1020,7 +1032,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="계정 관리";
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1042,15 +1054,15 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="연간 구독이 12개월 결제보다 17% 저렴합니다";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="현재 구독을 업그레이드하려면, 고객 지원에 [A]맞춤 요금제[/A]를 요청하세요.";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="현재 요금제:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="현재 요금제";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="맞춤 요금제로 업그레이드";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="맞춤 요금제로 업그레이드하는 방법을 문의하세요:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="요금제 요청";
 /* Header shown to help on the purchasin process */
@@ -1513,7 +1525,7 @@
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="현재 버전";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
-"remindPasswordTitle"="비밀번호가 기억났나요?";
+"remindPasswordTitle"="암호가 기억났나요?";
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="MEGA의 암호화 기술로 인하여 데이터 손실 없이 비밀번호를 초기화할 수 없습니다. 비밀번호를 반드시 기억하도록 하세요.";
 /* Text that describes why the user should test his/her password before logging out */
@@ -1521,7 +1533,7 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="다시 보여주지 마세요";
 /* Label for test password button and titles */
-"testPassword"="비밀번호 테스트";
+"testPassword"="암호 시험";
 /* Label for recovery key button */
 "backupRecoveryKey"="복구 키 백업";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1529,7 +1541,7 @@
 /* Title text for the account confirmation. */
 "confirm"="확인";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
-"passwordAccepted"="비밀번호 확인됨";
+"passwordAccepted"="암호 확인됨";
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="복구 키 내보내기";
 /* Title to confirm that you want to logout */
@@ -1747,7 +1759,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="사진에 저장중...";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="공유 준비중……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="사진에 저장함";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1759,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="대화 링크 얻기";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="키 순환은 약간 더 안전합니다만, 대화 링크를 생성할 수 없고 새로운 참여자는 과거 메시지를 볼 수 없습니다.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="암호화 키 순환은 약간 더 안전하지만, 대화 링크를 만들 수 없고 새 참여자들이 지난 메시지를 볼 수 없게 됩니다.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="키 순환은 100명 이상의 참여자가 있는 대화에서는 해제됩니다.";
+"Key rotation is disabled for conversations with more than 100 participants."="암호화 키 순환은 100명 이상의 참여자가 있는 대화에서는 해제됩니다.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="대화 링크를 생성하려면 그룹 이름을 지어야합니다.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1929,7 +1941,7 @@
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="통화 시작";
 /* Title for feature Password Reminder */
-"Password Reminder"="비밀번호 도우미";
+"Password Reminder"="암호 도우미";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="메시지";
 /* Title of the button in the contact info screen to start an audio call */
@@ -2037,7 +2049,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="%1$s님의 연락처는 당신의 비즈니스 계정의 일부이기 때문에 삭제할 수 없습니다.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="비밀번호 필요";
+"Require Passcode"="암호 필요";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2218,8 +2230,10 @@
 "Message..."="메시지...";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="외관";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="유저 인터페이스";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="기본 탭";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="정렬과 보기 모드";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2244,14 @@
 "Night"="밤";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="최소";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="실행";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="레이아웃";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="앱 아이콘";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Configure default launch section."="Configure default launch section.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2307,7 +2325,7 @@
 /* Label to indicate a server port to be used. String as short as possible. */
 "Port"="포트";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
-"Proxy server requires a password"="프록시 서버가 비밀번호를 요구합니다";
+"Proxy server requires a password"="프록시 서버가 암호를 요구합니다";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="이용자명:";
 /* Text used for a title or header listing the details of something. */
@@ -2355,9 +2373,9 @@
 /* Text for options in Get Link View to set expiry date */
 "Set Expiry Date"="만료일 설정";
 /* Text for options in Get Link View to activate password protection */
-"Password Protection"="비밀번호 보호";
+"Password Protection"="암호로 보호";
 /* Text for options in Get Link View to set password protection */
-"Set Password"="비밀번호 설정";
+"Set Password"="암호 설정";
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="링크와 해독 키를 따로 내보냅니다.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
@@ -2377,15 +2395,15 @@
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="키가 클립보드에 복사되었습니다";
 /* Message shown when the password has been copied to the Clipboard */
-"Password Copied to Clipboard"="비밀번호가 클립보드에 복사되었습니다";
+"Password Copied to Clipboard"="암호가 클립보드에 복사되었습니다";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="우리의 종단간 암호화 시스템은 이 파일을 위해 자동으로 생성된 고유의 키를 필요로 합니다. 이 키에 대한 링크는 자동으로 생성되지만, 보안을 위해 해독 키를 별도로 내보낼 수 있습니다.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="해독 키";
 /* Text to indicate the user to remove the password of a link */
-"Remove Password"="비밀번호 제거";
+"Remove Password"="암호 제거";
 /* Text to indicate the user to reset/change the password of a link */
-"Reset Password"="비밀번호 재설정";
+"Reset Password"="암호 재설정";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="이 링크는 링크 소유주의 계정이 MEGA [A]이용 약관[/A]의 중대한 위반으로 인하여 폐쇄되었기 때문에 사용할 수 없습니다.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
@@ -2437,12 +2455,44 @@
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="이 링크는 해독 키 없이 공유되었습니다. 키를 공유하시겠습니까?";
 /* Title for password protect link alert */
-"Link Password"="링크 비밀번호";
+"Link Password"="링크 암호";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="이 링크의 비밀번호를 공유하시겠습니까?";
+"Do you want to share the password for this link?"="이 링크의 암호를 공유하시겠습니까?";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="메시지 발송됨";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="메시지 발송 실패";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="메시지 발송 취소";
+/* Cookie dialog header */
+"Before you continue"="진행하기 전에";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="우리는 제3자를 포함하여 당신에게 서비스를 제공하고, 우리 서비스에서의 경험을 향상하고 당신이 보는 광고를 개인화하기 위하여 로컬 저장소 그리고 비슷한 기술 (‘쿠키’)를 사용합니다. 첫 방문시 쿠키를 허용하거나 쿠키 설정에서 설정할 수 있습니다. 더 알아보려면 우리의 [A]쿠키 정책[/A]을 읽어보세요.";
+/* Cookie dialog button label. */
+"Accept Cookies"="쿠키 허용";
+/* Cookie settings dialog text. */
+"Essential Cookies"="필수 쿠키";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="항상 켬";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="필수 사항은 우리 서비스에 대한 안전한 접근과 중요한 기능을 제공하기 위함입니다. 이러한 이유로, 동의가 필요하지 않습니다.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="선호 사항 쿠키";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="당신이 선택한 어떠한 표기나 형식 설정을 기억하도록 허용합니다. 이 쿠키를 허용하지 않으면 당신이 선호하는 화면 배치 등을 저장할 수 없습니다.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="성능과 분석 쿠키";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="당신이 우리의 서비스를 어떻게 이용하는지 이해하도록 돕고 우리가 향상시킬 수 있도록 데이터를 제공해주세요. 이 쿠키를 허용하지 않는다면 설계를 향상시킬 수 있는 데이터가 우리에게 덜 제공됩니다.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="광고 쿠키";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="당신의 브라우징 기록을 우리 또는 우리의 승인된 광고 파트너들이 활용하여 당신이 우리 서비스와 다른 웹사이트에서 보는 광고를 개인화 하도록 합니다. 이 쿠키를 허용하지 않는다면 덜 관련있는 광고를 보게 됩니다.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="제3자 쿠키";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="이것들은 우리가 아닌 다른 이들에 의해 통제되는 쿠키입니다; 우리는 위에 설명한 기능 유형들을 제공하기 위해 이 쿠키를 사용합니다. 이 쿠키를 허용하지 않는다면 각 제3자 쿠키가 어떤 것이냐에 따라 서로 다른 영향을 받게 됩니다. 우리가 사용하는 제3자 쿠키가 어떤 것인지 자세히 보려면 ‘자세한 정보’를 클릭하세요.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="자세한 정보";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="사용중인 제3자 쿠키 없음";

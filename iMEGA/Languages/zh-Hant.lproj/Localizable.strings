@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="由舊至新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="選擇";
+"choosePhotoVideo"="從相片中選擇";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍攝";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="已經有一個同名的資料夾";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="無法進行文件掃描";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已經有一個同名的檔案";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -373,7 +373,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="複製鏈接";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="複製金鑰";
+"copyKey"="複製密鑰";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開啟於...";
 /* */
@@ -465,7 +465,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A]個檔案與[B]個資料夾已移到垃圾桶";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="未獲得授權";
+"permissionTitle"="權限錯誤";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="請檢查您被授予的權限";
 /* Message shown when a folder have been shared */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="您的設備中沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="私隱條款";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Cookie政策";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Cookie設定";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,8 +881,16 @@
 "simplePasscodeLabel"="簡單密碼";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本機資料";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="10次輸入失敗後，您的本機檔案將被刪除且您將被強制登出";
+/* Button text to change the passcode type. */
+"Passcode Options"="密碼選項";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4位數字代碼";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6位數字代碼";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="自定義字母數字代碼";
 /* Menu item */
 "help"="支援";
 /* Title of the section to access MEGA's help centre */
@@ -906,7 +918,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="取消傳輸";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="你要取消 %@ 嗎？";
+"cancelTransfersText"="您要取消所有傳輸嗎？";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="所有傳輸";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1020,7 +1032,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳戶";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="管理帳戶";
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1042,15 +1054,15 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="一次訂一年比累計12個月付款便宜17%";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="想升級您目前的訂閱方案，請聯繫客服以取得[A]客製化方案[/A]。";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="目前使用的方案：";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="目前方案";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="升級為客製化方案";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="如何升級成客製化方案，請與我們洽詢：";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽詢客製化專屬方案";
 /* Header shown to help on the purchasin process */
@@ -1747,7 +1759,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="正在儲存至照片中...";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="準備分享…";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="儲存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1759,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="取得聊天連結";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="金鑰輪替會稍微安全些，但不允許您建立聊天連接，而且新的參與者將無法看到歴史的訊息。";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="加密密鑰輪替更安全一些，但是不允許您建立聊天連結，而且新加入者將看不到舊的訊息。";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="與超過100位參與者的對話無法使用金鑰輪替功能。";
+"Key rotation is disabled for conversations with more than 100 participants."="與超過100位參與者的對話無法使用加密金鑰輪替功能。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="您必須為該群組命名，才能創建聊天連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2051,7 +2063,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="您最近一次付款有問題。請使用電腦版瀏覽器登入MEGA以取得更多訊息。";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="您的商業帳戶已過期";
+"Your business account is expired"="您的商業帳戶已經過期";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="處理您的付款時出現問題。在電腦版網頁瀏覽器中修復此問題之前，MEGA僅限於檢視。";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2218,8 +2230,10 @@
 "Message..."="輸入訊息…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖曳即可取消，放開即可發送";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="外觀";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="使用者介面";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="起始分頁";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和查看模式";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2244,14 @@
 "Night"="夜晚";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="最小的";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="開啟";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="設計";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="應用程式圖示";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Configure default launch section."="設定預設開啟選項";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="設定排序順序與預設檢視（清單或縮圖）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2441,8 +2459,40 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="您要分享此連結的密碼嗎？";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="訊息已發送";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="訊息發送失敗";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="訊息發送已取消";
+/* Cookie dialog header */
+"Before you continue"="在繼續之前";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我們使用本機儲存及類似技術（Cookies）來為您提供我們的服務，提升您使用我們服務的體驗並自訂您看到的，包括來自第三方的廣告，從到訪網站開始接受我們所使用的Cookie，或在Cookie設定中自訂Cookie選項。在我們的[A]Cookie政策[/A]了解更多信息。";
+/* Cookie dialog button label. */
+"Accept Cookies"="接受Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="必要的Cookies";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="總是啟用";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="為您提供重要功能和安全存取我們服務的必要條件。因此，它們不需用戶的同意。";
+/* Cookie settings dialog text. */
+"Preference Cookies"="偏好的Cookie";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="允許我們記住某些您所選擇的顯示及格式設定。不接受這些Cookies將意味著我們無法為您記住您的喜好設定，例如螢幕外觀。";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="性能與分析Cookies";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="協助我們了解您如何使用我們的服務，並提供我們可用來改進的資訊。不接受這些Cookies將意味著我們將缺少可用來幫助我們改進設計的資訊。";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="廣告Cookies";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="我們和我們所認可的廣告合作夥伴所使用，根據您的瀏覽記錄以客製化您在我們服務及其它網站上看到的廣告。不接受這些Cookies意味我們可能會顯示不相關的廣告。";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="第三方Cookies";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="這些Cookies不是我們控制的；我們使用這些Cookies來提供上述功能類型。根據每個第三方Cookie的類型，不接受這些Cookies將會產生不同的含義。點擊下面更多資訊來了解我們使用的所有第三方Cookies資訊。";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="更多資訊";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="沒有使用第三方Cookie";

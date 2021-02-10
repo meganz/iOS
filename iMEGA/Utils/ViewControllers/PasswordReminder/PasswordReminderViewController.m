@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
 @property (weak, nonatomic) IBOutlet UIImageView *keyImageView;
 
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
+
 @end
 
 @implementation PasswordReminderViewController
@@ -114,7 +116,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.backgroundView.backgroundColor = UIColor.mnz_background;
     
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     

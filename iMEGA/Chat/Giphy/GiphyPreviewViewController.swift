@@ -2,7 +2,7 @@ import UIKit
 
 class GiphyPreviewViewController: UIViewController {
 
-    var previewImageView: YYAnimatedImageView = YYAnimatedImageView.newAutoLayout()
+    var previewImageView: UIImageView = UIImageView.newAutoLayout()
     var onCompleted: (_ giphy: GiphyResponseModel?) -> Void = {_ in } // closure must be held in this class.
     var giphy: GiphyResponseModel?
     
@@ -24,8 +24,7 @@ class GiphyPreviewViewController: UIViewController {
         previewImageView.autoPinEdge(toSuperviewEdge: .left)
         previewImageView.autoPinEdge(toSuperviewEdge: .right)
         previewImageView.autoMatch(.height, to: .width, of: view, withMultiplier: ratio)
-
-        previewImageView.yy_imageURL = URL(string: giphy.webp)
+        previewImageView.sd_setImage(with: URL(string: giphy.webp))
         previewImageView.backgroundColor = UIColor(patternImage: UIImage(named: "giphyCellBackground")!)
     }
     

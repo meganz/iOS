@@ -16,10 +16,12 @@
 
 #import "NSObject+Debounce.h"
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
+
+@property (nonatomic, strong) PSAViewModel *psaViewModel;
 
 @end
 
@@ -40,32 +42,14 @@
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController]];
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
-        UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        MEGANavigationController *navigationController = defaultViewControllersMutableArray[i];
+        navigationController.navigationDelegate = self;
+        UITabBarItem *tabBarItem = navigationController.tabBarItem;
         tabBarItem.title = nil;
         tabBarItem.badgeColor = UIColor.clearColor;
         [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
-        switch (i) {
-            case CLOUD:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-                break;
-                
-            case PHOTOS:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-                break;
-                
-            case CHAT:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"chat", @"Chat section header");
-                break;
-                
-            case SHARES:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
-                break;
-                
-            case HOME:
-                tabBarItem.accessibilityLabel = NSLocalizedString(@"Home", @"Accessibility label of Home section in tabbar item");
-                break;
-        }
+        tabBarItem.accessibilityLabel = [[Tab alloc] initWithTabType:i].title;
     }
     
     self.viewControllers = defaultViewControllersMutableArray;
@@ -94,8 +78,9 @@
     
     [self setBadgeValueForChats];
     [self configurePhoneImageBadge];
-
-    self.selectedViewController = homeViewController;
+    
+    self.selectedViewController = [defaultViewControllersMutableArray objectAtIndex:[TabManager getPreferenceTab].tabType];
+    [self showPSAViewIfNeeded];
 }
 
 - (void)tapProgressView {
@@ -109,18 +94,27 @@
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
+    
+    if (self.psaViewModel != nil) {
+        [self adjustPSAFrameIfNeededWithPsaViewModel:self.psaViewModel];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(showPSAViewIfNeeded)
+                                               name:UIApplicationWillEnterForegroundNotification
+                                             object:nil];
     [self.view setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -180,8 +174,8 @@
 
 - (void)openChatRoomNumber:(NSNumber *)chatNumber {
     if (chatNumber) {
-        self.selectedIndex = CHAT;
-        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+        self.selectedIndex = TabTypeChat;
+        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
         
         UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
@@ -196,8 +190,8 @@
 }
 
 - (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatID {
-    self.selectedIndex = CHAT;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    self.selectedIndex = TabTypeChat;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
     ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
 
     UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
@@ -215,36 +209,36 @@
         return;
     }
 
-    self.selectedIndex = HOME;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
+    self.selectedIndex = TabTypeHome;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showAchievements];
 }
 
 - (void)showOffline {
-    self.selectedIndex = HOME;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:HOME];
+    self.selectedIndex = TabTypeHome;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showOfflines];
 }
 
 - (void)showUploadFile {
-    self.selectedIndex = CLOUD;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    self.selectedIndex = TabTypeCloudDrive;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
     CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
     [cloudDriveVC presentUploadAlertController];
 }
 
 - (void)showScanDocument {
-    self.selectedIndex = CLOUD;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CLOUD];
+    self.selectedIndex = TabTypeCloudDrive;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
     CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
     [cloudDriveVC presentScanDocument];
 }
 
 - (void)showStartConversation {
-    self.selectedIndex = CHAT;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+    self.selectedIndex = TabTypeChat;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
     ChatRoomsViewController *chatRoomsViewController = navigationController.viewControllers.firstObject;
     [chatRoomsViewController showStartConversation];
 }
@@ -284,7 +278,7 @@
     } else {
         badgeValue = unreadChats ? @"⦁" : nil;
     }
-    [self setBadgeValue:badgeValue tabPosition:CHAT];
+    [self setBadgeValue:badgeValue tabPosition:TabTypeChat];
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
@@ -307,6 +301,14 @@
 
 - (UIViewController *)homeViewController {
     return [HomeScreenFactory.new createHomeScreenFrom:self];
+}
+
+- (void)showPSAViewIfNeeded {
+    if (self.psaViewModel == nil) {
+        self.psaViewModel = [self createPSAViewModel];
+    }
+    
+    [self showPSAViewIfNeeded:self.psaViewModel];
 }
 
 #pragma mark - MEGAChatDelegate
@@ -339,5 +341,17 @@
     }
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self showPSAViewIfNeeded];
+}
+
+#pragma mark - MEGANavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController {
+    if (self.psaViewModel != nil) {
+        [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
+    }
+}
 
 @end

@@ -163,10 +163,10 @@
         if (self.searchController.active) {
             if (UIDevice.currentDevice.iPad) {
                 if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetSearchControllerFrame:self.searchController];
+                    [Helper resetFrameForSearchController:self.searchController];
                 }
             } else {
-                [Helper resetSearchControllerFrame:self.searchController];
+                [Helper resetFrameForSearchController:self.searchController];
             }
         }
     } completion:nil];
@@ -791,7 +791,7 @@
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
     if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetSearchControllerFrame:searchController];
+        [Helper resetFrameForSearchController:searchController];
     }
 }
 

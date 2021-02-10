@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="tertua";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Pilih";
+"choosePhotoVideo"="Pilih dari Foto";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Ambil foto";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -305,7 +305,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Sudah ada folder dengan nama yang sama";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="Pemindaian dokumen tidak tersedia";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Sudah ada file dengan nama yang sama";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -465,7 +465,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A] file dan [B] folder dipindahkan ke Sampah";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="Permissions error";
+"permissionTitle"="Kesalahan izin";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Cek permission anda untuk folder ini";
 /* Message shown when a folder have been shared */
@@ -632,6 +632,10 @@
 "noEmailAccountConfigured"="Tidak ada alamat email tersedia pada perangkat anda";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Kebijakan Privasi";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
+"Cookie Policy"="Kebijakan Cookie";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
+"Cookie Settings"="Pengaturan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Persyaratan Layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -877,8 +881,16 @@
 "simplePasscodeLabel"="Passcode Sederhana";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Hapus Data Lokal";
-/* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal memasukkan passcode";
+/* Footer text that explain what will happen if reach the max number of failed attempts */
+"failedAttempstSectionTitle"="File lokal Anda akan dihapus dan Anda akan keluar setelah 10 kali gagal";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="Bantuan";
 /* Title of the section to access MEGA's help centre */
@@ -906,7 +918,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Batalkan transfer";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Apakah anda ingin membatalkan %@?";
+"cancelTransfersText"="Apakah anda ingin membatalkan semua pemindahan?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="SEMUA transfer";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1020,7 +1032,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade akun";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="Kelola Akun";
 /*  */
 "chooseYourAccountType"="Pilih tipe akun anda";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1042,15 +1054,15 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Berlangganan tahunan adalah 17% lebih murah dari 12 pembayaran bulanan";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Untuk mengupgrade langganan anda saat ini, hubungi dukungan untuk [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan saat ini:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="Rencana saat ini";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="Tingkatkan ke paket khusus";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="Tanyakan kepada kami bagaimana anda dapat meningkatkan ke paket khusus:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Request plan";
 /* Header shown to help on the purchasin process */
@@ -1747,21 +1759,21 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Menyimpan ke Foto ...";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="Bersiap untuk berbagi ……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Disimpan ke Foto";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Tidak dapat menyimpan Item";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="Rotasi Kunci Enkripsi";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Nyalakan Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="Aktifkan Rotasi Kunci Enkripsi";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Dapatkan tautan obrolan";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi tombol sedikit lebih aman, tetapi tidak memungkinkan Anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi kunci enkripsi sedikit lebih aman, tetapi tidak memungkinkan anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Rotasi kunci dinonaktifkan untuk percakapan dengan lebih dari 100 peserta.";
+"Key rotation is disabled for conversations with more than 100 participants."="Rotasi kunci enkripsi dinonaktifkan untuk percakapan dengan lebih dari 100 peserta.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Untuk membuat tautan obrolan, Anda harus memberi nama grup.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1773,7 +1785,7 @@
 /* Users previewing a public chat */
 "Observers"="Pengamat";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ mengaktifkan rotasi kunci terenkripsi.";
+"%@ enabled Encrypted Key Rotation"="%@ diaktifkan rotasi kunci Enkripsi.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ membuat tautan publik untuk obrolan.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2051,7 +2063,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ada masalah dengan pembayaran terakhir anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Akun bisnis Anda kedaluwarsa";
+"Your business account is expired"="Akun bisnis anda telah kedaluwarsa";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Terjadi masalah saat memproses pembayaran anda. MEGA terbatas hanya untuk melihat sampai masalah ini telah diperbaiki di browser web desktop.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2218,8 +2230,10 @@
 "Message..."="Pesan…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Tarik ke kiri untuk membatalkan, lepaskan untuk mengirim";
-/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Penampilan";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"Appearance"="User Interface";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+"Default Tab"="Tab Default";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mode Penyortiran Dan Tampilan";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2230,10 +2244,14 @@
 "Night"="Malam";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+"Launch"="Meluncurkan";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Tata letak";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Ikon Aplikasi";
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+"Configure default launch section."="Konfigurasikan bagian peluncuran default.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Konfigurasikan urutan pengurutan dan tampilan default (Daftar atau Gambar Kecil).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2441,8 +2459,40 @@
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Apakah anda ingin membagikan kata sandi untuk tautan ini?";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="pesan terkirim";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="gagal mengirim pesan";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="pengiriman pesan dibatalkan";
+/* Cookie dialog header */
+"Before you continue"="Sebelum anda melanjutkan";
+/* Cookie dialog text. Please leave [A], [/A] as it is. */
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+/* Cookie dialog button label. */
+"Accept Cookies"="Terima Cookies";
+/* Cookie settings dialog text. */
+"Essential Cookies"="Cookie Penting";
+/* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
+"Always On"="Selalu Aktif";
+/* Cookie settings dialog text. */
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Penting untuk memberi anda fungsionalitas penting dan akses aman ke layanan kami. Untuk alasan ini, mereka tidak membutuhkan persetujuan.";
+/* Cookie settings dialog text. */
+"Preference Cookies"="Preferensi Cookies";
+/* Cookie settings dialog text. */
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Izinkan kami mengingat pengaturan tampilan dan format tertentu yang anda pilih. Tidak menerima Cookie ini berarti kami tidak dapat mengingat beberapa hal untuk anda seperti tata letak layar pilihan anda.";
+/* Cookie settings dialog text. */
+"Performance and Analytics Cookies"="Cookie Kinerja dan Analisis";
+/* Cookie settings dialog text. */
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
+/* Cookie settings dialog text. */
+"Advertising Cookies"="Cookie Iklan";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Digunakan oleh kami dan mitra periklanan kami yang disetujui untuk menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain berdasarkan riwayat penelusuran anda. Tidak menerima Cookies ini berarti kami mungkin menampilkan iklan yang kurang relevan.";
+/* Cookie settings dialog text. */
+"Third Party Cookies"="Cookie Pihak Ketiga";
+/* Cookie settings dialog text. */
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ini adalah Cookies yang dikendalikan oleh orang lain selain kami; kami menggunakan Cookie ini untuk menyediakan jenis fungsionalitas yang dijelaskan di atas. Tidak menerima Cookie ini akan memiliki implikasi yang berbeda tergantung pada jenis Cookie apa setiap Cookie pihak ketiga itu. Klik ‘Informasi Lebih Lanjut’ di bawah untuk detail tentang semua Cookie pihak ketiga yang kami gunakan.";
+/* Cookie settings dialog link label. Should be same as in “24659” string. */
+"More Information"="Informasi Lebih Lanjut";
+/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
+"No Third Party Cookies in use"="Tidak ada Cookie Pihak Ketiga yang digunakan";
