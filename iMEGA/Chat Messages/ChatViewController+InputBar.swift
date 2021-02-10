@@ -173,6 +173,7 @@ extension ChatViewController {
                 return
             }
             
+            self.addToChatViewController = nil
             self.adjustMessageCollectionBottomInset()
         }
         
