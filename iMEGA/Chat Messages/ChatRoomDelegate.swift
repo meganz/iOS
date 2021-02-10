@@ -682,7 +682,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         switch message.type {
         case .normal, .alterParticipants, .truncate, .privilegeChange, .chatTitle, .attachment, .contact,
              .callEnded, .callStarted, .containsMeta, .voiceClip, .publicHandleCreate, .publicHandleDelete,
-             . setPrivateMode:
+             . setPrivateMode, .setRetentionTime:
             return true
         default:
             return false

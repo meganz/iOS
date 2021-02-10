@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを消去";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="試行が10回失敗後、あなたのローカルファイルが削除され、あなたはログアウトされます。";
+"failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
 /* Button text to change the passcode type. */
 "Passcode Options"="パスコードオプション";
 /* Action text to change to 4-Digit Numeric passcode type. */

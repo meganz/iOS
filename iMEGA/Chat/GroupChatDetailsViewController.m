@@ -23,14 +23,12 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 
-#import "MEGA-Swift.h"
-
 typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     GroupChatDetailsSectionChatNotifications = 0,
     GroupChatDetailsSectionRenameGroup,
     GroupChatDetailsSectionSharedFiles,
     GroupChatDetailsSectionGetChatLink,
-    GroupChatDetailsSectionClearChatHistory,
+    GroupChatDetailsSectionManageChatHistory,
     GroupChatDetailsSectionArchiveChat,
     GroupChatDetailsSectionLeaveGroup,
     GroupChatDetailsSectionEncryptedKeyRotation,
@@ -180,21 +178,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         }
         rightButtonAction.enabled = enableRightButton;
     }
-}
-
-- (void)showClearChatHistoryAlert {
-    UIAlertController *clearChatHistoryAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.") message:NSLocalizedString(@"clearTheFullMessageHistory", @"A confirmation message for a user to confirm that they want to clear the history of a chat.") preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-    
-    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [[MEGASdkManager sharedMEGAChatSdk] clearChatHistory:self.chatRoom.chatId delegate:self];
-    }];
-    
-    [clearChatHistoryAlertController addAction:cancelAction];
-    [clearChatHistoryAlertController addAction:continueAction];
-    
-    [self presentViewController:clearChatHistoryAlertController animated:YES completion:nil];
 }
 
 - (void)showArchiveChatAlert {
@@ -448,7 +431,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo && self.chatRoom.isPublicChat && !self.chatRoom.isPreview) ? 1 : 0;
             break;
             
-        case GroupChatDetailsSectionClearChatHistory:
+        case GroupChatDetailsSectionManageChatHistory:
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
             break;
             
@@ -518,9 +501,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
-        case GroupChatDetailsSectionClearChatHistory:
+        case GroupChatDetailsSectionManageChatHistory:
             cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
-            cell.nameLabel.text = NSLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+            cell.nameLabel.text = NSLocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
+            cell.nameLabel.textColor = UIColor.mnz_label;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
         case GroupChatDetailsSectionArchiveChat:
@@ -690,7 +675,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             }
             break;
             
-        case GroupChatDetailsSectionClearChatHistory:
+        case GroupChatDetailsSectionManageChatHistory:
             height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
@@ -758,7 +743,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
             break;
             
-        case GroupChatDetailsSectionClearChatHistory:
+        case GroupChatDetailsSectionManageChatHistory:
             height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
@@ -832,7 +817,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
             break;
             
-        case GroupChatDetailsSectionClearChatHistory:
+        case GroupChatDetailsSectionManageChatHistory:
             heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
             break;
             
@@ -917,8 +902,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 break;
             }
                 
-            case GroupChatDetailsSectionClearChatHistory:
-                [self showClearChatHistoryAlert];
+            case GroupChatDetailsSectionManageChatHistory:
+                [[ManageChatHistoryViewRouter.alloc initWithChatId:self.chatRoom.chatId navigationController:self.navigationController] start];
                 break;
                 
             case GroupChatDetailsSectionArchiveChat:

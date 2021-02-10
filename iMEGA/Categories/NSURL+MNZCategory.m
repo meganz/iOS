@@ -170,12 +170,7 @@
 }
 
 - (NSString *)mnz_MEGAURL {
-    NSString *afterSlashesString = [self mnz_afterSlashesString];
-    if ([afterSlashesString hasPrefix:@"#"]) {
-        return [NSString stringWithFormat:@"https://mega.nz/%@", [self mnz_afterSlashesString]];
-    } else {
-        return [NSString stringWithFormat:@"https://mega.nz/#%@", [self mnz_afterSlashesString]];
-    }
+    return [NSString stringWithFormat:@"https://mega.nz/%@", [self mnz_afterSlashesString]];
 }
 
 - (NSString *)mnz_afterSlashesString {

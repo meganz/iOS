@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="10번의 실패 이후 모든 로컬 파일이 삭제되고 로그아웃 됩니다";
+"failedAttempstSectionTitle"="비밀번호를 10번 틀리면 로그아웃하고 로컬 데이터를 삭제";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */

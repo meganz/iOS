@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="После 10 неудачных попыток локальные файлы будут удалены, а вы выйдете из системы";
+"failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */

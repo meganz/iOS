@@ -11,6 +11,20 @@
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
+@interface NodeTableViewCell()
+
+@property (weak, nonatomic) IBOutlet UILabel *infoStringRightLabel;
+
+@end
+
 @implementation NodeTableViewCell
 
 - (void)awakeFromNib {
@@ -102,25 +116,23 @@
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
         MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
-        NSString *nodeDisplayDateTime;
         switch (self.cellFlavor) {
             case NodeTableViewCellFlavorVersions:
             case NodeTableViewCellFlavorRecentAction:
             case NodeTableViewCellFlavorCloudDrive:
-                nodeDisplayDateTime =
+                self.infoLabel.text =
                     self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
                     [Helper sizeAndModicationDateForNode:node api:megaSDK];
+                self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
                 break;
             case NodeTableViewCellFlavorSharedLink:
-                nodeDisplayDateTime = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
+                self.infoLabel.text = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
+                self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
                 break;
             case NodeTableViewCellExplorerView:
-                nodeDisplayDateTime = self.node.parent.name;
+                [self updateInfo];
                 break;
         }
-
-        self.infoLabel.text = nodeDisplayDateTime;
-        self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
         self.versionedImageView.hidden = YES;
@@ -227,10 +239,26 @@
 }
 
 - (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
+    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;
     }
     self.backgroundColor = [UIColor mnz_homeRecentsCellBackgroundForTraitCollection:currentTraitCollection];
+}
+
+- (void)updateInfo {
+    if (self.cellFlavor == NodeTableViewCellExplorerView && self.node != nil) {
+        self.infoStringRightLabel.lineBreakMode = NSLineBreakByTruncatingHead;
+        BOOL shouldIncludeRootFolder = self.node.isInShare
+        || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
+        self.infoLabel.text = shouldIncludeRootFolder ? @"" : @"> ";
+        self.infoStringRightLabel.text = [self.node filePathWithDelimeter:@" > "
+                                                            sdk:MEGASdkManager.sharedMEGASdk
+                                          includeRootFolderName:shouldIncludeRootFolder
+                                                excludeFileName:YES];
+        self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
+        self.versionedImageView.hidden = NO;
+    }
 }
 
 @end

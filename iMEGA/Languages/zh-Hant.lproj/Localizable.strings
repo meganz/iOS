@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本機資料";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="10次輸入失敗後，您的本機檔案將被刪除且您將被強制登出";
+"failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
 /* Button text to change the passcode type. */
 "Passcode Options"="密碼選項";
 /* Action text to change to 4-Digit Numeric passcode type. */
