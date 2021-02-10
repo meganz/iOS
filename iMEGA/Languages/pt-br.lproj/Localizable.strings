@@ -884,13 +884,13 @@
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Todos os seus dados locais serão deletados e você será deslogado depois de 10 tentativas incorretas";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Opções de código de acesso";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Código numérico de 4 dígitos";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Código numérico de 6 dígitos";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Código alfanumérico personalizado";
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obter o link do chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="A rotação de chaves é um pouco mais segura, mas não permite criar um link do chat, e os novos participantes não verão as mensagens anteriores.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="A rotação da chave de criptografia é um pouco mais segura, mas não permite que você crie um link do chat, e os novos participantes não verão as mensagens anteriores.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="A rotação de chaves está desativada nos chats com mais de 100 participantes.";
+"Key rotation is disabled for conversations with more than 100 participants."="A rotação da chave de criptografia está desativada nos chats com mais de 100 participantes.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Você precisa nomear o grupo para poder criar um link de chat.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2377,7 +2377,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Definir uma senha";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Exportar a chave de decodificação do link separadamente.";
+"Export the link and decryption key separately."="Exportar o link e a chave de decodificação por separado.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Mais informações";
 /* Text indicating the date until a link will be valid */
@@ -2467,15 +2467,15 @@
 /* Cookie dialog header */
 "Before you continue"="Antes de continuar";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Usamos cookies e tecnologias semelhantes (“cookies”) para levar os nossos serviços a você, melhorar a sua experiência com os nossos serviços e personalizar os anúncios que você visualiza, inclusive por meio de terceiros. Você pode aceitar o nosso uso dos cookies desde o início da sua visita ou personalizar os cookies nas Configurações de cookies. Para mais informações, acesse a nossa [A]Política de cookies[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Usamos armazenamento local e tecnologias semelhantes (“cookies”) para levar os nossos serviços a você, melhorar a sua experiência com os nossos serviços e personalizar os anúncios que você visualiza, inclusive por meio de terceiros. Você pode aceitar o nosso uso dos cookies desde o início da sua visita ou personalizar os cookies nas Configurações de cookies. Para mais informações, acesse a nossa [A]Política de cookies[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Aceitar cookies";
 /* Cookie settings dialog text. */
 "Essential Cookies"="Cookies essenciais";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Sempre ativo";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="São essenciais para poder proporcionar funções importantes e acesso seguro aos nossos serviços. Por este motivo, eles não requerem consentimento.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="São essenciais para poder proporcionar funções importantes e acesso seguro aos nossos serviços. Por este motivo, não requerem consentimento.";
 /* Cookie settings dialog text. */
 "Preference Cookies"="Cookies de preferência";
 /* Cookie settings dialog text. */
@@ -2495,4 +2495,4 @@
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Mais informações";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Não estão sendo usados cookies de terceiros";

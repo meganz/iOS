@@ -19,7 +19,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Đã lưu lại";
 /*  */
-"passcode"="Passcode";
+"passcode"="Mã Số";
 /* "Size" of the file or folder you are sharing */
 "size"="Kích cỡ";
 /* Quality title, used in changing the export quality of scaned doc */
@@ -633,9 +633,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie Policy";
+"Cookie Policy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cookie Settings";
+"Cookie Settings"="Cài Đặt Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -876,9 +876,9 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Đã đóng các phiên đang hoạt động";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Đổi Passcode";
+"changePasscodeLabel"="Đổi Mã Số";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Passcode Đơn Giản";
+"simplePasscodeLabel"="Mã Số Đơn Giản";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Xóa Dữ Liệu Được Lưu";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
@@ -1032,7 +1032,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Nâng Cấp Tài Khoản";
 /* account management button title in business account’s landing page */
-"Manage Account"="Manage Account";
+"Manage Account"="Quản Lý Tài Khoản";
 /*  */
 "chooseYourAccountType"="Chọn hạng tài khoản";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1058,7 +1058,7 @@
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Gói Hiện Tại:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"Current plan"="Gói hiện tại";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgrade to a custom plan";
 /* Mail subject to upgrade to a custom plan */
@@ -1122,9 +1122,9 @@
 /* Empty Gifs section */
 "No GIFs found"="Không có GIF phù hợp";
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"This message has reached the maximum limit of %d reactions."="This message has reached the maximum limit of %d reactions.";
+"This message has reached the maximum limit of %d reactions."="Tin nhắn này đã đạt giới hạn bày tỏ tối đa %d cảm xúc.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="You have reached the maximum limit of %d reactions.";
+"You have reached the maximum limit of %d reactions."="Bạn đã đạt giới hạn bày tỏ tối đa %d cảm xúc.";
 /* Chat section header */
 "chat"="Chát";
 /* Empty Conversations section */
@@ -1280,7 +1280,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Gửi tên liên lạc";
 /* */
-"done"="Hoàn thành";
+"done"="Hoàn Thành";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Bật hiển thị xem trước nội dung tóm tắt của URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1759,7 +1759,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Đang lưu vào Ảnh…";
 /* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
+"Preparing to share…"="Đang chuẩn bị để chia sẻ……";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Đã lưu vào Ảnh";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1771,7 +1771,7 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Lấy liên kết vào cuộc chát";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên mã khóa giúp cho việc an ninh được nâng cấp hơn, nhưng sẽ không cho phép bất kỳ ai tạo ra đường liên kết tới cuộc chát và người mới tham gia vào chát sẽ không thấy các tin nhắn diễn ra từ trước.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên mã khóa có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chát và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
 "Key rotation is disabled for conversations with more than 100 participants."="Luân phiên mã khóa bị tắt đối với các cuộc trò chuyện có hơn 100 thành viên.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
@@ -1831,7 +1831,7 @@
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="Đã xóa tên của bạn khỏi sổ liên lạc";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
-"Contact relationship established"="Hai bạn có tên liên lạc của nhau";
+"Contact relationship established"="Tên liên lạc đã được thiết lập";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
 "Account has been deleted/deactivated"="Tài khoản đã bị xóa/vô hiệu hóa";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
@@ -2049,7 +2049,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Không thể xóa tên %1$s khỏi sổ liên lạc vì đây là nhân viên trong tài khoản Doanh Nghiệp này.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Yêu Cầu Passcode";
+"Require Passcode"="Yêu Cầu Mã Số";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Ngay lập tức";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2191,7 +2191,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Mật khẩu có nguy cơ đã bị tiết lộ và hacker sử dụng để thử truy cập vào các dịch vụ khác nhau, có thể bao gồm cả MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer over quota";
+"Transfer over quota"="Đã quá mức băng thông để truyền tải";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Dọn Mục Đã Chọn";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2415,7 +2415,7 @@
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="CHIA SẺ";
 /* Search placeholder text in search bar on home screen*/
-"Search Your Files"="Search Your Files";
+"Search Your Files"="Tìm Tệp Tin";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2425,7 +2425,7 @@
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Tải Lên Tệp Tin";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="Lối Tắt";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
 "Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
 /* Title for document explorer view */
@@ -2433,7 +2433,7 @@
 /* Title for audio explorer view */
 "Audio"="Âm Thanh";
 /* Title for video explorer view */
-"Videos"="Video";
+"Videos"="Videos";
 /* Photo Explorer Screen: No documents in the account */
 "No documents found"="Không có văn bản tài liệu nào";
 /* Audio Explorer Screen: No audio files in the account */
@@ -2449,50 +2449,50 @@
 /* Photo Explorer Screen: No images in the accoun t*/
 "No images found"="Không có ảnh nào";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Trang chính";
+"Home"="Trang chủ";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Docs";
+"Docs"="Văn bản";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+"This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có mã giải khóa. Ban có muốn chia sẻ mã bây giờ không?";
 /* Title for password protect link alert */
-"Link Password"="Link Password";
+"Link Password"="Mật Khẩu Đường Liên Kết";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="Do you want to share the password for this link?";
+"Do you want to share the password for this link?"="Bạn có muốn chia sẻ mật khẩu cho đường liên kết này không?";
 /*  Accessibility message when a message is sent in chat */
-"message sent"="message sent";
+"message sent"="đã gửi tin nhắn";
 /* Accessibility message when a message sending fails in chat */
-"failed to send the message"="failed to send the message";
+"failed to send the message"="gửi đi tin nhắn bị thất bại";
 /*  Accessibility message when a message is cancelled in chat */
-"message sending cancelled"="message sending cancelled";
+"message sending cancelled"="đã hủy gửi đi tin nhắn";
 /* Cookie dialog header */
-"Before you continue"="Before you continue";
+"Before you continue"="Trước khi tiếp tục";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use Cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customise the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accept Cookies";
+"Accept Cookies"="Chấp Nhận Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Essential Cookies";
+"Essential Cookies"="Cookies Thiết Yếu";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Luôn Bật";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Cần thiết để cung cấp cho quý khách chức năng quan trọng và quyền truy cập an toàn vào các dịch vụ của chúng tôi. Vì thế, các mục này không cần yêu cầu sự đồng ý.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preference Cookies";
+"Preference Cookies"="Cookies Theo Ý Thích";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Cho phép chúng tôi nhớ các cài đặt hiển thị và định dạng ngôn ngữ mà quý khách chọn. Không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ không thể ghi nhớ một số điều mà quý khách áp đặt, chẳng hạn như bố cục màn hình và cách hiện danh sách.";
 /* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+"Performance and Analytics Cookies"="Cookies Hiệu Suất và Phân Tích";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Giúp chúng tôi hiểu cách quý khách sử dụng dịch vụ và cung cấp cho chúng tôi dữ liệu có thể sử dụng để cải tiến. Việc không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ nhận ít dữ liệu để giúp cải tiến thiết kế sau này.";
 /* Cookie settings dialog text. */
-"Advertising Cookies"="Advertising Cookies";
+"Advertising Cookies"="Cookies Quảng Cáo";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant.";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Được sử dụng bởi chúng tôi và các đối tác quảng cáo được chấp thuận để tùy chỉnh các quảng cáo quý khách thấy trên các dịch vụ của chúng tôi và trên các trang web khác dựa trên lịch sử duyệt web của quý khách. Không chấp nhận những Cookies này có nghĩa là chúng tôi có thể hiển thị những quảng cáo ít liên quan hơn tới sở thích của quý khách.";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="Third Party Cookies";
+"Third Party Cookies"="Cookies Bên Thứ Ba";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Đây là những Cookies được kiểm soát bởi ai đó không phải từ phía chúng tôi; chúng tôi sử dụng các Cookies này để cung cấp các chức năng được mô tả ở trên. Việc không chấp nhận các Cookie này sẽ có các tác động khác nhau tùy thuộc vào loại Cookies của bên thứ ba. Clíck vào ‘Thêm Thông Tin’ bên dưới để biết chi tiết về tất cả các Cookies của bên thứ ba mà chúng tôi sử dụng.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="More Information";
+"More Information"="Thêm Thông Tin";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Không có Cookies Bên Thứ Ba nào đang được dùng";

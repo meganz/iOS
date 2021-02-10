@@ -1771,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="获得聊天链接";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="密钥轮换相对更为安全，但不允许您创建聊天链接，新参与者将无法看到过去的消息。";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="加密密钥轮换更为安全，然而您将无法创建聊天链接，同时新参与者也不会看到历史消息。";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="密钥轮换将被禁用当参与者超过100人时。";
+"Key rotation is disabled for conversations with more than 100 participants."="当参与者人数超过100人时，加密密钥轮换将禁用。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="创建聊天链接前请先为群组命名。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2467,13 +2467,13 @@
 /* Cookie dialog header */
 "Before you continue"="我们的Cookie政策";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用Cookie和类似技术(‘Cookies’)为您提供服务，增强您的服务体验并定制您看到的广告，包括第三方。请在开始访问时接受我们的Cookie使用政策，或在Cookie设置中自定义Cookie。您可以在我们的[A]Cookie政策[/A]中了解更多信息。";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用本地存储和类似技术（“ Cookies”）为您提供服务，通过我们的服务增强您的体验，并定制您所看到的广告（包括通过第三方）。从访问开始就接受我们对Cookie的使用，或在Cookie设置中自定义Cookie。您可以在我们的[A]《Cookie政策》[/A]中了解更多信息。";
 /* Cookie dialog button label. */
 "Accept Cookies"="接受Cookies";
 /* Cookie settings dialog text. */
 "Essential Cookies"="基本Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="始终开启";
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="基本Cookie为您提供重要功能以及对我们服务的安全访问。因此，无需经过同意。";
 /* Cookie settings dialog text. */
@@ -2495,4 +2495,4 @@
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="更多信息";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="未使用第三方Cookie";
