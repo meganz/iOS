@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Du plus ancien";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="Choisir dans Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Prendre une photo";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -365,7 +365,7 @@
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Définir une date d’expiration";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="Définir la protection par mot de passe";
+"setPasswordProtection"="Définir une protection par mot de passe";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="Chiffrer";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -633,9 +633,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie Policy";
+"Cookie Policy"="Politique sur les Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cookie Settings";
+"Cookie Settings"="Paramètres des Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Conditions générales d’utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -882,7 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d’accès.";
+"failedAttempstSectionTitle"="Vos fichiers locaux seront supprimés et vous serez déconnecté après dix tentatives infructueuses.";
+/* Button text to change the passcode type. */
+"Passcode Options"="Passcode Options";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4-Digit Numeric Code";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6-Digit Numeric Code";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
 "help"="Aide";
 /* Title of the section to access MEGA's help centre */
@@ -942,7 +950,7 @@
 /*  */
 "howItWorksSecondary"="Vous pouvez contacter votre ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre ami avant qu’il ne s’inscrive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu'un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
+"howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu’un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Primes déverrouillées :";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -1763,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé de chiffrement est un peu plus sûre, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="La rotation de clé est désactivée pour les conversations de plus de 100 participants.";
+"Key rotation is disabled for conversations with more than 100 participants."="La rotation de clé de chiffrement est désactivée pour les conversations de plus de 100 participants.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Pour créer un lien de conversation, vous devez donner un nom au groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="Interface utilisateur";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="Onglet par défaut";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tri et mode d’affichage";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,15 +2245,15 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="Lancement";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Configurez la section de lancement par défaut";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes)";
+"Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Par dossier";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
@@ -2255,7 +2263,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utilisez le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
@@ -2423,7 +2431,7 @@
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
-"Audio"="Son";
+"Audio"="Sons";
 /* Title for video explorer view */
 "Videos"="Vidéos";
 /* Photo Explorer Screen: No documents in the account */
@@ -2457,34 +2465,34 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="L’envoi du message a été annulé";
 /* Cookie dialog header */
-"Before You Continue"="Before You Continue";
+"Before you continue"="Avant que vous ne poursuiviez";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Nous utilisons la mémoire locale et des technologies semblables (« cookies ») pour vous fournir nos services, améliorer votre expérience d’utilisation de nos services et personnaliser les publicités que vous voyez, dont celles provenant de tiers. Acceptez dès le début de votre visite notre utilisation de Témoins ou personnalisez les Témoins dans les paramètres des Témoins de navigation. Apprenez-en davantage dans notre [A]Politique sur les Témoins de navigation[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accept Cookies";
+"Accept Cookies"="Accepter les Témoins de navigation";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Essential Cookies";
+"Essential Cookies"="Témoins essentiels";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="Toujours activés";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Ils sont essentiels pour une fonction importante et pour un accès sécurisé à nos services. Pour cette raison, ils ne demandent pas de consentement.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preference Cookies";
+"Preference Cookies"="Témoins des préférences";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Ils nous permettent de mémoriser certains paramètres d’affichage et de formatage que vous choisissez. Le refus de ces Témoins signifierait que nous ne pourrions pas mémoriser certaines choses pour vous, telles que votre disposition d’écran préférée.";
 /* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+"Performance and Analytics Cookies"="Témoins de performances et d’analyses";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Ils nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
 /* Cookie settings dialog text. */
-"Advertising Cookies"="Advertising Cookies";
+"Advertising Cookies"="Témoins publicitaires";
 /* Cookie settings dialog text. */
-"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Ils sont utilisés par nous et par nos partenaires publicitaires approuvés afin de personnaliser les publicités que vous voyez dans nos services et sur d’autres sites Web, d’après votre historique de navigation. Le refus de ces Témoins signifierait que nous pourrions afficher des publicités moins pertinentes.";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="Third Party Cookies";
+"Third Party Cookies"="Témoins tiers";
 /* Cookie settings dialog text. */
-"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ces Témoins ne sont pas contrôlés par nous, mais par des tiers ; nous utilisons ces Témoins pour fournir les types de fonctions que nous décrivons ci-dessous. Le refus de ces Témoins aurait différentes implications suivant la nature de chaque Témoin tiers. Vous obtiendrez des détails sur les Témoins que nous utilisons en cliquant sur « Plus de précision » ci-dessous.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More information"="More information";
+"More Information"="Plus de précisions";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="Aucun témoin tiers n’est utilisé";

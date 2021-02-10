@@ -279,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="由舊至新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="從相片中選擇";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍攝";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -373,7 +373,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="複製鏈接";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="複製金鑰";
+"copyKey"="複製密鑰";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開啟於...";
 /* */
@@ -633,9 +633,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="私隱條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie Policy";
+"Cookie Policy"="Cookie政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cookie Settings";
+"Cookie Settings"="Cookie設定";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -883,6 +883,14 @@
 "eraseAllLocalDataLabel"="清除本機資料";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
+/* Button text to change the passcode type. */
+"Passcode Options"="密碼選項";
+/* Action text to change to 4-Digit Numeric passcode type. */
+"4-Digit Numeric Code"="4位數字代碼";
+/* Action text to change to 6-Digit Numeric passcode type. */
+"6-Digit Numeric Code"="6位數字代碼";
+/* Action text to change to Custom Alphanumeric passcode type. */
+"Custom Alphanumeric Code"="自定義字母數字代碼";
 /* Menu item */
 "help"="支援";
 /* Title of the section to access MEGA's help centre */
@@ -1763,9 +1771,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="取得聊天連結";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="金鑰輪替會稍微安全些，但不允許您建立聊天連接，而且新的參與者將無法看到歴史的訊息。";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="加密密鑰輪替更安全一些，但是不允許您建立聊天連結，而且新加入者將看不到舊的訊息。";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="與超過100位參與者的對話無法使用金鑰輪替功能。";
+"Key rotation is disabled for conversations with more than 100 participants."="與超過100位參與者的對話無法使用加密金鑰輪替功能。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="您必須為該群組命名，才能創建聊天連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -2225,7 +2233,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="使用者介面";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
-"Default Tab"="Default Tab";
+"Default Tab"="起始分頁";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和查看模式";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2237,13 +2245,13 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="最小的";
 /* Section title inside of Settings - User Interface, where you can change the app's launch.*/
-"Launch"="Launch";
+"Launch"="開啟";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="設計";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="應用程式圖示";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="設定預設開啟選項";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="設定排序順序與預設檢視（清單或縮圖）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2457,34 +2465,34 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="訊息發送已取消";
 /* Cookie dialog header */
-"Before You Continue"="Before You Continue";
+"Before you continue"="在繼續之前";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"We use cookies and similar technologies (‘Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A]."="[$24751]";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我們使用本機儲存及類似技術（Cookies）來為您提供我們的服務，提升您使用我們服務的體驗並自訂您看到的，包括來自第三方的廣告，從到訪網站開始接受我們所使用的Cookie，或在Cookie設定中自訂Cookie選項。在我們的[A]Cookie政策[/A]了解更多信息。";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accept Cookies";
+"Accept Cookies"="接受Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Essential Cookies";
+"Essential Cookies"="必要的Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="總是啟用";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="為您提供重要功能和安全存取我們服務的必要條件。因此，它們不需用戶的同意。";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preference Cookies";
+"Preference Cookies"="偏好的Cookie";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.";
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="允許我們記住某些您所選擇的顯示及格式設定。不接受這些Cookies將意味著我們無法為您記住您的喜好設定，例如螢幕外觀。";
 /* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Performance and Analytics Cookies";
+"Performance and Analytics Cookies"="性能與分析Cookies";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="協助我們了解您如何使用我們的服務，並提供我們可用來改進的資訊。不接受這些Cookies將意味著我們將缺少可用來幫助我們改進設計的資訊。";
 /* Cookie settings dialog text. */
-"Advertising Cookies"="Advertising Cookies";
+"Advertising Cookies"="廣告Cookies";
 /* Cookie settings dialog text. */
-"Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant."="[$24760]";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="我們和我們所認可的廣告合作夥伴所使用，根據您的瀏覽記錄以客製化您在我們服務及其它網站上看到的廣告。不接受這些Cookies意味我們可能會顯示不相關的廣告。";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="Third Party Cookies";
+"Third Party Cookies"="第三方Cookies";
 /* Cookie settings dialog text. */
-"These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use."="[$24762]";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="這些Cookies不是我們控制的；我們使用這些Cookies來提供上述功能類型。根據每個第三方Cookie的類型，不接受這些Cookies將會產生不同的含義。點擊下面更多資訊來了解我們使用的所有第三方Cookies資訊。";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More information"="More information";
+"More Information"="更多資訊";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"No Third Party Cookies in use"="沒有使用第三方Cookie";
