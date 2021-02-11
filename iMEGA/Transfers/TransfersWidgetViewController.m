@@ -954,9 +954,8 @@ static TransfersWidgetViewController* instance = nil;
 
         case MegaNodeActionTypeGetLink:
         case MegaNodeActionTypeManageLink: {
-            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+            if (MEGAReachabilityManager.isReachableHUDIfNot && node != nil) {
                 MEGANavigationController *getLinkNC = [GetLinkViewController instantiateWithNodes:@[node]];
-
                 [self presentViewController:getLinkNC animated:YES completion:nil];
             }
             break;

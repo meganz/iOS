@@ -206,8 +206,13 @@
 }
 
 - (NSInteger)calculateColumnCount {
-    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds);
-    return (NSInteger) ((containerWidth - self.layout.sectionInset.left - self.layout.sectionInset.right) / ThumbnailSizeWidth);
+    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds) - self.layout.sectionInset.left - self.layout.sectionInset.right;
+    if (@available(iOS 11.0, *)) {
+        containerWidth = containerWidth - UIApplication.sharedApplication.keyWindow.safeAreaInsets.left - UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    NSInteger columns = ((containerWidth) / ThumbnailSizeWidth);
+
+    return MAX(2, columns);
 }
 
 - (NSArray *)buildListFor:(FileType) fileOrFolder {
