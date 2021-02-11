@@ -300,9 +300,12 @@ static MEGAIndexer *indexer;
     if (error) {
         return YES;
     }
+    
     if (freeSpace < [nodeSizeNumber longLongValue]) {
+#ifdef MAIN_APP_TARGET
         StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
         [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
+#endif
         return NO;
     }
     return YES;
