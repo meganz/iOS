@@ -881,11 +881,13 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeLogout: {
-            [Helper logout];
-            
-            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-            [self didBecomeActive];
-            
+            // Don't invalidate the session if its local logout
+            if (request.flag) {
+                [Helper logout];
+                
+                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                [self didBecomeActive];
+            }
             break;
         }
             
