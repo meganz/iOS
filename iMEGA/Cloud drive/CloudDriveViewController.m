@@ -371,7 +371,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    if (node == nil) {
+        return nil;
+    }
+    
     previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.cdCollectionView.collectionView convertRect:[self.cdCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     switch (node.type) {
@@ -599,7 +603,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditMode:NO];
                 }
