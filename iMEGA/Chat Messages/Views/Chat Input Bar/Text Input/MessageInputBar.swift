@@ -217,12 +217,7 @@ class MessageInputBar: UIView {
             messageTextView.invalidateIntrinsicContentSize()
         }
         
-        sendButton.isEnabled = false
-        
-        if !messageTextView.isFirstResponder {
-            showMicButtonUI()
-        }
-        
+        showMicButtonUI()
         delegate.tappedSendButton(withText: text)
     }
     
@@ -240,7 +235,7 @@ class MessageInputBar: UIView {
         }
         
         messageTextView.reset()
-        sendButton.isEnabled = false
+        showMicButtonUI()
         delegate.clearEditMessage()
     }
     
@@ -273,11 +268,13 @@ class MessageInputBar: UIView {
         guard let editMessage = editMessage else {
             editViewHeightConstraint.constant = 0
             sendButton.setImage(UIImage(named: "sendButton"), for: .normal)
+            sendButton.isEnabled = true
             return
         }
         editViewHeightConstraint.constant = 40
         editMessageLabel.text = editMessage.message.content
         sendButton.setImage(UIImage(named: "confirmEdit"), for: .normal)
+        sendButton.isEnabled = !editMessage.message.content.isEmpty
     }
     
     override var keyCommands: [UIKeyCommand]? {
@@ -479,6 +476,11 @@ class MessageInputBar: UIView {
     
     private func updateTextUI() {
         delegate?.typing(withText: messageTextView.text)
+        
+        guard editMessage == nil else {
+            sendButton.isEnabled = !messageTextView.text.isEmpty
+            return
+        }
         
         if messageTextView.text.isEmpty {
             showMicButtonUI()
