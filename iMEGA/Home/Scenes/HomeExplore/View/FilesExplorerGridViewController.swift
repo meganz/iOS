@@ -5,11 +5,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     private lazy var layout: CHTCollectionViewWaterfallLayout = CHTCollectionViewWaterfallLayout()
     
     private lazy var collectionView: UICollectionView = {
-        configureLayout()
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: layout
-        )
+        let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
         return collectionView
     }()
     
@@ -30,6 +26,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addCollectionView()
+        configureLayout()
         collectionView.register(
             FileExplorerGridCell.nib,
             forCellWithReuseIdentifier: FileExplorerGridCell.reuseIdentifier
@@ -105,9 +102,9 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     private func addCollectionView() {
         view.addSubview(collectionView)
         if #available(iOS 11.0, *) {
-            collectionView.autoPinEdgesToSuperviewEdges()
+            collectionView.autoPinEdgesToSuperviewSafeArea()
         } else {
-            collectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+            collectionView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
             addSearchBarViewIfNeeded()
             collectionView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor).isActive = true
         }
@@ -126,8 +123,9 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        layout.columnCount = calculateColumnCount(containerWidth: size.width)
-        layout.invalidateLayout()
+        coordinator.animate { (_) in
+            self.layout.columnCount = self.calculateColumnCount()
+        }
     }
 
     private func configureLayout() {
@@ -135,11 +133,17 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
         layout.minimumInteritemSpacing = 8
-        layout.columnCount = calculateColumnCount(containerWidth: UIScreen.main.bounds.width)
+        layout.columnCount = calculateColumnCount()
     }
 
-    private func calculateColumnCount(containerWidth: CGFloat) -> Int {
-        return Int((containerWidth - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))
+    private func calculateColumnCount() -> Int {
+        var containerWidth = UIScreen.main.bounds.width - layout.sectionInset.left - layout.sectionInset.right;
+        if #available(iOS 11.0, *),
+           let keyWindow = UIApplication.shared.keyWindow {
+            containerWidth = containerWidth - keyWindow.safeAreaInsets.left - keyWindow.safeAreaInsets.right;
+        }
+        let columns = Int((containerWidth - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))
+        return max(2, columns)
     }
     
     // MARK: - Execute command
