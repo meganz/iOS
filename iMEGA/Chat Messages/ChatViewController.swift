@@ -522,7 +522,7 @@ class ChatViewController: MessagesViewController {
     func isPreviousMessageSentSameDay(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
             let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath) else {
-                return true
+                return false
         }
 
         let previousMessageDate = messages[previousMessageIndexPath.section].sentDate
