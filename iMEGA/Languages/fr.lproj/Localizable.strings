@@ -197,7 +197,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille";
+"cloudDriveEmptyState_titleRubbishBin"="La corbeille est vide";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Aucun fichier n’est enregistré Hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Vos fichiers locaux seront supprimés et vous serez déconnecté après dix tentatives infructueuses.";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
 "Passcode Options"="Options du code d’accès";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1018,7 +1018,7 @@
 /* Title for "Local" used space. */
 "localLabel"="Localement";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Disponible";
+"availableLabel"="Libre";
 /* title of the My Account screen */
 "accountType"="Type de compte :";
 /* Label to indicate that the current user has a Free account. */
@@ -1202,7 +1202,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Souhaitez-vous vraiment effacer l’historique entier de cette conversation ?";
+"clearTheFullMessageHistory"="Voulez-vous vraiment complètement effacer l’historique de cette conversation ?";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
@@ -2253,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Configurez la section de lancement par défaut.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
