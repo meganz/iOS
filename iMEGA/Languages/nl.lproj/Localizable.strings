@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Uw lokale bestanden worden verwijderd en u wordt uitgelogd na 10 mislukte pogingen";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Toegangscode-opties";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4-Cijferige Numerieke Code";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6-Cijferige Numerieke Code";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Aangepaste alfanumerieke code";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -1787,7 +1787,7 @@
 /* Users previewing a public chat */
 "Observers"="Waarnemers";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ ingeschakelde Coderingssleutelrotatie.";
+"%@ enabled Encrypted Key Rotation"="%@ ingeschakelde coderingssleutelrotatie.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ heeft een chatlink gecreëerd";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2253,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Applicatie-pictogram";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Configureer de standaard startsectie.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configureer de sorteervolgorde en de standaardweergave (Lijst of Miniatuur).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */

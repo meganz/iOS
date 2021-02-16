@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="10번의 실패 이후 모든 로컬 파일이 삭제되고 로그아웃 됩니다";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -2253,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="앱 아이콘";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="기본 실행 섹션 설정";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */

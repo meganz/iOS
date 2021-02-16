@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Actualmente en uso %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancelar cuenta";
+"cancelYourAccount"="Eliminar cuenta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Perderás todos los datos asociados con esta cuenta. ¿Estás seguro de que quieres continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Borrar los datos locales";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Los archivos locales serán eliminados y la sesión se cerrará después de 10 intentos fallidos.";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Opciones de código de acceso";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Código de 4 dígitos";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Código de 6 dígitos";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Código alfanumérico";
 /* Menu item */
 "help"="Ayuda";
 /* Title of the section to access MEGA's help centre */
@@ -2253,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Ícono de la app";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="Configurar la sección de inicio predeterminada.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configurar las preferencias de ordenado y de vista por defecto (Lista o miniatura)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */

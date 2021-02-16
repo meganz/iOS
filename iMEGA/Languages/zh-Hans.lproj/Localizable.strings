@@ -231,7 +231,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="传输暂停";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="无传输/不传输";
+"transfersEmptyState_titleAll"="无传输";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="无下载/不下载";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地数据";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="您的本地文件将被删除，您将在10次尝试失败后注销";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="密码选项";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4位数字密码";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6位数字密码";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="自定字母数字密码";
 /* Menu item */
 "help"="帮助";
 /* Title of the section to access MEGA's help centre */
@@ -2253,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="App图标";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Show Home section when you launch the app."="Show Home section when you launch the app.";
+"Configure default launch section."="配置默认启动部分。";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="配置排序顺序和默认视图（列表或缩略图）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
