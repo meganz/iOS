@@ -15,6 +15,8 @@
 #import "MEGAPicker-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
+#import "MEGAGenericRequestDelegate.h"
+
 @import Firebase;
 
 @interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
@@ -24,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *openButton;
 
 @property (nonatomic) LaunchViewController *launchVC;
-
+@property (nonatomic) BrowserViewController *browserVC;
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
 
@@ -52,7 +54,25 @@
     
     [MEGASdk setLogToConsole:YES];
     
-    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+    MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        switch ([request type]) {
+          
+            case MEGARequestTypeLogout: {
+                if (request.flag) {
+                    [Helper logout];
+                    [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self configureUI];
+                    }];
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }];
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
     
     if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -109,11 +129,7 @@
             self.privacyView = privacyVC.view;
             [self.view addSubview:self.privacyView];
         } else {
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [self presentPasscode];
-            } else {
-                [self presentDocumentPicker];
-            }
+            [self presentDocumentPicker];
         }
     }
 }
@@ -125,10 +141,6 @@
     }
     
     if (self.session) {
-        if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
-            [self presentPasscode];
-        }
-    } else {
         [self configureUI];
     }
 }
@@ -166,13 +178,7 @@
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
         // Common scenario, present the browser after passcode.
-        [[LTHPasscodeViewController sharedUser] setDelegate:self];
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
-            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-            [self presentPasscode];
-        } else {
-            [self loginToMEGA];
-        }
+        [self loginToMEGA];
     } else {
         // The user either needs to login or logged in before the current version of the MEGA app, so there is
         // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
@@ -181,6 +187,9 @@
         self.megaLogoImageView.hidden = NO;
         self.loginLabel.hidden = NO;
         self.openButton.hidden = NO;
+        
+        self.browserVC.view.hidden = true;
+        self.launchVC.view.hidden = true;
     }
 }
 
@@ -240,6 +249,7 @@
         BrowserViewController *browserVC = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
         browserVC.browserAction = BrowserActionDocumentProvider;
         browserVC.browserViewControllerDelegate = self;
+        self.browserVC = browserVC;
         [self addChildViewController:browserVC];
         [self.view addSubview:browserVC.view];
         [browserVC didMoveToParentViewController:self];
@@ -249,12 +259,18 @@
     if (self.launchVC) {
         [self.launchVC.view removeFromSuperview];
         self.launchVC = nil;
-    }    
+    }
+    
+    [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    if ([LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        [self presentPasscode];
+    }
 }
 
 - (void)presentPasscode {
     LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
-
+    
     if (!self.passcodePresented && !passcodeVC.isBeingPresented && (passcodeVC.presentingViewController == nil)) {
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
@@ -262,9 +278,11 @@
                         andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
         
         [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+        passcodeVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:passcodeVC animated:NO completion:nil];
         self.passcodePresented = YES;
     }
+    
 }
 
 - (void)copyDatabasesFromMainApp {
@@ -357,6 +375,11 @@
     }
 }
 
+- (void)logout {
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+    [[MEGASdkManager sharedMEGASdk] logout];
+}
+
 #pragma mark - MEGARequestDelegate
 
 
@@ -389,11 +412,13 @@
             break;
             
         case MEGARequestTypeLogout: {
-            [Helper logout];
-            
-            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-            [self didBecomeActive];
-          
+            if (request.flag) {
+                [Helper logout];
+                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self configureUI];
+                }];
+            }
             break;
         }
             
@@ -425,26 +450,15 @@
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
-    [self dismissViewControllerAnimated:YES completion:^{
-        self.passcodePresented = YES;
-        if ([MEGAReachabilityManager isReachable]) {
-            [self loginToMEGA];
-        } else {
-            [self presentDocumentPicker];
-        }
-    }];
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }];
+    [self logout];
 }
 
 - (void)logoutButtonWasPressed {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }];
+    [self logout];
 }
 
 @end
