@@ -500,7 +500,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     func onChatNotification(_ api: MEGAChatSdk, chatId: UInt64, message: MEGAChatMessage) {
         if chatId != self.chatId || message.messageId != self.msgId {
             let base64messageId = MEGASdk.base64Handle(forUserHandle: message.messageId) ?? ""
-            let base64chatId = MEGASdk.base64Handle(forUserHandle: message.messageId) ?? ""
+            let base64chatId = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
             MEGALogWarning("On chat: \(base64chatId) notification for message: \(base64messageId) different from the one that trigger the push")
             return
         }
