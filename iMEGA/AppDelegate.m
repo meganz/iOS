@@ -379,14 +379,6 @@
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
     
-    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-
-    if (!sessionV3) {
-        [Helper logout];
-        [self showOnboardingWithCompletion:nil];
-        [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-
-    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
