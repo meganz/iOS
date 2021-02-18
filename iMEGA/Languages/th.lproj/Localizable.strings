@@ -2533,7 +2533,7 @@
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "Always On"="เปิดไว้เสมอ";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="จำเป็นสำหรับการมอบฟังก์ชันการทำงานที่สำคัญและการเข้าถึงบริการของเราอย่างปลอดภัย ด้วยเหตุนี้พวกเขาจึงไม่ต้องการความยินยอม";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="มีความจำเป็นต่อการให้บริการฟังก์ชันการทำงานที่สำคัญ และการเข้าถึงบริการของเราอย่างปลอดภัย ด้วยเหตุนี้จึงไม่ต้องขอความยินยอมจากคุณ";
 /* Cookie settings dialog text. */
 "Preference Cookies"="คุกกี้สำหรับกำหนดลักษณะ";
 /* Cookie settings dialog text. */

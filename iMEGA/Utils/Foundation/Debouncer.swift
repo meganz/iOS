@@ -3,6 +3,7 @@ import Foundation
 final class Debouncer {
     private let delay: TimeInterval
     private let dispatchQueue: DispatchQueue
+    private let workQueue = DispatchQueue(label: "DebouncerWorkQueue")
 
     private var dispatchWork: DispatchWorkItem?
 
@@ -18,8 +19,10 @@ final class Debouncer {
     }
 
     func start(action: @escaping () -> Void) {
-        cancel()
-        execute(action)
+        workQueue.async {
+            self.cancel()
+            self.execute(action)
+        }
     }
 
     func cancel() {

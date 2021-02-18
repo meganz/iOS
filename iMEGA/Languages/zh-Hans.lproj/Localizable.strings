@@ -231,7 +231,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="传输暂停";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="无传输/不传输";
+"transfersEmptyState_titleAll"="无传输";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="无下载/不下载";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
