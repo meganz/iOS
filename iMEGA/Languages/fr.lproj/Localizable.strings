@@ -1202,7 +1202,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Souhaitez-vous vraiment effacer l’historique entier de cette conversation ?";
+"clearTheFullMessageHistory"="Voulez-vous vraiment complètement effacer l’historique de cette conversation ?";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
