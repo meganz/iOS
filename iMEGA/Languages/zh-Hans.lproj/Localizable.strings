@@ -231,7 +231,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="传输暂停";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="无传输/不传输";
+"transfersEmptyState_titleAll"="无传输";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="无下载/不下载";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
@@ -573,7 +573,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
+"theUserHasBeenInvited"="用户已被邀请，对方接受邀请后，将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="该用户已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地数据";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="您的本地文件将被删除，您将在10次尝试失败后注销";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="密码选项";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4位数字密码";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6位数字密码";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="自定字母数字密码";
 /* Menu item */
 "help"="帮助";
 /* Title of the section to access MEGA's help centre */
@@ -1204,6 +1204,8 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您确定要清除此对话的全部历史记录吗？";
 /* Message show when the history of a chat has been successfully deleted. */
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="聊天记录已清除";
 /* 'Next' button in a dialog */
 "continue"="继续";
@@ -1977,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="无近期记录";
 /* Plural of items which contains a folder. 2 items */
-"items"="个项目";
+"items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="聊天链接失效";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2412,6 +2414,62 @@
 "Unavailable"="不可用";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="邮件已发送。请等待几分钟后再试。";
+/* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
+"Manage Chat History"="Manage Chat History";
+/* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
+"History Clearing"="History Clearing";
+/* Text show under the setting 'History Retention' to explain what will happen if enabled */
+"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
+"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
+"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
+"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+/* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
+"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+/* Text show under the setting 'Clear Chat History' to explain what will happen if used */
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+/* Title show on the sheet to configure default values of the 'History Retention' setting */
+"Clear Messages Older Than"="Clear Messages Older Than";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Day"="One Day";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Week"="One Week";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Month"="One Month";
+/* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
+"Custom..."="Custom…";
+/* System message displayed to all chat participants when one of them enables retention history */
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+/* System message that is shown to all chat participants upon disabling the Retention history. */
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+/*  */
+"hour"="小时";
+/*  */
+"hours"="小时";
+/*  */
+"day"="day";
+/*  */
+"1 day"="1 day";
+/*  */
+"week"="week";
+/*  */
+"weeks"="weeks";
+/*  */
+"1 week"="1 week";
+/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
+"%1 weeks"="%1 weeks";
+/*  */
+"month"="month";
+/*  */
+"1 month"="1 month";
+/* The number of months e.g. 2 months, 5 months etc. */
+"%1 months"="%1 months";
+/* */
+"1 year"="1 year";
+/*  */
+"year"="year";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="共享";
 /* Search placeholder text in search bar on home screen*/
@@ -2431,9 +2489,9 @@
 /* Title for document explorer view */
 "Documents"="文档";
 /* Title for audio explorer view */
-"Audio"="语音";
+"Audio"="音频";
 /* Title for video explorer view */
-"Videos"="影片";
+"Videos"="视频";
 /* Photo Explorer Screen: No documents in the account */
 "No documents found"="无文档";
 /* Audio Explorer Screen: No audio files in the account */
@@ -2465,7 +2523,7 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="消息发送已取消";
 /* Cookie dialog header */
-"Before you continue"="我们的Cookie政策";
+"Before You Continue"="我们的Cookie政策";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用本地存储和类似技术（“ Cookies”）为您提供服务，通过我们的服务增强您的体验，并定制您所看到的广告（包括通过第三方）。从访问开始就接受我们对Cookie的使用，或在Cookie设置中自定义Cookie。您可以在我们的[A]《Cookie政策》[/A]中了解更多信息。";
 /* Cookie dialog button label. */
@@ -2496,3 +2554,13 @@
 "More Information"="更多信息";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="未使用第三方Cookie";
+/* Text shown when the creation of a version as a new file was successful */
+"Version created as a new file successfully."="Version created as a new file successfully.";
+/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
+"Permissions error"="Permissions error";
+/* Text shown for the action create new file */
+"Create new file"="Create new file";
+/* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
+"Pro Lite"="Pro精简版";

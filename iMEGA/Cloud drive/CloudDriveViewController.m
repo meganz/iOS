@@ -1137,7 +1137,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     } else {
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
-                if (!self.parentNode) {
+                if (!self.parentNode || self.parentNode.type == MEGANodeTypeRoot) {
                     navigationTitle = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 } else {
                     navigationTitle = [self.parentNode name];

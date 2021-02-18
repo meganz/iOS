@@ -39,7 +39,7 @@
         case MEGAAccountTypeLite:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
             self.headerView.backgroundColor = UIColor.mnz_proLITE;
-            title = @"Pro Lite";
+            title = NSLocalizedString(@"Pro Lite", nil);
             self.selectMembershiptLabel.textColor = UIColor.mnz_proLITE;
             break;
             

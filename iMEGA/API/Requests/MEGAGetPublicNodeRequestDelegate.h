@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGAGetPublicNodeRequestDelegate : MEGABaseRequestDelegate
+@interface MEGAGetPublicNodeRequestDelegate : NSObject <MEGARequestDelegate>
 
 @property (nonatomic) BOOL savePublicHandle;
 

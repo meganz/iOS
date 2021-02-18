@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 
-- (void)configureCellForNode:(MEGANode *)node;
+- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api;
 - (void)setupAppearance;
 
 @end
@@ -25,9 +25,9 @@ typedef NS_ENUM(NSUInteger, ThumbnailSection) {
 };
 
 typedef NS_ENUM(NSUInteger, ThumbnailSize) {
-    ThumbnailSizeHeightFile = 200,
-    ThumbnailSizeHeightFolder = 40,
-    ThumbnailSizeWidth = 150
+    ThumbnailSizeHeightFile = 230,
+    ThumbnailSizeHeightFolder = 45,
+    ThumbnailSizeWidth = 180
 };
 
 typedef NS_ENUM(NSUInteger, FileType) {

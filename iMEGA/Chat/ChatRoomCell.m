@@ -410,7 +410,31 @@
             }
             break;
         }
+        
+        case MEGAChatMessageTypeSetRetentionTime: {
+            NSString *text;
+            NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
+            MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
+            if (chatRoom.retentionTime <= 0) {
+                text = NSLocalizedString(@"[A]%1$s[/A][B] disabled message clearing.[/B]", @"System message that is shown to all chat participants upon disabling the Retention history.");
+                text = text.mnz_removeWebclientFormatters;
+                
+                text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
+            } else {
+                text = NSLocalizedString(@"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]", @"System message displayed to all chat participants when one of them enables retention history");
+                text = text.mnz_removeWebclientFormatters;
+                
+                text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
+                
+                NSString *retentionTimeString = [NSString mnz_hoursDaysWeeksMonthsOrYearFrom:chatRoom.retentionTime];
+                NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:retentionTimeString font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.mnz_label].string;
+                text = [text stringByReplacingOccurrencesOfString:@"%2$s" withString:lastMessage];
+            }
             
+            self.chatLastMessage.text = text;
+            break;
+        }
+        
         case MEGAChatMessageTypeChatTitle: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
             NSString *changedGroupChatNameTo = NSLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");

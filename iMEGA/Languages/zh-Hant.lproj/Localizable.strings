@@ -573,7 +573,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您無須增加個人的電子郵件";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="用戶[X]已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
+"theUserHasBeenInvited"="用戶已被邀請且該邀請被接受後，他將會出現在您的聯絡人列表中。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="該用戶已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本機資料";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="10次輸入失敗後，您的本機檔案將被刪除且您將被強制登出";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
 "Passcode Options"="密碼選項";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1204,6 +1204,8 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您確定要清除此對話的全部歷史記錄嗎？";
 /* Message show when the history of a chat has been successfully deleted. */
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="聊天紀錄已清空";
 /* 'Next' button in a dialog */
 "continue"="繼續";
@@ -1977,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="近期沒有活動";
 /* Plural of items which contains a folder. 2 items */
-"items"="個項目";
+"items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="聊天連結無法使用";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2412,6 +2414,62 @@
 "Unavailable"="無用的";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="電子郵件已發送。請等待幾分鐘，然後再重試。";
+/* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
+"Manage Chat History"="Manage Chat History";
+/* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
+"History Clearing"="History Clearing";
+/* Text show under the setting 'History Retention' to explain what will happen if enabled */
+"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
+"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
+"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
+"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+/* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
+"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+/* Text show under the setting 'Clear Chat History' to explain what will happen if used */
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+/* Title show on the sheet to configure default values of the 'History Retention' setting */
+"Clear Messages Older Than"="Clear Messages Older Than";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Day"="One Day";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Week"="One Week";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Month"="One Month";
+/* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
+"Custom..."="Custom…";
+/* System message displayed to all chat participants when one of them enables retention history */
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+/* System message that is shown to all chat participants upon disabling the Retention history. */
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+/*  */
+"hour"="小時";
+/*  */
+"hours"="小時";
+/*  */
+"day"="day";
+/*  */
+"1 day"="1 day";
+/*  */
+"week"="week";
+/*  */
+"weeks"="weeks";
+/*  */
+"1 week"="1 week";
+/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
+"%1 weeks"="%1 weeks";
+/*  */
+"month"="month";
+/*  */
+"1 month"="1 month";
+/* The number of months e.g. 2 months, 5 months etc. */
+"%1 months"="%1 months";
+/* */
+"1 year"="1 year";
+/*  */
+"year"="year";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="共享";
 /* Search placeholder text in search bar on home screen*/
@@ -2465,7 +2523,7 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="訊息發送已取消";
 /* Cookie dialog header */
-"Before you continue"="在繼續之前";
+"Before You Continue"="在繼續之前";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我們使用本機儲存及類似技術（Cookies）來為您提供我們的服務，提升您使用我們服務的體驗並自訂您看到的，包括來自第三方的廣告，從到訪網站開始接受我們所使用的Cookie，或在Cookie設定中自訂Cookie選項。在我們的[A]Cookie政策[/A]了解更多信息。";
 /* Cookie dialog button label. */
@@ -2496,3 +2554,13 @@
 "More Information"="更多資訊";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="沒有使用第三方Cookie";
+/* Text shown when the creation of a version as a new file was successful */
+"Version created as a new file successfully."="Version created as a new file successfully.";
+/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
+"Permissions error"="Permissions error";
+/* Text shown for the action create new file */
+"Create new file"="Create new file";
+/* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
+"Pro Lite"="Pro Lite";

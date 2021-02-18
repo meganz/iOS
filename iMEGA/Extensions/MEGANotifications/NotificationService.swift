@@ -21,6 +21,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     override init() {
         super.init()
         FirebaseApp.configure()
+        NotificationService.setupLogging()
+        MEGALogDebug("NSE Init, pid: \(ProcessInfo.processInfo.processIdentifier)")
     }
 
     // MARK: - UNNotificationServiceExtension
@@ -29,7 +31,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
-        NotificationService.setupLogging()
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
         removePreviousGenericNotifications()
         
@@ -173,8 +174,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent.body = NotificationService.genericBody
             bestAttemptContent.sound = nil
         } else {
-            MEGALogDebug("Post notification: message found")
             if let msgId = msgId, let chatId = chatId {
+                let base64messageId = MEGASdk.base64Handle(forUserHandle: msgId) ?? ""
+                let base64chatId = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
+                MEGALogDebug("Post notification: message \(base64messageId) found in chat \(base64chatId)")
                 MEGAStore.shareInstance()?.insertMessage(msgId, chatId: chatId)
             }
         }
@@ -365,7 +368,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 sharedUserDefaults.set(false, forKey: MEGAInvalidateNSECache)
             }
         }
-        
         return success
     }
     
@@ -497,7 +499,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 
     func onChatNotification(_ api: MEGAChatSdk, chatId: UInt64, message: MEGAChatMessage) {
         if chatId != self.chatId || message.messageId != self.msgId {
-            MEGALogWarning("onChatNotification for a different message")
+            let base64messageId = MEGASdk.base64Handle(forUserHandle: message.messageId) ?? ""
+            let base64chatId = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
+            MEGALogWarning("On chat: \(base64chatId) notification for message: \(base64messageId) different from the one that trigger the push")
             return
         }
 

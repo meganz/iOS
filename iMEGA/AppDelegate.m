@@ -245,9 +245,7 @@
             } completion:nil];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                }
+                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
                                                                          withLogout:NO
@@ -380,6 +378,7 @@
     if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -731,9 +730,7 @@
             [self.window setRootViewController:_mainTBC];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                }
+                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 
                 if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
                     [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
@@ -1201,9 +1198,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }
+    [[MEGASdkManager sharedMEGASdk] logout];
 }
 
 - (void)logoutButtonWasPressed {
