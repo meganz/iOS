@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Manage Chat History Table View Controller-->
+        <scene sceneID="TKa-7S-dvO">
+            <objects>
+                <tableViewController storyboardIdentifier="ManageChatHistoryTableViewControllerID" id="U5G-Eg-fSa" customClass="ManageChatHistoryTableViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="ehW-KK-Ywe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection footerTitle="Automatically delete messages older than a certain amount of time." id="unh-OR-rey">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="eVz-UR-606">
+                                        <rect key="frame" x="0.0" y="17.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="eVz-UR-606" id="Tsv-ww-Uhx">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lfh-Xw-hlB">
+                                                    <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="historyRetentionSwitchValueChanged:" destination="U5G-Eg-fSa" eventType="valueChanged" id="nvP-h9-4ke"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History Retention" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDo-wQ-xnb">
+                                                    <rect key="frame" x="20" y="11.5" width="132" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="fDo-wQ-xnb" firstAttribute="centerY" secondItem="Tsv-ww-Uhx" secondAttribute="centerY" id="14t-IB-Nk1"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lfh-Xw-hlB" secondAttribute="trailing" id="1y9-je-0pF"/>
+                                                <constraint firstItem="fDo-wQ-xnb" firstAttribute="trailing" secondItem="Tsv-ww-Uhx" secondAttribute="trailingMargin" id="4bO-Rx-xIX"/>
+                                                <constraint firstItem="lfh-Xw-hlB" firstAttribute="trailing" secondItem="Tsv-ww-Uhx" secondAttribute="trailingMargin" id="6Gz-FT-ygl"/>
+                                                <constraint firstItem="fDo-wQ-xnb" firstAttribute="leading" secondItem="Tsv-ww-Uhx" secondAttribute="leadingMargin" constant="15" id="Ogf-6B-u8K"/>
+                                                <constraint firstItem="fDo-wQ-xnb" firstAttribute="leading" secondItem="Tsv-ww-Uhx" secondAttribute="leadingMargin" id="Tf3-Z1-Q5v"/>
+                                                <constraint firstItem="lfh-Xw-hlB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fDo-wQ-xnb" secondAttribute="trailing" constant="8" id="Uqs-XC-B34"/>
+                                                <constraint firstItem="lfh-Xw-hlB" firstAttribute="centerY" secondItem="Tsv-ww-Uhx" secondAttribute="centerY" id="fb3-GA-y9i"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="4bO-Rx-xIX"/>
+                                                    <exclude reference="Ogf-6B-u8K"/>
+                                                    <exclude reference="6Gz-FT-ygl"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell hidden="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="J1V-mp-pCl">
+                                        <rect key="frame" x="0.0" y="61.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J1V-mp-pCl" id="0wl-O9-gJd">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lc-3k-BEa">
+                                                    <rect key="frame" x="345" y="1.5" width="57" height="41"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                                    <state key="normal" title="Save"/>
+                                                    <connections>
+                                                        <action selector="historyRetentionSaveTouchUpInside:" destination="U5G-Eg-fSa" eventType="touchUpInside" id="nbA-Hs-3ds"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 hour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKz-JB-gpc">
+                                                    <rect key="frame" x="183.5" y="11.5" width="47" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9Lc-3k-BEa" firstAttribute="centerY" secondItem="0wl-O9-gJd" secondAttribute="centerY" id="0L0-vX-pRM"/>
+                                                <constraint firstItem="9Lc-3k-BEa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iKz-JB-gpc" secondAttribute="trailing" constant="10" id="Sq7-ES-giY"/>
+                                                <constraint firstItem="iKz-JB-gpc" firstAttribute="centerY" secondItem="0wl-O9-gJd" secondAttribute="centerYWithinMargins" id="b8I-T1-RRl"/>
+                                                <constraint firstItem="iKz-JB-gpc" firstAttribute="centerX" secondItem="0wl-O9-gJd" secondAttribute="centerX" id="nNQ-av-QAH"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9Lc-3k-BEa" secondAttribute="trailingMargin" id="rfJ-ts-E3J"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell hidden="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="162" id="wed-Fa-eCd">
+                                        <rect key="frame" x="0.0" y="105.5" width="414" height="162"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="wed-Fa-eCd" id="api-nS-5hs">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="162"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rec-KF-9CF">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="162"/>
+                                                </pickerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rec-KF-9CF" firstAttribute="top" secondItem="api-nS-5hs" secondAttribute="top" id="JwF-Pg-ynP"/>
+                                                <constraint firstItem="rec-KF-9CF" firstAttribute="leading" secondItem="api-nS-5hs" secondAttribute="leading" id="ZVU-Fy-opF"/>
+                                                <constraint firstAttribute="trailing" secondItem="rec-KF-9CF" secondAttribute="trailing" id="lkV-RT-AlU"/>
+                                                <constraint firstAttribute="bottom" secondItem="rec-KF-9CF" secondAttribute="bottom" id="zDw-hm-IME"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="Delete all messages and files shared in this conversation from both parties. This action is irreversible." id="Mir-4Q-TAo">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="WKa-Qn-3mM" style="IBUITableViewCellStyleDefault" id="AuO-yF-E4v">
+                                        <rect key="frame" x="0.0" y="331" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="AuO-yF-E4v" id="LOI-Uo-CWN">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear All Chat History" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WKa-Qn-3mM">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="U5G-Eg-fSa" id="Sbk-S6-yQN"/>
+                            <outlet property="delegate" destination="U5G-Eg-fSa" id="Zhy-CV-vcR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="rUn-Qs-Epv">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Ik9-rM-ZXU"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="clearAllChatHistoryLabel" destination="WKa-Qn-3mM" id="3ka-lq-bFF"/>
+                        <outlet property="historyRetentionCustomLabel" destination="iKz-JB-gpc" id="8Xp-LL-S1t"/>
+                        <outlet property="historyRetentionCustomTableViewCell" destination="J1V-mp-pCl" id="3VJ-Vr-LDV"/>
+                        <outlet property="historyRetentionLabel" destination="fDo-wQ-xnb" id="QdK-bQ-evn"/>
+                        <outlet property="historyRetentionPickerTableViewCell" destination="wed-Fa-eCd" id="uho-7U-vZH"/>
+                        <outlet property="historyRetentionPickerView" destination="rec-KF-9CF" id="KdA-qS-drh"/>
+                        <outlet property="historyRetentionSaveButton" destination="9Lc-3k-BEa" id="Utb-5g-JEq"/>
+                        <outlet property="historyRetentionSwitch" destination="lfh-Xw-hlB" id="Hej-Sl-1Zh"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ScY-7T-VQp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1330" y="293"/>
+        </scene>
+    </scenes>
+</document>

@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="ตกลง";
 /* Button title to clear something */
-"clear"="เคลียร์";
+"clear"="ล้าง";
 /* */
 "yes"="ใช่";
 /* */
@@ -573,7 +573,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="ไม่มีความจำเป็นที่จะเพิ่มที่อยู่อีเมลของคุณเอง";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="[X] ได้รับคำเชิญแล้วและจะปรากฏในรายชื่อผู้ติดต่อของคุณ";
+"theUserHasBeenInvited"="ได้เชิญผู้ใช้แล้ว และจะปรากฏในรายชื่อผู้ติดต่อของคุณเมื่ออีกฝ่ายกดยอมรับ";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="ผู้ใช้งานไดรับคำเชิญแล้วและจะปรากฎบนรายชื่อผู้ติดต่อของคุณ";
 /* Alert title shown when you want to remove one or more contacts */
@@ -751,9 +751,9 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="บนอุปกรณ์ของคุณ";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="เคลียร์ไฟล์ออฟไลน์";
+"clearOfflineFiles"="ล้างไฟล์ออฟไลน์";
 /* Section title where you can 'Clear Cache' of your MEGA app */
-"clearCache"="เคลียร์แคช";
+"clearCache"="ล้างแคช";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="บน MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="ไฟล์ภายในเครื่องของคุณจะถูกลบและคุณจะถูกออกจากระบบหลังจากที่กรอกรหัสผิดเกิน 10 ครั้ง";
+"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="ตัวเลือกรหัส";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="รหัสตัวเลข 4 หลัก";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="รหัสตัวเลข 6 หลัก";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="รหัสตัวอักษรและตัวเลขที่กำหนดเอง";
 /* Menu item */
 "help"="ช่วยเหลือ";
 /* Title of the section to access MEGA's help centre */
@@ -1158,7 +1158,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="สถานะ";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="ตัวอย่าง Rich URL";
+"richUrlPreviews"="แสดงตัวอย่าง URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="เพิ่มประสบการณ์ MEGAchat โดยที่เนื้อหา URL จะได้รับการดึงข้อมูลโดยไม่มีการเข้ารหัสลับแบบต้นทางถึงปลายทาง";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1202,9 +1202,11 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="ล้างประวัติการแชท";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="คุณแน่ใจหรือไม่ว่าจะเคลียร์ประวัติข้อความเต็มรูปแบบของการสนทนานี้";
+"clearTheFullMessageHistory"="คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติข้อความทั้งหมดของการสนทนานี้";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="เคลียร์ประวัติแชทเรียบร้อยแล้ว";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Chat History has Been Cleared"="ล้างประวัติการแชทแล้ว";
 /* 'Next' button in a dialog */
 "continue"="ดำเนินการต่อ";
 /* Title of the incoming shared folders of a user. */
@@ -1282,7 +1284,7 @@
 /* */
 "done"="เรียบร้อย";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="เปิดใช้งานตัวอย่าง Rich URL";
+"enableRichUrlPreviews"="เปิดใช้งานตัวอย่าง URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="อนุญาตเสมอ";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1292,7 +1294,7 @@
 /* */
 "never"="ไม่เคยมี";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="คุณกำลังปิดใช้ตัวอย่าง Rich URL อย่างถาวร คุณสามารถเปิดใช้ตัวอย่าง Rich URL ได้ในการตั้งค่าของคุณ คุณต้องการดำเนินการต่อหรือไม่";
+"richPreviewsConfirmation"="คุณกำลังปิดใช้แสดงตัวอย่าง URL อย่างถาวร คุณสามารถเปิดใช้งานตัวอย่าง URL ได้ในการตั้งค่าของคุณ คุณต้องการดำเนินการต่อหรือไม่";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="นำตัวอย่างออก";
 /* */
@@ -1735,9 +1737,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ถังขยะจะเคลียร์ให้คุณโดยอัตโนมัติ ระยะเวลาต่ำสุดคือ 7 วันและระยะเวลาสูงสุดของคุณคือ 30 วัน";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ถังขยะจะถูกล้างให้คุณโดยอัตโนมัติ ระยะเวลาขั้นต่ำคือ 7 วันและระยะเวลาสูงสุดคือ 30 วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="เคลียร์ไฟล์ในถังขยะคุณได้โดยอัตโนมัติ ระยะเวลาต่ำสุดคือ 7 วัน";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ถังขยะสามารถล้างให้คุณได้โดยอัตโนมัติ ระยะเวลาขั้นต่ำคือ 7 วัน";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="หากต้องการปิดใช้งานตัวกำหนดเวลาทำความสะอาดถังขยะหรือตั้งระยะเวลาเก็บรักษาที่นานขึ้น คุณต้องสมัครแผน PRO";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1977,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="ไม่มีกิจกรรมล่าสุด";
 /* Plural of items which contains a folder. 2 items */
-"items"="รายการ";
+"items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="ลิงก์แชทไม่พร้อมใช้งาน";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2199,7 +2201,7 @@
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
 "Resume All"="ดำเนินการต่อทั้งหมด";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
-"Clear All"="ลบทั้งหมด";
+"Clear All"="ล้างทั้งหมด";
 /* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="ดำเนินการถ่ายโอนต่อหรือไม่";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
@@ -2251,7 +2253,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="ไอคอนแอป";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
-"Configure default launch section."="Configure default launch section.";
+"Configure default launch section."="กำหนดค่าส่วนการเปิดใช้งานเริ่มต้น";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="กำหนดค่าลำดับการเรียงและมุมมองเริ่มต้น (รายการหรือรูปขนาดย่อ)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2412,6 +2414,62 @@
 "Unavailable"="ไม่พร้อมใช้งาน";
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="ส่งอีเมลไปแล้ว กรุณารอสักครู่ก่อนที่จะลองใหม่อีกครั้ง";
+/* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
+"Manage Chat History"="Manage Chat History";
+/* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
+"History Clearing"="History Clearing";
+/* Text show under the setting 'History Retention' to explain what will happen if enabled */
+"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
+"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
+"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+/* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
+"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+/* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
+"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+/* Text show under the setting 'Clear Chat History' to explain what will happen if used */
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+/* Title show on the sheet to configure default values of the 'History Retention' setting */
+"Clear Messages Older Than"="Clear Messages Older Than";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Day"="One Day";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Week"="One Week";
+/* Used within the `Retention History` dropdown -- available option for the time range selection. */
+"One Month"="One Month";
+/* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
+"Custom..."="Custom…";
+/* System message displayed to all chat participants when one of them enables retention history */
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+/* System message that is shown to all chat participants upon disabling the Retention history. */
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+/*  */
+"hour"="ชั่วโมง";
+/*  */
+"hours"="ชั่วโมง";
+/*  */
+"day"="day";
+/*  */
+"1 day"="1 day";
+/*  */
+"week"="week";
+/*  */
+"weeks"="weeks";
+/*  */
+"1 week"="1 week";
+/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
+"%1 weeks"="%1 weeks";
+/*  */
+"month"="month";
+/*  */
+"1 month"="1 month";
+/* The number of months e.g. 2 months, 5 months etc. */
+"%1 months"="%1 months";
+/* */
+"1 year"="1 year";
+/*  */
+"year"="year";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="แชร์";
 /* Search placeholder text in search bar on home screen*/
@@ -2465,17 +2523,17 @@
 /*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="ยกเลิกการส่งข้อความแล้ว";
 /* Cookie dialog header */
-"Before you continue"="ก่อนที่คุณจะดำเนินการต่อ";
+"Before You Continue"="ก่อนที่คุณจะดำเนินการต่อ";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="เราได้มีการใช้คุกกี้และเทคโนโลยีที่คล้ายกัน (‘คุกกี้’) เพื่อให้บริการแก่คุณ ปรับปรุงประสบการณ์ของคุณด้วยบริการของเรา และปรับแต่งโฆษณาที่ปรากฎให้คุณเห็น รวมถึงผ่านบุคคลที่สาม ยอมรับการใช้คุกกี้ของเราตั้งแต่เริ่มเยี่ยมชมหรือปรับแต่งคุกกี้ในการตั้งค่าคุกกี้ อ่านเพิ่มเติมใน[A]นโยบายคุกกี้[/A]ของเรา";
 /* Cookie dialog button label. */
 "Accept Cookies"="ยอมรับการใช้งานคุกกี้";
 /* Cookie settings dialog text. */
 "Essential Cookies"="คุกกี้สำคัญ";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Always On";
+"Always On"="เปิดไว้เสมอ";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="จำเป็นสำหรับการมอบฟังก์ชันการทำงานที่สำคัญและการเข้าถึงบริการของเราอย่างปลอดภัย ด้วยเหตุนี้พวกเขาจึงไม่ต้องการความยินยอม";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="มีความจำเป็นต่อการให้บริการฟังก์ชันการทำงานที่สำคัญ และการเข้าถึงบริการของเราอย่างปลอดภัย ด้วยเหตุนี้จึงไม่ต้องขอความยินยอมจากคุณ";
 /* Cookie settings dialog text. */
 "Preference Cookies"="คุกกี้สำหรับกำหนดลักษณะ";
 /* Cookie settings dialog text. */
@@ -2496,3 +2554,13 @@
 "More Information"="ข้อมูลเพิ่มเติม";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="ไม่มีการใช้งานคุกกี้จากที่อื่น";
+/* Text shown when the creation of a version as a new file was successful */
+"Version created as a new file successfully."="Version created as a new file successfully.";
+/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
+"Permissions error"="Permissions error";
+/* Text shown for the action create new file */
+"Create new file"="Create new file";
+/* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
+"Pro Lite"="Pro Lite";

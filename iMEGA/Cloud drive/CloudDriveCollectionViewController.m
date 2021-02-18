@@ -62,7 +62,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self getNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-    [cell configureCellForNode:node];
+    [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
     cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
     cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
     return cell;
@@ -206,8 +206,13 @@
 }
 
 - (NSInteger)calculateColumnCount {
-    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds);
-    return (NSInteger) ((containerWidth - self.layout.sectionInset.left - self.layout.sectionInset.right) / ThumbnailSizeWidth);
+    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds) - self.layout.sectionInset.left - self.layout.sectionInset.right;
+    if (@available(iOS 11.0, *)) {
+        containerWidth = containerWidth - UIApplication.sharedApplication.keyWindow.safeAreaInsets.left - UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    NSInteger columns = ((containerWidth) / ThumbnailSizeWidth);
+
+    return MAX(2, columns);
 }
 
 - (NSArray *)buildListFor:(FileType) fileOrFolder {

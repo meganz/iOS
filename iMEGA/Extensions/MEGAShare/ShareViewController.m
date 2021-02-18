@@ -5,6 +5,7 @@
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
+#import "MEGASdk+MNZCategory.h"
 
 #import "Helper.h"
 #import "LaunchViewController.h"
@@ -73,6 +74,25 @@
     [super viewDidLoad];
     
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        switch ([request type]) {
+          
+            case MEGARequestTypeLogout: {
+                if (request.flag) {
+                    [Helper logout];
+                    [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self didBecomeActive];
+                    }];
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }];
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
@@ -130,17 +150,9 @@
         
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([MEGAReachabilityManager isReachable]) {
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                self.passcodeToBePresented = YES;
-            } else {
-                [self loginToMEGA];
-            }
+            [self loginToMEGA];
         } else {
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                self.passcodeToBePresented = YES;
-            } else {
-                [self presentFilesDestinationViewController];
-            }
+            [self presentFilesDestinationViewController];
         }
         
         if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
@@ -161,9 +173,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.passcodeToBePresented) {
-        [self presentPasscode];
-    }
 }
 
 - (void)willResignActive {
@@ -220,12 +229,8 @@
             [self initChatAndStartLogging];
             [self fetchAttachments];
         }
-        if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
-            [self presentPasscode];
-        } else {
-            if (!self.fetchNodesDone) {
-                [self loginToMEGA];
-            }
+        if (!self.fetchNodesDone) {
+            [self loginToMEGA];
         }
     } else {
         [self requireLogin];
@@ -330,25 +335,29 @@
     [self addChildViewController:navigationController];
     [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:navigationController.view];
+    
+    [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    if ([LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        [self presentPasscode];
+    }
 }
 
 - (void)presentPasscode {
     LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
-    if (!self.passcodePresented && !passcodeVC.isBeingPresented && passcodeVC.presentingViewController == nil) {
-        if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        }
-        
+    
+    if (!self.passcodePresented && !passcodeVC.isBeingPresented && (passcodeVC.presentingViewController == nil)) {
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES
                         andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
         
         [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+        passcodeVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:passcodeVC animated:NO completion:nil];
         self.passcodePresented = YES;
-        self.passcodeToBePresented = NO;
     }
+    
 }
 
 - (void)fakeModalPresentation {
@@ -815,6 +824,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     dispatch_semaphore_signal(self.semaphore);
 }
 
+- (void)logout {
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+    [[MEGASdkManager sharedMEGASdk] logout];
+}
+
 #pragma mark - BrowserViewControllerDelegate
 
 - (void)uploadToParentNode:(MEGANode *)parentNode {
@@ -840,6 +854,22 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+            
+        case MEGARequestTypeLogout: {
+      
+            if (request.paramType != MEGAErrorTypeApiESSL) {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
@@ -860,6 +890,17 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self performAttachNodeHandle:request.nodeHandle];
             } else {
                 [self onePendingLess];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeLogout: {
+            // Don't invalidate the session if its local logout
+            if (request.flag) {
+                [Helper logout];
+                
+                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                [self didBecomeActive];
             }
             break;
         }
@@ -910,26 +951,16 @@ void uncaughtExceptionHandler(NSException *exception) {
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
-    [self dismissViewControllerAnimated:YES completion:^{
-        self.passcodePresented = YES;
-        if ([MEGAReachabilityManager isReachable]) {
-            if (!self.fetchNodesDone) {
-                [self loginToMEGA];
-            }
-        } else {
-            [self presentFilesDestinationViewController];
-        }
-    }];
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }
+    [self logout];
 }
 
 - (void)logoutButtonWasPressed {
-    [[MEGASdkManager sharedMEGASdk] logout];
+    [self logout];
 }
+
 
 @end

@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionNicknameVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
-    ContactDetailsSectionClearChatHistory,
+    ContactDetailsSectionManageChatHistory,
     ContactDetailsSectionArchiveChat,
     ContactDetailsSectionAddParticipantToContact,
     ContactDetailsSectionRemoveParticipant,
@@ -303,10 +303,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     return cell;
 }
 
-- (ContactTableViewCell *)cellForClearChatHistoryWithIndexPath:(NSIndexPath *)indexPath {
+- (ContactTableViewCell *)cellForManageChatHistoryWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
-    cell.nameLabel.text = NSLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+    cell.nameLabel.text = NSLocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
@@ -383,31 +384,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.actionsView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.whiteColor;
     self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-}
-
-- (void)showClearChatHistoryAlert {
-    UIAlertController *clearChatHistoryAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.") message:NSLocalizedString(@"clearTheFullMessageHistory", @"A confirmation message for a user to confirm that they want to clear the history of a chat.") preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    
-    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-            if (request.type == MEGAChatRequestTypeTruncateHistory && error.type == MEGAChatErrorTypeOk) {
-                [self showClearChatHistoryConfirmationAlert];
-            }
-        }];
-        
-        [MEGASdkManager.sharedMEGAChatSdk clearChatHistory:self.chatRoom.chatId delegate:delegate];
-    }];
-    
-    [clearChatHistoryAlertController addAction:cancelAction];
-    [clearChatHistoryAlertController addAction:continueAction];
-    
-    [self presentViewController:clearChatHistoryAlertController animated:YES completion:nil];
-}
-
-- (void)showClearChatHistoryConfirmationAlert {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:NSLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted")];
 }
 
 - (void)showArchiveChatAlertAtIndexPath {
@@ -751,10 +727,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
     if (self.shouldAllowToAddContact) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionManageChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionManageChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -893,8 +869,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             cell = [self cellForSharedFoldersWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionClearChatHistory:
-            cell = [self cellForClearChatHistoryWithIndexPath:indexPath];
+        case ContactDetailsSectionManageChatHistory:
+            cell = [self cellForManageChatHistoryWithIndexPath:indexPath];
             break;
             
         case ContactDetailsSectionArchiveChat:
@@ -1008,8 +984,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [self openSharedFolderAtIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionClearChatHistory:
-            [self showClearChatHistoryAlert];
+        case ContactDetailsSectionManageChatHistory:
+           [[ManageChatHistoryViewRouter.alloc initWithChatId:self.chatRoom.chatId navigationController:self.navigationController] start];
             break;
             
         case ContactDetailsSectionArchiveChat:

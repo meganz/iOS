@@ -25,13 +25,7 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    [super onRequestStart:api request:request];
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [super onRequestFinish:api request:request error:error];
-    
     MEGAUser *user = [api contactForEmail:request.email];
     
     if (error.type) {

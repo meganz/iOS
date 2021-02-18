@@ -1,7 +1,7 @@
 
-#import "MEGABaseRequestDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface MEGARemoveRequestDelegate : MEGABaseRequestDelegate
+@interface MEGARemoveRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (instancetype)initWithMode:(NSInteger)mode files:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion;
 
