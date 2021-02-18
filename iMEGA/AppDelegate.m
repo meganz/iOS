@@ -1217,6 +1217,15 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGAIndexer.sharedIndexer.enableSpotlight = NO;
 }
 
+- (void)passcodeViewControllerWillClose {
+    if (self.mainTBC.selectedIndex == TabTypeChat) {
+        MEGANavigationController *navigationController = self.mainTBC.childViewControllers[TabTypeChat];
+        if ([navigationController.viewControllers.lastObject isKindOfClass:[ChatViewController class]]) {
+            [((ChatViewController *)navigationController.viewControllers.lastObject) becomeFirstResponder];
+        }
+    }
+}
+
 #pragma mark - PKPushRegistryDelegate
 
 - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
