@@ -18,6 +18,7 @@ pipeline {
       stage('Submodule update') {
          steps {
             injectEnvironments({
+              sh "git submodule foreach --recursive git clean -xfd"
               sh "git submodule update --init --recursive"
             })
         }
