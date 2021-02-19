@@ -560,6 +560,8 @@ static const CGFloat GapBetweenPages = 10.0;
         [self removeActivityIndicatorsFromView:imageView];
     };
     
+    MEGANode *mediaNode = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
         [UIView transitionWithView:imageView
                           duration:0.2
@@ -572,7 +574,7 @@ static const CGFloat GapBetweenPages = 10.0;
                 }
              ];
             
-            if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
+            if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
                 self.pieChartView.alpha = 0.0f;
             }
         }
@@ -581,7 +583,7 @@ static const CGFloat GapBetweenPages = 10.0;
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
+        if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
             self.transferProgress = transfer.transferredBytes.doubleValue / transfer.totalBytes.doubleValue;
             [self.pieChartView reloadData];
             if (self.pieChartView.alpha < 1.0f) {
