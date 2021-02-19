@@ -1220,6 +1220,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGAIndexer.sharedIndexer.enableSpotlight = NO;
 }
 
+- (void)passcodeViewControllerWillClose {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAPasscodeViewControllerWillCloseNotification object:nil];
+}
+
 #pragma mark - PKPushRegistryDelegate
 
 - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
