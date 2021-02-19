@@ -206,12 +206,17 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
-
+                
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(becomeFirstResponder),
+                                               name: NSNotification.Name.MEGAPasscodeViewControllerWillClose,
+                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         dismissKeyboardIfRequired()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.MEGAPasscodeViewControllerWillClose, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -31,6 +31,7 @@ NSString * const MEGATransferOverQuotaNotification = @"nz.mega.transferOverQuota
 NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
 NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";
+NSString * const MEGAPasscodeViewControllerWillCloseNotification = @"nz.mega.passcodeViewControllerWillClose";
 
 #pragma mark - global notification keys
 

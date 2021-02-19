@@ -1218,12 +1218,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)passcodeViewControllerWillClose {
-    if (self.mainTBC.selectedIndex == TabTypeChat) {
-        MEGANavigationController *navigationController = self.mainTBC.childViewControllers[TabTypeChat];
-        if ([navigationController.viewControllers.lastObject isKindOfClass:[ChatViewController class]]) {
-            [((ChatViewController *)navigationController.viewControllers.lastObject) becomeFirstResponder];
-        }
-    }
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAPasscodeViewControllerWillCloseNotification object:nil];
 }
 
 #pragma mark - PKPushRegistryDelegate
