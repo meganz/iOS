@@ -30,6 +30,7 @@ extern NSString * const MEGATransferOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
 extern NSString * const MEGAOpenChatRoomFromPushNotification;
+extern NSString * const MEGAPasscodeViewControllerWillCloseNotification;
 
 #pragma mark - global notification keys
 
