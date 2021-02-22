@@ -2556,11 +2556,11 @@
 "No Third Party Cookies in use"="Không có Cookies Bên Thứ Ba nào đang được dùng";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Phiên bản đã được chuyển thành một tệp tin toàn vẹn.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
 /* Text shown for the action create new file */
 "Create new file"="Tạo tệp mới";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Bạn không có đủ quyền hạn để khôi phục tệp này. Để tiếp tục, cần phải tạo một tệp mới với dữ liệu muốn phục hồi. Bạn có muốn tiếp tục không?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="Trang Tài Khoản";

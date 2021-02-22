@@ -105,11 +105,19 @@
     
     self.navigationItem.title = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
+    self.editBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
+    self.incomingButton.accessibilityLabel = NSLocalizedString(@"incoming", nil);
+    self.outgoingButton.accessibilityLabel = NSLocalizedString(@"outgoing", nil);
+    self.linksButton.accessibilityLabel = NSLocalizedString(@"Links", nil);
+    
     self.incomingLabel.text = NSLocalizedString(@"incoming", nil);
+    self.incomingLabel.isAccessibilityElement = NO;
     self.outgoingLabel.text = NSLocalizedString(@"outgoing", nil);
+    self.outgoingLabel.isAccessibilityElement = NO;
     self.linksLabel.text = NSLocalizedString(@"Links", nil);
+    self.linksLabel.isAccessibilityElement = NO;
     
     self.incomingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.incomingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
