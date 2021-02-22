@@ -413,6 +413,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewControllerToCommit];
         [self.navigationController presentViewController:navigationController animated:YES completion:nil];
     } else {
+        if (viewControllerToCommit.isBeingPresented || viewControllerToCommit.presentingViewController != nil) {
+            return;
+        }
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
 }
