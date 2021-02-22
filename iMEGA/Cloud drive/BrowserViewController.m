@@ -555,6 +555,7 @@
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [self.browserViewControllerDelegate nodeEditCompleted:NO];
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
         MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
@@ -571,6 +572,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         [SVProgressHUD show];
+        [self.browserViewControllerDelegate nodeEditCompleted:NO];
         for (MEGANode *node in self.selectedNodesArray) {
             self.remainingOperations++;
             MEGANode *tempNode = (self.browserAction == BrowserActionImportFromFolderLink) ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;

@@ -29,7 +29,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -766,10 +766,9 @@
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.browserViewControllerDelegate = self;
         browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesMutableArray];
         [browserVC setBrowserAction:BrowserActionCopy];
-        
-        [self setEditing:NO animated:YES];
     }
 }
 
@@ -1478,5 +1477,12 @@
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
 }
+
+#pragma mark - BrowserViewControllerDelegate
+
+- (void)nodeEditCompleted:(BOOL)editMode {
+    [self setEditing:editMode animated:NO];
+}
+
 
 @end

@@ -32,7 +32,7 @@
 static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
 static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -601,6 +601,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self presentViewController:mcnc animated:YES completion:nil];
     
     BrowserViewController *browserVC = mcnc.viewControllers.firstObject;
+    browserVC.browserViewControllerDelegate = self;
     browserVC.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
     browserVC.browserAction = BrowserActionMove;
 }
@@ -1053,6 +1054,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotos) object:nil];
         [self performSelector:@selector(reloadPhotos) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
     }
+}
+
+#pragma mark - BrowserViewControllerDelegate
+
+- (void)nodeEditCompleted:(BOOL)editMode {
+    [self setEditing:editMode animated:NO];
 }
 
 @end
