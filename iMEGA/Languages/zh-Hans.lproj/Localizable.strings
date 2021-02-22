@@ -2449,27 +2449,27 @@
 /*  */
 "hours"="小时";
 /*  */
-"day"="day";
+"day"="日";
 /*  */
-"1 day"="1 day";
+"1 day"="1天";
 /*  */
-"week"="week";
+"week"="周";
 /*  */
-"weeks"="weeks";
+"weeks"="周";
 /*  */
 "1 week"="1 week";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
 "%1 weeks"="%1 weeks";
 /*  */
-"month"="month";
+"month"="月";
 /*  */
-"1 month"="1 month";
+"1 month"="一个月";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 个月";
 /* */
-"1 year"="1 year";
+"1 year"="一年";
 /*  */
-"year"="year";
+"year"="年";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="共享";
 /* Search placeholder text in search bar on home screen*/
@@ -2555,12 +2555,12 @@
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="未使用第三方Cookie";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
+"Version created as a new file successfully."="版本已成功创建为新文件。";
 /* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
 "Permissions error"="Permissions error";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="创建新文档";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您没有还原文件所需的权限，您想使用已还原的数据创建一个新文件吗？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro精简版";

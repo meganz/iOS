@@ -2449,27 +2449,27 @@
 /*  */
 "hours"="uren";
 /*  */
-"day"="day";
+"day"="dag";
 /*  */
-"1 day"="1 day";
+"1 day"="1 dag";
 /*  */
 "week"="week";
 /*  */
-"weeks"="weeks";
+"weeks"="weken";
 /*  */
 "1 week"="1 week";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
 "%1 weeks"="%1 weeks";
 /*  */
-"month"="month";
+"month"="maand";
 /*  */
-"1 month"="1 month";
+"1 month"="1 maand";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 maanden";
 /* */
-"1 year"="1 year";
+"1 year"="1 jaar";
 /*  */
-"year"="year";
+"year"="jaar";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="DELEN";
 /* Search placeholder text in search bar on home screen*/
@@ -2555,12 +2555,12 @@
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="Er worden geen cookies van derden gebruikt";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
+"Version created as a new file successfully."="Versie is met succes aangemaakt als een nieuw bestand.";
 /* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
 "Permissions error"="Permissions error";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="Creëer een nieuw bestand";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="U hebt niet de vereiste machtigingen om dit bestand terug te zetten. Om door te gaan, kunnen we een nieuw bestand maken met de teruggekeerde gegevens. Wilt u doorgaan?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
