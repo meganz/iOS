@@ -354,7 +354,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 - (IBAction)didTapPermissionsButton:(UIButton *)sender {
     NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (sender.tag - 1) : sender.tag;
     
-    uint64_t userHandle = [self.participantsMutableArray objectAtIndex:index].unsignedLongLongValue;
+    NSNumber *participant = [self.participantsMutableArray objectOrNilAtIndex:index];
+    if (participant == nil) {
+        return;
+    }
+    
+    uint64_t userHandle = participant.unsignedLongLongValue;
     NSString *peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
     
     if (index != (self.participantsMutableArray.count - 1)) {

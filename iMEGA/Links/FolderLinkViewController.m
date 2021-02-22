@@ -565,9 +565,11 @@
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-    activityVC.popoverPresentationController.barButtonItem = sender;
-    [self presentViewController:activityVC animated:YES completion:nil];
+    if (link != nil) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
+        activityVC.popoverPresentationController.barButtonItem = sender;
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
