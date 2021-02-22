@@ -58,7 +58,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, BrowserViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -1623,10 +1623,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.browserViewControllerDelegate = self;
     browserVC.selectedNodesArray = self.selectedNodesArray.copy;
     browserVC.browserAction = BrowserActionMove;
-    
-    self.selectedNodesArray = nil;
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
@@ -1634,10 +1633,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.browserViewControllerDelegate = self;
     browserVC.selectedNodesArray = self.selectedNodesArray.copy;
     browserVC.browserAction = BrowserActionCopy;
-    
-    self.selectedNodesArray = nil;
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
@@ -2000,6 +1998,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - BrowserViewControllerDelegate
+
+- (void)nodeEditCompleted:(BOOL)editMode {
+    [self setEditMode:editMode];
 }
 
 @end
