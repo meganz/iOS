@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="ใช้ไปแล้ว %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="ยกเลิกบัญชีของคุณ";
+"cancelYourAccount"="ลบบัญชี";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="คุณจะสูญเสียข้อมูลทั้งหมดที่เชื่อมโยงกับบัญชีนี้ คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="คุณจะถูกออกจากระบบและไฟล์ออฟไลน์ของคุณจะถูกลบหลังจากความพยายามล้มเหลวเกิน 10 ครั้ง";
 /* Button text to change the passcode type. */
 "Passcode Options"="ตัวเลือกรหัส";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1205,7 +1205,7 @@
 "clearTheFullMessageHistory"="คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติข้อความทั้งหมดของการสนทนานี้";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Error. The history of the chat has not been cleared successfully"="ข้อผิดพลาด ไม่สามารถล้างประวัติการแชทได้";
 "Chat History has Been Cleared"="ล้างประวัติการแชทแล้ว";
 /* 'Next' button in a dialog */
 "continue"="ดำเนินการต่อ";
@@ -2261,9 +2261,9 @@
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="เหมือนกันทั้งหมด";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"Sorting preference"="ตั้งค่าการจัดเรียง";
+"Sorting preference"="กำหนดลักษณะการจัดเรียง";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"View mode preference"="ตั้งค่าโหมดมุมมอง";
+"View mode preference"="กำหนดลักษณะโหมดมุมมอง";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="กำหนดลำดับการจัดเรียงคอลัมน์ในแต่ละโฟลเดอร์หรือใช้คำสั่งเดียวกันสำหรับโฟลเดอร์ทั้งหมด";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
@@ -2415,61 +2415,61 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="ส่งอีเมลไปแล้ว กรุณารอสักครู่ก่อนที่จะลองใหม่อีกครั้ง";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="จัดการประวัติการแชท";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="ล้างประวัติการแชท";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="ลบข้อความที่เก่ากว่าในระยะเวลาหนึ่งโดยอัตโนมัติ";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="ลบข้อความที่เก่ากว่าหนึ่งวันโดยอัตโนมัติ";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="ลบข้อความที่เก่ากว่าหนึ่งสัปดาห์โดยอัตโนมัติ";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="ลบข้อความที่เก่ากว่าหนึ่งเดือนโดยอัตโนมัติ";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="ลบข้อความที่เก่ากว่า %1โดยอัตโนมัติ";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="ลบข้อความและไฟล์ทั้งหมดที่แชร์ในการสนทนานี้จากทั้งสองฝ่าย การดำเนินการนี้จะไม่สามารถย้อนกลับได้";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="ล้างข้อความที่เก่ากว่า";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="หนึ่งวัน";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="หนึ่งสัปดาห์";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="หนึ่งเดือน";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="กำหนดเอง…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] เปลี่ยนเวลาล้างข้อความเป็น[/B][A] %2$s[/A][B][/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] ปิดใช้งานการล้างข้อความ[/B]";
 /*  */
 "hour"="ชั่วโมง";
 /*  */
 "hours"="ชั่วโมง";
 /*  */
-"day"="day";
+"day"="วัน";
 /*  */
-"1 day"="1 day";
+"1 day"="1 วัน";
 /*  */
-"week"="week";
+"week"="สัปดาห์";
 /*  */
-"weeks"="weeks";
+"weeks"="สัปดาห์";
 /*  */
-"1 week"="1 week";
+"1 week"="1 สัปดาห์";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 สัปดาห์";
 /*  */
-"month"="month";
+"month"="เดือน";
 /*  */
-"1 month"="1 month";
+"1 month"="1 เดือน";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 เดือน";
 /* */
-"1 year"="1 year";
+"1 year"="1 ปี";
 /*  */
-"year"="year";
+"year"="ปี";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="แชร์";
 /* Search placeholder text in search bar on home screen*/
@@ -2549,18 +2549,18 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="คุกกี้จากที่อื่น";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="คุกกี้เหล่านี้ถูกควบคุมโดยบุคคลอื่นที่ไม่ใช่เรา เราใช้คุกกี้เหล่านี้เพื่อจัดหาประเภทของฟังก์ชันที่อธิบายไว้ข้างต้นแล้ว การไม่ยอมรับคุกกี้เหล่านี้จะมีผลกระทบที่แตกต่างกันไป ขึ้นอยู่กับประเภทของคุกกี้แต่ละคุกกี้จากที่อื่น คลิกที่ ’ข้อมูลเพิ่มเติม’ ด้านล่างเพื่อดูรายละเอียดเกี่ยวกับคุกกี้จากที่อื่นทั้งหมดที่เราใช้";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="คุกกี้เหล่านี้ถูกควบคุมโดยบุคคลอื่นที่ไม่ใช่เรา เราใช้คุกกี้เหล่านี้เพื่อจัดหาประเภทของฟังก์ชันที่อธิบายไว้ข้างต้นแล้ว การไม่ยอมรับคุกกี้เหล่านี้จะมีผลกระทบที่แตกต่างกันไป ขึ้นอยู่กับประเภทของคุกกี้แต่ละคุกกี้จากที่อื่น คลิกที่ “ข้อมูลเพิ่มเติม” ด้านล่างเพื่อดูรายละเอียดเกี่ยวกับคุกกี้จากที่อื่นทั้งหมดที่เราใช้";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="ข้อมูลเพิ่มเติม";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="ไม่มีการใช้งานคุกกี้จากที่อื่น";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
+"Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่เรียบร้อยแล้ว";
 /* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
 "Permissions error"="Permissions error";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="สร้างไฟล์ใหม่";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="คุณไม่มีสิทธิ์ในการแปลงไฟล์นี้กลับคืน เพื่อดำเนินการต่อ เราสามารถสร้างไฟล์ใหม่ด้วยข้อมูลที่ถูกแปลงกลับได้ คุณต้องการที่จะดำเนินการต่อไปหรือไม่";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
