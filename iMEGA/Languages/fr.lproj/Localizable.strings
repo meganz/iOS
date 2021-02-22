@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Vous serez déconnecté et vos fichiers Hors ligne seront supprimés après dix tentatives infructueuses.";
 /* Button text to change the passcode type. */
 "Passcode Options"="Options du code d’accès";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1202,10 +1202,10 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Voulez-vous vraiment complètement effacer l’historique de cette conversation ?";
+"clearTheFullMessageHistory"="Voulez-vous vraiment effacer tout l’historique de cette conversation ?";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Error. The history of the chat has not been cleared successfully"="Erreur. L’historique de la conversation n’a pas été effacé avec succès";
 "Chat History has Been Cleared"="L’historique de la conversation a été effacé";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
@@ -2415,35 +2415,35 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Le courriel a déjà été envoyé. Veuillez patienter quelques minutes avant de réessayer.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Gérer l’historique de la conversation";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Effacement de l’historique";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Supprimer automatiquement les messages plus anciens qu’une certaine durée.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Supprimer automatiquement les messages de plus d’un jour.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Supprimer automatiquement les messages de plus d’une semaine.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Supprimer automatiquement les messages de plus d’un mois.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Supprimer automatiquement les messages de plus de %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Supprimer automatiquement les messages et fichiers partagés dans cette conversation pour les deux parties. Cette action est irréversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Supprimer les messages de plus de";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Un jour";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Une semaine";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Un mois";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Personnalisée…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] a changé la durée avant effacement du message à[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] a désactivé l’effacement des messages.[/B]";
 /*  */
 "hour"="heure";
 /*  */
@@ -2457,9 +2457,9 @@
 /*  */
 "weeks"="semaines";
 /*  */
-"1 week"="1 week";
+"1 week"="1 semaine";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 semaines";
 /*  */
 "month"="mois";
 /*  */
@@ -2556,11 +2556,11 @@
 "No Third Party Cookies in use"="Aucun témoin tiers n’est utilisé";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La version a été créée avec succès en tant que nouveau fichier.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
 /* Text shown for the action create new file */
 "Create new file"="Créer un nouveau fichier";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Vous n’avez pas les droits exigés pour rétablir ce fichier. Afin de poursuivre, nous pouvons créer un nouveau fichier avec les données rétablies. Voulez-vous poursuivre ?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro léger";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="Mon compte";

@@ -34,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateTitle;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateCount;
@@ -101,6 +102,8 @@
             [self.usersWithoutChatArray addObject:user];
         }
     }
+    self.addBarButtonItem.accessibilityLabel = NSLocalizedString(@"startConversation", comment: "start a chat/conversation");
+    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault:

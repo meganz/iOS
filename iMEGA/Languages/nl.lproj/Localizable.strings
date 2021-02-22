@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Momenteel %s in gebruik";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Annuleer Uw Account";
+"cancelYourAccount"="Verwijder Account";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="U zal alle gegevens verliezen die op dit account staan. Weet u zeker dat u door wilt gaan?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="U wordt uitgelogd en uw offline bestanden worden verwijderd na 10 mislukte pogingen";
 /* Button text to change the passcode type. */
 "Passcode Options"="Toegangscode-opties";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1205,7 +1205,7 @@
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Error. The history of the chat has not been cleared successfully"="Fout. De geschiedenis van de chat is niet succesvol gewist";
 "Chat History has Been Cleared"="Chatgeschiedenis is gewist";
 /* 'Next' button in a dialog */
 "continue"="Vervolgen";
@@ -2415,35 +2415,35 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail al verzonden. Wacht een paar minuten voordat u het opnieuw probeert.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Chatgeschiedenis Beheren";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Geschiedenis Wissen";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Verwijder automatisch berichten die ouder zijn dan een bepaalde tijd.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Automatisch berichten verwijderen die ouder zijn dan één dag.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Verwijder automatisch berichten ouder dan een week.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Verwijder automatisch berichten ouder dan een maand.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Verwijder automatisch berichten ouder dan %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Verwijder alle berichten en bestanden die in dit gesprek van beide partijen zijn gedeeld. Deze actie is onomkeerbaar.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Duidelijke berichten Ouder Dan";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Een Dag";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Een Week";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Een Maand";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Aangepast...";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] heeft de tijd voor het wissen van berichten gewijzigd in [/B][A]%2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s [/A][B] heeft het wissen van berichten uitgeschakeld. [/B]";
 /*  */
 "hour"="uur";
 /*  */
@@ -2459,7 +2459,7 @@
 /*  */
 "1 week"="1 week";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 weken";
 /*  */
 "month"="maand";
 /*  */
@@ -2549,18 +2549,18 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Cookies van derden";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Dit zijn cookies die worden beheerd door iemand anders dan wij; we gebruiken deze Cookies om de soorten functionaliteit te bieden die hierboven zijn beschreven. Het niet accepteren van deze Cookies heeft verschillende gevolgen, afhankelijk van het type Cookie dat elke Cookie van een derde partij is. Klik op ‘Meer informatie’ hieronder voor details over alle Cookies van derden die we gebruiken.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Dit zijn Cookies die worden beheerd door iemand anders dan wij; we gebruiken deze Cookies om de soorten functionaliteit te bieden die hierboven zijn beschreven. Het niet accepteren van deze Cookies heeft verschillende gevolgen, afhankelijk van het type cookie dat elke Cookie van een derde partij is. Klik op “Meer Informatie” hieronder voor details over alle Cookies van derden die we gebruiken.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Meer Informatie";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="Er worden geen cookies van derden gebruikt";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versie is met succes aangemaakt als een nieuw bestand.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
 /* Text shown for the action create new file */
 "Create new file"="Creëer een nieuw bestand";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="U hebt niet de vereiste machtigingen om dit bestand terug te zetten. Om door te gaan, kunnen we een nieuw bestand maken met de teruggekeerde gegevens. Wilt u doorgaan?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="Mijn Account";

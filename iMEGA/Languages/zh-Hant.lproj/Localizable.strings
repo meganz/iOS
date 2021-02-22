@@ -2556,11 +2556,11 @@
 "No Third Party Cookies in use"="沒有使用第三方Cookie";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="已成功的以此版本建立新檔案。";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
 /* Text shown for the action create new file */
 "Create new file"="建立新檔案";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您沒有還原此檔案的權限。為了繼續，我們能夠以還原的資料建立一個新檔案。您想要這麼做嗎？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="我的帳號";

@@ -4,6 +4,7 @@ final class ExplorerView: UIView {
     
     private let radius: CGFloat = 6.0
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var button: UIButton!
     @IBOutlet weak var iconBackgroundImageView: UIImageView!
     @IBOutlet weak var iconForegroundImageView: UIImageView!
     
@@ -11,6 +12,8 @@ final class ExplorerView: UIView {
         didSet {
             guard let configuration = configuration else { return }
             label.text = configuration.title
+            label.isAccessibilityElement = false
+            button.accessibilityLabel = configuration.title
             iconForegroundImageView.image = configuration.iconForegroundImage
             iconBackgroundImageView?.image = configuration.iconBackgroundImage
             borderGradientLayer.colors = configuration.borderGradientColors.map({$0.cgColor})
