@@ -13,31 +13,37 @@ If you want to be the first one to receive the updates, join the MEGA beta follo
 
 This document will guide you to build the application on a Mac machine with Xcode.
 
+### Prerequisites
+In order to build MEGA for iOS locally, it is necessary to install the following tools on the local machine:
+
+- Install [Xcode](https://itunes.apple.com/app/xcode/id497799835?mt=12) in your system.
+- Cocoapods (https://cocoapods.org/)
+
+
+
 ### Build & Run the application
 
 Get the source code
 
 ```
 git clone https://github.com/meganz/ios.git
+```
+
+Open .gitmodules file and change url for karere submodule, use this one: https://github.com/meganz/MEGAchat.git
+
+```
 cd ios
 git submodule update --init --recursive
 ```
 
 ##### Preparation:
-1. Install [Xcode](https://itunes.apple.com/app/xcode/id497799835?mt=12) in your system.
-
-2. Clone this repo.
-
-3. Download the prebuilt third party dependencies from this link: https://mega.nz/#!ZZlSzKCQ!pCnK7UKbV3bjZvnRxkHkudcHGQcoarEE8bNlN2WDGfM.
-
-4. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
-
+1. Clone this repo.
+2. Download the prebuilt third party dependencies from this link: https://mega.nz/#!ZZlSzKCQ!pCnK7UKbV3bjZvnRxkHkudcHGQcoarEE8bNlN2WDGfM.
+3. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
+4. Open the terminal and run `pod install`
 5. Open `iMEGA.xcworkspace`.
-
 6. Make sure the `MEGA` target is selected.
-
 7. Build and run (⌘R).
-
 8. Enjoy!
 
 If you want to build the third party dependencies by yourself: 
