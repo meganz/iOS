@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Actualmente en uso %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancelar cuenta";
+"cancelYourAccount"="Eliminar cuenta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Perderás todos los datos asociados con esta cuenta. ¿Estás seguro de que quieres continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Borrar los datos locales";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Se cerrará la sesión y tus archivos sin conexión se eliminarán después de 10 intentos fallidos";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Opciones de código de acceso";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Código de 4 dígitos";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Código de 6 dígitos";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Código alfanumérico";
 /* Menu item */
 "help"="Ayuda";
 /* Title of the section to access MEGA's help centre */
@@ -1146,7 +1146,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] se unió al grupo por invitación de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] ha limpiado el chat.";
+"clearedTheChatHistory"="[A] ha limpiado el historial del chat.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[C] ha cambiado el permiso de [A] a [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -1205,7 +1205,7 @@
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Error. The history of the chat has not been cleared successfully"="No se ha podido limpiar el historial del chat";
 "Chat History has Been Cleared"="Se ha limpiado el historial del chat";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
@@ -1671,7 +1671,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Buscar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Al activar, permitirá buscar archivos y carpetas de MEGA en la Búsqueda con Spotlight.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite buscar archivos y carpetas de MEGA en la Búsqueda con Spotlight.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1733,7 +1733,7 @@
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
 "Rubbish-Bin Cleaning Scheduler:"="Limpieza automática de la papelera";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
-"Remove files older than"="Eliminar archivos anteriores a";
+"Remove files older than"="Eliminar archivos con más de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="días";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -2415,61 +2415,61 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Correo electrónico ya enviado. Espera unos minutos antes de volver a intentarlo.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Gestionar historial del chat";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Limpieza del historial";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Elimina automáticamente los mensajes anteriores a una determinada cantidad de tiempo.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Elimina automáticamente los mensajes con más de un día.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Elimina automáticamente los mensajes con más de una semana.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Elimina automáticamente los mensajes con más de un mes.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Eliminar automáticamente mensajes con más de %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Elimina todos los mensajes y archivos compartidos por ambas partes en esta conversación. Esta acción es irreversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Limpia mensajes con más de";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Un día";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Una semana";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Un mes";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Personalizar...";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] ha cambiado el tiempo de limpieza de mensajes a [/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] ha desactivado la limpieza de mensajes.[/B]";
 /*  */
 "hour"="hora";
 /*  */
 "hours"="horas";
 /*  */
-"day"="day";
+"day"="día";
 /*  */
-"1 day"="1 day";
+"1 day"="1 día";
 /*  */
-"week"="week";
+"week"="semana";
 /*  */
-"weeks"="weeks";
+"weeks"="semanas";
 /*  */
-"1 week"="1 week";
+"1 week"="1 semana";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 semanas";
 /*  */
-"month"="month";
+"month"="mes";
 /*  */
-"1 month"="1 month";
+"1 month"="1 mes";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 meses";
 /* */
-"1 year"="1 year";
+"1 year"="1 año";
 /*  */
-"year"="year";
+"year"="año";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="COMPARTIR";
 /* Search placeholder text in search bar on home screen*/
@@ -2555,12 +2555,12 @@
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="Las Cookies de terceros no están activas";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
+"Version created as a new file successfully."="La versión se ha creado como un nuevo archivo.";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="Crear nuevo archivo";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="No tienes los permisos necesarios para revertir este archivo. Para continuar, podemos crear un nuevo archivo con los datos anteriores. ¿Te gustaría continuar?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="Mi cuenta";

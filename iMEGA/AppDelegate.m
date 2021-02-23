@@ -379,20 +379,10 @@
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
     
-    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-
-    if (!sessionV3) {
-        [Helper logout];
-        [self showOnboardingWithCompletion:nil];
-        [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-
-    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
-    
-    [MEGASdkManager destroySharedMEGAChatSdk];
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
@@ -403,6 +393,8 @@
     if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
+    
+    [self localLogoutSDKandChat];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -1192,6 +1184,17 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)localLogoutSDKandChat {
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [MEGASdkManager.sharedMEGASdk localLogoutWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        [MEGASdkManager.sharedMEGAChatSdk localLogoutWithDelegate:[MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            dispatch_semaphore_signal(semaphore);
+        }]];
+    }]];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    [MEGASdkManager destroySharedMEGAChatSdk];
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1215,6 +1218,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)passcodeWasEnabled {
     MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+}
+
+- (void)passcodeViewControllerWillClose {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAPasscodeViewControllerWillCloseNotification object:nil];
 }
 
 #pragma mark - PKPushRegistryDelegate
@@ -1472,7 +1479,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 return;
             }
             
-            if (request.paramType != MEGAErrorTypeApiESSL) {
+            if (request.paramType != MEGAErrorTypeApiESSL && request.flag) {
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             }
             break;
@@ -1665,11 +1672,13 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeLogout: {            
-            [Helper logout];
-            [self showOnboardingWithCompletion:nil];
-            
-            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+        case MEGARequestTypeLogout: {
+            if (request.flag) { // if logout (not if localLogout)
+                [Helper logout];
+                [self showOnboardingWithCompletion:nil];
+                
+                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+            }
             break;
         }
             

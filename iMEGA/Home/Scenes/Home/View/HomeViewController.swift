@@ -238,6 +238,7 @@ final class HomeViewController: UIViewController {
             target: self,
             action: .didTapNewChat
         )
+        startConversationItem.accessibilityLabel = NSLocalizedString("startConversation", comment: "start a chat/conversation")
         self.startConversationItem = startConversationItem
 
         let startUploadBarButtonItem = UIBarButtonItem(
@@ -246,6 +247,7 @@ final class HomeViewController: UIViewController {
             target: self,
             action: .didTapNewUpload
         )
+        startUploadBarButtonItem.accessibilityLabel = NSLocalizedString("upload", comment: "")
         self.startUploadBarButtonItem = startUploadBarButtonItem
 
         navigationItem.setRightBarButtonItems([startUploadBarButtonItem, startConversationItem], animated: false)

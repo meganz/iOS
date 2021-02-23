@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="目前已使用 %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="註銷帳戶";
+"cancelYourAccount"="刪除帳戶";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您將遺失所有與此帳戶相關的資料，確定要繼續嗎？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本機資料";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="嘗試10次失敗後，您將被強制登出而且您的離線檔案將被刪除";
 /* Button text to change the passcode type. */
 "Passcode Options"="密碼選項";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1205,7 +1205,7 @@
 "clearTheFullMessageHistory"="您確定要清除此對話的全部歷史記錄嗎？";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Error. The history of the chat has not been cleared successfully"="錯誤。聊天記錄尚未成功清除。";
 "Chat History has Been Cleared"="聊天紀錄已清空";
 /* 'Next' button in a dialog */
 "continue"="繼續";
@@ -2415,61 +2415,61 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="電子郵件已發送。請等待幾分鐘，然後再重試。";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="管理聊天記錄";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="歷史記錄清除";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="自動刪除超過一定時間的訊息。";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="自動刪除超過一天的訊息。";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="自動刪除超過一週的訊息。";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="自動刪除超過一個月的訊息。";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="自動刪除超過%1的訊息";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="刪除雙方在此對話中共享的所有訊息和檔案。此動作是無法復原的。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="刪除超過此時間的訊息";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="一天";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="一週";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="一個月";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="自訂…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]將訊息刪除時間改為[/B][A]%2$s[/A][B]。[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]停用訊息刪除功能。[/B]";
 /*  */
 "hour"="小時";
 /*  */
 "hours"="小時";
 /*  */
-"day"="day";
+"day"="日";
 /*  */
-"1 day"="1 day";
+"1 day"="1天";
 /*  */
-"week"="week";
+"week"="週";
 /*  */
-"weeks"="weeks";
+"weeks"="週";
 /*  */
-"1 week"="1 week";
+"1 week"="一週";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1週";
 /*  */
-"month"="month";
+"month"="每月";
 /*  */
-"1 month"="1 month";
+"1 month"="一個月";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 個月";
 /* */
-"1 year"="1 year";
+"1 year"="一年";
 /*  */
-"year"="year";
+"year"="年";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="共享";
 /* Search placeholder text in search bar on home screen*/
@@ -2549,18 +2549,18 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="第三方Cookies";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="這些Cookies不是我們控制的；我們使用這些Cookies來提供上述功能類型。根據每個第三方Cookie的類型，不接受這些Cookies將會產生不同的含義。點擊下面更多資訊來了解我們使用的所有第三方Cookies資訊。";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="這些Cookies不是我們控制的；我們使用這些Cookies來提供上述功能類型。根據每個第三方Cookie的類型，不接受這些Cookies將會產生不同的含義。點擊下面 “更多資訊” 來了解我們使用的所有第三方Cookies資訊。";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="更多資訊";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="沒有使用第三方Cookie";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
+"Version created as a new file successfully."="已成功的以此版本建立新檔案。";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="建立新檔案";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您沒有還原此檔案的權限。為了繼續，我們能夠以還原的資料建立一個新檔案。您想要這麼做嗎？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="我的帳號";

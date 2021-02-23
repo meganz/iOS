@@ -165,6 +165,8 @@
                 break;
                 
             case SKPaymentTransactionStateFailed:
+                MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
+                
                 if (transaction.error.code != SKErrorPaymentCancelled) {
                     [_delegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
                 }
