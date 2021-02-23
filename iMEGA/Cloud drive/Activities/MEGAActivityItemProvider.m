@@ -1,7 +1,12 @@
 #import "MEGAActivityItemProvider.h"
 
+#import <LinkPresentation/LinkPresentation.h>
+
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+
+#import "Helper.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface MEGAActivityItemProvider () <UIActivityItemSource, MEGARequestDelegate> {
     dispatch_semaphore_t semaphore;
@@ -63,6 +68,34 @@
 
 - (UIImage *)activityViewController:(UIActivityViewController *)activityViewController thumbnailImageForActivityType:(NSString *)activityType suggestedSize:(CGSize)size {
     return [UIImage imageNamed:@"AppIcon"];
+}
+
+- (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController  API_AVAILABLE(ios(13.0)) {
+    LPLinkMetadata *metadata = LPLinkMetadata.new;
+    metadata.title = self.node.name;
+
+    NSString *subtitleString;
+    if (self.node.isFile) {
+        subtitleString = [Helper sizeAndModicationDateForNode:self.node api:MEGASdkManager.sharedMEGASdk];
+    } else if (self.node.isFolder) {
+        subtitleString = [Helper filesAndFoldersInFolderNode:self.node api:MEGASdkManager.sharedMEGASdk];
+    }
+    metadata.originalURL = [NSURL.alloc initFileURLWithPath:subtitleString];
+
+    if (self.node.hasThumbnail) {
+        NSString *thumbnailFilePath = [Helper pathForNode:self.node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+        if ([NSFileManager.defaultManager fileExistsAtPath:thumbnailFilePath]) {
+            NSItemProvider *iconItemProvider = [NSItemProvider.new initWithObject:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            metadata.iconProvider = iconItemProvider;
+        }
+    } else {
+        UIImageView *imageView = UIImageView.new;
+        [imageView mnz_imageForNode:self.node];
+        NSItemProvider *iconItemProvider = [NSItemProvider.new initWithObject:imageView.image];
+        metadata.iconProvider = iconItemProvider;
+    }
+
+    return metadata;
 }
 
 #pragma mark - MEGARequestDelegate
