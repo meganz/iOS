@@ -2005,8 +2005,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - BrowserViewControllerDelegate
 
-- (void)nodeEditCompleted:(BOOL)editMode {
-    [self setEditMode:editMode];
+- (void)nodeEditCompleted:(BOOL)complete {
+    [self setEditMode:!complete];
 }
 
 @end

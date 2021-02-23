@@ -1058,8 +1058,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 #pragma mark - BrowserViewControllerDelegate
 
-- (void)nodeEditCompleted:(BOOL)editMode {
-    [self setEditing:editMode animated:NO];
+- (void)nodeEditCompleted:(BOOL)complete {
+    [self setEditing:!complete animated:NO];
 }
 
 @end

@@ -586,6 +586,7 @@
 - (void)shareNodesWithLevel:(MEGAShareType)shareType {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
+    [self.contatctsViewControllerDelegate nodeEditCompleted:YES];
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:self.nodesArray.count completion:^{
