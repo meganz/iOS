@@ -29,7 +29,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -807,11 +807,10 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+        contactsVC.contatctsViewControllerDelegate = self;
         contactsVC.contactsMode = ContactsModeShareFoldersWith;
         [contactsVC setNodesArray:[_selectedNodesMutableArray copy]];
         [self presentViewController:navigationController animated:YES completion:nil];
-        
-        [self setEditing:NO animated:YES];
     }
 }
 
@@ -1486,10 +1485,10 @@
     [node navigateToParentAndPresent];
 }
 
-#pragma mark - BrowserViewControllerDelegate
+#pragma mark - BrowserViewControllerDelegate, ContactsViewControllerDelegate
 
-- (void)nodeEditCompleted:(BOOL)editMode {
-    [self setEditing:editMode animated:NO];
+- (void)nodeEditCompleted:(BOOL)complete {
+    [self setEditing:!complete animated:NO];
 }
 
 

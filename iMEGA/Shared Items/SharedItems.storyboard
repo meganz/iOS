@@ -548,7 +548,7 @@
                     <items/>
                 </toolbar>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="YkL-Id-Ryo"/>
-                <barButtonItem enabled="NO" image="download" width="32" style="plain" id="eTZ-Oi-bPQ" userLabel="Download Bar Button Item">
+                <barButtonItem enabled="NO" image="infoDownload" width="32" style="plain" id="eTZ-Oi-bPQ" userLabel="Download Bar Button Item">
                     <connections>
                         <action selector="downloadAction:" destination="2AR-na-hSZ" id="HhA-im-6OR"/>
                     </connections>
@@ -573,7 +573,7 @@
                         <action selector="removeLinkAction:" destination="2AR-na-hSZ" id="vfH-WA-BaV"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="shareWith" width="32" style="plain" id="5Mi-qb-CMK" userLabel="Share Folder Bar Button Item">
+                <barButtonItem enabled="NO" image="shareFolder" width="32" style="plain" id="5Mi-qb-CMK" userLabel="Share Folder Bar Button Item">
                     <connections>
                         <action selector="shareFolderAction:" destination="2AR-na-hSZ" id="hfi-Fw-SBE"/>
                     </connections>
@@ -589,9 +589,9 @@
     </scenes>
     <resources>
         <image name="copy" width="28" height="28"/>
-        <image name="download" width="32" height="32"/>
         <image name="favouriteSmall" width="12.5" height="12"/>
         <image name="incomingSegmentControler" width="24" height="24"/>
+        <image name="infoDownload" width="32" height="32"/>
         <image name="leaveShare" width="28" height="28"/>
         <image name="linksSegmentControler" width="24" height="24"/>
         <image name="more" width="28" height="28.5"/>
@@ -602,7 +602,7 @@
         <image name="removeShare" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="share" width="28" height="28"/>
-        <image name="shareWith" width="38" height="32"/>
+        <image name="shareFolder" width="28" height="28"/>
         <image name="sharedItemsIcon" width="31" height="28"/>
         <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>
