@@ -2449,27 +2449,27 @@
 /*  */
 "hours"="часы";
 /*  */
-"day"="day";
+"day"="день";
 /*  */
-"1 day"="1 day";
+"1 day"="1 день";
 /*  */
-"week"="week";
+"week"="неделя";
 /*  */
-"weeks"="weeks";
+"weeks"="нед.";
 /*  */
 "1 week"="1 week";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
 "%1 weeks"="%1 weeks";
 /*  */
-"month"="month";
+"month"="месяц";
 /*  */
-"1 month"="1 month";
+"1 month"="1 месяц";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 месяцев";
 /* */
-"1 year"="1 year";
+"1 year"="1 год";
 /*  */
-"year"="year";
+"year"="год";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="ПОДЕЛИТЬСЯ";
 /* Search placeholder text in search bar on home screen*/
@@ -2555,12 +2555,12 @@
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="Сторонние файлы cookie не используются";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
+"Version created as a new file successfully."="Версия была успешно создана как новый файл.";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="Создать новый файл";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="У вас нет прав, необходимых для восстановления этого файла. Чтобы продолжить, мы можем создать новый файл с восстановленными данными. Хотите продолжить?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="Мой аккаунт";

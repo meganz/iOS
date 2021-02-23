@@ -71,7 +71,8 @@ class MessageInputBar: UIView {
     private let kMEGAUIKeyInputCarriageReturn = "\r"
 
     private var keyboardShowObserver: NSObjectProtocol?
-    
+    private var keyboardHideObserver: NSObjectProtocol?
+
     private var expanded: Bool = false
     private var minTopPaddingWhenExpanded: CGFloat = 20.0
     private var expandedHeight: CGFloat? {
@@ -217,12 +218,7 @@ class MessageInputBar: UIView {
             messageTextView.invalidateIntrinsicContentSize()
         }
         
-        sendButton.isEnabled = false
-        
-        if !messageTextView.isFirstResponder {
-            showMicButtonUI()
-        }
-        
+        showMicButtonUI()
         delegate.tappedSendButton(withText: text)
     }
     
@@ -240,7 +236,7 @@ class MessageInputBar: UIView {
         }
         
         messageTextView.reset()
-        sendButton.isEnabled = false
+        showMicButtonUI()
         delegate.clearEditMessage()
     }
     
@@ -273,11 +269,13 @@ class MessageInputBar: UIView {
         guard let editMessage = editMessage else {
             editViewHeightConstraint.constant = 0
             sendButton.setImage(UIImage(named: "sendButton"), for: .normal)
+            sendButton.isEnabled = true
             return
         }
         editViewHeightConstraint.constant = 40
         editMessageLabel.text = editMessage.message.content
         sendButton.setImage(UIImage(named: "confirmEdit"), for: .normal)
+        sendButton.isEnabled = !editMessage.message.content.isEmpty
     }
     
     override var keyCommands: [UIKeyCommand]? {
@@ -301,18 +299,21 @@ class MessageInputBar: UIView {
     
     private func registerKeyboardNotifications() {
         keyboardShowObserver = keyboardShowNotification()
+        keyboardHideObserver = keyboardHideNotification()
     }
     
     private func removeKeyboardNotifications() {
-        remove(observer: keyboardShowObserver)
+        remove(observers: [keyboardShowObserver, keyboardHideObserver])
     }
     
-    private func remove(observer: NSObjectProtocol?) {
-        guard let observer = observer else {
-            return
+    private func remove(observers: [NSObjectProtocol?]) {
+        observers.forEach { observer in
+            guard let observer = observer else {
+                return
+            }
+            
+            NotificationCenter.default.removeObserver(observer)
         }
-        
-        NotificationCenter.default.removeObserver(observer)
     }
     
     private func expand() {
@@ -422,6 +423,23 @@ class MessageInputBar: UIView {
         }
     }
     
+    private func keyboardHideNotification() -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardDidHideNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let `self` = self else {
+                return
+            }
+            
+            if self.expanded {
+                self.expanded = false
+                self.collapse()
+            }
+        }
+    }
+    
     private func showMicButtonUI() {
         micButton.alpha = 0.0
         micButton.isHidden = false
@@ -479,6 +497,11 @@ class MessageInputBar: UIView {
     
     private func updateTextUI() {
         delegate?.typing(withText: messageTextView.text)
+        
+        guard editMessage == nil else {
+            sendButton.isEnabled = !messageTextView.text.isEmpty
+            return
+        }
         
         if messageTextView.text.isEmpty {
             showMicButtonUI()

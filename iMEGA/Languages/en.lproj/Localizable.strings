@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Currently using %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancel Your Account";
+"cancelYourAccount"="Delete Account";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -2549,18 +2549,18 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Third Party Cookies";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information’ below for details on all the third party Cookies we use.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on “More Information” below for details on all the third party Cookies we use.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="More Information";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="No Third Party Cookies in use";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
+"Version created as a new file successfully."="Version was created as a new file successfully.";
 /* Text shown for the action create new file */
 "Create new file"="Create new file";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="My Account";

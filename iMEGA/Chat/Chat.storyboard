@@ -449,6 +449,7 @@
                         <outlet property="archivedChatEmptyStateTitle" destination="dFA-7b-ajV" id="DVx-Wf-zhh"/>
                         <outlet property="contactsOnMegaEmptyStateTitle" destination="3ZN-5d-SgR" id="SfE-ku-j31"/>
                         <outlet property="contactsOnMegaEmptyStateView" destination="Trx-xU-y0T" id="dZo-8p-n1b"/>
+                        <outlet property="moreBarButtonItem" destination="8yY-z6-rqz" id="Vub-Sb-a48"/>
                         <outlet property="tableView" destination="OEw-WR-Lm7" id="4K9-2w-rBx"/>
                         <outlet property="topBannerButton" destination="Eno-hS-WFi" id="W7k-bf-WdL"/>
                         <outlet property="topBannerButtonTopConstraint" destination="AUh-SW-WxH" id="1j5-QL-wBl"/>

@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="현재 %s 사용중";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="계정 취소";
+"cancelYourAccount"="계정 삭제";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="이 계정과 연결된 모든 데이터를 잃게 됩니다. 진행하시겠습니까?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="당신은 로그아웃 되고 오프라인 파일은 10번의 실패 후에 삭제됩니다";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="암호 옵션";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4자리 숫자 코드";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6자리 숫자 코드";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="영숫자 코드";
 /* Menu item */
 "help"="도움말";
 /* Title of the section to access MEGA's help centre */
@@ -1205,7 +1205,7 @@
 "clearTheFullMessageHistory"="이 대화의 모든 메시지 기록을 삭제하시겠습니까?";
 /* Message show when the history of a chat has been successfully deleted. */
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
+"Error. The history of the chat has not been cleared successfully"="오류. 대화 기록이 성공적으로 삭제되지 않았습니다";
 "Chat History has Been Cleared"="대화 기록이 삭제되었습니다";
 /* 'Next' button in a dialog */
 "continue"="계속";
@@ -2415,61 +2415,61 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="이메일이 이미 발송되었습니다. 몇 분 기다린 후 다시 시도하세요.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="대화 기록 관리";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="기록 삭제";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="특정 시간보다 오래된 메시지는 자동으로 삭제합니다.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="1일 이상의 메시지는 자동으로 삭제합니다.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="1주 이상의 메시지는 자동으로 삭제합니다.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="1개월 이상의 메시지는 자동으로 삭제합니다.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="1%1 이상의 메시지는 자동으로 삭제합니다.";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="이 대화 내의 양쪽 모두의 메시지와 공유된 파일을 삭제합니다. 이 행동은 되돌릴 수 없습니다.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="다음보다 오래된 메시지 삭제";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="1일";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="1주";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="1개월";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="사용자 지정...";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]님이 메시지 삭제 시간을[/B][A] %2$s[/A][B]로 변경하였습니다.[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]님이 메시지 삭제를 해제하였습니다.[/B]";
 /*  */
 "hour"="시간";
 /*  */
 "hours"="시간";
 /*  */
-"day"="day";
+"day"="일";
 /*  */
-"1 day"="1 day";
+"1 day"="1일";
 /*  */
-"week"="week";
+"week"="주";
 /*  */
-"weeks"="weeks";
+"weeks"="주";
 /*  */
-"1 week"="1 week";
+"1 week"="1주";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1주";
 /*  */
-"month"="month";
+"month"="월";
 /*  */
-"1 month"="1 month";
+"1 month"="1개월";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1개월";
 /* */
-"1 year"="1 year";
+"1 year"="1년";
 /*  */
-"year"="year";
+"year"="년";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="공유";
 /* Search placeholder text in search bar on home screen*/
@@ -2549,18 +2549,18 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="제3자 쿠키";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="이것들은 우리가 아닌 다른 이들에 의해 통제되는 쿠키입니다; 우리는 위에 설명한 기능 유형들을 제공하기 위해 이 쿠키를 사용합니다. 이 쿠키를 허용하지 않는다면 각 제3자 쿠키가 어떤 것이냐에 따라 서로 다른 영향을 받게 됩니다. 우리가 사용하는 제3자 쿠키가 어떤 것인지 자세히 보려면 ‘자세한 정보’를 클릭하세요.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="이것들은 우리가 아닌 다른 이들에 의해 통제되는 쿠키입니다; 우리는 위에 설명한 기능 유형들을 제공하기 위해 이 쿠키를 사용합니다. 이 쿠키를 허용하지 않는다면 각 제3자 쿠키가 어떤 것인가에 따라 서로 다른 영향을 받게 됩니다. 우리가 사용하는 제3자 쿠키가 어떤 것인지 자세히 보려면 ‘자세한 정보’를 클릭하세요.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="자세한 정보";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="사용중인 제3자 쿠키 없음";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
+"Version created as a new file successfully."="기록으로 새 파일을 성공적으로 생성하였습니다.";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="새 파일 만들기";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="이 파일을 되돌릴 권한이 없습니다. 계속하려면 되돌린 데이터로 새 파일을 만들 수 있습니다. 계속하시겠습니까?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="내 계정";

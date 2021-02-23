@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancelar conta";
+"cancelYourAccount"="Excluir conta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Você perderá todos os dados associados a esta conta. Tem certeza de que deseja continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -1302,7 +1302,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cota de transferência insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="O download excede a cota de transferência disponível para o seu IP e, portanto, pode ser interrompido.";
+"depletedTransferQuota_message"="O download excede a cota de transferência disponível para a sua conta e, portanto, pode ser interrompido.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Veja os planos";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -2415,11 +2415,11 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="O email já foi enviado. Espere alguns minutos antes de tentar novamente.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Gerenciar o histórico do chat";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Gerenciar o histórico do chat";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Deletar automaticamente mensagens depois de um certo período de tempo.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
 "Automatically delete messages older than one day"="Automatically delete messages older than one day.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
@@ -2429,47 +2429,47 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Automatically delete messages older than %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Deletar todas as mensagens e arquivos compartilhados por ambas as partes nesta conversa. Esta ação é irreversível.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Clear Messages Older Than";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Um dia";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Week"="One Week";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Um mês";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
 "Custom..."="Custom…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] alterou o tempo de eliminação de mensagens para[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] desativou a eliminação de mensagens.[/B]";
 /*  */
 "hour"="hora";
 /*  */
 "hours"="horas";
 /*  */
-"day"="day";
+"day"="dia";
 /*  */
-"1 day"="1 day";
+"1 day"="1 dia";
 /*  */
-"week"="week";
+"week"="semana";
 /*  */
-"weeks"="weeks";
+"weeks"="semanas";
 /*  */
-"1 week"="1 week";
+"1 week"="1 semana";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
 "%1 weeks"="%1 weeks";
 /*  */
-"month"="month";
+"month"="mês";
 /*  */
-"1 month"="1 month";
+"1 month"="1 mês";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
+"%1 months"="%1 meses";
 /* */
-"1 year"="1 year";
+"1 year"="1 ano";
 /*  */
-"year"="year";
+"year"="ano";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="COMPARTILHAR";
 /* Search placeholder text in search bar on home screen*/
@@ -2555,12 +2555,12 @@
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="Não estão sendo usados cookies de terceiros";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version created as a new file successfully.";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
+"Version created as a new file successfully."="A versão foi criada como um novo arquivo.";
 /* Text shown for the action create new file */
-"Create new file"="Create new file";
+"Create new file"="Criar um novo arquivo";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Você não tem a permissão necessária para reverter este arquivo. Caso decida continuar, estará criando um novo arquivo com os dados revertidos. Você quer continuar?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="Minha conta";

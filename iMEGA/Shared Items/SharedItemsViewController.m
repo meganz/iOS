@@ -29,7 +29,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -105,11 +105,19 @@
     
     self.navigationItem.title = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
+    self.editBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
+    self.incomingButton.accessibilityLabel = NSLocalizedString(@"incoming", nil);
+    self.outgoingButton.accessibilityLabel = NSLocalizedString(@"outgoing", nil);
+    self.linksButton.accessibilityLabel = NSLocalizedString(@"Links", nil);
+    
     self.incomingLabel.text = NSLocalizedString(@"incoming", nil);
+    self.incomingLabel.isAccessibilityElement = NO;
     self.outgoingLabel.text = NSLocalizedString(@"outgoing", nil);
+    self.outgoingLabel.isAccessibilityElement = NO;
     self.linksLabel.text = NSLocalizedString(@"Links", nil);
+    self.linksLabel.isAccessibilityElement = NO;
     
     self.incomingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.incomingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
@@ -766,10 +774,9 @@
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.browserViewControllerDelegate = self;
         browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesMutableArray];
         [browserVC setBrowserAction:BrowserActionCopy];
-        
-        [self setEditing:NO animated:YES];
     }
 }
 
@@ -800,11 +807,10 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+        contactsVC.contatctsViewControllerDelegate = self;
         contactsVC.contactsMode = ContactsModeShareFoldersWith;
         [contactsVC setNodesArray:[_selectedNodesMutableArray copy]];
         [self presentViewController:navigationController animated:YES completion:nil];
-        
-        [self setEditing:NO animated:YES];
     }
 }
 
@@ -1478,5 +1484,12 @@
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
 }
+
+#pragma mark - BrowserViewControllerDelegate, ContactsViewControllerDelegate
+
+- (void)nodeEditCompleted:(BOOL)complete {
+    [self setEditing:!complete animated:NO];
+}
+
 
 @end
