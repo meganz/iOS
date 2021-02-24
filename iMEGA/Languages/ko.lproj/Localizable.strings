@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="이 대화의 모든 메시지 기록을 삭제하시겠습니까?";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="오류. 대화 기록이 성공적으로 삭제되지 않았습니다";
 "Chat History has Been Cleared"="대화 기록이 삭제되었습니다";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="오류가 발생하였습니다. 대화 기록이 삭제되지 않았습니다.";
 /* 'Next' button in a dialog */
 "continue"="계속";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="사진에 저장";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="사진에 저장중...";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="공유 준비중……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="내 계정";
+/* Text for title for favourite nodes */
+"Favourites"="즐겨찾기";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="즐겨찾기 없음";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="더 보기";

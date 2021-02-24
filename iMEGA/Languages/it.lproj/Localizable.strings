@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sei sicuro di voler cancellare tutta la chat?";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="La cronologia della chat è stata pulita";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="È stato riscontrato un errore. La cronologia della chat non è stata pulita con successo";
 /* 'Next' button in a dialog */
 "continue"="Continua";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="Salva nella Galleria";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Salvataggio nella Galleria...";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="Preparazione della condivisione……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Account";
+/* Text for title for favourite nodes */
+"Favourites"="Preferiti";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="Nessun preferito";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="VEDI DI PIÙ";

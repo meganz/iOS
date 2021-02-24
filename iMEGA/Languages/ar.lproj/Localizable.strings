@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="هل أنت متأكد أنك تريد مسح محفوظات الرسائل بالكامل لهذه المحادثة؟";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="تم محو سجل المحادثة";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="حدث خطأ. لم يتم مسح سجل المحادثة بنجاح";
 /* 'Next' button in a dialog */
 "continue"="استمرار";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="احفظ مع الصور";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="جاري الحفظ الى الصور...";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="جارٍ التحضير للمشاركة……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="برو لايت";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="حسابي";
+/* Text for title for favourite nodes */
+"Favourites"="مفضلات";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="لا يوجد مفضلات";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="عرض المزيد";

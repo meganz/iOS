@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sigur vrei să golești istoricul complet al mesajelor din această conversație?";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="Istoricul chatului a fost golit";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="S-a produs o eroare. Istoricul chatului nu a fost golit cu succes";
 /* 'Next' button in a dialog */
 "continue"="Continuă";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="Salvează în Poze";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Se salvează în Poze…";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="Se pregătește partajarea……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2421,7 +2423,7 @@
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
 "History Clearing"="History Clearing";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Șterge automat mesajele mai vechi de o anumită perioadă de timp.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
 "Automatically delete messages older than one day"="Automatically delete messages older than one day.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
@@ -2435,11 +2437,11 @@
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Clear Messages Older Than";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="O zi";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="O săptămână";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="O lună";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
 "Custom..."="Custom…";
 /* System message displayed to all chat participants when one of them enables retention history */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Contul meu";
+/* Text for title for favourite nodes */
+"Favourites"="Favourites";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="No Favourites";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="VIEW MORE";
