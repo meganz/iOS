@@ -60,14 +60,14 @@ abstract_target 'iMEGA' do
 
   end
   
-  target 'MEGAWidgetExtension' do
-    # Pods for MEGAWidgetExtension
-
-  end
-  
   target 'MEGAIntent' do
     # Pods for MEGAPickerFileProvider
 
   end
 
+  target 'MEGAWidgetExtension' do
+    pod 'YYCategories'
+    # Pods for MEGAWidgetExtension
+
+  end
 end

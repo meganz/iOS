@@ -215,11 +215,21 @@
     [homeRouting showAchievements];
 }
 
-- (void)showOffline {
+- (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle {
     self.selectedIndex = TabTypeHome;
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showOfflines];
+    if (base64handle) {
+        [homeRouting showOfflineFile:base64handle];
+    }
+}
+
+- (void)showRecents {
+    self.selectedIndex = TabTypeHome;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
+    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
+    [homeRouting showRecents];
 }
 
 - (void)showUploadFile {
