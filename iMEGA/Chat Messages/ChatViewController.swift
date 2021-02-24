@@ -526,12 +526,13 @@ class ChatViewController: MessagesViewController {
 
     func isPreviousMessageSentSameDay(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
-            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath) else {
+            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath),
+            let previousMessageDate = messages[safe: previousMessageIndexPath.section]?.sentDate else {
                 return false
         }
 
-        let previousMessageDate = messages[previousMessageIndexPath.section].sentDate
-        return messages[indexPath.section].sentDate.isSameDay(date: previousMessageDate)
+
+        return messages[safe: indexPath.section]?.sentDate.isSameDay(date: previousMessageDate) ?? false
     }
 
     /// This method ignores the milliseconds.
@@ -577,7 +578,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Private methods
     
     private func mostRecentChatMessage(withinIndexPath indexPath: IndexPath) -> IndexPath? {
-        if messages[indexPath.section] is ChatMessage {
+        if messages[safe: indexPath.section] is ChatMessage {
             return indexPath
         }
         
