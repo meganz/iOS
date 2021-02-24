@@ -248,8 +248,8 @@
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
-                                                                         withLogout:NO
-                                                                     andLogoutTitle:nil];
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -734,8 +734,8 @@
                 
                 if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
                     [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
-                                                                             withLogout:NO
-                                                                         andLogoutTitle:nil];
+                                                                             withLogout:YES
+                                                                         andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
                 }
             }
         }

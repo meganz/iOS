@@ -348,8 +348,8 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
                                                      withAnimation:YES
-                                                        withLogout:NO
-                                                    andLogoutTitle:nil];
+                                                        withLogout:YES
+                                                    andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     }
     [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
