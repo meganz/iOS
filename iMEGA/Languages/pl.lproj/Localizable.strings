@@ -1979,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Brak aktywności";
 /* Plural of items which contains a folder. 2 items */
-"items"="items";
+"%1$d items"="%1$d elementów";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Link do czatu niedostępny";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */

@@ -1979,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="近期沒有活動";
 /* Plural of items which contains a folder. 2 items */
-"items"="items";
+"%1$d items"="%1$d個項目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="聊天連結無法使用";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
