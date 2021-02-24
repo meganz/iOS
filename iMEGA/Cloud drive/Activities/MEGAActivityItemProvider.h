@@ -2,6 +2,6 @@
 
 @interface MEGAActivityItemProvider : UIActivityItemProvider
 
-- (instancetype)initWithPlaceholderString:(NSString*)placeholder node:(MEGANode *)node;
+- (instancetype)initWithPlaceholderString:(NSString *)placeholder node:(MEGANode *)node api:(MEGASdk *)api;
 
 @end

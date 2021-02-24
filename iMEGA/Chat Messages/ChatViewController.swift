@@ -4,6 +4,7 @@ import MessageKit
 class ChatViewController: MessagesViewController {
 
     // MARK: - Properties
+    let sdk = MEGASdkManager.sharedMEGASdk()
 
     @objc var chatRoom: MEGAChatRoom! {
         didSet {
@@ -29,8 +30,13 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatViewController.shareSelectedMessages))
+    let shareBarButtonItem = UIBarButtonItem(image: UIImage(named: "share")?.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.shareSelectedMessages))
     let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+    let copyBarButtonItem = UIBarButtonItem(image: UIImage(named: "copy")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
+    let offlineBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
+    let saveToPhotosButtonItem = UIBarButtonItem(image: UIImage(named: "saveToPhotos")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
+    let importButtonItem = UIBarButtonItem(image: UIImage(named: "import")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
+    
     let deleteBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(ChatViewController.deleteSelectedMessages))
     
     var sendTypingTimer: Timer?
