@@ -169,7 +169,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                                                                                      api: MEGASdkManager.sharedMEGASdk(),
                                                                                      displayMode: .chatAttachment,
                                                                                      presenting: nil,
-                                                                                     preferredIndex: UInt(idx!))
+                                                                                     preferredIndex: UInt(idx ?? 0))
                     photoBrowserVC?.delegate = self
                     present(viewController: photoBrowserVC!)
                 } else {

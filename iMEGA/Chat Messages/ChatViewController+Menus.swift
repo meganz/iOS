@@ -26,7 +26,7 @@ extension ChatViewController {
     
     func forwardMessage(_ message: ChatMessage) {
         selectedMessages.insert(message)
-        customToolbar(type: .forward)
+        customToolbar(type: .text)
         setEditing(true, animated: true)
         
         guard let index = messages.firstIndex(where: { chatMessage -> Bool in
@@ -97,37 +97,44 @@ extension ChatViewController {
         MEGASdkManager.sharedMEGAChatSdk()?.removeRichLink(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
     }
     
-    func downloadMessage(_ message: ChatMessage) {
-        let megaMessage =  message.message
+    func downloadMessage(_ messages: [ChatMessage]) {
         var downloading = false
         
-        for index in 0...megaMessage.nodeList.size.intValue - 1 {
-            var node = megaMessage.nodeList.node(at: index)
-            if chatRoom.isPreview {
-                node = MEGASdkManager.sharedMEGASdk().authorizeNode(node!) ?? nil
-            }
+        for message in messages {
+            let megaMessage =  message.message
             
-            if node != nil {
-                Helper.downloadNode(node!, folderPath: Helper.relativePathForOffline(), isFolderLink: false)
-                downloading = true
+            for index in 0..<megaMessage.nodeList.size.intValue {
+                var node: MEGANode?
+                if chatRoom.isPreview {
+                    node = sdk.authorizeNode(megaMessage.nodeList.node(at: index))
+                }
+                
+                if let node = node {
+                    Helper.downloadNode(node, folderPath: Helper.relativePathForOffline(), isFolderLink: false)
+                    downloading = true
+                }
             }
         }
+        
         if downloading {
             SVProgressHUD.show(UIImage(named: "hudDownload")!, status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts"))
         }
     }
     
-    func importMessage(_ message: ChatMessage) {
-        let megaMessage = message.message
+    func importMessage(_ messages: [ChatMessage]) {
 
         var nodes = [MEGANode]()
-        for index in 0...megaMessage.nodeList.size.intValue - 1 {
-            var node = megaMessage.nodeList.node(at: index)
-            if chatRoom.isPreview {
-                node = MEGASdkManager.sharedMEGASdk().authorizeNode(node!) ?? nil
-            }
-            if node != nil {
-                nodes.append(node!)
+        
+        for message in messages {
+            let megaMessage = message.message
+            for index in 0..<megaMessage.nodeList.size.intValue {
+                var node: MEGANode?
+                if chatRoom.isPreview {
+                    node = sdk.authorizeNode(megaMessage.nodeList.node(at: index))
+                }
+                if let node = node {
+                    nodes.append(node)
+                }
             }
         }
         
@@ -146,25 +153,28 @@ extension ChatViewController {
 
         let usersCount = megaMessage.usersCount
         let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate(numberOfRequests: usersCount)
-        for index in 0...usersCount - 1 {
-            let email = megaMessage.userEmail(at: index)
-            MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email!, message: "", action: .add, delegate: inviteContactRequestDelegate)
+        for index in 0..<usersCount {
+            if let email = megaMessage.userEmail(at: index) {
+                sdk.inviteContact(withEmail: email, message: "", action: .add, delegate: inviteContactRequestDelegate)
+            }
         }
         
     }
     
-    func saveToPhotos(_ chatMessage: ChatMessage) {
-        if chatMessage.message.nodeList.size.uintValue == 1,
-            var node = chatMessage.message.nodeList.node(at: 0),
-            (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            if chatRoom.isPreview,
-                let authorizedNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
-                node = authorizedNode
+    func saveToPhotos(_ messages: [ChatMessage]) {
+        for chatMessage in messages {
+            if chatMessage.message.nodeList.size.uintValue == 1,
+               var node = chatMessage.message.nodeList.node(at: 0),
+               (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                if chatRoom.isPreview,
+                   let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
+                    node = authorizedNode
+                }
+                
+                node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdkFolder())
+            } else {
+                MEGALogDebug("Wrong Message type to be saved to album")
             }
-            
-            node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdkFolder())
-        } else {
-            MEGALogDebug("Wrong Message type to be saved to album")
         }
     }
     

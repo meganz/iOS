@@ -1760,8 +1760,12 @@
 "Save to Photos"="Save to Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Saving to Photos…";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="Preparing to share……";
+/* Label for the status of a transfer when is being Downloading - (String as short as possible. */
+"Downloading %@"="Downloading %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */

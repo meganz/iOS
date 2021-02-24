@@ -44,6 +44,7 @@ abstract_target 'iMEGA' do
   target 'MEGAPicker' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAPicker
+    pod 'YYCategories'
 
   end
 
@@ -55,6 +56,7 @@ abstract_target 'iMEGA' do
   target 'MEGAShare' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAShare
+    pod 'YYCategories'
 
   end
   

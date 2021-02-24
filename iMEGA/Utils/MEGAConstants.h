@@ -103,6 +103,7 @@ extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
 extern NSString * const MEGAExplorerViewModePreference;
+extern NSString * const MEGAUIActivityTypeImportToCloudDrive;
 
 #pragma mark - Background Task completion.
 
