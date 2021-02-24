@@ -1158,8 +1158,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
                 
             case DisplayModeRecents: {
-                NSString *itemsString =  NSLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
-                navigationTitle = [NSString stringWithFormat:@"%td %@", self.nodes.size.integerValue, itemsString];
+                navigationTitle = [NSString stringWithFormat:NSLocalizedString(@"%1$d items", @"Plural of items which contains a folder. 2 items"), self.nodes.size.intValue];
                 break;
             }
                 
