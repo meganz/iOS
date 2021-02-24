@@ -30,6 +30,7 @@
 			<array/>
 			<key>IntentsSupported</key>
 			<array>
+				<string>SelectSectionIntent</string>
 				<string>SelectShortcutIntent</string>
 			</array>
 		</dict>

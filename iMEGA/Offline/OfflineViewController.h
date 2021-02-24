@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MEGAQLPreviewController;
+@class MEGAQLPreviewController, MOOfflineNode;
 
 typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
     AccountScreen = 0,
@@ -32,5 +32,6 @@ typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
 - (void)showInfoFilePath:(NSString *)itemPath at:(NSIndexPath *)indexPath from:(UIButton *)sender;
 - (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(void (^ _Nullable)(void))cancelAction;
 - (void)setEditMode:(BOOL)editMode;
+- (void)openFileFromWidgetWith:(NSString * _Nonnull)path;
 
 @end

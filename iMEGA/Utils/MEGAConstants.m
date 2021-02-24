@@ -151,3 +151,9 @@ const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;
 
 const NSInteger MEGAMaxReactionsPerMessagePerUser = 24;
 const NSInteger MEGAMaxReactionsPerMessage = 50;
+
+#pragma mark - Widget Extension
+
+NSString * const MEGAShortcutsWidget = @"MEGAShortcutsWidget";
+NSString * const MEGAQuickAccessWidget = @"MEGAQuickAccessWidget";
+const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;

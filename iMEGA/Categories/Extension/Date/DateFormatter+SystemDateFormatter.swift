@@ -63,6 +63,18 @@ extension DateFormatter {
                             timeZone: timeZone,
                             locale: locale)
     }
+    
+    /// `15:32`
+    @objc static func timeShort(calendar: Calendar? = nil,
+                               timeZone: TimeZone? = nil,
+                               locale: Locale? = nil) -> DateFormatting {
+        systemDateFormatter(dateStyle: .none,
+                            timeStyle: .short,
+                            isRelative: false,
+                            calendar: calendar,
+                            timeZone: timeZone,
+                            locale: locale)
+    }
 }
 
 // MARK: - Privates

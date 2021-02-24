@@ -775,6 +775,21 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
+- (void)openFileFromWidgetWith:(NSString *)path {
+    MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:path]];
+    for (int i = 0; i < self.offlineSortedItems.count; i++){
+        NSDictionary *dictionary = self.offlineSortedItems[i];
+        NSURL *url = [dictionary valueForKey:kPath];
+       
+        if ([url.path isEqualToString:[NSString stringWithFormat:@"%@%@", [Helper pathForOffline], offlineNode.localPath]]) {
+            [self itemTapped:offlineNode.localPath.lastPathComponent atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            return;
+        }
+    }
+    
+    MEGALogError(@"Offline file opened from QuickAccessWidget not found");
+}
+
 - (void)itemTapped:(NSString *)name atIndexPath:(NSIndexPath *)indexPath {
     self.previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:name];
     
@@ -928,17 +943,21 @@ static NSString *kisDirectory = @"kisDirectory";
             [MEGAStore.shareInstance deleteOfflineAppearancePreferenceWithPath:relativePath];
             
             for (NSString *localPathAux in offlinePathsOnFolderArray) {
-                offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
+                MOOfflineNode *childOfflineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
                 if (offlineNode) {
-                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                    [[MEGAStore shareInstance] removeOfflineNode:childOfflineNode];
                 }
             }
-        } else {
-            if (offlineNode) {
-                [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-            }
         }
+        
+        if (offlineNode) {
+            [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+        }
+        
         [self reloadUI];
+        if (@available(iOS 14.0, *)) {
+            [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAQuickAccessWidget];
+        }
         return YES;
     }
 }

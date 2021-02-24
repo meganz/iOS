@@ -101,6 +101,7 @@
     [offlineNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
     [offlineNode setLocalPath:path];
     [offlineNode setFingerprint:node.fingerprint];
+    [offlineNode setDownloadedDate:[NSDate date]];
 
     MEGALogDebug(@"Save context: insert offline node: %@", offlineNode);
     
@@ -145,6 +146,21 @@
 
 }
 
+- (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+
+    [request setPredicate: [NSPredicate predicateWithFormat:@"base64Handle == %@", base64Handle]];
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+
+}
+
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
     [self.managedObjectContext deleteObject:offlineNode];
     MEGALogDebug(@"Save context - remove offline node: %@", offlineNode);
@@ -165,6 +181,26 @@
     }
     
     [self saveContext];
+}
+
+- (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"downloadedDate" ascending:NO]];
+    if (fetchLimit) {
+        request.fetchLimit = fetchLimit.intValue;
+    }
+    
+    if (inRootFolder) {
+        [request setPredicate: [NSPredicate predicateWithFormat:@"NOT (localPath CONTAINS %@)", @"/"]];
+    }
+
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+
+    return array;
 }
 
 #pragma mark - MOUser entity

@@ -105,6 +105,8 @@
 
 @property (nonatomic) NSNumber *openChatLater;
 
+@property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager;
+
 @end
 
 @implementation AppDelegate
@@ -298,6 +300,8 @@
         [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
+    
+    self.quickAccessWidgetManager = [QuickAccessWidgetManager.alloc init];
     
     return YES;
 }
@@ -694,7 +698,7 @@
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
-        [self.mainTBC showOffline];
+        [self.mainTBC showOfflineAndPresentFileWithHandle:nil];
     } else {
         quickActionManaged = NO;
     }
@@ -1396,6 +1400,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (!nodeList) {
         [Helper startPendingUploadTransferIfNeeded];
     }
+    
+    if (@available(iOS 14.0, *)) {
+        [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
+    }
 }
 
 - (void)onAccountUpdate:(MEGASdk *)api {
@@ -1669,15 +1677,23 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
             }
 
+            if (@available(iOS 14.0, *)) {
+                [self.quickAccessWidgetManager createWidgetItemData];
+            }
+            
             break;
         }
             
-        case MEGARequestTypeLogout: {
+        case MEGARequestTypeLogout: {            
             if (request.flag) { // if logout (not if localLogout)
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];
                 
                 [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                
+                if (@available(iOS 14.0, *)) {
+                    [QuickAccessWidgetManager reloadAllWidgetsContent];
+                }
             }
             break;
         }
@@ -1967,6 +1983,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+                if (@available(iOS 14.0, *)) {
+                    [QuickAccessWidgetManager reloadAllWidgetsContent];
+                }
             }
         }
         

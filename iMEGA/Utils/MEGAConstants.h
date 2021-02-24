@@ -155,3 +155,9 @@ extern const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent;
 
 extern const NSInteger MEGAMaxReactionsPerMessagePerUser;
 extern const NSInteger MEGAMaxReactionsPerMessage;
+
+#pragma mark - Widget Extension
+
+extern NSString * const MEGAShortcutsWidget;
+extern NSString * const MEGAQuickAccessWidget;
+extern const NSInteger MEGAQuickAccessWidgetMaxDisplayItems;

@@ -8,5 +8,6 @@
 @property (nonatomic, retain) NSString * localPath;
 @property (nonatomic, retain) NSString * parentBase64Handle;
 @property (nonatomic, retain) NSString * fingerprint;
+@property (nonatomic, retain) NSDate * downloadedDate;
 
 @end
