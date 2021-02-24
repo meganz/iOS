@@ -19,6 +19,7 @@ pipeline {
          steps {
             injectEnvironments({
               sh "git submodule foreach --recursive git clean -xfd"
+              sh "git submodule sync --recursive"
               sh "git submodule update --init --recursive"
             })
         }
