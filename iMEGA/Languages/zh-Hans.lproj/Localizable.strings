@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地数据";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="尝试10次失败后，您的帐户将被登出，您的离线文件将被删除。";
 /* Button text to change the passcode type. */
 "Passcode Options"="密码选项";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您确定要清除此对话的全部历史记录吗？";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="错误。聊天记录尚未清除成功";
 "Chat History has Been Cleared"="聊天记录已清除";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="错误，聊天记录未成功清除";
 /* 'Next' button in a dialog */
 "continue"="继续";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="保存至照片";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="正在保存至照片……";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="正在准备分享…";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2423,29 +2425,29 @@
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="自动删除超过一定时间的聊天记录。";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="自动删除超过一天的聊天记录。";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="自动删除超过一周的聊天记录。";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="自动删除超过一个月的聊天记录。";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="自动删除超过%1的聊天记录";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="删除双方对话中的所有消息和文件。此操作无法撤回。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="您想要清除多久前的聊天记录";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="一天";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="一周";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="一个月";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="自定义…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]将消息清除时间更改为[/B][A] %2$s[/A][B]。[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]已禁用消息清除。[/B]";
 /*  */
 "hour"="小时";
 /*  */
@@ -2459,9 +2461,9 @@
 /*  */
 "weeks"="周";
 /*  */
-"1 week"="1 week";
+"1 week"="1周";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1周";
 /*  */
 "month"="月";
 /*  */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro精简版";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的账号";
+/* Text for title for favourite nodes */
+"Favourites"="收藏夹";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="无收藏";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="查看更多";

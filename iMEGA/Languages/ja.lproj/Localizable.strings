@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="この会話の完全なメッセージ履歴をクリアしてもよろしいですか？　";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="エラー。チャットの履歴が正常にクリアされていません";
 "Chat History has Been Cleared"="チャット履歴がクリアされました";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="エラーが発生しました。チャット履歴が正常にクリアされませんでした";
 /* 'Next' button in a dialog */
 "continue"="続ける";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="写真に保存";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="写真に保存中…";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="共有の準備をしています……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="アカウント設定";
+/* Text for title for favourite nodes */
+"Favourites"="お気に入り";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="お気に入りがありません";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="もっと表示";

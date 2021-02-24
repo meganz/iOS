@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
 /* Message show when the history of a chat has been successfully deleted. */
+"Chat History has Been Cleared"="Chat history has been cleared";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history has not been successfully cleared";
-"Chat History has Been Cleared"="Chat history has been cleared";
 /* 'Next' button in a dialog */
 "continue"="Continue";
 /* Title of the incoming shared folders of a user. */

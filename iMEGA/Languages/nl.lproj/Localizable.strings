@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Fout. De geschiedenis van de chat is niet succesvol gewist";
 "Chat History has Been Cleared"="Chatgeschiedenis is gewist";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="Een fout heeft opgetreden. De chat geschiedenis is niet succesvol gewist";
 /* 'Next' button in a dialog */
 "continue"="Vervolgen";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="Opslaan naar Foto's";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Opslaan naar Foto's";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="Voorbereiden om te delen ……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mijn Account";
+/* Text for title for favourite nodes */
+"Favourites"="Favorieten";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="Geen Favorieten";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="MEER WEERGEVEN";

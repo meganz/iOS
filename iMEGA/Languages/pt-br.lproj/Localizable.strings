@@ -882,7 +882,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Depois de 10 tentativas incorretas, você será deslogado e os arquivos salvos em Offline serão deletados.";
 /* Button text to change the passcode type. */
 "Passcode Options"="Opções de código de acesso";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens deste chat?";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Error. The history of the chat has not been cleared successfully";
 "Chat History has Been Cleared"="O histórico do chat foi deletado.";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="Não foi possível deletar o histórico do chat";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="Salvar no Fotos";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Salvando no Fotos…";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="Preparando para compartilhar...";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2423,25 +2425,25 @@
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="Deletar automaticamente mensagens depois de um certo período de tempo.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Excluir automaticamente mensagens com mais de um dia.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Excluir automaticamente mensagens com mais de uma semana.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Excluir automaticamente mensagens com mais de um mês.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Excluir automaticamente mensagens com mais de %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Deletar todas as mensagens e arquivos compartilhados por ambas as partes nesta conversa. Esta ação é irreversível.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Excluir automaticamente mensagens com mais de";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Day"="Um dia";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Uma semana";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="Um mês";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Personalizar…";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] alterou o tempo de eliminação de mensagens para[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2461,7 +2463,7 @@
 /*  */
 "1 week"="1 semana";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 semanas";
 /*  */
 "month"="mês";
 /*  */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Minha conta";
+/* Text for title for favourite nodes */
+"Favourites"="Favoritos";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="Não há itens marcados como favoritos";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="VER MAIS";

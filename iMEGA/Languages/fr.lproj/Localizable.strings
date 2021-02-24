@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Voulez-vous vraiment effacer tout l’historique de cette conversation ?";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="Erreur. L’historique de la conversation n’a pas été effacé avec succès";
 "Chat History has Been Cleared"="L’historique de la conversation a été effacé";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="Une erreur est survenue. L’historique de la conversation n’a pas été effacé avec succès";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
 /* Title of the incoming shared folders of a user. */
@@ -1760,6 +1760,8 @@
 "Save to Photos"="Enregistrer dans Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Enregistrement dans Photos…";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="Préparation au partage…";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -2566,3 +2568,9 @@
 "Pro Lite"="Pro léger";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mon compte";
+/* Text for title for favourite nodes */
+"Favourites"="Favoris";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="Il n’y a aucun favori";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="AFFICHER DAVANTAGE";
