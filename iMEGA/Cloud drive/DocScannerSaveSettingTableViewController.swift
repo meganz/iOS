@@ -364,7 +364,7 @@ extension DocScannerSaveSettingTableViewController {
             docs?.enumerated().forEach {
                 if let resizedImage = shrinkedImage(image: $0.element),
                    let data = resizedImage.jpegData(compressionQuality: 1) {
-                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset).jpg" : "\(self.fileName).jpg"
+                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
