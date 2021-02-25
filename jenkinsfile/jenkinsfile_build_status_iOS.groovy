@@ -14,6 +14,9 @@ pipeline {
    options {
         timeout(time: 1, unit: 'HOURS') 
    }
+    environment {
+        APP_STORE_CONNECT_API_KEY = credentials('AuthKey_J62DXF966A.p8')
+    }
    stages {
       stage('Submodule update') {
          steps {
