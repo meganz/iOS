@@ -2,8 +2,8 @@
 extension MEGAStore {
     
     func deleteQuickAccessRecentItems(with context: NSManagedObjectContext, completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
-        
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: QuickAccessWidgetRecentItem.fetchRequest())
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetRecentItem")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 
         do {
             try context.execute(deleteRequest)
@@ -29,7 +29,8 @@ extension MEGAStore {
     
     func fetchAllQuickAccessRecentItem(context: NSManagedObjectContext) -> [QuickAccessWidgetRecentItem]? {
         do {
-            return try context.fetch(QuickAccessWidgetRecentItem.fetchRequest())
+            let fetchRequest: NSFetchRequest<QuickAccessWidgetRecentItem> = QuickAccessWidgetRecentItem.fetchRequest()
+            return try context.fetch(fetchRequest)
         } catch let error as NSError {
             MEGALogError("Could not fetch [QuickAccessWidgetRecentItem] object for path \(error.localizedDescription)")
             return nil
@@ -66,7 +67,8 @@ extension MEGAStore {
     
     func fetchAllQuickAccessFavouriteItems(context: NSManagedObjectContext) -> [QuickAccessWidgetFavouriteItem]? {
         do {
-            return try context.fetch(QuickAccessWidgetFavouriteItem.fetchRequest())
+            let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
+            return try context.fetch(fetchRequest)
         } catch let error as NSError {
             MEGALogError("Could not fetch [QuickAccessWidgetFavouriteItem] object for path \(error.localizedDescription)")
             return nil
@@ -91,8 +93,8 @@ extension MEGAStore {
     }
     
     func deleteQuickAccessFavouriteItems(with context: NSManagedObjectContext, completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
-        
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: QuickAccessWidgetFavouriteItem.fetchRequest())
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetFavouriteItem")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 
         do {
             try context.execute(deleteRequest)

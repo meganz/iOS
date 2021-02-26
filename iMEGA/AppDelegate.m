@@ -105,7 +105,7 @@
 
 @property (nonatomic) NSNumber *openChatLater;
 
-@property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager;
+@property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
 
 @end
 
@@ -301,7 +301,9 @@
         [center removeAllDeliveredNotifications];
     }
     
-    self.quickAccessWidgetManager = [QuickAccessWidgetManager.alloc init];
+    if (@available(iOS 14.0, *)) {
+        self.quickAccessWidgetManager = [QuickAccessWidgetManager.alloc init];
+    }
     
     return YES;
 }
