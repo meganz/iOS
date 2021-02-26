@@ -121,12 +121,12 @@ struct MediumShortcutsWidgetView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HStack(alignment: .top, spacing: 8) {
-                    if let firstShortcut = shortcuts[0], let url = URL(string: firstShortcut.link) {
+                    if let firstShortcut = shortcuts[safe: 0], let url = URL(string: firstShortcut.link) {
                         Link(destination: url, label: {
                             ShortcutView(shortcut: firstShortcut)
                         })
                     }
-                    if let secondShortcut = shortcuts[1], let url = URL(string: secondShortcut.link) {
+                    if let secondShortcut = shortcuts[safe: 1], let url = URL(string: secondShortcut.link) {
                         Link(destination: url, label: {
                             ShortcutView(shortcut: secondShortcut)
                         })
@@ -136,12 +136,12 @@ struct MediumShortcutsWidgetView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height/2)
 
                 HStack(alignment: .top, spacing: 8) {
-                    if let thirdShortcut = shortcuts[2], let url = URL(string: thirdShortcut.link) {
+                    if let thirdShortcut = shortcuts[safe: 2], let url = URL(string: thirdShortcut.link) {
                         Link(destination: url, label: {
                             ShortcutView(shortcut: thirdShortcut)
                         })
                     }
-                    if let fourthShortcut = shortcuts[3], let url = URL(string: fourthShortcut.link) {
+                    if let fourthShortcut = shortcuts[safe: 3], let url = URL(string: fourthShortcut.link) {
                         Link(destination: url, label: {
                             ShortcutView(shortcut: fourthShortcut)
                         })
