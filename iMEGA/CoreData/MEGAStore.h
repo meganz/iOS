@@ -27,7 +27,7 @@
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
 - (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
 - (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle;
-- (void)removeOfflineNode:(MOOfflineNode *)offlineNode;
+- (void)removeOfflineNode:(nonnull MOOfflineNode *)offlineNode;
 - (void)removeAllOfflineNodes;
 - (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder;
 

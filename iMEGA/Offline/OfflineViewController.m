@@ -944,7 +944,7 @@ static NSString *kisDirectory = @"kisDirectory";
             
             for (NSString *localPathAux in offlinePathsOnFolderArray) {
                 MOOfflineNode *childOfflineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
-                if (offlineNode) {
+                if (childOfflineNode) {
                     [[MEGAStore shareInstance] removeOfflineNode:childOfflineNode];
                 }
             }
