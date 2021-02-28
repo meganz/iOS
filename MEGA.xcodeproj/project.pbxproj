@@ -11418,7 +11418,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -11529,7 +11529,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGANotifications";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGANotifications";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -11637,7 +11637,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAWidget";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAWidget";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -11713,7 +11713,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAIntent";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAIntent";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -11794,7 +11794,7 @@
 				MARKETING_VERSION = 5.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPickerFileProvider";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
 			};
@@ -11900,7 +11900,7 @@
 				MARKETING_VERSION = 5.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPicker";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPicker/Supporting Files/MEGAPicker-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
@@ -12009,7 +12009,7 @@
 				MARKETING_VERSION = 5.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAShare";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAShare";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
