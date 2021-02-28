@@ -58,23 +58,23 @@ platform :ios do
     push_to_git_remote
   end
 
-  desc "Build App using development certificate for Appcenter"
-  lane :build_using_development do |options|
+  desc "Build App using adhoc certificate for Appcenter"
+  lane :build_using_adhoc do |options|
 
     increment_build_number(
       build_number: Time.new.strftime("%y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
       xcodeproj: PROJECT
     )
 
-    match_configuration(type: "development")
+    match_configuration(type: "adhoc")
 
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
-      export_method: "development",
+      export_method: "ad-hoc",
       output_directory: BUILD_DIR,
       export_options: {
-        iCloudContainerEnvironment: "Development"
+        iCloudContainerEnvironment: "Production"
       }
     )
   end
@@ -191,6 +191,7 @@ platform :ios do
 
   lane :sync_all_code_signing do
     match_configuration(type: "development")
+    match_configuration(type: "adhoc")    
     match_configuration(type: "appstore")
   end
 
