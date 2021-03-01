@@ -1345,8 +1345,6 @@
 "connecting"="Connecting…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Please try uploading these files from within the MEGA app.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Shared successfully";
 /* Notification message shown when a transfer failed. Keep colon. */

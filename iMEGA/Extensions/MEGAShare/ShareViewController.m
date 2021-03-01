@@ -92,7 +92,10 @@
                 break;
         }
     }];
-    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
+    
+    @autoreleasepool {
+        [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
+    }
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
@@ -241,15 +244,6 @@
     [super didReceiveMemoryWarning];
     
     MEGALogError(@"Share extension received memory warning");
-    if (!self.presentedViewController) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:NSLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
-            }];
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -873,14 +867,18 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [api fetchNodesWithDelegate:self];
+            @autoreleasepool {
+                [api fetchNodesWithDelegate:self];
+            }
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
-            [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            @autoreleasepool {
+                [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            }
             [self presentFilesDestinationViewController];
             break;
         }
