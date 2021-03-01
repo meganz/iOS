@@ -67,7 +67,7 @@ static NSString *kPath = @"kPath";
     
     [self.offline setViewEditing:editing];
     
-    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+    [self.collectionView reloadData];
 }
 
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath {
