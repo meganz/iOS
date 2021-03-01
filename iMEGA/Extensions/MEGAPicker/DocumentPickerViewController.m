@@ -208,7 +208,7 @@
 
 - (NSString *)appGroupContainerURL {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAFileExtensionStorageFolder] path];
+    NSString *storagePath = self.documentStorageURL.path;
     if (![fileManager fileExistsAtPath:storagePath]) {
         [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -330,6 +330,10 @@
         }
     }
     return newestDate;
+}
+
+- (NSURL *)documentStorageURL {
+    return [NSFileProviderManager.defaultManager documentStorageURL];
 }
 
 #pragma mark - BrowserViewControllerDelegate
