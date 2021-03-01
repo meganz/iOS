@@ -1193,11 +1193,16 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)localLogoutSDKandChat {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     [MEGASdkManager.sharedMEGASdk localLogoutWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-        [MEGASdkManager.sharedMEGAChatSdk localLogoutWithDelegate:[MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        if (MEGASdkManager.sharedMEGAChatSdk) {
+            [MEGASdkManager.sharedMEGAChatSdk localLogoutWithDelegate:[MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                dispatch_semaphore_signal(semaphore);
+            }]];
+        } else {
             dispatch_semaphore_signal(semaphore);
-        }]];
+        }
     }]];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));
+    dispatch_semaphore_wait(semaphore, timeout);
     [MEGASdkManager destroySharedMEGAChatSdk];
 }
 
