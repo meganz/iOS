@@ -565,10 +565,14 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineItems = [NSMutableArray arrayWithArray:sortedArray];
 }
 
-- (MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
+- (nullable MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
     NSMutableArray *items = self.viewModePreference == ViewModePreferenceThumbnail ? self.offlineSortedFileItems : self.offlineSortedItems;
-    NSInteger selectedIndexFile = [[[items objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+    NSDictionary *item = [items objectOrNilAtIndex:indexPath.row];
+    if (item == nil) {
+        return nil;
+    }
+    NSInteger selectedIndexFile = [[item objectForKey:kIndex] integerValue];
     previewController.currentPreviewItemIndex = selectedIndexFile;
     
     [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -816,6 +820,9 @@ static NSString *kisDirectory = @"kisDirectory";
             [self presentViewController:megaAVViewController animated:YES completion:nil];
         } else {
             MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+            if (previewController == nil) {
+                return;
+            }
             [self presentViewController:previewController animated:YES completion:nil];
         }
         
@@ -855,6 +862,9 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+        if (previewController == nil) {
+            return;
+        }
         [self presentViewController:previewController animated:YES completion:nil];
     }
 }
