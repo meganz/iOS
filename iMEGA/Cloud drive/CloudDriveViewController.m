@@ -371,7 +371,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (node == nil) {
         return nil;
     }
@@ -606,7 +606,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+                MEGANode *nodePressed = [self nodeAtIndexPath:indexPath];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditMode:NO];
                 }
@@ -796,12 +796,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
     MEGANode *node;
-    if (isInSearch) {
-        if (self.searchNodesArray.count > indexPath.row) {
-            node = self.searchNodesArray[indexPath.row];
-        }
+    if (self.viewModePreference == ViewModePreferenceList) {
+        node = isInSearch ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     } else {
-        node = [self.nodes nodeAtIndex:indexPath.row];
+        node = [self.cdCollectionView thumbnailNodeAtIndexPath:indexPath];
     }
     
     return node;
