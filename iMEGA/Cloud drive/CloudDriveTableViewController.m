@@ -247,7 +247,7 @@
     if (indexPath.row > self.cloudDrive.nodes.size.integerValue) {
         return;
     }
-    MEGANode *node = [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
         
