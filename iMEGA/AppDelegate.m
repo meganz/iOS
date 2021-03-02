@@ -1333,7 +1333,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - MEGAGlobalDelegate
 
-- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+- (void)onUsersUpdate:(MEGASdk *)sdk userList:(MEGAUserList *)userList {
     NSInteger userListCount = userList.size.integerValue;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
@@ -1349,19 +1349,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             
             if (user.isOwnChange == 0) { //If the change is external
-                if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle) {
-                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
-                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
-                    }
+                if (user.handle == sdk.myUser.handle) {
+                    [user resetAvatarIfNeededInSdk:sdk];
                     
                     if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+                        [sdk getUserAttributeType:MEGAUserAttributeFirstname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                        [sdk getUserAttributeType:MEGAUserAttributeLastname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeUserAlias]) {
                         [self fetchContactsNickname];
@@ -1371,36 +1366,34 @@ void uncaughtExceptionHandler(NSException *exception) {
                         MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                             [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
                         }];
-                        [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+                        [sdk isRichPreviewsEnabledWithDelegate:delegate];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeCameraUploadsFolder]) {
                         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTargetFolderChangedInRemoteNotification object:nil];
                     }
                 } else {
-                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
-                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
-                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
-                    }
+                    [user resetAvatarIfNeededInSdk:sdk];
+                    
                     if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                        [sdk getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+                        [sdk getUserAttributeForUser:user type:MEGAUserAttributeLastname];
                     }
                 }
             }
             
         } else if (user.visibility == MEGAUserVisibilityVisible) {
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+            [sdk getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+            [sdk getUserAttributeForUser:user type:MEGAUserAttributeLastname];
         }
         
         if (user.visibility == MEGAUserVisibilityHidden) {
             [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
         }
     }
+    
+    [self checkCookieSettingsUpdateIn:userList];
 }
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {

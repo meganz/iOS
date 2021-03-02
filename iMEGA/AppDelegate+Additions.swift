@@ -177,10 +177,10 @@ extension AppDelegate {
     }
 }
 
-// MARK: - MEGAGlobalDelegate
+// MARK: - Config Cookie Settings
 
-extension AppDelegate: MEGAGlobalDelegate {
-    public func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
+extension AppDelegate {
+    @objc func checkCookieSettingsUpdate(in userList: MEGAUserList) {
         guard let size = userList.size?.intValue else {
             return
         }
