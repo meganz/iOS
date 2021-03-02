@@ -397,7 +397,6 @@
 		5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AD472252C3771006986AF /* TableViewEmptyStateConfiguration.swift */; };
 		5D3CD8A42531829B00E3B459 /* MEGAAppGroupFilePathUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3CD8A32531829B00E3B459 /* MEGAAppGroupFilePathUseCaseProtocol.swift */; };
 		5D3CD8A625318FB600E3B459 /* NodeThumbnailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3CD8A525318FB600E3B459 /* NodeThumbnailUseCase.swift */; };
-		5D4244B62511FB5F00EE544D /* SDKNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4244B52511FB5F00EE544D /* SDKNode.swift */; };
 		5D4244D22512005500EE544D /* NodeSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4244D12512005500EE544D /* NodeSearchRepository.swift */; };
 		5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4244DE251305BD00EE544D /* SearchResultFileTableViewCell.swift */; };
 		5D4244E1251305BD00EE544D /* SearchResultFileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4244DF251305BD00EE544D /* SearchResultFileTableViewCell.xib */; };
@@ -1125,6 +1124,7 @@
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
+		A80B66E125E7F72000486EC5 /* NodeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80B66E025E7F72000486EC5 /* NodeEntity.swift */; };
 		A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2B22EAFB1700B24E76 /* SearchOperation.m */; };
 		A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
 		A811DCB92476C472002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
@@ -2360,7 +2360,6 @@
 		5D3AD472252C3771006986AF /* TableViewEmptyStateConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewEmptyStateConfiguration.swift; sourceTree = "<group>"; };
 		5D3CD8A32531829B00E3B459 /* MEGAAppGroupFilePathUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAppGroupFilePathUseCaseProtocol.swift; sourceTree = "<group>"; };
 		5D3CD8A525318FB600E3B459 /* NodeThumbnailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeThumbnailUseCase.swift; sourceTree = "<group>"; };
-		5D4244B52511FB5F00EE544D /* SDKNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNode.swift; sourceTree = "<group>"; };
 		5D4244D12512005500EE544D /* NodeSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSearchRepository.swift; sourceTree = "<group>"; };
 		5D4244DE251305BD00EE544D /* SearchResultFileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultFileTableViewCell.swift; sourceTree = "<group>"; };
 		5D4244DF251305BD00EE544D /* SearchResultFileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultFileTableViewCell.xib; sourceTree = "<group>"; };
@@ -2919,6 +2918,7 @@
 		A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatStartCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A802B1FF1FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatAnswerCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatAnswerCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
+		A80B66E025E7F72000486EC5 /* NodeEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEntity.swift; sourceTree = "<group>"; };
 		A811CE2A22EAFB1700B24E76 /* SearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOperation.h; sourceTree = "<group>"; };
 		A811CE2B22EAFB1700B24E76 /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
 		A811DCB72476C460002FCD98 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -6018,7 +6018,6 @@
 				5D44BDC42508669200F24069 /* ContactRequest.swift */,
 				5D667EEB24ECF9400092474D /* StoreUser.swift */,
 				5D69E2332511A0EA00A61195 /* MEGAHandle.swift */,
-				5D4244B52511FB5F00EE544D /* SDKNode.swift */,
 				BF6D309D25390AEA00BD4653 /* ExplorerTypeEntity.swift */,
 				5D8303E6256270800082CA18 /* BannerEntity.swift */,
 			);
@@ -7876,6 +7875,7 @@
 		B662B86C24F32E4F0089376A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				A80B66E025E7F72000486EC5 /* NodeEntity.swift */,
 				830C272625E40D9A00E9B56E /* OfflineFiles */,
 				830C26FD25E40AC800E9B56E /* QuickAccessWidget */,
 				5D17CFBC25466DF10000194A /* Device */,
@@ -9946,7 +9946,6 @@
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
 				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
-				5D4244B62511FB5F00EE544D /* SDKNode.swift in Sources */,
 				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				5D60D50424DF77E700313955 /* Array+EmbedInStackView.swift in Sources */,
@@ -10212,6 +10211,7 @@
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				A86B9F642316D6AB00F35E7A /* FLEXKeychainQuery.m in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
+				A80B66E125E7F72000486EC5 /* NodeEntity.swift in Sources */,
 				BF6D30AA25390BBA00BD4653 /* FilesSearchUseCase.swift in Sources */,
 				5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */,
 				B63AEB0B2511BD74000B8517 /* GetSMSErrorEntity.swift in Sources */,

@@ -1,6 +1,4 @@
-import Foundation
-
-struct SDKNode {
+struct NodeEntity {
 
     // MARK: - Types
 
@@ -91,7 +89,7 @@ struct SDKNode {
     }
 }
 
-extension SDKNode {
+extension NodeEntity {
 
     init(with node: MEGANode) {
 
