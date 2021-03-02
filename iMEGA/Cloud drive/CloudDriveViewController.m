@@ -232,6 +232,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
             [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
             
+            toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             [self reloadData];
         }
     }
@@ -1552,6 +1553,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
