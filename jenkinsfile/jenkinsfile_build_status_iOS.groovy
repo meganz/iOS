@@ -67,7 +67,7 @@ pipeline {
             }
         }
 
-        stage('Generating Executable (IPA)') {
+        stage('Run Unit test') {
             steps {
                 gitlabCommitStatus(name: 'Run Unit test') {
                     injectEnvironments({
