@@ -39,6 +39,6 @@ class ThrottlerTest: XCTestCase {
             }
         }
 
-        wait(for: [expectaction], timeout: 1)
+        wait(for: [expectaction], timeout: 1.5)
     }
 }
