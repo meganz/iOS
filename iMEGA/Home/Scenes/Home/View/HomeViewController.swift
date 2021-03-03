@@ -144,6 +144,7 @@ final class HomeViewController: UIViewController {
                 self?.offlineViewController.openFileFromWidget(with: path)
             }
         }
+        quickAccessWidgetViewModel.dispatch(.managePendingAction)
 
         uploadViewModel.notifyUpdate = { [weak self] homeUploadingViewModel in
             asyncOnMain {
