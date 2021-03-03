@@ -14,6 +14,7 @@ final class PSAViewModel: NSObject, ViewModelType {
     private let router: PSAViewRouting
     private let useCase: PSAUseCase
     private var psaEntity: PSAEntity?
+    private var isFetchingPSA = false
     
     @PreferenceWrapper(key: .lastPSAShownTimestamp, defaultValue: -1.0)
     private var lastPSAShownTimestampPreference: TimeInterval
@@ -36,8 +37,10 @@ final class PSAViewModel: NSObject, ViewModelType {
     func dispatch(_ action: PSAViewAction) {
         switch action {
         case .showPSAViewIfNeeded:
-            guard router.isPSAViewAlreadyShown() == false else { return }
+            guard router.isPSAViewAlreadyShown() == false, !isFetchingPSA else { return }
+            isFetchingPSA = true
             shouldShowView { [weak self] show in
+                self?.isFetchingPSA = false
                 guard let self = self, !self.router.isPSAViewAlreadyShown(), show else { return }
                 
                 self.router.start()
