@@ -38,7 +38,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
     }
     
-    private let throttler = Throttler(timeInterval: 1.0)
+    private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     
     @objc func animate(progress: CGFloat, duration: TimeInterval) {
         guard let progressLayer = progressLayer else {
