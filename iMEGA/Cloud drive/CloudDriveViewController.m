@@ -232,7 +232,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
             [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
             
-            toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             [self reloadData];
         }
     }

@@ -97,6 +97,7 @@ class AppearanceManager: NSObject {
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
         toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
+        toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
