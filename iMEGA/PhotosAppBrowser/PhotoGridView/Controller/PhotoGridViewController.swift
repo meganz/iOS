@@ -203,6 +203,11 @@ extension PhotoGridViewController: AlbumDelegate {
             return
         }
         
+        if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= album.assetCount() {
+            collectionView.reloadData()
+            return
+        }
+        
         collectionView.performBatchUpdates({
             if let removedIndexPaths = removedIndexPaths {
                 let selectedIndexPathsToBeDeleted = removeSelectedAssets(forIndexPaths: removedIndexPaths)
