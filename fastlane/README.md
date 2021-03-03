@@ -51,6 +51,11 @@ Upload to iTunesConnect
 fastlane ios sync_all_code_signing
 ```
 
+### ios tests
+```
+fastlane ios tests
+```
+MEGA unit tests
 
 ----
 

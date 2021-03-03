@@ -221,4 +221,12 @@ platform :ios do
       verbose: true
     )
   end
+
+  desc "MEGA unit tests"
+  lane :tests do
+    run_tests(
+      scheme: "MEGA",
+      devices: ["iPhone 8"]
+    )
+  end
 end
