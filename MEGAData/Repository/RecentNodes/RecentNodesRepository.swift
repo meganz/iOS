@@ -8,13 +8,17 @@ struct RecentNodesRepository: RecentNodesRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
+    func recentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], QuickAccessWidgetErrorEntity>) -> Void) {
         guard let recentActionBuckets = sdk.recentActions() as? [MEGARecentActionBucket] else {
             completion(.failure(.sdk))
             return
         }
         
-        completion(.success(recentActionBuckets))
+        let recentActionBucketEntityArray = recentActionBuckets.compactMap {
+            RecentActionBucketEntity(with: $0)
+        }
+        
+        completion(.success(recentActionBucketEntityArray))
     }
 
 }

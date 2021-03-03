@@ -84,8 +84,8 @@ class QuickAccessWidgetManager: NSObject {
             case .success(let recentActions):
                 var recentItems = [RecentItemEntity]()
                 recentActions.forEach { (bucket) in
-                    bucket.nodesList.mnz_nodesArrayFromNodeList()?.forEach({ (node) in
-                        recentItems.append(RecentItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: bucket.timestamp, isUpdate: bucket.isUpdate))
+                    bucket.nodes.forEach({ (node) in
+                        recentItems.append(RecentItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: bucket.date, isUpdate: bucket.isUpdate))
                     })
                 }
                 self.recentItemsUseCase.resetRecentItems(by: Array(recentItems.prefix(8))) { (result) in
