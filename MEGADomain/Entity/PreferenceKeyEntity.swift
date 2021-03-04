@@ -3,6 +3,6 @@ import Foundation
 enum PreferenceKeyEntity: String {
     case dontShowAgainAddPhoneNumber
     case backupHeartbeatRegistrationId
-    case lastPSAShownTimestamp
+    case lastPSARequestTimestamp
     case launchTab
 }
