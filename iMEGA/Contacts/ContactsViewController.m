@@ -297,6 +297,9 @@
             
         case ContactsModeFolderSharedWith: {
             self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+            if (self.shareFolderActivity != nil) {
+                self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
+            }
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -742,6 +745,9 @@
             cell.selectedBackgroundView = view;
         }
     } else {
+        if (self.contactsMode == ContactsModeFolderSharedWith && self.shareFolderActivity != nil) {
+            self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
+        }
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
