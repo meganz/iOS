@@ -227,7 +227,6 @@
     
     if (moUser) {
         moUser.firstname = firstname;
-        MEGALogDebug(@"Save context - update firstname: %@", firstname);
         [self saveContext];
     }
 }
@@ -237,7 +236,6 @@
     
     if (moUser) {
         moUser.lastname = lastname;
-        MEGALogDebug(@"Save context - update lastname: %@", lastname);
         [self saveContext];
     }
 }
@@ -247,7 +245,6 @@
     
     if (moUser) {
         moUser.email = email;
-        MEGALogDebug(@"Save context - update email: %@", email);
         [self saveContext];
     }
 }
@@ -262,7 +259,6 @@
 
     if (moUser) {
         moUser.nickname = nickname;
-        MEGALogDebug(@"Save context - update nickname: %@", nickname);
         if (context == nil && NSThread.isMainThread) {
             [self saveContext];
         }
@@ -274,7 +270,6 @@
     
     if (moUser) {
         moUser.firstname = firstname;
-        MEGALogDebug(@"Save context - update firstname: %@", firstname);
         [self saveContext];
     }
 }
@@ -284,7 +279,6 @@
 
     if (moUser) {
         moUser.lastname = lastname;
-        MEGALogDebug(@"Save context - update lastname: %@", lastname);
         [self saveContext];
     }
 }
@@ -294,7 +288,6 @@
 
     if (moUser) {
         moUser.nickname = nickname;
-        MEGALogDebug(@"Save context - update nickname: %@", nickname);
         [self saveContext];
     }
 }
@@ -341,13 +334,13 @@
         if (moChatDraft) {
             moChatDraft.text = text;
             
-            MEGALogDebug(@"Save context - update chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+            MEGALogDebug(@"Save context - update chat draft with chatId %@", moChatDraft.chatId);
         } else {
             MOChatDraft *moChatDraft = [NSEntityDescription insertNewObjectForEntityForName:@"ChatDraft" inManagedObjectContext:self.managedObjectContext];
             moChatDraft.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
             moChatDraft.text = text;
             
-            MEGALogDebug(@"Save context - insert chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+            MEGALogDebug(@"Save context - insert chat draft with chatId %@", moChatDraft.chatId);
         }
     } else if (moChatDraft) {
         [self.managedObjectContext deleteObject:moChatDraft];

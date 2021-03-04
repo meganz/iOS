@@ -4,9 +4,14 @@
 @implementation MOUser
 
 // Insert code here to add functionality to your managed object subclass
-- (NSString *)description {    
+- (NSString *)description {
+#ifdef DEBUG
     return [NSString stringWithFormat:@"<%@: base64Handle=%@, email=%@, firstname=%@, lastname=%@, nickname=%@ interactedWith=%@>",
             self.class, self.base64userHandle, self.email, self.firstname, self.lastname, self.nickname, self.interactedwith];
+#else
+    return [NSString stringWithFormat:@"<%@: base64Handle=%@>",
+            self.class, self.base64userHandle];
+#endif
 }
 
 - (NSString *)fullName {
