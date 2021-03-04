@@ -58,12 +58,23 @@
         switch ([request type]) {
           
             case MEGARequestTypeLogout: {
-                if (request.flag) {
+                // if logout (not if localLogout) or session killed in other client
+                BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+                if (request.flag || sessionInvalidateInOtherClient) {
                     [Helper logout];
                     [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        [self configureUI];
-                    }];
+                    
+                    if (sessionInvalidateInOtherClient) {
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            [self dismissGrantingAccessToURL:nil];
+                        }]];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    } else {
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            [self configureUI];
+                        }];
+                    }
                 }
                 break;
             }
@@ -414,17 +425,6 @@
         case MEGARequestTypeFetchNodes:
             [self presentDocumentPicker];
             break;
-            
-        case MEGARequestTypeLogout: {
-            if (request.flag) {
-                [Helper logout];
-                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [self configureUI];
-                }];
-            }
-            break;
-        }
             
         default:
             break;

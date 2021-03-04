@@ -1206,6 +1206,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     [MEGASdkManager destroySharedMEGAChatSdk];
 }
 
+- (void)presentLogoutFromOtherClientAlert {
+    self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1531,10 +1537,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
                         [Helper logout];
                         [self showOnboardingWithCompletion:nil];
-                        
-                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
+                        [self presentLogoutFromOtherClientAlert];
                     }
                 }
                 break;
@@ -1684,8 +1687,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeLogout: {            
-            if (request.flag) { // if logout (not if localLogout)
+        case MEGARequestTypeLogout: {
+            // if logout (not if localLogout) or session killed in other client
+            BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+            if (request.flag || sessionInvalidateInOtherClient) {
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];
                 
@@ -1693,6 +1698,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
                 if (@available(iOS 14.0, *)) {
                     [QuickAccessWidgetManager reloadAllWidgetsContent];
+                }
+                if (sessionInvalidateInOtherClient) {
+                    [self presentLogoutFromOtherClientAlert];
                 }
             }
             break;
