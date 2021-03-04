@@ -78,12 +78,24 @@
         switch ([request type]) {
           
             case MEGARequestTypeLogout: {
-                if (request.flag) {
+                // if logout (not if localLogout) or session killed in other client
+                BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+                if (request.flag || sessionInvalidateInOtherClient) {
                     [Helper logout];
                     [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        [self didBecomeActive];
-                    }];
+                    if (sessionInvalidateInOtherClient) {
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            [self dismissViewControllerAnimated:YES completion:^{
+                                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+                            }];
+                        }]];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    } else {
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            [self didBecomeActive];
+                        }];
+                    }
                 }
                 break;
             }
@@ -888,17 +900,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self performAttachNodeHandle:request.nodeHandle];
             } else {
                 [self onePendingLess];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeLogout: {
-            // Don't invalidate the session if its local logout
-            if (request.flag) {
-                [Helper logout];
-                
-                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                [self didBecomeActive];
             }
             break;
         }
