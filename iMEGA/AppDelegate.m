@@ -281,7 +281,9 @@
         }
     }
     
-    [Helper setIndexer:MEGAIndexer.sharedIndexer];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        [Helper setIndexer:MEGAIndexer.sharedIndexer];
+    });
     
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
