@@ -169,7 +169,9 @@ platform :ios do
     api_key = app_store_connect_api_key(
       key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
       issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-      key_content: ENV["APP_STORE_CONNECT_API_KEY"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+      is_key_content_base64: true,
+      in_house: false
     )
 
     upload_to_testflight(
@@ -206,7 +208,9 @@ platform :ios do
       api_key = app_store_connect_api_key(
         key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
         issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-        key_content: ENV["APP_STORE_CONNECT_API_KEY"],
+        key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+        is_key_content_base64: true,
+        in_house: false
       )
     end
 
