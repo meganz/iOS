@@ -301,10 +301,6 @@
         [center removeAllDeliveredNotifications];
     }
     
-    if (@available(iOS 14.0, *)) {
-        self.quickAccessWidgetManager = [QuickAccessWidgetManager.alloc init];
-    }
-    
     return YES;
 }
 
@@ -605,6 +601,14 @@
     }
     
     return _backgroundRefreshPerformer;
+}
+
+- (QuickAccessWidgetManager *)quickAccessWidgetManager {
+    if (_quickAccessWidgetManager == nil) {
+        _quickAccessWidgetManager = [[QuickAccessWidgetManager alloc] init];
+    }
+    
+    return _quickAccessWidgetManager;
 }
 
 #pragma mark - Private
@@ -1821,7 +1825,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (request.type == MEGAChatRequestTypeImportMessages) {
         MEGALogDebug(@"Imported messages %lld", request.number);
-        NSManagedObjectContext *childQueueContext = MEGAStore.shareInstance.childPrivateQueueContext;
+        NSManagedObjectContext *childQueueContext = [MEGAStore.shareInstance.stack newBackgroundContext];
         if (childQueueContext) {
             [childQueueContext performBlock:^{
                 [MEGAStore.shareInstance deleteAllMessagesWithContext:childQueueContext];

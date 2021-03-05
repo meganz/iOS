@@ -6,7 +6,7 @@ extension MEGAStore {
         if let moUser = fetchUser(withUserHandle: handle) {
             moUser.interactedwith = NSNumber.init(value: interactedWith)
             
-            MEGAStore.shareInstance()?.save(storeStack.viewContext)
+            MEGAStore.shareInstance()?.save(stack.viewContext)
         }
     }
     
@@ -14,7 +14,7 @@ extension MEGAStore {
         if let moUser = fetchUser(withEmail: email) {
             moUser.interactedwith = NSNumber.init(value: interactedWith)
             
-            MEGAStore.shareInstance()?.save(storeStack.viewContext)
+            MEGAStore.shareInstance()?.save(stack.viewContext)
         }
     }
 }

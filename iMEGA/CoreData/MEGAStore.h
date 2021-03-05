@@ -8,14 +8,13 @@
 #import "MOFolderLayout+CoreDataProperties.h"
 #import "MOMessage+CoreDataProperties.h"
 #import "MOOfflineFolderLayout+CoreDataProperties.h"
-#import "MEGAStoreStack.h"
+#import "MEGACoreDataStack.h"
 
 @interface MEGAStore : NSObject
 
 #pragma mark - store stack
 
-@property (readonly) MEGAStoreStack *storeStack;
-@property (nonatomic, readonly) NSManagedObjectContext *childPrivateQueueContext;
+@property (readonly) MEGACoreDataStack *stack;
 
 #pragma mark - Singleton Lifecycle
 

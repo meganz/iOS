@@ -106,8 +106,8 @@ extension AppDelegate {
 
     @objc func fetchContactsNickname() {
         guard let megaStore = MEGAStore.shareInstance(),
-            let privateQueueContext = megaStore.childPrivateQueueContext else {
-                return
+              let privateQueueContext = megaStore.stack?.newBackgroundContext() else {
+            return
         }
 
         privateQueueContext.perform {
