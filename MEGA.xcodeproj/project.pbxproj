@@ -560,7 +560,7 @@
 		77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77485F83207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m */; };
 		774941DB240FF69800FC5CB6 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
 		774941DD2410EA7F00FC5CB6 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
-		774941DE2410EABC00FC5CB6 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
+		774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
@@ -856,7 +856,7 @@
 		83655ABA2593854D001A0846 /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		83655AC32593855F001A0846 /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
-		83655AD525938662001A0846 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
+		83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		83655AE7259387F6001A0846 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
 		83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
 		83655B282593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */; };
@@ -1365,8 +1365,8 @@
 		AD0FFCEE56528070B64086CE /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 108BCCD8A01F4FA842CBACF9 /* Pods_iMEGA_MEGAWidgetExtension.framework */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
-		B604890F223C4F7A00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
-		B6048910223C4F7B00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
+		B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
+		B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F05E82514C022005133C2 /* XCTestCase+Addition.swift */; };
@@ -1384,7 +1384,7 @@
 		B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63AEB132511F73C000B8517 /* AddPhoneNumberViewModelTests.swift */; };
 		B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63AEB172512040E000B8517 /* Array+Additions.swift */; };
 		B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B63F3196223BA47400B0C6A6 /* CameraUpload.xcdatamodeld */; };
-		B63F31A0223BA8FA00B0C6A6 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
+		B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		B642925E22277EDD007BB9DE /* LivePhotoScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B642925D22277EDD007BB9DE /* LivePhotoScanner.m */; };
 		B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
@@ -3267,8 +3267,8 @@
 		B63AEB132511F73C000B8517 /* AddPhoneNumberViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhoneNumberViewModelTests.swift; sourceTree = "<group>"; };
 		B63AEB172512040E000B8517 /* Array+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Additions.swift"; sourceTree = "<group>"; };
 		B63F3197223BA47400B0C6A6 /* CameraUpload.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CameraUpload.xcdatamodel; sourceTree = "<group>"; };
-		B63F319E223BA8FA00B0C6A6 /* MEGAStoreStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAStoreStack.h; sourceTree = "<group>"; };
-		B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAStoreStack.m; sourceTree = "<group>"; };
+		B63F319E223BA8FA00B0C6A6 /* MEGACoreDataStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGACoreDataStack.h; sourceTree = "<group>"; };
+		B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGACoreDataStack.m; sourceTree = "<group>"; };
 		B642925C22277EDD007BB9DE /* LivePhotoScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LivePhotoScanner.h; sourceTree = "<group>"; };
 		B642925D22277EDD007BB9DE /* LivePhotoScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LivePhotoScanner.m; sourceTree = "<group>"; };
 		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
@@ -4283,8 +4283,8 @@
 				4147C2D21B4EE9BA00A37044 /* MEGAStore.h */,
 				4147C2D31B4EE9BA00A37044 /* MEGAStore.m */,
 				B63F3196223BA47400B0C6A6 /* CameraUpload.xcdatamodeld */,
-				B63F319E223BA8FA00B0C6A6 /* MEGAStoreStack.h */,
-				B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */,
+				B63F319E223BA8FA00B0C6A6 /* MEGACoreDataStack.h */,
+				B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -10283,7 +10283,7 @@
 				A86B9F6A2316D6AB00F35E7A /* FLEXASLLogController.m in Sources */,
 				B6E7A8D72500D74600CD6AC2 /* NSLayoutConstraint+Layout.swift in Sources */,
 				834AD6062024694200D2527F /* MGSwipeTableCell.m in Sources */,
-				B63F31A0223BA8FA00B0C6A6 /* MEGAStoreStack.m in Sources */,
+				B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */,
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
@@ -10624,7 +10624,7 @@
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
 				A81DF35C2508FD86009C8B60 /* DateFormatting.swift in Sources */,
 				A81DF35B2508FD6C009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */,
-				774941DE2410EABC00FC5CB6 /* MEGAStoreStack.m in Sources */,
+				774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
 				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
 				7794AF1C231FDF590039C1D2 /* SVIndefiniteAnimatedView.m in Sources */,
@@ -10713,7 +10713,7 @@
 				8311A2F0258775E90027BEFF /* FileTypes.swift in Sources */,
 				83655ABA2593854D001A0846 /* MOMediaDestination+CoreDataClass.m in Sources */,
 				830C289E25E68D9800E9B56E /* QuickAccessWidgetViewController.swift in Sources */,
-				83655AD525938662001A0846 /* MEGAStoreStack.m in Sources */,
+				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10757,7 +10757,7 @@
 				5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
 				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
-				B604890F223C4F7A00BA91F9 /* MEGAStoreStack.m in Sources */,
+				B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */,
 				7747B2D9208625B50011814E /* Reachability.m in Sources */,
 				5B367577204FFC150087362D /* SendToChatActivity.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
@@ -10856,7 +10856,7 @@
 				2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				8310488A21AECD860057400D /* DTConstants.m in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
-				B6048910223C4F7B00BA91F9 /* MEGAStoreStack.m in Sources */,
+				B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */,
 				BF943E9323554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */,
 				5BE689B82419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,

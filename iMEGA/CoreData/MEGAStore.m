@@ -4,7 +4,7 @@
 
 @interface MEGAStore ()
 
-@property (strong, nonatomic) MEGAStoreStack *storeStack;
+@property (strong, nonatomic) MEGACoreDataStack *stack;
 
 @end
 
@@ -24,19 +24,18 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
+        _stack = [[MEGACoreDataStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveLogoutNotification) name:MEGALogoutNotification object:nil];
     }
     return self;
 }
 
-- (NSManagedObjectContext *)managedObjectContext {
-    return self.storeStack.viewContext;
+- (void)didReceiveLogoutNotification {
+    [self.stack deleteStore];
 }
 
-- (NSManagedObjectContext *)childPrivateQueueContext {
-    NSManagedObjectContext *context = [NSManagedObjectContext.alloc initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    context.parentContext = self.managedObjectContext;
-    return context;
+- (NSManagedObjectContext *)managedObjectContext {
+    return self.stack.viewContext;
 }
 
 - (NSURL *)storeURL {
@@ -476,7 +475,7 @@
 #pragma mark - MOMessage entity
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
-    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.childPrivateQueueContext;
+    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.stack.newBackgroundContext;
     
     MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage"
                                                         inManagedObjectContext:context];
@@ -489,7 +488,7 @@
 }
 
 - (void)deleteMessage:(MOMessage *)message {
-    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.childPrivateQueueContext;
+    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.stack.newBackgroundContext;
 
     [context deleteObject:message];
     
