@@ -280,13 +280,8 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         if (self.node) {
-            NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[self.node]];
-            if (checkFileExist.count || self.node.isFolder) {
-                UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:sender];
-                [self presentViewController:activityVC animated:YES completion:nil];
-            } else {
-                [self.node mnz_downloadNodeAndShare];
-            }
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
+            [self presentViewController:activityVC animated:YES completion:nil];
         } else {
             if (self.filePath) {
                 UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:self.filePath]] applicationActivities:nil];

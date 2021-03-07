@@ -1988,10 +1988,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_setNodeCoordinates];
-        
-        if ([transfer.appData containsString:@"SystemShareFile"]) {
-            [transfer mnz_showSystemShare];
-        }
     }
 }
 
