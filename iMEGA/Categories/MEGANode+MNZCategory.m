@@ -207,15 +207,6 @@
 
 #pragma mark - Actions
 
-- (void)mnz_downloadNodeAndShare {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"share"] status:NSLocalizedString(@"Preparing to share…", @"Text shown when starting the process to share a filee to other app")];
-    
-    NSString *downloadsDirectory = Helper.relativePathForOffline;
-    NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
-    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-    [MEGASdkManager.sharedMEGASdk startDownloadNode:[[MEGASdkManager sharedMEGASdk] authorizeNode:self] localPath:localPath appData:[[NSString string] mnz_appDataToSystemShareFile]];
-}
-
 - (BOOL)mnz_downloadNode {
     return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
 }
