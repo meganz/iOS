@@ -954,6 +954,7 @@
 		83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
+		83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
 		83E3454E25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */; };
 		83E3454F25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */; };
@@ -2831,6 +2832,7 @@
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
+		83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
 		83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -4776,6 +4778,7 @@
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
 				BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */,
 				0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */,
+				83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -9649,6 +9652,7 @@
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
 				A86B9F282316D6AB00F35E7A /* FLEXCarouselCell.m in Sources */,
+				83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */,
 				B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */,
 				5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */,
 				A86B9F532316D6AB00F35E7A /* FLEXArgumentInputObjectView.m in Sources */,

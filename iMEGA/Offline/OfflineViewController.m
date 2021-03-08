@@ -56,6 +56,8 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (nonatomic, strong) OfflineCollectionViewController *offlineCollectionView;
 @property (nonatomic, assign) ViewModePreference viewModePreference;
 
+@property (nonatomic, copy) void (^openFileWhenViewReady)(void);
+
 @end
 
 @implementation OfflineViewController
@@ -125,6 +127,14 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     [self reloadUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+        
+    if (self.openFileWhenViewReady != nil) {
+        self.openFileWhenViewReady();
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -776,18 +786,26 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)openFileFromWidgetWith:(NSString *)path {
-    MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:path]];
-    for (int i = 0; i < self.offlineSortedItems.count; i++){
-        NSDictionary *dictionary = self.offlineSortedItems[i];
-        NSURL *url = [dictionary valueForKey:kPath];
-       
-        if ([url.path isEqualToString:[NSString stringWithFormat:@"%@%@", [Helper pathForOffline], offlineNode.localPath]]) {
-            [self itemTapped:offlineNode.localPath.lastPathComponent atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            return;
+    if (self.isViewReady) {
+        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:path]];
+        for (int i = 0; i < self.offlineSortedItems.count; i++){
+            NSDictionary *dictionary = self.offlineSortedItems[i];
+            NSURL *url = [dictionary valueForKey:kPath];
+           
+            if ([url.path isEqualToString:[NSString stringWithFormat:@"%@%@", [Helper pathForOffline], offlineNode.localPath]]) {
+                [self itemTapped:offlineNode.localPath.lastPathComponent atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+                return;
+            }
         }
+        
+        MEGALogError(@"Offline file opened from QuickAccessWidget not found");
+    } else {
+        __weak typeof(self) weakSelf = self;
+        self.openFileWhenViewReady = ^{
+            [weakSelf openFileFromWidgetWith:path];
+            weakSelf.openFileWhenViewReady = nil;
+        };
     }
-    
-    MEGALogError(@"Offline file opened from QuickAccessWidget not found");
 }
 
 - (void)itemTapped:(NSString *)name atIndexPath:(NSIndexPath *)indexPath {
