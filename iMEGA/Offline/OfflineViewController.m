@@ -985,7 +985,7 @@ static NSString *kisDirectory = @"kisDirectory";
         
         [self reloadUI];
         if (@available(iOS 14.0, *)) {
-            [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAQuickAccessWidget];
+            [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
         }
         return YES;
     }
