@@ -7,7 +7,7 @@ class ThrottlerTest: XCTestCase {
         let expectaction = expectation(description: "Fullfill once")
         expectaction.expectedFulfillmentCount = 1
 
-        let throttler = Throttler(timeInterval: 0.5)
+        let throttler = Throttler(timeInterval: 0.5, dispatchQueue: .main)
         throttler.start {
             expectaction.fulfill()
         }
@@ -25,7 +25,7 @@ class ThrottlerTest: XCTestCase {
         let expectaction = expectation(description: "Fullfill twice")
         expectaction.expectedFulfillmentCount = 2
 
-        let throttler = Throttler(timeInterval: 0.5)
+        let throttler = Throttler(timeInterval: 0.5, dispatchQueue: .main)
         throttler.start {
             expectaction.fulfill()
         }
