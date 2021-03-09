@@ -646,9 +646,7 @@
     BOOL userHasChanged = NO;
     
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
-        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
+        [user removeAvatarFromLocalCache];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;

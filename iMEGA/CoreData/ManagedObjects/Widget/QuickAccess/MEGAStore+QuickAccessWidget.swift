@@ -1,105 +1,132 @@
 
 extension MEGAStore {
     
-    func deleteQuickAccessRecentItems(with context: NSManagedObjectContext, completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
-        
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: QuickAccessWidgetRecentItem.fetchRequest())
-
-        do {
-            try context.execute(deleteRequest)
-            completion(.success(()))
-        } catch let error as NSError {
-            MEGALogError("Could not delete QuickAccessWidgetRecentItem object: \(error.localizedDescription)")
-            completion(.failure(.megaStore))
+    func deleteQuickAccessRecentItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+        let context = stack.newBackgroundContext()
+        context.perform {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetRecentItem")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            
+            do {
+                try context.execute(deleteRequest)
+                completion(.success(()))
+            } catch let error as NSError {
+                MEGALogError("Could not delete QuickAccessWidgetRecentItem object: \(error.localizedDescription)")
+                completion(.failure(.megaStore))
+            }
         }
     }
     
     func insertQuickAccessRecentItem(withBase64Handle base64Handle: String,
                                      name: String,
                                      isUpdate: Bool,
-                                     timestamp: Date,
-                                     context: NSManagedObjectContext) {
-        let quickAccessRecentItem = QuickAccessWidgetRecentItem.createInstance(withContext: context)
-        quickAccessRecentItem.handle = base64Handle
-        quickAccessRecentItem.name = name
-        quickAccessRecentItem.isUpdate = isUpdate as NSNumber
-        quickAccessRecentItem.timestamp = timestamp
-        MEGAStore.shareInstance()?.save(context)
+                                     timestamp: Date) {
+        stack.performBackgroundTask { context in
+            let quickAccessRecentItem = QuickAccessWidgetRecentItem.createInstance(withContext: context)
+            quickAccessRecentItem.handle = base64Handle
+            quickAccessRecentItem.name = name
+            quickAccessRecentItem.isUpdate = isUpdate as NSNumber
+            quickAccessRecentItem.timestamp = timestamp
+            self.save(context)
+        }
     }
     
-    func fetchAllQuickAccessRecentItem(context: NSManagedObjectContext) -> [QuickAccessWidgetRecentItem]? {
-        do {
-            return try context.fetch(QuickAccessWidgetRecentItem.fetchRequest())
-        } catch let error as NSError {
-            MEGALogError("Could not fetch [QuickAccessWidgetRecentItem] object for path \(error.localizedDescription)")
-            return nil
+    func fetchAllQuickAccessRecentItem() -> [QuickAccessWidgetRecentItem] {
+        let context = stack.newBackgroundContext()
+        var items = [QuickAccessWidgetRecentItem]()
+        
+        context.performAndWait {
+            do {
+                let fetchRequest: NSFetchRequest<QuickAccessWidgetRecentItem> = QuickAccessWidgetRecentItem.fetchRequest()
+                items = try context.fetch(fetchRequest)
+            } catch let error as NSError {
+                MEGALogError("Could not fetch [QuickAccessWidgetRecentItem] object for path \(error.localizedDescription)")
+            }
         }
+        
+        return items
     }
     
     func insertQuickAccessFavouriteItem(withBase64Handle base64Handle: String,
                                         name: String,
-                                        timestamp: Date,
-                                        context: NSManagedObjectContext) {
-        let quickAccessWidgetFavouriteItem = QuickAccessWidgetFavouriteItem.createInstance(withContext: context)
-        quickAccessWidgetFavouriteItem.handle = base64Handle
-        quickAccessWidgetFavouriteItem.name = name
-        quickAccessWidgetFavouriteItem.timestamp = timestamp
-        MEGAStore.shareInstance().save(context)
+                                        timestamp: Date) {
+        stack.performBackgroundTask { context in
+            let quickAccessWidgetFavouriteItem = QuickAccessWidgetFavouriteItem.createInstance(withContext: context)
+            quickAccessWidgetFavouriteItem.handle = base64Handle
+            quickAccessWidgetFavouriteItem.name = name
+            quickAccessWidgetFavouriteItem.timestamp = timestamp
+            self.save(context)
+        }
     }
     
-    func deleteQuickAccessFavouriteItem(withBase64Handle base64Handle: String, inContext context: NSManagedObjectContext) {
-        
-        let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "handle == %@", base64Handle)
-
-        do {
-            if let object = try context.fetch(fetchRequest).first {
-                context.delete(object)
-                MEGAStore.shareInstance().save(context)
-            } else {
-                MEGALogError("Could not find QuickAccessWidgetFavouriteItem object to delete")
+    func deleteQuickAccessFavouriteItem(withBase64Handle base64Handle: String) {
+        stack.performBackgroundTask { context in
+            let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "handle == %@", base64Handle)
+            
+            do {
+                if let object = try context.fetch(fetchRequest).first {
+                    context.delete(object)
+                    self.save(context)
+                } else {
+                    MEGALogError("Could not find QuickAccessWidgetFavouriteItem object to delete")
+                }
+            } catch let error as NSError {
+                MEGALogError("Could not delete QuickAccessWidgetFavouriteItem object: \(error.localizedDescription)")
             }
-        } catch let error as NSError {
-            MEGALogError("Could not delete QuickAccessWidgetFavouriteItem object: \(error.localizedDescription)")
         }
     }
     
-    func fetchAllQuickAccessFavouriteItems(context: NSManagedObjectContext) -> [QuickAccessWidgetFavouriteItem]? {
-        do {
-            return try context.fetch(QuickAccessWidgetFavouriteItem.fetchRequest())
-        } catch let error as NSError {
-            MEGALogError("Could not fetch [QuickAccessWidgetFavouriteItem] object for path \(error.localizedDescription)")
-            return nil
-        }
-    }
-    
-    func fetchQuickAccessFavourtieItems(withLimit fetchLimit: Int?, context: NSManagedObjectContext) -> [QuickAccessWidgetFavouriteItem]? {
-        let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
-     
-        if let fetchLimit = fetchLimit {
-            fetchRequest.fetchLimit = fetchLimit
+    func fetchAllQuickAccessFavouriteItems() -> [QuickAccessWidgetFavouriteItem] {
+        let context = stack.newBackgroundContext()
+        var items = [QuickAccessWidgetFavouriteItem]()
+        
+        context.performAndWait {
+            do {
+                let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
+                items = try context.fetch(fetchRequest)
+            } catch let error as NSError {
+                MEGALogError("Could not fetch [QuickAccessWidgetFavouriteItem] object for path \(error.localizedDescription)")
+            }
         }
         
-        do {
-            let objects = try context.fetch(fetchRequest)
-            return objects
-        } catch let error as NSError {
-            MEGALogError("Error fetching QuickAccessWidgetFavouriteItem: \(error.description)")
-            return nil
-        }
+        return items
     }
     
-    func deleteQuickAccessFavouriteItems(with context: NSManagedObjectContext, completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func fetchQuickAccessFavourtieItems(withLimit fetchLimit: Int?) -> [QuickAccessWidgetFavouriteItem] {
+        let context = stack.newBackgroundContext()
+        var items = [QuickAccessWidgetFavouriteItem]()
         
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: QuickAccessWidgetFavouriteItem.fetchRequest())
-
-        do {
-            try context.execute(deleteRequest)
-            completion(.success(()))
-        } catch let error as NSError {
-            MEGALogError("Could not delete QuickAccessWidgetFavouriteItem object: \(error.localizedDescription)")
-            completion(.failure(.megaStore))
+        context.performAndWait {
+            let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
+            
+            if let fetchLimit = fetchLimit {
+                fetchRequest.fetchLimit = fetchLimit
+            }
+            
+            do {
+                items = try context.fetch(fetchRequest)
+            } catch let error as NSError {
+                MEGALogError("Error fetching QuickAccessWidgetFavouriteItem: \(error.description)")
+            }
+        }
+        
+        return items
+    }
+    
+    func deleteQuickAccessFavouriteItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+        stack.performBackgroundTask { context in
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetFavouriteItem")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            
+            do {
+                try context.execute(deleteRequest)
+                completion(.success(()))
+            } catch let error as NSError {
+                MEGALogError("Could not delete QuickAccessWidgetFavouriteItem object: \(error.localizedDescription)")
+                completion(.failure(.megaStore))
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ extension ChatViewController: MessagesDataSource {
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
             return NSAttributedString(
-                string: message.sentDate.string(withDateFormat: "E dd MMM") ,
+                string: NSCalendar.current.isDateInToday(message.sentDate) ? NSLocalizedString("Today", comment: "") : message.sentDate.string(withDateFormat: "E dd MMM"),
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
                              NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
 
