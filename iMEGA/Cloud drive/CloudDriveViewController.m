@@ -58,7 +58,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, BrowserViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -89,6 +89,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
+@property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
 @property (strong, nonatomic) Throttler *throttler;
 
@@ -169,6 +170,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     
+    self.navigationController.delegate = self;
     self.throttler = [Throttler.alloc initWithTimeInterval:.1 dispatchQueue:dispatch_get_main_queue()];
 }
 
@@ -183,6 +185,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
+    
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -192,6 +196,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self encourageToUpgrade];
     
     [self requestReview];
+    
+    [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -208,6 +214,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         self.selectedNodesArray = nil;
         [self setEditMode:NO];
+    }
+    
+    if (self.shouldRemovePlayerDelegate) {
+        [AudioPlayerManager.shared removeDelegate:self];
     }
 }
 
@@ -2013,6 +2023,27 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        self.cdTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    } else {
+        self.cdCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    }
+}
+
+#pragma mark - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
+        self.shouldRemovePlayerDelegate = ![viewController conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 #pragma mark - BrowserViewControllerDelegate

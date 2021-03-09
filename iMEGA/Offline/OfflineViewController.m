@@ -32,7 +32,7 @@ static NSString *kFileSize = @"kFileSize";
 static NSString *kDuration = @"kDuration";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate>
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -100,7 +100,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
-    
+
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -131,6 +131,8 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [AudioPlayerManager.shared addDelegate:self];
         
     if (self.openFileWhenViewReady != nil) {
         self.openFileWhenViewReady();
@@ -147,6 +149,8 @@ static NSString *kisDirectory = @"kisDirectory";
         self.selectedItems = nil;
         [self setEditMode:NO];
     }
+    
+    [AudioPlayerManager.shared removeDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -834,8 +838,16 @@ static NSString *kisDirectory = @"kisDirectory";
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
         if (asset.playable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
-            [self presentViewController:megaAVViewController animated:YES completion:nil];
+            if ([asset tracksWithMediaType:AVMediaTypeVideo].count > 0) {
+                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
+                            [self presentViewController:megaAVViewController animated:YES completion:nil];
+            } else {
+                if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
+                    [AudioPlayerManager.shared initMiniPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+                } else {
+                    [AudioPlayerManager.shared initFullScreenPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self];
+                }
+            }
         } else {
             MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
             if (previewController == nil) {
@@ -1332,6 +1344,16 @@ static NSString *kisDirectory = @"kisDirectory";
     
     if ([transfer type] == MEGATransferTypeDownload) {
         [self reloadUI];
+    }
+}
+
+#pragma mark - AudioPlayer
+
+- (void)updateContentView:(CGFloat)height {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        self.offlineTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    } else {
+        self.offlineCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
     }
 }
 

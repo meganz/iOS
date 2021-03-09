@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -135,7 +135,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="littleQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
                                                 <rect key="frame" x="385" y="343" width="12" height="12"/>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
                                                 <rect key="frame" x="63" y="518" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="M9c-MZ-MYw"/>
@@ -187,6 +187,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="64Q-GC-ymX"/>
                         <constraints>
                             <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="width" secondItem="HNb-vZ-9Rz" secondAttribute="width" id="7YN-v5-MkE"/>
                             <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="height" secondItem="HNb-vZ-9Rz" secondAttribute="height" id="ZII-31-e3p"/>
@@ -194,7 +195,6 @@
                             <constraint firstItem="ptk-b4-EIp" firstAttribute="width" secondItem="HNb-vZ-9Rz" secondAttribute="width" id="jOd-14-hQq"/>
                             <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="leading" secondItem="64Q-GC-ymX" secondAttribute="leading" id="q63-D4-Fbv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="64Q-GC-ymX"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Login" id="5it-Nq-awd">
@@ -339,7 +339,7 @@
                                                     <action selector="termsCheckboxTouchUpInside:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="yBJ-nr-2C4"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih">
                                                 <rect key="frame" x="58" y="429.66666666666669" width="224" height="27"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="I agree with the MEGA Terms of Service"/>
@@ -372,7 +372,7 @@
                                                     <outletCollection property="gestureRecognizers" destination="ukt-vC-RZc" appends="YES" id="sX8-b4-iac"/>
                                                 </connections>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU">
                                                 <rect key="frame" x="63" y="607" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="HJ1-8d-saO"/>
@@ -385,6 +385,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <viewLayoutGuide key="safeArea" id="Sm7-b3-lKu"/>
                                         <constraints>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="top" secondItem="hkb-3j-jnC" secondAttribute="bottom" id="2Ap-Xk-fDt"/>
                                             <constraint firstItem="l5v-Oj-XXr" firstAttribute="centerY" secondItem="fqq-un-Bih" secondAttribute="centerY" id="61x-3w-Nx4"/>
@@ -413,7 +414,6 @@
                                             <constraint firstItem="bak-ZA-1ZU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Wh7-Wf-VZs" secondAttribute="bottom" constant="40" id="uZu-SQ-iud"/>
                                             <constraint firstItem="l5v-Oj-XXr" firstAttribute="leading" secondItem="qlZ-z1-r9I" secondAttribute="leading" constant="10" id="vOu-cv-dOf"/>
                                         </constraints>
-                                        <viewLayoutGuide key="safeArea" id="Sm7-b3-lKu"/>
                                         <variation key="widthClass=regular">
                                             <mask key="constraints">
                                                 <exclude reference="Yuj-VQ-n2s"/>
@@ -432,13 +432,13 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="MHW-24-Y0i"/>
                         <constraints>
                             <constraint firstItem="lM5-va-TqA" firstAttribute="top" secondItem="MHW-24-Y0i" secondAttribute="top" id="BsP-Kt-wuS"/>
                             <constraint firstItem="lM5-va-TqA" firstAttribute="bottom" secondItem="MHW-24-Y0i" secondAttribute="bottom" id="Tw6-XY-z6Z"/>
                             <constraint firstItem="lM5-va-TqA" firstAttribute="leading" secondItem="MHW-24-Y0i" secondAttribute="leading" id="dOV-xJ-MY1"/>
                             <constraint firstItem="lM5-va-TqA" firstAttribute="centerX" secondItem="AWH-xe-qAi" secondAttribute="centerX" id="zEs-oT-4bq"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="MHW-24-Y0i"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
@@ -481,7 +481,7 @@
             <objects>
                 <viewController storyboardIdentifier="ConfirmAccountViewControllerID" id="Q0l-3c-nfd" customClass="ConfirmAccountViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tEv-K7-MM9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="GSl-YH-DKg">
@@ -538,8 +538,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm">
-                                <rect key="frame" x="63" y="584" width="288" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm">
+                                <rect key="frame" x="63" y="540" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="288" id="tQT-7u-kru"/>
                                     <constraint firstAttribute="height" constant="50" id="yay-PP-NzN"/>
@@ -550,8 +550,8 @@
                                     <action selector="confirmTouchUpInside:" destination="Q0l-3c-nfd" eventType="touchUpInside" id="nvt-q6-kIM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg">
-                                <rect key="frame" x="63" y="651" width="288" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg">
+                                <rect key="frame" x="63" y="607" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="288" id="0Ya-eN-Z6a"/>
                                     <constraint firstAttribute="height" constant="50" id="iIl-rQ-h6Q"/>
@@ -563,6 +563,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="U3h-9g-M5i"/>
                         <constraints>
                             <constraint firstItem="h2P-8s-Lnf" firstAttribute="top" secondItem="GSl-YH-DKg" secondAttribute="bottom" constant="40" id="C2T-c6-EdC"/>
                             <constraint firstItem="GSl-YH-DKg" firstAttribute="top" secondItem="U3h-9g-M5i" secondAttribute="top" constant="100" id="DKS-AV-Um4"/>
@@ -579,7 +580,6 @@
                             <constraint firstItem="w6i-73-vzN" firstAttribute="leading" secondItem="U3h-9g-M5i" secondAttribute="leading" id="tca-K1-IC7"/>
                             <constraint firstItem="urs-kB-QJB" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="y3t-S9-n8Q"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="U3h-9g-M5i"/>
                         <variation key="widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="Io5-l9-rf1"/>
@@ -616,7 +616,7 @@
                                 <rect key="frame" x="145" y="88" width="124" height="96"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting email confirmation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfX-ZS-ROY">
-                                <rect key="frame" x="96.333333333333329" y="213" width="221.66666666666669" height="21.666666666666657"/>
+                                <rect key="frame" x="97.000000000000014" y="213" width="220.33333333333337" height="21.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -649,12 +649,12 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you have misspelled your email address, correct it and click 'Resend'." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ey0-Yn-d6F">
-                                <rect key="frame" x="31.666666666666657" y="398.66666666666669" width="351" height="28.666666666666686"/>
+                                <rect key="frame" x="31.666666666666657" y="398.66666666666669" width="350.66666666666674" height="28.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Pg-W1e">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Pg-W1e">
                                 <rect key="frame" x="63" y="467.33333333333331" width="288" height="49.999999999999943"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="gmy-wV-QdT"/>
@@ -675,6 +675,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="CVR-Cw-jCa"/>
                         <constraints>
                             <constraint firstItem="3py-Mg-p80" firstAttribute="centerX" secondItem="CVR-Cw-jCa" secondAttribute="centerX" id="8LJ-K4-Ub5"/>
                             <constraint firstItem="ey0-Yn-d6F" firstAttribute="centerX" secondItem="JVh-eC-WKS" secondAttribute="centerX" id="8i1-TQ-iSF"/>
@@ -700,7 +701,6 @@
                             <constraint firstItem="ey0-Yn-d6F" firstAttribute="top" secondItem="DU4-vX-4QG" secondAttribute="bottom" constant="6" id="kMM-ME-iSK"/>
                             <constraint firstItem="DU4-vX-4QG" firstAttribute="leading" secondItem="CVR-Cw-jCa" secondAttribute="leading" id="zDt-M8-lw9"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="CVR-Cw-jCa"/>
                         <variation key="widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="zDt-M8-lw9"/>
@@ -747,8 +747,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="checkBox" width="20" height="20"/>
-        <image name="checkBoxSelected" width="20" height="20"/>
+        <image name="checkBox" width="24" height="24"/>
+        <image name="checkBoxSelected" width="72" height="72"/>
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24.666666030883789" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>

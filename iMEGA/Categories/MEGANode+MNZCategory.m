@@ -96,9 +96,17 @@
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
-        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
-        if (viewController) {
-            [navigationController presentViewController:viewController animated:YES completion:nil];
+        if (self.name.mnz_isMultimediaPathExtension && !self.name.mnz_isVideoPathExtension && self.mnz_isPlayable) {
+            if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
+                [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:[navigationController.viewControllers lastObject] shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+            } else {
+                [AudioPlayerManager.shared initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:[navigationController.viewControllers lastObject]];
+            }
+        } else {
+            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
+            if (viewController) {
+                [navigationController presentViewController:viewController animated:YES completion:nil];
+            }
         }
     }
 }

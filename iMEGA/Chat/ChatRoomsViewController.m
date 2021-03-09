@@ -30,7 +30,7 @@
 #import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -196,6 +196,8 @@
     }
     
     self.navigationController.toolbarHidden = true;
+    
+    [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -205,6 +207,8 @@
         [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
         [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     }
+    
+    [AudioPlayerManager.shared removeDelegate:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -1579,6 +1583,12 @@
         default:
             break;
     }
+}
+
+#pragma mark - AudioPlayer
+
+- (void)updateContentView:(CGFloat)height {
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
 @end

@@ -30,7 +30,7 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate>
+@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
@@ -39,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
@@ -134,8 +133,18 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [AudioPlayerManager.shared removeDelegate:self];
+    [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [AudioPlayerManager.shared addDelegate:self];
+    [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self shouldShowMiniPlayer];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -523,7 +532,9 @@
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [MEGALinkManager resetUtilsForLinksWithoutSession];
     
-    [[MEGASdkManager sharedMEGASdkFolder] logout];
+    if (!AudioPlayerManager.shared.isPlayerAlive) {
+        [[MEGASdkManager sharedMEGASdkFolder] logout];
+    }
     
     [SVProgressHUD dismiss];
     
@@ -1106,6 +1117,16 @@
             
         default:
             break;
+    }
+}
+
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        self.flTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    } else {
+        self.flCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
     }
 }
 

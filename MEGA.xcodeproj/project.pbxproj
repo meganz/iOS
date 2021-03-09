@@ -14,6 +14,7 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		1E4FEE43BA4A9B2FBBB75D86 /* Pods_iMEGA_MEGAShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
 		2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */; };
 		2F04634024BFF13900A47A81 /* ChatMessageActionMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */; };
@@ -97,7 +98,7 @@
 		2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
-		40FBC6237ED3EFEDB3CECD23 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3BEE149B079214E2044B465 /* Pods_MEGAUnitTests.framework */; };
+		32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -170,7 +171,7 @@
 		41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
-		5760ADF99DB8C13A7A64C7F2 /* Pods_iMEGA_MEGA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 645C2DE5F9C843B26DECC160 /* Pods_iMEGA_MEGA.framework */; };
+		4D0B2F71E80816B269390FE4 /* Pods_iMEGA_MEGA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */; };
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
 		5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */; };
 		5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0343D825822867005307A6 /* UIApplication+Additions.swift */; };
@@ -541,8 +542,6 @@
 		5DFBF1F324F4BE8A00BB662B /* UploadFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFBF1F224F4BE8A00BB662B /* UploadFromURL.swift */; };
 		5DFC8DC224ECEC9B00DDA006 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */; };
 		5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */; };
-		711342073D973616FEE2AB65 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925CDE2575F5BE7F55EBD685 /* Pods_iMEGA_MEGAPickerFileProvider.framework */; };
-		7193599AE9E650B5D5727DD3 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA37F8E1D224CF1FE2FD069 /* Pods_iMEGA_MEGANotifications.framework */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -694,6 +693,7 @@
 		77FD20182359E42B004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
+		7E04501233DD45005BD169D5 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82180C05739A204E51DBC53A /* Pods_iMEGA_MEGANotifications.framework */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C265E25DFC6D300E9B56E /* FavouriteNodesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C265D25DFC6D300E9B56E /* FavouriteNodesRepositoryProtocol.swift */; };
 		830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */; };
@@ -991,7 +991,6 @@
 		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		83FF5030247E86F600EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
-		842A2BDD4DEF84C08E11566D /* Pods_iMEGA_MEGAPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEAD82908C1128A089968676 /* Pods_iMEGA_MEGAPicker.framework */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
@@ -1125,7 +1124,6 @@
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
 		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
-		A1FA1B44B0922AE037298EC6 /* Pods_iMEGA_MEGAShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 293CE4E5C869F3554A805888 /* Pods_iMEGA_MEGAShare.framework */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
@@ -1369,8 +1367,7 @@
 		A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F71FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m */; };
 		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
-		ABE67DCFA612ECC09791DE94 /* Pods_iMEGA_MEGAIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC1F0EA37E21311962933E63 /* Pods_iMEGA_MEGAIntent.framework */; };
-		AD0FFCEE56528070B64086CE /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 108BCCD8A01F4FA842CBACF9 /* Pods_iMEGA_MEGAWidgetExtension.framework */; };
+		AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
@@ -1757,10 +1754,80 @@
 		BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */; };
 		BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */; };
 		BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */; };
+		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
+		C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */; };
+		C44CE0112590C66F00313719 /* AudioPlayer+EventObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */; };
+		C44CE01B2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */; };
+		C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D6DEC257013FB003D1723 /* AudioPlaylistViewController.swift */; };
+		C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D6DF625701415003D1723 /* AudioPlaylistViewRouter.swift */; };
+		C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D6DFE25701420003D1723 /* AudioPlaylistViewModel.swift */; };
+		C44FE40925B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */; };
+		C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */; };
+		C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */; };
+		C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */; };
+		C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */; };
+		C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */; };
+		C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */; };
+		C45321AE2592546E008BAA79 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45321AD2592546E008BAA79 /* UIViewController+Additions.swift */; };
+		C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390CC256587BF0026F215 /* MEGASlider.swift */; };
+		C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390D62565BB840026F215 /* MEGASelectedButton.swift */; };
+		C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */; };
+		C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */; };
+		C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */; };
+		C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */; };
+		C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2DF425D2B97F00915A83 /* AudioPlaylistViewModelTests.swift */; };
+		C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E0725D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift */; };
+		C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */; };
+		C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E2225D2E05100915A83 /* MiniPlayerViewModelTests.swift */; };
+		C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E2C25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift */; };
+		C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */; };
+		C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */; };
+		C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */; };
+		C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */; };
+		C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */; };
+		C45D791B2593AAB100EB6C2F /* MiniPlayerSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D791A2593AAB100EB6C2F /* MiniPlayerSource.swift */; };
+		C45D79252593AD5600EB6C2F /* MiniPlayerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */; };
+		C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */; };
+		C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E402025DD1C230060E116 /* AudioPlayerManager.swift */; };
 		C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
+		C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D675250DBAAB00D74666 /* StoreUserClient.swift */; };
+		C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */; };
+		C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */; };
+		C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */; };
+		C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */; };
+		C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */; };
+		C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF412570F0F400898D48 /* PlaylistItemTableViewCell.swift */; };
+		C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF4925711A9200898D48 /* AudioPlaylistIndexedSource.swift */; };
+		C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */; };
+		C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */; };
+		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
+		C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */; };
+		C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */; };
+		C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */; };
+		C49F8639255AE2030074A054 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8638255AE2030074A054 /* AudioPlayer.swift */; };
+		C49FB1EE258B6F1000B1280D /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */; };
 		C4A9146725814E2B008D879F /* UICollectionView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */; };
+		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
+		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
+		C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */; };
+		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
+		C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */; };
+		C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */; };
+		C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */; };
+		C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */; };
+		C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D673250DBA3900D74666 /* StoreUser.swift */; };
+		C4F0C913259E10190063C5C5 /* SDKAvatarClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient.swift */; };
+		C4F0C91C259E10200063C5C5 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		C4F0C91D259E10240063C5C5 /* SDKUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66F250D9C0200D74666 /* SDKUserClient.swift */; };
+		C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */; };
+		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
+		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
+		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
+		D5AA6B2E51A36623F0D218DB /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9B3EA07F8F091C5227E3C /* Pods_iMEGA_MEGAWidgetExtension.framework */; };
+		D73C71AA95D9B6E977AC1E94 /* Pods_iMEGA_MEGAPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37516D1F358D226D33BD2C /* Pods_iMEGA_MEGAPicker.framework */; };
+		DAECA35E488889DD64F98876 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635E004E70F3D28EB93A99B8 /* Pods_iMEGA_MEGAPickerFileProvider.framework */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -1882,23 +1949,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		02601A984A44E36E65AFC537 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.debug.xcconfig"; sourceTree = "<group>"; };
-		095DCFBE3BFEE732CC33F35D /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; sourceTree = "<group>"; };
+		0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEGAUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D30D86125BFA14A00C26367 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Additions.swift"; sourceTree = "<group>"; };
 		0D8DD97625B513830084FE6F /* FolderContentStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentStat.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
-		108BCCD8A01F4FA842CBACF9 /* Pods_iMEGA_MEGAWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		224E9D9CCAEA9F7F3A97F507 /* Pods-iMEGA-MEGAShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAShare.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAShare/Pods-iMEGA-MEGAShare.release.xcconfig"; sourceTree = "<group>"; };
-		24478A0E2C52EC401C501F3A /* Pods-iMEGA-MEGAShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAShare.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAShare/Pods-iMEGA-MEGAShare.debug.xcconfig"; sourceTree = "<group>"; };
-		265C4DAEC8867A40D5A2A99B /* Pods-iMEGA-MEGA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.release.xcconfig"; sourceTree = "<group>"; };
-		293CE4E5C869F3554A805888 /* Pods_iMEGA_MEGAShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAShare.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAShare/Pods-iMEGA-MEGAShare.debug.xcconfig"; sourceTree = "<group>"; };
+		27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.release.xcconfig"; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
 		2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManagmentTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageActionMenuViewController.swift; sourceTree = "<group>"; };
@@ -1981,7 +2048,7 @@
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
-		3572896EA9411ED912D26758 /* Pods-MEGAUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.release.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.release.xcconfig"; sourceTree = "<group>"; };
+		3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -1989,7 +2056,6 @@
 		410333FA1B9995DC00380FF3 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAVViewController.h; sourceTree = "<group>"; };
 		410AD3C01C883AA900BF939E /* MEGAAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAVViewController.m; sourceTree = "<group>"; };
-		41113786A1AE077EEB2BB928 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.debug.xcconfig"; sourceTree = "<group>"; };
 		411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollActivity.h; sourceTree = "<group>"; };
 		411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollActivity.m; sourceTree = "<group>"; };
 		4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MNZCategory.h"; sourceTree = "<group>"; };
@@ -2133,6 +2199,8 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.debug.xcconfig"; sourceTree = "<group>"; };
+		553A9E85EBBC3A2DE5994EEF /* Pods-iMEGA-MEGA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.release.xcconfig"; sourceTree = "<group>"; };
 		5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallTableViewCell.h; sourceTree = "<group>"; };
 		5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallTableViewCell.m; sourceTree = "<group>"; };
 		5B00B6E6210745BF0076D5BB /* FileManagementTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagementTableViewController.h; sourceTree = "<group>"; };
@@ -2397,7 +2465,6 @@
 		5D6092AD255D6ABD005FA3E4 /* ActionSheetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetFactory.swift; sourceTree = "<group>"; };
 		5D6092BC256219E1005FA3E4 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		5D60D50324DF77E700313955 /* Array+EmbedInStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+EmbedInStackView.swift"; sourceTree = "<group>"; };
-		5D60D78FA00854C399D21509 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
 		5D62093724ED1511004648A1 /* MEGANotificationUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGANotificationUseCaseTests.swift; sourceTree = "<group>"; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
 		5D646601248909F7006030A5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -2514,8 +2581,10 @@
 		5DFBF1F224F4BE8A00BB662B /* UploadFromURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFromURL.swift; sourceTree = "<group>"; };
 		5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
 		5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarGeneratingUseCaseTests.swift; sourceTree = "<group>"; };
-		645C2DE5F9C843B26DECC160 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B791A3F5735F9DED735B1D8 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; sourceTree = "<group>"; };
+		635E004E70F3D28EB93A99B8 /* Pods_iMEGA_MEGAPickerFileProvider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPickerFileProvider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6462E4EC10864E0093B28129 /* Pods-iMEGA-MEGAIntent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.release.xcconfig"; sourceTree = "<group>"; };
+		6EB2987BE3BFDB8070962245 /* Pods-iMEGA-MEGA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.debug.xcconfig"; sourceTree = "<group>"; };
+		70F9B3EA07F8F091C5227E3C /* Pods_iMEGA_MEGAWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -2610,6 +2679,8 @@
 		77FD1FFF2359A5A7004FB892 /* libnative_api.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_api.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_api.a; sourceTree = "<group>"; };
 		77FD20002359A5A7004FB892 /* libvideocapture_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvideocapture_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideocapture_objc.a; sourceTree = "<group>"; };
 		77FD20012359A5A7004FB892 /* libnative_video.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_video.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_video.a; sourceTree = "<group>"; };
+		7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig"; sourceTree = "<group>"; };
+		82180C05739A204E51DBC53A /* Pods_iMEGA_MEGANotifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGANotifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830C265D25DFC6D300E9B56E /* FavouriteNodesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteNodesRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -2852,8 +2923,6 @@
 		83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
-		925CDE2575F5BE7F55EBD685 /* Pods_iMEGA_MEGAPickerFileProvider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPickerFileProvider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		934264B7600276F886F2EB54 /* Pods-iMEGA-MEGAPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.release.xcconfig"; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
 		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
@@ -2907,8 +2976,6 @@
 		949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94B28C231F0E464C000331E6 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Release-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
-		969BB4CD1E78FFA91617C752 /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig"; sourceTree = "<group>"; };
-		A3A5060931469CDC0F0490FF /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A802B1FB1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatStartCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -3243,6 +3310,8 @@
 		A8F6E88E1F9E75B60087859C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
+		AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
@@ -3481,8 +3550,9 @@
 		B6E7A8E22503897A00CD6AC2 /* PreferenceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceWrapper.swift; sourceTree = "<group>"; };
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
-		BAD298015662FD875114F602 /* Pods-MEGAUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BEAD82908C1128A089968676 /* Pods_iMEGA_MEGAPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.debug.xcconfig"; sourceTree = "<group>"; };
+		BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.release.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.release.xcconfig"; sourceTree = "<group>"; };
+		BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 4.xcdatamodel"; sourceTree = "<group>"; };
 		BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceClipInputBar.swift; sourceTree = "<group>"; };
 		BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceClipInputBar.xib; sourceTree = "<group>"; };
@@ -3518,6 +3588,7 @@
 		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
+		BF37516D1F358D226D33BD2C /* Pods_iMEGA_MEGAPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF3809E72577494700689A63 /* UITableView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Additions.swift"; sourceTree = "<group>"; };
 		BF46B7F125A68316008641BB /* PSARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSARepository.swift; sourceTree = "<group>"; };
 		BF46B7FD25A6897D008641BB /* PSAEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAEntity.swift; sourceTree = "<group>"; };
@@ -3684,12 +3755,72 @@
 		BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesDownloadUseCase.swift; sourceTree = "<group>"; };
 		BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodeClipboardOperationRepository.swift; sourceTree = "<group>"; };
 		BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeClipboardOperationUseCase.swift; sourceTree = "<group>"; };
-		C3BEE149B079214E2044B465 /* Pods_MEGAUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEGAUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
+		C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+RemoteCommand.swift"; sourceTree = "<group>"; };
+		C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+EventObservers.swift"; sourceTree = "<group>"; };
+		C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+PlaybackEvents.swift"; sourceTree = "<group>"; };
+		C44D6DEC257013FB003D1723 /* AudioPlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewController.swift; sourceTree = "<group>"; };
+		C44D6DF625701415003D1723 /* AudioPlaylistViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewRouter.swift; sourceTree = "<group>"; };
+		C44D6DFE25701420003D1723 /* AudioPlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewModel.swift; sourceTree = "<group>"; };
+		C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+MetadataLoader.swift"; sourceTree = "<group>"; };
+		C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderFooterView.swift; sourceTree = "<group>"; };
+		C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistHeaderFooterView.xib; sourceTree = "<group>"; };
+		C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoRepository.swift; sourceTree = "<group>"; };
+		C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCase.swift; sourceTree = "<group>"; };
+		C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+AudioPlayer.swift"; sourceTree = "<group>"; };
+		C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaybackTests.swift; sourceTree = "<group>"; };
+		C45321AD2592546E008BAA79 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
+		C45390CC256587BF0026F215 /* MEGASlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASlider.swift; sourceTree = "<group>"; };
+		C45390D62565BB840026F215 /* MEGASelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASelectedButton.swift; sourceTree = "<group>"; };
+		C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
+		C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCase.swift; sourceTree = "<group>"; };
+		C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Notifiers.swift"; sourceTree = "<group>"; };
+		C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerViewRouter.swift; sourceTree = "<group>"; };
+		C45A2DF425D2B97F00915A83 /* AudioPlaylistViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewModelTests.swift; sourceTree = "<group>"; };
+		C45A2E0725D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlaylistViewRouter.swift; sourceTree = "<group>"; };
+		C45A2E2225D2E05100915A83 /* MiniPlayerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModelTests.swift; sourceTree = "<group>"; };
+		C45A2E2C25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMiniPlayerViewRouter.swift; sourceTree = "<group>"; };
+		C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkActionViewControllerDelegate.swift; sourceTree = "<group>"; };
+		C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		C45D791A2593AAB100EB6C2F /* MiniPlayerSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSource.swift; sourceTree = "<group>"; };
+		C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSource.swift; sourceTree = "<group>"; };
+		C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDelegate.swift; sourceTree = "<group>"; };
+		C45E402025DD1C230060E116 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
+		C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
+		C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModelTests.swift; sourceTree = "<group>"; };
+		C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoRepository.swift; sourceTree = "<group>"; };
+		C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOfflineFileInfoRepository.swift; sourceTree = "<group>"; };
+		C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreaminginfoRepository.swift; sourceTree = "<group>"; };
+		C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerHandler.swift; sourceTree = "<group>"; };
+		C480AF412570F0F400898D48 /* PlaylistItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemTableViewCell.swift; sourceTree = "<group>"; };
+		C480AF4925711A9200898D48 /* AudioPlaylistIndexedSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistIndexedSource.swift; sourceTree = "<group>"; };
+		C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistSource.swift; sourceTree = "<group>"; };
+		C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistIndexedDelegate.swift; sourceTree = "<group>"; };
+		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
+		C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
+		C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouter.swift; sourceTree = "<group>"; };
+		C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
+		C49F8638255AE2030074A054 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Additions.swift"; sourceTree = "<group>"; };
 		C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Additions.swift"; sourceTree = "<group>"; };
-		CB3754845CFE5EE4053A6C67 /* Pods-iMEGA-MEGAPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.debug.xcconfig"; sourceTree = "<group>"; };
-		DBA33BC8EB7660C3C0CBA26C /* Pods-iMEGA-MEGA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.debug.xcconfig"; sourceTree = "<group>"; };
+		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
+		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
+		C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
+		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
+		C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCurrentStateEntity.swift; sourceTree = "<group>"; };
+		C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCase.swift; sourceTree = "<group>"; };
+		C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoRepository.swift; sourceTree = "<group>"; };
+		C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+Additions.swift"; sourceTree = "<group>"; };
+		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
+		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
+		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
+		E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAShare.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAShare/Pods-iMEGA-MEGAShare.release.xcconfig"; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -3776,9 +3907,7 @@
 		E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveLinkActivity.m; sourceTree = "<group>"; };
 		E8F7917C1BC5754A00C58676 /* ShareFolderActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFolderActivity.h; sourceTree = "<group>"; };
 		E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFolderActivity.m; sourceTree = "<group>"; };
-		F61951DA5F00CCDEA93F0826 /* Pods-iMEGA-MEGAIntent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.release.xcconfig"; sourceTree = "<group>"; };
-		FC1F0EA37E21311962933E63 /* Pods_iMEGA_MEGAIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFA37F8E1D224CF1FE2FD069 /* Pods_iMEGA_MEGANotifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGANotifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE81B51B3AC6FB2F5A212B06 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3812,7 +3941,7 @@
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
 				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
-				5760ADF99DB8C13A7A64C7F2 /* Pods_iMEGA_MEGA.framework in Frameworks */,
+				4D0B2F71E80816B269390FE4 /* Pods_iMEGA_MEGA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3851,7 +3980,7 @@
 				77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */,
 				7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */,
 				A811DCBF2476C4EB002FCD98 /* CoreServices.framework in Frameworks */,
-				7193599AE9E650B5D5727DD3 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */,
+				7E04501233DD45005BD169D5 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3891,7 +4020,7 @@
 				835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */,
 				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
 				83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */,
-				AD0FFCEE56528070B64086CE /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */,
+				D5AA6B2E51A36623F0D218DB /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3899,7 +4028,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABE67DCFA612ECC09791DE94 /* Pods_iMEGA_MEGAIntent.framework in Frameworks */,
+				AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3950,7 +4079,7 @@
 				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
 				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
-				842A2BDD4DEF84C08E11566D /* Pods_iMEGA_MEGAPicker.framework in Frameworks */,
+				D73C71AA95D9B6E977AC1E94 /* Pods_iMEGA_MEGAPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3984,7 +4113,7 @@
 				A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */,
-				711342073D973616FEE2AB65 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */,
+				DAECA35E488889DD64F98876 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4026,7 +4155,7 @@
 				A811DCBA2476C47F002FCD98 /* MetalKit.framework in Frameworks */,
 				A811DCBE2476C4E0002FCD98 /* CoreServices.framework in Frameworks */,
 				943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */,
-				A1FA1B44B0922AE037298EC6 /* Pods_iMEGA_MEGAShare.framework in Frameworks */,
+				1E4FEE43BA4A9B2FBBB75D86 /* Pods_iMEGA_MEGAShare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4034,7 +4163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40FBC6237ED3EFEDB3CECD23 /* Pods_MEGAUnitTests.framework in Frameworks */,
+				32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4075,12 +4204,12 @@
 		1373618C1A6664C300B740E8 /* iMEGA */ = {
 			isa = PBXGroup;
 			children = (
+				5D5BFC9D24BD6B4900845194 /* Home */,
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				41840EE81E811CD600D8308D /* MEGAApplication.h */,
 				41840EE91E811CD600D8308D /* MEGAApplication.m */,
-				5D5BFC9D24BD6B4900845194 /* Home */,
 				A88E7FE42549FD8A001B0A66 /* Recents */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
@@ -4097,6 +4226,7 @@
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
 				E889C9DE1B55652B00ECEFDF /* My Account */,
 				41EABF181DA7C53A0087271C /* Chat */,
+				C49F8610255ABD6A0074A054 /* AudioPlayer */,
 				BF46B82525AB98F3008641BB /* PSA */,
 				9419B6BD1F20D18300FEBE31 /* Spotlight */,
 				5B5FBDDD20BD8C76000EE35B /* Two Factor Authentication */,
@@ -4373,6 +4503,7 @@
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
 				B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */,
 				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
+				C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */,
@@ -4433,6 +4564,7 @@
 				5D9DC3CA253EB7AF0055F4C4 /* Foundation */,
 				B695E57E23275A3800D12B9E /* Functions */,
 				5B2417E620527F5900C8DDE2 /* Headers */,
+				C45C2FA425C94D5800315369 /* Delegates */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
 				5D72206D24A1D93400910945 /* MarkedString */,
@@ -4460,6 +4592,8 @@
 				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
 				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
 				B654BF3824FF123700A3CBC8 /* MVVM-R.swift */,
+				C45390CC256587BF0026F215 /* MEGASlider.swift */,
+				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
 				7747B2D5208623550011814E /* Network */,
 				5D646600248909D5006030A5 /* Theme */,
 				5DE448E7248D159000EE00CB /* UIKit+Tools */,
@@ -4564,14 +4698,14 @@
 				9432290A1EDD8271007DB542 /* QuartzCore.framework */,
 				83199F1225556CD900344531 /* WidgetKit.framework */,
 				83199F1425556CDA00344531 /* SwiftUI.framework */,
-				C3BEE149B079214E2044B465 /* Pods_MEGAUnitTests.framework */,
-				645C2DE5F9C843B26DECC160 /* Pods_iMEGA_MEGA.framework */,
-				FC1F0EA37E21311962933E63 /* Pods_iMEGA_MEGAIntent.framework */,
-				FFA37F8E1D224CF1FE2FD069 /* Pods_iMEGA_MEGANotifications.framework */,
-				BEAD82908C1128A089968676 /* Pods_iMEGA_MEGAPicker.framework */,
-				925CDE2575F5BE7F55EBD685 /* Pods_iMEGA_MEGAPickerFileProvider.framework */,
-				293CE4E5C869F3554A805888 /* Pods_iMEGA_MEGAShare.framework */,
-				108BCCD8A01F4FA842CBACF9 /* Pods_iMEGA_MEGAWidgetExtension.framework */,
+				0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */,
+				AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */,
+				3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */,
+				82180C05739A204E51DBC53A /* Pods_iMEGA_MEGANotifications.framework */,
+				BF37516D1F358D226D33BD2C /* Pods_iMEGA_MEGAPicker.framework */,
+				635E004E70F3D28EB93A99B8 /* Pods_iMEGA_MEGAPickerFileProvider.framework */,
+				0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */,
+				70F9B3EA07F8F091C5227E3C /* Pods_iMEGA_MEGAWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4770,10 +4904,13 @@
 				BF7D43BA253D0930003DF1DA /* Sequence+Additions.swift */,
 				BFE6E55D25535DEB00050DCA /* UITableViewCell+Additions.swift */,
 				BF3809E72577494700689A63 /* UITableView+Additions.swift */,
+				C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */,
+				C45321AD2592546E008BAA79 /* UIViewController+Additions.swift */,
 				C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */,
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
 				BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */,
 				0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */,
+				C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */,
 				83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */,
 			);
 			path = Categories;
@@ -5227,6 +5364,8 @@
 				5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */,
 				5D66F8C524E507900088E5FF /* BadgeButton.swift */,
 				5D66F8C724E510510088E5FF /* PaddingLabel.swift */,
+				C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */,
+				C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5370,7 +5509,6 @@
 			isa = PBXGroup;
 			children = (
 				5D166B78252196D8004F4F4A /* HomeSearchResultRouter.swift */,
-				5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -5567,6 +5705,7 @@
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
 				5D33D675250DBAAB00D74666 /* StoreUserClient.swift */,
+				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -6202,22 +6341,22 @@
 		6A14AF05052121F51C5E2D0C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BAD298015662FD875114F602 /* Pods-MEGAUnitTests.debug.xcconfig */,
-				3572896EA9411ED912D26758 /* Pods-MEGAUnitTests.release.xcconfig */,
-				DBA33BC8EB7660C3C0CBA26C /* Pods-iMEGA-MEGA.debug.xcconfig */,
-				265C4DAEC8867A40D5A2A99B /* Pods-iMEGA-MEGA.release.xcconfig */,
-				02601A984A44E36E65AFC537 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */,
-				F61951DA5F00CCDEA93F0826 /* Pods-iMEGA-MEGAIntent.release.xcconfig */,
-				41113786A1AE077EEB2BB928 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */,
-				5D60D78FA00854C399D21509 /* Pods-iMEGA-MEGANotifications.release.xcconfig */,
-				CB3754845CFE5EE4053A6C67 /* Pods-iMEGA-MEGAPicker.debug.xcconfig */,
-				934264B7600276F886F2EB54 /* Pods-iMEGA-MEGAPicker.release.xcconfig */,
-				6B791A3F5735F9DED735B1D8 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */,
-				969BB4CD1E78FFA91617C752 /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */,
-				24478A0E2C52EC401C501F3A /* Pods-iMEGA-MEGAShare.debug.xcconfig */,
-				224E9D9CCAEA9F7F3A97F507 /* Pods-iMEGA-MEGAShare.release.xcconfig */,
-				A3A5060931469CDC0F0490FF /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */,
-				095DCFBE3BFEE732CC33F35D /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */,
+				BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */,
+				BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */,
+				6EB2987BE3BFDB8070962245 /* Pods-iMEGA-MEGA.debug.xcconfig */,
+				553A9E85EBBC3A2DE5994EEF /* Pods-iMEGA-MEGA.release.xcconfig */,
+				FE81B51B3AC6FB2F5A212B06 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */,
+				6462E4EC10864E0093B28129 /* Pods-iMEGA-MEGAIntent.release.xcconfig */,
+				4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */,
+				A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */,
+				BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */,
+				27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */,
+				082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */,
+				7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */,
+				21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */,
+				E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */,
+				11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */,
+				188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -8094,6 +8233,7 @@
 				B63AEB122511F73C000B8517 /* SMSVerification */,
 				5DF330E624B7EE5C0099D936 /* DateFormatting */,
 				837B9C0824781B1600D409B4 /* NodeActions */,
+				C452B66225CD4E550073B22C /* AudioPlayer */,
 				B6CED48F22B8AC70009C4861 /* Info.plist */,
 				5B076EDA22C251BF00D773B9 /* CameraUpload */,
 			);
@@ -8500,12 +8640,199 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		C44CDFA32590A08F00313719 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				C49F8638255AE2030074A054 /* AudioPlayer.swift */,
+				C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */,
+				C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */,
+				C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */,
+				C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */,
+				C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */,
+				C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */,
+				C45E402025DD1C230060E116 /* AudioPlayerManager.swift */,
+			);
+			path = AudioPlayer;
+			sourceTree = "<group>";
+		};
+		C452B66225CD4E550073B22C /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */,
+				C47E7C0025D18FC800DB6FF5 /* Repository */,
+				C45A2E3625D2F7F100915A83 /* UseCases */,
+				C45A2E0625D2B9C200915A83 /* Routers */,
+				C45A2DF325D2B93B00915A83 /* ViewModel */,
+			);
+			path = AudioPlayer;
+			sourceTree = "<group>";
+		};
+		C453AB70256E5F8D005E4E1B /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C49F861F255ABE860074A054 /* AudioPlayerScene */,
+				C453AB75256E5FCF005E4E1B /* AudioPlaylistScene */,
+				C4AF4A8B2582833200594716 /* MiniPlayerScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C453AB73256E5F9E005E4E1B /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */,
+				C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */,
+				C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		C453AB74256E5FB6005E4E1B /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				C4CBDD4E256EC8F800835CF5 /* Domain */,
+				C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */,
+				C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */,
+				C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		C453AB75256E5FCF005E4E1B /* AudioPlaylistScene */ = {
+			isa = PBXGroup;
+			children = (
+				C480AF3E2570F0C200898D48 /* Cells */,
+				C44D6DEC257013FB003D1723 /* AudioPlaylistViewController.swift */,
+				C44D6DF625701415003D1723 /* AudioPlaylistViewRouter.swift */,
+				C44D6DFE25701420003D1723 /* AudioPlaylistViewModel.swift */,
+				C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */,
+				C480AF4925711A9200898D48 /* AudioPlaylistIndexedSource.swift */,
+				C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */,
+			);
+			path = AudioPlaylistScene;
+			sourceTree = "<group>";
+		};
+		C45A2DF325D2B93B00915A83 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */,
+				C45A2DF425D2B97F00915A83 /* AudioPlaylistViewModelTests.swift */,
+				C45A2E2225D2E05100915A83 /* MiniPlayerViewModelTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C45A2E0625D2B9C200915A83 /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+				C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */,
+				C45A2E0725D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift */,
+				C45A2E2C25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift */,
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
+		C45A2E3625D2F7F100915A83 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */,
+				C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */,
+				C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		C45C2FA425C94D5800315369 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */,
+				C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		C45D79072593A89F00EB6C2F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C47E7C0025D18FC800DB6FF5 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */,
+				C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */,
+				C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */,
+				C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		C480AF3E2570F0C200898D48 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C480AF412570F0F400898D48 /* PlaylistItemTableViewCell.swift */,
+				C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */,
+				C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C49F8610255ABD6A0074A054 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				C49F8617255ABE810074A054 /* AudioPlayer.storyboard */,
+				C453AB73256E5F9E005E4E1B /* Repository */,
+				C453AB74256E5FB6005E4E1B /* UseCases */,
+				C44CDFA32590A08F00313719 /* AudioPlayer */,
+				C453AB70256E5F8D005E4E1B /* Scenes */,
+			);
+			path = AudioPlayer;
+			sourceTree = "<group>";
+		};
+		C49F861F255ABE860074A054 /* AudioPlayerScene */ = {
+			isa = PBXGroup;
+			children = (
+				C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */,
+				C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */,
+				C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */,
+				C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */,
+			);
+			path = AudioPlayerScene;
+			sourceTree = "<group>";
+		};
+		C4AF4A8B2582833200594716 /* MiniPlayerScene */ = {
+			isa = PBXGroup;
+			children = (
+				C45D79072593A89F00EB6C2F /* Cells */,
+				C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */,
+				C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */,
+				C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */,
+				C45D791A2593AAB100EB6C2F /* MiniPlayerSource.swift */,
+				C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */,
+				C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */,
+			);
+			path = MiniPlayerScene;
+			sourceTree = "<group>";
+		};
+		C4CBDD4E256EC8F800835CF5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */,
+				C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
+				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
 				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
 				E85044C41A6D84620064B675 /* FileLinkViewController.h */,
@@ -8632,14 +8959,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */;
 			buildPhases = (
-				BD08375549D3EF77A6CDE759 /* [CP] Check Pods Manifest.lock */,
+				5D2EF5C25E3D5EA36A14929E /* [CP] Check Pods Manifest.lock */,
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
 				942254FF1EDC03150074C51A /* Embed App Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script */,
-				04805C15AD27AB7907EF932F /* [CP] Embed Pods Frameworks */,
 				B6CB4E4C253EFA8A0009E87F /* Crashlytics */,
+				54B2F3203E01F695C1D764F2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -8660,7 +8987,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7794AEDE231E4E0A0039C1D2 /* Build configuration list for PBXNativeTarget "MEGANotifications" */;
 			buildPhases = (
-				015F9E8DB7798B872FD6685D /* [CP] Check Pods Manifest.lock */,
+				C4BEDEAE5B76A0F7B4B12BDD /* [CP] Check Pods Manifest.lock */,
 				7794AED0231E4E0A0039C1D2 /* Sources */,
 				7794AED1231E4E0A0039C1D2 /* Frameworks */,
 				7794AED2231E4E0A0039C1D2 /* Resources */,
@@ -8679,7 +9006,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83199F2325556CDE00344531 /* Build configuration list for PBXNativeTarget "MEGAWidgetExtension" */;
 			buildPhases = (
-				BF30BEC4FD6B150ADAC2A95F /* [CP] Check Pods Manifest.lock */,
+				9C6AD6E6C71ACDB04A768452 /* [CP] Check Pods Manifest.lock */,
 				83199F0D25556CD900344531 /* Sources */,
 				83199F0E25556CD900344531 /* Frameworks */,
 				83199F0F25556CD900344531 /* Resources */,
@@ -8698,7 +9025,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 831B4916256FED700086002B /* Build configuration list for PBXNativeTarget "MEGAIntent" */;
 			buildPhases = (
-				9DEDFF23376C41E52D55096D /* [CP] Check Pods Manifest.lock */,
+				82FB76D6AD4E16551B2DC94C /* [CP] Check Pods Manifest.lock */,
 				831B490A256FED6F0086002B /* Sources */,
 				831B490B256FED6F0086002B /* Frameworks */,
 				831B490C256FED6F0086002B /* Resources */,
@@ -8717,7 +9044,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */;
 			buildPhases = (
-				2B6F0A95DCB25A395212C2D0 /* [CP] Check Pods Manifest.lock */,
+				36F095DBB25B8BB2F337B561 /* [CP] Check Pods Manifest.lock */,
 				942254D81EDC03130074C51A /* Sources */,
 				942254D91EDC03130074C51A /* Frameworks */,
 				942254DA1EDC03130074C51A /* Resources */,
@@ -8736,7 +9063,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 942254F91EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPickerFileProvider" */;
 			buildPhases = (
-				FDEB72F36B91CC901E0A8752 /* [CP] Check Pods Manifest.lock */,
+				56262E2C75BA0B5BCF780399 /* [CP] Check Pods Manifest.lock */,
 				942254E71EDC03140074C51A /* Sources */,
 				942254E81EDC03140074C51A /* Frameworks */,
 				942254E91EDC03140074C51A /* Resources */,
@@ -8755,7 +9082,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 943F8B1D1EF26E9C00AFD89F /* Build configuration list for PBXNativeTarget "MEGAShare" */;
 			buildPhases = (
-				3AE460937F9BA97DEF4A3C69 /* [CP] Check Pods Manifest.lock */,
+				83C1A17A656507E15D14B3FC /* [CP] Check Pods Manifest.lock */,
 				943F8B0B1EF26E9C00AFD89F /* Sources */,
 				943F8B0C1EF26E9C00AFD89F /* Frameworks */,
 				943F8B0D1EF26E9C00AFD89F /* Resources */,
@@ -8774,7 +9101,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6CED49422B8AC70009C4861 /* Build configuration list for PBXNativeTarget "MEGAUnitTests" */;
 			buildPhases = (
-				E5C7A06968F8301F40041512 /* [CP] Check Pods Manifest.lock */,
+				D678B681B385A70EC4307942 /* [CP] Check Pods Manifest.lock */,
 				B6CED48722B8AC70009C4861 /* Sources */,
 				B6CED48822B8AC70009C4861 /* Frameworks */,
 				B6CED48922B8AC70009C4861 /* Resources */,
@@ -8984,6 +9311,7 @@
 				5D4244E1251305BD00EE544D /* SearchResultFileTableViewCell.xib in Resources */,
 				C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */,
 				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
+				C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */,
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */,
 				2F528CAE24739053006DE5C2 /* LoadingMessageReusableView.xib in Resources */,
@@ -9030,6 +9358,7 @@
 				5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */,
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
 				5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */,
+				C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */,
 				BF9457C324FDC8EE0048F82B /* PhotosExplorerViewController.xib in Resources */,
 				BFAB114823CEA5C300BCE72D /* PhotoCarouselViewController.xib in Resources */,
 				BFAAF718252E85810053A9BF /* VideoExplorerTableViewCell.xib in Resources */,
@@ -9040,6 +9369,7 @@
 				83B0B461242CC24E00468191 /* ChatSharedItems.storyboard in Resources */,
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
+				C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
 				B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */,
 				5DAC09DF24CFE832001B6476 /* MEGABannerView.xib in Resources */,
@@ -9202,7 +9532,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		015F9E8DB7798B872FD6685D /* [CP] Check Pods Manifest.lock */ = {
+		2FCB996A24CA8CA10040E825 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
+		};
+		36F095DBB25B8BB2F337B561 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9217,14 +9565,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGANotifications-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAPicker-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		04805C15AD27AB7907EF932F /* [CP] Embed Pods Frameworks */ = {
+		54B2F3203E01F695C1D764F2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9290,7 +9638,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2B6F0A95DCB25A395212C2D0 /* [CP] Check Pods Manifest.lock */ = {
+		56262E2C75BA0B5BCF780399 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9305,14 +9653,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAPicker-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAPickerFileProvider-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2FCB996A24CA8CA10040E825 /* Run Script */ = {
+		5D2EF5C25E3D5EA36A14929E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9320,17 +9668,43 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Run Script";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGA-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		3AE460937F9BA97DEF4A3C69 /* [CP] Check Pods Manifest.lock */ = {
+		82FB76D6AD4E16551B2DC94C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAIntent-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83C1A17A656507E15D14B3FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9352,7 +9726,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9DEDFF23376C41E52D55096D /* [CP] Check Pods Manifest.lock */ = {
+		9C6AD6E6C71ACDB04A768452 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9367,7 +9741,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAIntent-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAWidgetExtension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -9514,7 +9888,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		BD08375549D3EF77A6CDE759 /* [CP] Check Pods Manifest.lock */ = {
+		C4BEDEAE5B76A0F7B4B12BDD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9529,36 +9903,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGA-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGANotifications-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BF30BEC4FD6B150ADAC2A95F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAWidgetExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E5C7A06968F8301F40041512 /* [CP] Check Pods Manifest.lock */ = {
+		D678B681B385A70EC4307942 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9574,28 +9926,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-MEGAUnitTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FDEB72F36B91CC901E0A8752 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAPickerFileProvider-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -9666,6 +9996,7 @@
 				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,
 				5D56820B252FEC9800FE7F9C /* Reader+GroupingSorting.swift in Sources */,
 				2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */,
+				C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
@@ -9674,11 +10005,13 @@
 				BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
+				C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */,
 				B662B86324ED056B0089376A /* PreferenceKeyEntity.swift in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				830C270125E40ADC00E9B56E /* FavouriteItemEntity.swift in Sources */,
 				5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */,
 				B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */,
+				C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */,
 				A86B9F3E2316D6AB00F35E7A /* FLEXNetworkTransactionTableViewCell.m in Sources */,
 				A86B9F5F2316D6AB00F35E7A /* FLEXObjectRef.m in Sources */,
 				A86B9F492316D6AB00F35E7A /* FLEXDefaultEditorViewController.m in Sources */,
@@ -9728,9 +10061,11 @@
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */,
+				C49F8639255AE2030074A054 /* AudioPlayer.swift in Sources */,
 				BF943E9E235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */,
 				B662B87B24F76DAC0089376A /* AchievementTypeEntity.swift in Sources */,
 				5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */,
+				C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */,
 				B662B85B24ECC7A30089376A /* AddPhoneNumberRouter.swift in Sources */,
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				A86B9F2B2316D6AB00F35E7A /* FLEXImageExplorerViewController.m in Sources */,
@@ -9744,6 +10079,7 @@
 				A86B9F472316D6AB00F35E7A /* FLEXMutableFieldEditorViewController.m in Sources */,
 				B65AC8E321F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m in Sources */,
 				B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */,
+				C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				A86B9F522316D6AB00F35E7A /* FLEXArgumentInputDateView.m in Sources */,
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
@@ -9751,6 +10087,7 @@
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
+				C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */,
 				5D3CD8A42531829B00E3B459 /* MEGAAppGroupFilePathUseCaseProtocol.swift in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */,
@@ -9760,6 +10097,7 @@
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */,
 				5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */,
+				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				41D21DF01D01AE89002E6296 /* ALView+PureLayout.m in Sources */,
 				BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */,
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
@@ -9773,6 +10111,7 @@
 				A86B9F5C2316D6AB00F35E7A /* FLEXWindow.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
+				C44FE40925B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift in Sources */,
 				835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				5D3AD46F252C370C006986AF /* CellConfiguration.swift in Sources */,
@@ -9856,6 +10195,7 @@
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
 				83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */,
 				8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */,
+				C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */,
 				830C269B25DFCABC00E9B56E /* QuickAccessWidgetErrorEntity.swift in Sources */,
@@ -9910,6 +10250,7 @@
 				5D8C5AB524EF974800EDD7A9 /* FileUploadingViewModel.swift in Sources */,
 				83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */,
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
+				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
 				A86B9F452316D6AB00F35E7A /* FLEXExplorerToolbar.m in Sources */,
@@ -9918,6 +10259,7 @@
 				A86B9F782316D6AB00F35E7A /* FLEXCookiesTableViewController.m in Sources */,
 				5DAC09D524CFCA16001B6476 /* MEGACarouselFlowLayout.swift in Sources */,
 				B654BF3924FF123700A3CBC8 /* MVVM-R.swift in Sources */,
+				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
 				5D31674D24FCA9880032492F /* UIViewController+DevicePermissionAlerting.swift in Sources */,
@@ -9940,6 +10282,7 @@
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
 				B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */,
 				BFAB114723CEA5C300BCE72D /* PhotoCarouselViewController.swift in Sources */,
+				C49FB1EE258B6F1000B1280D /* CALayer+Additions.swift in Sources */,
 				5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */,
 				B6AADED5251896D1009A874C /* AuthRepository.swift in Sources */,
 				A86B9F7A2316D6AB00F35E7A /* FLEXLiveObjectsTableViewController.m in Sources */,
@@ -9951,6 +10294,7 @@
 				A86B9F352316D6AB00F35E7A /* FLEXViewExplorerViewController.m in Sources */,
 				BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */,
 				5B51E2E124597A39009379BA /* MOUser+CoreDataProperties.m in Sources */,
+				C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */,
 				771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
@@ -9965,6 +10309,7 @@
 				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
 				5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
+				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
@@ -9996,12 +10341,14 @@
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
 				BF3809E82577494700689A63 /* UITableView+Additions.swift in Sources */,
 				5D92DD1124BFE2B200D7D13B /* DateFormatting.swift in Sources */,
+				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
 				A86B9F4B2316D6AB00F35E7A /* FLEXIvarEditorViewController.m in Sources */,
 				A86B9F6E2316D6AB00F35E7A /* FLEXAddressExplorerCoordinator.m in Sources */,
 				5D667EEC24ECF9400092474D /* StoreUser.swift in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				B662B86524ED0D800089376A /* VerificationCodeViewModel.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
+				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				5D9DC3E1253EB9230055F4C4 /* UnitDataStorage.swift in Sources */,
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
@@ -10009,6 +10356,7 @@
 				5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */,
 				B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
+				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
@@ -10024,6 +10372,7 @@
 				B6AADEC2251894C1009A874C /* AchievementRepositoryProtocol.swift in Sources */,
 				A86B9F412316D6AB00F35E7A /* FLEXNetworkHistoryTableViewController.m in Sources */,
 				BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */,
+				C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */,
 				BFB463F32434296000FB90B9 /* IndexPath+Additions.swift in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
@@ -10058,6 +10407,7 @@
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				5D8303E7256270800082CA18 /* BannerEntity.swift in Sources */,
 				5D4244D22512005500EE544D /* NodeSearchRepository.swift in Sources */,
+				C45321AE2592546E008BAA79 /* UIViewController+Additions.swift in Sources */,
 				830C26AF25DFCE5300E9B56E /* FavouriteNodesUseCase.swift in Sources */,
 				5D79EDD4251C71B500C0307A /* SearchHintTableViewCell.swift in Sources */,
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
@@ -10100,6 +10450,7 @@
 				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
 				A86B9F812316D6AB00F35E7A /* FLEXHeapEnumerator.m in Sources */,
+				C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
@@ -10133,6 +10484,7 @@
 				5D66F8C824E510510088E5FF /* PaddingLabel.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
+				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
 				5DC4DE0D24DBC27900D9AD16 /* ExploreViewStack.swift in Sources */,
 				83BD328025DD3C7200F8B91D /* FavouriteItemsUseCase.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
@@ -10145,6 +10497,7 @@
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
+				C44CE0112590C66F00313719 /* AudioPlayer+EventObservers.swift in Sources */,
 				5BFA9618252E0E13003653EB /* ManageHistoryRepositoryProtocol.swift in Sources */,
 				B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */,
 				A86B9F742316D6AB00F35E7A /* FLEXMultiColumnTableView.m in Sources */,
@@ -10211,7 +10564,9 @@
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				A86B9F5B2316D6AB00F35E7A /* FLEXExplorerViewController.m in Sources */,
+				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
 				5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */,
+				C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */,
 				B662B88124F8CB490089376A /* MEGAError+Addition.swift in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
 				A86B9F792316D6AB00F35E7A /* FLEXLibrariesTableViewController.m in Sources */,
@@ -10219,6 +10574,7 @@
 				5D342A3D2537ED7600039273 /* PhotoExplorerCollectionCell.swift in Sources */,
 				5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
+				C45D791B2593AAB100EB6C2F /* MiniPlayerSource.swift in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
@@ -10267,8 +10623,10 @@
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				BF7EBD3F24526A140015255F /* AddToChatMediaCollectionSource.swift in Sources */,
 				BF5E33A02558D3EB0055395E /* FileExplorerGridCellViewModel.swift in Sources */,
+				C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */,
 				77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */,
 				B662B86E24F32ED70089376A /* RegionEntity.swift in Sources */,
+				C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */,
 				5D8DC6B5248CB1D70067A4F9 /* UIButton+BackgroundColor.swift in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
@@ -10280,9 +10638,11 @@
 				5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */,
 				5D92DD1524BFE2B200D7D13B /* Date+Manipulation.swift in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
+				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
 				5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */,
 				5D17CFAF25466D090000194A /* ReachabilityUseCaseProtocol.swift in Sources */,
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
+				C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */,
 				A86B9F392316D6AB00F35E7A /* FLEXTableViewCell.m in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
@@ -10293,6 +10653,7 @@
 				5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */,
 				5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */,
 				83FB143A219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
+				C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				A86B9F4F2316D6AB00F35E7A /* FLEXArgumentInputView.m in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
@@ -10308,6 +10669,7 @@
 				5BE7BEE523745FC700BBD23F /* EmptyStateView.m in Sources */,
 				BFAB113D23CEA5C300BCE72D /* PhotoGridViewCell.swift in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
+				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
 				BF9457CE24FF02360048F82B /* PhotoExplorerCollectionSectionHeaderView.swift in Sources */,
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
 				A86B9F3F2316D6AB00F35E7A /* FLEXNetworkCurlLogger.m in Sources */,
@@ -10317,6 +10679,7 @@
 				7764AAB3246EE18E00134C88 /* MegaAvatarView.swift in Sources */,
 				5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */,
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
+				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
@@ -10327,6 +10690,7 @@
 				834AD6062024694200D2527F /* MGSwipeTableCell.m in Sources */,
 				B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */,
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
+				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
@@ -10352,6 +10716,7 @@
 				5B43C3262542F31B00A54AB6 /* ClearChatHistoryUseCase.swift in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
 				5DD4D71525076802004C0CFE /* NodeShareRouter.swift in Sources */,
+				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
 				A86B9F4C2316D6AB00F35E7A /* FLEXFieldEditorViewController.m in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
@@ -10359,6 +10724,7 @@
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
+				C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
@@ -10373,6 +10739,7 @@
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
+				C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */,
 				BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */,
 				5DD5D13025591C930078BC5E /* UITextField+LeftView.swift in Sources */,
 				BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */,
@@ -10506,6 +10873,7 @@
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */,
 				5DA32DBC24EA49600075B613 /* UIImage+Manipulate.swift in Sources */,
+				C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */,
 				5D6092AE255D6ABD005FA3E4 /* ActionSheetFactory.swift in Sources */,
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
 				BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */,
@@ -10522,6 +10890,7 @@
 				A86B9F652316D6AB00F35E7A /* FLEXKeychainTableViewController.m in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
 				5D166B7725219650004F4F4A /* HomeSearchResultViewModel.swift in Sources */,
+				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				837ABEF825DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
@@ -10546,6 +10915,7 @@
 				8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */,
 				BFAB113F23CEA5C300BCE72D /* AssetDownloader.swift in Sources */,
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
+				C44CE01B2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift in Sources */,
 				BF7D43BB253D0930003DF1DA /* Sequence+Additions.swift in Sources */,
 				B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */,
 				5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */,
@@ -10565,6 +10935,7 @@
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
 				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
+				C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				2F528CAD24739053006DE5C2 /* LoadingMessageReusableView.swift in Sources */,
 				2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */,
@@ -10575,6 +10946,7 @@
 				BF5E3495255C8FD10055395E /* FilesExplorerViewController.swift in Sources */,
 				A80B66F525E80D2000486EC5 /* RecentActionBucketEntity.swift in Sources */,
 				BFCEE8B425102D9600D43448 /* IndexSet+Additions.swift in Sources */,
+				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
 				5D9DC3CC253EB7AF0055F4C4 /* Debouncer.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */,
@@ -10590,6 +10962,7 @@
 				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
 				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
 				A81C6593254B2EC900105BF4 /* GiphyPreviewViewController.swift in Sources */,
+				C45D79252593AD5600EB6C2F /* MiniPlayerDataSource.swift in Sources */,
 				B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				5DA32DC124EA923D0075B613 /* UserAlert.swift in Sources */,
@@ -10632,6 +11005,8 @@
 				837DC7A9256D196400CA289E /* GetLinkStringTableViewCell.swift in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
 				5DA32DC524EA936D0075B613 /* FileSystemImageCacheClient.swift in Sources */,
+				5DA32DC524EA936D0075B613 /* FileSystemImageCacheClient.swift in Sources */,
+				C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */,
 				A86B9F6F2316D6AB00F35E7A /* FLEXTableLeftCell.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				BFCB81112505A8D90096BD57 /* FilesExplorerListViewController.swift in Sources */,
@@ -11036,18 +11411,30 @@
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
 				B67B182025CAACC00022D6C0 /* SDKUserClient.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */,
+				C4F0C91D259E10240063C5C5 /* SDKUserClient.swift in Sources */,
+				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
+				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
+				5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */,
+				C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */,
+				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				B67B189A25CAAEBE0022D6C0 /* StoreUser.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
+				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				A83CFEA025DAAAF300622675 /* ThrottlerTest.swift in Sources */,
 				5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient.swift in Sources */,
+				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				B67B189025CAAEB40022D6C0 /* StoreUserClient.swift in Sources */,
+				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
 				5D52C747250C4F0200286A43 /* UserAlert.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				5D60902F24B8207B00CBAADD /* DateFormatter_SystemFormatter+ConvenientTests.swift in Sources */,
+				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
+				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
+				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				B6AADF042518B80D009A874C /* CheckSMSUseCaseTests.swift in Sources */,
 				B66BA25C25155EA2009787BD /* MockCheckSMSUseCase.swift in Sources */,
 				B66BA25525155E78009787BD /* MockGetSMSUseCase.swift in Sources */,
@@ -11061,17 +11448,27 @@
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
+				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
+				C4F0C91C259E10200063C5C5 /* (null) in Sources */,
+				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				BF08AA1425CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
+				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
+				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
+				C4F0C913259E10190063C5C5 /* SDKAvatarClient.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				B67B17EE25CAACB70022D6C0 /* SDKAvatarClient.swift in Sources */,
 				B66BA2472514DD2C009787BD /* MockPreferenceUseCase.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
+				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
+				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
 				B6AADF122518BB67009A874C /* MockAchievementRepository.swift in Sources */,
 				B6AADEDF2518A323009A874C /* GetSMSUseCaseTests.swift in Sources */,
 				B66BA26325155FC3009787BD /* MockAuthUseCase.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
+				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
+				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11320,7 +11717,7 @@
 		};
 		137361B11A6664C400B740E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBA33BC8EB7660C3C0CBA26C /* Pods-iMEGA-MEGA.debug.xcconfig */;
+			baseConfigurationReference = 6EB2987BE3BFDB8070962245 /* Pods-iMEGA-MEGA.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -11385,7 +11782,7 @@
 		};
 		137361B21A6664C400B740E8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 265C4DAEC8867A40D5A2A99B /* Pods-iMEGA-MEGA.release.xcconfig */;
+			baseConfigurationReference = 553A9E85EBBC3A2DE5994EEF /* Pods-iMEGA-MEGA.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -11447,7 +11844,7 @@
 		};
 		7794AEDC231E4E0A0039C1D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41113786A1AE077EEB2BB928 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */;
+			baseConfigurationReference = 4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -11504,7 +11901,7 @@
 		};
 		7794AEDD231E4E0A0039C1D2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D60D78FA00854C399D21509 /* Pods-iMEGA-MEGANotifications.release.xcconfig */;
+			baseConfigurationReference = A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -11559,7 +11956,7 @@
 		};
 		83199F1F25556CDE00344531 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3A5060931469CDC0F0490FF /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */;
+			baseConfigurationReference = 11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -11614,7 +12011,7 @@
 		};
 		83199F2025556CDE00344531 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 095DCFBE3BFEE732CC33F35D /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */;
+			baseConfigurationReference = 188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -11667,7 +12064,7 @@
 		};
 		831B4917256FED700086002B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 02601A984A44E36E65AFC537 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */;
+			baseConfigurationReference = FE81B51B3AC6FB2F5A212B06 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -11705,7 +12102,7 @@
 		};
 		831B4918256FED700086002B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F61951DA5F00CCDEA93F0826 /* Pods-iMEGA-MEGAIntent.release.xcconfig */;
+			baseConfigurationReference = 6462E4EC10864E0093B28129 /* Pods-iMEGA-MEGAIntent.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -11741,7 +12138,7 @@
 		};
 		942254FA1EDC03150074C51A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B791A3F5735F9DED735B1D8 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */;
+			baseConfigurationReference = 082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -11780,7 +12177,7 @@
 		};
 		942254FB1EDC03150074C51A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 969BB4CD1E78FFA91617C752 /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */;
+			baseConfigurationReference = 7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -11820,7 +12217,7 @@
 		};
 		942254FD1EDC03150074C51A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB3754845CFE5EE4053A6C67 /* Pods-iMEGA-MEGAPicker.debug.xcconfig */;
+			baseConfigurationReference = BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -11875,7 +12272,7 @@
 		};
 		942254FE1EDC03150074C51A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 934264B7600276F886F2EB54 /* Pods-iMEGA-MEGAPicker.release.xcconfig */;
+			baseConfigurationReference = 27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -11929,7 +12326,7 @@
 		};
 		943F8B1B1EF26E9C00AFD89F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24478A0E2C52EC401C501F3A /* Pods-iMEGA-MEGAShare.debug.xcconfig */;
+			baseConfigurationReference = 21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -11983,7 +12380,7 @@
 		};
 		943F8B1C1EF26E9C00AFD89F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 224E9D9CCAEA9F7F3A97F507 /* Pods-iMEGA-MEGAShare.release.xcconfig */;
+			baseConfigurationReference = E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -12037,7 +12434,7 @@
 		};
 		B6CED49222B8AC70009C4861 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BAD298015662FD875114F602 /* Pods-MEGAUnitTests.debug.xcconfig */;
+			baseConfigurationReference = BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -12090,7 +12487,7 @@
 		};
 		B6CED49322B8AC70009C4861 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3572896EA9411ED912D26758 /* Pods-MEGAUnitTests.release.xcconfig */;
+			baseConfigurationReference = BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

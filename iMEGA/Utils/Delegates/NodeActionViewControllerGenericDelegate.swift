@@ -3,9 +3,9 @@ import Foundation
 final class NodeActionViewControllerGenericDelegate:
     NodeActionViewControllerDelegate
 {
-    private weak var viewController: UINavigationController?
+    private weak var viewController: UIViewController?
 
-    init(viewController: UINavigationController) {
+    init(viewController: UIViewController) {
         self.viewController = viewController
     }
 
@@ -34,7 +34,13 @@ final class NodeActionViewControllerGenericDelegate:
             guard let contactsViewController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
             contactsViewController.node = node
             contactsViewController.contactsMode = .shareFoldersWith
-            viewController.pushViewController(contactsViewController, animated: true)
+            
+            if let navigationController = viewController as? UINavigationController {
+                navigationController.pushViewController(contactsViewController, animated: true)
+            } else {
+                viewController.present(contactsViewController, animated: true)
+            }
+            
 
         case .info:
             showNodeInfo(node)
