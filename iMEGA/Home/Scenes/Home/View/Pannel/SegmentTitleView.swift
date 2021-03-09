@@ -38,6 +38,12 @@ final class SegmentTitleView: UIView {
         setTitles(model.titles)
     }
 
+    func selectTab(_ index: Int) {
+        setSelected(at: index, of: buttons)
+    }
+    
+    // MARK: - Private
+
     private func setTitles(_ titles: [SegmentTitleViewModel.Title]) {
         let titleButtonStyler = traitCollection.theme.buttonStyle.styler(of: .segmentTitleButton)
         let buttons: [UIButton] = titles.enumerated().map { index, title in

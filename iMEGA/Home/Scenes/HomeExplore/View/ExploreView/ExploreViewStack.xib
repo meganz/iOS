@@ -60,6 +60,7 @@
                                 <constraint firstItem="zWE-AR-6ZO" firstAttribute="leading" secondItem="Dya-jq-TR5" secondAttribute="leading" id="tFu-bZ-za6"/>
                             </constraints>
                             <connections>
+                                <outlet property="button" destination="5Tj-Ir-02a" id="7eg-LR-J7j"/>
                                 <outlet property="iconForegroundImageView" destination="zWE-AR-6ZO" id="Jrg-rN-iXw"/>
                                 <outlet property="label" destination="8zd-jk-2G3" id="wki-bU-KhS"/>
                             </connections>
@@ -98,6 +99,7 @@
                                 <constraint firstAttribute="bottom" secondItem="jNT-JU-ngu" secondAttribute="bottom" constant="8" id="wnF-P3-TP9"/>
                             </constraints>
                             <connections>
+                                <outlet property="button" destination="TNm-J3-7ah" id="D9E-IS-LOg"/>
                                 <outlet property="iconForegroundImageView" destination="9up-ce-WMB" id="qLJ-ZR-LED"/>
                                 <outlet property="label" destination="jNT-JU-ngu" id="QXm-6R-dqG"/>
                             </connections>
@@ -136,6 +138,7 @@
                                 <constraint firstItem="Hqm-UD-geE" firstAttribute="top" secondItem="WXQ-KK-bi8" secondAttribute="top" constant="3" id="uVD-YS-T9O"/>
                             </constraints>
                             <connections>
+                                <outlet property="button" destination="Lqd-8u-njE" id="rlr-r1-7jc"/>
                                 <outlet property="iconForegroundImageView" destination="Hqm-UD-geE" id="gq8-u1-37J"/>
                                 <outlet property="label" destination="PZM-VR-lj4" id="OaO-9M-b8W"/>
                             </connections>
@@ -183,6 +186,7 @@
                                 <constraint firstAttribute="trailing" secondItem="7b2-3Q-Gxj" secondAttribute="trailing" id="t7b-Kk-8S6"/>
                             </constraints>
                             <connections>
+                                <outlet property="button" destination="OMM-Ou-9dU" id="YlP-zL-zxr"/>
                                 <outlet property="iconBackgroundImageView" destination="7b2-3Q-Gxj" id="YaZ-xe-KOD"/>
                                 <outlet property="iconForegroundImageView" destination="fEE-Tx-tku" id="xmx-AA-HI0"/>
                                 <outlet property="label" destination="F1D-KP-e6B" id="ozH-xL-5GL"/>

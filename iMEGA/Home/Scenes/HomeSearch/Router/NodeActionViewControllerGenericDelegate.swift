@@ -62,7 +62,30 @@ final class NodeActionViewControllerGenericDelegate:
         case .saveToPhotos:
             node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdk())
         case .favourite:
-            MEGASdkManager.sharedMEGASdk().setNodeFavourite(node, favourite:!node.isFavourite)
+            let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+            if node.isFavourite {
+                nodefavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
+                    switch result {
+                    case .success():
+                        if #available(iOS 14.0, *) {
+                            QuickAccessWidgetManager().deleteFavouriteItem(for: node)
+                        }
+                    case .failure(_):
+                        break
+                    }
+                }
+            } else {
+                nodefavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
+                    switch result {
+                    case .success():
+                        if #available(iOS 14.0, *) {
+                            QuickAccessWidgetManager().insertFavouriteItem(for: node)
+                        }
+                    case .failure(_):
+                        break
+                    }
+                }
+            }
         case .label:
             node.mnz_labelActionSheet(in: viewController)
         default:

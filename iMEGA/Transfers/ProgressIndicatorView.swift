@@ -1,6 +1,6 @@
 import UIKit
 
-class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, MEGARequestDelegate {
+class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     var backgroundLayer: CAShapeLayer?
     var progressBackgroundLayer: CAShapeLayer?
     var progressLayer: CAShapeLayer?
@@ -37,6 +37,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             }
         }
     }
+    
+    private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     
     @objc func animate(progress: CGFloat, duration: TimeInterval) {
         guard let progressLayer = progressLayer else {
@@ -291,11 +293,18 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
         }
     }
     
+    // MARK: - MEGATransferDelegate
+    
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
         if transfer.type == .download {
-            overquota = false
+            if overquota {
+                overquota = false
+            }
         }
-        configureData()
+        throttler.start { [weak self] in
+            guard let self = self else { return }
+            self.configureData()
+        }
     }
     
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
@@ -311,7 +320,10 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             MEGASdkManager.sharedMEGASdk().resetTotalUploads()
             MEGASdkManager.sharedMEGASdk().resetTotalDownloads()
         }
-        configureData()
+        throttler.start { [weak self] in
+            guard let self = self else { return }
+            self.configureData()
+        }
     }
     
     func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
@@ -319,6 +331,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGAGlobalDelegate, M
             overquota = true
         }
     }
+    
+    // MARK: - MEGARequestDelegate
 
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         if error.type != .apiOk {

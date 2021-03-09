@@ -19,7 +19,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     
 
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        if message is ChatNotificationMessage {
+        guard !(message is ChatNotificationMessage) && !indexPath.isEmpty else {
             return 0.0
         }
         

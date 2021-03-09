@@ -5,7 +5,7 @@
 #import "LocalFileNameGenerator.h"
 #import "SavedIdentifierParser.h"
 #import "NSURL+CameraUpload.h"
-#import "MEGAStoreStack.h"
+#import "MEGACoreDataStack.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 7;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
@@ -16,7 +16,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 @property (strong, nonatomic) LocalFileNameGenerator *fileNameCoordinator;
 @property (strong, nonatomic) dispatch_queue_t serialQueueForContext;
 @property (strong, nonatomic) dispatch_queue_t serialQueueForFileCoordinator;
-@property (strong, nonatomic) MEGAStoreStack *storeStack;
+@property (strong, nonatomic) MEGACoreDataStack *stack;
 
 @end
 
@@ -38,7 +38,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
         _serialQueueForContext = dispatch_queue_create("nz.mega.cameraUpload.recordManager.context", DISPATCH_QUEUE_SERIAL);
         _serialQueueForFileCoordinator = dispatch_queue_create("nz.mega.cameraUpload.recordManager.coordinator", DISPATCH_QUEUE_SERIAL);
         
-        _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"CameraUpload" storeURL:[NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"CameraUpload.sqlite"]];
+        _stack = [[MEGACoreDataStack alloc] initWithModelName:@"CameraUpload" storeURL:[NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"CameraUpload.sqlite"]];
     }
     
     return self;
@@ -58,7 +58,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 - (NSManagedObjectContext *)backgroundContext {
     dispatch_sync(self.serialQueueForContext, ^{
         if (self->_backgroundContext == nil) {
-            self->_backgroundContext = [self.storeStack newBackgroundContext];
+            self->_backgroundContext = [self.stack newBackgroundContext];
             self->_backgroundContext.undoManager = nil;
         }
     });
@@ -73,7 +73,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     _backgroundContext = nil;
     _fileNameCoordinator = nil;
     
-    [self.storeStack deleteStore];
+    [self.stack deleteStore];
 }
 
 #pragma mark - access properties of record

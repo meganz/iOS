@@ -1,8 +1,8 @@
-#import "MEGAStoreStack.h"
+#import "MEGACoreDataStack.h"
 @import Firebase;
 @import SQLite3;
 
-@interface MEGAStoreStack ()
+@interface MEGACoreDataStack ()
 
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
 @property (strong, nonatomic) NSString *modelName;
@@ -10,7 +10,7 @@
 
 @end
 
-@implementation MEGAStoreStack
+@implementation MEGACoreDataStack
 
 - (instancetype)initWithModelName:(NSString *)name storeURL:(NSURL *)URL {
     self = [super init];
@@ -80,6 +80,10 @@
 
 - (NSManagedObjectContext *)newBackgroundContext {
     return self.persistentContainer.newBackgroundContext;
+}
+
+- (void)performBackgroundTask:(void (^)(NSManagedObjectContext * _Nonnull))block {
+    [self.persistentContainer performBackgroundTask:block];
 }
 
 #pragma mark - delete store

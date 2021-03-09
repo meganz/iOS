@@ -443,6 +443,37 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
             break;
 
+        case URLTypePresentNode:
+            self.nodeToPresentBase64Handle = [url.absoluteString componentsSeparatedByString:@"/"].lastObject;
+            [self presentNode];
+            [MEGALinkManager resetLinkAndURLType];
+            break;
+            
+        case URLTypeShowOffline:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showOfflineAndPresentFileWithHandle:nil];
+            }
+            break;
+            
+        case URLTypePresentOfflineFile:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showOfflineAndPresentFileWithHandle:url.lastPathComponent];
+            }
+            break;
+            
+        case URLTypeShowFavourites:
+            [Helper hasSession_alertIfNot];
+            break;
+            
+        case URLTypeShowRecents:
+            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showRecents];
+            }
+            break;
+            
         default:
             break;
     }

@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @optional
 - (void)didSelectNode:(MEGANode *)node;
 - (void)uploadToParentNode:(MEGANode *)parentNode;
+- (void)nodeEditCompleted:(BOOL)complete;
 @end
 
 @interface BrowserViewController : UIViewController

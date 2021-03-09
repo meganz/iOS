@@ -4,9 +4,10 @@
 
 @interface MOOfflineNode : NSManagedObject
 
-@property (nonatomic, retain) NSString * base64Handle;
-@property (nonatomic, retain) NSString * localPath;
-@property (nonatomic, retain) NSString * parentBase64Handle;
-@property (nonatomic, retain) NSString * fingerprint;
+@property (nonnull, nonatomic, retain) NSString * base64Handle;
+@property (nonnull, nonatomic, retain) NSString * localPath;
+@property (nullable, nonatomic, retain) NSString * parentBase64Handle;
+@property (nullable, nonatomic, retain) NSString * fingerprint;
+@property (nullable, nonatomic, retain) NSDate * downloadedDate;
 
 @end

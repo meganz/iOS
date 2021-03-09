@@ -10,7 +10,8 @@
 - (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatNumber;
 
 - (void)showAchievements;
-- (void)showOffline;
+- (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle;
+- (void)showRecents;
 - (void)showUploadFile;
 - (void)showScanDocument;
 - (void)showStartConversation;

@@ -4,6 +4,7 @@ import MessageKit
 class ChatViewController: MessagesViewController {
 
     // MARK: - Properties
+    let sdk = MEGASdkManager.sharedMEGASdk()
 
     @objc var chatRoom: MEGAChatRoom! {
         didSet {
@@ -29,8 +30,13 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatViewController.shareSelectedMessages))
+    let shareBarButtonItem = UIBarButtonItem(image: UIImage(named: "share")?.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.shareSelectedMessages))
     let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+    let copyBarButtonItem = UIBarButtonItem(image: UIImage(named: "copy")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
+    let offlineBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
+    let saveToPhotosButtonItem = UIBarButtonItem(image: UIImage(named: "saveToPhotos")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
+    let importButtonItem = UIBarButtonItem(image: UIImage(named: "import")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
+    
     let deleteBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(ChatViewController.deleteSelectedMessages))
     
     var sendTypingTimer: Timer?
@@ -206,12 +212,17 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
-
+                
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(becomeFirstResponder),
+                                               name: NSNotification.Name.MEGAPasscodeViewControllerWillClose,
+                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         dismissKeyboardIfRequired()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.MEGAPasscodeViewControllerWillClose, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -521,12 +532,13 @@ class ChatViewController: MessagesViewController {
 
     func isPreviousMessageSentSameDay(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
-            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath) else {
-                return true
+            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath),
+            let previousMessageDate = messages[safe: previousMessageIndexPath.section]?.sentDate else {
+                return false
         }
 
-        let previousMessageDate = messages[previousMessageIndexPath.section].sentDate
-        return messages[indexPath.section].sentDate.isSameDay(date: previousMessageDate)
+
+        return messages[safe: indexPath.section]?.sentDate.isSameDay(date: previousMessageDate) ?? false
     }
 
     /// This method ignores the milliseconds.
@@ -572,7 +584,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Private methods
     
     private func mostRecentChatMessage(withinIndexPath indexPath: IndexPath) -> IndexPath? {
-        if messages[indexPath.section] is ChatMessage {
+        if messages[safe: indexPath.section] is ChatMessage {
             return indexPath
         }
         

@@ -30,6 +30,7 @@ extern NSString * const MEGATransferOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
 extern NSString * const MEGAOpenChatRoomFromPushNotification;
+extern NSString * const MEGAPasscodeViewControllerWillCloseNotification;
 
 #pragma mark - global notification keys
 
@@ -102,6 +103,7 @@ extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
 extern NSString * const MEGAExplorerViewModePreference;
+extern NSString * const MEGAUIActivityTypeImportToCloudDrive;
 
 #pragma mark - Background Task completion.
 
@@ -153,3 +155,9 @@ extern const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent;
 
 extern const NSInteger MEGAMaxReactionsPerMessagePerUser;
 extern const NSInteger MEGAMaxReactionsPerMessage;
+
+#pragma mark - Widget Extension
+
+extern NSString * const MEGAShortcutsWidget;
+extern NSString * const MEGAQuickAccessWidget;
+extern const NSInteger MEGAQuickAccessWidgetMaxDisplayItems;

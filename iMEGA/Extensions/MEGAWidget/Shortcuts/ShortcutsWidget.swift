@@ -51,7 +51,7 @@ struct ShortcutsProvider: IntentTimelineProvider {
 }
 
 struct ShortcutsWidget: Widget {
-    let kind: String = "MEGAShortcutsWidget"
+    let kind: String = MEGAShortcutsWidget
 
     var body: some WidgetConfiguration {
         
@@ -100,15 +100,15 @@ struct ShortcutView: View {
                 Image(shortcut.imageName)
                     .resizable()
                     .frame(width: 28, height: 28, alignment: .leading)
-                    .padding([.leading, .top, .trailing], 8)
+                    .padding([.leading, .trailing], 8)
                 Text(shortcut.title)
                     .font(.system(size: 12, weight: .semibold, design: .default))
                     .foregroundColor(.white)
-                    .padding([.leading, .bottom, .trailing], 8)
+                    .padding([.leading, .trailing], 8)
             }
-            .frame(maxHeight: .infinity)
             Spacer()
         }
+        .frame(maxHeight: .infinity)
         .background(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
         .cornerRadius(8)
     }
@@ -118,37 +118,41 @@ struct MediumShortcutsWidgetView: View {
     let shortcuts: [ShortcutDetail]
     
     var body: some View {
-        
-        VStack {
-            HStack(alignment: .top, spacing: 8) {
-                if let url = URL(string: shortcuts[0].link) {
-                    Link(destination: url, label: {
-                        ShortcutView(shortcut: shortcuts[0])
-                    })
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                HStack(alignment: .top, spacing: 8) {
+                    if let firstShortcut = shortcuts[safe: 0], let url = URL(string: firstShortcut.link) {
+                        Link(destination: url, label: {
+                            ShortcutView(shortcut: firstShortcut)
+                        })
+                    }
+                    if let secondShortcut = shortcuts[safe: 1], let url = URL(string: secondShortcut.link) {
+                        Link(destination: url, label: {
+                            ShortcutView(shortcut: secondShortcut)
+                        })
+                    }
                 }
-                if let url = URL(string: shortcuts[1].link) {
-                    Link(destination: url, label: {
-                        ShortcutView(shortcut: shortcuts[1])
-                    })
+                .padding(EdgeInsets(top: 8, leading: 8, bottom: 4, trailing: 8))
+                .frame(width: geometry.size.width, height: geometry.size.height/2)
+
+                HStack(alignment: .top, spacing: 8) {
+                    if let thirdShortcut = shortcuts[safe: 2], let url = URL(string: thirdShortcut.link) {
+                        Link(destination: url, label: {
+                            ShortcutView(shortcut: thirdShortcut)
+                        })
+                    }
+                    if let fourthShortcut = shortcuts[safe: 3], let url = URL(string: fourthShortcut.link) {
+                        Link(destination: url, label: {
+                            ShortcutView(shortcut: fourthShortcut)
+                        })
+                    }
                 }
+                .padding(EdgeInsets(top: 4, leading: 8, bottom: 8, trailing: 8))
+                .frame(width: geometry.size.width, height: geometry.size.height/2)
             }
-            
-            HStack(alignment: .top, spacing: 8) {
-                if let url = URL(string: shortcuts[2].link) {
-                    Link(destination: url, label: {
-                        ShortcutView(shortcut: shortcuts[2])
-                    })
-                }
-                if let url = URL(string: shortcuts[3].link) {
-                    Link(destination: url, label: {
-                        ShortcutView(shortcut: shortcuts[3])
-                    })
-                }
-            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .background(Color("SecondaryBackground"))
         }
-        .padding(8)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("SecondaryBackground"))
     }
 }
 

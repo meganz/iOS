@@ -74,7 +74,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if MEGAReachabilityManager.isReachable() {
             if folderLink.searchController.isActive {
-                return folderLink.searchNodesArray.count
+                return folderLink.searchNodesArray?.count ?? 0
             } else {
                 if folderLink.isFolderLinkNotValid {
                     return 0

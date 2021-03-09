@@ -85,65 +85,20 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             return
         }
         
-        if #available(iOS 11.0, *) {
-            MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder(completion: { (parentNode) in
-                let fileType = DocScanExportFileType(rawValue: UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)!)
-                if fileType == .pdf {
-                    let pdfDoc = PDFDocument()
-                    self.docs?.enumerated().forEach {
-                        if let pdfpage = PDFPage(image: $0.element) {
-                            pdfDoc.insert(pdfpage, at: $0.offset)
-                        }
-                    }
-                    let data = pdfDoc.dataRepresentation()
-                    let fileName = "\(self.fileName).pdf"
-                    let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
-                    
-                    do {
-                        try data?.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
-                        var appData = NSString().mnz_appData(toSaveCoordinates: tempPath.mnz_coordinatesOfPhotoOrVideo() ?? "")
-                        appData = ((appData) as NSString).mnz_appDataToAttach(toChatID: chatRoom.chatId, asVoiceClip: false)
-                        ChatUploader.sharedInstance.upload(filepath: tempPath,
-                                                           appData: appData,
-                                                           chatRoomId: chatRoom.chatId,
-                                                           parentNode: parentNode,
-                                                           isSourceTemporary: false,
-                                                           delegate: MEGAStartUploadTransferDelegate(completion: nil))
- 
-                    } catch {
-                        MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
-                    }
-                } else if fileType == .jpg {
-                    self.docs?.enumerated().forEach {
-                        if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
-                            let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
-                            let fileName: String
-                            if self.docs?.count ?? 1 > 1 {
-                                fileName = "\(self.fileName) \($0.offset).jpg"
-                            } else {
-                                fileName =  "\(self.fileName).jpg"
-                            }
-                            let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
-                            do {
-                                try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
-                                var appData = NSString().mnz_appData(toSaveCoordinates: tempPath.mnz_coordinatesOfPhotoOrVideo() ?? "")
-                                appData = ((appData) as NSString).mnz_appDataToAttach(toChatID: chatRoom.chatId, asVoiceClip: false)
-                                ChatUploader.sharedInstance.upload(filepath: tempPath,
-                                                                   appData: appData,
-                                                                   chatRoomId: chatRoom.chatId,
-                                                                   parentNode: parentNode,
-                                                                   isSourceTemporary: false,
-                                                                   delegate: MEGAStartUploadTransferDelegate(completion: nil))
- 
-                            } catch {
-                                MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
-                            }
-                        }
-                    }
-                }
-                self.dismiss(animated: true, completion: nil)
-            })
-        }
+        MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder(completion: { (parentNode) in
+            let paths = self.exportScannedDocs()
+            paths.forEach { (path) in
+                var appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
+                appData = ((appData) as NSString).mnz_appDataToAttach(toChatID: chatRoom.chatId, asVoiceClip: false)
+                ChatUploader.sharedInstance.upload(filepath: path,
+                                                   appData: appData,
+                                                   chatRoomId: chatRoom.chatId,
+                                                   parentNode: parentNode,
+                                                   isSourceTemporary: false,
+                                                   delegate: MEGAStartUploadTransferDelegate(completion: nil))
+            }
+        })
+        dismiss(animated: true, completion: nil)
     }
     
     private func updateAppearance() {
@@ -409,10 +364,7 @@ extension DocScannerSaveSettingTableViewController {
             docs?.enumerated().forEach {
                 if let resizedImage = shrinkedImage(image: $0.element),
                    let data = resizedImage.jpegData(compressionQuality: 1) {
-                    fileName = "\(self.fileName).jpg"
-                    if self.docs?.count ?? 1 > 1 {
-                        fileName = "\(self.fileName) \($0.offset).jpg"
-                    }
+                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)

@@ -31,6 +31,7 @@ NSString * const MEGATransferOverQuotaNotification = @"nz.mega.transferOverQuota
 NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
 NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";
+NSString * const MEGAPasscodeViewControllerWillCloseNotification = @"nz.mega.passcodeViewControllerWillClose";
 
 #pragma mark - global notification keys
 
@@ -102,6 +103,7 @@ NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSha
 NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
 NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
 NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";
+NSString * const MEGAUIActivityTypeImportToCloudDrive = @"MEGAUIActivityTypeImportToCloudDrive";
 
 #pragma mark - Background Task completion.
 
@@ -149,3 +151,9 @@ const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;
 
 const NSInteger MEGAMaxReactionsPerMessagePerUser = 24;
 const NSInteger MEGAMaxReactionsPerMessage = 50;
+
+#pragma mark - Widget Extension
+
+NSString * const MEGAShortcutsWidget = @"MEGAShortcutsWidget";
+NSString * const MEGAQuickAccessWidget = @"MEGAQuickAccessWidget";
+const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;
