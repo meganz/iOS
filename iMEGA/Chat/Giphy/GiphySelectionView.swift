@@ -197,7 +197,7 @@ extension GiphySelectionView: CHTCollectionViewDelegateWaterfallLayout, UICollec
             let srcWebp = gif.webp.replacingOccurrences(of: ServiceManager.shared.BASE_URL, with: ServiceManager.shared.GIPHY_URL)
             let srcMp4 = gif.mp4.replacingOccurrences(of: ServiceManager.shared.BASE_URL, with: ServiceManager.shared.GIPHY_URL)
 
-            MEGASdkManager.sharedMEGAChatSdk()?.sendGiphy(toChat: self.controller.chatRoom.chatId, srcMp4: srcMp4, srcWebp: srcWebp, sizeMp4: sizeMp4, sizeWebp: sizeWebp, width: width, height: height, title: gif.title)
+            MEGASdkManager.sharedMEGAChatSdk().sendGiphy(toChat: self.controller.chatRoom.chatId, srcMp4: srcMp4, srcWebp: srcWebp, sizeMp4: sizeMp4, sizeWebp: sizeWebp, width: width, height: height, title: gif.title)
             self.controller.navigationController?.dismiss(animated: true, completion: nil)
         }
         controller.navigationController?.pushViewController(previewVC, animated: true)

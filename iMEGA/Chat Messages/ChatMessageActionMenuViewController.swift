@@ -324,7 +324,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         let emoji = sender.attributedTitle(for: .normal)?.string
         let megaMessage = chatMessage?.message
 
-        MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+        MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
         dismiss(animated: true, completion: nil)
     }
     
@@ -342,7 +342,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     // MARK: - Internal methods used by the extension of this class
 
     func isFromCurrentSender(message: ChatMessage) -> Bool {
-        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
+        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle
     }
 
 }

@@ -763,9 +763,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [SVProgressHUD dismiss];
     }];
     
-    if (![MEGASdkManager sharedMEGAChatSdk]) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
     MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
     if (chatInit == MEGAChatInitNotDone) {
         chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];

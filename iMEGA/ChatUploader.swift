@@ -127,9 +127,9 @@
                         let chatRoomId = UInt64(chatRoomIdString) {
                         
                         if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
-                            MEGASdkManager.sharedMEGAChatSdk()?.attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
+                            MEGASdkManager.sharedMEGAChatSdk().attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
                         } else {
-                            MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoomId, node: nodeHandle)
+                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoomId, node: nodeHandle)
                         }
                         
                         MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")

@@ -19,18 +19,14 @@ extension ChatViewController {
     }
 
     var shouldDisableAudioVideoCall: Bool {
-        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
-            return true
-        }
-        
-        let chatConnection = chatSDK.chatConnectionState(chatRoom.chatId)
+        let chatConnection = MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId)
 
         return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
             || chatConnection != .online
             || !MEGAReachabilityManager.isReachable()
             || chatRoom.peerCount == 0
-            || chatSDK.hasCall(inChatRoom: chatRoom.chatId)
-            || chatSDK.mnz_existsActiveCall
+            || MEGASdkManager.sharedMEGAChatSdk().hasCall(inChatRoom: chatRoom.chatId)
+            || MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
             || isVoiceRecordingInProgress
     }
 
@@ -96,7 +92,7 @@ extension ChatViewController {
             return
         }
 
-        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: peerHandle) else {
+        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: peerHandle) else {
             return
         }
 

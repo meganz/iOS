@@ -272,10 +272,6 @@
 #pragma mark - Login and Setup
 
 - (void)initChatAndStartLogging {
-    if (![MEGASdkManager sharedMEGAChatSdk]) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
-    
     MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
     if (chatInit == MEGAChatInitNotDone) {
         chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];

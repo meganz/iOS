@@ -13,7 +13,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
         
         let userName = chatMessage.displayName
-        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
+        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
             return
         }
         var actions = [ActionSheetAction]()
@@ -48,7 +48,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         if chatRoom.ownPrivilege == .moderator,
         chatRoom.isGroup {
             let removeParticipantAction = ActionSheetAction(title: NSLocalizedString("removeParticipant", comment: ""), detail: nil, image: nil, style: .default) {
-                MEGASdkManager.sharedMEGAChatSdk()?.remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
+                MEGASdkManager.sharedMEGAChatSdk().remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
             }
             actions.append(removeParticipantAction)
 
