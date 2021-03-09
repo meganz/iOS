@@ -1,6 +1,7 @@
 import Foundation
 
 enum QuickAccessWidgetAction: ActionType {
+    case managePendingAction
     case showOffline
     case showRecents
     case showOfflineFile(String)
@@ -16,6 +17,7 @@ final class QuickAccessWidgetViewModel: ViewModelType {
     
     // MARK: - Private properties
     private let offlineFilesUseCase: OfflineFilesUseCaseProtocol
+    private var pendingQuickAccessWidgetAction: QuickAccessWidgetAction?
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -25,17 +27,26 @@ final class QuickAccessWidgetViewModel: ViewModelType {
     }
     
     func dispatch(_ action: QuickAccessWidgetAction) {
-        switch action {
-        case .showOffline:
-            invokeCommand?(.selectOfflineTab)
-        case .showRecents:
-            invokeCommand?(.selectRecentsTab)
-        case .showOfflineFile(let base64Handle):
-            invokeCommand?(.selectOfflineTab)
-            guard let path = offlineFilesUseCase.offlineFile(for: base64Handle)?.localPath else {
-                return
+        if let invokeCommand = invokeCommand {
+            switch action {
+            case .managePendingAction:
+                guard let pendingAction = pendingQuickAccessWidgetAction else {
+                    return
+                }
+                dispatch(pendingAction)
+            case .showOffline:
+                invokeCommand(.selectOfflineTab)
+            case .showRecents:
+                invokeCommand(.selectRecentsTab)
+            case .showOfflineFile(let base64Handle):
+                invokeCommand(.selectOfflineTab)
+                guard let path = offlineFilesUseCase.offlineFile(for: base64Handle)?.localPath else {
+                    return
+                }
+                invokeCommand(.presentOfflineFileWithPath(path))
             }
-            invokeCommand?(.presentOfflineFileWithPath(path))
+        } else {
+            pendingQuickAccessWidgetAction = action
         }
     }
 }

@@ -464,7 +464,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeShowFavourites:
-            [MEGALinkManager resetLinkAndURLType];
+            [Helper hasSession_alertIfNot];
             break;
             
         case URLTypeShowRecents:

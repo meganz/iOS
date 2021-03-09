@@ -41,8 +41,8 @@ struct QuickAccessWidget: Widget {
         IntentConfiguration(kind: kind, intent: SelectSectionIntent.self, provider: QuickAccessProvider()) { entry in
             QuickAccessWidgetView(entry: entry)
         }
-        .configurationDisplayName(NSLocalizedString("Quick Access", comment: "Text title for shortcuts, ie in the widget"))
-        .description(NSLocalizedString("Display items of a section in the MEGA app", comment: "Text description leading the user to perform an action, ie the shortcuts widget"))
+        .configurationDisplayName(NSLocalizedString("Quick Access", comment: "Title for the QuickAccess widget"))
+        .description(NSLocalizedString("Quickly access files on Recents, Favourites, or Offline section", comment: "Text description for the QuickAccess widget"))
         .supportedFamilies([.systemLarge])
     }
 }

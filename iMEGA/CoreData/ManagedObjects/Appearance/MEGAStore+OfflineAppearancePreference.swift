@@ -7,24 +7,24 @@ extension MEGAStore {
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {
             offlineAppearancePreference.sortType = NSNumber.init(value: sortType)
         } else {
-            let offlineAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: storeStack.viewContext) as! OfflineAppearancePreference
+            let offlineAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: stack.viewContext) as! OfflineAppearancePreference
             offlineAppearancePreference.localPath = path
             offlineAppearancePreference.sortType = NSNumber.init(value: sortType)
         }
         
-        MEGAStore.shareInstance()?.save(storeStack.viewContext)
+        MEGAStore.shareInstance()?.save(stack.viewContext)
     }
     
     @objc func insertOrUpdateOfflineViewMode(path: String, viewMode: Int) {
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {
             offlineAppearancePreference.viewMode = NSNumber.init(value: viewMode)
         } else {
-            let offlineAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: storeStack.viewContext) as! OfflineAppearancePreference
+            let offlineAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: stack.viewContext) as! OfflineAppearancePreference
             offlineAppearancePreference.localPath = path
             offlineAppearancePreference.viewMode = NSNumber.init(value: viewMode)
         }
         
-        MEGAStore.shareInstance()?.save(storeStack.viewContext)
+        MEGAStore.shareInstance()?.save(stack.viewContext)
     }
     
     @objc func fetchOfflineAppearancePreference(path: String) -> OfflineAppearancePreference? {
@@ -33,7 +33,7 @@ extension MEGAStore {
         
         var offlineAppearancePreferencesArray : [OfflineAppearancePreference]
         do {
-            offlineAppearancePreferencesArray = try storeStack.viewContext.fetch(fetchRequest)
+            offlineAppearancePreferencesArray = try stack.viewContext.fetch(fetchRequest)
             
             guard let offlineAppearancePreference = offlineAppearancePreferencesArray.first else {
                 return nil
@@ -52,7 +52,7 @@ extension MEGAStore {
         
         var offlineAppearancePreferencesArray : [OfflineAppearancePreference]
         do {
-            offlineAppearancePreferencesArray = try storeStack.viewContext.fetch(fetchRequest)
+            offlineAppearancePreferencesArray = try stack.viewContext.fetch(fetchRequest)
             
             return offlineAppearancePreferencesArray
         } catch let error as NSError {
@@ -65,9 +65,9 @@ extension MEGAStore {
     @objc func deleteOfflineAppearancePreference(path : String) {
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {
             MEGALogDebug("Deleted OfflineAppearancePreference \(offlineAppearancePreference)")
-            storeStack.viewContext.delete(offlineAppearancePreference)
+            stack.viewContext.delete(offlineAppearancePreference)
             
-            MEGAStore.shareInstance()?.save(storeStack.viewContext)
+            MEGAStore.shareInstance()?.save(stack.viewContext)
         }
     }
     
@@ -76,7 +76,7 @@ extension MEGAStore {
         
         for offlineAppearancePreference in offlineAppearancePreferencesArray {
             MEGALogDebug("Delete OfflineAppearancePreference \(offlineAppearancePreference)")
-            storeStack.viewContext.delete(offlineAppearancePreference)
+            stack.viewContext.delete(offlineAppearancePreference)
         }
     }
 }

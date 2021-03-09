@@ -145,11 +145,9 @@
 #pragma mark - UIActivityItemSource
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if (self.isCancelled && self.node.isExported) {
+    if ((self.isCancelled || self.node.isFolder) && self.node.isExported) {
         self.link = self.node.publicLink;
-    }
-    if ([activityType isEqualToString:UIActivityTypeAirDrop]) {
-        return [NSURL URLWithString:self.link];
+        return self.link;
     }
 
     if ([activityType isEqualToString:MEGAUIActivityTypeOpenIn] || [activityType isEqualToString:MEGAUIActivityTypeGetLink] || [activityType isEqualToString:MEGAUIActivityTypeRemoveLink] || [activityType isEqualToString:MEGAUIActivityTypeShareFolder] || [activityType isEqualToString:MEGAUIActivityTypeSaveToCameraRoll] || [activityType isEqualToString:MEGAUIActivityTypeRemoveSharing]) {

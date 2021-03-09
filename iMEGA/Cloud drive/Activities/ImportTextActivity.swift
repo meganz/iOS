@@ -51,8 +51,7 @@ class ImportTextActivity: UIActivity, BrowserViewControllerDelegate {
         } catch {
             MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
         }
-        UIApplication.mnz_presentingViewController().dismiss(animated: true) {
-            self.activityDidFinish(true)
-        }
+        self.activityDidFinish(true)
+        UIApplication.mnz_presentingViewController().dismiss(animated: true)
     }
 }

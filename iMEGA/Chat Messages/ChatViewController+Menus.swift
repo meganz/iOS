@@ -104,7 +104,7 @@ extension ChatViewController {
             let megaMessage =  message.message
             
             for index in 0..<megaMessage.nodeList.size.intValue {
-                var node: MEGANode?
+                var node = megaMessage.nodeList.node(at: index)
                 if chatRoom.isPreview {
                     node = sdk.authorizeNode(megaMessage.nodeList.node(at: index))
                 }
@@ -128,7 +128,7 @@ extension ChatViewController {
         for message in messages {
             let megaMessage = message.message
             for index in 0..<megaMessage.nodeList.size.intValue {
-                var node: MEGANode?
+                var node = megaMessage.nodeList.node(at: index)
                 if chatRoom.isPreview {
                     node = sdk.authorizeNode(megaMessage.nodeList.node(at: index))
                 }
