@@ -106,6 +106,7 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.sendToChatAction())
             nodeActions.append(NodeAction.selectAction())
             nodeActions.append(NodeAction.shareAction())
+            nodeActions.append(NodeAction.sortAction())
             if viewMode == .list {
                 nodeActions.append(NodeAction.thumbnailAction())
             } else {
