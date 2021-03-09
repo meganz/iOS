@@ -209,4 +209,8 @@ extension NodeAction {
     class func thumbnailAction() -> NodeAction {
         return NodeAction(title: NSLocalizedString("Thumbnail View", comment: "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .thumbnail)
     }
+    
+    class func sortAction() -> NodeAction {
+        return NodeAction(title: NSLocalizedString("sortTitle", comment: "Section title of the 'Sort by'"), detail: nil, image: UIImage(named: "sort"), type: .sort)
+    }
 }
