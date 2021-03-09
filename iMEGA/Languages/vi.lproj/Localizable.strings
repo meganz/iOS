@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Hiện đang dùng %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Hủy Tài Khoản";
+"cancelYourAccount"="Xóa Tài Khoản";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Bạn sẽ mất tất cả dữ liệu liên quan đến tới tài khoản này. Bạn có chắc muốn tiếp tục không?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -1345,8 +1345,6 @@
 "connecting"="Đang kết nối...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Một số tệp tin không thể chia sẻ lên được MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Hệ thống bị giới hạn khi chia sẻ các mục đã chọn. Xin thử đăng tải lại các tệp tin này từ trong ứng dụng MEGA.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Đã được chia sẻ cho:";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1789,7 +1787,7 @@
 /* Users previewing a public chat */
 "Observers"="Người theo dõi";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ đã bật Luân Phiên Mã Khóa.";
+"%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên mã khóa.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết vào cuộc chát.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2431,7 +2429,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Automatically delete messages older than %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation. This action is irreversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Clear Messages Older Than";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2480,6 +2478,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Chọn Thư Mục";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="Đang phát";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2572,3 +2572,13 @@
 "No Favourites"="Không Có Mục Ưa Thích";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="XEM THÊM";
+/* Title for the QuickAccess widget */
+"Quick Access"="Quick Access";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or the Offline section";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Quickly access files from your Favourites section";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Quickly access files from your Recents section";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Quickly access files from your Offline section";
