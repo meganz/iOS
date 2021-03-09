@@ -536,6 +536,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {

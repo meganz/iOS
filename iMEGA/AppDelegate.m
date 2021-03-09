@@ -1511,8 +1511,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ld", (long)request.type, (long)error.type)
-    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -1834,14 +1832,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             }];
         }
     }
-    
-    MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);
 }
 
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
-    MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
     self.chatLastKnownInitState = newState;
     if (newState == MEGAChatInitError) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
@@ -1852,8 +1847,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
-    
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
@@ -2009,10 +2002,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_setNodeCoordinates];
-        
-        if ([transfer.appData containsString:@"SystemShareFile"]) {
-            [transfer mnz_showSystemShare];
-        }
     }
 }
 

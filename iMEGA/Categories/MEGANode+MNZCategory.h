@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Actions
 
-- (void)mnz_downloadNodeAndShare;
 - (BOOL)mnz_downloadNode;
 - (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;

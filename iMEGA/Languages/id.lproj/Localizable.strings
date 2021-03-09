@@ -1762,8 +1762,6 @@
 "Saving to Photos…"="Menyimpan ke Foto ...";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Bersiap untuk berbagi ……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Downloading %@";
 /* Text shown when a photo or video is saved to Photos app */

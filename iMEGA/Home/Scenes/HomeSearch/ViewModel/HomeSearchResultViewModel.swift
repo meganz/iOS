@@ -93,7 +93,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
         }
     }
 
-    fileprivate func transformeNode(_ file: SDKNode) -> HomeSearchResultFileViewModel {
+    fileprivate func transformeNode(_ file: NodeEntity) -> HomeSearchResultFileViewModel {
         let ownerFolder = self.nodeDetailUseCase.ownerFolder(of: file.handle)
         let imageLoadCompletion: ((@escaping (UIImage?) -> Void) -> Void)? = { [weak self] callback in
             self?.nodeDetailUseCase.loadThumbnail(

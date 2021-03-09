@@ -46,16 +46,17 @@ class PhotoExplorerListSource: NSObject {
         }
     }
     
-    func nodeAtIndexPath(_ indexPath: IndexPath) -> MEGANode {
-        return nodesByDay[indexPath.section][indexPath.item]
+    func nodeAtIndexPath(_ indexPath: IndexPath) -> MEGANode? {
+        nodesByDay[safe: indexPath.section]?[safe: indexPath.item]
     }
     
     func didSelectNodeAtIndexPath(_ indexPath: IndexPath) {
-        selectedNodes?.append(nodeAtIndexPath(indexPath))
+        guard let node = nodeAtIndexPath(indexPath) else { return }
+        selectedNodes?.append(node)
     }
     
     func didDeselectNodeAtIndexPath(_ indexPath: IndexPath) {
-        let selectedNode = nodeAtIndexPath(indexPath)
+        guard let selectedNode = nodeAtIndexPath(indexPath) else { return }
         selectedNodes?.removeAll(where: { $0 == selectedNode })
     }
     

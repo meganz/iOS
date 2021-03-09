@@ -36,7 +36,7 @@ struct NodeThumbnailUseCase: NodeThumbnailUseCaseProtocol {
         }
     }
 
-    fileprivate func downloadthumbnailForNode(_ node: SDKNode, completion: @escaping (UIImage?) -> Void) {
+    fileprivate func downloadthumbnailForNode(_ node: NodeEntity, completion: @escaping (UIImage?) -> Void) {
         switch node.hasThumnail {
         case true:
             loadThumbnailForThumbnailedNode(of: node.handle, base64Handle: node.base64Handle, completion: completion)
@@ -89,7 +89,7 @@ struct NodeThumbnailUseCase: NodeThumbnailUseCaseProtocol {
     }
 
     fileprivate func loadThumbnailForFolderNode(
-        _ node: SDKNode,
+        _ node: NodeEntity,
         completion: @escaping (UIImage?) -> Void
     ) {
         if node.name == MEGACameraUploadsNodeName {
@@ -124,7 +124,7 @@ struct NodeThumbnailUseCase: NodeThumbnailUseCaseProtocol {
         completion(UIImage(named: fileTypeImageName))
     }
 
-    private func defaultFolderImage(forNode node: SDKNode) -> UIImage? {
+    private func defaultFolderImage(forNode node: NodeEntity) -> UIImage? {
         guard node.isFolder else { return nil }
         if node.isInShare { return UIImage.mnz_incomingFolder() }
         if node.isOutShare { return UIImage.mnz_outgoingFolder() }

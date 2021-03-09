@@ -1,7 +1,7 @@
 import Foundation
 
 protocol RecentNodesUseCaseProtocol {
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
+    func recentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], QuickAccessWidgetErrorEntity>) -> Void)
 }
 
 struct RecentNodesUseCase: RecentNodesUseCaseProtocol {
@@ -11,7 +11,7 @@ struct RecentNodesUseCase: RecentNodesUseCaseProtocol {
     init(repo: RecentNodesRepositoryProtocol) {
         self.repo = repo
     }
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
+    func recentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], QuickAccessWidgetErrorEntity>) -> Void) {
         repo.recentActionBuckets(completion: completion)
     }
     

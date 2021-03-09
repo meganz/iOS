@@ -283,6 +283,11 @@ extension PhotoCarouselViewController: AlbumDelegate {
             return
         }
         
+        if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= album.assetCount() {
+            collectionView.reloadData()
+            return
+        }
+        
         var newIndexPath: IndexPath?
         var snapshotView: UIView?
         
