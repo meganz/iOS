@@ -160,4 +160,7 @@ extern const NSInteger MEGAMaxReactionsPerMessage;
 
 extern NSString * const MEGAShortcutsWidget;
 extern NSString * const MEGAQuickAccessWidget;
+extern NSString * const MEGAFavouritesQuickAccessWidget;
+extern NSString * const MEGARecentsQuickAccessWidget;
+extern NSString * const MEGAOfflineQuickAccessWidget;
 extern const NSInteger MEGAQuickAccessWidgetMaxDisplayItems;

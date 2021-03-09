@@ -1634,6 +1634,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self registerForVoIPNotifications];
             [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
+            if (@available(iOS 14.0, *)) {
+                [QuickAccessWidgetManager reloadAllWidgetsContent];
+            }
             break;
         }
             
@@ -1991,7 +1994,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
                 if (@available(iOS 14.0, *)) {
-                    [QuickAccessWidgetManager reloadAllWidgetsContent];
+                    [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
                 }
             }
         }

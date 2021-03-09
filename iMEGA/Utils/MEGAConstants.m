@@ -156,4 +156,8 @@ const NSInteger MEGAMaxReactionsPerMessage = 50;
 
 NSString * const MEGAShortcutsWidget = @"MEGAShortcutsWidget";
 NSString * const MEGAQuickAccessWidget = @"MEGAQuickAccessWidget";
+NSString * const MEGAFavouritesQuickAccessWidget = @"MEGAFavouritesQuickAccessWidget";
+NSString * const MEGARecentsQuickAccessWidget = @"MEGARecentsQuickAccessWidget";
+NSString * const MEGAOfflineQuickAccessWidget = @"MEGAOfflineQuickAccessWidget";
+
 const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;

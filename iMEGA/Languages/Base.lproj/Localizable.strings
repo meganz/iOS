@@ -2574,3 +2574,9 @@
 "Quick Access"="Quick Access";
 /* Text description for the QuickAccess widget */
 "Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or Offline section";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Quickly access files on Favourites section";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Quickly access files on Recents section";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Quickly access files on Offline section";
