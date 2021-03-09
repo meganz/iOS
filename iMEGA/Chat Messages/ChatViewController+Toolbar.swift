@@ -68,7 +68,7 @@ extension ChatViewController {
                         audioController.stopAnyOngoingPlaying()
                     }
                 }
-                MEGASdkManager.sharedMEGAChatSdk()?.revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
+                MEGASdkManager.sharedMEGAChatSdk().revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
             } else {
                 let foundIndex = messages.firstIndex { message -> Bool in
                     guard let localChatMessage = message as? ChatMessage else {
@@ -89,7 +89,7 @@ extension ChatViewController {
                     }, completion: nil)
                 } else {
                     let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
-                    let deleteMessage = MEGASdkManager.sharedMEGAChatSdk()?.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
+                    let deleteMessage = MEGASdkManager.sharedMEGAChatSdk().deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
                     deleteMessage?.chatId = chatRoom.chatId
                     chatRoomDelegate.chatMessages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
                 }
@@ -148,7 +148,7 @@ extension ChatViewController {
                 showSuccess = chatIdNumbers?.count ?? 0 > 1
             } else if chatIdNumbers?.count == 1 && self.chatRoom.isPreview {
                 let chatId = chatIdNumbers?.first!.uint64Value
-                let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId!)
+                let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId!)
                 let messagesVC = ChatViewController()
                 messagesVC.chatRoom = chatRoom
                 self.replaceCurrentViewController(withViewController: messagesVC)

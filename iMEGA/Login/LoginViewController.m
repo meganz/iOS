@@ -129,10 +129,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 #pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
-    if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
-    
     if ([[MEGASdkManager sharedMEGAChatSdk] initState] != MEGAChatInitWaitingNewSession) {
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
         if (chatInit != MEGAChatInitWaitingNewSession) {

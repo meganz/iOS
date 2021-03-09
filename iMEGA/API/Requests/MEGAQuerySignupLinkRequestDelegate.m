@@ -41,11 +41,7 @@
     if (self.urlType == URLTypeConfirmationLink) {
         if (request.flag) {
             NSString *ephemeralEmail = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
-            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"] && [request.email isEqualToString:ephemeralEmail]) {
-                if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-                    [MEGASdkManager createSharedMEGAChatSdk];
-                }
-                
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"] && [request.email isEqualToString:ephemeralEmail]) {                
                 MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
                 if (chatInit != MEGAChatInitWaitingNewSession) {
                     MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");

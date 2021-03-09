@@ -172,6 +172,9 @@
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatRequestDelegate:self];
+        
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
@@ -216,12 +219,6 @@
         }
         
         isAccountFirstLogin = NO;
-        
-        if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-            [MEGASdkManager createSharedMEGAChatSdk];
-        } else {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-        }
         
         [self initProviderDelegate];
         
@@ -1209,7 +1206,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }]];
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));
     dispatch_semaphore_wait(semaphore, timeout);
-    [MEGASdkManager destroySharedMEGAChatSdk];
 }
 
 - (void)presentLogoutFromOtherClientAlert {
@@ -1819,7 +1815,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        [MEGASdkManager destroySharedMEGAChatSdk];
         [self.megaProviderDelegate invalidateProvider];
         self.megaProviderDelegate = nil;
         self.megaCallManager = nil;

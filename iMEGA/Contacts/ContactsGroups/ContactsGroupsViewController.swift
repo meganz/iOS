@@ -56,7 +56,7 @@ class ContactsGroupsViewController: UIViewController {
     }
 
     func fetchGroupChatsList() {
-        guard let chatListItems = MEGASdkManager.sharedMEGAChatSdk()?.chatListItems else {
+        guard let chatListItems = MEGASdkManager.sharedMEGAChatSdk().chatListItems else {
             return
         }
         
@@ -72,7 +72,7 @@ class ContactsGroupsViewController: UIViewController {
     }
     
     func addNewChatToList(chatRoom: MEGAChatRoom) {
-        guard let newChatListItem = MEGASdkManager.sharedMEGAChatSdk()?.chatListItem(forChatId: chatRoom.chatId) else {
+        guard let newChatListItem = MEGASdkManager.sharedMEGAChatSdk().chatListItem(forChatId: chatRoom.chatId) else {
             return
         }
         groupChats.append(newChatListItem)
@@ -85,7 +85,7 @@ class ContactsGroupsViewController: UIViewController {
     
     func showGroupChatRoom(at indexPath: IndexPath) {
         let chatListItem = searchingGroupChats.count != 0 ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
-        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatListItem.chatId) else {
+        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
         let messagesVC = ChatViewController()
@@ -107,20 +107,20 @@ class ContactsGroupsViewController: UIViewController {
             let messagesVC = ChatViewController()
 
             if keyRotation {
-                MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(usersArray: users, title: groupName, completion: { chatRoom in
+                MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(usersArray: users, title: groupName, completion: { chatRoom in
                     self?.addNewChatToList(chatRoom: chatRoom)
                     messagesVC.chatRoom = chatRoom
                     self?.navigationController?.pushViewController(messagesVC, animated: true)
                 })
             } else {
-                MEGASdkManager.sharedMEGAChatSdk()?.createPublicChat(withPeers: MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users), title: groupName, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
-                    guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: request.chatHandle) else {
+                MEGASdkManager.sharedMEGAChatSdk().createPublicChat(withPeers: MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users), title: groupName, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
+                    guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
                         return
                     }
                     self?.addNewChatToList(chatRoom: chatRoom)
                     messagesVC.chatRoom = chatRoom
                     if getChatlink {
-                        MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(messagesVC.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
+                        MEGASdkManager.sharedMEGAChatSdk().createChatLink(messagesVC.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
                             if error.type == .MEGAChatErrorTypeOk {
                                 messagesVC.publicChatWithLinkCreated = true
                                 messagesVC.publicChatLink = URL(string: request.text)
