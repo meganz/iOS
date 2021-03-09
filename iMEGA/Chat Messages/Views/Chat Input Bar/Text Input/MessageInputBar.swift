@@ -71,7 +71,8 @@ class MessageInputBar: UIView {
     private let kMEGAUIKeyInputCarriageReturn = "\r"
 
     private var keyboardShowObserver: NSObjectProtocol?
-    
+    private var keyboardHideObserver: NSObjectProtocol?
+
     private var expanded: Bool = false
     private var minTopPaddingWhenExpanded: CGFloat = 20.0
     private var expandedHeight: CGFloat? {
@@ -298,18 +299,21 @@ class MessageInputBar: UIView {
     
     private func registerKeyboardNotifications() {
         keyboardShowObserver = keyboardShowNotification()
+        keyboardHideObserver = keyboardHideNotification()
     }
     
     private func removeKeyboardNotifications() {
-        remove(observer: keyboardShowObserver)
+        remove(observers: [keyboardShowObserver, keyboardHideObserver])
     }
     
-    private func remove(observer: NSObjectProtocol?) {
-        guard let observer = observer else {
-            return
+    private func remove(observers: [NSObjectProtocol?]) {
+        observers.forEach { observer in
+            guard let observer = observer else {
+                return
+            }
+            
+            NotificationCenter.default.removeObserver(observer)
         }
-        
-        NotificationCenter.default.removeObserver(observer)
     }
     
     private func expand() {
@@ -415,6 +419,23 @@ class MessageInputBar: UIView {
                 let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
                 messageTextViewExpanadedHeight != self.expandedHeight {
                 self.messageTextView.expandedHeight = self.expandedHeight
+            }
+        }
+    }
+    
+    private func keyboardHideNotification() -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardDidHideNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let `self` = self else {
+                return
+            }
+            
+            if self.expanded {
+                self.expanded = false
+                self.collapse()
             }
         }
     }

@@ -586,6 +586,7 @@
 - (void)shareNodesWithLevel:(MEGAShareType)shareType {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
+    [self.contatctsViewControllerDelegate nodeEditCompleted:YES];
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:self.nodesArray.count completion:^{
@@ -640,9 +641,7 @@
     BOOL userHasChanged = NO;
     
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
-        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
+        [user removeAvatarFromLocalCache];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;
@@ -762,6 +761,9 @@
     if (!self.selectedUsersArray) {
         self.selectedUsersArray = [NSMutableArray new];
         [self.deleteBarButtonItem setEnabled:NO];
+        if (self.contactsMode == ContactsModeChatAddParticipant) {
+            self.addParticipantBarButtonItem.enabled = NO;
+        }
     }
 }
 
@@ -1776,6 +1778,7 @@
                     return;
                 }
                 [self.selectedUsersArray addObject:user];
+                self.addParticipantBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
                 [self addItemsToList:@[[ItemListModel.alloc initWithUser:user]]];
                 if (self.searchController.searchBar.isFirstResponder) {
                     self.searchController.searchBar.text = @"";
@@ -1834,6 +1837,9 @@
             }
             if (self.contactsMode != ContactsModeChatStartConversation) {
                 self.deleteBarButtonItem.enabled = NO;
+            }
+            if (self.contactsMode == ContactsModeChatAddParticipant) {
+                self.addParticipantBarButtonItem.enabled = NO;
             }
         }
         
@@ -2007,22 +2013,6 @@
     
     if (self.contactsMode == ContactsModeDefault) {
         self.tableView.tableHeaderView = nil;
-    }
-}
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    switch (self.contactsMode) {
-        case ContactsModeChatStartConversation:
-        case ContactsModeChatAddParticipant:
-        case ContactsModeChatAttachParticipant:
-        case ContactsModeChatCreateGroup:
-        case ContactsModeShareFoldersWith:
-            searchController.searchBar.showsCancelButton = NO;
-            break;
-            
-        default:
-            searchController.searchBar.showsCancelButton = YES;
-            break;
     }
 }
 
@@ -2203,6 +2193,9 @@
     [self.selectedUsersArray removeObject:item];
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
+        if (self.contactsMode == ContactsModeChatAddParticipant) {
+            self.addParticipantBarButtonItem.enabled = NO;
+        }
     }
 }
 

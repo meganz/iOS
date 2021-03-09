@@ -7,7 +7,10 @@
         return MEGAStore.shareInstance()
     }
     
-    private lazy var context: NSManagedObjectContext? = store?.childPrivateQueueContext
+    private var context: NSManagedObjectContext? {
+        store?.stack?.newBackgroundContext()
+    }
+    
     private var isDatabaseCleanupTaskCompleted: Bool?
     
     private override init() { super.init() }

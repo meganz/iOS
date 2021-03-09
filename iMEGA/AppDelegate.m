@@ -105,6 +105,8 @@
 
 @property (nonatomic) NSNumber *openChatLater;
 
+@property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
+
 @end
 
 @implementation AppDelegate
@@ -248,8 +250,8 @@
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
-                                                                         withLogout:NO
-                                                                     andLogoutTitle:nil];
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -279,7 +281,9 @@
         }
     }
     
-    [Helper setIndexer:MEGAIndexer.sharedIndexer];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        [Helper setIndexer:MEGAIndexer.sharedIndexer];
+    });
     
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
@@ -384,8 +388,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
-    [MEGASdkManager destroySharedMEGAChatSdk];
-    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
@@ -395,6 +397,8 @@
     if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
+    
+    [self localLogoutSDKandChat];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -601,6 +605,14 @@
     return _backgroundRefreshPerformer;
 }
 
+- (QuickAccessWidgetManager *)quickAccessWidgetManager {
+    if (_quickAccessWidgetManager == nil) {
+        _quickAccessWidgetManager = [[QuickAccessWidgetManager alloc] init];
+    }
+    
+    return _quickAccessWidgetManager;
+}
+
 #pragma mark - Private
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
@@ -694,7 +706,7 @@
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
-        [self.mainTBC showOffline];
+        [self.mainTBC showOfflineAndPresentFileWithHandle:nil];
     } else {
         quickActionManaged = NO;
     }
@@ -734,8 +746,8 @@
                 
                 if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
                     [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
-                                                                             withLogout:NO
-                                                                         andLogoutTitle:nil];
+                                                                             withLogout:YES
+                                                                         andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
                 }
             }
         }
@@ -1184,6 +1196,28 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)localLogoutSDKandChat {
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [MEGASdkManager.sharedMEGASdk localLogoutWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        if (MEGASdkManager.sharedMEGAChatSdk) {
+            [MEGASdkManager.sharedMEGAChatSdk localLogoutWithDelegate:[MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                dispatch_semaphore_signal(semaphore);
+            }]];
+        } else {
+            dispatch_semaphore_signal(semaphore);
+        }
+    }]];
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));
+    dispatch_semaphore_wait(semaphore, timeout);
+    [MEGASdkManager destroySharedMEGAChatSdk];
+}
+
+- (void)presentLogoutFromOtherClientAlert {
+    self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1207,6 +1241,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)passcodeWasEnabled {
     MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+}
+
+- (void)passcodeViewControllerWillClose {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAPasscodeViewControllerWillCloseNotification object:nil];
 }
 
 #pragma mark - PKPushRegistryDelegate
@@ -1307,7 +1345,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - MEGAGlobalDelegate
 
-- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+- (void)onUsersUpdate:(MEGASdk *)sdk userList:(MEGAUserList *)userList {
     NSInteger userListCount = userList.size.integerValue;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
@@ -1323,19 +1361,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             
             if (user.isOwnChange == 0) { //If the change is external
-                if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle) {
-                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
-                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
-                    }
+                if (user.handle == sdk.myUser.handle) {
+                    [user resetAvatarIfNeededInSdk:sdk];
                     
                     if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+                        [sdk getUserAttributeType:MEGAUserAttributeFirstname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                        [sdk getUserAttributeType:MEGAUserAttributeLastname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeUserAlias]) {
                         [self fetchContactsNickname];
@@ -1345,41 +1378,43 @@ void uncaughtExceptionHandler(NSException *exception) {
                         MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                             [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
                         }];
-                        [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+                        [sdk isRichPreviewsEnabledWithDelegate:delegate];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeCameraUploadsFolder]) {
                         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTargetFolderChangedInRemoteNotification object:nil];
                     }
                 } else {
-                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
-                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
-                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
-                    }
+                    [user resetAvatarIfNeededInSdk:sdk];
+                    
                     if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                        [sdk getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+                        [sdk getUserAttributeForUser:user type:MEGAUserAttributeLastname];
                     }
                 }
             }
             
         } else if (user.visibility == MEGAUserVisibilityVisible) {
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+            [sdk getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+            [sdk getUserAttributeForUser:user type:MEGAUserAttributeLastname];
         }
         
         if (user.visibility == MEGAUserVisibilityHidden) {
             [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
         }
     }
+    
+    [self checkCookieSettingsUpdateIn:userList];
 }
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
         [Helper startPendingUploadTransferIfNeeded];
+    }
+    
+    if (@available(iOS 14.0, *)) {
+        [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
     }
 }
 
@@ -1464,7 +1499,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 return;
             }
             
-            if (request.paramType != MEGAErrorTypeApiESSL) {
+            if (request.paramType != MEGAErrorTypeApiESSL && request.flag) {
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             }
             break;
@@ -1508,10 +1543,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
                         [Helper logout];
                         [self showOnboardingWithCompletion:nil];
-                        
-                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
+                        [self presentLogoutFromOtherClientAlert];
                     }
                 }
                 break;
@@ -1654,14 +1686,29 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
             }
 
+            if (@available(iOS 14.0, *)) {
+                [self.quickAccessWidgetManager createWidgetItemData];
+            }
+            
             break;
         }
             
-        case MEGARequestTypeLogout: {            
-            [Helper logout];
-            [self showOnboardingWithCompletion:nil];
-            
-            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+        case MEGARequestTypeLogout: {
+            // if logout (not if localLogout) or session killed in other client
+            BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+            if (request.flag || sessionInvalidateInOtherClient) {
+                [Helper logout];
+                [self showOnboardingWithCompletion:nil];
+                
+                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                
+                if (@available(iOS 14.0, *)) {
+                    [QuickAccessWidgetManager reloadAllWidgetsContent];
+                }
+                if (sessionInvalidateInOtherClient) {
+                    [self presentLogoutFromOtherClientAlert];
+                }
+            }
             break;
         }
             
@@ -1780,7 +1827,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (request.type == MEGAChatRequestTypeImportMessages) {
         MEGALogDebug(@"Imported messages %lld", request.number);
-        NSManagedObjectContext *childQueueContext = MEGAStore.shareInstance.childPrivateQueueContext;
+        NSManagedObjectContext *childQueueContext = [MEGAStore.shareInstance.stack newBackgroundContext];
         if (childQueueContext) {
             [childQueueContext performBlock:^{
                 [MEGAStore.shareInstance deleteAllMessagesWithContext:childQueueContext];
@@ -1950,6 +1997,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+                if (@available(iOS 14.0, *)) {
+                    [QuickAccessWidgetManager reloadAllWidgetsContent];
+                }
             }
         }
         

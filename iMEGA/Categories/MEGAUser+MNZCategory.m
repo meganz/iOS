@@ -4,6 +4,7 @@
 #import "Helper.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 
 @implementation MEGAUser (MNZCategory)
 
@@ -30,6 +31,22 @@
 - (NSString *)mnz_displayName {
     MOUser *moUser = [MEGAStore.shareInstance fetchUserWithUserHandle:self.handle];
     return moUser.displayName == nil ? @"" : moUser.displayName;
+}
+
+- (void)resetAvatarIfNeededInSdk:(MEGASdk *)sdk {
+    if ([self hasChangedType:MEGAUserChangeTypeAvatar] || [self hasChangedType:MEGAUserChangeTypeFirstname]) {
+        [self removeAvatarFromLocalCache];
+        [sdk getAvatarUser:self destinationFilePath:[self avatarFilePath]];
+    }
+}
+
+- (void)removeAvatarFromLocalCache {
+    [NSFileManager.defaultManager mnz_removeItemAtPath:[self avatarFilePath]];
+}
+
+- (NSString *)avatarFilePath {
+    NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:self.handle];
+    return [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
 }
 
 @end

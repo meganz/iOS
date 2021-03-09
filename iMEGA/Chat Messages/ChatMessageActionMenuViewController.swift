@@ -44,14 +44,14 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.downloadMessage(chatMessage)
+        self.chatViewController?.downloadMessage([chatMessage])
     }
     
     lazy var importAction = ActionSheetAction(title: NSLocalizedString("Import to Cloud Drive", comment: ""), detail: nil, image: UIImage(named: "import"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.importMessage(chatMessage)
+        self.chatViewController?.importMessage([chatMessage])
     }
     
     lazy var addContactAction = ActionSheetAction(title: NSLocalizedString("addContact", comment: ""), detail: nil, image: UIImage(named: "addContact"), style: .default) {
@@ -72,7 +72,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.saveToPhotos(chatMessage)
+        self.chatViewController?.saveToPhotos([chatMessage])
     }
     
     lazy var shareAction = ActionSheetAction(title: NSLocalizedString("share", comment: ""), detail: nil, image: UIImage(named: "share"), style: .default) {

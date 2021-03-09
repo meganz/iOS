@@ -4,7 +4,7 @@
 
 @interface MEGAStore ()
 
-@property (strong, nonatomic) MEGAStoreStack *storeStack;
+@property (strong, nonatomic) MEGACoreDataStack *stack;
 
 @end
 
@@ -24,19 +24,18 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
+        _stack = [[MEGACoreDataStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveLogoutNotification) name:MEGALogoutNotification object:nil];
     }
     return self;
 }
 
-- (NSManagedObjectContext *)managedObjectContext {
-    return self.storeStack.viewContext;
+- (void)didReceiveLogoutNotification {
+    [self.stack deleteStore];
 }
 
-- (NSManagedObjectContext *)childPrivateQueueContext {
-    NSManagedObjectContext *context = [NSManagedObjectContext.alloc initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    context.parentContext = self.managedObjectContext;
-    return context;
+- (NSManagedObjectContext *)managedObjectContext {
+    return self.stack.viewContext;
 }
 
 - (NSURL *)storeURL {
@@ -101,6 +100,7 @@
     [offlineNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
     [offlineNode setLocalPath:path];
     [offlineNode setFingerprint:node.fingerprint];
+    [offlineNode setDownloadedDate:[NSDate date]];
 
     MEGALogDebug(@"Save context: insert offline node: %@", offlineNode);
     
@@ -145,6 +145,21 @@
 
 }
 
+- (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+
+    [request setPredicate: [NSPredicate predicateWithFormat:@"base64Handle == %@", base64Handle]];
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+
+}
+
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
     [self.managedObjectContext deleteObject:offlineNode];
     MEGALogDebug(@"Save context - remove offline node: %@", offlineNode);
@@ -165,6 +180,26 @@
     }
     
     [self saveContext];
+}
+
+- (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"downloadedDate" ascending:NO]];
+    if (fetchLimit) {
+        request.fetchLimit = fetchLimit.intValue;
+    }
+    
+    if (inRootFolder) {
+        [request setPredicate: [NSPredicate predicateWithFormat:@"NOT (localPath CONTAINS %@)", @"/"]];
+    }
+
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+
+    return array;
 }
 
 #pragma mark - MOUser entity
@@ -440,7 +475,7 @@
 #pragma mark - MOMessage entity
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
-    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.childPrivateQueueContext;
+    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.stack.newBackgroundContext;
     
     MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage"
                                                         inManagedObjectContext:context];
@@ -453,7 +488,7 @@
 }
 
 - (void)deleteMessage:(MOMessage *)message {
-    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.childPrivateQueueContext;
+    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.stack.newBackgroundContext;
 
     [context deleteObject:message];
     

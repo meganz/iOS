@@ -157,6 +157,7 @@
 	<string>NSPhotoLibraryUsageDescription</string>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>SelectSectionIntent</string>
 		<string>SelectShortcutIntent</string>
 	</array>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>

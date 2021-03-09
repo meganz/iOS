@@ -263,6 +263,9 @@
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                     [[MEGAStore shareInstance] removeAllOfflineNodes];
+                    if (@available(iOS 14.0, *)) {
+                        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAQuickAccessWidget];
+                    }
                     [self reloadUI];
                 });
             });

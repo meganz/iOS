@@ -48,9 +48,29 @@ final class HomeRecentActionViewModel:
         case .failure:
             break
         case .success(let isFavourite):
-            isFavourite
-                ? nodeFavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle, completion: { _ in })
-                : nodeFavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle, completion: { _ in })
+            if isFavourite {
+                nodeFavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
+                    switch result {
+                    case .success():
+                        if #available(iOS 14.0, *) {
+                            QuickAccessWidgetManager().deleteFavouriteItem(for: node)
+                        }
+                    case .failure(_):
+                        break
+                    }
+                }
+            } else {
+                nodeFavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
+                    switch result {
+                    case .success():
+                        if #available(iOS 14.0, *) {
+                            QuickAccessWidgetManager().insertFavouriteItem(for: node)
+                        }
+                    case .failure(_):
+                        break
+                    }
+                }
+            }
         }
 
     }

@@ -14,10 +14,15 @@ pipeline {
    options {
         timeout(time: 1, unit: 'HOURS') 
    }
+    environment {
+        APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
+    }
    stages {
       stage('Submodule update') {
          steps {
             injectEnvironments({
+              sh "git submodule foreach --recursive git clean -xfd"
+              sh "git submodule sync --recursive"
               sh "git submodule update --init --recursive"
             })
         }

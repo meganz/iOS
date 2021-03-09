@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,7 +48,7 @@
                                             <action selector="didPressLeftToolbarButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9ow-6i-pKC"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="X7E-D4-iws"/>
                                     <barButtonItem id="Ytc-aC-zrZ">
                                         <connections>
                                             <action selector="didPressCenterToolbarButton:" destination="yD8-RT-K0O" id="GsB-ll-PuH"/>
@@ -69,6 +70,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="mor-0x-30S"/>
                         <constraints>
                             <constraint firstItem="Z54-Be-FUS" firstAttribute="trailing" secondItem="mor-0x-30S" secondAttribute="trailing" id="4Er-s0-s8R"/>
                             <constraint firstItem="mor-0x-30S" firstAttribute="bottom" secondItem="Z54-Be-FUS" secondAttribute="bottom" id="4GG-tp-7bl"/>
@@ -87,26 +89,55 @@
                             <constraint firstItem="FGv-7h-IkY" firstAttribute="leading" secondItem="mor-0x-30S" secondAttribute="leading" id="msR-Sa-mEz"/>
                             <constraint firstItem="ulA-CI-VZp" firstAttribute="bottom" secondItem="BIU-zX-lhe" secondAttribute="bottom" id="rAm-5X-FtS"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="mor-0x-30S"/>
                     </view>
                     <connections>
+                        <outlet property="allMediaToolBarItem" destination="337-ps-Kti" id="H5d-Wt-uej"/>
                         <outlet property="centerToolbarItem" destination="Ytc-aC-zrZ" id="HwJ-in-pI9"/>
                         <outlet property="closeBarButtonItem" destination="Bfh-QP-H1o" id="5tf-Af-tnV"/>
                         <outlet property="customActionsButton" destination="YVt-M3-aSH" id="YEr-Op-Iyv"/>
+                        <outlet property="forwardToolbarItem" destination="hCM-73-xr9" id="L4l-Oi-XD7"/>
+                        <outlet property="importToolbarItem" destination="dRR-FQ-Z4n" id="lFP-nZ-x7Y"/>
                         <outlet property="leftToolbarItem" destination="xTs-Xs-c6Q" id="SN4-Os-Oha"/>
                         <outlet property="navigationBar" destination="FGv-7h-IkY" id="T9E-zi-bd6"/>
                         <outlet property="navigationItem" destination="u26-RZ-kaH" id="Kj4-LD-0cj"/>
                         <outlet property="pieChartView" destination="HQW-yX-2Zj" id="ee7-TH-eQk"/>
                         <outlet property="rightToolbarItem" destination="Rck-W5-yGE" id="rWm-rZ-Z7d"/>
+                        <outlet property="saveToolbarItem" destination="ktG-X9-E0r" id="8F1-iZ-j9I"/>
                         <outlet property="scrollView" destination="ulA-CI-VZp" id="oyd-Da-pqT"/>
                         <outlet property="scrollViewTrailingConstraint" destination="74B-e7-8rm" id="CER-Bv-MAS"/>
+                        <outlet property="shareToolbarItem" destination="R7p-5g-SRq" id="S90-Xu-Fya"/>
                         <outlet property="statusBarBackground" destination="PCJ-Sw-nnM" id="QXl-Rh-SvD"/>
                         <outlet property="toolbar" destination="Z54-Be-FUS" id="BbJ-Aa-yik"/>
                     </connections>
                 </viewController>
+                <barButtonItem title="Item" image="saveToPhotos" style="plain" id="ktG-X9-E0r" userLabel="saveItem">
+                    <connections>
+                        <action selector="didPressSaveToPhotobarButton:" destination="yD8-RT-K0O" id="92b-AK-PtP"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Item" image="import" style="plain" id="dRR-FQ-Z4n" userLabel="importItem">
+                    <connections>
+                        <action selector="didPressImportbarButton:" destination="yD8-RT-K0O" id="L6m-Z1-z86"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Item" image="forwardToolbar" style="plain" id="hCM-73-xr9" userLabel="forwardItem">
+                    <connections>
+                        <action selector="didPressForwardbarButton:" destination="yD8-RT-K0O" id="22Z-uW-h04"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="All Media" id="337-ps-Kti" userLabel="allMediaItem">
+                    <connections>
+                        <action selector="didPressAllMediasButton:" destination="yD8-RT-K0O" id="a77-VF-aUT"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="share" style="plain" id="R7p-5g-SRq" userLabel="shareItem">
+                    <connections>
+                        <action selector="didPressSharebarButton:" destination="yD8-RT-K0O" id="8M7-Ra-iTF"/>
+                    </connections>
+                </barButtonItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tmH-uB-CiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="173.59999999999999" y="161.45320197044336"/>
+            <point key="canvasLocation" x="206" y="171"/>
         </scene>
         <!--Photo Browser Picker View Controller-->
         <scene sceneID="uqH-OG-t1m">
@@ -130,7 +161,7 @@
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="70h-sa-EZW">
                                 <rect key="frame" x="0.0" y="88" width="375" height="724"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1SO-Az-bk2">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -194,6 +225,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="HRi-IQ-AyN"/>
                         <constraints>
                             <constraint firstItem="70h-sa-EZW" firstAttribute="top" secondItem="dht-79-RjI" secondAttribute="bottom" id="7ls-Ck-kwW"/>
                             <constraint firstItem="dht-79-RjI" firstAttribute="trailing" secondItem="HRi-IQ-AyN" secondAttribute="trailing" id="8Sc-Oo-OZE"/>
@@ -207,7 +239,6 @@
                             <constraint firstAttribute="top" secondItem="G6f-xa-epe" secondAttribute="top" id="e5b-e8-bCH"/>
                             <constraint firstItem="70h-sa-EZW" firstAttribute="leading" secondItem="HRi-IQ-AyN" secondAttribute="leading" id="gJw-FY-mh2"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="HRi-IQ-AyN"/>
                     </view>
                     <connections>
                         <outlet property="closeBarButtonItem" destination="vUv-17-6IT" id="cwH-ax-YoD"/>
@@ -223,9 +254,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="forwardToolbar" width="28" height="28"/>
+        <image name="import" width="28" height="28"/>
         <image name="more" width="28" height="28.666666030883789"/>
+        <image name="saveToPhotos" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
         <image name="thumbnailsThin" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

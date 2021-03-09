@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติข้อความทั้งหมดของการสนทนานี้";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="ข้อผิดพลาด ไม่สามารถล้างประวัติการแชทได้";
 "Chat History has Been Cleared"="ล้างประวัติการแชทแล้ว";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="เกิดข้อผิดพลาด ล้างประวัติแชทไม่สำเร็จ";
 /* 'Next' button in a dialog */
 "continue"="ดำเนินการต่อ";
 /* Title of the incoming shared folders of a user. */
@@ -1760,8 +1760,12 @@
 "Save to Photos"="บันทึกลงในรูปถ่าย";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="กำลังบันทึกไปยังรูปภาพ...";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="All Media";
 /* Text shown when starting the process to share a filee to other app */
 "Preparing to share…"="กำลังเตรียมการแชร์…";
+/* Label for the status of a transfer when is being Downloading - (String as short as possible. */
+"Downloading %@"="Downloading %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="บันทึกไปยังรูปภาพแล้ว";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1979,7 +1983,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="ไม่มีกิจกรรมล่าสุด";
 /* Plural of items which contains a folder. 2 items */
-"items"="items";
+"%1$d items"="%1$d รายการ";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="ลิงก์แชทไม่พร้อมใช้งาน";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2556,11 +2560,17 @@
 "No Third Party Cookies in use"="ไม่มีการใช้งานคุกกี้จากที่อื่น";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่เรียบร้อยแล้ว";
-/* Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions */
-"Permissions error"="Permissions error";
 /* Text shown for the action create new file */
 "Create new file"="สร้างไฟล์ใหม่";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="คุณไม่มีสิทธิ์ในการแปลงไฟล์นี้กลับคืน เพื่อดำเนินการต่อ เราสามารถสร้างไฟล์ใหม่ด้วยข้อมูลที่ถูกแปลงกลับได้ คุณต้องการที่จะดำเนินการต่อไปหรือไม่";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
+/* The avatar picture button to go to my account page. Use for voice over. */
+"My Account"="บัญชีของฉัน";
+/* Text for title for favourite nodes */
+"Favourites"="รายการโปรด";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="ไม่มีรายการโปรด";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="ดูเพิ่มเติม";

@@ -58,7 +58,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, BrowserViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -89,6 +89,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
+
+@property (strong, nonatomic) Throttler *throttler;
 
 @end
 
@@ -166,6 +168,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
+    
+    self.throttler = [Throttler.alloc initWithTimeInterval:.1 dispatchQueue:dispatch_get_main_queue()];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1158,8 +1162,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
                 
             case DisplayModeRecents: {
-                NSString *itemsString =  NSLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
-                navigationTitle = [NSString stringWithFormat:@"%td %@", self.nodes.size.integerValue, itemsString];
+                navigationTitle = [NSString stringWithFormat:NSLocalizedString(@"%1$d items", @"Plural of items which contains a folder. 2 items"), self.nodes.size.intValue];
                 break;
             }
                 
@@ -1626,10 +1629,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.browserViewControllerDelegate = self;
     browserVC.selectedNodesArray = self.selectedNodesArray.copy;
     browserVC.browserAction = BrowserActionMove;
-    
-    self.selectedNodesArray = nil;
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
@@ -1637,10 +1639,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.browserViewControllerDelegate = self;
     browserVC.selectedNodesArray = self.selectedNodesArray.copy;
     browserVC.browserAction = BrowserActionCopy;
-    
-    self.selectedNodesArray = nil;
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
@@ -1814,20 +1815,22 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         return;
     }
     
-    NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-    
-    if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.viewModePreference == ViewModePreferenceList) {
-        float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
+    [self.throttler startWithAction:^{
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.cdTableView.tableView cellForRowAtIndexPath:indexPath];
-            [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
-            cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+        if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.viewModePreference == ViewModePreferenceList) {
+            float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
+            NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
+            NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
+            
+            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
+            if (indexPath != nil) {
+                NodeTableViewCell *cell = (NodeTableViewCell *)[self.cdTableView.tableView cellForRowAtIndexPath:indexPath];
+                [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
+                cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+            }
         }
-    }
+    }];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1934,9 +1937,23 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self showNodeInfo:node];
             break;
             
-        case MegaNodeActionTypeFavourite:
-            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+        case MegaNodeActionTypeFavourite: {
+            if (@available(iOS 14.0, *)) {
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        if (request.numDetails == 1) {
+                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                        } else {
+                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
+            } else {
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            }
             break;
+        }
             
         case MegaNodeActionTypeLabel:
             [node mnz_labelActionSheetInViewController:self];
@@ -2003,6 +2020,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - BrowserViewControllerDelegate
+
+- (void)nodeEditCompleted:(BOOL)complete {
+    [self setEditMode:!complete];
 }
 
 @end

@@ -34,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateTitle;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateCount;
@@ -101,6 +102,8 @@
             [self.usersWithoutChatArray addObject:user];
         }
     }
+    self.addBarButtonItem.accessibilityLabel = NSLocalizedString(@"startConversation", comment: "start a chat/conversation");
+    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault:
@@ -495,6 +498,11 @@
     NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
     if (self.searchController.isActive) {
         [self.searchChatListItemArray removeObjectAtIndex:indexPath.row];
+        for (MEGAChatListItem *chatListItem in [self.chatListItemArray mutableCopy]) {
+            if (chatListItem.chatId == chatId) {
+                [self.chatListItemArray removeObject:chatListItem];
+            }
+        }
     } else {
         [self.chatListItemArray removeObjectAtIndex:indexPath.row];
     }
@@ -1426,7 +1434,11 @@
         }
         
         if (indexPath && self.chatListItemArray.count > 0) {
-            [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
+            if (self.searchController.isActive) {
+                [self.searchChatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
+            } else {
+                [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
+            }
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
                 case MEGAChatListItemChangeTypeOwnPrivilege:
@@ -1455,7 +1467,11 @@
                     
                 case MEGAChatListItemChangeTypeArchived:
                     [self deleteRowByChatId:item.chatId];
-                    self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+                         self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                    } else {
+                         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                    }
                     if (self.isArchivedChatsRowVisible) {
                         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                     }

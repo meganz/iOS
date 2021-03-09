@@ -823,8 +823,6 @@ static MEGAIndexer *indexer;
         }
     }
     
-    [MEGAStore.shareInstance.storeStack deleteStore];
-    
     // Delete files saved by extensions
     NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];

@@ -426,7 +426,20 @@
         }
         
         case MegaNodeActionTypeFavourite:
-            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            if (@available(iOS 14.0, *)) {
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        if (request.numDetails == 1) {
+                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                        } else {
+                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
+            } else {
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            }
             break;
             
         case MegaNodeActionTypeLabel:

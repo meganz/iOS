@@ -1,6 +1,8 @@
 
 #import "MEGASdkManager.h"
 
+static const NSInteger MaximumNOFILE = 20000;
+
 @implementation MEGASdkManager
 
 static MEGAChatSdk *_MEGAChatSdk = nil;
@@ -27,6 +29,7 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
         }
 
         _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePathURL.path];
+        [_megaSDK setRLimitFileCount:MaximumNOFILE];
         [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;
@@ -64,6 +67,7 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
     dispatch_once(&onceToken, ^{
         NSString *basePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
         _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePath];
+        [_megaSDKFolder setRLimitFileCount:MaximumNOFILE];
         [_megaSDKFolder retrySSLErrors:YES];
     });
     return _megaSDKFolder;

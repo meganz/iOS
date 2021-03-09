@@ -76,9 +76,10 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     // MARK: - Switch Tab
 
     func showTab(_ tab: DisplayTab) {
-        updateTabVisiblity(to: tab)
+        currentDisplayTab = tab
+        let index = tab == .recents ? 0 : 1
+        titleView.selectTab(index)
     }
-    
     
     func isOverScroll() -> Bool {
         switch currentDisplayTab {
