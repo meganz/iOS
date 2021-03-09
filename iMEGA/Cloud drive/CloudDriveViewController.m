@@ -375,7 +375,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (node == nil) {
         return nil;
     }
@@ -610,7 +610,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+                MEGANode *nodePressed = [self nodeAtIndexPath:indexPath];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditMode:NO];
                 }
@@ -800,12 +800,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
     MEGANode *node;
-    if (isInSearch) {
-        if (self.searchNodesArray.count > indexPath.row) {
-            node = self.searchNodesArray[indexPath.row];
-        }
+    if (self.viewModePreference == ViewModePreferenceList) {
+        node = isInSearch ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     } else {
-        node = [self.nodes nodeAtIndex:indexPath.row];
+        node = [self.cdCollectionView thumbnailNodeAtIndexPath:indexPath];
     }
     
     return node;
@@ -1558,6 +1556,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
@@ -1905,14 +1904,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeShare: {
-            NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
-            if (checkFileExist.count || node.isFolder) {
-                UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-                [self presentViewController:activityVC animated:YES completion:nil];
-            } else {
-                [node mnz_downloadNodeAndShare];
-            }
-
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;
             

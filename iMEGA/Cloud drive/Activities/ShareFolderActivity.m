@@ -5,7 +5,7 @@
 
 @interface ShareFolderActivity ()
 
-@property (strong, nonatomic) NSArray *nodes;
+@property (strong, nonatomic) NSArray<MEGANode *> *nodes;
 
 @end
 
@@ -28,6 +28,10 @@
         return NSLocalizedString(@"shareFolders", nil);
     }
     
+    if ([self.nodes count] == 1 && (self.nodes.firstObject).isShared) {
+        return NSLocalizedString(@"Manage Share", @"Text indicating to the user the action that will be executed on tap.");
+    }
+    
     return NSLocalizedString(@"shareFolder", nil);
 }
 
@@ -40,11 +44,19 @@
 }
 
 - (UIViewController *)activityViewController {
-    
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    contactsVC.nodesArray = self.nodes;
-    contactsVC.contactsMode = ContactsModeShareFoldersWith;
+    ContactsViewController *contactsVC;
+    
+    if ([self.nodes count] == 1 && (self.nodes.firstObject).isShared) {
+        contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+        contactsVC.node = self.nodes.firstObject;
+        contactsVC.contactsMode = ContactsModeFolderSharedWith;        
+        [navigationController pushViewController:contactsVC animated:YES];
+    } else {
+        contactsVC = navigationController.viewControllers.firstObject;
+        contactsVC.nodesArray = self.nodes;
+        contactsVC.contactsMode = ContactsModeShareFoldersWith;
+    }
     contactsVC.shareFolderActivity = self;
     
     return navigationController;

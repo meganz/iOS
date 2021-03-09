@@ -5,7 +5,7 @@ struct NodeSearchRepository {
     var search: (
         _ filename: String,
         _ rootNodeHandle: MEGAHandle?,
-        _ completion: (@escaping ([SDKNode]) -> Void)
+        _ completion: (@escaping ([NodeEntity]) -> Void)
     ) -> () -> Void
 
     var cancel: (() -> Void) -> Void
@@ -41,7 +41,7 @@ extension NodeSearchRepository {
                         return
                     }
                     let sdkNodes = foundNodes.map { node in
-                        SDKNode(with: node)
+                        NodeEntity(with: node)
                     }
                     completionAction(sdkNodes)
                 }

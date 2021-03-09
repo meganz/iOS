@@ -148,8 +148,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
-
         if let chatMessage = message {
             if !chatMessage.isDeleted {
                 if supportedMessage(message) {

@@ -219,6 +219,8 @@
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
             [self updateAppearance];
             
             [self.tableView reloadData];
@@ -295,6 +297,9 @@
             
         case ContactsModeFolderSharedWith: {
             self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+            if (self.shareFolderActivity != nil) {
+                self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
+            }
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -710,6 +715,7 @@
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
@@ -729,6 +735,7 @@
         } else if (self.navigationController.isToolbarHidden) {
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
+            [self.navigationController.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
         }
         for (ContactTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
@@ -736,6 +743,9 @@
             cell.selectedBackgroundView = view;
         }
     } else {
+        if (self.contactsMode == ContactsModeFolderSharedWith && self.shareFolderActivity != nil) {
+            self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
+        }
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
