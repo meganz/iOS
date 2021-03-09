@@ -109,7 +109,7 @@
 /*  */
 "weak"="Vulnérable";
 /*  */
-"passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas de noms ou de mots du dictionnaire.";
+"passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas des noms ou des mots du dictionnaire.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Moyen";
 /*  */
@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Le lien d’annulation est expiré.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour annuler votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour supprimer votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Votre compte a été annulé avec succès.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -1345,8 +1345,6 @@
 "connecting"="Connexion…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Certains éléments n’ont pas pu être partagés avec MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Les ressources du système sont restreintes lors du partage d’éléments. Veuillez essayer de téléverser ces fichiers à partir de l’appli MEGA.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="A été partagé avec succès";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1761,9 +1759,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Enregistrement dans Photos…";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
+"All Media"="Tous les médias";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="Téléchargement de %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Enregistrée dans Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2431,7 +2429,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Supprimer automatiquement les messages de plus de %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Supprimer automatiquement les messages et fichiers partagés dans cette conversation pour les deux parties. Cette action est irréversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Supprimer tous les messages et fichiers partagés dans cette conversation. Cette action est irréversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Supprimer les messages de plus de";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2441,7 +2439,7 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="Un mois";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Personnalisée…";
+"Custom..."="Personnalisé…";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] a changé la durée avant effacement du message à[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2480,6 +2478,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Sélectionner le dossier";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="En cours de lecture";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Voulez-vous vraiment déplacer le dossier des Téléversements de l’appareil photo vers la corbeille ? Si oui, un nouveau dossier sera automatiquement généré pour les Téléversements de l’appareil photo.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2572,3 +2572,13 @@
 "No Favourites"="Il n’y a aucun favori";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="AFFICHER DAVANTAGE";
+/* Title for the QuickAccess widget */
+"Quick Access"="Accès rapide";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Accédez rapidement aux fichiers dans Récents, Favoris ou la section Hors ligne.";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Accéder facilement aux fichiers de votre section Favoris";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Accéder facilement aux fichiers de votre section Récents";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Accéder facilement aux fichiers de votre section Hors ligne";

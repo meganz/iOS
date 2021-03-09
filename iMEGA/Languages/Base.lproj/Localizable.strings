@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Cancellation link has expired.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="This is the last step to cancel your account. You will permanently lose all the data stored in the cloud. Please enter your password below.";
+"enterYourPasswordToConfirmThatYouWanToClose"="This is the last step to delete your account. You will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Your account has been cancelled successfully.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -2429,7 +2429,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Automatically delete messages older than %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation. This action is irreversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Clear Messages Older Than";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2479,7 +2479,7 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Select Folder";
 /* Section header of Audio Player playlist that contains playing track */
-"Playing" = "Playing";
+"Playing"="Playing";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2575,10 +2575,10 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Quick Access";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or Offline section";
+"Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or the Offline section";
 /* Text description for the Favourites QuickAccess widget */
-"Quickly access files on Favourites section"="Quickly access files on Favourites section";
+"Quickly access files on Favourites section"="Quickly access files from your Favourites section";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="Quickly access files on Recents section";
+"Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Quickly access files on Offline section";
+"Quickly access files on Offline section"="Quickly access files from your Offline section";
