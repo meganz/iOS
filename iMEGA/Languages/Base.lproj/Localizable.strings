@@ -2478,6 +2478,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Select Folder";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing" = "Playing";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */

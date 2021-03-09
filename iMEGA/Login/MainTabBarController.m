@@ -28,7 +28,6 @@
 @implementation MainTabBarController
 
 #pragma mark - Lifecycle
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -59,22 +58,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
 
-    self.progressView = ({
-        ProgressIndicatorView *view = [ProgressIndicatorView.alloc initWithFrame:CGRectMake(0, 0, 70, 70)];
-        view.userInteractionEnabled = YES;
-        [self.view addSubview:view];
-    
-        [view addGestureRecognizer:({
-            [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProgressView)];
-        })];
-        [view autoSetDimensionsToSize:CGSizeMake(70, 70)];
-        [view autoPinEdgeToSuperviewSafeArea:ALEdgeRight withInset:8];
-        [view autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:60];
-        [TransfersWidgetViewController sharedTransferViewController].progressView = view;
-        view.hidden = YES;
-        view;
-        
-    });
+    [self defineProgressView];
     
     [self setBadgeValueForChats];
     [self configurePhoneImageBadge];
@@ -115,12 +99,17 @@
     [super viewWillDisappear:animated];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self showCameraUploadV2MigrationScreenIfNeeded];
+    
+    [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self shouldShowMiniPlayer];
 }
 
 - (BOOL)shouldAutorotate {
@@ -261,6 +250,46 @@
     [self presentViewController:navigation animated:YES completion:nil];
 }
 
+- (void)defineProgressView {
+    self.progressView = ({
+        ProgressIndicatorView *view = [ProgressIndicatorView.alloc initWithFrame:CGRectMake(0, 0, 70, 70)];
+        view.userInteractionEnabled = YES;
+        
+        [self.progressView removeFromSuperview];
+        
+        [self.view addSubview:view];
+    
+        [view addGestureRecognizer:({
+            [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProgressView)];
+        })];
+        [view autoSetDimensionsToSize:CGSizeMake(70, 70)];
+        [view autoPinEdgeToSuperviewSafeArea:ALEdgeRight withInset:8];
+        
+        if ([AudioPlayerManager.shared isPlayerAlive]) {
+            [view autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:120];
+        } else {
+            [view autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:60];
+        }
+        
+        [TransfersWidgetViewController sharedTransferViewController].progressView = view;
+        view.hidden = YES;
+        view;
+    });
+}
+
+- (void)shouldUpdateProgressViewLocation {
+    for (UIView *subview in self.view.subviews) {
+        if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
+            if ([AudioPlayerManager.shared isPlayerAlive]) {
+                [subview autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:120];
+            } else {
+                [subview autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:60];
+            }
+            [subview layoutIfNeeded];
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
@@ -364,5 +393,4 @@
         [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
     }
 }
-
 @end

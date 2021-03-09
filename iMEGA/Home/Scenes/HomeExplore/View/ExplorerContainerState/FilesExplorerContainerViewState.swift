@@ -118,6 +118,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.showSelectButton(show)
     }
     
+    func updateContentView(_ height: CGFloat) {
+        filesExplorerViewController?.updateContentView(height)
+    }
+    
     // MARK: - Private methods.
     
     func updateTitle(withNodesCount count: Int) {

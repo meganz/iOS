@@ -51,6 +51,10 @@ extern NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification;
 extern NSString * const MEGACameraUploadNodeUploadCompleteNotification;
 extern NSString * const MEGACameraUploadCompleteNotification;
 
+#pragma mark - audio player notification keys
+
+extern NSString * const MEGAAudioPlayerShouldUpdateContainerNotification;
+
 #pragma mark - camera upload notification keys
 
 extern NSString * const MEGAPhotoConcurrentCountUserInfoKey;
