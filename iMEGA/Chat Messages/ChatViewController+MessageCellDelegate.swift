@@ -92,7 +92,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
             audioController.playSound(for: message, in: cell)
             return
         }
-        if audioController.playingMessage?.messageId == message.messageId {
+        if audioController.isPlayingSameMessage(message) {
             // tap occur in the current cell that is playing audio sound
             if audioController.state == .playing {
                 audioController.pauseSound(for: message, in: cell)
@@ -113,6 +113,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                                                                 in: messagesCollectionView) as? ChatMessage else { return }
         if chatMessage.transfer != nil {
             checkTransferPauseStatus()
+            if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
+                guard let cell = cell as? AudioMessageCell else {
+                    return
+                }
+                didTapPlayButton(in: cell)
+            }
             return
         }
         
