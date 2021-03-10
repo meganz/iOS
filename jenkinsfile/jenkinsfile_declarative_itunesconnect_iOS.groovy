@@ -106,8 +106,8 @@ pipeline {
                 }
 
                 stage('Upload (dSYMs) to Firebase') {
-                    gitlabCommitStatus(name: 'Upload (dSYMs) to Firebase') {
-                        steps {
+                    steps {
+                        gitlabCommitStatus(name: 'Upload (dSYMs) to Firebase') {
                             injectEnvironments({
                                 retry(3) {
                                     sh "bundle exec fastlane upload_symbols ENV:DEV"
