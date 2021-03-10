@@ -9,8 +9,8 @@ extension QuickAccessWidgetFavouriteItem {
         return NSFetchRequest<QuickAccessWidgetFavouriteItem>(entityName: "QuickAccessWidgetFavouriteItem")
     }
 
-    @NSManaged public var handle: String
-    @NSManaged public var timestamp: Date
-    @NSManaged public var name: String
+    @NSManaged public var handle: String?
+    @NSManaged public var timestamp: Date?
+    @NSManaged public var name: String?
 
 }

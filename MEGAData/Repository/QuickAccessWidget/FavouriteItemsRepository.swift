@@ -22,14 +22,20 @@ class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
     }
     
     func fetchAllFavouriteItems() -> [FavouriteItemEntity] {
-        store.fetchAllQuickAccessFavouriteItems().map {
-            FavouriteItemEntity(base64Handle: $0.handle, name: $0.name, timestamp: $0.timestamp)
+        store.fetchAllQuickAccessFavouriteItems().compactMap {
+            guard let handle = $0.handle,
+                  let name = $0.name,
+                  let date = $0.timestamp else { return nil }
+            return FavouriteItemEntity(base64Handle: handle, name: name, timestamp: date)
         }
     }
     
     func fetchFavouriteItems(upTo count: Int) -> [FavouriteItemEntity] {
-        store.fetchQuickAccessFavourtieItems(withLimit: count).map {
-            FavouriteItemEntity(base64Handle: $0.handle, name: $0.name, timestamp: $0.timestamp)
+        store.fetchQuickAccessFavourtieItems(withLimit: count).compactMap {
+            guard let handle = $0.handle,
+                  let name = $0.name,
+                  let date = $0.timestamp else { return nil }
+            return FavouriteItemEntity(base64Handle: handle, name: name, timestamp: date)
         }
     }
     
