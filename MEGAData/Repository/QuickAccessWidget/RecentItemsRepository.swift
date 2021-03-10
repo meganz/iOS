@@ -18,8 +18,15 @@ class RecentItemsRepository: RecentItemsRepositoryProtocol {
     }
     
     func fetchAllRecentItems() -> [RecentItemEntity] {
-        store.fetchAllQuickAccessRecentItem().map {
-            RecentItemEntity(base64Handle: $0.handle, name: $0.name, timestamp: $0.timestamp, isUpdate: $0.isUpdate.boolValue)
+        store.fetchAllQuickAccessRecentItem().compactMap {
+            guard let handle = $0.handle,
+                  let name = $0.name,
+                  let date = $0.timestamp,
+                  let isUpdate = $0.isUpdate else {
+                return nil
+            }
+            
+            return RecentItemEntity(base64Handle: handle, name: name, timestamp: date, isUpdate: isUpdate.boolValue)
         }
     }
 }
