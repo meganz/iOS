@@ -284,13 +284,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
                         if filteredArray.count > 0, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
                             let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                            transfers[index] = receivedMessage
-                            chatViewController?.messagesCollectionView.performBatchUpdates({
-                                chatViewController?.messagesCollectionView.reloadSections([chatMessages.count + index])
-                            }, completion: { [weak self] _ in
-                                self?.chatMessages.append(receivedMessage)
-                                self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
-                            })
+                            chatMessages.append(receivedMessage)
+                            transfers.remove(at: index)
                             if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer.nodeHandle) {
                                 let path = NSHomeDirectory().append(pathComponent: transfer.path)
                                 let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")

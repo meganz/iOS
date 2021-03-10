@@ -53,7 +53,7 @@ extension ChatViewController: MessagesDisplayDelegate {
             containerView.layer.borderColor = boraderColor.cgColor
             containerView.layer.borderWidth = 1
             
-            if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual {
+            if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual, chatMessage.transfer?.transferChatMessageType() != .voiceClip {
                 containerView.alpha = 0.7
             } else {
                 containerView.alpha = 1
