@@ -140,7 +140,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                 }
                 
                 if let node = node,
-                    (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension ) {
+                    (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                     let attachments = messages.filter { (message) -> Bool in
                         guard let localChatMessage = message as? ChatMessage else {
                             return false
@@ -160,8 +160,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                         if chatRoom.isPreview {
                             tempNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
                         }
-                        if tempNode != nil {
-                            mediaNodesArray.append(tempNode!)
+                        if let tempNode = tempNode,
+                           (tempNode.name.mnz_isImagePathExtension || tempNode.name.mnz_isVideoPathExtension) {
+                            mediaNodesArray.append(tempNode)
                         }
                     }
                     let idx = attachments.firstIndex { message -> Bool in
