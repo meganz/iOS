@@ -55,7 +55,7 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
     [_MEGAChatSdk removeChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk removeChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
 #endif
-    _MEGAChatSdk = nil;
+    [_MEGAChatSdk deleteMegaChatApi];
     MEGALogDebug(@"_MEGAChatSdk destroyed: %@", _MEGAChatSdk);
     [MEGAChatSdk setLogToConsole:NO];
     [MEGASdk setLogToConsole:YES];
