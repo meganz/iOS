@@ -95,7 +95,9 @@
         } else {
             initialForAvatar = name.mnz_initialForAvatar;
         }
+        
         image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
+        [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }

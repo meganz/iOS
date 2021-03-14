@@ -46,6 +46,11 @@ static const CGFloat GapBetweenPages = 10.0;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *centerToolbarItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *saveToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *importToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *forwardToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *allMediaToolBarItem;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
@@ -131,6 +136,16 @@ static const CGFloat GapBetweenPages = 10.0;
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
             
+        case DisplayModeChatAttachment:
+        {
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            [self.toolbar setItems:@[self.shareToolbarItem, flexibleItem, self.importToolbarItem, flexibleItem, self.saveToolbarItem, flexibleItem, self.forwardToolbarItem]];
+            self.allMediaToolBarItem.title = NSLocalizedString(@"All Media", @"");
+            
+            self.navigationItem.rightBarButtonItem = self.allMediaToolBarItem;
+        }
+
+            break;
         default:
             break;
     }
@@ -296,6 +311,11 @@ static const CGFloat GapBetweenPages = 10.0;
         case DisplayModeFileLink:
             subtitle = NSLocalizedString(@"fileLink", @"Title for the file link view");
             
+            break;
+        case DisplayModeChatAttachment: {
+            MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+            subtitle = [node.creationTime stringWithFormat:@"MMMM dd • HH:mm"];
+        }
             break;
             
         default: {
@@ -702,6 +722,15 @@ static const CGFloat GapBetweenPages = 10.0;
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
+- (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender {
+    MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
+    pickerVC.mediaNodes = self.mediaNodes;
+    pickerVC.delegate = self;
+    pickerVC.api = self.api;
+    pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:pickerVC animated:YES completion:nil];
+}
+
 - (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
     if (node == nil) {
@@ -714,16 +743,68 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         default: {
-            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
-            pickerVC.mediaNodes = self.mediaNodes;
-            pickerVC.delegate = self;
-            pickerVC.api = self.api;
-            pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
-            [self presentViewController:pickerVC animated:YES completion:nil];
-            
+            [self didPressAllMediasButton:sender];
             break;
         }
     }
+}
+
+- (IBAction)didPressImportbarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
+    [browserVC setBrowserAction:BrowserActionImport];
+    
+}
+
+- (IBAction)didPressSaveToPhotobarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
+    [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+}
+
+- (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
+    [node mnz_sendToChatInViewController:self];
+}
+
+- (IBAction)didPressSharebarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    if (node == nil) {
+        return;
+    }
+    UIActivityViewController *activityViewController;
+    if (node.name.mnz_isVideoPathExtension) {
+        activityViewController = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+    } else {
+        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node api:MEGASdkManager.sharedMEGASdk];
+        NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+        if (node.name.mnz_isImagePathExtension) {
+            SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node api:self.api];
+            [activitiesMutableArray addObject:saveToCameraRollActivity];
+        }
+        activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
+        activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard];
+        activityViewController.popoverPresentationController.barButtonItem = sender;
+    }
+    
+    activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        [self reloadUI];
+    };
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
+
 }
 
 - (IBAction)didPressRightToolbarButton:(UIBarButtonItem *)sender {
@@ -738,27 +819,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         default: {
-            UIActivityViewController *activityViewController;
-            if (node.name.mnz_isVideoPathExtension) {
-                activityViewController = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-            } else {
-                MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-                NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-                if (node.name.mnz_isImagePathExtension) {
-                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node api:self.api];
-                    [activitiesMutableArray addObject:saveToCameraRollActivity];
-                }
-                activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
-                activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard];
-                activityViewController.popoverPresentationController.barButtonItem = sender;
-            }
-            
-            activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-                [self reloadUI];
-            };
-            
-            [self presentViewController:activityViewController animated:YES completion:nil];
-
+            [self didPressSharebarButton:sender];
             break;
         }
     }
@@ -1026,16 +1087,11 @@ static const CGFloat GapBetweenPages = 10.0;
                     break;
                     
                 default: {
-                    NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
-                    if (checkFileExist.count || node.isFolder) {
-                        UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-                        activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-                            [self reloadUI];
-                        };
-                        [self presentViewController:activityVC animated:YES completion:nil];
-                    } else {
-                        [node mnz_downloadNodeAndShare];
-                    }
+                    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+                    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                        [self reloadUI];
+                    };
+                    [self presentViewController:activityVC animated:YES completion:nil];
                     break;
                 }
             }
@@ -1066,7 +1122,20 @@ static const CGFloat GapBetweenPages = 10.0;
         }
             
         case MegaNodeActionTypeFavourite:
-            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            if (@available(iOS 14.0, *)) {
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        if (request.numDetails == 1) {
+                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                        } else {
+                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
+            } else {
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            }
             break;
             
         case MegaNodeActionTypeLabel:

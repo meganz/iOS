@@ -95,6 +95,23 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_quaternaryBackgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor.white.withAlphaComponent(0.78)
+                
+            case .dark:
+                return mnz_black252525().withAlphaComponent(0.78)
+                
+            @unknown default:
+                return UIColor.white
+            }
+        } else {
+            return UIColor.white
+        }
+    }
+    
     // MARK: Background grouped
     
     @objc class func mnz_secondaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
@@ -609,6 +626,10 @@ extension UIColor {
         return UIColor.init(red: 44.0/255.0, green: 44.0/255.0, blue: 46.0/255.0, alpha: 1.0)
     }
     
+    @objc class func mnz_black252525() -> UIColor {
+        return UIColor.init(red: 37.0/255.0, green: 37.0/255.0, blue: 37.0/255.0, alpha: 1.0)
+    }
+    
     // MARK: Gray
     
     @objc class func mnz_gray363638() -> UIColor {
@@ -698,6 +719,10 @@ extension UIColor {
     @objc class func mnz_grayEBEBF5() -> UIColor {
         return UIColor(red: 0.92, green: 0.92, blue: 0.96, alpha: 1.00)
     }
+    
+    @objc class func mnz_gray333333() -> UIColor {
+        return UIColor(red: 51.0/255.0, green: 51.0/255.0, blue: 51.0/255.0, alpha: 1.00)
+    }
 
     // MARK: Blue
     
@@ -785,6 +810,10 @@ extension UIColor {
     
     @objc class func mnz_whiteF7F7F7() -> UIColor {
         return UIColor.init(red: 247.0/255.0, green:  247.0/255.0, blue:  247.0/255.0, alpha: 1.0)
+    }
+    
+    @objc class func mnz_whiteEFEFEF() -> UIColor {
+        return UIColor.init(red: 239.0/255.0, green:  239.0/255.0, blue:  239.0/255.0, alpha: 1.0)
     }
 }
 

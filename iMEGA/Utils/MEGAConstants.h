@@ -51,6 +51,10 @@ extern NSString * const MEGACameraUploadTargetFolderUpdatedInMemoryNotification;
 extern NSString * const MEGACameraUploadNodeUploadCompleteNotification;
 extern NSString * const MEGACameraUploadCompleteNotification;
 
+#pragma mark - audio player notification keys
+
+extern NSString * const MEGAAudioPlayerShouldUpdateContainerNotification;
+
 #pragma mark - camera upload notification keys
 
 extern NSString * const MEGAPhotoConcurrentCountUserInfoKey;
@@ -103,6 +107,7 @@ extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
 extern NSString * const MEGAExplorerViewModePreference;
+extern NSString * const MEGAUIActivityTypeImportToCloudDrive;
 
 #pragma mark - Background Task completion.
 
@@ -154,3 +159,12 @@ extern const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent;
 
 extern const NSInteger MEGAMaxReactionsPerMessagePerUser;
 extern const NSInteger MEGAMaxReactionsPerMessage;
+
+#pragma mark - Widget Extension
+
+extern NSString * const MEGAShortcutsWidget;
+extern NSString * const MEGAQuickAccessWidget;
+extern NSString * const MEGAFavouritesQuickAccessWidget;
+extern NSString * const MEGARecentsQuickAccessWidget;
+extern NSString * const MEGAOfflineQuickAccessWidget;
+extern const NSInteger MEGAQuickAccessWidgetMaxDisplayItems;

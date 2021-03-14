@@ -126,26 +126,22 @@ extension ChatViewController {
     
     // MARK: - Private methods.
     private func join(button: UIButton) {
-        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
-            return
-        }
-        
-        if chatSDK.initState() == .anonymous {
+        if MEGASdkManager.sharedMEGAChatSdk().initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink
             MEGALinkManager.selectedOption = .joinChatLink
             dismissChatRoom()
         } else {
             let delegate = MEGAChatGenericRequestDelegate { (request, error) in
                 let chatViewController = ChatViewController()
-                chatViewController.chatRoom = chatSDK.chatRoom(forChatId: request.chatHandle)
+                chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle)
                 self.closeChatRoom()
                 self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
                 button.isEnabled = true
-                MEGALinkManager.joiningOrLeavingChatBase64Handles.remove(MEGASdk.base64Handle(forUserHandle: self.chatRoom.chatId))
+                MEGALinkManager.joiningOrLeavingChatBase64Handles.remove(MEGASdk.base64Handle(forUserHandle: self.chatRoom.chatId) ?? "")
                 self.updateJoinView()
 
             }
-            chatSDK.autojoinPublicChat(chatRoom.chatId, delegate: delegate)
+            MEGASdkManager.sharedMEGAChatSdk().autojoinPublicChat(chatRoom.chatId, delegate: delegate)
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.add(handle)
             }
@@ -245,14 +241,14 @@ extension ChatViewController {
         selectedUsers.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
         
         if keyRotationEnabled {
-            MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(usersArray: selectedUsers,
+            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(usersArray: selectedUsers,
                                                                    title: groupName) {
                                                                     newChatRoom in
                                                                     self.open(chatRoom: newChatRoom)
             }
         } else {
             let createChatGroupRequestDelegate = MEGAChatGenericRequestDelegate { request, error in
-                let newChatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: request.chatHandle)
+                let newChatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle)
                 if getChatLink {
                     let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {
@@ -271,12 +267,12 @@ extension ChatViewController {
                     }
 
                     
-                    MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(chatId, delegate: genericRequestDelegate)
+                    MEGASdkManager.sharedMEGAChatSdk().createChatLink(chatId, delegate: genericRequestDelegate)
                 } else {
                     self.open(chatRoom: newChatRoom)
                 }
             }
-            MEGASdkManager.sharedMEGAChatSdk()?.createPublicChat(withPeers: peerlist,
+            MEGASdkManager.sharedMEGAChatSdk().createPublicChat(withPeers: peerlist,
                                                                  title: groupName,
                                                                  delegate: createChatGroupRequestDelegate)
         }
@@ -447,13 +443,13 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedSendButton(withText text: String) {
-        MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
+        MEGASdkManager.sharedMEGAChatSdk().sendStopTypingNotification(forChat: chatRoom.chatId)
         
         if let editMessage = editMessage {
             let messageId = (editMessage.message.status == .sending) ? editMessage.message.temporalId : editMessage.message.messageId
             
             if editMessage.message.content != text,
-                let message = MEGASdkManager.sharedMEGAChatSdk()?.editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
+                let message = MEGASdkManager.sharedMEGAChatSdk().editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
                 message.chatId = chatRoom.chatId
                                 
                 let firstIndex = messages.firstIndex { message -> Bool in
@@ -474,7 +470,7 @@ extension ChatViewController: ChatInputBarDelegate {
             }
             
             self.editMessage = nil
-        } else if let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text) {
+        } else if let message = MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: chatRoom.chatId, message: text) {
             chatRoomDelegate.updateUnreadMessagesLabel(unreads: 0)
             chatRoomDelegate.insertMessage(message, scrollToBottom: true)
             checkDialogs(message)
@@ -562,7 +558,7 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func typing(withText text: String) {
         if text.isEmpty {
-            MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
+            MEGASdkManager.sharedMEGAChatSdk().sendStopTypingNotification(forChat: chatRoom.chatId)
             if sendTypingTimer != nil {
                 self.sendTypingTimer?.invalidate()
                 self.sendTypingTimer = nil
@@ -577,7 +573,7 @@ extension ChatViewController: ChatInputBarDelegate {
                 timer.invalidate()
                 self.sendTypingTimer = nil
             }
-            MEGASdkManager.sharedMEGAChatSdk()?.sendTypingNotification(forChat: chatRoom.chatId)
+            MEGASdkManager.sharedMEGAChatSdk().sendTypingNotification(forChat: chatRoom.chatId)
         }
     }
     
@@ -704,7 +700,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 
                 selectedNodes.forEach { node in
                     Helper.import(node) { newNode in
-                        MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
+                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
                     }
                 }
             }
@@ -729,7 +725,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 return
             }
             
-            if let message = MEGASdkManager.sharedMEGAChatSdk()?.attachContacts(toChat: self.chatRoom.chatId,
+            if let message = MEGASdkManager.sharedMEGAChatSdk().attachContacts(toChat: self.chatRoom.chatId,
                                                                                 contacts: users) {
                 self.chatRoomDelegate.insertMessage(message)
             }
@@ -804,15 +800,11 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func canRecordAudio() -> Bool {
-        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
-            return false
-        }
-        
         if !isAudioPermissionAuthorized() {
             return false
         }
         
-        if chatSDK.mnz_existsActiveCall {
+        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
             let message = NSLocalizedString("It is not possible to record voice messages while there is a call in progress", comment: "Message shown when there is an ongoing call and the user tries to record a voice message")
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.showError(withStatus: message)

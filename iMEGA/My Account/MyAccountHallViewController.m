@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     MyAccountOffline
 };
 
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
@@ -123,11 +123,14 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    
+    [AudioPlayerManager.shared removeDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
+    [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -534,6 +537,12 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         default:
             break;
     }
+}
+
+#pragma mark - AudioPlayer
+
+- (void)updateContentView:(CGFloat)height {
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
 @end

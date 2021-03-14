@@ -21,11 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios bump
 ```
 Bump and tag version
-### ios build_using_development
+### ios build_using_adhoc
 ```
-fastlane ios build_using_development
+fastlane ios build_using_adhoc
 ```
-Build App using development certificate for Appcenter
+Build App using adhoc certificate for Appcenter
 ### ios upload_to_appcenter
 ```
 fastlane ios upload_to_appcenter
@@ -46,16 +46,16 @@ build a app store release version
 fastlane ios upload_to_itunesconnect
 ```
 Upload to iTunesConnect
-### ios sync_all_development
+### ios sync_all_code_signing
 ```
-fastlane ios sync_all_development
-```
-
-### ios sync_device_info
-```
-fastlane ios sync_device_info
+fastlane ios sync_all_code_signing
 ```
 
+### ios tests
+```
+fastlane ios tests
+```
+MEGA unit tests
 
 ----
 

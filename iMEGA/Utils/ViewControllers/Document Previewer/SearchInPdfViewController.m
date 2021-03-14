@@ -66,7 +66,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SearchItemCell" forIndexPath:indexPath];
     
-    PDFSelection *selection = [[self.searchResults objectAtIndex:indexPath.row] copy];
+    PDFSelection *selection = [self.searchResults objectOrNilAtIndex:indexPath.row];
+    if (selection == nil) {
+        return cell;
+    }
+    
     [selection extendSelectionForLineBoundaries];
     
     UILabel *page = [cell viewWithTag:1];
@@ -82,7 +86,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate didSelectSearchResult:[self.searchResults objectAtIndex:indexPath.row]];
+        PDFSelection *searchResult = [self.searchResults objectOrNilAtIndex:indexPath.row];
+        if (searchResult == nil) {
+            return;
+        }
+        [self.delegate didSelectSearchResult:searchResult];
     }];
 }
 

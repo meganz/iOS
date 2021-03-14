@@ -6,6 +6,9 @@ protocol HomeRouting: NSObjectProtocol {
     func showAchievements()
 
     func showOfflines()
+    func showOfflineFile(_ handle: String)
+
+    func showRecents()
 }
 
 final class HomeViewController: UIViewController {
@@ -23,6 +26,8 @@ final class HomeViewController: UIViewController {
     var recentsViewModel: HomeRecentActionViewModelType!
 
     var bannerViewModel: HomeBannerViewModelType!
+
+    var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
 
     // MARK: - Router
 
@@ -127,6 +132,19 @@ final class HomeViewController: UIViewController {
                 self?.startConversationItem.isEnabled = networkAvailable
             }
         }
+        
+        quickAccessWidgetViewModel.invokeCommand = { [weak self] command in
+            switch command {
+            case .selectOfflineTab:
+                self?.slidePanelView.showTab(.offline)
+            case .selectRecentsTab:
+                self?.slidePanelView.showTab(.recents)
+            case .presentOfflineFileWithPath(let path):
+                self?.navigationController?.popToRootViewController(animated: false)
+                self?.offlineViewController.openFileFromWidget(with: path)
+            }
+        }
+        quickAccessWidgetViewModel.dispatch(.managePendingAction)
 
         uploadViewModel.notifyUpdate = { [weak self] homeUploadingViewModel in
             asyncOnMain {
@@ -484,7 +502,15 @@ extension HomeViewController: HomeRouting {
     }
 
     func showOfflines() {
-        router.didTap(on: .showOffline)
+        quickAccessWidgetViewModel.dispatch(.showOffline)
+    }
+    
+    func showOfflineFile(_ handle: String) {
+        quickAccessWidgetViewModel.dispatch(.showOfflineFile(handle))
+    }
+    
+    func showRecents() {
+        quickAccessWidgetViewModel.dispatch(.showRecents)
     }
 }
 

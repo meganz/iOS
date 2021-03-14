@@ -113,7 +113,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     
     private func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64] {
         guard let userHandleList =  MEGASdkManager
-            .sharedMEGAChatSdk()?
+            .sharedMEGAChatSdk()
             .reactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
                 MEGALogDebug("user handle list for emoji \(emoji) is empty")
             return []
@@ -166,7 +166,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
     
     func userName(forHandle handle: UInt64) -> String? {
         guard let myHandle = MEGASdkManager.sharedMEGASdk().myUser?.handle, myHandle != handle else {
-            if let myFullName = MEGASdkManager.sharedMEGAChatSdk()?.myFullname {
+            if let myFullName = MEGASdkManager.sharedMEGAChatSdk().myFullname {
                 return String(format: "%@ (%@)", myFullName, NSLocalizedString("me", comment: "The title for my message in a chat. The message was sent from yourself."))
             }
 

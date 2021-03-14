@@ -36,7 +36,7 @@ class ReactionContainerView: UIView {
             emojis.removeAll()
             rootFlexContainer.subviews.forEach { $0.removeFromSuperview() }
             let megaMessage = chatMessage?.message
-            guard let list = MEGASdkManager.sharedMEGAChatSdk()?.messageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0) else {
+            guard let list = MEGASdkManager.sharedMEGAChatSdk().messageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0) else {
                 return
             }
             for index in 0 ..< list.size {
@@ -45,7 +45,7 @@ class ReactionContainerView: UIView {
             rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(10).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in
                     let megaMessage = chatMessage?.message
-                    guard let userhandles = MEGASdkManager.sharedMEGAChatSdk()?.reactionUsers(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) else {
+                    guard let userhandles = MEGASdkManager.sharedMEGAChatSdk().reactionUsers(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) else {
                         return
                     }
                     let isEmojiSelected = emojiSelected(userhandles)
@@ -55,9 +55,9 @@ class ReactionContainerView: UIView {
                     if let delegate = delegate {
                         emojiButton.buttonPressed = { [weak self] emoji, emojiButton in
                             if isEmojiSelected {
-                                MEGASdkManager.sharedMEGAChatSdk()?.deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+                                MEGASdkManager.sharedMEGAChatSdk().deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
                             } else {
-                                MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+                                MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
                             }
                         }
                         emojiButton.buttonLongPress = delegate.emojiLongPressed
@@ -70,7 +70,7 @@ class ReactionContainerView: UIView {
                 flex.addItem(addMoreView).width(44).margin(2).height(30)
             }
             
-            if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
+            if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
                 rootFlexContainer.flex.direction(.rowReverse)
             } else {
                 rootFlexContainer.flex.direction(.row)
@@ -109,7 +109,7 @@ class ReactionContainerView: UIView {
     
     func emojiSelected(_ userhandles: MEGAHandleList) -> Bool {
         for index in 0..<userhandles.size {
-            if userhandles.megaHandle(at: index) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
+            if userhandles.megaHandle(at: index) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
                 return true
             }
         }
@@ -128,7 +128,7 @@ class ReactionContainerView: UIView {
     
     private func layout() {
         rootFlexContainer.pin.top()
-        if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
+        if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
             rootFlexContainer.pin.width(UIScreen.main.bounds.width - 40)
             rootFlexContainer.pin.right()
         } else {

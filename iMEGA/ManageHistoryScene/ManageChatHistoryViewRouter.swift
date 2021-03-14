@@ -24,10 +24,7 @@ final class ManageChatHistoryViewRouter: NSObject, ManageChatHistoryProtocol {
     }
     
     func build() -> UIViewController {
-        guard let chatSdk = MEGASdkManager.sharedMEGAChatSdk() else {
-            fatalError("MEGAChatSDK cannot be nil")
-        }
-        let repository = ManageChatHistoryRepository(chatSdk: chatSdk)
+        let repository = ManageChatHistoryRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())
         let manageChatHistoryUseCase = ManageChatHistoryUseCase(retentionValueUseCase: HistoryRetentionUseCase(repository: repository), historyRetentionUseCase: HistoryRetentionUseCase(repository: repository), clearChatHistoryUseCase: ClearChatHistoryUseCase(repository: repository))
         let viewModel = ManageChatHistoryViewModel(router: self, manageChatHistoryUseCase: manageChatHistoryUseCase, chatId: chatId)
         let pickerViewModel = HistoryRetentionPickerViewModel()

@@ -7,10 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MEGASdkManager : NSObject
 
 + (MEGASdk *)sharedMEGASdk;
-+ (nullable MEGAChatSdk *)sharedMEGAChatSdk;
-
-+ (void)createSharedMEGAChatSdk;
-+ (void)destroySharedMEGAChatSdk;
++ (MEGAChatSdk *)sharedMEGAChatSdk;
 
 + (MEGASdk *)sharedMEGASdkFolder;
 

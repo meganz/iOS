@@ -27,46 +27,67 @@ pipeline {
    agent any
    options {
         timeout(time: 3, unit: 'HOURS') 
+        gitLabConnection('hl')
    }
-   stages {
-      stage('Submodule update') {
-         steps {
-            injectEnvironments({
-                sh "git submodule foreach --recursive git clean -xfd"
-                sh "git submodule update --init --recursive"
-            })
-        }
+    environment {
+        APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
+    }
+    post {
+      failure {
+        updateGitlabCommitStatus(name: 'Jenkins', state: 'failed')
       }
+      success {
+        updateGitlabCommitStatus(name: 'Jenkins', state: 'success')
+      }
+    }
+   stages {
+        stage('Submodule update') {
+            steps {
+                gitlabCommitStatus(name: 'Submodule update') {
+                    injectEnvironments({
+                        sh "git submodule foreach --recursive git clean -xfd"
+                        sh "git submodule sync --recursive"
+                        sh "git submodule update --init --recursive"
+                    })
+                }
+            }
+        }
 
         stage('Downloading dependencies') {
             steps {
-                injectEnvironments({
-                    retry(3) {
-                        sh "sh ./download_3rdparty.sh"
-                    }
-                    sh "bundle install"
-                    sh "bundle exec pod repo update"
-                    sh "bundle exec pod cache clean --all --verbose"
-                    sh "bundle exec pod install --verbose"                
-                })
+                gitlabCommitStatus(name: 'Downloading dependencies') {
+                    injectEnvironments({
+                        retry(3) {
+                            sh "sh ./download_3rdparty.sh"
+                        }
+                        sh "bundle install"
+                        sh "bundle exec pod repo update"
+                        sh "bundle exec pod cache clean --all --verbose"
+                        sh "bundle exec pod install --verbose"
+                    })
+                }
             }
         }
 
         stage('Running CMake') {
             steps {
-                injectEnvironments({
-                    dir("iMEGA/Vendor/Karere/src/") {
-                        sh "cmake -P genDbSchema.cmake"
-                    }
-                })
+                gitlabCommitStatus(name: 'Running CMake') {
+                    injectEnvironments({
+                        dir("iMEGA/Vendor/Karere/src/") {
+                            sh "cmake -P genDbSchema.cmake"
+                        }
+                    })
+                }
             }
         }
 
         stage('Generating Executable (IPA)') {
             steps {
-                injectEnvironments({
-                    sh "arch -x86_64 bundle exec fastlane build_release BUILD_NUMBER:$BUILD_NUMBER"
-                })
+                gitlabCommitStatus(name: 'Generating Executable (IPA)') {
+                    injectEnvironments({
+                        sh "arch -x86_64 bundle exec fastlane build_release BUILD_NUMBER:$BUILD_NUMBER"
+                    })
+                }
             }
         }
 
@@ -74,30 +95,28 @@ pipeline {
             parallel {
                 stage('Deploying executable (IPA) to iTunes Connect') {
                     steps {
-                        injectEnvironments({
-                            retry(3) {
+                        gitlabCommitStatus(name: 'Deploying executable (IPA) to iTunes Connect') {
+                            injectEnvironments({
+                                retry(3) {
                                 sh "bundle exec fastlane upload_to_itunesconnect ENV:DEV"
-                            }
-                        })
+                                }
+                            })
+                        }
                     }
                 }
 
                 stage('Upload (dSYMs) to Firebase') {
                     steps {
-                        injectEnvironments({
-                            retry(3) {
-                                sh "bundle exec fastlane upload_symbols ENV:DEV"
-                            }
-                        })
+                        gitlabCommitStatus(name: 'Upload (dSYMs) to Firebase') {
+                            injectEnvironments({
+                                retry(3) {
+                                    sh "bundle exec fastlane upload_symbols ENV:DEV"
+                                }
+                            })
+                        }
                     }
                 }
             }
         }
    }
-   
-    post {
-        always { 
-            callSlack(currentBuild.currentResult)
-        }
-    }
 }

@@ -82,7 +82,7 @@ final class NewChatRouter {
                     guard error.type == .MEGAChatErrorTypeOk else { return }
                     completion(request.chatHandle, request.text)
                 }
-                chatSDK?.createChatLink(request.chatHandle, delegate: publicChatLinkCreationDelegate)
+                chatSDK.createChatLink(request.chatHandle, delegate: publicChatLinkCreationDelegate)
             }
         }
     }
@@ -95,7 +95,7 @@ final class NewChatRouter {
     ) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
         let chatPeers = MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users)
-        chatSDK?.createPublicChat(
+        chatSDK.createPublicChat(
             withPeers: chatPeers,
             title: chatRoomName,
             delegate: chatRequestDelegate(ofShouldGetChatLink: shouldGetChatLink, completion: completion)
@@ -104,16 +104,16 @@ final class NewChatRouter {
 
     private func createChatRoom(byUsers users: [MEGAUser], groupName: String?, completion: @escaping (MEGAChatRoom) -> Void) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
-        chatSDK?.mnz_createChatRoom(usersArray: users, title: groupName, completion: completion)
+        chatSDK.mnz_createChatRoom(usersArray: users, title: groupName, completion: completion)
     }
 
     private func chatRoom(byUserHandle userHandle: MEGAHandle,
                           completion: @escaping (MEGAChatRoom) -> Void) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
-        if let chatRoom = chatSDK?.chatRoom(byUser: userHandle) {
+        if let chatRoom = chatSDK.chatRoom(byUser: userHandle) {
             completion(chatRoom)
         } else {
-            chatSDK?.mnz_createChatRoom(userHandle: userHandle, completion: { chatRoom in
+            chatSDK.mnz_createChatRoom(userHandle: userHandle, completion: { chatRoom in
                 completion(chatRoom)
             })
         }

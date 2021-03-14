@@ -303,8 +303,10 @@ static MEGAIndexer *indexer;
     
     if (freeSpace < [nodeSizeNumber longLongValue]) {
 #ifdef MAIN_APP_TARGET
-        StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
-        [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+            [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
+        });
 #endif
         return NO;
     }
@@ -822,8 +824,6 @@ static MEGAIndexer *indexer;
             [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
         }
     }
-    
-    [MEGAStore.shareInstance.storeStack deleteStore];
     
     // Delete files saved by extensions
     NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;

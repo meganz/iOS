@@ -34,20 +34,5 @@ class MessageEditCollectionOverlayView : MessageReusableView {
     
     func configureDisplaying(isActive: Bool) {
         self.isActive = isActive
-        // Get the collectionView
-        if let collectionView = self.superview as? UICollectionView {
-            // Get indexPath
-            guard  let indexPath = indexPath,
-                let cell = collectionView.cellForItem(at: indexPath) as? MessageContentCell else {
-                return
-            }
-            let messageContainerView = cell.messageContainerView
-            centerConstraint.constant = messageContainerView.frame.minY / 2
-            
-            
-            
-        }
-        
-        
     }
 }

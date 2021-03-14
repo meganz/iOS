@@ -78,7 +78,7 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - PanModal (1.2.7)
-  - PinLayout (1.9.2)
+  - PinLayout (1.9.3)
   - PromisesObjC (1.2.12)
   - SDWebImage/Core (5.10.2)
   - SDWebImageWebPCoder (0.8.1):
@@ -173,12 +173,12 @@ SPEC CHECKSUMS:
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
-  PinLayout: 0d96022e46e8b80468d819f182a393b97ca038da
+  PinLayout: 4d8733121f8687edcc8f00c19bf1379d12808767
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
   SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: a2821477ac478b6726b3c8c381f8777da9731882
+PODFILE CHECKSUM: 9829c2ae50e9e4a778f771e6ff971f15cd1ba5b8
 
 COCOAPODS: 1.10.0

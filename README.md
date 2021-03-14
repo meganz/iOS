@@ -29,7 +29,9 @@ Get the source code
 git clone https://github.com/meganz/ios.git
 ```
 
-Open .gitmodules file and change url for karere submodule, use this one: https://github.com/meganz/MEGAchat.git
+Open .gitmodules file and:
+1. Change url for karere submodule, use this one: https://github.com/meganz/MEGAchat.git
+2. Change url for SDK submodule, use this one: https://github.com/meganz/SDK.git
 
 ```
 cd ios

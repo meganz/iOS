@@ -175,7 +175,6 @@
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
     if (event.type == EventAccountConfirmation) {
-        [MEGASdkManager createSharedMEGAChatSdk];
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
         if (chatInit != MEGAChatInitWaitingNewSession) {
             MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");

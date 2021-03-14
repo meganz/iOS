@@ -30,7 +30,7 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate>
+@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
@@ -39,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
@@ -134,8 +133,18 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [AudioPlayerManager.shared removeDelegate:self];
+    [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [AudioPlayerManager.shared addDelegate:self];
+    [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self shouldShowMiniPlayer];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -200,7 +209,7 @@
     
     [self setNavigationBarTitleLabel];
     
-    self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
+    self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
     if (_nodeList.size.unsignedIntegerValue == 0) {
         [self setActionButtonsEnabled:NO];
     } else {
@@ -415,6 +424,42 @@
         [self.flCollectionView reloadData];
     }
 }
+
+- (void)presentSortByActionSheet {
+    MEGASortOrderType sortType = [Helper sortTypeFor:self.parentNode];
+    
+    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+    
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.parentNode];
+        [self reloadUI];
+    }]];
+    
+    ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
+    [self presentViewController:sortByActionSheet animated:YES completion:nil];
+}
+
 #pragma mark - Layout
 
 - (void)determineViewMode {
@@ -487,7 +532,9 @@
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [MEGALinkManager resetUtilsForLinksWithoutSession];
     
-    [[MEGASdkManager sharedMEGASdkFolder] logout];
+    if (!AudioPlayerManager.shared.isPlayerAlive) {
+        [[MEGASdkManager sharedMEGASdkFolder] logout];
+    }
     
     [SVProgressHUD dismiss];
     
@@ -1064,8 +1111,22 @@
             [self changeViewModePreference];
             break;
             
+        case MegaNodeActionTypeSort:
+            [self presentSortByActionSheet];
+            break;
+            
         default:
             break;
+    }
+}
+
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        self.flTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    } else {
+        self.flCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
     }
 }
 

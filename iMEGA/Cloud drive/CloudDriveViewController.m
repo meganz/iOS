@@ -58,7 +58,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, BrowserViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -89,6 +89,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
+@property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
+
+@property (strong, nonatomic) Throttler *throttler;
 
 @end
 
@@ -166,6 +169,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
+    
+    self.navigationController.delegate = self;
+    self.throttler = [Throttler.alloc initWithTimeInterval:.1 dispatchQueue:dispatch_get_main_queue()];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -179,6 +185,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
+    
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -188,6 +196,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self encourageToUpgrade];
     
     [self requestReview];
+    
+    [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -204,6 +214,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         self.selectedNodesArray = nil;
         [self setEditMode:NO];
+    }
+    
+    if (self.shouldRemovePlayerDelegate) {
+        [AudioPlayerManager.shared removeDelegate:self];
     }
 }
 
@@ -371,7 +385,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (node == nil) {
         return nil;
     }
@@ -606,7 +620,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+                MEGANode *nodePressed = [self nodeAtIndexPath:indexPath];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditMode:NO];
                 }
@@ -796,12 +810,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
     MEGANode *node;
-    if (isInSearch) {
-        if (self.searchNodesArray.count > indexPath.row) {
-            node = self.searchNodesArray[indexPath.row];
-        }
+    if (self.viewModePreference == ViewModePreferenceList) {
+        node = isInSearch ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     } else {
-        node = [self.nodes nodeAtIndex:indexPath.row];
+        node = [self.cdCollectionView thumbnailNodeAtIndexPath:indexPath];
     }
     
     return node;
@@ -1158,8 +1170,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
                 
             case DisplayModeRecents: {
-                NSString *itemsString =  NSLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
-                navigationTitle = [NSString stringWithFormat:@"%td %@", self.nodes.size.integerValue, itemsString];
+                navigationTitle = [NSString stringWithFormat:NSLocalizedString(@"%1$d items", @"Plural of items which contains a folder. 2 items"), self.nodes.size.intValue];
                 break;
             }
                 
@@ -1555,6 +1566,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
@@ -1812,20 +1824,22 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         return;
     }
     
-    NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-    
-    if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.viewModePreference == ViewModePreferenceList) {
-        float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
+    [self.throttler startWithAction:^{
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.cdTableView.tableView cellForRowAtIndexPath:indexPath];
-            [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
-            cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+        if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.viewModePreference == ViewModePreferenceList) {
+            float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
+            NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
+            NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
+            
+            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
+            if (indexPath != nil) {
+                NodeTableViewCell *cell = (NodeTableViewCell *)[self.cdTableView.tableView cellForRowAtIndexPath:indexPath];
+                [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
+                cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+            }
         }
-    }
+    }];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1900,14 +1914,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeShare: {
-            NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
-            if (checkFileExist.count || node.isFolder) {
-                UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-                [self presentViewController:activityVC animated:YES completion:nil];
-            } else {
-                [node mnz_downloadNodeAndShare];
-            }
-
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;
             
@@ -1932,9 +1940,23 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self showNodeInfo:node];
             break;
             
-        case MegaNodeActionTypeFavourite:
-            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+        case MegaNodeActionTypeFavourite: {
+            if (@available(iOS 14.0, *)) {
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        if (request.numDetails == 1) {
+                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                        } else {
+                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
+            } else {
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            }
             break;
+        }
             
         case MegaNodeActionTypeLabel:
             [node mnz_labelActionSheetInViewController:self];
@@ -2001,6 +2023,27 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        self.cdTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    } else {
+        self.cdCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    }
+}
+
+#pragma mark - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
+        self.shouldRemovePlayerDelegate = ![viewController conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 #pragma mark - BrowserViewControllerDelegate

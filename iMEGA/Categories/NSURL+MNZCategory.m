@@ -165,6 +165,30 @@
     if ([afterSlashesString containsString:@"addContact"]) {
         return URLTypeAddContact;
     }
+    
+    if ([afterSlashesString containsString:@"widget.quickaccess.recents"]) {
+        if ([afterSlashesString containsString:@"/"]) {
+            return URLTypePresentNode;
+        } else {
+            return URLTypeShowRecents;
+        }
+    }
+    
+    if ([afterSlashesString containsString:@"widget.quickaccess.favourites"]) {
+        if ([afterSlashesString containsString:@"/"]) {
+            return URLTypePresentNode;
+        } else {
+            return URLTypeShowFavourites;
+        }
+    }
+    
+    if ([afterSlashesString containsString:@"widget.quickaccess.offline"]) {
+        if ([afterSlashesString containsString:@"/"]) {
+            return URLTypePresentOfflineFile;
+        } else {
+            return URLTypeShowOffline;
+        }
+    }
 
     return type;
 }

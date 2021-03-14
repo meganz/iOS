@@ -19,7 +19,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     
 
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        if message is ChatNotificationMessage {
+        guard !(message is ChatNotificationMessage) && !indexPath.isEmpty else {
             return 0.0
         }
         
@@ -60,7 +60,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         guard let message = messages[section] as? ChatMessage else {
             return .zero
         }
-        let list = MEGASdkManager.sharedMEGAChatSdk()?.messageReactions(forChat: message.chatRoom.chatId , messageId: message.message.messageId)
+        let list = MEGASdkManager.sharedMEGAChatSdk().messageReactions(forChat: message.chatRoom.chatId , messageId: message.message.messageId)
 
         if message.message.isManagementMessage || list?.size == 0 {
             return .zero

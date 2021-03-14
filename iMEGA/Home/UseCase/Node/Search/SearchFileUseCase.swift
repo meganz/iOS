@@ -10,7 +10,7 @@ protocol SearchFileUseCaseProtocol {
     func searchFiles(
         withName name: String,
         searchPath: SearchFileRootPath,
-        completion: @escaping ([SDKNode]) -> Void
+        completion: @escaping ([NodeEntity]) -> Void
     )
 
     func cancelCurrentSearch()
@@ -45,7 +45,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     func searchFiles(
         withName fileName: String,
         searchPath: SearchFileRootPath,
-        completion: @escaping ([SDKNode]) -> Void
+        completion: @escaping ([NodeEntity]) -> Void
     ) {
         debouncer.start { [weak self] in
             guard let self = self else { return }
@@ -61,7 +61,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     private func startSearchingFiles(
         withName fileName: String,
         searchPath: SearchFileRootPath,
-        completion: @escaping ([SDKNode]) -> Void
+        completion: @escaping ([NodeEntity]) -> Void
     ) {
         cancelAction?()
         switch searchPath {

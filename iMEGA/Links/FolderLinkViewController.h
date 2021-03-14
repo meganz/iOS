@@ -1,5 +1,8 @@
 #import <UIKit/UIKit.h>
 
+@class AudioPlayer;
+@class MiniPlayerViewRouter;
+
 @interface FolderLinkViewController : UIViewController
 
 @property (nonatomic) BOOL isFolderRootNode;
@@ -14,6 +17,12 @@
 
 @property (nonatomic, getter=isFolderLinkNotValid) BOOL folderLinkNotValid;
 @property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
+
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
+@property (nonatomic, strong) UIView * _Nullable bottomView;
+@property (nonatomic, strong) AudioPlayer * _Nullable player;
+@property (nonatomic, strong) MiniPlayerViewRouter * _Nullable miniPlayerRouter;
 
 - (void)didSelectNode:(MEGANode *)node;
 - (void)showActionsForNode:(MEGANode *)node from:(UIButton *)sender;

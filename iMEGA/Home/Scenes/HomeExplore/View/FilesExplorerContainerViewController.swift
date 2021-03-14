@@ -64,6 +64,16 @@ class FilesExplorerContainerViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AudioPlayerManager.shared.addDelegate(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayerManager.shared.removeDelegate(self)
+    }
+    
     //MARK:- Bar Buttons    
     func updateTitle(_ title: String?) {
         self.title = title
@@ -244,5 +254,12 @@ extension FilesExplorerContainerViewController: TraitEnviromentAware {
             AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
                                                    traitCollection: traitCollection)
         }
+    }
+}
+
+// MARK: - AudioPlayer
+extension FilesExplorerContainerViewController: AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        currentState.updateContentView(height)
     }
 }

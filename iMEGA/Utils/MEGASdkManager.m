@@ -1,9 +1,9 @@
 
 #import "MEGASdkManager.h"
 
-@implementation MEGASdkManager
+static const NSInteger MaximumNOFILE = 20000;
 
-static MEGAChatSdk *_MEGAChatSdk = nil;
+@implementation MEGASdkManager
 
 + (NSString *)userAgent {
     return [NSString stringWithFormat:@"%@/%@", MEGAiOSAppUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
@@ -27,43 +27,30 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
         }
 
         _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePathURL.path];
+        [_megaSDK setRLimitFileCount:MaximumNOFILE];
         [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;
 }
 
 + (MEGAChatSdk *)sharedMEGAChatSdk {
+    static MEGAChatSdk *_MEGAChatSdk;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _MEGAChatSdk = [[MEGAChatSdk alloc] init:[self sharedMEGASdk]];
+        [MEGASdk setLogToConsole:NO];
+        [MEGAChatSdk setLogToConsole:YES];
+    });
     return _MEGAChatSdk;
 }
-
-+ (void)createSharedMEGAChatSdk {
-    _MEGAChatSdk = [[MEGAChatSdk alloc] init:[self sharedMEGASdk]];
-#ifndef MNZ_APP_EXTENSION
-    [_MEGAChatSdk addChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
-    [_MEGAChatSdk addChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
-#endif
-    MEGALogDebug(@"_MEGAChatSdk created: %@", _MEGAChatSdk);
-    [MEGASdk setLogToConsole:NO];
-    [MEGAChatSdk setLogToConsole:YES];
-}
-
-+ (void)destroySharedMEGAChatSdk {
-#ifndef MNZ_APP_EXTENSION
-    [_MEGAChatSdk removeChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
-    [_MEGAChatSdk removeChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
-#endif
-    _MEGAChatSdk = nil;
-    MEGALogDebug(@"_MEGAChatSdk destroyed: %@", _MEGAChatSdk);
-    [MEGAChatSdk setLogToConsole:NO];
-    [MEGASdk setLogToConsole:YES];
-}
-
 + (MEGASdk *)sharedMEGASdkFolder {
     static MEGASdk *_megaSDKFolder = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString *basePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
         _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePath];
+        [_megaSDKFolder setRLimitFileCount:MaximumNOFILE];
         [_megaSDKFolder retrySSLErrors:YES];
     });
     return _megaSDKFolder;

@@ -36,7 +36,7 @@ class MessageReactionReusableView: MessageReusableView {
     }
 
     func isFromCurrentSender(message: MessageType) -> Bool {
-        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
+        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle
     }
     
 }
