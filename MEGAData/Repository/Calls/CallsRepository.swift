@@ -14,20 +14,20 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     private var call: MEGAChatCall?
     
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol) {
-        if let call = chatSdk?.chatCall(forChatId: chatId) {
+        if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = call
             self.callId = call.callId
         }
 
-        chatSdk?.add(self)
+        chatSdk.add(self)
         self.callbacksDelegate = callbacksDelegate
     }
     
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
-        if chatSdk?.chatConnectionState(chatId) == .online {
-            chatSdk?.answerChatCall(chatId, enableVideo: false, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in
+        if chatSdk.chatConnectionState(chatId) == .online {
+            chatSdk.answerChatCall(chatId, enableVideo: false, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in
                 if error?.type == .MEGAChatErrorTypeOk {
-                    guard let call = self?.chatSdk?.chatCall(forChatId: chatId) else {
+                    guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                         completion(.failure(.generic))
                         return
                     }
@@ -49,9 +49,9 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
     
     func startChatCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
-        chatSdk?.startChatCall(chatId, enableVideo: enableVideo, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
+        chatSdk.startChatCall(chatId, enableVideo: enableVideo, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
             if error?.type == .MEGAChatErrorTypeOk {
-                guard let call = self?.chatSdk?.chatCall(forChatId: chatId) else {
+                guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                     completion(.failure(.generic))
                     return
                 }
@@ -70,7 +70,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
     
     func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
-        guard let activeCall = chatSdk?.chatCall(forChatId: chatId) else {
+        guard let activeCall = chatSdk.chatCall(forChatId: chatId) else {
             completion(.failure(.generic))
             return
         }
@@ -84,9 +84,9 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
     
     func enableLocalVideo(for chatId: MEGAHandle, delegate: MEGAChatVideoDelegate, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        chatSdk?.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { [weak self] (error) in
+        chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { [weak self] (error) in
             if error?.type == .MEGAChatErrorTypeOk {
-                self?.chatSdk?.addChatLocalVideo(chatId, delegate: delegate)
+                self?.chatSdk.addChatLocalVideo(chatId, delegate: delegate)
                 completion(.success)
             } else {
                 completion(.failure(.chatLocalVideoNotEnabled))
@@ -95,9 +95,9 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
     
     func disableLocalVideo(for chatId: MEGAHandle, delegate: MEGAChatVideoDelegate, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        chatSdk?.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { [weak self] (error) in
+        chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { [weak self] (error) in
             if error?.type == .MEGAChatErrorTypeOk {
-                self?.chatSdk?.addChatLocalVideo(chatId, delegate: delegate)
+                self?.chatSdk.addChatLocalVideo(chatId, delegate: delegate)
                 completion(.success)
             } else {
                 completion(.failure(.chatLocalVideoNotDisabled))
