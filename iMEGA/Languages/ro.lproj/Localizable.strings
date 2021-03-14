@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Parola ta este ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Medie";
+"PasswordStrengthMedium"="Medie";
 /*  */
 "passwordMedium"="Parola ta este suficientă de bună pentru a continua, dar este recomandat să o faci mai puternică parola pe viitor.";
 /*  */
@@ -1452,11 +1452,13 @@
 "qualityOfVideosUploadedToAChat"="Calitatea videoclipurilor încărcate într-un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Calitate video";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Scăzut(ă)";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Medie";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Ridicat(ă)";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Se pregătește...";
@@ -2128,7 +2130,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nu a fost posibil să se obțină conținutul acestui fișier, deoarece nu este codificat nici în UTF-8, nici în ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Plată restantă";
-/* */
+/* Business account status */
 "Active"="Activă";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
