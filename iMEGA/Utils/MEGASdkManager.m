@@ -44,7 +44,6 @@ static const NSInteger MaximumNOFILE = 20000;
     });
     return _MEGAChatSdk;
 }
-
 + (MEGASdk *)sharedMEGASdkFolder {
     static MEGASdk *_megaSDKFolder = nil;
     static dispatch_once_t onceToken;

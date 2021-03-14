@@ -1206,6 +1206,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }]];
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));
     dispatch_semaphore_wait(semaphore, timeout);
+    [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
 }
 
 - (void)presentLogoutFromOtherClientAlert {
