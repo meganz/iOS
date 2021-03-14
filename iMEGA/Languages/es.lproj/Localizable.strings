@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Tu contraseña es fácil de adivinar. Trata de hacerla más larga. Combina mayúsculas y minúsculas. Agrega caracteres especiales. No utilices nombres o palabras del diccionario.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Media";
+"PasswordStrengthMedium"="Media";
 /*  */
 "passwordMedium"="Tu contraseña es lo suficientemente buena para continuar, pero te recomendamos elegir una más dificil.";
 /*  */
@@ -149,7 +149,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA necesita un mínimo de %@. Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados en tu galería. También puedes administrar lo que MEGA almacena en tu dispositivo.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA necesita un mínimo de %@. Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados de tu galería. También puedes administrar lo que MEGA almacena en tu dispositivo.";
 /* Title for the file link view */
 "fileLink"="Enlace del Archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -1452,11 +1452,13 @@
 "qualityOfVideosUploadedToAChat"="Calidad de los vídeos subidos a un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Calidad de vídeo";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Baja";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Media";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Alta";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Preparando...";
@@ -1759,7 +1761,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Guardando en Fotos...";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
+"All Media"="Multimedia";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Descargando %@";
 /* Text shown when a photo or video is saved to Photos app */
@@ -2128,7 +2130,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="No se puede obtener el contenido de este archivo, ya que no está codificado ni en UTF-8 ni en ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pago vencido";
-/* */
+/* Business account status */
 "Active"="Activa";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";

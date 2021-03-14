@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Uw wachtwoord is makkelijk te raden. Probeer uw wachtwoord langer te maken. Combineer hoofdletter en kleine letters. Voeg speciale tekens toe. Gebruik geen namen of woordenboek woorden.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Middelmatig";
+"PasswordStrengthMedium"="Middelmatig";
 /*  */
 "passwordMedium"="Uw wachtwoord is sterk genoeg om door te gaan, echter raden wij u aan uw wachtwoord sterker te maken.";
 /*  */
@@ -125,7 +125,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href=\"terms\">Algemene Overeenkomst</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S] als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s end-to-end encryptie</a>.";
+"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S]als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s end-to-end codering</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Vul uw naam in";
 /* Error text shown when you have not written the same password */
@@ -858,7 +858,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Bevestig nieuw e-mailadres";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Verander e-mailadres";
+"Change Email"="Wijzig E-mailadres";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Het nieuwe en het oude e-mailadres mogen niet hetzelfde zijn.";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1452,11 +1452,13 @@
 "qualityOfVideosUploadedToAChat"="Kwaliteit van video's geüpload in een chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Video Kwaliteit";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Laag";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Middelmatig";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Hoog";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Orgineel";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Voorbereiden...";
@@ -2069,7 +2071,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Er is een probleem opgetreden bij het verwerken van uw betaling. MEGA kan alleen worden bekeken totdat dit probleem is opgelost in een desktop webbrowser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]/ U kunt alleen door uw gegevens bladeren.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]. U kunt alleen door uw gegevens bladeren.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Hoewel MEGA geen toegang heeft tot uw gegevens, heeft uw zakelijke accountbeheerder de mogelijkheid om de camera-uploads in uw gebruikersaccount te beheren en te bekijken";
 /* */
@@ -2128,7 +2130,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Het was niet mogelijk om de inhoud van dit bestand te verkrijgen, omdat het niet gecodeerd is in UTF-8 of ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Betaling over tijd";
-/* */
+/* Business account status */
 "Active"="Actief";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
@@ -2407,7 +2409,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Wachtwoord opnieuw instellen";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Deze koppeling is niet beschikbaar doordat de account van de gebruiker voor grove schending van de MEGA's [A]Servicevoorwaarden[/A] is gesloten.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Deze koppeling is niet beschikbaar doordat de account van de gebruiker voor grove schending van de MEGA’s [A]Algemene Voorwaarden[/A] is gesloten.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Er werd gerapporteerd dat deze map/dit bestand aanstootgevende inhoud bevat, zoals uitbuitingsmateriaal voor kinderen, gewelddadig extremisme of bestialiteit. Het account van de link maker is gesloten en de volledige details, inclusief het IP-adres, zijn aan de autoriteiten verstrekt.";
 /* Text used to show the user that some resource is not available */

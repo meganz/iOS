@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas des noms ou des mots du dictionnaire.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Moyen";
+"PasswordStrengthMedium"="Moyen";
 /*  */
 "passwordMedium"="Votre mot de passe est assez bon pour poursuivre, mais il est recommandé de le renforcer.";
 /*  */
@@ -551,11 +551,11 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="Supprimer le partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Souhaitez-vous vraiment supprimer ce partage ? (Partagé avec 1 contact)";
+"removeOneShareOneContactMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Souhaitez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
+"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Souhaitez-vous vraiment supprimer ces partages ? (Partagés avec %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment supprimer ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Le partage a été supprimé";
 /* Message shown when some shares have been removed */
@@ -587,9 +587,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Quitter";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Souhaitez-vous vraiment quitter ce partage ?";
+"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage ?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Souhaitez-vous vraiment quitter ces partages ?";
+"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages ?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partager";
 /* Select all items/elements on the list */
@@ -771,7 +771,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Supprimer le compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Souhaitez-vous vraiment poursuivre ?";
+"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment poursuivre ?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à votre courriel, veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
@@ -1000,7 +1000,7 @@
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Déconnexion";
 /* String shown when you are logging out of your account. */
-"loggingOut"="Déconnexion";
+"loggingOut"="Déconnexion en cours";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Supprimer la photo";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
@@ -1112,9 +1112,9 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Souhaitez-vous vraiment supprimer cet élément Hors ligne ?";
+"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément Hors ligne ?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Souhaitez-vous vraiment supprimer ces éléments Hors ligne ?";
+"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments Hors ligne ?";
 /* Giphy section header */
 "Send GIF"="Envoyer un GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1294,7 +1294,7 @@
 /* */
 "never"="Jamais";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Vous êtes sur le point de désactiver définitivement les aperçus d’URL enrichis. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Souhaitez-vous poursuivre ?";
+"richPreviewsConfirmation"="Vous êtes sur le point de désactiver définitivement les aperçus d’URL enrichis. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Voulez-vous poursuivre ?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Supprimer l’aperçu";
 /* */
@@ -1314,7 +1314,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nouveau dossier partagé";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Souhaitez-vous vraiment abandonner l’inscription ?";
+"areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment abandonner l’inscription ?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
 /* A button to resend the email confirmation. */
@@ -1452,11 +1452,13 @@
 "qualityOfVideosUploadedToAChat"="Qualité des vidéos téléversées dans une conversation";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Qualité des vidéos";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Basse";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Moyen";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Haute";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Originale";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Préparation…";
@@ -1611,9 +1613,9 @@
 /* Title of archived chats button */
 "archivedChats"="Conversations archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Souhaitez-vous vraiment archiver cette conversation ?";
+"archiveChatMessage"="Voulez-vous vraiment archiver cette conversation ?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Souhaitez-vous vraiment désarchiver cette conversation ?";
+"unarchiveChatMessage"="Voulez-vous vraiment désarchiver cette conversation ?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Désarchiver la conversation";
 /* Title of button to archive chats. */
@@ -1715,7 +1717,7 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nDésactiver le versionnage des fichiers n’empêche pas vos contacts de créer de nouvelles versions dans les dossiers partagés.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Voulez-vous vraiment désactiver le versionnage des fichiers ?";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="Versions de fichiers";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -2005,7 +2007,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Changer pour un serveur de test ?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Souhaitez-vous vraiment changer vers un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Voulez-vous vraiment changer vers un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Donner accès à votre carnet d’adresses";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2128,7 +2130,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Il n’a pas été possible d’obtenir le contenu de ce fichier, car il n’est codé ni en UTF-8 ni en ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Le paiement est en retard";
-/* */
+/* Business account status */
 "Active"="Active";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rôle :";
@@ -2399,7 +2401,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Le mot de passe a été copié dans le presse-papiers";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Notre système de chiffrement de bout en bout exige une clé unique générée automatiquement pour ce fichier. Un lien qui comprend cette clé est créé par défaut, mais vous pouvez exporter séparément la clé de chiffrement par mesure supplémentaire de sécurité.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Notre système de chiffrement de bout en bout exige une clé unique générée automatiquement pour ce fichier. Un lien qui comprend cette clé est créé par défaut, mais par mesure supplémentaire de sécurité, vous pouvez exporter séparément la clé de chiffrement.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Clé de déchiffrement";
 /* Text to indicate the user to remove the password of a link */

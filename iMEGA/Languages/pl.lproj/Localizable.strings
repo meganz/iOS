@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Twoje hasło można łatwo odgadnąć. Spróbuj zwiększyć swoje hasło. Połącz wielkie i małe litery. Dodaj znaki specjalne. Nie używaj nazw ani słów słownikowych.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Średnie";
+"PasswordStrengthMedium"="Średnie";
 /*  */
 "passwordMedium"="Twoje hasło jest wystarczająco bezpieczne aby kontynuować, ale rekomendujemy wzmocnienie hasła później.";
 /*  */
@@ -1452,11 +1452,13 @@
 "qualityOfVideosUploadedToAChat"="Jakość filmów wgrywanych do czatu:";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Jakość wideo";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Niska";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Średnie";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Wysoka";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Oryginalny";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Przygotowywanie...";
@@ -2128,7 +2130,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Opłata zaległa";
-/* */
+/* Business account status */
 "Active"="Aktywne";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rola:";

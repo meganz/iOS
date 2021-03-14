@@ -61,7 +61,7 @@
             
         case PasswordStrengthMedium:
             self.imageView.image = [UIImage imageNamed:@"indicatorMedium"];
-            self.strengthLabel.text = NSLocalizedString(@"medium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
+            self.strengthLabel.text = NSLocalizedString(@"PasswordStrengthMedium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
             self.strengthLabel.textColor = UIColor.systemGreenColor;
             if (updateDescription) {
                 self.strengthDescriptionLabel.text = NSLocalizedString(@"passwordMedium", @"");
