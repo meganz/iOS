@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,7 +47,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XtC-yn-6bx">
                     <rect key="frame" x="207" y="827" width="0.0" height="0.0"/>
                     <subviews>
-                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPP-OE-nyG">
+                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPP-OE-nyG">
                             <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="KEx-KD-OKW"/>
@@ -55,9 +55,17 @@
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         </button>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5O-Y5-Tzr">
+                            <rect key="frame" x="0.0" y="0.0" width="288" height="60"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="HL9-vm-uq9"/>
+                            </constraints>
+                        </view>
                     </subviews>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="K3f-lP-shF"/>
             <constraints>
                 <constraint firstItem="jOP-gA-9dj" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="35" id="0My-MF-KVQ"/>
                 <constraint firstItem="XtC-yn-6bx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jOP-gA-9dj" secondAttribute="bottom" constant="16" id="0T9-9L-mwL"/>
@@ -69,8 +77,8 @@
                 <constraint firstItem="K3f-lP-shF" firstAttribute="bottom" secondItem="XtC-yn-6bx" secondAttribute="bottom" constant="35" id="nHC-JP-90C"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jOP-gA-9dj" secondAttribute="trailing" constant="40" id="yv2-NR-v8k"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="K3f-lP-shF"/>
             <connections>
+                <outlet property="bottomView" destination="O5O-Y5-Tzr" id="NDA-eM-Imp"/>
                 <outlet property="button" destination="jPP-OE-nyG" id="hQ9-iZ-ePe"/>
                 <outlet property="descriptionLabel" destination="jU8-Oa-6ip" id="YZG-Dl-Ojh"/>
                 <outlet property="imageView" destination="0sb-yg-ZOf" id="6jY-Sj-ToM"/>

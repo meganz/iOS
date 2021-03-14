@@ -22,7 +22,7 @@
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
-@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
+@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol>
 
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
@@ -59,6 +59,18 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     
     [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [AudioPlayerManager.shared addDelegate:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [AudioPlayerManager.shared removeDelegate:self];
 }
 
 - (void)removeFromParentViewController {
@@ -234,8 +246,16 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
             [self.delegate showSelectedNodeInViewController:photoBrowserVC];
         } else {
-            UIViewController *displayViewController = [self viewControllerForNode:node withFolderLink:NO];
-            [self.delegate showSelectedNodeInViewController:displayViewController];
+            if (node.name.mnz_isMultimediaPathExtension && !node.name.mnz_isVideoPathExtension && node.mnz_isPlayable) {
+                if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
+                    [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+                } else {
+                    [AudioPlayerManager.shared initFullScreenPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self];
+                }
+            } else {
+                UIViewController *displayViewController = [self viewControllerForNode:node withFolderLink:NO];
+                [self.delegate showSelectedNodeInViewController:displayViewController];
+            }
         }
     } else {
         if (recentActionBucket.isMedia) {
@@ -342,6 +362,12 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     if (request.type == MEGARequestTypeFetchNodes) {
         [self reloadUI];
     }
+}
+
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
 @end

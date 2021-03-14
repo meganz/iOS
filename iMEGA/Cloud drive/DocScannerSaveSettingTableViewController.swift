@@ -294,14 +294,14 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                 let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { (transfer) in
                     let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer!.nodeHandle)
                     chats.forEach { chatRoom in
-                        MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
                     }
                     users.forEach { user in
-                        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(byUser: user.handle) {
-                            MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: user.handle) {
+                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
                         } else {
-                            MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
-                                MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
+                                MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
                             })
                         }
                     }
@@ -364,7 +364,7 @@ extension DocScannerSaveSettingTableViewController {
             docs?.enumerated().forEach {
                 if let resizedImage = shrinkedImage(image: $0.element),
                    let data = resizedImage.jpegData(compressionQuality: 1) {
-                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset).jpg" : "\(self.fileName).jpg"
+                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)

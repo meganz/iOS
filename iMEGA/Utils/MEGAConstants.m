@@ -61,6 +61,10 @@ NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUp
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
 NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 
+#pragma mark - audio player notification keys
+
+NSString * const MEGAAudioPlayerShouldUpdateContainerNotification = @"nz.mega.audioplayer.updateContainerView";
+
 #pragma mark - camera upload constants
 
 NSString * const MEGACameraUploadsNodeName = @"Camera Uploads";
@@ -103,6 +107,7 @@ NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSha
 NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
 NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
 NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";
+NSString * const MEGAUIActivityTypeImportToCloudDrive = @"MEGAUIActivityTypeImportToCloudDrive";
 
 #pragma mark - Background Task completion.
 
@@ -150,3 +155,13 @@ const NSTimeInterval MEGAMinDelayInSecondsToSendAnEvent = 20.0;
 
 const NSInteger MEGAMaxReactionsPerMessagePerUser = 24;
 const NSInteger MEGAMaxReactionsPerMessage = 50;
+
+#pragma mark - Widget Extension
+
+NSString * const MEGAShortcutsWidget = @"MEGAShortcutsWidget";
+NSString * const MEGAQuickAccessWidget = @"MEGAQuickAccessWidget";
+NSString * const MEGAFavouritesQuickAccessWidget = @"MEGAFavouritesQuickAccessWidget";
+NSString * const MEGARecentsQuickAccessWidget = @"MEGARecentsQuickAccessWidget";
+NSString * const MEGAOfflineQuickAccessWidget = @"MEGAOfflineQuickAccessWidget";
+
+const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;

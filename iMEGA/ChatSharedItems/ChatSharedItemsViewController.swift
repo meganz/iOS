@@ -51,7 +51,7 @@ class ChatSharedItemsViewController: UIViewController {
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
         tableView.allowsMultipleSelectionDuringEditing = true
         
-        MEGASdkManager.sharedMEGAChatSdk()?.openNodeHistory(forChat: chatRoom.chatId, delegate: self)
+        MEGASdkManager.sharedMEGAChatSdk().openNodeHistory(forChat: chatRoom.chatId, delegate: self)
         
         updateAppearance()
         loadMoreFiles()
@@ -60,7 +60,7 @@ class ChatSharedItemsViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        MEGASdkManager.sharedMEGAChatSdk()?.closeNodeHistory(forChat: chatRoom.chatId, delegate: self)
+        MEGASdkManager.sharedMEGAChatSdk().closeNodeHistory(forChat: chatRoom.chatId, delegate: self)
 
         super.viewWillDisappear(animated)
     }
@@ -192,9 +192,7 @@ class ChatSharedItemsViewController: UIViewController {
     }
     
     private func loadMoreFiles() {
-        guard let source = MEGASdkManager.sharedMEGAChatSdk()?.loadAttachments(forChat: chatRoom.chatId, count: 16) else {
-            return
-        }
+        let source = MEGASdkManager.sharedMEGAChatSdk().loadAttachments(forChat: chatRoom.chatId, count: 16)
         
         switch source {
         case .error:
@@ -279,14 +277,14 @@ class ChatSharedItemsViewController: UIViewController {
                 continue
             }
             let handle = messagesArray[indexPath.row].userHandle
-            if MEGASdkManager.sharedMEGAChatSdk()?.userFullnameFromCache(byUserHandle: handle) == nil && !requestedParticipantsMutableSet.contains(handle) {
+            if MEGASdkManager.sharedMEGAChatSdk().userFullnameFromCache(byUserHandle: handle) == nil && !requestedParticipantsMutableSet.contains(handle) {
                 userHandles.append(handle)
                 requestedParticipantsMutableSet.insert(handle)
             }
         }
         
         if userHandles.count > 0 {
-            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: userHandles as [NSNumber], delegate: self)
+            MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: userHandles as [NSNumber], delegate: self)
         }
     }
 }

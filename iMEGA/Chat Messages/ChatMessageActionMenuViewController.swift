@@ -44,14 +44,14 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.downloadMessage(chatMessage)
+        self.chatViewController?.downloadMessage([chatMessage])
     }
     
     lazy var importAction = ActionSheetAction(title: NSLocalizedString("Import to Cloud Drive", comment: ""), detail: nil, image: UIImage(named: "import"), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.importMessage(chatMessage)
+        self.chatViewController?.importMessage([chatMessage])
     }
     
     lazy var addContactAction = ActionSheetAction(title: NSLocalizedString("addContact", comment: ""), detail: nil, image: UIImage(named: "addContact"), style: .default) {
@@ -72,7 +72,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let chatMessage = self.chatMessage else {
             return
         }
-        self.chatViewController?.saveToPhotos(chatMessage)
+        self.chatViewController?.saveToPhotos([chatMessage])
     }
     
     lazy var shareAction = ActionSheetAction(title: NSLocalizedString("share", comment: ""), detail: nil, image: UIImage(named: "share"), style: .default) {
@@ -324,7 +324,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         let emoji = sender.attributedTitle(for: .normal)?.string
         let megaMessage = chatMessage?.message
 
-        MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+        MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
         dismiss(animated: true, completion: nil)
     }
     
@@ -342,7 +342,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     // MARK: - Internal methods used by the extension of this class
 
     func isFromCurrentSender(message: ChatMessage) -> Bool {
-        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
+        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle
     }
 
 }

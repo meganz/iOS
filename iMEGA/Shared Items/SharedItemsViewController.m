@@ -29,7 +29,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -81,6 +81,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *linksButton;
 @property (weak, nonatomic) IBOutlet UILabel *linksLabel;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
+
+@property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
 @end
 
@@ -143,6 +145,8 @@
     if (self.sortOrderType == MEGASortOrderTypeNone) {
         self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
     }
+    
+    self.navigationController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -156,6 +160,8 @@
     [self addSearchBar];
     
     [self reloadUI];
+    
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -166,6 +172,7 @@
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -173,6 +180,15 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
+    [AudioPlayerManager.shared addDelegate:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (self.shouldRemovePlayerDelegate) {
+        [AudioPlayerManager.shared removeDelegate:self];
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -626,6 +642,7 @@
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
@@ -1426,7 +1443,20 @@
             break;
             
         case MegaNodeActionTypeFavourite:
-            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            if (@available(iOS 14.0, *)) {
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        if (request.numDetails == 1) {
+                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                        } else {
+                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
+            } else {
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            }
             break;
             
         case MegaNodeActionTypeLabel:
@@ -1485,11 +1515,28 @@
     [node navigateToParentAndPresent];
 }
 
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+}
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
+        self.shouldRemovePlayerDelegate = ![viewController conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.shouldRemovePlayerDelegate = YES;
+}
+
 #pragma mark - BrowserViewControllerDelegate, ContactsViewControllerDelegate
 
 - (void)nodeEditCompleted:(BOOL)complete {
     [self setEditing:!complete animated:NO];
 }
-
 
 @end

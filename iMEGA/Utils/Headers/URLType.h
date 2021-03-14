@@ -23,5 +23,10 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeScanDocument,
     URLTypeStartConversation,
     URLTypeAddContact,
+    URLTypeShowRecents,
+    URLTypeShowFavourites,
+    URLTypeShowOffline,
+    URLTypePresentNode,
+    URLTypePresentOfflineFile,
     URLTypeTotal
 };

@@ -39,7 +39,7 @@ extension ChatViewController: MessagesDataSource {
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
             return NSAttributedString(
-                string: message.sentDate.string(withDateFormat: "E dd MMM") ,
+                string: NSCalendar.current.isDateInToday(message.sentDate) ? NSLocalizedString("Today", comment: "") : message.sentDate.string(withDateFormat: "E dd MMM"),
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
                              NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
 
@@ -50,7 +50,7 @@ extension ChatViewController: MessagesDataSource {
     
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         
-        guard MEGASdkManager.sharedMEGAChatSdk()?.isFullHistoryLoaded(forChat: chatRoom.chatId) ?? false else {
+        guard MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) ?? false else {
             let loadingMessagesHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LoadingMessageReusableView.reuseIdentifier, for: indexPath)  as! LoadingMessageReusableView
             loadingMessagesHeaderView.loadingView.mnz_startShimmering()
             return loadingMessagesHeaderView
@@ -94,7 +94,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
             return
         }
         guard let emojisStringList = MEGASdkManager
-            .sharedMEGAChatSdk()?
+            .sharedMEGAChatSdk()
             .messageReactions(forChat: chatRoom.chatId,
                                  messageId: chatMessage.message.messageId) else {
                                     MEGALogDebug("Could not fetch the emoji list for a message")

@@ -18,6 +18,9 @@
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
+
 @import Firebase;
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
@@ -34,16 +37,22 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-    
-    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList]];
     
     NSMutableArray<MEGANode *> *nodes = [[NSMutableArray<MEGANode *> alloc] init];
+    NSString *stringContent = @"";
     
     for (MEGAChatMessage *message in messages) {
         switch (message.type) {
             case MEGAChatMessageTypeNormal:
             case MEGAChatMessageTypeContainsMeta:
-                [activityItemsMutableArray addObject:message.content];
+                if (messages.count == 1) {
+                    stringContent = message.content;
+                } else {
+                    NSString *userName = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:message.userHandle];
+                    NSString *content = [NSString stringWithFormat:@"[%@] #%@:%@\n",[message.timestamp stringWithFormat:@"dd/MM/yyyy HH:mm"], userName,message.content];
+                    stringContent = [stringContent stringByAppendingString:content];
+                }
                 stringCount++;
                 
                 break;
@@ -108,7 +117,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
                     
                     [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
                         [nodes addObject:node];
-                        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+                        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node api:MEGASdkManager.sharedMEGASdk];
                         [activityItemsMutableArray addObject:activityItemProvider];
                         dispatch_semaphore_signal(semaphore);
                     }];
@@ -126,17 +135,21 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
         }
     }
     
-    if (stringCount == 0 && fileCount < 5 && nodes.count == 0) {
-        [excludedActivityTypesMutableArray removeObject:UIActivityTypeSaveToCameraRoll];
-    }
-    
-    if (stringCount == 0 && fileCount == 0 && nodes.count == 1) {
-        [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
+    if (stringCount > 0) {
+        [activityItemsMutableArray addObject:stringContent];
+        if (fileCount == 0) {
+            ImportTextActivity *textActivity = [[ImportTextActivity alloc] initWithContent:stringContent];
+            [activitiesMutableArray addObject:textActivity];
+        }
     }
     
     if (stringCount == 0 && fileCount == 0 && nodes.count > 0) {
         GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodes];
         [activitiesMutableArray addObject:getLinkActivity];
+        
+        SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodes];
+        [activitiesMutableArray addObject:sendToChatActivity];
+
     }
     
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
@@ -151,7 +164,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
-    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList]];
     
     GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
     [activitiesMutableArray addObject:getLinkActivity];
@@ -196,7 +209,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
         }
     } else {
         for (MEGANode *node in nodesArray) {
-            MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+            MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node api:MEGASdkManager.sharedMEGASdk];
             [activityItemsMutableArray addObject:activityItemProvider];
         }
         

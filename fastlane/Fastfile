@@ -58,23 +58,23 @@ platform :ios do
     push_to_git_remote
   end
 
-  desc "Build App using development certificate for Appcenter"
-  lane :build_using_development do |options|
+  desc "Build App using adhoc certificate for Appcenter"
+  lane :build_using_adhoc do |options|
 
     increment_build_number(
       build_number: Time.new.strftime("%y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
       xcodeproj: PROJECT
     )
-    
-    match(type: "development", readonly: is_ci)
+
+    match_configuration(type: "adhoc")
 
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
-      export_method: "development",
+      export_method: "ad-hoc",
       output_directory: BUILD_DIR,
       export_options: {
-        iCloudContainerEnvironment: "Development"
+        iCloudContainerEnvironment: "Production"
       }
     )
   end
@@ -139,7 +139,7 @@ platform :ios do
       xcodeproj: PROJECT
     )
 
-    match(type: "appstore", readonly: is_ci)
+    match_configuration(type: "appstore")
 
     gym(
       workspace: WORKSPACE,
@@ -165,10 +165,19 @@ platform :ios do
       match_lightweight_tag: false,
       merge_commit_filtering: "exclude_merges"
     )
-    
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+      is_key_content_base64: true,
+      in_house: false
+    )
+
     upload_to_testflight(
       skip_submission: false,
       groups:["MEGA"],
+      api_key: api_key,
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       changelog: lane_context[SharedValues::FL_CHANGELOG],
 
@@ -188,8 +197,37 @@ platform :ios do
       )
   end
 
-  lane :sync_all_development do
-    match(type: "development", readonly: is_ci)
+  lane :sync_all_code_signing do
+    match_configuration(type: "development")
+    match_configuration(type: "adhoc")    
+    match_configuration(type: "appstore")
   end
 
+  private_lane :match_configuration do |options|
+
+    if is_ci
+      api_key = app_store_connect_api_key(
+        key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+        issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+        key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+        is_key_content_base64: true,
+        in_house: false
+      )
+    end
+
+    match(
+      type: options[:type],
+      api_key: api_key,
+      readonly: is_ci,
+      verbose: true
+    )
+  end
+
+  desc "MEGA unit tests"
+  lane :tests do
+    run_tests(
+      scheme: "MEGA",
+      devices: ["iPhone 8"]
+    )
+  end
 end

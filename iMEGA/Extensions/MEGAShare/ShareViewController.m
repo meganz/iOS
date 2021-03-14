@@ -78,12 +78,24 @@
         switch ([request type]) {
           
             case MEGARequestTypeLogout: {
-                if (request.flag) {
+                // if logout (not if localLogout) or session killed in other client
+                BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+                if (request.flag || sessionInvalidateInOtherClient) {
                     [Helper logout];
                     [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        [self didBecomeActive];
-                    }];
+                    if (sessionInvalidateInOtherClient) {
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            [self dismissViewControllerAnimated:YES completion:^{
+                                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+                            }];
+                        }]];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    } else {
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            [self didBecomeActive];
+                        }];
+                    }
                 }
                 break;
             }
@@ -92,7 +104,10 @@
                 break;
         }
     }];
-    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
+    
+    @autoreleasepool {
+        [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
+    }
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
@@ -241,15 +256,6 @@
     [super didReceiveMemoryWarning];
     
     MEGALogError(@"Share extension received memory warning");
-    if (!self.presentedViewController) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:NSLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
-            }];
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -266,10 +272,6 @@
 #pragma mark - Login and Setup
 
 - (void)initChatAndStartLogging {
-    if (![MEGASdkManager sharedMEGAChatSdk]) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
-    
     MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
     if (chatInit == MEGAChatInitNotDone) {
         chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
@@ -873,14 +875,18 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [api fetchNodesWithDelegate:self];
+            @autoreleasepool {
+                [api fetchNodesWithDelegate:self];
+            }
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
-            [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            @autoreleasepool {
+                [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            }
             [self presentFilesDestinationViewController];
             break;
         }
@@ -890,17 +896,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self performAttachNodeHandle:request.nodeHandle];
             } else {
                 [self onePendingLess];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeLogout: {
-            // Don't invalidate the session if its local logout
-            if (request.flag) {
-                [Helper logout];
-                
-                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                [self didBecomeActive];
             }
             break;
         }

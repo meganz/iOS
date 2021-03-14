@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントをキャンセルする最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
+"enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントを削除する最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="アカウントは正常に削除されました。";
 /* Account closure, password check dialog when user click on closure email. */
@@ -1204,9 +1204,9 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="この会話の完全なメッセージ履歴をクリアしてもよろしいですか？　";
 /* Message show when the history of a chat has been successfully deleted. */
-/* Message show when the history of a chat hasn’t been successfully deleted */
-"Error. The history of the chat has not been cleared successfully"="エラー。チャットの履歴が正常にクリアされていません";
 "Chat History has Been Cleared"="チャット履歴がクリアされました";
+/* Message show when the history of a chat hasn’t been successfully deleted */
+"An error has occurred. The chat history has not been successfully cleared"="エラーが発生しました。チャット履歴が正常にクリアされませんでした";
 /* 'Next' button in a dialog */
 "continue"="続ける";
 /* Title of the incoming shared folders of a user. */
@@ -1345,8 +1345,6 @@
 "connecting"="接続中...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="一部のアイテムはMEGAと共有できませんでした";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="項目の共有時に利用できるシステムリソースは限られています。これらのファイルをMEGAアプリ内からアップロードしてみてください。";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="共有成功です。";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1760,8 +1758,10 @@
 "Save to Photos"="写真に保存";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="写真に保存中…";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="共有の準備をしています……";
+/* Text shown for switching from preview view to all media view. */
+"All Media"="すべてのメディア";
+/* Label for the status of a transfer when is being Downloading - (String as short as possible. */
+"Downloading %@"="%@をダウンロード中";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="写真に保存されました";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1979,7 +1979,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="最近の活動はありません";
 /* Plural of items which contains a folder. 2 items */
-"items"="items";
+"%1$d items"="%1$d項目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="チャットリンクは利用できません";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2429,7 +2429,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="%1より古いメッセージを自動的に削除します";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="この会話で共有されているすべてのメッセージとファイルを両方の当事者から削除します。このアクションは元に戻せません。";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="この会話で共有されているすべてのメッセージとファイルを削除します。このアクションは元に戻せません。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="以下より古いメッセージをクリアする：";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2478,6 +2478,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGAカメラアップロードフォルダ";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="フォルダを選択";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="再生中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="カメラアップロードフォルダをごみ箱に移動してもよろしいですか？　その場合、新しいフォルダがカメラアップロード用に自動的に生成されます。";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2564,3 +2566,19 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="アカウント設定";
+/* Text for title for favourite nodes */
+"Favourites"="お気に入り";
+/* Text describing that there is not any node marked as favourite */
+"No Favourites"="お気に入りがありません";
+/* Text indicating to the user that can perform an action to view more results */
+"VIEW MORE"="もっと表示";
+/* Title for the QuickAccess widget */
+"Quick Access"="クイックアクセス";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="最近、お気に入り、またはオフラインセクションのファイルに素早くアクセスします";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="お気に入りセクションからファイルに素早くアクセスします";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="最近セクションからファイルに素早くアクセスします";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="オフラインセクションからファイルに素早くアクセスします";

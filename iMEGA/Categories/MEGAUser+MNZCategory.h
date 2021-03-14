@@ -19,4 +19,7 @@
 
 @property (nonatomic, readonly) NSString *mnz_displayName;
 
+- (void)resetAvatarIfNeededInSdk:(MEGASdk *)sdk;
+- (void)removeAvatarFromLocalCache;
+
 @end

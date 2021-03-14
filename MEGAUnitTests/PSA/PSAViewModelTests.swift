@@ -8,7 +8,28 @@ final class PSAViewModelTests: XCTestCase {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let router = PSAViewRouter(tabBarController: UITabBarController())
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [.configView(mocPSAEntity())])
+    }
+    
+    func testAction_shouldShowPSAView_AfterOneHourScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
+        let router = MockPSAViewRouter()
+        let mocPreferenceUseCase = MockPreferenceUseCase()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mocPreferenceUseCase)
+        mocPreferenceUseCase.dict[PreferenceKeyEntity.lastPSARequestTimestamp] = Date().timeIntervalSince1970 - 3600
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertTrue(router.psaViewShown)
+    }
+    
+    func testAction_shouldShowPSAView_WithinOneHourScenario() {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
+        let router = MockPSAViewRouter()
+        let mocPreferenceUseCase = MockPreferenceUseCase()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mocPreferenceUseCase)
+        mocPreferenceUseCase.dict[PreferenceKeyEntity.lastPSARequestTimestamp] = Date().timeIntervalSince1970 - 3599
+        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        XCTAssertFalse(router.psaViewShown)
     }
     
     func testAction_shouldShowPSAView_SuccessScenario() {
@@ -41,7 +62,7 @@ final class PSAViewModelTests: XCTestCase {
     func testAction_shouldShowPSAView_PSAAlreadyShownScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let mockPreference = MockPreferenceUseCase()
-        mockPreference.dict[.lastPSAShownTimestamp] = Date().timeIntervalSince1970
+        mockPreference.dict[.lastPSARequestTimestamp] = Date().timeIntervalSince1970
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mockPreference)
 

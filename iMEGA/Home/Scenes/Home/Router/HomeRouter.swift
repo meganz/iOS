@@ -17,7 +17,6 @@ enum HomeRoutingSource {
     // MARK: - Application Root Launcher
 
     case showAchievement
-    case showOffline
 
     // MARK: - Recents
 
@@ -91,8 +90,6 @@ final class HomeRouter: HomeRouterProtocol {
 
         case .showAchievement:
             presentAchievement()
-        case .showOffline:
-            presentOffline()
 
         // MARK: - Recents
 
@@ -184,14 +181,5 @@ final class HomeRouter: HomeRouterProtocol {
         }
         navigationController?.pushViewController(myAccountViewController, animated: true)
         myAccountViewController.openAchievements()
-    }
-
-    private func presentOffline() {
-        guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-                .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
-            return
-        }
-        navigationController?.pushViewController(myAccountViewController, animated: true)
-        myAccountViewController.openOffline()
     }
 }
