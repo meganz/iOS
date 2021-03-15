@@ -58,7 +58,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         return fromNodes?.compactMap {
             guard let url = path(fromHandle: $0.handle) else { return nil }
-            return AudioPlayerItem(name: $0.name, url: url, node: $0.handle)
+            return AudioPlayerItem(name: $0.name, url: url, node: $0.handle, hasThumbnail: $0.hasThumbnail())
         }
     }
     
@@ -66,7 +66,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         return fromNodes?.compactMap {
             guard let node = folderAuthNode(fromNode: $0),
                 let url = streamingInfoRepository.path(fromNode: node) else { return nil }
-            return AudioPlayerItem(name: node.name, url: url, node: node.handle)
+            return AudioPlayerItem(name: node.name, url: url, node: node.handle, hasThumbnail: $0.hasThumbnail())
         }
     }
     
