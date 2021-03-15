@@ -75,14 +75,6 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         XCTAssertTrue(player.tracks.count == tracksNumber + 1)
     }
     
-    func testAudioPlayerShufflePlaylist() throws {
-        let tracks = try XCTUnwrap(player.queuePlayer?.items())
-        player.shuffle(true)
-        player.shuffle(true)
-        let reorderTracks = try XCTUnwrap(player.queuePlayer?.items())
-        XCTAssertFalse(tracks.elementsEqual(reorderTracks))
-    }
-    
     func testAudioPlayerMoveItems() {
         XCTAssertTrue(player.tracks.count == tracks.count)
         let firstTrack = player.tracks.first
