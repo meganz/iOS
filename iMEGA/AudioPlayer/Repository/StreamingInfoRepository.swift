@@ -28,7 +28,7 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
         guard let node = sdk.authorizeNode(fromFolderLinkNode),
               let url = path(fromNode: node) else { return nil }
         
-        return AudioPlayerItem(name: node.name, url: url, node: node.handle)
+        return AudioPlayerItem(name: node.name, url: url, node: node.handle, hasThumbnail: node.hasThumbnail())
     }
     
     func info(fromHandle: MEGAHandle) -> MEGANode? {
