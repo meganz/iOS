@@ -36,7 +36,7 @@ final class MiniPlayerDelegate: NSObject, UICollectionViewDelegateFlowLayout, UI
         
         if loopMode, currentIndexPath?.row ?? 0 == itemsNumber {
             collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
-        } else if lastIndexPath != currentIndexPath {
+        } else if lastIndexPath != currentIndexPath || lastIndexPath == IndexPath(row: 0, section: 0) {
             delegate?.play(direction: lastContentOffset.x < scrollView.contentOffset.x ? .up : .down)
         }
     }
