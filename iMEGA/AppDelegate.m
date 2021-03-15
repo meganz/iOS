@@ -1818,7 +1818,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        [MEGASdkManager destroySharedMEGAChatSdk];
         [self.megaProviderDelegate invalidateProvider];
         self.megaProviderDelegate = nil;
         self.megaCallManager = nil;
