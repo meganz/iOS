@@ -29,7 +29,7 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
         titleLabel.textColor = UIColor.mnz_label()
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         
-        subtitleLabel.textColor = UIColor.mnz_secondaryLabel()
+        subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         subtitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     }
 }
