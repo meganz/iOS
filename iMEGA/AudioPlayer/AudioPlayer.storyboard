@@ -110,7 +110,8 @@
                                         <blurEffect style="regular"/>
                                     </visualEffectView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGO-Oq-XW2">
-                                        <rect key="frame" x="352" y="10" width="46" height="30"/>
+                                        <rect key="frame" x="347" y="10" width="51" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="removeButtonAction:" destination="TTC-Ka-TRq" eventType="touchUpInside" id="QKu-kS-i2u"/>
@@ -624,11 +625,11 @@
                             <mask key="constraints">
                                 <exclude reference="c3z-8D-s5c"/>
                                 <exclude reference="lpm-te-e3H"/>
-                                <exclude reference="eNP-PG-M3e"/>
                                 <exclude reference="H6I-Dg-Ilp"/>
                                 <exclude reference="KR1-Y4-a45"/>
                                 <exclude reference="MeA-ba-7YW"/>
                                 <exclude reference="ewU-up-phU"/>
+                                <exclude reference="eNP-PG-M3e"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -637,7 +638,6 @@
                                 <exclude reference="buA-aY-HJe"/>
                                 <include reference="c3z-8D-s5c"/>
                                 <include reference="lpm-te-e3H"/>
-                                <include reference="eNP-PG-M3e"/>
                                 <exclude reference="4oj-t9-lLZ"/>
                                 <exclude reference="7kC-AZ-7hY"/>
                                 <exclude reference="H6I-Dg-Ilp"/>
@@ -646,6 +646,7 @@
                                 <include reference="MeA-ba-7YW"/>
                                 <include reference="ewU-up-phU"/>
                                 <exclude reference="fm6-bM-2UY"/>
+                                <include reference="eNP-PG-M3e"/>
                             </mask>
                         </variation>
                     </view>
