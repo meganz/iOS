@@ -235,7 +235,7 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
         invokeCommand?(.change(currentItem: currentItem, indexPath: indexPath))
     }
     
-    func audio(player: AVQueuePlayer, reloadCurrent item: AudioPlayerItem?) {
+    func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
         guard let currentItem = item else { return }
         invokeCommand?(.reload(currentItem: currentItem))
     }
