@@ -82,10 +82,6 @@
     self.navigationItem.title = NSLocalizedString(@"Storage", @"Navigate title for the storage information screen");
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

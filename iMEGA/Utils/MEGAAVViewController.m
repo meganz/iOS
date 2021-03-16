@@ -171,10 +171,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 #pragma mark - Private
 
 - (void)seekToDestination:(MOMediaDestination *)mediaDestination play:(BOOL)play {

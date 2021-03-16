@@ -81,14 +81,6 @@
 #endif
 }
 
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)dealloc {
 #ifdef MAIN_APP_TARGET
     [NSNotificationCenter.defaultCenter removeObserver:self];
