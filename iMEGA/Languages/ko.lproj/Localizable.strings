@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다. 당신만이 접근할 수 있는 6자리 코드가 없으면, 당신의 비밀번호를 알고 있을지라도 접근할 수 없습니다.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="이 기기에 2단계 인증 앱이 필요합니다";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */

@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="المصداقة المزدوجة 2FA هي طبقة إضافية من الحماية لحسابك.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="المصادقة المزدوجة 2FA هي طبقة إضافية من الأمان على حسابك. تحمي حسابك من الولوج حتى وان كان الشخص الذي يحاول الدخول الى حسابك يعرف كلمة المرور خاصتك، كون الدخول الى الحساب يتطلب أيضا الحصول على الرمز المكون من 6 أرقام الذي انت فقط تستطيع الحصول عليه.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="تحتاج الى تطبيق مصادقة مثبت على جهازك الحالي";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */

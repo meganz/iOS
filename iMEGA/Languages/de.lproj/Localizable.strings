@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Zwei-Faktor-Authentfizierung ist eine zusätzliche Sicherheitsvorkehrung, die den Zugang zu Ihrem Account schützt.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Zwei-Faktor-Authentfizierung ist eine zusätzliche Sicherheitsvorkehrung, die den Zugang zu Ihrem Account schützt. Selbst bei Kenntnis Ihres Passworts können unberechtigte Dritte nur dann auf Ihren Account zugreifen, wenn sie den von der Authentifizierungs-App angezeigten sechsstelligen Code kennen.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Sie benötigen eine Zwei-Faktor-Authentifizierungs-App auf diesem Gerät";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
