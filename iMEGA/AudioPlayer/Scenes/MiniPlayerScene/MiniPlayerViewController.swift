@@ -9,6 +9,7 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
     
     // MARK: - Private properties
     private var miniPlayerSource: MiniPlayerDataSource? {
@@ -22,6 +23,7 @@ final class MiniPlayerViewController: UIViewController {
         }
     }
     private var lastMovementIndexPath: IndexPath?
+    private let containerViewDefaultMargin: CGFloat = 12.0
     
     // MARK: - Internal properties
     var viewModel: MiniPlayerViewModel!
@@ -135,6 +137,14 @@ final class MiniPlayerViewController: UIViewController {
         progressView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
         imageView.layer.cornerRadius = 8.0
         separatorView.layer.addBorder(edge: .top, color: UIColor.mnz_gray848484().withAlphaComponent(0.35), thickness: 0.5)
+        
+        if #available(iOS 11.0, *) {
+            containerViewLeadingConstraint.constant = UIDevice.current.orientation.isLandscape && UIDevice.current.iPhoneDevice ?
+                containerViewDefaultMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.left ?? 0.0) : containerViewDefaultMargin
+        } else {
+            containerViewLeadingConstraint.constant = containerViewDefaultMargin
+        }
+        view.layoutIfNeeded()
     }
     
     // MARK: - UI actions
