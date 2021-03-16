@@ -73,7 +73,6 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?)
     @objc optional func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?)
-    @objc optional func audio(player: AVQueuePlayer, reloadCurrent item: AudioPlayerItem?)
     @objc optional func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, entireQueue: [AudioPlayerItem]?)
     @objc optional func audioPlayerWillStartBlockingAction()
