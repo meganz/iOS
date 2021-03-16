@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Ai nevoie de o aplicație de autentificare cu doi factori pe acest dispozitiv";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */

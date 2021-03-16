@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта. Это значит, что даже если кто-то знает ваш пароль, он не сможет получить к нему доступ без шестизначного кода, который есть только у вас.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Нужно приложение для двухфакторной аутентификации";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */

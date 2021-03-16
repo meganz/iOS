@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ ซึ่งหมายความว่าแม้จะมีคนรู้จักรหัสผ่านของคุณ พวกเขาจะไม่สามารถเข้าถึงข้อมูลของคุณได้ เพราะต้องใช้รหัสหกหลักสำหรับการรับรองความถูกต้องก่อนทุกครั้ง";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="คุณต้องมีแอปตัวรับรองความถูกต้องสำหรับอุปกรณ์นี้";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */

@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="A autenticação de dois fatores é uma segunda camada de segurança para a sua conta.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="A autenticação de dois fatores é uma segunda camada de segurança para a sua conta. Isso significa que, mesmo que alguém saiba a sua senha, não poderá acessar a sua conta sem ter acesso ao código de seis dígitos que só você pode obter.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Você precisa de um aplicativo de autenticação de dois fatores neste dispositivo";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */

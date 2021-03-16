@@ -1634,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="雙重驗證是您帳戶的第二層安全保護。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="雙重驗證是您帳戶的第二層安全保護。這意味著，即使有人知道您的密碼，他們也無法存取您的帳戶，且無法獲得只有您能讀取的六位碼。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用雙重驗證程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
