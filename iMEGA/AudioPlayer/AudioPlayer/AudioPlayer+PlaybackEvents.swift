@@ -44,6 +44,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
             }
         }
+        
+        notify(aboutCurrentItemAndQueue)
     }
     
     func removeLoopItems() {
