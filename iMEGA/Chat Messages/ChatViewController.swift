@@ -316,10 +316,6 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         return super.collectionView(collectionView, cellForItemAt: indexPath)

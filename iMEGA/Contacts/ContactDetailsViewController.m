@@ -201,14 +201,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     

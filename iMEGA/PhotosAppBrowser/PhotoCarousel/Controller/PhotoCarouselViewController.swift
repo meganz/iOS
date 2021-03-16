@@ -139,12 +139,6 @@ final class PhotoCarouselViewController: UIViewController {
         }
     }
     
-    // MARK:- Orientation method.
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     // MARK:- Interface methods.
     
     func didViewPage(atIndex index: Int) {

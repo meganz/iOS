@@ -195,14 +195,7 @@ final class HomeViewController: UIViewController {
     private enum Constant {
         static let slidePanelRoundCornerHeight: CGFloat = 20 // This value need to be same as `constraintToTopPosition`
     }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.iPhoneDevice {
-            return .portrait
-        }
-        
-        return .all
-    }
+
 
     // MARK: - View Setup
 

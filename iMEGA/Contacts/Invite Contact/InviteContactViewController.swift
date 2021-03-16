@@ -52,10 +52,6 @@ class InviteContactViewController: UIViewController {
         navigationController?.presentationController?.delegate = self
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         

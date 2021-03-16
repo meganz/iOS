@@ -236,10 +236,6 @@ static const CGFloat GapBetweenPages = 10.0;
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
 

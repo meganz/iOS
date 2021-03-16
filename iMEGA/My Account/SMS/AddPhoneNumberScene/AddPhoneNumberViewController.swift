@@ -22,14 +22,6 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
         
         viewModel.dispatch(.onViewReady)
     }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return [.portrait, .portraitUpsideDown]
-        } else {
-            return .all
-        }
-    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
