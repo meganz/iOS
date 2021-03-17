@@ -75,6 +75,7 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?)
     @objc optional func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, entireQueue: [AudioPlayerItem]?)
+    @objc optional func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool)
     @objc optional func audioPlayerWillStartBlockingAction()
     @objc optional func audioPlayerDidFinishBlockingAction()
     @objc optional func audioPlayerDidPausePlayback()
@@ -97,6 +98,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func aboutUpdateCurrentIndexPath(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidPausePlayback(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidResumePlayback(_ observer: AudioPlayerObserversProtocol)
+    func aboutAudioPlayerConfiguration(_ observer: AudioPlayerObserversProtocol)
 }
 
 //MARK: - Audio Player Handler

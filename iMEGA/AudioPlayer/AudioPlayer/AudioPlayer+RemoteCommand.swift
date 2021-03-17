@@ -67,6 +67,11 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     @objc func audioPlayer(didReceiveNextTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         guard queuePlayer != nil else { return .commandFailed }
         
+        if isRepeatOneMode() {
+            repeatAll(true)
+            notify(aboutAudioPlayerConfiguration)
+        }
+        
         updateCommandsState(enabled: false)
         playNext() { [weak self] in
             guard let `self` = self else { return }

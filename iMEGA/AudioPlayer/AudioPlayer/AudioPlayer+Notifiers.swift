@@ -84,4 +84,10 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
     func aboutAudioPlayerDidResumePlayback(_ observer: AudioPlayerObserversProtocol) {
         observer.audioPlayerDidResumePlayback?()
     }
+    
+    func aboutAudioPlayerConfiguration(_ observer: AudioPlayerObserversProtocol) {
+        guard let player = queuePlayer else { return }
+        
+        observer.audio?(player: player, loopMode: isRepeatAllMode(), shuffleMode: isShuffleMode(), repeatOneMode: isRepeatOneMode())
+    }
 }
