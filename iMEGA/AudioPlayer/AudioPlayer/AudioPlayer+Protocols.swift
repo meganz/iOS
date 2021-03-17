@@ -109,6 +109,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
     func isShuffleEnabled() -> Bool
+    func autoPlay(enable: Bool)
     func isPlayerPlaying() -> Bool
     func isPlayerPaused() -> Bool
     func isPlayerAlive() -> Bool
