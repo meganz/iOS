@@ -122,6 +122,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         filesExplorerViewController?.updateContentView(height)
     }
     
+    func audioPlayer(hidden: Bool) {
+        containerViewController.audioPlayer(hidden: hidden)
+    }
+    
     // MARK: - Private methods.
     
     func updateTitle(withNodesCount count: Int) {

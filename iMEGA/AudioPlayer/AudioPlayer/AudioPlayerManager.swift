@@ -188,13 +188,13 @@ import Foundation
         player = nil
     }
     
-    func playerStayVisible(_ visible: Bool, presenter: UIViewController) {
+    func playerHidden(_ hidden: Bool, presenter: UIViewController) {
         guard presenter.conforms(to: AudioPlayerPresenterProtocol.self) else { return }
         
-        if visible {
-            miniPlayerHandlerListenerManager.notify{$0.showMiniPlayer()}
-        } else {
+        if hidden {
             miniPlayerHandlerListenerManager.notify{$0.hideMiniPlayer()}
+        } else {
+            miniPlayerHandlerListenerManager.notify{$0.showMiniPlayer()}
         }
         
         player?.updateContentViews()
@@ -204,13 +204,13 @@ import Foundation
         player?.add(presenterListener: delegate)
         
         guard let vc = delegate as? UIViewController else { return }
-        playerStayVisible(isPlayerAlive(), presenter: vc)
+        playerHidden(!isPlayerAlive(), presenter: vc)
         miniPlayerRouter?.updatePresenter(vc)
     }
     
     func removeDelegate(_ delegate: AudioPlayerPresenterProtocol) {
         guard let vc = delegate as? UIViewController else { return }
-        playerStayVisible(false, presenter: vc)
+        playerHidden(true, presenter: vc)
         
         player?.remove(presenterListener: delegate)
     }

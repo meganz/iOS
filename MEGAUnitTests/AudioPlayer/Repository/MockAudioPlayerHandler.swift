@@ -100,7 +100,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func playerPlaylistItems() -> [AudioPlayerItem]? { nil}
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {}
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {}
-    func playerStayVisible(_ visible: Bool, presenter: UIViewController) {}
+    func playerHidden(_ hidden: Bool, presenter: UIViewController) {}
     func closePlayer() {}
     func isPlayerPlaying() -> Bool { true }
     func isPlayerPaused() -> Bool { false }

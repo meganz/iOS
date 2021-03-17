@@ -1604,6 +1604,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         
         [self setToolbarActionsEnabled:NO];
     }
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared playerHidden:editing presenter:self];
+    }
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {

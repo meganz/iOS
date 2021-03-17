@@ -134,6 +134,12 @@ class FilesExplorerContainerViewController: UIViewController {
         navigationItem.rightBarButtonItem = selectAllBarButtonItem
     }
     
+    func audioPlayer(hidden: Bool) {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.playerHidden(hidden, presenter: self)
+        }
+    }
+    
     //MARK:- Actions
 
     @objc private func moreButtonItemSelected(_ button: UIBarButtonItem) {
