@@ -129,15 +129,6 @@ final class AudioPlayer: NSObject {
         preloadNextTracksMetadata()
     }
     
-    private func setAudioSession(active: Bool) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: .defaultToSpeaker)
-            try AVAudioSession.sharedInstance().setActive(active)
-        } catch {
-            MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
-        }
-    }
-    
     private func setDefaultAudioSession() throws {
         do {
         try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
@@ -149,6 +140,15 @@ final class AudioPlayer: NSObject {
     }
 
     //MARK: - Internal Functions
+    func setAudioSession(active: Bool) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: .defaultToSpeaker)
+            try AVAudioSession.sharedInstance().setActive(active)
+        } catch {
+            MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
+        }
+    }
+    
     func add(tracks: [AudioPlayerItem]) {
         self.tracks = tracks
         setupPlayer()

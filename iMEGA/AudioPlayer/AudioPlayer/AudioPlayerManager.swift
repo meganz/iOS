@@ -232,4 +232,14 @@ import Foundation
         
         miniPlayerHandlerListenerManager.notify{$0.initMiniPlayer(viewController: miniPlayerVC)}
     }
+    
+    func setAudioPlayerAudioSession() {
+        player?.setAudioSession(active: true)
+    }
+    
+    func activeAudioPlayerSessionIfNeeded() {
+        if isPlayerAlive() {
+            setAudioPlayerAudioSession()
+        }
+    }
 }

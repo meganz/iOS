@@ -43,6 +43,11 @@ class AudioRecorder: NSObject {
             throw RecordError.activeCall
         }
         
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.playerPause()
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+        }
+        
         try AVAudioSession.sharedInstance().setMode(.default)
         try AVAudioSession.sharedInstance().setActive(true)
         
@@ -86,8 +91,12 @@ class AudioRecorder: NSObject {
         displayLink?.invalidate()
         displayLink = nil
         
-        try AVAudioSession.sharedInstance().setMode(.voiceChat)
-        try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        if !AudioPlayerManager.shared.isPlayerAlive() {
+            try AVAudioSession.sharedInstance().setMode(.voiceChat)
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
+        
+        AudioPlayerManager.shared.activeAudioPlayerSessionIfNeeded()
 
         return recorder.url.path
     }
