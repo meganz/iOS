@@ -306,7 +306,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.stateLabel.font = [UIFont systemFontOfSize:17.0];
     self.progressStackView.hidden = YES;
     self.enableCameraUploadsButton.hidden = YES;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
@@ -316,7 +315,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         case MEGACameraUploadsStateUploading:
             self.stateLabel.hidden = YES;
             self.progressStackView.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
         case MEGACameraUploadsStateCompleted:
             self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
