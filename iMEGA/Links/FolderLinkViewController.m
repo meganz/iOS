@@ -585,6 +585,10 @@
     if (!self.selectedNodesArray) {
         self.selectedNodesArray = [NSMutableArray new];
     }
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared playerHidden:editing presenter:self];
+    }
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {

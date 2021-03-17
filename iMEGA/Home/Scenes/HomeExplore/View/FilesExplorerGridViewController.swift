@@ -67,11 +67,13 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     
     override func setEditingMode() {
         setEditing(true, animated: true)
+        audioPlayer(hidden: true)
     }
     
     override func endEditingMode() {
         super.endEditingMode()
         setEditing(false, animated: true)
+        audioPlayer(hidden: false)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

@@ -368,7 +368,7 @@
         [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }
     
-    [self setEditing:NO animated:YES];
+    [self endEditingMode];
 }
 
 - (void)selectedSharesOfSelectedNodes {
@@ -382,7 +382,7 @@
 
 - (void)removeSelectedOutgoingShares {
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedSharesMutableArray.count completion:^{
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
         [self reloadUI];
     }];
     
@@ -391,7 +391,7 @@
         [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
     
-    [self setEditing:NO animated:YES];
+    [self endEditingMode];
 }
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -554,11 +554,23 @@
     self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
-- (void)shouldStartEditingModeAtIndex:(NSIndexPath *)indexPath {
+- (void)startEditingModeAtIndex:(NSIndexPath *)indexPath {
     [self setEditing:YES animated:YES];
     [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     [self configToolbarItemsForSharedItems];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self audioPlayerHidden:YES];
+}
+
+- (void)endEditingMode {
+    [self setEditing:NO animated:YES];
+    [self audioPlayerHidden:NO];
+}
+
+- (void)audioPlayerHidden:(BOOL)hidden {
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared playerHidden:hidden presenter:self];
+    }
 }
 
 #pragma mark - Utils
@@ -589,7 +601,7 @@
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     if (self.tableView.isEditing) {
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
     } else {
         __weak __typeof__(self) weakSelf = self;
         UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
@@ -770,7 +782,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         for (MEGANode *n in _selectedNodesMutableArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
-                [self setEditing:NO animated:YES];
+                [self endEditingMode];
                 return;
             }
         }
@@ -781,7 +793,7 @@
             [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
         
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
     }
 }
 
@@ -915,7 +927,7 @@
         for (MEGANode *node in self.selectedNodesMutableArray) {
             [node mnz_removeLink];
         }
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
     }
 }
 
@@ -1099,7 +1111,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    [self shouldStartEditingModeAtIndex:indexPath];
+    [self startEditingModeAtIndex:indexPath];
 }
 
 #pragma clang diagnostic push
@@ -1110,7 +1122,7 @@
     if (self.incomingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_leaveSharingInViewController:self];
-            [self setEditing:NO animated:YES];
+            [self endEditingMode];
         }];
         shareAction.image = [UIImage imageNamed:@"leaveShareGesture"];
         shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1118,7 +1130,7 @@
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeSharing];
-            [self setEditing:NO animated:YES];
+            [self endEditingMode];
         }];
         shareAction.image = [UIImage imageNamed:@"removeShareGesture"];
         shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1126,7 +1138,7 @@
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeLink];
-            [self setEditing:NO animated:YES];
+            [self endEditingMode];
         }];
         removeLinkAction.image = [UIImage imageNamed:@"removeLinkGesture"];
         removeLinkAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1228,17 +1240,17 @@
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesMutableArray.count == 0) {
-                [self setEditing:NO animated:YES];
+                [self endEditingMode];
             }
             if (self.selectedNodesMutableArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesMutableArray.firstObject;
                 MEGANode *nodePressed = self.incomingButton.selected ? [self.incomingNodesMutableArray objectOrNilAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectOrNilAtIndex:indexPath.row];
                 if (nodeSelected.handle == nodePressed.handle) {
-                    [self setEditing:NO animated:YES];
+                    [self endEditingMode];
                 }
             }
         } else {
-            [self shouldStartEditingModeAtIndex:indexPath];
+            [self startEditingModeAtIndex:indexPath];
         }
     }
     

@@ -954,6 +954,10 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     }
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared playerHidden:editing presenter:self];
+    }
 }
 
 - (BOOL)removeOfflineNodeCell:(NSString *)itemPath {
