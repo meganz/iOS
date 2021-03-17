@@ -140,13 +140,14 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .categoryChange:
-            if isPlaying {
-                pause()
-                notify(aboutAudioPlayerDidPausePlayback)
-            }
+            if isPlaying { pause() }
+        case .oldDeviceUnavailable: pause()
+            
         default:
             break
         }
+        
+        notify(aboutCurrentState)
     }
     
     @objc func didReceiveLogout(notification: Notification) {
