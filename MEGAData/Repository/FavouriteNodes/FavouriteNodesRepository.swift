@@ -8,8 +8,12 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func favouriteNodes(completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void) {
-        sdk.favourites(forParent: nil, count: 0, delegate: RequestDelegate { (result) in
+    func getAllFavouriteNodes(completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void) {
+        getFavouriteNodes(limitCount: 0, completion: completion)
+    }
+    
+    func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void) {
+        sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { (result) in
             switch result {
             case .success(let request):
                 guard let favouritesHandleArray = request.megaHandleArray else {

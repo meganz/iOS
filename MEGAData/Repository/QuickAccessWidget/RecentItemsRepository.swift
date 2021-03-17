@@ -17,16 +17,12 @@ class RecentItemsRepository: RecentItemsRepositoryProtocol {
         store.insertQuickAccessRecentItem(withBase64Handle: item.base64Handle, name: item.name, isUpdate: item.isUpdate, timestamp: item.timestamp)
     }
     
+    @available(iOS 14.0, *)
+    func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+        store.batchInsertQuickAccessRecentItems(items, completion: completion)
+    }
+    
     func fetchAllRecentItems() -> [RecentItemEntity] {
-        store.fetchAllQuickAccessRecentItem().compactMap {
-            guard let handle = $0.handle,
-                  let name = $0.name,
-                  let date = $0.timestamp,
-                  let isUpdate = $0.isUpdate else {
-                return nil
-            }
-            
-            return RecentItemEntity(base64Handle: handle, name: name, timestamp: date, isUpdate: isUpdate.boolValue)
-        }
+        store.fetchAllQuickAccessRecentItem()
     }
 }

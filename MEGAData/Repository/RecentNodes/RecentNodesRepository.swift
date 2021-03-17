@@ -8,7 +8,7 @@ struct RecentNodesRepository: RecentNodesRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
+    func getAllRecentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
         guard let recentActionBuckets = sdk.recentActions() as? [MEGARecentActionBucket] else {
             completion(.failure(.sdk))
             return
@@ -16,5 +16,13 @@ struct RecentNodesRepository: RecentNodesRepositoryProtocol {
         
         completion(.success(recentActionBuckets))
     }
-
+    
+    func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
+        guard let recentActionBuckets = sdk.recentActions(sinceDays: 30, maxNodes: limitCount) as? [MEGARecentActionBucket] else {
+            completion(.failure(.sdk))
+            return
+        }
+        
+        completion(.success(recentActionBuckets))
+    }
 }
