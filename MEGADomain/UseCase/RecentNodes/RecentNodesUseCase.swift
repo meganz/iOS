@@ -1,18 +1,22 @@
 import Foundation
 
 protocol RecentNodesUseCaseProtocol {
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
+    func getAllRecentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
+    func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
 }
 
 struct RecentNodesUseCase: RecentNodesUseCaseProtocol {
-    
     private let repo: RecentNodesRepositoryProtocol
 
     init(repo: RecentNodesRepositoryProtocol) {
         self.repo = repo
     }
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
-        repo.recentActionBuckets(completion: completion)
+    
+    func getAllRecentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
+        repo.getAllRecentActionBuckets(completion: completion)
     }
     
+    func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void) {
+        repo.getRecentActionBuckets(limitCount: limitCount, completion: completion)
+    }
 }

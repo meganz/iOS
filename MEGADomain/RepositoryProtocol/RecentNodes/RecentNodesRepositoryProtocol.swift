@@ -1,5 +1,6 @@
 import Foundation
 
 protocol RecentNodesRepositoryProtocol {
-    func recentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
+    func getAllRecentActionBuckets(completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
+    func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[MEGARecentActionBucket], QuickAccessWidgetErrorEntity>) -> Void)
 }

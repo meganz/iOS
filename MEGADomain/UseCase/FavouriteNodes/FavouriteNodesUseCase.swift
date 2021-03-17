@@ -2,7 +2,8 @@
 import Foundation
 
 protocol FavouriteNodesUseCaseProtocol {
-    func favouriteNodes(completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void)
+    func getAllFavouriteNodes(completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void)
+    func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void)
 }
 
 struct FavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
@@ -13,7 +14,11 @@ struct FavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         self.repo = repo
     }
     
-    func favouriteNodes(completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void) {
-        repo.favouriteNodes(completion: completion)
+    func getAllFavouriteNodes(completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void) {
+        repo.getAllFavouriteNodes(completion: completion)
+    }
+    
+    func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[MEGANode], QuickAccessWidgetErrorEntity>) -> Void) {
+        repo.getFavouriteNodes(limitCount: limitCount, completion: completion)
     }
 }
