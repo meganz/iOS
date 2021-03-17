@@ -717,6 +717,7 @@ static MEGAIndexer *indexer;
     
     UILabel *label = [[UILabel alloc] init];
     [label setNumberOfLines:[subtitle isEqualToString:@""] ? 1 : 2];
+    [label setLineBreakMode:NSLineBreakByClipping];
     
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAttributedText:titleMutableAttributedString];
