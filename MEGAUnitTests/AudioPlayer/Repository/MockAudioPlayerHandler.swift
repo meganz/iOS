@@ -112,5 +112,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func isShuffleEnabled() -> Bool { false }
     func currentRepeatMode() -> RepeatMode { RepeatMode.none }
     func refreshCurrentItemState() {}
+    func setAudioPlayerAudioSession() {}
+    func activeAudioPlayerSessionIfNeeded() {}
     func autoPlay(enable: Bool) {}
 }
