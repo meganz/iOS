@@ -1181,6 +1181,7 @@
         UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
             contactLinkVC.scanCode = YES;
+            contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
             if (self.contactsMode == ContactsModeShareFoldersWith) {
                 contactLinkVC.contactLinkQRType = ContactLinkQRTypeShareFolder;
                 contactLinkVC.contactLinkQRDelegate = self;
