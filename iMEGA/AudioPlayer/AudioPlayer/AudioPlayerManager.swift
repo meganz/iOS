@@ -37,6 +37,10 @@ import Foundation
         player?.isShuffleMode() ?? false
     }
     
+    func autoPlay(enable: Bool) {
+        player?.isAutoPlayEnabled = enable
+    }
+    
     func currentRepeatMode() -> RepeatMode {
         if player?.isRepeatOneMode() ?? false { return .repeatOne }
         else if player?.isRepeatAllMode() ?? false { return .loop }

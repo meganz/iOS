@@ -125,7 +125,7 @@ final class AudioPlayer: NSObject {
         registerAudioPlayerNotifications()
         notify(aboutCurrentState)
         
-        if isAutoPlayEnabled { play() }
+        isAutoPlayEnabled ? play() : pause()
         preloadNextTracksMetadata()
     }
     
