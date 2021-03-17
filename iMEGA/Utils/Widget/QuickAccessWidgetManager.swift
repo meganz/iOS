@@ -4,11 +4,12 @@ import WidgetKit
 
 @available(iOS 14.0, *)
 class QuickAccessWidgetManager: NSObject {
-    
     private let recentItemsUseCase: RecentItemsUseCaseProtocol
     private let recentNodesUseCase: RecentNodesUseCaseProtocol
     private let favouriteItemsUseCase: FavouriteItemsUseCaseProtocol
     private let favouriteNodesUseCase: FavouriteNodesUseCaseProtocol
+    
+    private let debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
 
     override init() {
         self.recentItemsUseCase = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
@@ -30,9 +31,8 @@ class QuickAccessWidgetManager: NSObject {
     }
     
     @objc func createWidgetItemData() {
-        createRecentItemsData {
-            self.createFavouritesItemsData()
-        }
+        self.createRecentItemsDataWithDebounce()
+        self.createFavouritesItemsDataWithDebounce()
     }
     
     @objc func createQuickAccessWidgetItemsDataIfNeeded(for nodeList: MEGANodeList) {
@@ -56,13 +56,11 @@ class QuickAccessWidgetManager: NSObject {
         }
         
         if shouldCreateRecentItems {
-            createRecentItemsData {
-                if shouldCreateFavouriteItems {
-                    self.createFavouritesItemsData()
-                }
-            }
-        } else {
-            self.createFavouritesItemsData()
+            self.createRecentItemsDataWithDebounce()
+        }
+        
+        if shouldCreateFavouriteItems {
+            self.createFavouritesItemsDataWithDebounce()
         }
     }
     
@@ -77,9 +75,14 @@ class QuickAccessWidgetManager: NSObject {
     }
     
     //MARK: - Private
-    func createRecentItemsData(completion: (() -> Void)? = nil) {
-        
-        recentNodesUseCase.recentActionBuckets(completion: { (result) in
+    private func createRecentItemsDataWithDebounce() {
+        debouncer.start {
+            self.createRecentItemsData()
+        }
+    }
+    
+    private func createRecentItemsData() {
+        recentNodesUseCase.getRecentActionBuckets(limitCount: MEGAQuickAccessWidgetMaxDisplayItems) { (result) in
             switch result {
             case .success(let recentActions):
                 var recentItems = [RecentItemEntity]()
@@ -88,27 +91,28 @@ class QuickAccessWidgetManager: NSObject {
                         recentItems.append(RecentItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: bucket.date, isUpdate: bucket.isUpdate))
                     })
                 }
-                self.recentItemsUseCase.resetRecentItems(by: Array(recentItems.prefix(8))) { (result) in
+                self.recentItemsUseCase.resetRecentItems(by: recentItems) { (result) in
                     switch result {
                     case .success(_):
                         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGARecentsQuickAccessWidget)
                     case .failure(_):
                         MEGALogError("Error creating recent items data for widget")
                     }
-                    if let completion = completion {
-                        completion()
-                    }
                 }
             case .failure(_):
                 MEGALogError("Error creating recent items data for widget")
             }
-        })
-        
+        }
     }
     
-    func createFavouritesItemsData(completion: (() -> Void)? = nil) {
-        
-        favouriteNodesUseCase.favouriteNodes { (result) in
+    private func createFavouritesItemsDataWithDebounce() {
+        debouncer.start {
+            self.createFavouritesItemsData()
+        }
+    }
+    
+    private func createFavouritesItemsData() {
+        favouriteNodesUseCase.getFavouriteNodes(limitCount: MEGAQuickAccessWidgetMaxDisplayItems) { (result) in
             switch result {
             case .success(let nodes):
                 var favouriteItems = [FavouriteItemEntity]()
@@ -121,9 +125,6 @@ class QuickAccessWidgetManager: NSObject {
                         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
                     case .failure(_):
                         MEGALogError("Error creating favourite items data for widget")
-                    }
-                    if let completion = completion {
-                        completion()
                     }
                 }
             case .failure(_):

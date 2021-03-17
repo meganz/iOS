@@ -7,9 +7,13 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
+
+    func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void) {
+        getFavouriteNodes(limitCount: 0, completion: completion)
+    }
     
-    func favouriteNodes(completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void) {
-        sdk.favourites(forParent: nil, count: 0, delegate: RequestDelegate { (result) in
+    func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void) {
+        sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { (result) in
             switch result {
             case .success(let request):
                 guard let favouritesHandleArray = request.megaHandleArray else {
@@ -28,5 +32,4 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
             }
         })
     }
-
 }

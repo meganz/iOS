@@ -2,8 +2,11 @@ import Foundation
 
 // MARK: - Use case protocol -
 protocol FavouriteItemsUseCaseProtocol {
+    @available(iOS 14.0, *)
     func createFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void)
     func insertFavouriteItem(_ item: FavouriteItemEntity)
+    @available(iOS 14.0, *)
+    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void)
     func deleteFavouriteItem(with base64Handle: MEGABase64Handle)
     func fetchAllFavouriteItems() -> [FavouriteItemEntity]
     func fetchFavouriteItems(upTo count: Int) -> [FavouriteItemEntity]
@@ -17,14 +20,14 @@ struct FavouriteItemsUseCase: FavouriteItemsUseCaseProtocol {
         self.repo = repo
     }
 
+    @available(iOS 14.0, *)
     func createFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
         repo.deleteAllFavouriteItems { (result) in
             switch result {
             case .success():
-                items.forEach {
-                    repo.insertFavouriteItem($0)
+                repo.batchInsertFavouriteItems(items) { insertResult in
+                    completion(insertResult)
                 }
-                completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -37,6 +40,11 @@ struct FavouriteItemsUseCase: FavouriteItemsUseCaseProtocol {
     
     func insertFavouriteItem(_ item: FavouriteItemEntity) {
         repo.insertFavouriteItem(item)
+    }
+    
+    @available(iOS 14.0, *)
+    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+        repo.batchInsertFavouriteItems(items, completion: completion)
     }
     
     func fetchAllFavouriteItems() -> [FavouriteItemEntity] {
