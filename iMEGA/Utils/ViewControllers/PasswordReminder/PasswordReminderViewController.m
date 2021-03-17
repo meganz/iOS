@@ -145,8 +145,6 @@
 }
 
 - (void)configureUI {
-    self.keyImageView.hidden = UIDevice.currentDevice.iPhone4X;
-
     if (self.logout) {
         UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tapClose:)];
         self.navigationItem.rightBarButtonItem = cancelBarButtonItem;
