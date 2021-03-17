@@ -325,4 +325,9 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     func audioPlayerDidResumePlayback() {
         invokeCommand?(.didResumePlayback)
     }
+    
+    func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool) {
+        repeatItemsState = loopMode ? .loop : repeatOneMode ? .repeatOne : .none
+        invokeCommand?(.updateShuffle(status: shuffleMode))
+    }
 }
