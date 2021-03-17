@@ -58,7 +58,7 @@ final class UploadFileUseCase: UploadFilesUseCaseProtocol {
         let docuQuality = UserDefaults.standard.float(forKey: "DocScanQualityKey")
         let imageData = images.compactMap { image -> Data? in
             let scanQuality = DocScanQuality(rawValue: docuQuality) ?? .best
-            return image.jpegData(compressionQuality: CGFloat(scanQuality.rawValue))
+            return image.shrinkedImageData(docScanQuality: scanQuality)
         }
 
         let dataWithFilePaths = imageData.enumerated().map { data -> (String, Data) in

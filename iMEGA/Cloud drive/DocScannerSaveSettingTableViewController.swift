@@ -9,8 +9,8 @@ enum DocScanExportFileType: String {
 
 enum DocScanQuality: Float, CustomStringConvertible {
     case best = 1
-    case medium = 0.7
-    case low = 0.5
+    case medium = 0.8
+    case low = 0.7
     
     var description: String {
         switch self {
@@ -20,6 +20,17 @@ enum DocScanQuality: Float, CustomStringConvertible {
             return NSLocalizedString("medium", comment: "")
         case .low:
             return NSLocalizedString("low", comment: "")
+        }
+    }
+    
+    var imageSize: Int {
+        switch self {
+        case .best:
+            return 3000
+        case .medium:
+            return 2000
+        case .low:
+            return 1000
         }
     }
 }
@@ -318,29 +329,22 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
 }
 
 extension DocScannerSaveSettingTableViewController {
-    private func shrinkedImage(image: UIImage?) -> UIImage? {
-        guard let image = image,
-              let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey))
-        else {
-            return nil
-        }
-        return image.resize(to: CGSize(width: image.size.width * CGFloat(quality.rawValue), height: image.size.height * CGFloat(quality.rawValue)))
-        
-    }
-
     private func exportScannedDocs() -> [String] {
         guard let storedExportFileTypeKey = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey) else {
             MEGALogDebug("No stored value found for docScanExportFileTypeKey")
             return []
         }
         let fileType = DocScanExportFileType(rawValue: storedExportFileTypeKey)
+        let scanQuality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey))
         var tempPaths: [String] = []
         if fileType == .pdf {
             if #available(iOS 11.0, *) {
                 let pdfDoc = PDFDocument()
                 docs?.enumerated().forEach {
-                    if let resizedImage = shrinkedImage(image: $0.element),
-                    let pdfPage = PDFPage(image: resizedImage) {
+                    if let quality = scanQuality,
+                       let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: quality),
+                       let shrinkedImage = UIImage(data: shrinkedImageData),
+                       let pdfPage = PDFPage(image: shrinkedImage) {
                         pdfDoc.insert(pdfPage, at: $0.offset)
                     } else {
                         MEGALogDebug(String(format: "could not create PdfPage at index %d", $0.offset))
@@ -362,8 +366,8 @@ extension DocScannerSaveSettingTableViewController {
             }
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
-                if let resizedImage = shrinkedImage(image: $0.element),
-                   let data = resizedImage.jpegData(compressionQuality: 1) {
+                if let quality = scanQuality,
+                   let data = $0.element.shrinkedImageData(docScanQuality: quality) {
                     let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
