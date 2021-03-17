@@ -150,6 +150,8 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
     }
     
+    [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+    
     self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
     
     [self updateAppearance];
