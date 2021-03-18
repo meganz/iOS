@@ -172,6 +172,9 @@
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatRequestDelegate:self];
+        
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
@@ -216,12 +219,6 @@
         }
         
         isAccountFirstLogin = NO;
-        
-        if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-            [MEGASdkManager createSharedMEGAChatSdk];
-        } else {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-        }
         
         [self initProviderDelegate];
         
@@ -1209,7 +1206,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }]];
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));
     dispatch_semaphore_wait(semaphore, timeout);
-    [MEGASdkManager destroySharedMEGAChatSdk];
+    [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
 }
 
 - (void)presentLogoutFromOtherClientAlert {
@@ -1511,8 +1508,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ld", (long)request.type, (long)error.type)
-    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -1636,6 +1631,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self registerForVoIPNotifications];
             [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
+            if (@available(iOS 14.0, *)) {
+                [QuickAccessWidgetManager reloadAllWidgetsContent];
+            }
             break;
         }
             
@@ -1833,14 +1831,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             }];
         }
     }
-    
-    MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);
 }
 
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
-    MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
     self.chatLastKnownInitState = newState;
     if (newState == MEGAChatInitError) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
@@ -1851,8 +1846,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
-    
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
@@ -1997,7 +1990,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
                 if (@available(iOS 14.0, *)) {
-                    [QuickAccessWidgetManager reloadAllWidgetsContent];
+                    [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
                 }
             }
         }
@@ -2008,10 +2001,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_setNodeCoordinates];
-        
-        if ([transfer.appData containsString:@"SystemShareFile"]) {
-            [transfer mnz_showSystemShare];
-        }
     }
 }
 

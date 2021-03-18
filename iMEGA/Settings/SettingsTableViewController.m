@@ -54,10 +54,6 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
     [self setupUI];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

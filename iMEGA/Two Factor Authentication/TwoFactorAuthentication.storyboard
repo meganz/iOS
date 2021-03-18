@@ -306,98 +306,109 @@
             </objects>
             <point key="canvasLocation" x="166" y="-1155"/>
         </scene>
-        <!--Two-Factor Authentication-->
+        <!--Enabling Two-Factor Authentication-->
         <scene sceneID="el2-Be-jM2">
             <objects>
-                <viewController storyboardIdentifier="EnablingTwoFactorAuthenticationViewControllerID" id="vmb-r3-kvN" customClass="EnablingTwoFactorAuthenticationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EnablingTwoFactorAuthenticationViewControllerID" id="vmb-r3-kvN" userLabel="Enabling Two-Factor Authentication" customClass="EnablingTwoFactorAuthenticationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sUA-ek-h2o">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
-                                <rect key="frame" x="22.5" y="16" width="330.5" height="50.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="W9e-6V-BOw">
-                                <rect key="frame" x="90.5" y="98.5" width="194" height="194"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="194" id="CDB-yl-6OL"/>
-                                    <constraint firstAttribute="height" constant="194" id="X70-En-TWf"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5t-8t-WXX">
-                                <rect key="frame" x="43.5" y="535" width="288" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="VNF-Vg-zyy"/>
-                                    <constraint firstAttribute="width" constant="288" id="f7c-Pz-PU1"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <state key="normal" title="Open in..."/>
-                                <connections>
-                                    <action selector="openInTouchUpInside:" destination="vmb-r3-kvN" eventType="touchUpInside" id="P4a-0j-wmA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPw-hy-opU">
-                                <rect key="frame" x="43.5" y="601" width="288" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="TDw-eS-Bns"/>
-                                    <constraint firstAttribute="height" constant="50" id="jZN-wM-Ntj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <state key="normal" title="Next"/>
-                                <connections>
-                                    <action selector="nextTouchUpInside:" destination="vmb-r3-kvN" eventType="touchUpInside" id="Q2Q-ap-u0O"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vi-in-ARt">
-                                <rect key="frame" x="72" y="308.5" width="231" height="93.5"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tef-3w-SBY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" contentInsetAdjustmentBehavior="always" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xq-Iu-F8J">
-                                        <rect key="frame" x="10" y="10" width="211" height="73.5"/>
-                                        <string key="text">abcd efgh ijkm nlop qrst
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
+                                        <rect key="frame" x="20" y="16" width="335" height="50.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="W9e-6V-BOw">
+                                        <rect key="frame" x="90.5" y="98.5" width="194" height="194"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="194" id="CDB-yl-6OL"/>
+                                            <constraint firstAttribute="height" constant="194" id="X70-En-TWf"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5t-8t-WXX">
+                                        <rect key="frame" x="43.5" y="442" width="288" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="VNF-Vg-zyy"/>
+                                            <constraint firstAttribute="width" constant="288" id="f7c-Pz-PU1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <state key="normal" title="Open in..."/>
+                                        <connections>
+                                            <action selector="openInTouchUpInside:" destination="vmb-r3-kvN" eventType="touchUpInside" id="P4a-0j-wmA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPw-hy-opU">
+                                        <rect key="frame" x="43.5" y="508" width="288" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="288" id="TDw-eS-Bns"/>
+                                            <constraint firstAttribute="height" constant="50" id="jZN-wM-Ntj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <state key="normal" title="Next"/>
+                                        <connections>
+                                            <action selector="nextTouchUpInside:" destination="vmb-r3-kvN" eventType="touchUpInside" id="Q2Q-ap-u0O"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vi-in-ARt">
+                                        <rect key="frame" x="62" y="308.5" width="251" height="93.5"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" contentInsetAdjustmentBehavior="always" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xq-Iu-F8J">
+                                                <rect key="frame" x="20" y="10" width="211" height="73.5"/>
+                                                <string key="text">abcd efgh ijkm nlop qrst
 uvwx yzab cdef ghij kmnlop
 opqr stuv wxyz</string>
-                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textView>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="6Xq-Iu-F8J" firstAttribute="leading" secondItem="6vi-in-ARt" secondAttribute="leading" constant="20" id="Fgs-HC-Dta"/>
+                                            <constraint firstItem="6Xq-Iu-F8J" firstAttribute="centerX" secondItem="6vi-in-ARt" secondAttribute="centerX" id="aps-Pu-YvK"/>
+                                            <constraint firstItem="6Xq-Iu-F8J" firstAttribute="top" secondItem="6vi-in-ARt" secondAttribute="top" constant="10" id="ikC-C2-cGz"/>
+                                            <constraint firstAttribute="bottom" secondItem="6Xq-Iu-F8J" secondAttribute="bottom" constant="10" id="tzi-4X-qjq"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="6Xq-Iu-F8J" firstAttribute="leading" secondItem="6vi-in-ARt" secondAttribute="leading" constant="10" id="Fgs-HC-Dta"/>
-                                    <constraint firstAttribute="trailing" secondItem="6Xq-Iu-F8J" secondAttribute="trailing" constant="10" id="U77-HD-SDk"/>
-                                    <constraint firstItem="6Xq-Iu-F8J" firstAttribute="top" secondItem="6vi-in-ARt" secondAttribute="top" constant="10" id="ikC-C2-cGz"/>
-                                    <constraint firstAttribute="bottom" secondItem="6Xq-Iu-F8J" secondAttribute="bottom" constant="10" id="tzi-4X-qjq"/>
+                                    <constraint firstAttribute="trailing" secondItem="l4U-lC-Vjz" secondAttribute="trailing" constant="20" id="0go-cF-cfv"/>
+                                    <constraint firstItem="W9e-6V-BOw" firstAttribute="top" secondItem="l4U-lC-Vjz" secondAttribute="bottom" constant="32" id="1uJ-Og-ci2"/>
+                                    <constraint firstItem="W9e-6V-BOw" firstAttribute="centerX" secondItem="tef-3w-SBY" secondAttribute="centerX" id="3t5-CB-ThU"/>
+                                    <constraint firstItem="ZPw-hy-opU" firstAttribute="top" secondItem="K5t-8t-WXX" secondAttribute="bottom" constant="16" id="CS2-Gg-A5B"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6vi-in-ARt" secondAttribute="trailing" constant="20" id="Unm-FJ-k66"/>
+                                    <constraint firstItem="6vi-in-ARt" firstAttribute="centerX" secondItem="K5t-8t-WXX" secondAttribute="centerX" id="WAI-nr-kV5"/>
+                                    <constraint firstItem="l4U-lC-Vjz" firstAttribute="leading" secondItem="tef-3w-SBY" secondAttribute="leading" constant="20" id="Zmf-jM-sRS"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZPw-hy-opU" secondAttribute="bottom" constant="20" id="bHy-FV-1sG"/>
+                                    <constraint firstItem="l4U-lC-Vjz" firstAttribute="centerX" secondItem="W9e-6V-BOw" secondAttribute="centerX" id="gxb-Vi-Dl6"/>
+                                    <constraint firstItem="l4U-lC-Vjz" firstAttribute="top" secondItem="tef-3w-SBY" secondAttribute="top" constant="16" id="nSF-Da-dkf"/>
+                                    <constraint firstItem="6vi-in-ARt" firstAttribute="top" secondItem="W9e-6V-BOw" secondAttribute="bottom" constant="16" id="qZx-L8-s1e"/>
+                                    <constraint firstItem="6vi-in-ARt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tef-3w-SBY" secondAttribute="leading" constant="20" id="rsa-H5-MEx"/>
+                                    <constraint firstItem="6vi-in-ARt" firstAttribute="centerX" secondItem="tef-3w-SBY" secondAttribute="centerX" id="xHN-ls-kj1"/>
+                                    <constraint firstItem="K5t-8t-WXX" firstAttribute="top" secondItem="6vi-in-ARt" secondAttribute="bottom" constant="40" id="xai-cC-FDH"/>
+                                    <constraint firstItem="6vi-in-ARt" firstAttribute="centerX" secondItem="ZPw-hy-opU" secondAttribute="centerX" id="zPa-Xe-lrj"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="0.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
+                            </scrollView>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="6vi-in-ARt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Q24-9u-SHc" secondAttribute="leading" constant="20" id="1vc-AO-Z1W"/>
-                            <constraint firstItem="ZPw-hy-opU" firstAttribute="centerX" secondItem="Q24-9u-SHc" secondAttribute="centerX" id="3IF-8N-PMN"/>
-                            <constraint firstItem="l4U-lC-Vjz" firstAttribute="top" secondItem="Q24-9u-SHc" secondAttribute="top" constant="16" id="4dg-vN-lRO"/>
-                            <constraint firstItem="Q24-9u-SHc" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="l4U-lC-Vjz" secondAttribute="trailing" constant="20" id="6Ve-vK-OcO"/>
-                            <constraint firstItem="l4U-lC-Vjz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Q24-9u-SHc" secondAttribute="leading" constant="20" id="8gh-AT-IWR"/>
-                            <constraint firstItem="W9e-6V-BOw" firstAttribute="centerX" secondItem="sUA-ek-h2o" secondAttribute="centerX" id="AWc-3I-Nfs"/>
-                            <constraint firstItem="ZPw-hy-opU" firstAttribute="top" secondItem="K5t-8t-WXX" secondAttribute="bottom" constant="16" id="Lgs-hy-TLl"/>
-                            <constraint firstItem="W9e-6V-BOw" firstAttribute="top" secondItem="l4U-lC-Vjz" secondAttribute="bottom" constant="32" id="SnY-xH-cej"/>
-                            <constraint firstItem="6vi-in-ARt" firstAttribute="top" secondItem="W9e-6V-BOw" secondAttribute="bottom" constant="16" id="ZLi-mN-INh"/>
-                            <constraint firstItem="l4U-lC-Vjz" firstAttribute="centerX" secondItem="W9e-6V-BOw" secondAttribute="centerX" id="bmN-Z3-WGe"/>
-                            <constraint firstItem="K5t-8t-WXX" firstAttribute="centerX" secondItem="Q24-9u-SHc" secondAttribute="centerX" id="j89-jC-igA"/>
-                            <constraint firstItem="6vi-in-ARt" firstAttribute="centerX" secondItem="Q24-9u-SHc" secondAttribute="centerX" id="kdQ-Tn-c0c"/>
-                            <constraint firstItem="Q24-9u-SHc" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6vi-in-ARt" secondAttribute="trailing" constant="20" id="qLP-cf-6cX"/>
-                            <constraint firstItem="Q24-9u-SHc" firstAttribute="bottom" secondItem="ZPw-hy-opU" secondAttribute="bottom" constant="16" id="tod-yD-Fxf"/>
-                            <constraint firstItem="K5t-8t-WXX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6vi-in-ARt" secondAttribute="bottom" constant="16" id="vzx-CI-4a0"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Q24-9u-SHc"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="tef-3w-SBY" secondAttribute="bottom" id="QiK-sS-N22"/>
+                            <constraint firstItem="Q24-9u-SHc" firstAttribute="trailing" secondItem="tef-3w-SBY" secondAttribute="trailing" id="Vsw-hq-9cO"/>
+                            <constraint firstItem="tef-3w-SBY" firstAttribute="leading" secondItem="Q24-9u-SHc" secondAttribute="leading" id="nMq-2n-5F0"/>
+                            <constraint firstItem="tef-3w-SBY" firstAttribute="top" secondItem="sUA-ek-h2o" secondAttribute="top" id="ysR-lg-NGr"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Two-Factor Authentication" id="gs6-Fn-HTd">
                         <connections>
@@ -408,7 +419,7 @@ opqr stuv wxyz</string>
                         <outlet property="firstSectionLabel" destination="l4U-lC-Vjz" id="hXE-8n-y8K"/>
                         <outlet property="nextButton" destination="ZPw-hy-opU" id="3C6-5f-NrI"/>
                         <outlet property="openInButton" destination="K5t-8t-WXX" id="jCh-eH-FU6"/>
-                        <outlet property="seedQrImageTopLayoutConstraint" destination="SnY-xH-cej" id="BL1-Hb-kpe"/>
+                        <outlet property="seedQrImageTopLayoutConstraint" destination="1uJ-Og-ci2" id="dJs-1b-gkX"/>
                         <outlet property="seedQrImageView" destination="W9e-6V-BOw" id="2vZ-Uh-zzg"/>
                         <outlet property="seedQrImageViewHeightLayoutConstraint" destination="X70-En-TWf" id="48m-mz-pf6"/>
                         <outlet property="seedQrImageViewWidthLayoutConstraint" destination="CDB-yl-6OL" id="rp4-HL-Yrh"/>
@@ -421,10 +432,10 @@ opqr stuv wxyz</string>
             </objects>
             <point key="canvasLocation" x="911" y="-485"/>
         </scene>
-        <!--Two-Factor Authentication-->
+        <!--Setup Two-Factor Authentication-->
         <scene sceneID="SCy-P1-iIN">
             <objects>
-                <tableViewController storyboardIdentifier="SetupTwoFactorAuthenticationTableViewControllerID" id="ugG-Up-HZS" customClass="SetupTwoFactorAuthenticationTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SetupTwoFactorAuthenticationTableViewControllerID" id="ugG-Up-HZS" userLabel="Setup Two-Factor Authentication" customClass="SetupTwoFactorAuthenticationTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="lUM-6P-Opt" userLabel="Table View" customClass="Disabli">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -498,140 +509,145 @@ opqr stuv wxyz</string>
             </objects>
             <point key="canvasLocation" x="166" y="-484"/>
         </scene>
-        <!--Two-Factor Authentication-->
+        <!--Enabled Two-Factor Authentication-->
         <scene sceneID="Q5T-ir-iba">
             <objects>
-                <viewController storyboardIdentifier="EnabledTwoFactorAuthenticationViewControllerID" id="kdQ-Q4-Fte" customClass="EnabledTwoFactorAuthenticationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EnabledTwoFactorAuthenticationViewControllerID" id="kdQ-Q4-Fte" userLabel="Enabled Two-Factor Authentication" customClass="EnabledTwoFactorAuthenticationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vWA-0n-dO3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="2FASetup" translatesAutoresizingMaskIntoConstraints="NO" id="doM-ND-eYT">
-                                <rect key="frame" x="123.5" y="16" width="128" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="129" id="JD4-FC-aAc"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="NTs-KD-VVG"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="Vau-Ov-z9g"/>
-                                    <constraint firstAttribute="width" secondItem="doM-ND-eYT" secondAttribute="height" multiplier="1:1" id="mwo-B6-thQ"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="129" id="rzn-mS-VhS"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="achievementsCheck" translatesAutoresizingMaskIntoConstraints="NO" id="CVq-DV-DyN">
-                                <rect key="frame" x="123.5" y="16" width="32" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="32" id="BLQ-be-NqQ"/>
-                                    <constraint firstAttribute="width" secondItem="CVq-DV-DyN" secondAttribute="height" multiplier="1:1" id="T5n-aD-rPS"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="32" id="ViH-vX-REF"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication Enabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4g7-EC-3dP">
-                                <rect key="frame" x="56.5" y="160" width="262" height="19.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
-                                <rect key="frame" x="29.5" y="195.5" width="316.5" height="50.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
-                                <rect key="frame" x="29.5" y="262" width="316.5" height="67"/>
-                                <string key="text">If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
-Back up your recovery key.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qmf-eY-doL">
-                                <rect key="frame" x="29.5" y="345" width="316.5" height="60"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GrC-8N-WOI">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text" translatesAutoresizingMaskIntoConstraints="NO" id="zEZ-8l-5mn">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="2FASetup" translatesAutoresizingMaskIntoConstraints="NO" id="doM-ND-eYT">
+                                        <rect key="frame" x="123.5" y="20" width="128" height="128"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="GeB-5b-agz"/>
-                                            <constraint firstAttribute="width" constant="40" id="qaz-Mw-toH"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="129" id="JD4-FC-aAc"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="NTs-KD-VVG"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="Vau-Ov-z9g"/>
+                                            <constraint firstAttribute="width" secondItem="doM-ND-eYT" secondAttribute="height" multiplier="1:1" id="mwo-B6-thQ"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="129" id="rzn-mS-VhS"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Recovery Key.txt" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xf6-Kr-ff4">
-                                        <rect key="frame" x="60" y="20.5" width="117" height="19"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="achievementsCheck" translatesAutoresizingMaskIntoConstraints="NO" id="CVq-DV-DyN">
+                                        <rect key="frame" x="123.5" y="20" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="32" id="BLQ-be-NqQ"/>
+                                            <constraint firstAttribute="width" secondItem="CVq-DV-DyN" secondAttribute="height" multiplier="1:1" id="T5n-aD-rPS"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="32" id="ViH-vX-REF"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication Enabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4g7-EC-3dP">
+                                        <rect key="frame" x="56.5" y="164" width="262" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
+                                        <rect key="frame" x="20" y="199.5" width="335" height="50.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
+                                        <rect key="frame" x="20" y="266" width="335" height="67"/>
+                                        <string key="text">If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
+Back up your recovery key.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qmf-eY-doL">
+                                        <rect key="frame" x="20" y="349" width="335" height="60"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text" translatesAutoresizingMaskIntoConstraints="NO" id="zEZ-8l-5mn">
+                                                <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="GeB-5b-agz"/>
+                                                    <constraint firstAttribute="width" constant="40" id="qaz-Mw-toH"/>
+                                                </constraints>
+                                            </imageView>
+                                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Recovery Key.txt" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xf6-Kr-ff4">
+                                                <rect key="frame" x="60" y="20.5" width="117" height="19"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xf6-Kr-ff4" secondAttribute="trailing" constant="10" id="76A-v5-jv1"/>
+                                            <constraint firstItem="zEZ-8l-5mn" firstAttribute="leading" secondItem="Qmf-eY-doL" secondAttribute="leading" constant="10" id="PMw-Lj-TG7"/>
+                                            <constraint firstAttribute="height" constant="60" id="YnW-9e-mFK"/>
+                                            <constraint firstItem="zEZ-8l-5mn" firstAttribute="centerY" secondItem="Qmf-eY-doL" secondAttribute="centerY" id="bq7-Uj-ns9"/>
+                                            <constraint firstItem="Xf6-Kr-ff4" firstAttribute="centerY" secondItem="Qmf-eY-doL" secondAttribute="centerY" id="e6F-kC-tCt"/>
+                                            <constraint firstItem="Xf6-Kr-ff4" firstAttribute="leading" secondItem="zEZ-8l-5mn" secondAttribute="trailing" constant="10" id="sHN-xK-6tu"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UG-fV-LZb" userLabel="Export Recovery Key Button">
+                                        <rect key="frame" x="43.5" y="495" width="288" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="288" id="FGd-uy-iUV"/>
+                                            <constraint firstAttribute="height" constant="50" id="z2b-k2-kXP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <state key="normal" title="Export Recovery Key"/>
+                                        <connections>
+                                            <action selector="exportRecoveryKeyTouchUpInside:" destination="kdQ-Q4-Fte" eventType="touchUpInside" id="neU-3O-BRk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSy-RT-s5a" userLabel="Close Button">
+                                        <rect key="frame" x="43.5" y="561" width="288" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="2Ah-VI-okf"/>
+                                            <constraint firstAttribute="width" constant="288" id="OrB-dr-1Ls"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <action selector="closeTouchUpInside:" destination="kdQ-Q4-Fte" eventType="touchUpInside" id="QpG-3P-4hp"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xf6-Kr-ff4" secondAttribute="trailing" constant="10" id="76A-v5-jv1"/>
-                                    <constraint firstItem="zEZ-8l-5mn" firstAttribute="leading" secondItem="Qmf-eY-doL" secondAttribute="leading" constant="10" id="PMw-Lj-TG7"/>
-                                    <constraint firstAttribute="height" constant="60" id="YnW-9e-mFK"/>
-                                    <constraint firstItem="zEZ-8l-5mn" firstAttribute="centerY" secondItem="Qmf-eY-doL" secondAttribute="centerY" id="bq7-Uj-ns9"/>
-                                    <constraint firstItem="Xf6-Kr-ff4" firstAttribute="centerY" secondItem="Qmf-eY-doL" secondAttribute="centerY" id="e6F-kC-tCt"/>
-                                    <constraint firstItem="Xf6-Kr-ff4" firstAttribute="leading" secondItem="zEZ-8l-5mn" secondAttribute="trailing" constant="10" id="sHN-xK-6tu"/>
+                                    <constraint firstItem="CVq-DV-DyN" firstAttribute="leading" secondItem="doM-ND-eYT" secondAttribute="leading" id="0ud-6J-Qjp"/>
+                                    <constraint firstItem="2UG-fV-LZb" firstAttribute="top" secondItem="Qmf-eY-doL" secondAttribute="bottom" constant="40" id="1gS-Nj-JcO"/>
+                                    <constraint firstItem="Qmf-eY-doL" firstAttribute="centerX" secondItem="e4P-aS-ggI" secondAttribute="centerX" id="3N5-md-fEl"/>
+                                    <constraint firstItem="4g7-EC-3dP" firstAttribute="centerX" secondItem="doM-ND-eYT" secondAttribute="centerX" id="3fL-d7-a3G"/>
+                                    <constraint firstItem="2UG-fV-LZb" firstAttribute="centerX" secondItem="Qmf-eY-doL" secondAttribute="centerX" id="4WX-PF-Bll"/>
+                                    <constraint firstItem="lSy-RT-s5a" firstAttribute="top" secondItem="2UG-fV-LZb" secondAttribute="bottom" constant="16" id="6DU-AD-eNi"/>
+                                    <constraint firstItem="XRi-Uo-bUM" firstAttribute="centerX" secondItem="4g7-EC-3dP" secondAttribute="centerX" id="7Lh-Zg-zJR"/>
+                                    <constraint firstItem="4g7-EC-3dP" firstAttribute="top" secondItem="doM-ND-eYT" secondAttribute="bottom" constant="16" id="9ty-XR-koa"/>
+                                    <constraint firstItem="doM-ND-eYT" firstAttribute="top" secondItem="GrC-8N-WOI" secondAttribute="top" id="EaC-sV-1iY"/>
+                                    <constraint firstItem="Qmf-eY-doL" firstAttribute="top" secondItem="e4P-aS-ggI" secondAttribute="bottom" constant="16" id="Flc-LF-pTQ"/>
+                                    <constraint firstItem="XRi-Uo-bUM" firstAttribute="top" secondItem="4g7-EC-3dP" secondAttribute="bottom" constant="16" id="NKh-mk-e7H"/>
+                                    <constraint firstItem="Qmf-eY-doL" firstAttribute="width" secondItem="e4P-aS-ggI" secondAttribute="width" id="Rmr-b9-OnX"/>
+                                    <constraint firstAttribute="bottom" secondItem="lSy-RT-s5a" secondAttribute="bottom" constant="20" id="STC-qV-Rqm"/>
+                                    <constraint firstItem="e4P-aS-ggI" firstAttribute="top" secondItem="XRi-Uo-bUM" secondAttribute="bottom" constant="16" id="TVJ-mm-apN"/>
+                                    <constraint firstItem="XRi-Uo-bUM" firstAttribute="width" secondItem="e4P-aS-ggI" secondAttribute="width" id="UGp-cZ-bC8"/>
+                                    <constraint firstItem="XRi-Uo-bUM" firstAttribute="leading" secondItem="GrC-8N-WOI" secondAttribute="leading" constant="20" id="ghn-KZ-fxm"/>
+                                    <constraint firstItem="CVq-DV-DyN" firstAttribute="top" secondItem="doM-ND-eYT" secondAttribute="top" id="iGT-bc-9AB"/>
+                                    <constraint firstItem="2UG-fV-LZb" firstAttribute="centerX" secondItem="GrC-8N-WOI" secondAttribute="centerX" id="ns9-gt-yQH"/>
+                                    <constraint firstItem="e4P-aS-ggI" firstAttribute="centerX" secondItem="XRi-Uo-bUM" secondAttribute="centerX" id="o9G-Ya-7YD"/>
+                                    <constraint firstItem="2UG-fV-LZb" firstAttribute="centerX" secondItem="lSy-RT-s5a" secondAttribute="centerX" id="wg5-Pj-i2l"/>
+                                    <constraint firstAttribute="trailing" secondItem="XRi-Uo-bUM" secondAttribute="trailing" constant="20" id="yMA-TC-T2K"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="0.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UG-fV-LZb" userLabel="Export Recovery Key Button">
-                                <rect key="frame" x="43.5" y="491" width="288" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="FGd-uy-iUV"/>
-                                    <constraint firstAttribute="height" constant="50" id="z2b-k2-kXP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <state key="normal" title="Export Recovery Key"/>
-                                <connections>
-                                    <action selector="exportRecoveryKeyTouchUpInside:" destination="kdQ-Q4-Fte" eventType="touchUpInside" id="neU-3O-BRk"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSy-RT-s5a" userLabel="Close Button">
-                                <rect key="frame" x="43.5" y="557" width="288" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="2Ah-VI-okf"/>
-                                    <constraint firstAttribute="width" constant="288" id="OrB-dr-1Ls"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <state key="normal" title="Close"/>
-                                <connections>
-                                    <action selector="closeTouchUpInside:" destination="kdQ-Q4-Fte" eventType="touchUpInside" id="QpG-3P-4hp"/>
-                                </connections>
-                            </button>
+                            </scrollView>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="doM-ND-eYT" firstAttribute="top" secondItem="F1M-yu-O9a" secondAttribute="top" constant="16" id="2fj-bu-yjP"/>
-                            <constraint firstItem="e4P-aS-ggI" firstAttribute="centerX" secondItem="XRi-Uo-bUM" secondAttribute="centerX" id="5EO-Uv-M9O"/>
-                            <constraint firstItem="2UG-fV-LZb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Qmf-eY-doL" secondAttribute="bottom" constant="16" id="D05-Fc-3hm"/>
-                            <constraint firstItem="Qmf-eY-doL" firstAttribute="centerX" secondItem="e4P-aS-ggI" secondAttribute="centerX" id="Evc-JF-3FD"/>
-                            <constraint firstItem="F1M-yu-O9a" firstAttribute="bottom" secondItem="lSy-RT-s5a" secondAttribute="bottom" constant="16" id="FDq-QO-Hmq"/>
-                            <constraint firstItem="Qmf-eY-doL" firstAttribute="width" secondItem="e4P-aS-ggI" secondAttribute="width" id="HlB-Dy-CLA"/>
-                            <constraint firstItem="F1M-yu-O9a" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XRi-Uo-bUM" secondAttribute="trailing" constant="20" id="JzE-Zh-YEZ"/>
-                            <constraint firstItem="4g7-EC-3dP" firstAttribute="top" secondItem="doM-ND-eYT" secondAttribute="bottom" constant="16" id="KUc-ik-gzm"/>
-                            <constraint firstItem="XRi-Uo-bUM" firstAttribute="top" secondItem="4g7-EC-3dP" secondAttribute="bottom" constant="16" id="LFm-hk-WCW"/>
-                            <constraint firstItem="lSy-RT-s5a" firstAttribute="top" secondItem="2UG-fV-LZb" secondAttribute="bottom" constant="16" id="N72-Bz-lz3"/>
-                            <constraint firstItem="F1M-yu-O9a" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4g7-EC-3dP" secondAttribute="trailing" constant="20" id="P0E-tB-Yui"/>
-                            <constraint firstItem="XRi-Uo-bUM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="F1M-yu-O9a" secondAttribute="leading" constant="20" id="P8d-U1-beI"/>
-                            <constraint firstItem="2UG-fV-LZb" firstAttribute="centerX" secondItem="lSy-RT-s5a" secondAttribute="centerX" id="Yi3-cu-lvP"/>
-                            <constraint firstItem="e4P-aS-ggI" firstAttribute="top" secondItem="XRi-Uo-bUM" secondAttribute="bottom" constant="16" id="ZtK-Bo-xv1"/>
-                            <constraint firstItem="Qmf-eY-doL" firstAttribute="top" secondItem="e4P-aS-ggI" secondAttribute="bottom" constant="16" id="ao2-5J-BGX"/>
-                            <constraint firstItem="XRi-Uo-bUM" firstAttribute="centerX" secondItem="4g7-EC-3dP" secondAttribute="centerX" id="dCA-Hc-4Ax"/>
-                            <constraint firstItem="XRi-Uo-bUM" firstAttribute="width" secondItem="e4P-aS-ggI" secondAttribute="width" id="fHa-o4-aw9"/>
-                            <constraint firstItem="F1M-yu-O9a" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="e4P-aS-ggI" secondAttribute="trailing" constant="20" id="g1f-f1-5eK"/>
-                            <constraint firstItem="4g7-EC-3dP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="F1M-yu-O9a" secondAttribute="leading" constant="20" id="gHY-wx-vru"/>
-                            <constraint firstItem="CVq-DV-DyN" firstAttribute="leading" secondItem="doM-ND-eYT" secondAttribute="leading" id="iGh-jt-MK1"/>
-                            <constraint firstItem="Qmf-eY-doL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="F1M-yu-O9a" secondAttribute="leading" constant="20" id="jpn-Kg-6za"/>
-                            <constraint firstItem="lSy-RT-s5a" firstAttribute="centerX" secondItem="F1M-yu-O9a" secondAttribute="centerX" id="lMc-v4-QPK"/>
-                            <constraint firstItem="4g7-EC-3dP" firstAttribute="centerX" secondItem="doM-ND-eYT" secondAttribute="centerX" id="lsB-6e-ueq"/>
-                            <constraint firstItem="CVq-DV-DyN" firstAttribute="top" secondItem="doM-ND-eYT" secondAttribute="top" id="oZO-Fy-kJD"/>
-                            <constraint firstItem="e4P-aS-ggI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="F1M-yu-O9a" secondAttribute="leading" constant="20" id="oeu-jD-X6O"/>
-                            <constraint firstItem="F1M-yu-O9a" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qmf-eY-doL" secondAttribute="trailing" constant="20" id="qZg-Nc-0kK"/>
-                            <constraint firstItem="doM-ND-eYT" firstAttribute="centerX" secondItem="F1M-yu-O9a" secondAttribute="centerX" id="rSA-s8-G2h"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="F1M-yu-O9a"/>
+                        <constraints>
+                            <constraint firstItem="GrC-8N-WOI" firstAttribute="top" secondItem="F1M-yu-O9a" secondAttribute="top" id="G5X-Br-lbV"/>
+                            <constraint firstItem="F1M-yu-O9a" firstAttribute="trailing" secondItem="GrC-8N-WOI" secondAttribute="trailing" id="WIx-n4-dRd"/>
+                            <constraint firstItem="GrC-8N-WOI" firstAttribute="leading" secondItem="F1M-yu-O9a" secondAttribute="leading" id="XXL-KF-dz7"/>
+                            <constraint firstItem="GrC-8N-WOI" firstAttribute="bottom" secondItem="F1M-yu-O9a" secondAttribute="bottom" id="qmk-DS-9qY"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Two-Factor Authentication" id="aew-nU-W97">
                         <connections>
@@ -652,10 +668,10 @@ Back up your recovery key.</string>
             </objects>
             <point key="canvasLocation" x="2368" y="-982"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Enabled Two-Factor Authentication Navigation Controller-->
         <scene sceneID="Rax-fW-sTY">
             <objects>
-                <navigationController storyboardIdentifier="EnabledTwoFactorAuthenticationNavigationControllerID" id="7kU-0O-ez6" customClass="MEGANavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EnabledTwoFactorAuthenticationNavigationControllerID" id="7kU-0O-ez6" userLabel="Enabled Two-Factor Authentication Navigation Controller" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="eQA-TX-RYh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

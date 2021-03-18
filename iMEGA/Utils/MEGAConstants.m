@@ -61,6 +61,10 @@ NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUp
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
 NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 
+#pragma mark - audio player notification keys
+
+NSString * const MEGAAudioPlayerShouldUpdateContainerNotification = @"nz.mega.audioplayer.updateContainerView";
+
 #pragma mark - camera upload constants
 
 NSString * const MEGACameraUploadsNodeName = @"Camera Uploads";
@@ -156,4 +160,8 @@ const NSInteger MEGAMaxReactionsPerMessage = 50;
 
 NSString * const MEGAShortcutsWidget = @"MEGAShortcutsWidget";
 NSString * const MEGAQuickAccessWidget = @"MEGAQuickAccessWidget";
+NSString * const MEGAFavouritesQuickAccessWidget = @"MEGAFavouritesQuickAccessWidget";
+NSString * const MEGARecentsQuickAccessWidget = @"MEGARecentsQuickAccessWidget";
+NSString * const MEGAOfflineQuickAccessWidget = @"MEGAOfflineQuickAccessWidget";
+
 const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;

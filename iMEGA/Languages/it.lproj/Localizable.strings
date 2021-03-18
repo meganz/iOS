@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link di cancellazione scaduto";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Questo è l'ultimo step prima di cancellare il tuo account. Perderai in modo permanente tutti i tuoi dati salvati nel cloud. Inserisci la tua password qui sotto.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Questo è l’ultimo step prima di eliminare il tuo account. Perderai in modo permanente tutti i tuoi dati salvati nel cloud. Inserisci la tua password qui sotto.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Il tuo account è stato cancellato con successo.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Cancella dati locali";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Effettuerai il logout e i tuoi file salvati per l’offline saranno eliminati dopo 10 tentativi falliti";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Opzioni del passcode";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Codice numerico a 4 cifre";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Codice numerico a 6 cifre";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Codice alfanumerico personalizzato";
 /* Menu item */
 "help"="Aiuto";
 /* Title of the section to access MEGA's help centre */
@@ -1345,8 +1345,6 @@
 "connecting"="Connessione in corso...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Risorse di sistema limitate disponibili quando condividi elementi. Prova a caricare questi file tramite l'app di MEGA.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Condiviso";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="L'autenticazione a due fattori è un secondo livello di sicurezza per il tuo account.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="L'autenticazione a due fattori è un secondo livello di sicurezza per il tuo account.Che significa che anche se qualcuno sa la tua password non può accedere al tuo account, senza avere accesso anche al numero di 6 cifre a cui hai accesso solo tu.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Hai bisogno di un'applicazione per l'autenticazione a due fattori su questo dispositivo";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1761,11 +1761,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Salvataggio nella Galleria...";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparazione della condivisione……";
+"All Media"="Tutti i media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="Download di %@ in corso";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvata nella Galleria";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2419,35 +2417,35 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email già inviata. Per favore, attendi un po' di minuti prima di riprovare nuovamente.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Gestisci la cronologia delle chat";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Pulizia della cronologia";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Elimina automaticamente i messaggi più vecchi di un certo periodo di tempo.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Elimina automaticamente i messaggi più vecchi di un giorno.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Elimina automaticamente i messaggi più vecchi di una settimana.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Elimina automaticamente i messaggi più vecchi di un mese.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Elimina automaticamente i messaggi più vecchi di %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Elimina tutti i messaggi e i file condivisi in questa conversazione. Questa azione è irreversibile.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Elimina i messaggi più vecchi di";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Un giorno";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Una settimana";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Un mese";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Personalizzato…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] ha cambiato il tempo di eliminazione dei messaggi a[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] ha disabilitato la pulizia automatica dei messaggi.[/B]";
 /*  */
 "hour"="ora";
 /*  */
@@ -2461,9 +2459,9 @@
 /*  */
 "weeks"="settimane";
 /*  */
-"1 week"="1 week";
+"1 week"="1 settimana";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 settimane";
 /*  */
 "month"="mese";
 /*  */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="CARTELLA MEGA PER CARICAMENTI DA FOTOCAMERA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Seleziona la cartella";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="In riproduzione";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Sei sicuro di voler spostare la cartella dei Caricamenti da fotocamera nel Cestino? Se sì, una nuova cartella verrà creata in automatico per i Caricamenti da fotocamera.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2574,3 +2574,13 @@
 "No Favourites"="Nessun preferito";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="VEDI DI PIÙ";
+/* Title for the QuickAccess widget */
+"Quick Access"="Accesso veloce";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Accesso veloce ai file in Recenti, Preferiti, o nella sezione Offline";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Accesso veloce ai file dalla tua sezione Preferiti";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Accesso veloce ai file dalla tua sezione Recenti";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Accesso veloce ai file dalla tua sezione Offline";

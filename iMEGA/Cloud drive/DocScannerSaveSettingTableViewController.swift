@@ -294,14 +294,14 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                 let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { (transfer) in
                     let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer!.nodeHandle)
                     chats.forEach { chatRoom in
-                        MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
                     }
                     users.forEach { user in
-                        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(byUser: user.handle) {
-                            MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: user.handle) {
+                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
                         } else {
-                            MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
-                                MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
+                                MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
                             })
                         }
                     }

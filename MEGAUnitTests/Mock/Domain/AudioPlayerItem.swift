@@ -1,0 +1,15 @@
+@testable import MEGA
+
+extension AudioPlayerItem {
+
+    static var mockItem: Self {
+        .init(name: "Track 5", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!, node: MEGAHandle())
+    }
+    
+    static var mockArray: [AudioPlayerItem] {
+        [AudioPlayerItem(name: "Track 1", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!, node: nil),
+         AudioPlayerItem(name: "Track 2", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!, node: nil),
+         AudioPlayerItem(name: "Track 3", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!, node: nil),
+         AudioPlayerItem(name: "Track 4", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3")!, node: nil)]
+    }
+}

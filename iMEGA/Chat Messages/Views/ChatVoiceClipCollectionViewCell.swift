@@ -96,8 +96,17 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         
         loadingIndicator.color = textColor
         
-        if chatMessage.transfer != nil {
-            configureLoadingView()
+        if let transfer = chatMessage.transfer {
+            if transfer.type == .download {
+                configureLoadingView()
+            } else if let path = transfer.path {
+                guard FileManager.default.fileExists(atPath: path) else {
+                    MEGALogInfo("Failed to create audio player for URL: \(path)")
+                    return
+                }
+                let asset = AVAsset(url: URL(fileURLWithPath: path))
+                durationLabel.text = NSString.mnz_string(fromTimeInterval: CMTimeGetSeconds(asset.duration))
+            }
         } else {
             guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
             let duration = max(currentNode.duration, 0)

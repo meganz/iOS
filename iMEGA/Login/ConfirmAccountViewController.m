@@ -87,14 +87,6 @@
     }
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (UIDevice.currentDevice.iPhoneDevice) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -269,10 +261,6 @@
     
     switch ([request type]) {
         case MEGARequestTypeConfirmAccount: {
-            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-                [MEGASdkManager createSharedMEGAChatSdk];
-            }
-            
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
             if (chatInit != MEGAChatInitWaitingNewSession) {
                 MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");

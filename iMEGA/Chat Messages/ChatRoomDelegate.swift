@@ -17,7 +17,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     var loadingState = true
     private(set) var hasChatRoomClosed: Bool = false
     var isFullChatHistoryLoaded: Bool {
-        return MEGASdkManager.sharedMEGAChatSdk()?.isFullHistoryLoaded(forChat: chatRoom.chatId) ?? true
+        return MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) ?? true
     }
 
     var whoIsTyping: [UInt64: Timer] = [:]
@@ -34,7 +34,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         self.chatRoom = chatRoom
         super.init()
         MEGASdkManager.sharedMEGASdk().add(self)
-        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
+        MEGASdkManager.sharedMEGAChatSdk().add(self)
         reloadTransferData()
     }
 
@@ -148,8 +148,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
-
         if let chatMessage = message {
             if !chatMessage.isDeleted {
                 if supportedMessage(message) {
@@ -177,8 +175,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                     let lastMessageId = (chatMessages.last as? ChatMessage)?.message.messageId, let chatViewController = chatViewController {
                     chatMessages.insert(ChatNotificationMessage(type: .unreadMessage(chatRoom.unreadCount)),
                                         at: chatMessages.count - chatRoom.unreadCount)
-                    if !chatViewController.previewMode, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() {
-                        chatSDK.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
+                    if !chatViewController.previewMode {
+                        MEGASdkManager.sharedMEGAChatSdk().setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
                     }
                     
                     chatViewController.messagesCollectionView.reloadData()
@@ -224,7 +222,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             UIApplication.mnz_visibleViewController() == chatViewController,
             let chatViewController = chatViewController,
             !chatViewController.previewMode {
-            MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+            MEGASdkManager.sharedMEGAChatSdk().setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
         } else {
             chatRoom = api.chatRoom(forChatId: chatRoom.chatId)
         }
@@ -286,13 +284,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
                         if filteredArray.count > 0, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
                             let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                            transfers[index] = receivedMessage
-                            chatViewController?.messagesCollectionView.performBatchUpdates({
-                                chatViewController?.messagesCollectionView.reloadSections([chatMessages.count + index])
-                            }, completion: { [weak self] _ in
-                                self?.chatMessages.append(receivedMessage)
-                                self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
-                            })
+                            chatMessages.append(receivedMessage)
+                            transfers.remove(at: index)
                             if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer.nodeHandle) {
                                 let path = NSHomeDirectory().append(pathComponent: transfer.path)
                                 let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
@@ -414,16 +407,16 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     func openChatRoom() {
-        guard isChatRoomOpen == false, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+        guard isChatRoomOpen == false else {
             MEGALogDebug("openChatRoom: Trying to open already opened chat room - \(isChatRoomOpen)")
             return
         }
         closeChatRoom()
         
         MEGASdkManager.sharedMEGASdk().add(self)
-        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
+        MEGASdkManager.sharedMEGAChatSdk().add(self)
         
-        isChatRoomOpen = chatSDK.openChatRoom(chatRoom.chatId, delegate: self)
+        isChatRoomOpen = MEGASdkManager.sharedMEGAChatSdk().openChatRoom(chatRoom.chatId, delegate: self)
         if isChatRoomOpen {
             loadingState = true
             chatViewController?.messagesCollectionView.reloadEmptyDataSet()
@@ -437,8 +430,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         isChatRoomOpen = false
         chatMessages = []
         chatViewController?.messagesCollectionView.reloadData()
-        MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom(chatRoom.chatId, delegate: self)
-        MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
+        MEGASdkManager.sharedMEGAChatSdk().closeChatRoom(chatRoom.chatId, delegate: self)
+        MEGASdkManager.sharedMEGAChatSdk().remove(self)
         MEGASdkManager.sharedMEGASdk().remove(self)
     }
     
@@ -480,7 +473,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
 
         let lastSectionVisible = isLastSectionVisible()
-        let unreads = MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
+        let unreads = MEGASdkManager.sharedMEGAChatSdk().myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
 
         let index = chatMessages.firstIndex { object -> Bool in
             guard object is ChatNotificationMessage else {
@@ -495,7 +488,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             chatMessages[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
         } else if UIApplication.shared.applicationState != .active
             || UIApplication.mnz_visibleViewController() != chatViewController {
-            if MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle != message.userHandle,
+            if MEGASdkManager.sharedMEGAChatSdk().myUserHandle != message.userHandle,
                 unreads > 0 {
                 chatMessages.append(ChatNotificationMessage(type: .unreadMessage(unreads)))
             }
@@ -545,15 +538,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     private func loadMessages(count: Int = 32) {
-        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
-            return
-        }
-        
         if !isChatRoomOpen || awaitingLoad {
             MEGALogWarning("[Chat Links Scalability] avoid loadMessages because of an ongoing load")
             return
         }
-        switch chatSDK.loadMessages(forChat: chatRoom.chatId, count: count) {
+        switch MEGASdkManager.sharedMEGAChatSdk().loadMessages(forChat: chatRoom.chatId, count: count) {
         case .error:
             MEGALogDebug("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
         case .none:

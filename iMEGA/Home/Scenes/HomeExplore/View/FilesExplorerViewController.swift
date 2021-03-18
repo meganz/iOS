@@ -70,8 +70,11 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     override func endEditingMode() {
         delegate?.configureNavigationBarToDefault()
     }
+    
+    func updateContentView(_ height: CGFloat) {
+        fatalError("updateContentView(_:) needs to be implemented by the subclass ")
+    }
 }
-
 
 extension FilesExplorerViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {

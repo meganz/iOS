@@ -66,12 +66,12 @@ class QuickAccessWidgetManager: NSObject {
     
     @objc func insertFavouriteItem(for node: MEGANode) {
         favouriteItemsUseCase.insertFavouriteItem(FavouriteItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: Date()))
-        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAQuickAccessWidget)
+        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     
     @objc func deleteFavouriteItem(for node: MEGANode) {
         favouriteItemsUseCase.deleteFavouriteItem(with: node.base64Handle)
-        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAQuickAccessWidget)
+        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     
     //MARK: - Private
@@ -87,14 +87,14 @@ class QuickAccessWidgetManager: NSObject {
             case .success(let recentActions):
                 var recentItems = [RecentItemEntity]()
                 recentActions.forEach { (bucket) in
-                    bucket.nodesList.mnz_nodesArrayFromNodeList()?.forEach({ (node) in
-                        recentItems.append(RecentItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: bucket.timestamp, isUpdate: bucket.isUpdate))
+                    bucket.nodes.forEach({ (node) in
+                        recentItems.append(RecentItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: bucket.date, isUpdate: bucket.isUpdate))
                     })
                 }
                 self.recentItemsUseCase.resetRecentItems(by: recentItems) { (result) in
                     switch result {
                     case .success(_):
-                        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAQuickAccessWidget)
+                        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGARecentsQuickAccessWidget)
                     case .failure(_):
                         MEGALogError("Error creating recent items data for widget")
                     }
@@ -122,7 +122,7 @@ class QuickAccessWidgetManager: NSObject {
                 self.favouriteItemsUseCase.createFavouriteItems(favouriteItems) { (result) in
                     switch result {
                     case .success(_):
-                        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAQuickAccessWidget)
+                        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
                     case .failure(_):
                         MEGALogError("Error creating favourite items data for widget")
                     }

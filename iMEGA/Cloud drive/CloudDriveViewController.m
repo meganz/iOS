@@ -58,7 +58,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, BrowserViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -89,6 +89,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
+@property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
 @property (strong, nonatomic) Throttler *throttler;
 
@@ -169,6 +170,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     
+    self.navigationController.delegate = self;
     self.throttler = [Throttler.alloc initWithTimeInterval:.1 dispatchQueue:dispatch_get_main_queue()];
 }
 
@@ -183,6 +185,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
+    
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -192,6 +196,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self encourageToUpgrade];
     
     [self requestReview];
+    
+    [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -209,14 +215,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         self.selectedNodesArray = nil;
         [self setEditMode:NO];
     }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
     
-    return UIInterfaceOrientationMaskAll;
+    if (self.shouldRemovePlayerDelegate) {
+        [AudioPlayerManager.shared removeDelegate:self];
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -375,7 +377,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (node == nil) {
         return nil;
     }
@@ -610,7 +612,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+                MEGANode *nodePressed = [self nodeAtIndexPath:indexPath];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditMode:NO];
                 }
@@ -800,12 +802,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
     MEGANode *node;
-    if (isInSearch) {
-        if (self.searchNodesArray.count > indexPath.row) {
-            node = self.searchNodesArray[indexPath.row];
-        }
+    if (self.viewModePreference == ViewModePreferenceList) {
+        node = isInSearch ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     } else {
-        node = [self.nodes nodeAtIndex:indexPath.row];
+        node = [self.cdCollectionView thumbnailNodeAtIndexPath:indexPath];
     }
     
     return node;
@@ -1460,7 +1460,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                     [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
                 } else {
-                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
+                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                        [self didSelectNode:newFolderNode];
+                    }];
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
                 }
             }
@@ -1558,6 +1561,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {
@@ -1905,14 +1909,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeShare: {
-            NSArray *checkFileExist = [UIActivityViewController checkIfAllOfTheseNodesExistInOffline:@[node]];
-            if (checkFileExist.count || node.isFolder) {
-                UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-                [self presentViewController:activityVC animated:YES completion:nil];
-            } else {
-                [node mnz_downloadNodeAndShare];
-            }
-
+            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;
             
@@ -2020,6 +2018,27 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - AudioPlayerPresenterProtocol
+
+- (void)updateContentView:(CGFloat)height {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        self.cdTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    } else {
+        self.cdCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    }
+}
+
+#pragma mark - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
+        self.shouldRemovePlayerDelegate = ![viewController conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.shouldRemovePlayerDelegate = YES;
 }
 
 #pragma mark - BrowserViewControllerDelegate

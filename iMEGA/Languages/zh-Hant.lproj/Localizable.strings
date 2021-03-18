@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="您的密碼太容易被猜到了。請使用更長的密碼。結合大小寫字母，或添加特殊字符。請避免使用名字或字典中的單詞。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="中等";
+"medium"="普通";
 /*  */
 "passwordMedium"="您的密碼已足以繼續，但仍建議可再加強密碼強度。";
 /*  */
@@ -1345,8 +1345,6 @@
 "connecting"="正在連線中...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些項目無法與MEGA共享";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="共享檔案時可以使用有限的系統資源。請嘗試從MEGA應用程式中上傳這些檔案。";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="已共享";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1553,7 +1551,7 @@
 /* state previous to import a file */
 "loading"="讀取中";
 /*   */
-"next"="次一";
+"next"="下一步";
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="雙重驗證是您帳戶的第二層安全保護。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="雙重驗證是您帳戶的第二層安全保護。這意味著，即使有人知道您的密碼，他們也無法存取您的帳戶，且無法獲得只有您能讀取的六位碼。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用雙重驗證程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1761,11 +1761,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="正在儲存至照片中...";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="準備分享…";
+"All Media"="所有媒體";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="%@下載中";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="儲存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2319,7 +2317,7 @@
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="無法移除您的手機號碼，請稍後再試。";
 /* Text used to notify the user that some action would discard a non ended action */
-"Discard Changes"="放棄更改";
+"Discard Changes"="捨棄變更";
 /* Title of the Proxy section under Settings */
 "Proxy"="Proxy代理伺服器";
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
@@ -2433,7 +2431,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="自動刪除超過%1的訊息";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="刪除雙方在此對話中共享的所有訊息和檔案。此動作是無法復原的。";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="刪除此對話中所有訊息和分享的檔案。此動作是無法復原的。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="刪除超過此時間的訊息";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="選擇資料夾";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="播放中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將相片上傳資料夾移至垃圾桶嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2574,3 +2574,13 @@
 "No Favourites"="沒有喜歡的";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="查看更多";
+/* Title for the QuickAccess widget */
+"Quick Access"="快速存取";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="快速開啟近期存取、我的最愛、或離線存取的檔案";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="快速存取我的最愛的檔案";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="快速存取近期活動的檔案";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="快速存取離線存取的檔案";

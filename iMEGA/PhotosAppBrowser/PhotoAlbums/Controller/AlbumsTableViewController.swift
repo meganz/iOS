@@ -62,13 +62,6 @@ final class AlbumsTableViewController: UITableViewController {
         albums.delegate = nil
     }
     
-    
-    // MARK:- Orientation method.
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     // MARK:- Private methods.
     
     private func showDetail(album: Album) {

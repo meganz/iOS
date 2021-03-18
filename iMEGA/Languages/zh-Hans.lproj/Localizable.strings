@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="注销链接已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="这是删除您账户的最后一步。您将永久失去储存在云端空间中的所有资料。请在下方输入您的密码。";
+"enterYourPasswordToConfirmThatYouWanToClose"="这是删除帐户的最后一步。您将永久丢失保存在云盘中的所有数据。请在下方输入您的密码。";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="您的帐户已成功取消";
 /* Account closure, password check dialog when user click on closure email. */
@@ -1345,8 +1345,6 @@
 "connecting"="正在连接...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些项目无法与MEGA共享";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="共享文件时可使用的系统资源有限。您可尝试从MEGA app内上传这些文件。";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="已分享";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="双重验证是您账户的第二层安全保护。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="双重验证是您账户的第二层安全保护。即使他人得知您的密码，无6位验证码也无权对其访问，因此只有您拥有访问权限。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此设备上安装双重验证应用程序";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1761,11 +1761,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="正在保存至照片……";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="正在准备分享…";
+"All Media"="所有媒体";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="正在下载%@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="已保存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2433,7 +2431,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="自动删除超过%1的聊天记录";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="删除双方对话中的所有消息和文件。此操作无法撤回。";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="删除此对话中的所有消息和文件。此操作无法撤回。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="您想要清除多久前的聊天记录";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="选择文件夹";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="正在播放";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您确定要将相机上传文件夹移动至垃圾桶吗？如果是，系统将为您自动生成一个新的相机上传文件夹。";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2574,3 +2574,13 @@
 "No Favourites"="无收藏";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="查看更多";
+/* Title for the QuickAccess widget */
+"Quick Access"="快速访问";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="快速访问“近期”，“收藏夹”或“离线”中的文件";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="快速访问您的“收藏夹”";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="快速访问您的“近期”";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="快速访问您的“离线”";

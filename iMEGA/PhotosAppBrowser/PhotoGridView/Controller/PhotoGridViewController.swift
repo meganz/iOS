@@ -70,12 +70,6 @@ final class PhotoGridViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    // MARK:- Orientation method.
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-       .portrait
-    }
-    
     // MARK:- Private methods.
     
     private func showDetail(indexPath: IndexPath) {
@@ -199,6 +193,11 @@ extension PhotoGridViewController: AlbumDelegate {
         if let removedIndexPaths = removedIndexPaths,
               let changedIndexPaths = changedIndexPaths,
               !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
+            collectionView.reloadData()
+            return
+        }
+        
+        if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= album.assetCount() {
             collectionView.reloadData()
             return
         }
