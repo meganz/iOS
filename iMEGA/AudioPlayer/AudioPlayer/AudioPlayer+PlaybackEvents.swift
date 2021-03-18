@@ -64,21 +64,31 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
 
     func repeatLastItem() {
-        guard queuePlayer != nil,
-              let currentItem = currentItem(),
-              let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+        guard queuePlayer != nil else { return }
         
-        let lastItem = currentIndex > 0 ? tracks[currentIndex - 1] : nil
-        
-        if lastItem != nil, itemToRepeat?.node == lastItem?.node {
-            notify(aboutTheBeginningOfBlockingAction)
-            playPrevious() { [weak self] in
-                guard let `self` = self else { return }
-                self.notify(self.aboutTheEndOfBlockingAction)
+        if currentItem() == nil {
+            guard let lastItem = tracks.last else { return }
+            queuePlayer?.remove(lastItem)
+            queuePlayer?.replaceCurrentItem(with: lastItem)
+            lastItem.seek(to: .zero)
+        } else {
+            guard let currentItem = currentItem(),
+                  let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+            
+            let lastItem = currentIndex > 0 ? tracks[currentIndex - 1] : nil
+            
+            if let lastItem = lastItem,
+               let itemToRepeat = itemToRepeat,
+               lastItem == itemToRepeat {
+                notify(aboutTheBeginningOfBlockingAction)
+                playPrevious() { [weak self] in
+                    guard let `self` = self else { return }
+                    self.notify(self.aboutTheEndOfBlockingAction)
+                }
             }
+            
+            currentItem.seek(to: .zero)
         }
-        
-        currentItem.seek(to: .zero)
     }
     
     @objc func play() {
