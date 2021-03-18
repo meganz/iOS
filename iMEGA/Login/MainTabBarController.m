@@ -93,6 +93,7 @@
                                                name:UIApplicationWillEnterForegroundNotification
                                              object:nil];
     [self.view setNeedsLayout];
+    [AudioPlayerManager.shared addMiniPlayerHandler:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -108,7 +109,6 @@
     
     [self showCameraUploadV2MigrationScreenIfNeeded];
     
-    [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self shouldShowMiniPlayer];
 }
 
