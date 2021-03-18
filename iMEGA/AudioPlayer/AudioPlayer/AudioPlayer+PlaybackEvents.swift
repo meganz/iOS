@@ -192,7 +192,9 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func setProgressCompleted(_ percentage: Float) {
         guard let queuePlayer = queuePlayer,
               let currentItem = queuePlayer.currentItem else { return }
-        currentItem.seek(to: CMTime(seconds: CMTimeGetSeconds(currentItem.duration) * Double(percentage), preferredTimescale: currentItem.duration.timescale))
+        let time = CMTime(seconds: CMTimeGetSeconds(currentItem.duration) * Double(percentage), preferredTimescale: currentItem.duration.timescale)
+        guard CMTIME_IS_VALID(time) else { return }
+        currentItem.seek(to: time)
         notify(aboutCurrentState)
     }
     
