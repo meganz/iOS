@@ -28,9 +28,9 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         if let navController = selectedViewController as? UINavigationController, (navController.viewControllers.last?.conforms(to: AudioPlayerPresenterProtocol.self) ?? false) {
             if bottomView == nil {
                 AudioPlayerManager.shared.showMiniPlayer()
-            } else {
-                bottomView?.isHidden = false
             }
+            
+            bottomView?.isHidden = false
         }
     }
     
