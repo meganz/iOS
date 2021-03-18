@@ -57,6 +57,8 @@
     MEGALogDebug(@"[StoreKit] Purchase product \"%@\"", product.productIdentifier);
     if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
+            [SVProgressHUD show];
+            
             SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
             NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
             paymentRequest.applicationUsername = base64UserHandle;
@@ -78,8 +80,9 @@
 
 - (void)restorePurchase {
     if ([SKPaymentQueue canMakePayments]) {
-        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+        [SVProgressHUD show];
         
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"allowPurchase_title", nil) message:NSLocalizedString(@"allowPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -142,6 +145,7 @@
                 
                 [_delegate successfulPurchase:self];
                 
+                [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 
                 break;
@@ -155,8 +159,9 @@
                     shouldSubmitReceiptOnRestore = NO;
                 }
                 
+                [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-
+                
                 break;
                 
             case SKPaymentTransactionStateFailed:
@@ -166,6 +171,7 @@
                     [_delegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
                 }
                 
+                [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
                 
