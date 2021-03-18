@@ -151,13 +151,7 @@ final class AudioPlayerViewModel: ViewModelType {
                     playerHandler.playerPause()
                 }
             } else {
-                guard let currentItem = playerHandler.playerCurrentItem() else { return }
-                invokeCommand?(.reloadNodeInfo(name: currentItem.name,
-                                               artist: currentItem.artist ?? "",
-                                               thumbnail: currentItem.artwork,
-                                               size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
-                
-                invokeCommand?(.showLoading(false))
+                self.reloadNodeInfoWithCurrentItem()
             }
         }
         
@@ -196,6 +190,7 @@ final class AudioPlayerViewModel: ViewModelType {
         guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
               let currentFilePath = selectedFilePath,
               let currentTrack = files.first(where: { $0.url.path == currentFilePath }) else {
+            self.reloadNodeInfoWithCurrentItem()
             router.dismiss()
             return
         }
@@ -211,6 +206,16 @@ final class AudioPlayerViewModel: ViewModelType {
             return isFolderLink ? nodeInfoUseCase?.folderAuthNode(fromHandle: handle) :
                                     nodeInfoUseCase?.node(fromHandle: handle)
         }
+    }
+    
+    private func reloadNodeInfoWithCurrentItem() {
+        guard let currentItem = playerHandler.playerCurrentItem() else { return }
+        invokeCommand?(.reloadNodeInfo(name: currentItem.name,
+                                       artist: currentItem.artist ?? "",
+                                       thumbnail: currentItem.artwork,
+                                       size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
+        
+        invokeCommand?(.showLoading(false))
     }
 
     // MARK: - Dispatch action
