@@ -19,7 +19,9 @@ struct MEGAWidgetsBundle: SwiftUI.WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
         ShortcutsWidget()
-        QuickAccessWidget()
+        FavouritesQuickAccessWidget()
+        RecentsQuickAccessWidget()
+        OfflineQuickAccessWidget()
     }
     
     private func setupLogging() {

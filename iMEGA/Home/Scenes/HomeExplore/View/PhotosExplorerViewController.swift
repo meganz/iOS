@@ -44,6 +44,16 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         viewModel.dispatch(.onViewReady)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AudioPlayerManager.shared.addDelegate(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayerManager.shared.removeDelegate(self)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         calculateCellSizeAndReloadCollectionIfRequired()
@@ -251,4 +261,9 @@ extension PhotosExplorerViewController: DZNEmptyDataSetSource {
     }
 }
 
-
+//MARK:- AudioPlayer
+extension PhotosExplorerViewController: AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+    }
+}

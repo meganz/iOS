@@ -142,14 +142,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -314,7 +306,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.stateLabel.font = [UIFont systemFontOfSize:17.0];
     self.progressStackView.hidden = YES;
     self.enableCameraUploadsButton.hidden = YES;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
@@ -324,7 +315,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         case MEGACameraUploadsStateUploading:
             self.stateLabel.hidden = YES;
             self.progressStackView.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
         case MEGACameraUploadsStateCompleted:
             self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
@@ -536,6 +526,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
             NSLayoutAnchor *bottomAnchor;
             if (@available(iOS 11.0, *)) {

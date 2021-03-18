@@ -3,13 +3,13 @@ import UIKit
 extension ChatViewController {
     func checkIfChatHasActiveCall() {
         if chatRoom.ownPrivilege == .standard || chatRoom.ownPrivilege == .moderator {
-            if (MEGASdkManager.sharedMEGAChatSdk()?.hasCall(inChatRoom: chatRoom.chatId))!,
+            if (MEGASdkManager.sharedMEGAChatSdk().hasCall(inChatRoom: chatRoom.chatId)),
                 MEGAReachabilityManager.isReachable() {
-                let call = MEGASdkManager.sharedMEGAChatSdk()?.chatCall(forChatId: chatRoom.chatId)
+                let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId)
                 if !chatRoom.isGroup && call?.status == .destroyed {
                     return
                 }
-                if MEGASdkManager.sharedMEGAChatSdk()?.chatCalls(withState: .inProgress)?.size == 1 && call?.status != .inProgress {
+                if MEGASdkManager.sharedMEGAChatSdk().chatCalls(withState: .inProgress)?.size == 1 && call?.status != .inProgress {
                     self.hideTopBannerButton()
                 } else {
                     if call?.status == .inProgress {

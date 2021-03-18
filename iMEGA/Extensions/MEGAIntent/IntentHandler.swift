@@ -31,16 +31,3 @@ extension IntentHandler: SelectShortcutIntentHandling {
         }
     }
 }
-
-extension IntentHandler: SelectSectionIntentHandling {
-    func provideSectionOptionsCollection(for intent: SelectSectionIntent, with completion: @escaping (INObjectCollection<IntentSection>?, Error?) -> Void) {
-        let intentSections = SectionDetail.availableSections.map {
-            IntentSection(identifier: $0.link, display: $0.title)
-        }
-        completion(INObjectCollection(items: intentSections), nil)
-    }
-    
-    func defaultSection(for intent: SelectSectionIntent) -> IntentSection?    {
-        IntentSection(identifier: SectionDetail.defaultSection.link, display: SectionDetail.defaultSection.title )
-    }
-}

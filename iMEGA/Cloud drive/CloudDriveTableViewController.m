@@ -90,11 +90,11 @@
 #pragma mark - Public
 
 - (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath && [self.tableView hasRowAt:indexPath]) {
-        [UIView performWithoutAnimation:^{
+    [UIView performWithoutAnimation:^{
+        if (indexPath && [self.tableView hasRowAt:indexPath]) {
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-    }
+        }
+    }];
 }
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
@@ -247,7 +247,7 @@
     if (indexPath.row > self.cloudDrive.nodes.size.integerValue) {
         return;
     }
-    MEGANode *node = [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
         

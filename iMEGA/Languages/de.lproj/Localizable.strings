@@ -573,7 +573,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
+"theUserHasBeenInvited"="Der Benutzer wurde eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Die Benutzer wurden eingeladen und werden in Ihrer Kontaktliste auftauchen, sobald sie die Einladung annehmen.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -729,7 +729,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK Version";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK version";
+"megachatSdkVersion"="MEGAchat SDK-Version";
 /* Link to the public code of the app */
 "View Source Code"="Quellcode anzeigen";
 /* Title for the section "Acknowledgements" of the app */
@@ -918,7 +918,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Transfers stornieren";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="%@ stornieren?";
+"cancelTransfersText"="Alle Transfers stornieren?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="ALLE Transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1036,9 +1036,9 @@
 /*  */
 "chooseYourAccountType"="PRO-Accounts";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA Pro[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA Pro[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Speicher";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1338,15 +1338,13 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ungelesene Nachrichten";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnements verlängern sich am Ende der laufenden Zahlungsperiode automatisch zum gleichen Preis und für die gleiche Dauer. Sie können das Abonnement bis zu 24 Stunden vor Fälligkeit der nächsten Zahlung in Ihren iTunes-Einstellungen stornieren: Gehen Sie in den App Store und loggen Sie sich (falls nötig) mit Ihrer Apple ID ein. Gehen Sie dann auf die Seite Ihres Benutzerkontos und scrollen Sie zur Abonnementverwaltung. Dort können Sie Ihr MEGA PRO-Abonnement auswählen, das Datum der nächsten Fälligkeit einsehen, auf ein anderes Paket wechseln und die automatische Verlängerung ein- und ausschalten.";
+"autorenewableDescription"="Abonnements verlängern sich am Ende der laufenden Zahlungsperiode automatisch zum gleichen Preis und für die gleiche Dauer. Sie können das Abonnement bis zu 24 Stunden vor Fälligkeit der nächsten Zahlung in Ihren iTunes-Einstellungen stornieren: Gehen Sie in den App Store und loggen Sie sich (falls nötig) mit Ihrer Apple ID ein. Gehen Sie dann auf die Seite Ihres Benutzerkontos und scrollen Sie zur Abonnementverwaltung. Dort können Sie Ihr MEGA Pro-Abonnement auswählen, das Datum der nächsten Fälligkeit einsehen, auf ein anderes Paket wechseln und die automatische Verlängerung ein- und ausschalten.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Zum Fortfahren öffnen Sie MEGA und melden Sie sich an";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Verbindung wird aufgebaut...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Einige Elemente konnten nicht mit MEGA geteilt werden";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Die Systemressourcen reichen für die Operation nicht aus. Bitte laden Sie die Dateien aus der MEGA-App hoch.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Freigabe erfolgreich";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Zwei-Faktor-Authentfizierung ist eine zusätzliche Sicherheitsvorkehrung, die den Zugang zu Ihrem Account schützt.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Zwei-Faktor-Authentfizierung ist eine zusätzliche Sicherheitsvorkehrung, die den Zugang zu Ihrem Account schützt. Selbst bei Kenntnis Ihres Passworts können unberechtigte Dritte nur dann auf Ihren Account zugreifen, wenn sie den von der Authentifizierungs-App angezeigten sechsstelligen Code kennen.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Sie benötigen eine Zwei-Faktor-Authentifizierungs-App auf diesem Gerät";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1762,8 +1762,6 @@
 "Saving to Photos…"="Speichere in Photos...";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Preparing to share……";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Downloading %@";
 /* Text shown when a photo or video is saved to Photos app */
@@ -1821,7 +1819,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informationen zur Zahlung";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Ihr PRO-Status läuft bald ab";
+"PRO membership plan expiring soon"="Ihr Pro-Status endet bald";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Löschung durch Dritte";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1881,9 +1879,9 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Ihre Zahlung für %1 ist fehlgeschlagen.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Ihr PRO-Status läuft in weniger als 24 Stunden ab.";
+"Your PRO membership plan will expire in 1 day."="Ihr Pro-Status endet in weniger als 24 Stunden.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Ihr PRO-Status läuft in %1 Tagen ab.";
+"Your PRO membership plan will expire in %1 days."="Ihr Pro-Status endet in %1 Tagen.";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="Ihr Pro-Status ist gestern abgelaufen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1983,7 +1981,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Keine Aktivität";
 /* Plural of items which contains a folder. 2 items */
-"%1$d items"="Elemente";
+"%1$d items"="%1$d Elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2153,7 +2151,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Der Link ist nicht für diesen Account. Bitte melden Sie sich mit dem korrekten Account an.";
+"This link is not related to this account. Please log in with the correct account."="Der Link gehört nicht zu diesem Account. Bitte melden Sie sich mit dem korrekten Account an.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invite contacts now";
 /* Text showing the user one contact would be invited */
@@ -2433,7 +2431,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Automatically delete messages older than %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation. This action is irreversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Clear Messages Older Than";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA KAMERAUPLOADS";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Ordner auswählen";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="Playing";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2565,7 +2565,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Ihre Zugriffsrechte reichen nicht aus, um die Dateiversion zu ändern. Möchten Sie stattdessen eine Kopie mit der älteren Version erstellen?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="PRO Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mein Account";
 /* Text for title for favourite nodes */
@@ -2574,3 +2574,13 @@
 "No Favourites"="No Favourites";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="VIEW MORE";
+/* Title for the QuickAccess widget */
+"Quick Access"="Quick Access";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or the Offline section";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Quickly access files from your Favourites section";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Quickly access files from your Recents section";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Quickly access files from your Offline section";

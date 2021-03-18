@@ -91,7 +91,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         case .publicChatLink:
             if megaMessage.richNumber == nil {
                 
-                MEGASdkManager.sharedMEGAChatSdk()?.checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                MEGASdkManager.sharedMEGAChatSdk().checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
                     guard visibleIndexPaths.contains(indexPath), (error.type == .MEGAChatErrorTypeOk || error.type == .MegaChatErrorTypeExist) else {
                         return

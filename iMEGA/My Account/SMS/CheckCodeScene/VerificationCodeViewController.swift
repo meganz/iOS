@@ -42,14 +42,6 @@ final class VerificationCodeViewController: UIViewController, ViewType {
 
         navigationController?.isNavigationBarHidden = false
     }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return [.portrait, .portraitUpsideDown]
-        } else {
-            return .all
-        }
-    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

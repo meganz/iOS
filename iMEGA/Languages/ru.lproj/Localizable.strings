@@ -1345,8 +1345,6 @@
 "connecting"="Соединение…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Некоторыми элементами нельзя поделиться в MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="При совместном использовании элементов системные ресурсы ограничены. Попробуйте загрузить эти файлы из приложения MEGA.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Общий доступ предоставлен успешно";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта. Это значит, что даже если кто-то знает ваш пароль, он не сможет получить к нему доступ без шестизначного кода, который есть только у вас.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Нужно приложение для двухфакторной аутентификации";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1761,11 +1761,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Сохранение в фото…";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Подготовка к публикации ……";
+"All Media"="Все медиа";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="Скачивание %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Сохранено в фото";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2433,7 +2431,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Автоматически удалять сообщения старше %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Удалить все сообщения и файлы, которыми поделились в этом разговоре с обеих сторон. Это действие необратимо.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Удалить все сообщения и файлы, которыми поделились в этом разговоре. Это действие необратимо.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Очистить сообщения старше";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="ПАПКА ЗАГРУЗОК ИЗ КАМЕРЫ MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Выбрать папку";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="Воспроизводится";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в корзину? В этом случае будет автоматически создана новая папка для загрузок из камеры.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2574,3 +2574,13 @@
 "No Favourites"="Нет избранного";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="БОЛЬШЕ";
+/* Title for the QuickAccess widget */
+"Quick Access"="Быстрый доступ";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Быстрый доступ к файлам в недавних, избранных или сохранённых локально";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Быстрый доступ к файлам из «Избранного»";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Быстрый доступ к файлам из «Недавних»";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Быстрый доступ к файлам из «Локальных»";

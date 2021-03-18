@@ -1,7 +1,12 @@
 import MessageKit
 import MapKit
 
-extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
+extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, MessageLabelDelegate {
+    
+    func didSelectPhoneNumber(_ phoneNumber: String) {
+        guard let number = URL(string: "telprompt://" + phoneNumber.replacingOccurrences(of: " ", with: "-")) else { return }
+        UIApplication.shared.open(number)
+    }
     
     func didTapAvatar(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
@@ -13,7 +18,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
         
         let userName = chatMessage.displayName
-        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
+        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
             return
         }
         var actions = [ActionSheetAction]()
@@ -48,7 +53,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         if chatRoom.ownPrivilege == .moderator,
         chatRoom.isGroup {
             let removeParticipantAction = ActionSheetAction(title: NSLocalizedString("removeParticipant", comment: ""), detail: nil, image: nil, style: .default) {
-                MEGASdkManager.sharedMEGAChatSdk()?.remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
+                MEGASdkManager.sharedMEGAChatSdk().remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
             }
             actions.append(removeParticipantAction)
 
@@ -92,7 +97,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
             audioController.playSound(for: message, in: cell)
             return
         }
-        if audioController.playingMessage?.messageId == message.messageId {
+        if audioController.isPlayingSameMessage(message) {
             // tap occur in the current cell that is playing audio sound
             if audioController.state == .playing {
                 audioController.pauseSound(for: message, in: cell)
@@ -113,6 +118,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                                                                 in: messagesCollectionView) as? ChatMessage else { return }
         if chatMessage.transfer != nil {
             checkTransferPauseStatus()
+            if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
+                guard let cell = cell as? AudioMessageCell else {
+                    return
+                }
+                didTapPlayButton(in: cell)
+            }
             return
         }
         

@@ -68,13 +68,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
     [self.linkCopyButton setTitle:NSLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
     self.hintLabel.text = NSLocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
-    
-    if ([UIDevice currentDevice].iPhone4X) {
-        self.contactLinkConstraint.constant = 70.0f;
-        self.linkCopyConstraint.constant = 10.0f;
-        self.hintConstraint.constant = 70.0f;
-        self.errorConstraint.constant = 70.0f;
-    }
 
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = QRSectionScanCode;
@@ -102,13 +95,18 @@ typedef NS_ENUM(NSInteger, QRSection) {
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self.contactLinkCreateDelegate];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.scanCode) {
+        [self startRecognizingCodes];
+    }
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 
     [self setupCameraMask];
-    if (self.scanCode) {
-        [self startRecognizingCodes];
-    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

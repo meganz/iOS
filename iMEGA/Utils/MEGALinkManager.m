@@ -578,6 +578,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else if (node.name.mnz_isMultimediaPathExtension && node.mnz_isPlayable) {
+                [AudioPlayerManager.shared initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
                 [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }
@@ -612,6 +614,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     folderlinkVC.isFolderRootNode = YES;
     folderlinkVC.publicLinkString = MEGALinkManager.linkURL.mnz_MEGAURL;
     folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
+    
+    folderlinkVC.player = [AudioPlayerManager.shared currentPlayer];
     
     [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
 }
@@ -763,9 +767,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [SVProgressHUD dismiss];
     }];
     
-    if (![MEGASdkManager sharedMEGAChatSdk]) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
     MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
     if (chatInit == MEGAChatInitNotDone) {
         chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];

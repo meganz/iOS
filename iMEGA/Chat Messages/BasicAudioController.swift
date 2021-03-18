@@ -84,7 +84,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     /// - Note:
     ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
     open func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
-        if playingMessage?.messageId == message.messageId, let collectionView = messageCollectionView, let player = audioPlayer {
+        
+        if isPlayingSameMessage(message),
+           let collectionView = messageCollectionView,
+           let player = audioPlayer {
             playingCell = cell
             cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
             cell.playButton.isSelected = (player.isPlaying == true) ? true : false
@@ -216,8 +219,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             // 1. get the current message that decorates the playing cell
             // 2. check if current message is the same with playing message, if so then update the cell content
             // Note: Those messages differ in the case of cell reuse
-            let currentMessage = collectionView.messagesDataSource?.messageForItem(at: playingCellIndexPath, in: collectionView)
-            if currentMessage != nil && currentMessage?.messageId == playingMessage?.messageId {
+            if  let currentMessage = collectionView.messagesDataSource?.messageForItem(at: playingCellIndexPath, in: collectionView) as? ChatMessage,
+                isPlayingSameMessage(currentMessage) {
                 // messages are the same update cell content
                 cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
                 guard let displayDelegate = collectionView.messagesDisplayDelegate else {
@@ -230,6 +233,15 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
                 stopAnyOngoingPlaying()
             }
         }
+    }
+    
+    func isPlayingSameMessage(_ message: MessageType) -> Bool {
+        if let playingMessage = playingMessage as? ChatMessage,
+           let currentMessage = message as? ChatMessage,
+           (playingMessage.messageId == currentMessage.messageId || currentMessage.message.nodeList.node(at: 0)?.name == playingMessage.transfer?.fileName) {
+            return true
+        }
+        return false
     }
 
     // MARK: - Private Methods

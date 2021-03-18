@@ -17,6 +17,7 @@
 
 @property (nullable, weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nullable, weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (nullable, weak, nonatomic) IBOutlet UIView *bottomView;
 
 @end
 
@@ -74,14 +75,16 @@
     [super awakeFromNib];
     
     [self updateAppearance];
+      
+#ifdef MAIN_APP_TARGET
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(bottomViewVisibility) name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
+#endif
 }
 
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
+- (void)dealloc {
+#ifdef MAIN_APP_TARGET
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+#endif
 }
 
 #pragma mark - Private
@@ -90,6 +93,13 @@
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     [self.button mnz_setupPrimary:self.traitCollection];
+    [self bottomViewVisibility];
+}
+
+- (void)bottomViewVisibility {
+#ifdef MAIN_APP_TARGET
+    self.bottomView.hidden = ![AudioPlayerManager.shared isPlayerAlive];
+#endif
 }
 
 @end

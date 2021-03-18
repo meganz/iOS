@@ -16,20 +16,20 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
         viewController.dismiss(animated: true, completion: nil)
         
         chats.forEach {
-            MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: $0.chatId, message: link)
+            MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: $0.chatId, message: link)
         }
         
         users.forEach {
-            let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(byUser: $0.handle)
+            let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: $0.handle)
             if (chatRoom != nil) {
                 guard let chatId = chatRoom?.chatId else {
                     return
                 }
-                MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatId, message: link)
+                MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: chatId, message: link)
             } else {
                 MEGALogDebug("There is not a chat with %@, create the chat and send message", $0.email)
-                MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(userHandle: $0.handle, completion: {
-                    MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: $0.chatId, message: self.link)
+                MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(userHandle: $0.handle, completion: {
+                    MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: $0.chatId, message: self.link)
                 })
             }
         }

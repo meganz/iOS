@@ -60,7 +60,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self getNodeAtIndexPath:indexPath];
+    MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
     [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
     cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
@@ -70,7 +70,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.collectionView.allowsMultipleSelection) {
-        MEGANode *node = [self getNodeAtIndexPath:indexPath];
+        MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
 
         NSArray *filteredArray = [self.cloudDrive.selectedNodesArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             return ((MEGANode*)evaluatedObject).handle == node.handle;
@@ -87,7 +87,7 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self getNodeAtIndexPath:indexPath];
+    MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     if (node == nil) {
         return;
     }
@@ -118,7 +118,7 @@
     }
     
     if (collectionView.allowsMultipleSelection) {
-        MEGANode *node = [self getNodeAtIndexPath:indexPath];
+        MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
 
         NSMutableArray *tempArray = [self.cloudDrive.selectedNodesArray copy];
         for (MEGANode *tempNode in tempArray) {
@@ -167,7 +167,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    MEGANode *node = [self getNodeAtIndexPath:indexPath];
+    MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     if (node == nil) {
         return;
     }
@@ -201,7 +201,7 @@
 
 #pragma mark - Private methods
 
-- (nullable MEGANode *)getNodeAtIndexPath:(NSIndexPath *)indexPath {
+- (nullable MEGANode *)thumbnailNodeAtIndexPath:(NSIndexPath *)indexPath {
     return indexPath.section == ThumbnailSectionFile ? [self.fileList objectOrNilAtIndex:indexPath.row] : [self.folderList objectOrNilAtIndex:indexPath.row];
 }
 

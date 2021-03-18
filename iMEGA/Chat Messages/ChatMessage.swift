@@ -68,15 +68,15 @@ extension ChatMessage: SenderType {
             return "0"
         }
         
-        if transfer != nil, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() {
-            return String(format: "%llu", chatSDK.myUserHandle)
+        if transfer != nil {
+            return String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle)
         }
         
         return String(format: "%llu", message.userHandle)
     }
 
     var displayName: String {
-        let userEmail = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: message.userHandle) ?? ""
+        let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: message.userHandle) ?? ""
         let userName = chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? userEmail
         return userName
     }

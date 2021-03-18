@@ -769,7 +769,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Sekarang memakai %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Batalkan Akun Anda";
+"cancelYourAccount"="Hapus Akun";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Anda akan kehilangan seluruh data yang berhubungan dengan akun ini. Anda yakin ingin melanjutkan?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -882,15 +882,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Hapus Data Lokal";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Anda akan keluar dan file offline anda akan dihapus setelah 10 upaya gagal";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Opsi Kode Sandi";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Kode Numerik 4-Digit";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Kode Numerik 6-Digit";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Kode Alfanumerik Kustom";
 /* Menu item */
 "help"="Bantuan";
 /* Title of the section to access MEGA's help centre */
@@ -1345,8 +1345,6 @@
 "connecting"="Menghubungkan...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Beberapa item tidak dapat di share dengan MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Sumber daya sistem yang terbatas tersedia saat berbagi item. Coba unggah file-file ini dari dalam aplikasi MEGA.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Telah berhasil membagikan";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Autentikasi Dua Faktor adalah lapisan keamanan kedua untuk akun Anda.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Autentikasi Dua Faktor adalah lapisan keamanan kedua untuk akun Anda. Yang berarti bahwa bahkan jika seseorang mengetahui kata sandi Anda, mereka tidak dapat mengaksesnya, tanpa juga memiliki akses ke kode enam digit yang hanya Anda miliki aksesnya.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Anda memerlukan aplikasi autentikasi dua faktor di perangkat ini";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1761,11 +1761,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Menyimpan ke Foto ...";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Bersiap untuk berbagi ……";
+"All Media"="Semua Media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="Mendownload %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Disimpan ke Foto";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1791,7 +1789,7 @@
 /* Users previewing a public chat */
 "Observers"="Pengamat";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ diaktifkan rotasi kunci Enkripsi.";
+"%@ enabled Encrypted Key Rotation"="%@ mengaktifkan rotasi kunci enkripsi.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ membuat tautan publik untuk obrolan.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2419,35 +2417,35 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email sudah terkirim. Harap tunggu beberapa menit sebelum mencoba lagi.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Kelola Riwayat Obrolan";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Kliring Sejarah";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Hapus pesan yang lebih lama dari jangka waktu tertentu secara otomatis.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Hapus pesan yang lebih lama dari satu hari secara otomatis.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Hapus pesan yang lebih lama dari satu minggu secara otomatis.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Hapus pesan yang lebih lama dari satu bulan secara otomatis.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Hapus pesan yang lebih lama dari %1 secara otomatis";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation from both parties. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Hapus semua pesan dan file yang dibagikan dalam percakapan ini. Tindakan ini tidak dapat diubah.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Hapus Pesan Lebih Lama Dari";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Satu hari";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Satu Minggu";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Satu Bulan";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Kustom...";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] mengubah waktu pembersihan pesan menjadi [/B][A] %2$s[/A][B]. [/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] menonaktifkan penghapusan pesan.[/B]";
 /*  */
 "hour"="jam";
 /*  */
@@ -2461,9 +2459,9 @@
 /*  */
 "weeks"="minggu";
 /*  */
-"1 week"="1 week";
+"1 week"="1 minggu";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 minggu";
 /*  */
 "month"="Bulan";
 /*  */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER UPLOAD KAMERA MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Pilih Folder";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="Bermain";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah Anda yakin ingin memindahkan folder Unggahan Kamera ke Tong Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan Kamera.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2529,7 +2529,7 @@
 /* Cookie dialog header */
 "Before You Continue"="Sebelum anda melanjutkan";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Kami menggunakan penyimpanan lokal dan teknologi serupa (‘Cookies’) untuk memberikan layanan kami kepada anda, meningkatkan pengalaman anda dengan layanan kami dan menyesuaikan iklan yang anda lihat, termasuk melalui pihak ketiga. Terima penggunaan Cookie kami sejak awal kunjungan anda atau sesuaikan Cookie di Pengaturan Cookie. Baca selengkapnya di [A]Kebijakan Cookie[/A] kami.";
 /* Cookie dialog button label. */
 "Accept Cookies"="Terima Cookies";
 /* Cookie settings dialog text. */
@@ -2553,7 +2553,7 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Cookie Pihak Ketiga";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ini adalah Cookies yang dikendalikan oleh orang lain selain kami; kami menggunakan Cookie ini untuk menyediakan jenis fungsionalitas yang dijelaskan di atas. Tidak menerima Cookie ini akan memiliki implikasi yang berbeda tergantung pada jenis Cookie apa setiap Cookie pihak ketiga itu. Klik ‘Informasi Lebih Lanjut’ di bawah untuk detail tentang semua Cookie pihak ketiga yang kami gunakan.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ini adalah Cookies yang dikendalikan oleh orang lain selain kami; kami menggunakan Cookie ini untuk menyediakan jenis fungsionalitas yang dijelaskan di atas. Tidak menerima Cookie ini akan memiliki implikasi yang berbeda tergantung pada jenis Cookie apa setiap Cookie pihak ketiga itu. Klik “Informasi Lebih Lanjut” di bawah untuk detail tentang semua Cookie pihak ketiga yang kami gunakan.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Informasi Lebih Lanjut";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
@@ -2574,3 +2574,13 @@
 "No Favourites"="Tidak Ada Favorit";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="LIHAT LEBIH BANYAK";
+/* Title for the QuickAccess widget */
+"Quick Access"="Akses Cepat";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Akses file dengan cepat di Terbaru, Favorit, atau bagian Offline";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Quickly access files from your Favourites section";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Quickly access files from your Recents section";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Quickly access files from your Offline section";

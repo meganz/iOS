@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Annuleringskoppeling is verstreken.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Dit is de laatste stap om uw account te annuleren. U verliest alle gegevens die zijn opgeslagen in de cloud permanent. Voer alstublieft uw wachtwoord hieronder in.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Dit is de laatste stap om uw account te verwijderen. U verlies al uw gegevens die opgeslagen zijn in de cloud. Voer uw wachtwoord hieronder in.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Uw account is succesvol geannuleerd.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -1345,8 +1345,6 @@
 "connecting"="Verbinden...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Sommige items konden niet gedeeld worden in MEGA";
-/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Gelimiteerde systeem middelen zijn beschikbaar bij het delen van items. Probeer deze bestanden te uploaden vanuit de MEGA applicatie.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Correct gedeeld";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1636,6 +1634,8 @@
 "whatIsTwoFactorAuthentication"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account. Wat betekend dat zelfs als iemand uw wachtwoord weet ze geen toegang hebben zonder het, zonder ook toegang te hebben tot de zes cijferige code waar alleen u toegang tot heeft.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="U heeft een twee-stap authenticatie applicatie nodig op dit apparaat";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -1761,9 +1761,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Opslaan naar Foto's";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
-/* Text shown when starting the process to share a filee to other app */
-"Preparing to share…"="Voorbereiden om te delen ……";
+"All Media"="Alle Media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Downloading %@";
 /* Text shown when a photo or video is saved to Photos app */
@@ -2433,7 +2431,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Verwijder automatisch berichten ouder dan %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Verwijder alle berichten en bestanden die in dit gesprek van beide partijen zijn gedeeld. Deze actie is onomkeerbaar.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Verwijder alle berichten en bestanden gedeeld in dit gesprek. Deze actie onomkeerbaar.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Duidelijke berichten Ouder Dan";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2482,6 +2480,8 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Selecteer Map";
+/* Section header of Audio Player playlist that contains playing track */
+"Playing"="Spelen";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Weet u zeker dat u de Camera Uploads map naar de Prullenbak wilt verplaatsen? Zo ja, een nieuwe map wordt automatisch gegenereerd voor Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -2574,3 +2574,13 @@
 "No Favourites"="Geen Favorieten";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="MEER WEERGEVEN";
+/* Title for the QuickAccess widget */
+"Quick Access"="Snelle Toegang";
+/* Text description for the QuickAccess widget */
+"Quickly access files on Recents, Favourites, or Offline section"="Krijg snel toegang tot bestanden in Recent, Favorieten of het gedeelte Offline";
+/* Text description for the Favourites QuickAccess widget */
+"Quickly access files on Favourites section"="Krijg snel toegang tot bestanden vanuit uw Favorieten-sectie";
+/* Text description for the Recents QuickAccess widget */
+"Quickly access files on Recents section"="Krijg snel toegang tot bestanden vanuit uw sectie Recent";
+/* Text description for the Offline QuickAccess widget */
+"Quickly access files on Offline section"="Krijg snel toegang tot bestanden vanuit uw Offline sectie";

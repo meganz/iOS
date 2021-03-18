@@ -89,6 +89,10 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         listSource?.endEditingMode()
     }
     
+    override func updateContentView(_ height: CGFloat) {
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
     // MARK: - Execute command
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {

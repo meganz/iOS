@@ -139,12 +139,6 @@ final class PhotoCarouselViewController: UIViewController {
         }
     }
     
-    // MARK:- Orientation method.
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     // MARK:- Interface methods.
     
     func didViewPage(atIndex index: Int) {
@@ -279,6 +273,11 @@ extension PhotoCarouselViewController: AlbumDelegate {
         if let removedIndexPaths = removedIndexPaths,
               let changedIndexPaths = changedIndexPaths,
               !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
+            collectionView.reloadData()
+            return
+        }
+        
+        if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= album.assetCount() {
             collectionView.reloadData()
             return
         }

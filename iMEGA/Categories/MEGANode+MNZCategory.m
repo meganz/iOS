@@ -96,9 +96,17 @@
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
-        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
-        if (viewController) {
-            [navigationController presentViewController:viewController animated:YES completion:nil];
+        if (self.name.mnz_isMultimediaPathExtension && !self.name.mnz_isVideoPathExtension && self.mnz_isPlayable) {
+            if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
+                [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:[navigationController.viewControllers lastObject] shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+            } else {
+                [AudioPlayerManager.shared initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:[navigationController.viewControllers lastObject]];
+            }
+        } else {
+            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
+            if (viewController) {
+                [navigationController presentViewController:viewController animated:YES completion:nil];
+            }
         }
     }
 }
@@ -206,15 +214,6 @@
 }
 
 #pragma mark - Actions
-
-- (void)mnz_downloadNodeAndShare {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"share"] status:NSLocalizedString(@"Preparing to share…", @"Text shown when starting the process to share a filee to other app")];
-    
-    NSString *downloadsDirectory = Helper.relativePathForOffline;
-    NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
-    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-    [MEGASdkManager.sharedMEGASdk startDownloadNode:[[MEGASdkManager sharedMEGASdk] authorizeNode:self] localPath:localPath appData:[[NSString string] mnz_appDataToSystemShareFile]];
-}
 
 - (BOOL)mnz_downloadNode {
     return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];

@@ -22,6 +22,7 @@ class ExplorerBaseViewController: UIViewController {
         if !tabBarController.view.subviews.contains(toolbar) {
             toolbar.alpha = 0.0
             tabBarController.view.addSubview(toolbar)
+            toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             toolbar.autoPinEdge(.top, to: .top, of: tabBarController.tabBar)
             let bottomAnchor: NSLayoutYAxisAnchor
             if #available(iOS 11.0, *) {
@@ -148,4 +149,17 @@ class ExplorerBaseViewController: UIViewController {
     }
     
     func downloadStarted(forNode node: MEGANode) { }
+}
+
+extension ExplorerBaseViewController: TraitEnviromentAware {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        if #available(iOS 13.0, *) {
+            AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
+        }
+    }
 }

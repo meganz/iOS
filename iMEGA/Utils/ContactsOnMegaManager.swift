@@ -174,7 +174,7 @@ struct ContactOnMega: Codable {
                     self?.persistContactsOnMega()
                 }
             })
-            MEGASdkManager.sharedMEGAChatSdk()?.userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
+            MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
         }
     }
 
