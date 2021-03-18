@@ -47,7 +47,7 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPhone7,2":@"iPhone 6",           //iPhone 6 (GSM/North America/A1549) (CDMA/Verizon/A1549) (Global/Sprint/A1586) (China Mobile/A1589)
                               @"iPhone8,1":@"iPhone 6S",          //iPhone 6S (AT&T/SIM Free/A1633) (Global/A1688) (Mainland China/A1700)
                               @"iPhone8,2":@"iPhone 6S Plus",     //iPhone 6S Plus (AT&T/SIM Free/A1634) (Global/A1687) (Mainland China/A1699)
-                              @"iPhone8,4":@"iPhone SE",          //iPhone SE (United States/A1662) (Global/Sprint/A1723) (China Mobile/A1724)
+                              @"iPhone8,4":@"iPhone SE 1st",      //iPhone SE 1st generation (United States/A1662) (Global/Sprint/A1723) (China Mobile/A1724)
                               @"iPhone9,1":@"iPhone 7",           //iPhone 7
                               @"iPhone9,2":@"iPhone 7 Plus",      //iPhone 7 Plus
                               @"iPhone9,3":@"iPhone 7",           //iPhone 7
@@ -65,6 +65,11 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPhone12,1":@"iPhone 11",         //iPhone 11
                               @"iPhone12,3":@"iPhone 11 Pro",     //iPhone 11 Pro
                               @"iPhone12,5":@"iPhone 11 Pro Max", //iPhone 11 Pro Max
+                              @"iPhone12,8":@"iPhone SE 2nd",     //iPhone SE 2nd generation
+                              @"iPhone13,1":@"iPhone 12 Mini",    //iPhone 12 Mini
+                              @"iPhone13,2":@"iPhone 12",         //iPhone 12
+                              @"iPhone13,3":@"iPhone 12 Pro",     //iPhone 12 Pro
+                              @"iPhone13,4":@"iPhone 12 Pro Max", //iPhone 12 Pro Max
                               @"iPad1,1":@"iPad",                 //iPad (Original/1st Gen) (Wi-Fi/3G/GPS)
                               @"iPad2,1":@"iPad",                 //iPad 2 (Wi-Fi Only)
                               @"iPad2,2":@"iPad",                 //iPad 2 (Wi-Fi/GSM/GPS)
@@ -82,6 +87,8 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPad7,6":@"iPad",                 //iPad (6th Generation) (Cellular)
                               @"iPad7,11":@"iPad",                //iPad (7th Generation) (Wi-Fi)
                               @"iPad7,12":@"iPad",                //iPad (7th Generation) (Cellular)
+                              @"iPad11,6":@"iPad",                //iPad 8th Gen (WiFi)
+                              @"iPad11,7":@"iPad",                //iPad 8th Gen (WiFi+Cellular)
                               @"iPad4,1":@"iPad Air",             //iPad Air (5th Generation) (Wi-Fi)
                               @"iPad4,2":@"iPad Air",             //iPad Air (5th Generation) (Cellular)
                               @"iPad4,3":@"iPad Air",             //iPad Air (5th Generation) (Wi-Fi/TD-LTE - China)
@@ -89,6 +96,8 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPad5,4":@"iPad Air",             //iPad Air 2 (Wi-Fi/Cellular)
                               @"iPad11,3":@"iPad Air",            //iPad Air 3 (Wi-Fi)
                               @"iPad11,4":@"iPad Air",            //iPad Air 3 (Wi-Fi/Cellular)
+                              @"iPad13,1":@"iPad Air",            //iPad Air 4th Gen (WiFi)
+                              @"iPad13,2":@"iPad Air",            //iPad Air 4th Gen (WiFi+Cellular)
                               @"iPad2,5":@"iPad mini",            //iPad mini (1st Generation) (Wi-Fi Only)
                               @"iPad2,6":@"iPad mini",            //iPad mini (1st Generation) (Wi-Fi/AT&T/GPS)
                               @"iPad2,7":@"iPad mini",            //iPad mini (1st Generation) (Wi-Fi/VZ & Sprint/GPS)
@@ -117,7 +126,12 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPad8,5":@"iPad Pro (12.9-inch)", //iPad Pro 3rd Gen (12.9 inch, WiFi)
                               @"iPad8,6":@"iPad Pro (12.9-inch)", //iPad Pro 3rd Gen (12.9 inch, WiFi)
                               @"iPad8,7":@"iPad Pro (12.9-inch)", //iPad Pro 3rd Gen (12.9 inch, WiFi+Cellular)
-                              @"iPad8,8":@"iPad Pro (12.9-inch)"};//iPad Pro 3rd Gen (12.9 inch, WiFi+Cellular)
+                              @"iPad8,8":@"iPad Pro (12.9-inch)", //iPad Pro 3rd Gen (12.9 inch, WiFi+Cellular)
+                              @"iPad8,9":@"iPad Pro (11-inch)",   //iPad Pro 11 inch 4th Gen (WiFi)
+                              @"iPad8,10":@"iPad Pro (11-inch)",   //iPad Pro 11 inch 4th Gen (WiFi+Cellular)
+                              @"iPad8,11":@"iPad Pro (12.9-inch)", //iPad Pro 12.9 inch 4th Gen (WiFi)
+                              @"iPad8,12":@"iPad Pro (12.9-inch)", //iPad Pro 12.9 inch 4th Gen (WiFi+Cellular)
+        };
     }
     
     return devicesDictionary;
@@ -151,31 +165,6 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
 
 - (BOOL)iPhoneDevice {
     return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) ? YES : NO;
-}
-
-
-- (BOOL)iPhone4X {
-    if ([[self deviceName] hasPrefix:@"iPhone 4"] || [machine isEqualToString:@"iPod4,1"]) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)iPhone5X {
-    if ([[self deviceName] hasPrefix:@"iPhone 5"] || [[self deviceName] isEqualToString:@"iPhone SE"] || [machine isEqualToString:@"iPod5,1"] || [machine isEqualToString:@"iPod7,1"]) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)iPhone6X {
-    if ([[self deviceName] isEqualToString:@"iPhone 6"] || [[self deviceName] isEqualToString:@"iPhone 6S"]) {
-        return YES;
-    }
-    
-    return NO;
 }
 
 - (BOOL)iPhone6XPlus {

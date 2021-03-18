@@ -17,16 +17,10 @@
 
 @interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmTextTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *confirmTextLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmTextBottomLayoutConstraint;
-
 @property (weak, nonatomic) IBOutlet InputView *emailInputView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
-
 @property (weak, nonatomic) IBOutlet UIButton *confirmAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
@@ -40,14 +34,6 @@
     [super viewDidLoad];
     
     [self updateAppearance];
-    
-    if (UIDevice.currentDevice.iPhone4X) {
-        self.logoTopLayoutConstraint.constant = 12.f;
-        self.confirmTextTopLayoutConstraint.constant = 6.f;
-        self.confirmTextBottomLayoutConstraint.constant = 6.f;
-    } else if (UIDevice.currentDevice.iPhone5X || (UIDevice.currentDevice.iPadDevice && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation))) {
-        self.logoTopLayoutConstraint.constant = 24.f;
-    }
     
     switch (self.urlType) {
         case URLTypeConfirmationLink:

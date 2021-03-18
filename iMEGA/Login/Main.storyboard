@@ -598,12 +598,9 @@
                     <connections>
                         <outlet property="cancelButton" destination="4Wd-CD-LZg" id="DpB-iZ-0Yu"/>
                         <outlet property="confirmAccountButton" destination="urs-kB-QJB" id="RaW-7t-SRX"/>
-                        <outlet property="confirmTextBottomLayoutConstraint" destination="bSR-s2-Zd8" id="jH1-VS-RhN"/>
                         <outlet property="confirmTextLabel" destination="h2P-8s-Lnf" id="4h5-3R-IrJ"/>
-                        <outlet property="confirmTextTopLayoutConstraint" destination="vnm-48-egT" id="MU6-uv-4Iw"/>
                         <outlet property="emailInputView" destination="61x-Df-ghm" id="ers-4h-54w"/>
                         <outlet property="logoImageView" destination="GSl-YH-DKg" id="z0B-8h-a5t"/>
-                        <outlet property="logoTopLayoutConstraint" destination="kMS-fb-yYb" id="zcP-C8-4Wa"/>
                         <outlet property="passwordView" destination="w6i-73-vzN" id="RJk-Qn-QAN"/>
                     </connections>
                 </viewController>
@@ -722,14 +719,11 @@
                     <connections>
                         <outlet property="awaitingEmailConfirmationLabel" destination="cfX-ZS-ROY" id="ew6-Ur-46c"/>
                         <outlet property="cancelButton" destination="gCw-HK-PQg" id="SNP-Ty-rUK"/>
-                        <outlet property="checkYourEmailBottomLayoutConstraint" destination="lYg-9v-cSV" id="557-Vs-x7f"/>
                         <outlet property="checkYourEmailLabel" destination="JVh-eC-WKS" id="KGW-SL-XDa"/>
                         <outlet property="emailInputView" destination="DU4-vX-4QG" id="6GX-e6-PbO"/>
-                        <outlet property="mailImageTopLayoutConstraint" destination="oO6-gA-Ycd" id="kc0-1t-Xmb"/>
                         <outlet property="mailImageView" destination="3py-Mg-p80" id="dcO-Ww-kYv"/>
                         <outlet property="misspelledLabel" destination="ey0-Yn-d6F" id="5FI-a3-rIt"/>
                         <outlet property="resendButton" destination="fZ6-Pg-W1e" id="I8B-kn-cBk"/>
-                        <outlet property="resendButtonTopLayoutConstraint" destination="YFW-l9-Ouf" id="wDF-2I-drr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOh-KE-ERF" userLabel="First Responder" sceneMemberID="firstResponder"/>
