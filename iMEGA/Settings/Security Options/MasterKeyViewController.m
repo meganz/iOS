@@ -39,22 +39,6 @@
     [self updateAppearance];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    if ([[UIDevice currentDevice] iPhone4X]) {
-        self.tabBarController.tabBar.hidden = YES;
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    if ([[UIDevice currentDevice] iPhone4X]) {
-        self.tabBarController.tabBar.hidden = NO;
-    }
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

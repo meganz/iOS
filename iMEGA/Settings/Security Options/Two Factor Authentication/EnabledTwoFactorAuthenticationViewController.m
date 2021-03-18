@@ -28,10 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (([[UIDevice currentDevice] iPhone4X])) {
-        self.recoveryKeyView.hidden = YES;
-    }
-    
     self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"A title for the Two-Factor Authentication section on the My Account - Security page.");
     self.titleLabel.text = NSLocalizedString(@"twoFactorAuthenticationEnabled", @"A title on the mobile web client page showing that 2FA has been enabled successfully.");
     self.firstLabel.text = NSLocalizedString(@"twoFactorAuthenticationEnabledDescription", @"A message on the dialog shown after 2FA was successfully enabled.");

@@ -419,10 +419,7 @@ opqr stuv wxyz</string>
                         <outlet property="firstSectionLabel" destination="l4U-lC-Vjz" id="hXE-8n-y8K"/>
                         <outlet property="nextButton" destination="ZPw-hy-opU" id="3C6-5f-NrI"/>
                         <outlet property="openInButton" destination="K5t-8t-WXX" id="jCh-eH-FU6"/>
-                        <outlet property="seedQrImageTopLayoutConstraint" destination="1uJ-Og-ci2" id="dJs-1b-gkX"/>
                         <outlet property="seedQrImageView" destination="W9e-6V-BOw" id="2vZ-Uh-zzg"/>
-                        <outlet property="seedQrImageViewHeightLayoutConstraint" destination="X70-En-TWf" id="48m-mz-pf6"/>
-                        <outlet property="seedQrImageViewWidthLayoutConstraint" destination="CDB-yl-6OL" id="rp4-HL-Yrh"/>
                         <outlet property="seedTextView" destination="6Xq-Iu-F8J" id="eyP-Gv-Wlo"/>
                         <outlet property="seedTextViewView" destination="6vi-in-ARt" id="3kK-7j-rW5"/>
                     </connections>
