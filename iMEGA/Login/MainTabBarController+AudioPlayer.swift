@@ -6,9 +6,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         
         bottomView?.removeFromSuperview()
         
-        addChild(viewController)
         view.addSubview(miniPlayerView)
-        viewController.didMove(toParent: self)
         
         miniPlayerView.autoSetDimension(.height, toSize: 60.0)
         miniPlayerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
@@ -47,15 +45,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     func resetMiniPlayerContainer() {
         bottomView?.removeFromSuperview()
         bottomView = nil
-    }
-    
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { _ in
-            self.resetMiniPlayerContainer()
-            self.showMiniPlayer()
-        })
     }
     
     @objc func shouldShowMiniPlayer() {
