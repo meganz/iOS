@@ -5,6 +5,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     func setProgressCompleted(_ position: TimeInterval) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
         currentItem.seek(to: CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale))
+        refreshNowPlayingInfo()
         notify(aboutCurrentState)
     }
     
@@ -205,6 +206,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         let time = CMTime(seconds: CMTimeGetSeconds(currentItem.duration) * Double(percentage), preferredTimescale: currentItem.duration.timescale)
         guard CMTIME_IS_VALID(time) else { return }
         currentItem.seek(to: time)
+        refreshNowPlayingInfo()
         notify(aboutCurrentState)
     }
     

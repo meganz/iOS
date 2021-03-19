@@ -44,14 +44,14 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             repeatLastItem()
         } else {
             notify([aboutCurrentItem, aboutCurrentItemAndQueue, aboutCurrentThumbnail, aboutUpdateCurrentIndexPath])
-            setupNowPlaying()
-            
             guard let oldValue = value.oldValue as? AudioPlayerItem else { return }
             
             reset(item: oldValue)
             updateQueueWithLoopItems()
             resetPlayerItems()
         }
+        
+        refreshNowPlayingInfo()
     }
     
     // Listening for event about the status of the playback
@@ -69,7 +69,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             break
         }
         
-        setupNowPlaying()
+        refreshNowPlayingInfo()
     }
     
     // listening for change event when player stops playback
