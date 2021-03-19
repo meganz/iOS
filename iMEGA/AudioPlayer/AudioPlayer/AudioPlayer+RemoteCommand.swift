@@ -23,7 +23,7 @@ extension AudioPlayer {
         commandCenter.seekBackwardCommand.removeTarget(self)
     }
     
-    func setupNowPlaying() {
+    func refreshNowPlayingInfo() {
         guard let item = currentItem() else { return }
         
         var nowPlayingInfo = [String: Any]()
