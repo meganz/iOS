@@ -116,6 +116,9 @@ final class MiniPlayerViewModel: ViewModelType {
     }
 
     private func preparePlayer() {
+        if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
+            streamingInfoUseCase?.startServer()
+        }
         if let node = node {
             initialize(with: node)
         } else if let offlineFilePaths = filePaths {

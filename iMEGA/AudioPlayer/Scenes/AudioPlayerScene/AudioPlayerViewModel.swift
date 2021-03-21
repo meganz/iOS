@@ -123,7 +123,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Private functions
     private func preparePlayer() {
-        if !(playerHandler.isPlayerDefined()) {
+        if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()
         }
         
