@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="La autenticación de dos factores es una segunda capa de seguridad para tu cuenta.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="La autenticación de dos factores es una segunda capa de seguridad para tu cuenta. Esto significa que incluso si alguien conoce tu contraseña no va a poder acceder a tu cuenta sin tener acceso al código de seis dígitos al que solo tú tienes acceso.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="App de autenticación requerida";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Necesitas una aplicación de autenticación de dos factores en este dispositivo";
+"youNeedATwoFactorAuthenticationApp"="No se puede activar la autenticación de dos factores en este dispositivo. Abre el App Store e instala una app de autenticación.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Necesitas una aplicación de autenticación para activar el 2FA en MEGA. Puedes descargar e instalar Google Authenticator, Duo Mobile, Authy o Microsoft Authenticator para tu teléfono o tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Accede rápidamente a los archivos de la sección Recientes";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Accede rápidamente a los archivos de la sección Sin conexión";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="El dispositivo no tiene suficiente espacio para que MEGA funcione correctamente.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados de tu galería.Puedes administrar tu almacenamiento en %@";

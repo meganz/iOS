@@ -1636,6 +1636,8 @@
 "whatIsTwoFactorAuthentication"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản. Nghĩa là trong trường hợp có người biết mật khẩu để lén vào tài khoản sẽ không thể vào được, và buộc phải nhập thêm đoạn mã 6 chữ số mà chỉ chủ sở hữu tài khoản mới có.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Cần phải có cài app lập xác minh cho thiết bị này";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Quickly access files from your Offline section";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery.You can manage your storage in %@";

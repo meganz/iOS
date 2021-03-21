@@ -1636,6 +1636,8 @@
 "whatIsTwoFactorAuthentication"="L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte. Cela signifie que même si quelqu’un connaissait votre mot de passe, cette personne ne pourrait pas y accéder sans avoir aussi le code à 6 chiffres auquel vous seul pourrez accéder.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Vous avez besoin d’une appli d’authentification à deux facteurs sur cet appareil";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Accéder facilement aux fichiers de votre section Récents";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Accéder facilement aux fichiers de votre section Hors ligne";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="L’appareil n’a pas assez d’espace libre pour que MEGA fonctionne correctement.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libérez de l’espace en supprimant des applis que vous n’utilisez plus ou des fichiers vidéo volumineux dans votre galerie. Vous pouvez gérer votre mémoire dans %@";

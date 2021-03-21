@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта. Это значит, что даже если кто-то знает ваш пароль, он не сможет получить к нему доступ без шестизначного кода, который есть только у вас.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Требуется приложение-аутентификатор";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Нужно приложение для двухфакторной аутентификации";
+"youNeedATwoFactorAuthenticationApp"="Сожалеем, на вашем устройстве нельзя включить двухфакторную аутентификацию. Откройте App Store, чтобы установить приложение-аутентификатор.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Вам нужно приложение-аутентификатор, чтобы включить 2FA в MEGA. Вы можете загрузить и установить приложение Google Authenticator, Duo Mobile, Authy или Microsoft Authenticator на свой телефон или планшет.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Быстрый доступ к файлам из «Недавних»";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Быстрый доступ к файлам из «Локальных»";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="Недостаточно свободного места на устройстве для нормальной работы MEGA.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Освободите место, удалив приложения, которыми вы больше не пользуетесь, или большие видеофайлы в галерее.Вы можете управлять своим хранилищем в %@";

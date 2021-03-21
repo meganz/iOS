@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="A autenticação de dois fatores é uma segunda camada de segurança para a sua conta.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="A autenticação de dois fatores é uma segunda camada de segurança para a sua conta. Isso significa que, mesmo que alguém saiba a sua senha, não poderá acessar a sua conta sem ter acesso ao código de seis dígitos que só você pode obter.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Aplicativo de autenticação necessário";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Você precisa de um aplicativo de autenticação de dois fatores neste dispositivo";
+"youNeedATwoFactorAuthenticationApp"="Infelizmente a autenticação de dois fatores não pode ser ativada neste dispositivo. Por favor, acesse a App Store para instalar um aplicativo de autenticação.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Você precisa de um aplicativo de autenticação para ativar a 2FA no MEGA. Você pode baixar e instalar os aplicativos Google Authenticator, Duo Mobile, Authy ou Microsoft Authenticator no seu celular ou tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Acesse rapidamente os arquivos na área Atividades recentes";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Acesse rapidamente os arquivos na área Offline";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="O armazenamento disponível no seu dispositivo não é suficiente para o MEGA funcionar corretamente.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Você pode liberar espaço excluindo aplicativos que você já não usa, ou arquivos de vídeo grandes que estiverem na sua galeria.Você pode gerenciar o seu armazenamento em %@";

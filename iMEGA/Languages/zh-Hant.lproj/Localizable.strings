@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="雙重驗證是您帳戶的第二層安全保護。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="雙重驗證是您帳戶的第二層安全保護。這意味著，即使有人知道您的密碼，他們也無法存取您的帳戶，且無法獲得只有您能讀取的六位碼。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="需要身份驗證器應用程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用雙重驗證程式";
+"youNeedATwoFactorAuthenticationApp"="很抱歉，您的裝置無法啟用雙重驗證。請打開App Store來安裝Authenticator應用程式。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要身份驗證應用程式才能在MEGA上啟用雙重驗證。您可以在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2131,7 +2133,7 @@
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="付款逾期";
 /* Business account status */
-"Active"="登入";
+"Active"="有效的";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="職稱:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="快速存取近期活動的檔案";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="快速存取離線存取的檔案";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間來讓MEGA正確的運行";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="請刪除您沒在使用的應用程式或相簿裡大容量的影片檔案以釋放一些空間。您可以在%@管理您的儲存空間。";
