@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="Two-Factor Authentication is a second layer of security for your account.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+"youNeedATwoFactorAuthenticationApp"="We’re sorry, two-factor authentication cannot be enabled on your device. Please open the App Store to install an Authenticator app.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2067,7 +2069,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Your business account has expired";
+"Your business account is expired"="Your Business account has expired";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Quickly access files from your Offline section";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery.You can manage your storage in %@";

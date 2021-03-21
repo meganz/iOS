@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="双重验证是您账户的第二层安全保护。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="双重验证是您账户的第二层安全保护。即使他人得知您的密码，无6位验证码也无权对其访问，因此只有您拥有访问权限。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="身份验证器请求";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="您需要在此设备上安装双重验证应用程序";
+"youNeedATwoFactorAuthenticationApp"="很抱歉，您的设备无法启用双重验证。请打开App Store并安装一个验证应用程序。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要一个验证应用程序才能在MEGA上启用双重验证。 您可以为您的手机或平板电脑下载并安装Google验证，Duo Mobile，Authy或Microsoft验证程序。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="快速访问您的“近期”";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="快速访问您的“离线”";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="设备存储空间不足，MEGA无法正常运行";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="您可以通过删除不常用的应用程序或大型视频文件以释放设备存储空间。您可以在设置中进行：%@";

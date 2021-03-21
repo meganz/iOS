@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta. Co oznacza, że nawet jeśli ktoś zna twoje hasło, nie może uzyskać do niego dostępu, nie mając dostępu do sześciocyfrowego kodu, do którego masz dostęp.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Wymagana aplikacja Authenticator";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Potrzebujesz aplikacji uwierzytelniania dwustopniowego na tym urządzeniu";
+"youNeedATwoFactorAuthenticationApp"="Przykro nam, ale uwierzytelnianie dwuetapowe nie może być włączone na Twoim urządzeniu. Otwórz sklep App Store, aby zainstalować aplikację Authenticator.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Potrzebujesz aplikacji uwierzytelniającej, by włączyć 2FA na MEGA. Możesz pobrać i zainstalować aplikację Google Authenticator, Duo Mobile, Authy lub Microsoft Authenticator na swój telefon lub tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2067,7 +2069,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Wystąpił problem z ostatnią płatnością. Proszę uzyskać dostęp do MEGA za pomocą przeglądarki na pulpicie, aby uzyskać więcej informacji.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Twoje konto firmowe wygasło";
+"Your business account is expired"="Konto biznesowe wygasło";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Wystąpił problem z przetwarzaniem Twojej płatności. Wyświetlanie MEGA jest ograniczone tylko do momentu rozwiązania tego problemu w przeglądarce internetowej na komputerze.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Szybki dostęp do plików z sekcji Ostatnio dodane";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Szybki dostęp do plików z sekcji Offline";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="Urządzenie nie ma wystarczająco dużo miejsca, aby MEGA działała prawidłowo.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Zwolnij trochę miejsca, usuwając aplikacje, których już nie używasz, lub duże pliki wideo w swojej galerii.Możesz zarządzać swoją pamięcią masową w %@";

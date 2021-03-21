@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account. Wat betekend dat zelfs als iemand uw wachtwoord weet ze geen toegang hebben zonder het, zonder ook toegang te hebben tot de zes cijferige code waar alleen u toegang tot heeft.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticatie applicatie vereist";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="U heeft een twee-stap authenticatie applicatie nodig op dit apparaat";
+"youNeedATwoFactorAuthenticationApp"="Het spijt ons, maar tweefactorauthenticatie kan niet worden ingeschakeld op uw apparaat. Open de Applicatie Store om een ​​Authenticator-applicatie te installeren.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="U heeft een authenticatie applicatie nodig om 2FA in te schakelen op MEGA.U kunt de applicatie Google Authenticator, Duo Mobile, Authy of Microsoft Authenticator downloaden en installeren voor uw telefoon of tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2067,7 +2069,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Er is een probleem opgetreden met uw laatste betaling. Ga naar MEGA via een desktopbrowser voor meer informatie.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Uw zakelijke account is verlopen";
+"Your business account is expired"="Uw Zakelijke account is verlopen";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Er is een probleem opgetreden bij het verwerken van uw betaling. MEGA kan alleen worden bekeken totdat dit probleem is opgelost in een desktop webbrowser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Krijg snel toegang tot bestanden vanuit uw sectie Recent";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Krijg snel toegang tot bestanden vanuit uw Offline sectie";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="MEGA heeft niet genoeg apparaat opslag om correct te werken.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Maak ruimte vrij door applicaties die u niet meer gebruikt of grote videobestanden in uw galerij te verwijderen. U kunt uw opslag beheren in %@";

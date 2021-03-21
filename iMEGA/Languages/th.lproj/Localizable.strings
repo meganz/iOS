@@ -1636,6 +1636,8 @@
 "whatIsTwoFactorAuthentication"="การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ ซึ่งหมายความว่าแม้จะมีคนรู้จักรหัสผ่านของคุณ พวกเขาจะไม่สามารถเข้าถึงข้อมูลของคุณได้ เพราะต้องใช้รหัสหกหลักสำหรับการรับรองความถูกต้องก่อนทุกครั้ง";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="คุณต้องมีแอปตัวรับรองความถูกต้องสำหรับอุปกรณ์นี้";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="เข้าถึงไฟล์ได้อย่างรวดเร็วจากส่วนล่าสุดของคุณ";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="เข้าถึงไฟล์ได้อย่างรวดเร็วจากส่วนออฟไลน์ของคุณ";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="MEGA มีพื้นที่เก็บข้อมูลอุปกรณ์ไม่เพียงพอที่จะทำงานได้อย่างถูกต้อง";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="เพิ่มพื้นที่ว่างโดยการลบแอปที่คุณไม่ใช้แล้วหรือไฟล์วิดีโอขนาดใหญ่ในแกลเลอรีของคุณคุณสามารถจัดการพื้นที่เก็บข้อมูลของคุณได้ที่ %@";

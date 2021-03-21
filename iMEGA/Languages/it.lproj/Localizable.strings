@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="L'autenticazione a due fattori è un secondo livello di sicurezza per il tuo account.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="L'autenticazione a due fattori è un secondo livello di sicurezza per il tuo account.Che significa che anche se qualcuno sa la tua password non può accedere al tuo account, senza avere accesso anche al numero di 6 cifre a cui hai accesso solo tu.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="App autenticatrice richiesta";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Hai bisogno di un'applicazione per l'autenticazione a due fattori su questo dispositivo";
+"youNeedATwoFactorAuthenticationApp"="Ci dispiace, l’autenticazione a due fattori non può essere attivata sul tuo dispositivo. Per favore, apri l’App Store per installare un’app autenticatrice.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Hai bisogno di un'applicazione di autenticazione per attivare l'autenticazione a due fattori (2FA) su MEGA. Puoi scaricare ed installare le app di Google Authenticator, Duo Mobile, Authy o Microsoft Authenticator per il tuo telefono o tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2067,7 +2069,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="C'è stato un problema con il tuo ultimo pagamento. Per favore, accedi a MEGA utilizzando un browser desktop per maggiori informazioni.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Il tuo account business è scaduto";
+"Your business account is expired"="Il tuo account Business è scaduto";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="C'è stato un problema nel processo del tuo ultimo pagamento. MEGA è limitato alla visualizzazione finché questo problema non sarà aggiustato su un browser desktop.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="Accesso veloce ai file dalla tua sezione Recenti";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Accesso veloce ai file dalla tua sezione Offline";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="Il dispositivo non ha abbastanza spazio libero affinché MEGA possa funzionare correttamente.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera un po’ di spazio eliminando le app che non usi più o i video di grandi dimensioni nella tua galleria.Puoi gestire il tuo spazio in %@";

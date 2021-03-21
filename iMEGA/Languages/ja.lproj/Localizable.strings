@@ -1636,8 +1636,10 @@
 "whatIsTwoFactorAuthentication"="二要素認証は、アカウント用のセキュリティの第2層です。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="二要素認証は、アカウント用のセキュリティの第2層です。つまり、たとえ誰かがあなたのパスワードを知っていても、あなただけがアクセスできる6桁のコードにアクセスできない限り、それにアクセスすることはできません。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="オーセンティケータアプリが必要です";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="この端末では二要素認証アプリが必要です";
+"youNeedATwoFactorAuthenticationApp"="申し訳ありませんが、お使いの端末で二要素認証を有効にすることはできません。App Storeを開いて、オーセンティケータアプリをインストールしてください。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGAで2FAを有効にするには、オーセンティケーターアプリが必要です。スマートフォンやタブレット用に、Googleオーセンティケータ、Duo Mobile、Authy、Microsoftオーセンティケータアプリをダウンロードしてインストールできます。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2584,3 +2586,7 @@
 "Quickly access files on Recents section"="最近セクションからファイルに素早くアクセスします";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="オフラインセクションからファイルに素早くアクセスします";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="端末に、MEGAを正しく実行するための十分なスペースがありません。";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="使用しなくなったアプリやギャラリー内の大きな動画ファイルを削除して、スペースを確保してください。%@でストレージを管理できます。";
