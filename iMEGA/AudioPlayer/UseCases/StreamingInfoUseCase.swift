@@ -4,6 +4,7 @@ protocol StreamingInfoUseCaseProtocol {
     func stopServer()
     func info(from folderLinkNode: MEGANode) -> AudioPlayerItem?
     func info(from handle: MEGAHandle) -> MEGANode?
+    func isLocalHTTPProxyServerRunning() -> Bool
 }
 
 final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
@@ -28,5 +29,9 @@ final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
     
     func info(from handle: MEGAHandle) -> MEGANode? {
         streamingInfoRepository.info(fromHandle: handle)
+    }
+    
+    func isLocalHTTPProxyServerRunning() -> Bool {
+        streamingInfoRepository.isLocalHTTPProxyServerRunning()
     }
 }
