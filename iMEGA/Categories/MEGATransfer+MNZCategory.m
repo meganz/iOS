@@ -177,6 +177,20 @@
     return chatID;
 }
 
+- (NSString *)mnz_extractMessageIDFromAppData {
+    __block NSString *messageID;
+    
+    [self enumerateAppDataTypeWithBlock:^(NSString * appDataType, NSString *appDataComponent) {
+         
+         if ([appDataType isEqualToString:@"downloadAttachToMessageID"]) {
+             NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+             messageID = [tempAppDataComponent componentsSeparatedByString:@"="].lastObject;
+         }
+     }];
+    
+    return messageID;
+}
+
 - (void)mnz_moveFileToDestinationIfVoiceClipData {
     if ([self.appData containsString:@"attachVoiceClipToChatID"]) {
         MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];

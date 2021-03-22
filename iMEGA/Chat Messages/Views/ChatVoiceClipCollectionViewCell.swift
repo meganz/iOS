@@ -3,15 +3,7 @@ import MessageKit
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     var currentNode: MEGANode?
-    lazy var transferDelegate: MEGAStartDownloadTransferDelegate = {
-        return MEGAStartDownloadTransferDelegate(progress: nil, completion: { [weak self] (transfer) in
-            if self?.currentNode?.handle == transfer?.nodeHandle {
-                if let transfer = transfer, transfer.path != nil, FileManager.default.fileExists(atPath: transfer.path) {
-                    self?.configureLoadedView()
-                }
-            }
-        }, onError: nil)
-    }()
+    weak var messagesCollectionView: MessagesCollectionView?
     
     open var waveView: UIImageView = {
         let waveView = UIImageView(image: UIImage(named: "waveform_0000"))
@@ -31,7 +23,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        MEGASdkManager.sharedMEGASdk().add(transferDelegate)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,7 +63,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         guard let chatMessage = message as? ChatMessage else {
             return
         }
-        
+        self.messagesCollectionView = messagesCollectionView
         let megaMessage = chatMessage.message
         
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
@@ -98,7 +89,15 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         
         if let transfer = chatMessage.transfer {
             if transfer.type == .download {
-                configureLoadingView()
+                guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
+                self.currentNode = currentNode
+                let duration = max(currentNode.duration, 0)
+                durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+                if transfer.state.rawValue < MEGATransferState.complete.rawValue {
+                    configureLoadingView()
+                } else {
+                    configureLoadedView()
+                }
             } else if let path = transfer.path {
                 guard FileManager.default.fileExists(atPath: path) else {
                     MEGALogInfo("Failed to create audio player for URL: \(path)")
@@ -109,18 +108,13 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
             }
         } else {
             guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
+            self.currentNode = currentNode
             let duration = max(currentNode.duration, 0)
             durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
             let nodePath = currentNode.mnz_voiceCachePath()
             if !FileManager.default.fileExists(atPath: nodePath) {
-                MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: currentNode, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
-                    let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath) else {
-                        return
-                    }
-                    
-                    messagesCollectionView.reloadItems(at: [indexPath])
-                }, onError: nil))
+                let appData = NSString().mnz_appDataToDownloadAttach(toMessageID: megaMessage.messageId)
+                MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: currentNode, localPath: nodePath, appData: appData, delegate: MEGAStartDownloadTransferDelegate(start: nil, progress: nil, completion: nil, onError: nil))
                 configureLoadingView()
             } else {
                 configureLoadedView()
@@ -140,15 +134,15 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         playButton.isHidden = false
     }
     
-    deinit {
-        MEGASdkManager.sharedMEGASdk().remove(transferDelegate)
-    }
 }
 
 open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         configureAccessoryView()
+        outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
+        incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets:  UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 0))
+
     }
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {

@@ -71,6 +71,14 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         return reactionViewTemplate.sizeThatFits(CGSize(width: messagesCollectionView.bounds.width, height: .greatestFiniteMagnitude))
         
     }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        guard let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed else {
+           return 0
+        }
+        return 20
+    }
+    
 }
 
 extension ChatViewController: MessagesEditCollectionOverlayViewDelegate {

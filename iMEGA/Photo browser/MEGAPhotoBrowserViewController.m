@@ -639,7 +639,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case MEGAPhotoModeOriginal: {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion onError:nil];
+            MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
             NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             
             [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];

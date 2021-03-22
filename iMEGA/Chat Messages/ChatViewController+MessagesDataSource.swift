@@ -74,6 +74,34 @@ extension ChatViewController: MessagesDataSource {
         chatMessageReactionView.delegate = self
         return chatMessageReactionView
     }
+    
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        guard let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed else {
+           return nil
+        }
+        
+        let bottomLabelString = NSLocalizedString("Couldn't load. [RED]Tap to retry[/RED]", comment: "")
+        guard let title = (bottomLabelString as NSString).mnz_stringBetweenString("[RED]", andString: "[/RED]") else {
+            return nil
+        }
+        let description = (bottomLabelString as NSString).replacingOccurrences(of: String(format: "[RED]%@[/RED]", title), with: "")
+        
+        let titleAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.mnz_red(for: traitCollection),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
+        ]
+        let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
+        
+        let descriptionAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
+        ]
+        let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
+        
+        descriptionAttributedString.append(titleAttributedString)
+        
+        return descriptionAttributedString
+    }
 }
 
 extension ChatViewController: MessageReactionReusableViewDelegate {

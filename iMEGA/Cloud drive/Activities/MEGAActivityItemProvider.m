@@ -47,7 +47,7 @@
     BOOL activityValue = !([activityType isEqualToString:MEGAUIActivityTypeOpenIn] || [activityType isEqualToString:MEGAUIActivityTypeGetLink] || [activityType isEqualToString:MEGAUIActivityTypeRemoveLink] || [activityType isEqualToString:MEGAUIActivityTypeShareFolder] || [activityType isEqualToString:MEGAUIActivityTypeSaveToCameraRoll] || [activityType isEqualToString:MEGAUIActivityTypeRemoveSharing] || [activityType isEqualToString:MEGAUIActivityTypeSendToChat]);
     if (activityValue) {
         if (self.node.isFile) {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:^(MEGATransfer *transfer) {
+            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:^(MEGATransfer *transfer) {
                 @strongify(self)
                 
                 if (transfer.nodeHandle == self.node.handle) {
@@ -70,7 +70,7 @@
                     [self.alertController dismissViewControllerAnimated:YES completion:nil];
                     dispatch_semaphore_signal(semaphore);
                 }
-            } onError:^(MEGAError *error) {
+            } onError:^(MEGATransfer *transfer, MEGAError *error) {
                 @strongify(self)
                 
                 [self cancel];
