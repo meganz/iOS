@@ -62,6 +62,8 @@
             } else {
                 if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
                     container = [self newPersistentContainerByConfigFileProtection:YES];
+                } else if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_FULL) {
+                    [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
                 } else {
                     abort();
                 }

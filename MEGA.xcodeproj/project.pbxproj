@@ -1375,6 +1375,7 @@
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
 		B60D527625F8888F003E9829 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		B60D528125F88891003E9829 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
+		B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D531A25FA940A003E9829 /* DiskFullBlockingViewController.swift */; };
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F05E82514C022005133C2 /* XCTestCase+Addition.swift */; };
 		B616D808254DFBA300712012 /* CameraUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */; };
@@ -1534,6 +1535,8 @@
 		B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */; };
+		B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */; };
+		B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
 		B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */; };
 		B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B342175852E00882F74 /* AssetUploadInfo.m */; };
@@ -3319,6 +3322,7 @@
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
 		B6048911223CDA8400BA91F9 /* AssetFetchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetFetchResult.h; sourceTree = "<group>"; };
 		B6048912223CDA8400BA91F9 /* AssetFetchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetFetchResult.m; sourceTree = "<group>"; };
+		B60D531A25FA940A003E9829 /* DiskFullBlockingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewController.swift; sourceTree = "<group>"; };
 		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
 		B60F05E82514C022005133C2 /* XCTestCase+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Addition.swift"; sourceTree = "<group>"; };
@@ -3536,6 +3540,8 @@
 		B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadStatus.h; sourceTree = "<group>"; };
 		B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadStatus.m; sourceTree = "<group>"; };
+		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
+		B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewRouter.swift; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
 		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
 		B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionTaskDelegate.h; sourceTree = "<group>"; };
@@ -8295,6 +8301,16 @@
 			path = AttributeOperations;
 			sourceTree = "<group>";
 		};
+		B6DFECDA2607D97B00B0829B /* Disk Full Blocking Scene */ = {
+			isa = PBXGroup;
+			children = (
+				B60D531A25FA940A003E9829 /* DiskFullBlockingViewController.swift */,
+				B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */,
+				B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */,
+			);
+			path = "Disk Full Blocking Scene";
+			sourceTree = "<group>";
+		};
 		B6E7A8D52500D6BC00CD6AC2 /* Auto Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -8908,6 +8924,7 @@
 		E8C289F91BF65B2200F7A034 /* Launch */ = {
 			isa = PBXGroup;
 			children = (
+				B6DFECDA2607D97B00B0829B /* Disk Full Blocking Scene */,
 				41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */,
 				E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */,
 				E8C289FB1BF65B7800F7A034 /* LaunchViewController.h */,
@@ -10313,6 +10330,7 @@
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
+				B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
@@ -10570,6 +10588,7 @@
 				5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */,
 				C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */,
 				B662B88124F8CB490089376A /* MEGAError+Addition.swift in Sources */,
+				B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
 				A86B9F792316D6AB00F35E7A /* FLEXLibrariesTableViewController.m in Sources */,
 				0D8D4D1325B7C57500C7B7FE /* FileManager+Additions.swift in Sources */,
@@ -10805,6 +10824,7 @@
 				830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */,
 				BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
+				B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				BF943E9B23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,

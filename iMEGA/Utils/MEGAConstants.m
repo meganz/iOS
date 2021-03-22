@@ -32,6 +32,7 @@ NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
 NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";
 NSString * const MEGAPasscodeViewControllerWillCloseNotification = @"nz.mega.passcodeViewControllerWillClose";
+NSString * const MEGASQLiteDiskFullNotification = @"nz.mega.sqliteDiskFull";
 
 #pragma mark - global notification keys
 
