@@ -2589,4 +2589,4 @@
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="MEGA가 충분한 수준의 기기 저장 공간을 확보하지 못하였습니다.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="사용하지 않는 앱을 삭제하거나 갤러리에서 큰 동영상 파일을 삭제하여 공간을 확보하세요.다음의 메뉴에서 저장소를 관리할 수 있습니다 %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="사용하지 않는 앱을 삭제하거나 갤러리에서 큰 동영상 파일을 삭제하여 공간을 확보하세요. 다음의 메뉴에서 저장소를 관리할 수 있습니다 %@";
