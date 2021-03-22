@@ -4,9 +4,11 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     
     func setProgressCompleted(_ position: TimeInterval) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
-        currentItem.seek(to: CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale))
-        refreshNowPlayingInfo()
-        notify(aboutCurrentState)
+        currentItem.seek(to: CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.notify(self.aboutCurrentState)
+            self.refreshNowPlayingInfo()
+        }
     }
     
     func resetPlayerItems() {
