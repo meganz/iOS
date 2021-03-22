@@ -17,6 +17,7 @@
 - (void)mnz_saveInPhotosApp;
 - (void)mnz_setNodeCoordinates;
 - (NSString *)mnz_extractChatIDFromAppData;
+- (NSString *)mnz_extractMessageIDFromAppData;
 - (void)mnz_moveFileToDestinationIfVoiceClipData;
 - (NSUInteger)mnz_orderByState;
 

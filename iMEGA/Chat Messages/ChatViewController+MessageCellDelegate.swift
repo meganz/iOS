@@ -66,13 +66,15 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
-            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-                MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
-                return
+              let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,
+              message.transfer?.state != .failed else {
+            MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
+            return
         }
         
         selectedMessages = [message]
         forwardSelectedMessages()
+        
     }
     
     func didSelectURL(_ url: URL) {
@@ -106,12 +108,24 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         }
     }
     
+    func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+              let messagesDataSource = messagesCollectionView.messagesDataSource,
+              let chatMessage = messagesDataSource.messageForItem(at: indexPath,
+                                                                  in: messagesCollectionView) as? ChatMessage,
+              let transfer = chatMessage.transfer,
+              transfer.state == .failed else { return }
+        
+        MEGASdkManager.sharedMEGASdk().retryTransfer(transfer)
+        messagesCollectionView.reloadData()
+    }
+    
     func didTapMessage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
             let messagesDataSource = messagesCollectionView.messagesDataSource,
             let chatMessage = messagesDataSource.messageForItem(at: indexPath,
                                                                 in: messagesCollectionView) as? ChatMessage else { return }
-        if chatMessage.transfer != nil {
+        if let transfer = chatMessage.transfer, transfer.type == .upload {
             checkTransferPauseStatus()
             if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
                 guard let cell = cell as? AudioMessageCell else {

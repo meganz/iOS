@@ -184,7 +184,7 @@ class ChatViewController: MessagesViewController {
             }
             
             let megaMessage = chatMessage.message
-            if megaMessage.isManagementMessage || chatMessage.transfer != nil {
+            if megaMessage.isManagementMessage || chatMessage.transfer?.type == .upload {
                 return
             }
             let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)

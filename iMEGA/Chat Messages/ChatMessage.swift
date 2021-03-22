@@ -68,7 +68,7 @@ extension ChatMessage: SenderType {
             return "0"
         }
         
-        if transfer != nil {
+        if transfer?.type == .upload {
             return String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle)
         }
         
