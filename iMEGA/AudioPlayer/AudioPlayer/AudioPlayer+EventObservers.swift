@@ -27,6 +27,7 @@ extension AudioPlayer {
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: AVAudioSession.interruptionNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(changeRoute:)), name: AVAudioSession.routeChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogout(notification:)), name: Notification.Name.MEGALogout, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: Notification.Name.MEGAAudioPlayerInterruption, object: nil)
     }
     
     func unregisterAudioPlayerNotifications() {
@@ -120,28 +121,36 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .began:
+            MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
+            isAudioPlayerInterrupted = true
             pause()
-            notify(aboutAudioPlayerDidPausePlayback)
+            
         case .ended:
+            MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
             guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
+                setAudioSession(active: true)
                 play()
-                notify(aboutAudioPlayerDidResumePlayback)
             }
+            isAudioPlayerInterrupted = false
+            
         default: break
         }
+        
+        notify(aboutCurrentState)
     }
     
     @objc func audioPlayer(changeRoute notification: Notification) {
-        guard let userInfo = notification.userInfo,
+        guard !isAudioPlayerInterrupted,
+              let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
               let type = AVAudioSession.RouteChangeReason(rawValue: typeValue) else { return }
         
         switch type {
-        case .categoryChange:
-            if isPlaying { pause() }
-        case .oldDeviceUnavailable: pause()
+        case .oldDeviceUnavailable:
+            MEGALogDebug("[AudioPlayer] AVAudioSessionRouteChangeReason OldDeviceunavailable")
+            if !isAudioPlayerInterrupted { pause() }
             
         default:
             break
