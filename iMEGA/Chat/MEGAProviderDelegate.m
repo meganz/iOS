@@ -13,6 +13,7 @@
 #import "UIApplication+MNZCategory.h"
 
 #import "MEGANavigationController.h"
+#import "MEGA-Swift.h"
 
 @interface MEGAProviderDelegate () <MEGAChatCallDelegate, MEGAChatDelegate>
 
@@ -233,6 +234,18 @@
     
     [self.provider reportCallWithUUID:call.uuid updated:callUpdate];
 }
+
+- (void)sendAudioPlayerInterruptDidStartNotificationIfNeeded {
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared audioInterruptionDidStart];
+    }
+}
+
+- (void)sendAudioPlayerInterruptDidEndNotificationIfNeeded {
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
+    }
+}
     
 - (void)reportEndCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report end call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
@@ -397,6 +410,8 @@
 
 - (void)provider:(CXProvider *)provider didDeactivateAudioSession:(AVAudioSession *)audioSession {
     MEGALogDebug(@"[CallKit] Provider did deactivate audio session");
+    
+    [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
 }
 
 #pragma mark - MEGAChatCallDelegate
@@ -417,6 +432,7 @@
         case MEGAChatCallStatusRequestSent:
             self.outgoingCall = YES;
             [self.provider reportOutgoingCallWithUUID:call.uuid startedConnectingAtDate:nil];
+            [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
             break;
             
         case MEGAChatCallStatusRingIn: {
@@ -424,6 +440,7 @@
             if (uuid) {
                 [self updateCall:call];
             }
+            [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
             break;
         }
             
@@ -470,6 +487,13 @@
         case MEGAChatCallStatusTerminatingUserParticipation:
             if ([call hasChangedForType:MEGAChatCallChangeTypeStatus]) {
                 [self reportEndCall:call];
+                if(call.termCode == MEGAChatCallTermCodeCallReject ||
+                   call.termCode == MEGAChatCallTermCodeRejectElseWhere ||
+                   call.termCode == MEGAChatCallTermCodeAnswerElseWhere ||
+                   call.termCode == MEGAChatCallTermCodeBusy ||
+                   call.termCode == MEGAChatCallTermCodeCallReqCancel) {
+                    [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
+                }
             }
             break;
             

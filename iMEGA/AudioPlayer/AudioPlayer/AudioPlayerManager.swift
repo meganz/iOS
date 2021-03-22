@@ -242,4 +242,20 @@ import Foundation
             setAudioPlayerAudioSession()
         }
     }
+    
+    func audioInterruptionDidStart() {
+        NotificationCenter.default.post(name: Notification.Name.MEGAAudioPlayerInterruption,
+                                        object: nil,
+                                        userInfo: [AVAudioSessionInterruptionTypeKey: AVAudioSession.InterruptionType.began.rawValue])
+    }
+    
+    func audioInterruptionDidEndNeedToResume(_ resume: Bool) {
+        let userInfo = resume ? [AVAudioSessionInterruptionTypeKey: AVAudioSession.InterruptionType.ended.rawValue,
+                                 AVAudioSessionInterruptionOptionKey: AVAudioSession.InterruptionOptions.shouldResume.rawValue] :
+                                [AVAudioSessionInterruptionTypeKey: AVAudioSession.InterruptionType.ended.rawValue]
+        
+        NotificationCenter.default.post(name: Notification.Name.MEGAAudioPlayerInterruption,
+                                        object: nil,
+                                        userInfo: userInfo)
+    }
 }

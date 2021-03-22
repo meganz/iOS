@@ -97,6 +97,11 @@ final class AudioPlayer: NSObject {
     @objc var isPaused: Bool = false
     
     var isAutoPlayEnabled: Bool = true
+    var isAudioPlayerInterrupted: Bool = false {
+        didSet {
+            isAudioPlayerInterrupted ? disableRemoteCommands() : enableRemoteCommands()
+        }
+    }
     
     //MARK: - Private Functions
     init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false]) {
@@ -109,7 +114,7 @@ final class AudioPlayer: NSObject {
         unregisterRemoteControls()
         unregisterAudioPlayerNotifications()
         queuePlayer = nil
-        try? setDefaultAudioSession()
+        setDefaultAudioSession()
     }
     
     private func setupPlayer() {
@@ -128,24 +133,24 @@ final class AudioPlayer: NSObject {
         isAutoPlayEnabled ? play() : pause()
         preloadNextTracksMetadata()
     }
+
+    //MARK: - Internal Functions
+    func setAudioSession(active: Bool) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setActive(active)
+        } catch {
+            MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
+        }
+    }
     
-    private func setDefaultAudioSession() throws {
+    func setDefaultAudioSession() {
         do {
         try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
         try AVAudioSession.sharedInstance().setMode(.voiceChat)
         try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         } catch {
             MEGALogError("[AudioPlayer] Restore default AVAudioSession Error: \(error.localizedDescription)")
-        }
-    }
-
-    //MARK: - Internal Functions
-    func setAudioSession(active: Bool) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: .defaultToSpeaker)
-            try AVAudioSession.sharedInstance().setActive(active)
-        } catch {
-            MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
         }
     }
     
