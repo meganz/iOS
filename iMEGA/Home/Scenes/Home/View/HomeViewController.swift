@@ -103,6 +103,7 @@ final class HomeViewController: UIViewController {
             homeQuickActionSearch = false
             activateSearch()
         }
+        AudioPlayerManager.shared.addDelegate(self);
     }
 
     private func setupViewModelEventListening() {
@@ -698,4 +699,14 @@ private extension Selector {
     static let didTapAvatar = #selector(HomeViewController.didTapAvatarItem)
     static let didTapNewChat = #selector(HomeViewController.didTapNewChat)
     static let didTapNewUpload = #selector(HomeViewController.didTapNewUpload)
+}
+
+
+
+//MARK:- AudioPlayer
+extension HomeViewController: AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        slidePanelView.offlineScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        slidePanelView.recentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+    }
 }

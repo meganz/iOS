@@ -69,8 +69,8 @@ class FilesExplorerContainerViewController: UIViewController {
         AudioPlayerManager.shared.addDelegate(self)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         AudioPlayerManager.shared.removeDelegate(self)
     }
     

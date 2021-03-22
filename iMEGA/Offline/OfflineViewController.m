@@ -139,6 +139,11 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [AudioPlayerManager.shared removeDelegate:self];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
@@ -149,8 +154,6 @@ static NSString *kisDirectory = @"kisDirectory";
         self.selectedItems = nil;
         [self setEditMode:NO];
     }
-    
-    [AudioPlayerManager.shared removeDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
