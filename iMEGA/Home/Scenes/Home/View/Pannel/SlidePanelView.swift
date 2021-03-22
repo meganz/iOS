@@ -27,13 +27,13 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var recentsContainerView: UIView!
     
-    private var recentScrollView: UIScrollView!
+    public var recentScrollView: UIScrollView!
 
     // MARK: - Offlines Tab
 
     @IBOutlet private var offlineContainerView: UIView!
     
-    private var offlineScrollView: UIScrollView!
+    public var offlineScrollView: UIScrollView!
 
     // MARK: - Tab Control
 
