@@ -36,6 +36,8 @@ final class AudioPlayer: NSObject {
     private let assetKeysRequiredToPlay = ["playable"]
     private var playerViewControllerKVOContext = 0
     private var timer: Timer?
+    
+    private var taskId: UIBackgroundTaskIdentifier?
   
     //MARK: - Internal Computed Properties
     var currentIndex: Int? {
@@ -133,6 +135,19 @@ final class AudioPlayer: NSObject {
         isAutoPlayEnabled ? play() : pause()
         preloadNextTracksMetadata()
     }
+    
+    private func beginBackgroundTask() {
+        taskId = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            self.endBackgroundTask()
+        })
+    }
+    
+    private func endBackgroundTask() {
+        if self.taskId != .invalid {
+            UIApplication.shared.endBackgroundTask(self.taskId ?? .invalid)
+            self.taskId = .invalid
+        }
+    }
 
     //MARK: - Internal Functions
     func setAudioSession(active: Bool) {
@@ -155,6 +170,7 @@ final class AudioPlayer: NSObject {
     }
     
     func add(tracks: [AudioPlayerItem]) {
+        beginBackgroundTask()
         self.tracks = tracks
         setupPlayer()
     }
@@ -228,6 +244,7 @@ extension AudioPlayer: AudioPlayerTimerProtocol {
             guard let `self` = self else { return }
             self.notify(self.aboutCurrentState)
         }
+        endBackgroundTask()
     }
     
     func invalidateTimer() {
