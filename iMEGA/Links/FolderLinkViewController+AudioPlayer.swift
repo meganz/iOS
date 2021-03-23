@@ -6,9 +6,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
         
         bottomView?.removeFromSuperview()
         
-        addChild(viewController)
         view.addSubview(miniPlayerView)
-        viewController.didMove(toParent: self)
         
         miniPlayerView.autoSetDimension(.height, toSize: 60.0)
         miniPlayerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
