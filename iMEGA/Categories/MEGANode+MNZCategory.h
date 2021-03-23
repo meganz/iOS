@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)mnz_downloadNode;
 - (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
+- (BOOL)mnz_downloadNodeTopPriority;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
