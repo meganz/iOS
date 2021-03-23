@@ -106,9 +106,9 @@ import Foundation
         }
     }
     
-    func play(direction: MovementDirection) {
+    func play(item: AudioPlayerItem) {
         player?.blockAudioPlayerInteraction()
-        player?.play(direction) { [weak self] in
+        player?.play(item: item) { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
         }
     }

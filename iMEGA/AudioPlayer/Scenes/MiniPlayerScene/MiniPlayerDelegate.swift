@@ -1,7 +1,7 @@
 import Foundation
 
 protocol MiniPlayerActionsDelegate: class {
-    func play(direction: MovementDirection)
+    func play(index: IndexPath)
     func showPlayer(node: MEGAHandle, filePath: String?)
     func showPlayer(filePath: String?)
 }
@@ -28,16 +28,15 @@ final class MiniPlayerDelegate: NSObject, UICollectionViewDelegateFlowLayout, UI
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let collectionView = scrollView as? UICollectionView,
-              let lastContentOffset = lastContentOffset else { return}
+              let lastContentOffset = lastContentOffset,
+              let currentIndexPath = collectionView.indexPathForItem(at: CGPoint(x: scrollView.contentOffset.x + (scrollView.frame.width / 2), y: (scrollView.frame.height / 2))) else { return}
         
-        let center = CGPoint(x: scrollView.contentOffset.x + (scrollView.frame.width / 2), y: (scrollView.frame.height / 2))
         let lastIndexPath = collectionView.indexPathForItem(at: lastContentOffset)
-        let currentIndexPath = collectionView.indexPathForItem(at: center)
         
-        if loopMode, currentIndexPath?.row ?? 0 == itemsNumber {
+        if loopMode, currentIndexPath.row == itemsNumber {
             collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
         } else if lastIndexPath != currentIndexPath || lastIndexPath == IndexPath(row: 0, section: 0) {
-            delegate?.play(direction: lastContentOffset.x < scrollView.contentOffset.x ? .up : .down)
+            delegate?.play(index: currentIndexPath)
         }
     }
     
