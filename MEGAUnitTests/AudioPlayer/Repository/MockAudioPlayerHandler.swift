@@ -113,7 +113,6 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func currentRepeatMode() -> RepeatMode { RepeatMode.none }
     func refreshCurrentItemState() {}
     func setAudioPlayerAudioSession() {}
-    func activeAudioPlayerSessionIfNeeded() {}
     func autoPlay(enable: Bool) {}
     func audioInterruptionDidStart() {}
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}

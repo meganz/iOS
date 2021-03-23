@@ -154,7 +154,6 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()
     func setAudioPlayerAudioSession()
-    func activeAudioPlayerSessionIfNeeded()
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
 }
