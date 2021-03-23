@@ -8,8 +8,8 @@ enum DocScanExportFileType: String {
 }
 
 enum DocScanQuality: Float, CustomStringConvertible {
-    case best = 1
-    case medium = 0.9
+    case best = 0.95
+    case medium = 0.8
     case low = 0.7
     
     var description: String {
