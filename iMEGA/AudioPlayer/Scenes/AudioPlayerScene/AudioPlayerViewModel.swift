@@ -190,6 +190,7 @@ final class AudioPlayerViewModel: ViewModelType {
         guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
               let currentFilePath = selectedFilePath,
               let currentTrack = files.first(where: { $0.url.path == currentFilePath }) else {
+            invokeCommand?(.configureOfflinePlayer)
             self.reloadNodeInfoWithCurrentItem()
             router.dismiss()
             return
