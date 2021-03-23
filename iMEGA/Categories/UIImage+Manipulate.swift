@@ -51,7 +51,7 @@ extension UIImage {
                 newWidth = (width * maxSize) / height;
             }
         }
-        return self.resize(to: CGSize(width: newWidth, height: newHeight)).jpegData(compressionQuality: CGFloat(docScanQuality.rawValue))
+        return self.resize(to: CGSize(width: newWidth / UIScreen.main.scale, height: newHeight / UIScreen.main.scale)).jpegData(compressionQuality: CGFloat(docScanQuality.rawValue))
         
     }
 }
