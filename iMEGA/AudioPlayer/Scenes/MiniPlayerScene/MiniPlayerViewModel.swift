@@ -39,6 +39,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
+    var playerType: PlayerType = .default
     
     // MARK: - Init
     init(fileLink: String?,
@@ -82,6 +83,7 @@ final class MiniPlayerViewModel: ViewModelType {
                 router.dismiss()
                 return
             }
+            playerType = .fileLink
             initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
@@ -90,6 +92,7 @@ final class MiniPlayerViewModel: ViewModelType {
                 router.dismiss()
                 return
             }
+            playerType = isFolderLink ? .folderLink : .default
             initialize(tracks: children, currentTrack: currentTrack)
         }
     }
@@ -103,6 +106,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         
+        playerType = .offline
         initialize(tracks: files, currentTrack: currentTrack)
     }
     
@@ -110,7 +114,7 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
-        playerHandler.autoPlay(enable: fileLink == nil)
+        playerHandler.autoPlay(enable: playerType != .folderLink)
         playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
     }
