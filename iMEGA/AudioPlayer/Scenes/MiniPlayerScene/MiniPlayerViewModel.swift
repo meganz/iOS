@@ -3,7 +3,7 @@ import Foundation
 enum MiniPlayerAction: ActionType {
     case onViewDidLoad
     case onPlayPause
-    case play(MovementDirection)
+    case playItem(AudioPlayerItem)
     case onClose
     case `deinit`
     case showPlayer(MEGAHandle?, String?)
@@ -199,8 +199,8 @@ final class MiniPlayerViewModel: ViewModelType {
             shouldInitializePlayer ? preparePlayer() : configurePlayer()
         case .onPlayPause:
             playerHandler.playerTogglePlay()
-        case .play(let direction):
-            playerHandler.play(direction: direction)
+        case .playItem(let item):
+            playerHandler.play(item: item)
         case .onClose:
             closeMiniPlayer()
         case .deinit:
@@ -225,12 +225,10 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
-        guard let thumbnail = thumbnail else { return }
         invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
     }
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {
-        guard let thumbnail = thumbnail else { return }
         invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
     }
     

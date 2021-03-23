@@ -22,8 +22,8 @@ final class MiniPlayerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .onPlayPause, expectedCommands: [])
         XCTAssertEqual(playerHandler.togglePlay_calledTimes, 1)
         
-        test(viewModel: viewModel, action: .play(MovementDirection.up), expectedCommands: [])
-        XCTAssertEqual(playerHandler.playDirection_calledTimes, 1)
+        test(viewModel: viewModel, action: .playItem(AudioPlayerItem.mockItem), expectedCommands: [])
+        XCTAssertEqual(playerHandler.playItem_calledTimes, 1)
         
         test(viewModel: viewModel, action: .deinit, expectedCommands: [])
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)

@@ -113,8 +113,8 @@ final class MiniPlayerViewController: UIViewController {
         }
     }
     
-    private func userInteraction(enable: Bool) {
-        collectionView.isUserInteractionEnabled = enable
+    private func userInteraction(enabled: Bool) {
+        collectionView.isUserInteractionEnabled = enabled
     }
     
     private func refreshStateOfLoadingView(_ enable: Bool) {
@@ -164,21 +164,20 @@ final class MiniPlayerViewController: UIViewController {
             updateCurrent(indexPath: indexPath, item: currentItem)
         case .showLoading(let show):
             refreshStateOfLoadingView(show)
-        case .enableUserInteraction(let enable):
-            userInteraction(enable: enable)
+        case .enableUserInteraction(let enabled):
+            userInteraction(enabled: enabled)
         }
     }
 }
 
 extension MiniPlayerViewController: MiniPlayerActionsDelegate {
-    
-    func play(direction: MovementDirection) {
-        viewModel.dispatch(.play(direction))
+    func play(index: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: index) as? MiniPlayerItemCollectionViewCell,
+              let item = cell.item else { return }
         
-        guard let cell = collectionView.visibleCells.first as? MiniPlayerItemCollectionViewCell,
-              let indexPath = collectionView.indexPath(for: cell) else { return }
+        viewModel.dispatch(.playItem(item))
         
-        lastMovementIndexPath = indexPath
+        lastMovementIndexPath = index
     }
     
     func showPlayer(node: MEGAHandle, filePath: String?) {

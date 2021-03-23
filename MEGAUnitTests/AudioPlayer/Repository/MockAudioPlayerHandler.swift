@@ -17,7 +17,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var addPlayerTracks_calledTimes = 0
     var addPlayerListener_calledTimes = 0
     var removePlayerListener_calledTimes = 0
-    var playDirection_calledTimes = 0
+    var playItem_calledTimes = 0
     
     func isPlayerDefined() -> Bool { false }
     func isPlayerEmpty() -> Bool { false }
@@ -78,8 +78,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         playNext_calledTimes += 1
     }
     
-    func play(direction: MovementDirection) {
-        playDirection_calledTimes += 1
+    func play(item: AudioPlayerItem) {
+        playItem_calledTimes += 1
     }
     
     func playerRepeatAll(active: Bool) {

@@ -114,7 +114,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         } else {
             if queuePlayer?.items().count ?? 0 == tracks.count {
                 guard let currentItem = queuePlayer?.currentItem as? AudioPlayerItem else {
-                    notify(aboutTheEndOfBlockingAction)
+                    completion()
                     return
                 }
                 
@@ -153,8 +153,25 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
     }
     
-    @objc func play(_ direction: MovementDirection, completion: @escaping () -> Void) {
-        direction == .up ? playNext(completion): playPrevious(completion)
+    @objc func play(item: AudioPlayerItem, completion: @escaping () -> Void) {
+        guard let queuePlayer = queuePlayer,
+              let index = tracks.firstIndex(where: {$0 == item}) else {
+            completion()
+            return
+        }
+        
+        queuePlayer.remove(item)
+        queuePlayer.replaceCurrentItem(with: item)
+        
+        queuePlayer.items().filter({$0 != item}).forEach {
+            queuePlayer.remove($0)
+        }
+        
+        ((index + 1)..<tracks.count).forEach { index in
+            queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
+        }
+        
+        completion()
     }
     
     @objc func isShuffleMode() -> Bool {
