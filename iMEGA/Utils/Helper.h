@@ -40,6 +40,8 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink isTopPriority:(BOOL)isTopPriority;
++ (void)downloadNodeTopPriority:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
 
 + (NSMutableArray *)uploadingNodes;
 + (void)startPendingUploadTransferIfNeeded;

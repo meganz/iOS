@@ -314,6 +314,10 @@ static MEGAIndexer *indexer;
 }
 
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
+    [self downloadNode:node folderPath:folderPath isFolderLink:isFolderLink isTopPriority:NO];
+}
+
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink isTopPriority:(BOOL)isTopPriority {
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
     if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderInboxError", nil)];
@@ -329,7 +333,15 @@ static MEGAIndexer *indexer;
     
     NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
-    [api startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
+    if (isTopPriority) {
+        [api startDownloadTopPriorityWithNode:[api authorizeNode:node] localPath:relativeFilePath appData:nil];
+    } else {
+        [api startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
+    }
+}
+
++ (void)downloadNodeTopPriority:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
+    [self downloadNode:node folderPath:folderPath isFolderLink:isFolderLink isTopPriority:YES];
 }
 
 + (void)copyNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {

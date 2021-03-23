@@ -216,7 +216,11 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNode {
-    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
+    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk] isTopPriority:NO];
+}
+
+- (BOOL)mnz_downloadNodeTopPriority {
+    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk] isTopPriority:YES];
 }
 
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController {
@@ -261,11 +265,11 @@
     [viewController presentViewController:labelsActionSheet animated:YES completion:nil];
 }
 
-- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api {
+- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api isTopPriority:(BOOL)isTopPriority {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink];
+            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink isTopPriority:isTopPriority];
             return YES;
         } else {
             return NO;
