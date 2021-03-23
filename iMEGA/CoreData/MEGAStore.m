@@ -304,8 +304,10 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:userHandle]];
     [request setPredicate:predicate];
     
-    NSError *error;
-    NSArray *array = [context executeFetchRequest:request error:&error];
+    __block NSArray<MOUser *> *array;
+    [context performBlockAndWait:^{
+        array = [context executeFetchRequest:request error:nil];
+    }];
     
     return [array firstObject];
 }
@@ -504,9 +506,12 @@
 - (NSArray<MOMessage *> *)fetchMessagesWithContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [MOMessage fetchRequest];
     
-    NSError *error;
+    __block NSArray<MOMessage *> *messages;
+    [context performBlockAndWait:^{
+        messages = [context executeFetchRequest:request error:nil];
+    }];
     
-    return [context executeFetchRequest:request error:&error];
+    return messages;
 }
 
 - (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
