@@ -237,12 +237,6 @@ import Foundation
         player?.setAudioSession(active: true)
     }
     
-    func activeAudioPlayerSessionIfNeeded() {
-        if isPlayerAlive() {
-            setAudioPlayerAudioSession()
-        }
-    }
-    
     func audioInterruptionDidStart() {
         NotificationCenter.default.post(name: Notification.Name.MEGAAudioPlayerInterruption,
                                         object: nil,
