@@ -18,9 +18,6 @@ final class DiskFullBlockingViewRouter: NSObject, DiskFullBlockingViewRouting {
     }
     
     func manageDiskSpace() {
-        MEGALinkManager.processLinkURL(URL(string: UIApplication.openSettingsURLString))
-        DispatchQueue.main.async {
-            exit(0)
-        }
+        exit(0)
     }
 }

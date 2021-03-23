@@ -33,7 +33,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
     }()
     
     private lazy var headerImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "blockingDiskFull"))
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -106,11 +106,23 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
     // MARK: - Execute command
     func executeCommand(_ command: DiskFullBlockingViewModel.Command) {
         switch command {
-        case let .configView(title, description, manageTitle):
-            titleLabel.text = title
-            descriptionLabel.attributedText = description
-            manageButton.setTitle(manageTitle, for: .normal)
+        case let .configView(blockingModel):
+            titleLabel.text = blockingModel.title
+            manageButton.setTitle(blockingModel.manageDiskSpaceTitle, for: .normal)
+            headerImageView.image = UIImage(named: blockingModel.headerImageName)
+            descriptionLabel.attributedText = buildDescriptionText(by: blockingModel)
         }
+    }
+    
+    private func buildDescriptionText(by blockingModel: DiskFullBlockingModel) -> NSAttributedString {
+        let attributedString =
+            NSMutableAttributedString(string: blockingModel.description,
+                                      attributes:
+                                        [.font : UIFont.preferredFont(forTextStyle: .subheadline)])
+        let range = NSString(string: blockingModel.description).range(of: blockingModel.highlightedText)
+        attributedString.addAttributes([.font : UIFont.preferredFont(forTextStyle: .subheadline).bold()],
+                                       range: range)
+        return attributedString.copy() as! NSAttributedString
     }
 }
 
