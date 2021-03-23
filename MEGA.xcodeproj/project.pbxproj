@@ -178,7 +178,6 @@
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
 		5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */; };
 		5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0343D825822867005307A6 /* UIApplication+Additions.swift */; };
-		5B0568FA220C19BF0099BF74 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
 		5B09ABB522A9501C007342EF /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62528922A94AE700A4A8AA /* CoreTelephony.framework */; };
 		5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */; };
 		5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */; };
@@ -226,6 +225,8 @@
 		5B40B3AC2422ACB900B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
 		5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
 		5B43C3262542F31B00A54AB6 /* ClearChatHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43C3252542F31B00A54AB6 /* ClearChatHistoryUseCase.swift */; };
+		5B45D2AF260A0AB600DDD076 /* ItemListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B45D2AE260A0AB600DDD076 /* ItemListViewController.storyboard */; };
+		5B45D2C2260A0FA600DDD076 /* ItemListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B45D2AE260A0AB600DDD076 /* ItemListViewController.storyboard */; };
 		5B46D96924333D6100404ED4 /* Achievements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B46D96824333D6100404ED4 /* Achievements.storyboard */; };
 		5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */; };
 		5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */; };
@@ -2266,6 +2267,7 @@
 		5B40AB311F7A512E0034C3B3 /* AchievementsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsDetailsViewController.h; sourceTree = "<group>"; };
 		5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingPreference.swift; sourceTree = "<group>"; };
 		5B43C3252542F31B00A54AB6 /* ClearChatHistoryUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearChatHistoryUseCase.swift; sourceTree = "<group>"; };
+		5B45D2AE260A0AB600DDD076 /* ItemListViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ItemListViewController.storyboard; sourceTree = "<group>"; };
 		5B46D96824333D6100404ED4 /* Achievements.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Achievements.storyboard; sourceTree = "<group>"; };
 		5B48F8011F4C73FE001E3A29 /* AchievementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsViewController.h; sourceTree = "<group>"; };
 		5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsViewController.m; sourceTree = "<group>"; };
@@ -6651,6 +6653,7 @@
 		83337CA821009476000F40A7 /* ItemList */ = {
 			isa = PBXGroup;
 			children = (
+				5B45D2AE260A0AB600DDD076 /* ItemListViewController.storyboard */,
 				835223B22059588300A47438 /* ItemListViewController.h */,
 				835223B32059588300A47438 /* ItemListViewController.m */,
 				83337CA921009494000F40A7 /* ItemListModel.h */,
@@ -9420,6 +9423,7 @@
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */,
 				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
+				5B45D2AF260A0AB600DDD076 /* ItemListViewController.storyboard in Resources */,
 				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
@@ -9521,6 +9525,7 @@
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
 				B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */,
+				5B45D2C2260A0FA600DDD076 /* ItemListViewController.storyboard in Resources */,
 				BFCB8106250081C80096BD57 /* PhotoExplorerCollectionCell.xib in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
@@ -11067,7 +11072,6 @@
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */,
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
-				5B0568FA220C19BF0099BF74 /* ItemCollectionViewCell.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				BF08AA0025CA28AD009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				A8F0A1DA2178B41900575C57 /* MOMessage+CoreDataClass.m in Sources */,
