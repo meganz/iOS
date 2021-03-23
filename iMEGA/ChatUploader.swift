@@ -92,7 +92,7 @@
             let transferList = MEGASdkManager.sharedMEGASdk().transfers
             MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
             let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
-            store.fetchAllChatUploadTransfer(context: context)?.forEach { transfer in
+            store.fetchAllChatUploadTransfer(context: context).forEach { transfer in
                 if transfer.nodeHandle == nil {
                     MEGALogDebug("[ChatUploader] transfer task not completed \(transfer.index) : \(transfer.filepath)")
                     
