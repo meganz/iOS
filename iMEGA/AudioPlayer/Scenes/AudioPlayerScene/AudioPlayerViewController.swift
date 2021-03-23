@@ -336,6 +336,7 @@ final class AudioPlayerViewController: UIViewController {
         case .reloadThumbnail(let thumbnail):
             imageView.image = thumbnail
         case .showLoading(let enable):
+            timeSliderView.isUserInteractionEnabled = !enable
             refreshStateOfLoadingView(enable)
         case .updateRepeat(let status):
             updateRepeat(status)
