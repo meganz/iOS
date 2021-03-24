@@ -72,10 +72,10 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
             notify(aboutAudioPlayerConfiguration)
         }
         
-        updateCommandsState(enabled: false)
+        disableRemoteCommands()
         playNext() { [weak self] in
             guard let `self` = self else { return }
-            self.updateCommandsState(enabled: true)
+            self.enableRemoteCommands()
         }
 
         return.success
@@ -84,10 +84,10 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     @objc func audioPlayer(didReceivePreviousTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         guard event.command.isEnabled, queuePlayer != nil else { return .commandFailed }
         
-        updateCommandsState(enabled: false)
+        disableRemoteCommands()
         playPrevious() { [weak self] in
             guard let `self` = self else { return }
-            self.updateCommandsState(enabled: true)
+            self.enableRemoteCommands()
         }
 
         return.success

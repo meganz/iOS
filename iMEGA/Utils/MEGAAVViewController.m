@@ -85,6 +85,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared audioInterruptionDidStart];
+        [AudioPlayerManager.shared remoteCommandEnabled:NO];
     }
 }
 
@@ -142,6 +143,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:NO];
+        [AudioPlayerManager.shared remoteCommandEnabled:YES];
     }
         
     if (![AudioPlayerManager.shared isPlayerAlive]) {
