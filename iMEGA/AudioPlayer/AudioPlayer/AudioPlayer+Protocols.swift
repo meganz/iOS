@@ -156,6 +156,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func setAudioPlayerAudioSession()
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
+    func remoteCommandEnabled(_ enabled: Bool)
 }
 
 //MARK: - Mini Audio Player Handlers Functions

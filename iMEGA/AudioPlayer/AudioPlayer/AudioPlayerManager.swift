@@ -252,4 +252,8 @@ import Foundation
                                         object: nil,
                                         userInfo: userInfo)
     }
+    
+    func remoteCommandEnabled(_ enabled: Bool) {
+        enabled ? player?.enableRemoteCommands() : player?.disableRemoteCommands()
+    }
 }

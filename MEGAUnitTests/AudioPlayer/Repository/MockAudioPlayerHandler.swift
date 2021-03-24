@@ -116,4 +116,5 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func autoPlay(enable: Bool) {}
     func audioInterruptionDidStart() {}
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}
+    func remoteCommandEnabled(_ enabled: Bool) {}
 }

@@ -99,11 +99,7 @@ final class AudioPlayer: NSObject {
     @objc var isPaused: Bool = false
     
     var isAutoPlayEnabled: Bool = true
-    var isAudioPlayerInterrupted: Bool = false {
-        didSet {
-            isAudioPlayerInterrupted ? disableRemoteCommands() : enableRemoteCommands()
-        }
-    }
+    var isAudioPlayerInterrupted: Bool = false
     
     //MARK: - Private Functions
     init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false]) {
