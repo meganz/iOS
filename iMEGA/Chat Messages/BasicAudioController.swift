@@ -145,6 +145,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             MEGALogInfo("Failed to set audio mode to default")
         }
         proximityChanged()
+        
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidStart()
+        }
     }
 
     /// Used to pause the audio sound
@@ -192,6 +196,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         playingMessage = nil
         playingCell = nil
         setProximitySensorEnabled(false)
+        
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+        }
     }
 
     /// Resume a currently pause audio sound
