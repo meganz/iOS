@@ -4,7 +4,11 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     
     func setProgressCompleted(_ position: TimeInterval) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
-        currentItem.seek(to: CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)) { [weak self] _ in
+        
+        let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
+        guard CMTIME_IS_VALID(time) else { return }
+        
+        currentItem.seek(to: time) { [weak self] _ in
             guard let `self` = self else { return }
             self.notify(self.aboutCurrentState)
             self.refreshNowPlayingInfo()
@@ -222,11 +226,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func setProgressCompleted(_ percentage: Float) {
         guard let queuePlayer = queuePlayer,
               let currentItem = queuePlayer.currentItem else { return }
-        let time = CMTime(seconds: CMTimeGetSeconds(currentItem.duration) * Double(percentage), preferredTimescale: currentItem.duration.timescale)
-        guard CMTIME_IS_VALID(time) else { return }
-        currentItem.seek(to: time)
-        refreshNowPlayingInfo()
-        notify(aboutCurrentState)
+        
+        setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
     @objc func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
