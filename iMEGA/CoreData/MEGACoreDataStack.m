@@ -4,7 +4,7 @@
 
 @interface MEGACoreDataStack ()
 
-@property (strong, nonatomic) NSPersistentContainer *persistentContainer;
+@property (strong, nonatomic, nullable) NSPersistentContainer *persistentContainer;
 @property (strong, nonatomic) NSString *modelName;
 @property (strong, nonatomic) NSURL *storeURL;
 
@@ -23,7 +23,7 @@
 
 #pragma mark - persistent container
 
-- (NSPersistentContainer *)persistentContainer {
+- (nullable NSPersistentContainer *)persistentContainer {
     if (_persistentContainer == nil) {
         _persistentContainer = [self newPersistentContainerByConfigFileProtection:NO];
     }
@@ -38,7 +38,7 @@
  
  @return a new NSPersistentContainer object
  */
-- (NSPersistentContainer *)newPersistentContainerByConfigFileProtection:(BOOL)shouldConfigFileProtection {
+- (nullable NSPersistentContainer *)newPersistentContainerByConfigFileProtection:(BOOL)shouldConfigFileProtection {
     __block NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:self.modelName];
     NSPersistentStoreDescription *storeDescription;
     if (self.storeURL) {
@@ -63,6 +63,7 @@
                 if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
                     container = [self newPersistentContainerByConfigFileProtection:YES];
                 } else if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_FULL) {
+                    container = nil;
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
                 } else {
                     abort();

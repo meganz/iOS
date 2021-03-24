@@ -2,7 +2,11 @@
 extension MEGAStore {
     
     func deleteQuickAccessRecentItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
-        let context = stack.newBackgroundContext()
+        guard let context = stack.newBackgroundContext() else {
+            completion(.failure(.megaStore))
+            return
+        }
+        
         context.perform {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetRecentItem")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -66,9 +70,9 @@ extension MEGAStore {
     }
     
     func fetchAllQuickAccessRecentItem() -> [RecentItemEntity] {
-        let context = stack.newBackgroundContext()
         var items = [RecentItemEntity]()
         
+        guard let context = stack.newBackgroundContext() else { return items }
         context.performAndWait {
             do {
                 let fetchRequest: NSFetchRequest<QuickAccessWidgetRecentItem> = QuickAccessWidgetRecentItem.fetchRequest()
@@ -154,9 +158,8 @@ extension MEGAStore {
     }
     
     func fetchAllQuickAccessFavouriteItems() -> [FavouriteItemEntity] {
-        let context = stack.newBackgroundContext()
         var items = [FavouriteItemEntity]()
-        
+        guard let context = stack.newBackgroundContext() else { return items }
         context.performAndWait {
             do {
                 let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
@@ -176,9 +179,8 @@ extension MEGAStore {
     }
     
     func fetchQuickAccessFavourtieItems(withLimit fetchLimit: Int?) -> [FavouriteItemEntity] {
-        let context = stack.newBackgroundContext()
         var items = [FavouriteItemEntity]()
-        
+        guard let context = stack.newBackgroundContext() else { return items }
         context.performAndWait {
             let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]

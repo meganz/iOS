@@ -386,6 +386,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 #pragma mark - helper methods
 
 - (MOAssetUploadErrorPerLaunch *)createErrorRecordPerLaunchForLocalIdentifier:(NSString *)identifier {
+    if (self.backgroundContext == nil) return nil;
+    
     MOAssetUploadErrorPerLaunch *errorPerLaunch = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLaunch" inManagedObjectContext:self.backgroundContext];
     errorPerLaunch.localIdentifier = identifier;
     errorPerLaunch.errorCount = @(0);
@@ -393,6 +395,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 }
 
 - (MOAssetUploadErrorPerLogin *)createErrorRecordPerLoginForLocalIdentifier:(NSString *)identifier {
+    if (self.backgroundContext == nil) return nil;
+    
     MOAssetUploadErrorPerLogin *errorPerLogin = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLogin" inManagedObjectContext:self.backgroundContext];
     errorPerLogin.localIdentifier = identifier;
     errorPerLogin.errorCount = @(0);

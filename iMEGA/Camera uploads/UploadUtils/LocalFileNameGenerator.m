@@ -123,6 +123,8 @@
 #pragma mark - save local unique file name to core data
 
 - (BOOL)saveLocalUniqueFileName:(NSString *)name fileExtension:(NSString *)extension forUploadRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    if (self.backgroundContext == nil) return NO;
+    
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
         if (record.fileNameRecord == nil) {
