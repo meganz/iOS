@@ -668,7 +668,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
             if (self.changeType == ChangeTypePassword) {
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             } else if (self.changeType == ChangeTypePasswordFromLogout) {
                 [MEGASdkManager.sharedMEGASdk logout];
             }
