@@ -121,13 +121,18 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .began:
+            guard !isAudioPlayerInterrupted else { return }
+            
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
-            isAudioPlayerInterrupted = true
+            
             pause()
             
+            isAudioPlayerInterrupted = true
+            
         case .ended:
+            guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
-            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
                 setAudioSession(active: true)
