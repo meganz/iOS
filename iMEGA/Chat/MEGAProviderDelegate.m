@@ -487,11 +487,12 @@
         case MEGAChatCallStatusTerminatingUserParticipation:
             if ([call hasChangedForType:MEGAChatCallChangeTypeStatus]) {
                 [self reportEndCall:call];
-                if(call.termCode == MEGAChatCallTermCodeCallReject ||
+                if((call.termCode == MEGAChatCallTermCodeCallReject && !self.isOutgoingCall) ||
+                   (call.termCode == MEGAChatCallTermCodeCallReqCancel && !self.isOutgoingCall) ||
                    call.termCode == MEGAChatCallTermCodeRejectElseWhere ||
                    call.termCode == MEGAChatCallTermCodeAnswerElseWhere ||
                    call.termCode == MEGAChatCallTermCodeBusy ||
-                   call.termCode == MEGAChatCallTermCodeCallReqCancel) {
+                   call.termCode == MEGAChatCallTermCodeError) {
                     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
                 }
             }
