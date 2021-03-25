@@ -109,6 +109,8 @@
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -124,6 +126,8 @@
 }
 
 - (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -147,6 +151,8 @@
 }
 
 - (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -158,7 +164,6 @@
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return [array firstObject];
-
 }
 
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
@@ -168,6 +173,8 @@
 }
 
 - (void)removeAllOfflineNodes {
+    if (self.managedObjectContext == nil) return;
+    
     NSFetchRequest *allOfflineNodes = [[NSFetchRequest alloc] init];
     [allOfflineNodes setEntity:[NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext]];
     [allOfflineNodes setIncludesPropertyValues:NO]; //only fetch the managedObjectID
@@ -184,6 +191,8 @@
 }
 
 - (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder {
+    if (self.managedObjectContext == nil) return @[];
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -298,6 +307,8 @@
 }
 
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle context:(NSManagedObjectContext *)context {
+    if (context == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:context];
     
     NSFetchRequest *request = [NSFetchRequest.alloc init];
@@ -315,6 +326,8 @@
 }
 
 - (MOUser *)fetchUserWithEmail:(NSString *)email {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
