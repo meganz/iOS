@@ -59,10 +59,12 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     func audio(player: AVQueuePlayer, didChangeTimeControlStatus value: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>) {
         switch (player.timeControlStatus) {
         case .paused:
+            isPaused = true
             invalidateTimer()
             notify(aboutCurrentState)
             
         case .playing:
+            isPaused = false
             setTimer()
             notify([aboutCurrentItem, aboutCurrentThumbnail])
             
@@ -121,24 +123,24 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .began:
-            guard !isAudioPlayerInterrupted else { return }
+            guard !isAudioPlayerInterrupted, !isPaused else { return }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
-            
-            pause()
-            
             isAudioPlayerInterrupted = true
+            pause()
+            disableRemoteCommands()
             
         case .ended:
             guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
             
+            isAudioPlayerInterrupted = false
+            enableRemoteCommands()
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
                 setAudioSession(active: true)
                 play()
             }
-            isAudioPlayerInterrupted = false
             
         default: break
         }

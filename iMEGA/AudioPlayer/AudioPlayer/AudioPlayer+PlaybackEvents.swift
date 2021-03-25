@@ -101,6 +101,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func play() {
         queuePlayer?.play()
         isPaused = false
+        if areRemoteCommandsEnabled() { enableRemoteCommands() }
     }
     
     @objc func pause() {

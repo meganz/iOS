@@ -76,6 +76,11 @@ final class AudioPlayer: NSObject {
         PlayerCurrentStateEntity(currentTime: currentTime, remainingTime: duration - currentTime, percentage: percentageCompleted, isPlaying: isPlaying)
     }
     
+    var rate: Float {
+        get { queuePlayer?.rate ?? 0.0 }
+        set { queuePlayer?.rate = newValue }
+    }
+    
     //MARK: - Private Computed Properties
     private var duration: Double {
         guard let currentItem = queuePlayer?.currentItem else { return 0.0 }
@@ -85,11 +90,6 @@ final class AudioPlayer: NSObject {
     
     private var percentageCompleted: Float {
         currentTime == 0.0 || currentDuration == 0.0 ? 0.0 : Float(currentTime / currentDuration)
-    }
-    
-    private var rate: Float {
-        get { queuePlayer?.rate ?? 0.0 }
-        set { queuePlayer?.rate = newValue }
     }
     
     @objc var isPlaying: Bool {
