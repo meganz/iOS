@@ -1,6 +1,8 @@
 
 #import "GroupCallViewController.h"
 
+#import "MEGA-Swift.h"
+
 #import <AVFoundation/AVFoundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MediaPlayer/MediaPlayer.h>
@@ -117,6 +119,10 @@
     }
     
     [self updateAppearance];
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AVAudioSession.sharedInstance mnz_configureAVSessionForCall];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
