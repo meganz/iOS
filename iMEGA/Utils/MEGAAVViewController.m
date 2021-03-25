@@ -142,7 +142,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [self stopStreaming];
     
     if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:NO];
+        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
         [AudioPlayerManager.shared remoteCommandEnabled:YES];
     }
         
