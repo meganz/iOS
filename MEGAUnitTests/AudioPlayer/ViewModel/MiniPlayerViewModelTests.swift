@@ -33,8 +33,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .onClose, expectedCommands: [])
         XCTAssertEqual(router.dismiss_calledTimes, 1)
         
-        test(viewModel: viewModel, action: .showPlayer(MEGAHandle(), nil), expectedCommands: [.showLoading(true),
-                                                                                                .showLoading(false)])
+        test(viewModel: viewModel, action: .showPlayer(MEGANode(), nil), expectedCommands: [])
         XCTAssertEqual(router.showPlayer_calledTimes, 1)
     }
     

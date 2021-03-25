@@ -56,7 +56,7 @@ final class AudioPlayer: NSObject {
         currentItem()?.artwork
     }
     
-    var currentNode: NodeHandle? {
+    var currentNode: MEGANode? {
         currentItem()?.node
     }
     

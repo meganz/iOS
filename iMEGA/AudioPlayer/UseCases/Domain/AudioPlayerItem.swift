@@ -7,7 +7,7 @@ final class AudioPlayerItem: AVPlayerItem {
     var album: String?
     var nodeHasThumbnail: Bool
     var artwork: UIImage?
-    var node: MEGAHandle?
+    var node: MEGANode?
     var loadedMetadata = false
     
     let requiredAssetKeys = [
@@ -21,7 +21,7 @@ final class AudioPlayerItem: AVPlayerItem {
                                     filePathUseCase: MEGAAppGroupFilePathUseCase())
     }()
     
-    init(name: String, url: URL, node: MEGAHandle?, hasThumbnail: Bool = false) {
+    init(name: String, url: URL, node: MEGANode?, hasThumbnail: Bool = false) {
         self.name = name
         self.url = url
         self.node = node
@@ -58,13 +58,13 @@ final class AudioPlayerItem: AVPlayerItem {
     }
     
     func loadThumbnail(completionBlock: ((UIImage?, UInt64) -> Void)? = nil) {
-        guard let nodeHandle = node else { return }
+        guard let node = node else { return }
         if let artworkImage = artwork {
-            completionBlock?(artworkImage, nodeHandle)
+            completionBlock?(artworkImage, node.handle)
         } else {
-            nodeThumbnailUseCase.loadThumbnail(of: nodeHandle) { [weak self] in
+            nodeThumbnailUseCase.loadThumbnail(of: node.handle) { [weak self] in
                 self?.artwork = $0
-                completionBlock?($0, nodeHandle)
+                completionBlock?($0, node.handle)
             }
         }
     }
@@ -72,7 +72,7 @@ final class AudioPlayerItem: AVPlayerItem {
 
 extension AudioPlayerItem {
     static func == (lhs: AudioPlayerItem, rhs: AudioPlayerItem) -> Bool {
-        guard let lhsNode = lhs.node, let rhsNode = rhs.node else {
+        guard let lhsNode = lhs.node?.handle, let rhsNode = rhs.node?.handle else {
             return lhs.url == rhs.url
         }
         return lhsNode == rhsNode

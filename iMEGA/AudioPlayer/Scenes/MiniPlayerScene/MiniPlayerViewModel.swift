@@ -6,7 +6,7 @@ enum MiniPlayerAction: ActionType {
     case playItem(AudioPlayerItem)
     case onClose
     case `deinit`
-    case showPlayer(MEGAHandle?, String?)
+    case showPlayer(MEGANode?, String?)
 }
 
 protocol MiniPlayerViewRouting: Routing {
@@ -88,7 +88,7 @@ final class MiniPlayerViewModel: ViewModelType {
         } else {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node == node.handle }) else {
+                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
                 
                 guard let track = streamingInfoUseCase?.info(from: node) else {
                     router.dismiss()
@@ -180,19 +180,8 @@ final class MiniPlayerViewModel: ViewModelType {
         }
     }
     
-    private func showFullScreenPlayer(_ nodeHandle: MEGAHandle?, path: String?) {
-        if let nodeHandle = nodeHandle {
-            invokeCommand?(.showLoading(true))
-            loadNode(from: nodeHandle, url: path) { [weak self] node in
-                self?.invokeCommand?(.showLoading(false))
-                
-                if let node = node {
-                    self?.router.showPlayer(node: node, filePath: nil)
-                }
-            }
-        } else if let filePath = path {
-            router.showPlayer(node: nil, filePath: filePath)
-        }
+    private func showFullScreenPlayer(_ node: MEGANode?, path: String?) {
+        router.showPlayer(node: node, filePath: path)
     }
     
     private func closeMiniPlayer() {
@@ -216,8 +205,8 @@ final class MiniPlayerViewModel: ViewModelType {
             closeMiniPlayer()
         case .deinit:
             playerHandler.removePlayer(listener: self)
-        case .showPlayer(let nodeHandle, let filePath):
-            showFullScreenPlayer(nodeHandle, path: filePath)
+        case .showPlayer(let node, let filePath):
+            showFullScreenPlayer(node, path: filePath)
         }
     }
 }

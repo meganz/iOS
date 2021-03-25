@@ -175,7 +175,7 @@ final class AudioPlayerViewModel: ViewModelType {
         } else {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node == node.handle }) else {
+                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
                 
                 guard let track = streamingInfoUseCase?.info(from: node) else {
                     router.dismiss()
@@ -183,12 +183,12 @@ final class AudioPlayerViewModel: ViewModelType {
                 }
                 
                 playerType = .default
-                initialize(tracks: [track], currentTrack: track, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node)
+                initialize(tracks: [track], currentTrack: track, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node?.handle)
                 return
             }
             
             playerType = isFolderLink ? .folderLink : .default
-            initialize(tracks: children, currentTrack: currentTrack, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node)
+            initialize(tracks: children, currentTrack: currentTrack, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node?.handle)
         }
     }
     
@@ -205,15 +205,6 @@ final class AudioPlayerViewModel: ViewModelType {
         
         playerType = .offline
         initialize(tracks: files, currentTrack: currentTrack, currentItemChanges: URL(fileURLWithPath: currentFilePath) != playerHandler.playerCurrentItem()?.url)
-    }
-    
-    private func currentNode(for handle: MEGAHandle) -> MEGANode? {
-        if fileLink != nil {
-            return node
-        } else {
-            return isFolderLink ? nodeInfoUseCase?.folderAuthNode(fromHandle: handle) :
-                                    nodeInfoUseCase?.node(fromHandle: handle)
-        }
     }
     
     private func reloadNodeInfoWithCurrentItem() {
@@ -278,8 +269,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case .refreshShuffleStatus:
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .showActionsforCurrentNode(let sender):
-            guard let handle = playerHandler.playerCurrentItem()?.node,
-                  let node = currentNode(for: handle) else { return }
+            guard let node = playerHandler.playerCurrentItem()?.node else { return }
             router.showAction(for: node, sender: sender)
         case .deinit:
             playerHandler.removePlayer(listener: self)
