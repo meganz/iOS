@@ -12,11 +12,8 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         miniPlayerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         miniPlayerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
    
-        if #available(iOS 11.0, *) {
-            miniPlayerView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: tabBar.frame.size.height - view.safeAreaInsets.bottom)
-        } else {
-            miniPlayerView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: tabBar.frame.size.height)
-        }
+        miniPlayerView.autoPinEdge(.bottom, to: .top, of: tabBar)
+        
         bottomView = miniPlayerView
         
         shouldUpdateProgressViewLocation()
