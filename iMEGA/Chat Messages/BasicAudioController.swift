@@ -198,7 +198,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         setProximitySensorEnabled(false)
         
         if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+            let activeCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(!activeCall)
         }
     }
 
