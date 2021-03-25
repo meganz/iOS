@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
 @property (nonatomic, strong) UIView * _Nullable bottomView;
+@property (strong, nonatomic) NSLayoutConstraint *bottomViewBottomConstraint;
 @property (nonatomic, strong) AudioPlayer * _Nullable player;
 @property (nonatomic, strong) MiniPlayerViewRouter * _Nullable miniPlayerRouter;
 

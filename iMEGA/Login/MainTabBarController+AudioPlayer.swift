@@ -8,11 +8,14 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         
         view.addSubview(miniPlayerView)
         
-        miniPlayerView.autoSetDimension(.height, toSize: 60.0)
-        miniPlayerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
-        miniPlayerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-   
-        miniPlayerView.autoPinEdge(.bottom, to: .top, of: tabBar)
+        miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        bottomViewBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBar.frame.size.height)
+        bottomViewBottomConstraint.isActive = true
+        
+        miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        miniPlayerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         bottomView = miniPlayerView
         
@@ -42,6 +45,13 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     func resetMiniPlayerContainer() {
         bottomView?.removeFromSuperview()
         bottomView = nil
+    }
+    
+    @objc func refreshBottomConstraint() {
+        guard bottomView != nil else { return }
+        
+        bottomViewBottomConstraint.constant = -tabBar.frame.size.height
+        bottomView?.layoutIfNeeded()
     }
     
     @objc func shouldShowMiniPlayer() {
