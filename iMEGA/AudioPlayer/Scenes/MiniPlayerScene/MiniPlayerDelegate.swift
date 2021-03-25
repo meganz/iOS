@@ -22,6 +22,11 @@ final class MiniPlayerDelegate: NSObject, UICollectionViewDelegateFlowLayout, UI
         collectionView.bounds.size
     }
     
+    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        let itemAttrib = collectionView.layoutAttributesForItem(at: collectionView.indexPathsForVisibleItems.first ?? IndexPath(row: 0, section: 0))
+        return itemAttrib?.frame.origin ?? proposedContentOffset
+    }
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset
     }

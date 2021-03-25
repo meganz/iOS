@@ -8,6 +8,7 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     // MARK: - Private properties
@@ -134,7 +135,9 @@ final class MiniPlayerViewController: UIViewController {
         collectionView.backgroundColor = .clear
         progressView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
         imageView.layer.cornerRadius = 8.0
-        separatorView.layer.addBorder(edge: .top, color: UIColor.mnz_gray848484().withAlphaComponent(0.35), thickness: 0.5)
+        
+        separatorView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
+        separatorHeightConstraint.constant = 0.5
     }
     
     // MARK: - UI actions
