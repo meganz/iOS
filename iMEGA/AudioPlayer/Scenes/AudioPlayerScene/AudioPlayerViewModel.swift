@@ -176,7 +176,14 @@ final class AudioPlayerViewModel: ViewModelType {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
                   let currentTrack = children.first(where: { $0.node == node.handle }) else {
-                router.dismiss()
+                
+                guard let track = streamingInfoUseCase?.info(from: node) else {
+                    router.dismiss()
+                    return
+                }
+                
+                playerType = .default
+                initialize(tracks: [track], currentTrack: track, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node)
                 return
             }
             
