@@ -32,7 +32,7 @@ extension AudioPlayer {
         nowPlayingInfo[MPMediaItemPropertyArtist] = item.artist
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.duration.seconds
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = queuePlayer?.rate
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: isPaused ? 0.0 : 1.0)
         if let artwork = item.artwork {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { size in
                 artwork
@@ -132,5 +132,9 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     
     func disableRemoteCommands() {
         updateCommandsState(enabled: false)
+    }
+    
+    func areRemoteCommandsEnabled() -> Bool {
+        MPRemoteCommandCenter.shared().playCommand.isEnabled
     }
 }

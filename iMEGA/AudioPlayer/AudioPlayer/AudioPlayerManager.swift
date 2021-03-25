@@ -93,15 +93,23 @@ import Foundation
     }
     
     func playerTogglePlay() {
-        player?.togglePlay()
+        checkIfCallExist(then: player?.togglePlay)
+    }
+    
+    private func checkIfCallExist(then clousure: (() -> Void)?) {
+        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
+            Helper.cannotPlayContentDuringACallAlert()
+        } else {
+            clousure?()
+        }
     }
     
     func playerPause() {
-        player?.pause()
+        checkIfCallExist(then: player?.pause)
     }
     
     func playerPlay() {
-        player?.play()
+        checkIfCallExist(then: player?.play)
     }
     
     func playNext() {
