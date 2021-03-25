@@ -9,6 +9,11 @@ import Foundation
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
     
+    override private init() {
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(closePlayer), name: Notification.Name.MEGALogout, object: nil)
+    }
+    
     func currentPlayer() -> AudioPlayer? {
         player
     }
