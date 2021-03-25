@@ -124,6 +124,12 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
                                        range: range)
         return attributedString.copy() as! NSAttributedString
     }
+    
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) { return }
+    
+    override func show(_ vc: UIViewController, sender: Any?) { return }
+    
+    override func showDetailViewController(_ vc: UIViewController, sender: Any?) { return }
 }
 
 extension DiskFullBlockingViewController: TraitEnviromentAware {
