@@ -3,7 +3,7 @@
 extension AudioPlayerItem {
 
     static var mockItem: Self {
-        .init(name: "Track 5", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!, node: MEGAHandle())
+        .init(name: "Track 5", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!, node: MEGANode())
     }
     
     static var mockArray: [AudioPlayerItem] {

@@ -183,7 +183,7 @@ extension MiniPlayerViewController: MiniPlayerActionsDelegate {
         lastMovementIndexPath = index
     }
     
-    func showPlayer(node: MEGAHandle, filePath: String?) {
+    func showPlayer(node: MEGANode, filePath: String?) {
         viewModel.dispatch(.showPlayer(node, filePath))
     }
     

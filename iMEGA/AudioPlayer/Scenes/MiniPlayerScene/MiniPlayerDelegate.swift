@@ -2,7 +2,7 @@ import Foundation
 
 protocol MiniPlayerActionsDelegate: class {
     func play(index: IndexPath)
-    func showPlayer(node: MEGAHandle, filePath: String?)
+    func showPlayer(node: MEGANode, filePath: String?)
     func showPlayer(filePath: String?)
 }
 
