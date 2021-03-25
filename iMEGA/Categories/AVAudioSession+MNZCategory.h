@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 */
 - (NSString *)stringForAVAudioSessionRouteChangeReason:(AVAudioSessionRouteChangeReason)reason;
 
+/// Configure audio session for calls. Category: play and record, mode: voice chat.
+- (void)mnz_configureAVSessionForCall;
+
 @end
 
 NS_ASSUME_NONNULL_END

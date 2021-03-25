@@ -1,6 +1,8 @@
 
 #import "CallViewController.h"
 
+#import "MEGA-Swift.h"
+
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
@@ -122,6 +124,10 @@
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
     self.nameLabel.text = self.chatRoom.title;
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AVAudioSession.sharedInstance mnz_configureAVSessionForCall];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
