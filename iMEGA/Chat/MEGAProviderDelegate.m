@@ -489,6 +489,7 @@
                 [self reportEndCall:call];
                 if((call.termCode == MEGAChatCallTermCodeCallReject && !self.isOutgoingCall) ||
                    (call.termCode == MEGAChatCallTermCodeCallReqCancel && !self.isOutgoingCall) ||
+                   call.termCode == MEGAChatCallTermCodeAnswerTimeout ||
                    call.termCode == MEGAChatCallTermCodeRejectElseWhere ||
                    call.termCode == MEGAChatCallTermCodeAnswerElseWhere ||
                    call.termCode == MEGAChatCallTermCodeBusy ||
