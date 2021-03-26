@@ -304,6 +304,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
 extension AVQueuePlayer {
     func secureInsert(_ item: AVPlayerItem, after afterItem: AVPlayerItem?) {
         guard items().filter({item == $0}).isEmpty else { return }
-        insert(item, after: afterItem)
+        if canInsert(item, after: afterItem), item.status != .failed {
+            insert(item, after: afterItem)
+        }
     }
 }
