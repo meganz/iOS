@@ -89,7 +89,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
-@property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
 @property (strong, nonatomic) Throttler *throttler;
 
@@ -186,7 +185,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self reloadUI];
     
-    self.shouldRemovePlayerDelegate = YES;
+    if (self.displayMode != DisplayModeRecents) {
+        self.shouldRemovePlayerDelegate = YES;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -2047,7 +2048,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    self.shouldRemovePlayerDelegate = YES;
+    if (self.displayMode != DisplayModeRecents) {
+        self.shouldRemovePlayerDelegate = YES;
+    }
 }
 
 #pragma mark - BrowserViewControllerDelegate
