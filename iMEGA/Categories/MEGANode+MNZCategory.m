@@ -216,7 +216,7 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNode {
-    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk] isTopPriority:NO];
+    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
 }
 
 - (BOOL)mnz_downloadNodeTopPriority {
@@ -263,6 +263,10 @@
     
     ActionSheetViewController *labelsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:viewController.navigationItem.rightBarButtonItems.firstObject];
     [viewController presentViewController:labelsActionSheet animated:YES completion:nil];
+}
+
+- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api {
+    return [self mnz_downloadNodeWithApi:api isTopPriority:NO];
 }
 
 - (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api isTopPriority:(BOOL)isTopPriority {
