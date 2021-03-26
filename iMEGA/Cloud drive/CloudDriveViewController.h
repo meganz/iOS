@@ -24,6 +24,7 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 @property (strong, nonatomic) UISearchController *searchController;
 
 @property (assign, nonatomic) BOOL allNodesSelected;
+@property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
 
 - (void)presentUploadAlertController;
 - (void)presentScanDocument;
