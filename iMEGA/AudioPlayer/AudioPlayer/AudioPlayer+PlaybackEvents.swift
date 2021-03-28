@@ -11,7 +11,6 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         currentItem.seek(to: time) { [weak self] _ in
             guard let `self` = self else { return }
             self.notify(self.aboutCurrentState)
-            self.refreshNowPlayingInfo()
         }
     }
     
@@ -68,6 +67,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         ((currentIndex + 1)..<tracks.count).forEach { index in
             queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
         }
+        
+        notify(aboutCurrentItemAndQueue)
     }
 
     func repeatLastItem() {
@@ -101,7 +102,6 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func play() {
         queuePlayer?.play()
         isPaused = false
-        if areRemoteCommandsEnabled() { enableRemoteCommands() }
     }
     
     @objc func pause() {

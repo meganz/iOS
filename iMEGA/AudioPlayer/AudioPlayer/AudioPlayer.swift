@@ -18,6 +18,8 @@ final class AudioPlayer: NSObject {
     var audioQueueBufferEmptyObserver: NSKeyValueObservation?
     var audioQueueBufferAlmostThereObserver: NSKeyValueObservation?
     var audioQueueBufferFullObserver: NSKeyValueObservation?
+    var audioQueueRateObserver: NSKeyValueObservation?
+    var audioQueueNewItemObserver: NSKeyValueObservation?
     var metadataQueueFinishAllOperationsObserver: NSKeyValueObservation?
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
     var listenerManager = ListenerManager<AudioPlayerObserversProtocol>()
