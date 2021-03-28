@@ -4,6 +4,8 @@ extension AudioPlayer {
     func registerAudioPlayerEvents() {
         audioQueueObserver = queuePlayer?.observe(\.currentItem, options: [.new, .old], changeHandler: audio(player:didChangeItem:))
         audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options:  [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
+        audioQueueNewItemObserver = queuePlayer?.observe(\.currentItem, options: .initial, changeHandler: audio(player:didStartPlayingCurrentItem:))
+        audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .initial, changeHandler: audio(player:didChangePlayerRate:))
         audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: audio(player:didChangeTimeControlStatus:))
         audioQueueWaitingObserver = queuePlayer?.observe(\.reasonForWaitingToPlay, options: [.new, .old], changeHandler: audio(player:reasonForWaitingToPlay:))
         audioQueueBufferEmptyObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferEmpty, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferEmpty:))
@@ -15,6 +17,8 @@ extension AudioPlayer {
     func unregisterAudioPlayerEvents() {
         audioQueueObserver?.invalidate()
         audioQueueStatusObserver?.invalidate()
+        audioQueueNewItemObserver?.invalidate()
+        audioQueueRateObserver?.invalidate()
         audioQueueWaitingObserver?.invalidate()
         audioQueueStallObserver?.invalidate()
         audioQueueBufferEmptyObserver?.invalidate()
@@ -51,8 +55,6 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             updateQueueWithLoopItems()
             resetPlayerItems()
         }
-        
-        refreshNowPlayingInfo()
     }
     
     // Listening for event about the status of the playback
@@ -71,8 +73,6 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         default:
             break
         }
-        
-        refreshNowPlayingInfo()
     }
     
     // listening for change event when player stops playback
@@ -90,7 +90,15 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     
     // Listening for current item status change
     func audio(playerItem: AVPlayerItem, didChangeCurrentItemStatus value: NSKeyValueObservedChange<AVPlayerItem.Status>) {
-        // To know the audio player current status you can see it with: playerItem.status
+        refreshNowPlayingInfo()
+    }
+    
+    func audio(player: AVQueuePlayer, didStartPlayingCurrentItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
+        refreshNowPlayingInfo()
+    }
+    
+    func audio(player: AVQueuePlayer, didChangePlayerRate value: NSKeyValueObservedChange<Float>) {
+        refreshNowPlayingInfo()
     }
     
     // listening for buffer is empty
@@ -135,6 +143,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
             isAudioPlayerInterrupted = true
             pause()
+            disableRemoteCommands()
             
         case .ended:
             guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
@@ -142,6 +151,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
             
             isAudioPlayerInterrupted = false
+            enableRemoteCommands()
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
                 setAudioSession(active: true)
                 play()
