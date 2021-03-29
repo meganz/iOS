@@ -128,6 +128,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     
     func enableRemoteCommands() {
         updateCommandsState(enabled: true)
+        refreshNowPlayingInfo()
     }
     
     func disableRemoteCommands() {

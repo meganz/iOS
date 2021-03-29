@@ -143,12 +143,17 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
             isAudioPlayerInterrupted = true
             pause()
+            
+            setAudioSession(active: false)
+            
             disableRemoteCommands()
             
         case .ended:
             guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
+            
+            setAudioSession(active: true)
             
             isAudioPlayerInterrupted = false
             enableRemoteCommands()
