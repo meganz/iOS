@@ -167,6 +167,17 @@ final class AudioPlayer: NSObject {
         }
     }
     
+    func resetAudioSessionCategoryIfNeeded() {
+        if AVAudioSession.sharedInstance().category != .playback ||
+            AVAudioSession.sharedInstance().categoryOptions != .defaultToSpeaker {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, options: [.defaultToSpeaker])
+            } catch {
+                MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func add(tracks: [AudioPlayerItem]) {
         beginBackgroundTask()
         self.tracks = tracks

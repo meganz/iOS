@@ -93,6 +93,7 @@ import Foundation
     }
     
     func playerTogglePlay() {
+        player?.resetAudioSessionCategoryIfNeeded()
         checkIfCallExist(then: player?.togglePlay)
     }
     
@@ -105,10 +106,12 @@ import Foundation
     }
     
     func playerPause() {
+        player?.resetAudioSessionCategoryIfNeeded()
         checkIfCallExist(then: player?.pause)
     }
     
     func playerPlay() {
+        player?.resetAudioSessionCategoryIfNeeded()
         checkIfCallExist(then: player?.play)
     }
     
