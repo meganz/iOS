@@ -118,7 +118,7 @@ final class AudioPlayer: NSObject {
     }
     
     private func setupPlayer() {
-        setAudioSession(active: true)
+        setAudioPlayerSession(active: true)
         
         queuePlayer = AVQueuePlayer(items: tracks)
         
@@ -148,13 +148,9 @@ final class AudioPlayer: NSObject {
     }
 
     //MARK: - Internal Functions
-    func setAudioSession(active: Bool) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.defaultToSpeaker])
-            try AVAudioSession.sharedInstance().setActive(active)
-        } catch {
-            MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
-        }
+    func setAudioPlayerSession(active: Bool) {
+        resetAudioSessionCategoryIfNeeded()
+        setAudioSession(active: active)
     }
     
     func setDefaultAudioSession() {
@@ -164,6 +160,15 @@ final class AudioPlayer: NSObject {
         try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         } catch {
             MEGALogError("[AudioPlayer] Restore default AVAudioSession Error: \(error.localizedDescription)")
+        }
+    }
+    
+    func setAudioSession(active: Bool) {
+        do {
+            try active ? AVAudioSession.sharedInstance().setActive(active) :
+                        AVAudioSession.sharedInstance().setActive(active, options: .notifyOthersOnDeactivation)
+        } catch {
+            MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
         }
     }
     

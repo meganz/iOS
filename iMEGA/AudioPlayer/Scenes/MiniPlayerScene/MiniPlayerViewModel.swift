@@ -121,7 +121,7 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
-        playerHandler.autoPlay(enable: playerType != .folderLink)
+        playerHandler.autoPlay(enable: playerType != .fileLink)
         playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
     }

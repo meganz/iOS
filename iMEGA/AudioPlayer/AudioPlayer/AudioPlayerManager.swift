@@ -249,10 +249,6 @@ import Foundation
         miniPlayerHandlerListenerManager.notify{$0.initMiniPlayer(viewController: miniPlayerVC)}
     }
     
-    func setAudioPlayerAudioSession() {
-        player?.setAudioSession(active: true)
-    }
-    
     func audioInterruptionDidStart() {
         NotificationCenter.default.post(name: Notification.Name.MEGAAudioPlayerInterruption,
                                         object: nil,
