@@ -11,6 +11,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         currentItem.seek(to: time) { [weak self] _ in
             guard let `self` = self else { return }
             self.notify(self.aboutCurrentState)
+            self.refreshNowPlayingInfo()
         }
     }
     
