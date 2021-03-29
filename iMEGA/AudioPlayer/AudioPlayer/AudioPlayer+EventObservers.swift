@@ -153,7 +153,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             isAudioPlayerInterrupted = false
             enableRemoteCommands()
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
-                setAudioSession(active: true)
+                resetAudioSessionCategoryIfNeeded()
                 play()
             }
             
