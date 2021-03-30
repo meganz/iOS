@@ -46,8 +46,9 @@ class PhotoGridViewDataSource: NSObject {
     private func remove(asset: PHAsset, atIndex index: Int, selectedIndexPath: IndexPath) {
         selectedAssets.remove(at: index)
         updateCollectionCell(atIndexPath: selectedIndexPath, selectedIndex: nil)
-
-        (index..<selectedAssets.count).forEach { index in
+        
+        let totalCount = selectedAssets.count
+        (index..<totalCount).forEach { index in
             let toUpdatAsset = selectedAssets[index]
             if let visibleCells = collectionView.visibleCells as? [PhotoGridViewCell] {
                 visibleCells.forEach { cell in

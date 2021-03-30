@@ -84,22 +84,23 @@ final class SlidePanelAnimationController {
         guard let animationOffsetY = animationOffsetY else {
             fatalError("animationOffsetY in SlidePanelAnimationController must be set.")
         }
-
-        var fraction = -translationY / animationOffsetY
+        
+        var fraction: CGFloat = -translationY / animationOffsetY
         
         if currentPosition == .top {
             fraction *= -1
         }
-
+        
         if transitionAnimator.isReversed {
             fraction *= -1
         }
-
+        
         transitionAnimator.fractionComplete = fraction
         animationProgress = fraction
-        switch translationY > 0 {
-        case true: delegate?.didUpdateAnimationProgress(animationProgress, from: .top, to: .bottom)
-        case false: delegate?.didUpdateAnimationProgress(animationProgress, from: .bottom, to: .top)
+        if translationY > 0 {
+            delegate?.didUpdateAnimationProgress(animationProgress, from: .top, to: .bottom)
+        } else{
+            delegate?.didUpdateAnimationProgress(animationProgress, from: .bottom, to: .top)
         }
     }
 

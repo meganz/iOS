@@ -49,15 +49,16 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
         let megaMessage = chatMessage.message
         let maxWidth = messageContainerMaxWidth(for: message)
         
-        var messageContainerSize: CGSize
         let attributedText = megaMessage.attributedText
-        
         calculateLabel.attributedText = attributedText
-        messageContainerSize = calculateLabel.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+        let fitSize = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        var messageContainerSize: CGSize = calculateLabel.sizeThatFits(fitSize)
         
         let messageInsets = outgoingMessageLabelInsets
-        messageContainerSize.width += (messageInsets.left + messageInsets.right)
-        messageContainerSize.height += (messageInsets.top + messageInsets.bottom)
+        let horizontalInset: CGFloat = messageInsets.left + messageInsets.right
+        messageContainerSize.width += horizontalInset
+        let verticalInset: CGFloat = messageInsets.top + messageInsets.bottom
+        messageContainerSize.height += verticalInset
         
         return messageContainerSize
     }

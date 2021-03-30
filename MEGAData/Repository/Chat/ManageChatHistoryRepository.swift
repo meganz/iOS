@@ -19,9 +19,10 @@ struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
     }
     
     func setChatRetentionTime(for chatId: ChatId, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
-        chatSdk.setChatRetentionTime(chatId, period: period, delegate: MEGAChatGenericRequestDelegate { request, error in
+        let delegate = MEGAChatGenericRequestDelegate { request, error in
             if error.type == .MEGAChatErrorTypeOk {
-                completion(.success(UInt(request.number)))
+                let requestPeriod = UInt(truncatingIfNeeded: request.number)
+                completion(.success(requestPeriod))
                 return
             }
             
@@ -41,7 +42,9 @@ struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
             }
             
             completion(.failure(chatRetentionTimeError))
-        })
+        }
+        
+        chatSdk.setChatRetentionTime(chatId, period: period, delegate: delegate)
     }
     
     func clearChatHistory(for chatId: ChatId, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void) {

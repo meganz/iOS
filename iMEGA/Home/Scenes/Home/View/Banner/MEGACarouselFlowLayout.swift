@@ -120,7 +120,12 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
         let proposedContentOffsetCenterOrigin = proposedContentOffset.x + midSide
 
 
-        let closest = layoutAttributes.sorted { abs($0.center.x - proposedContentOffsetCenterOrigin) < abs($1.center.x - proposedContentOffsetCenterOrigin) }.first ?? UICollectionViewLayoutAttributes()
+        let sorted = layoutAttributes.sorted {
+            let first = abs($0.center.x - proposedContentOffsetCenterOrigin)
+            let second = abs($1.center.x - proposedContentOffsetCenterOrigin)
+            return first < second
+        }
+        let closest = sorted.first ?? UICollectionViewLayoutAttributes()
         let targetContentOffset = CGPoint(x: floor(closest.center.x - midSide), y: proposedContentOffset.y)
 
         page = Int(round(targetContentOffset.x / (itemSize.width + minimumLineSpacing)))

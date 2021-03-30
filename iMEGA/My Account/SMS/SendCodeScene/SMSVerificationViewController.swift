@@ -268,11 +268,12 @@ final class SMSVerificationViewController: UIViewController, ViewType {
 extension SMSVerificationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !headerImageView.isHidden else { return }
-
+        
         let offset = scrollView.contentOffset
         if offset.y < 0 {
             var transform = CATransform3DTranslate(CATransform3DIdentity, 0, offset.y, 0)
-            let scaleFactor = 1 + (-1 * offset.y / (headerImageView.frame.height / 2))
+            let factor = offset.y / (headerImageView.frame.height / 2)
+            let scaleFactor = 1 - factor
             transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
             headerImageView.layer.transform = transform
         } else {

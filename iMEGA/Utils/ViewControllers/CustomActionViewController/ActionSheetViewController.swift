@@ -14,9 +14,7 @@ class ActionSheetViewController: UIViewController {
     private var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
     private var backgroundView = UIView.newAutoLayout()
     private var top: NSLayoutConstraint?
-    private var layoutThreshold: CGFloat {
-        return CGFloat(self.view.bounds.height * 0.3)
-    }
+    private var layoutThreshold: CGFloat { self.view.bounds.height * 0.3 }
     private let titleLabel = UILabel()
 
     // MARK: - ActionController initializers
@@ -99,14 +97,18 @@ class ActionSheetViewController: UIViewController {
     }
     
     func layoutViews(to size: CGSize) {
-        var bottomHeight = 0
+        var bottomHeight: CGFloat = 0
         let layoutThreshold = size.height * 0.3
         if #available(iOS 11.0, *) {
-            bottomHeight = Int(view.safeAreaInsets.bottom) * 2
+            bottomHeight = view.safeAreaInsets.bottom * 2
         }
-        let height = CGFloat(actions.count * 60 + bottomHeight + 20) + (headerView?.bounds.height ?? 0)
+        
+        let actionCount = actions.count * 60
+        let actionHeight = CGFloat(actionCount) + bottomHeight + 20.0
+        let headerHeight = headerView?.bounds.height ?? 0.0
+        let height = actionHeight + headerHeight
         if height < size.height - layoutThreshold {
-            top?.constant = CGFloat(size.height - height)
+            top?.constant = size.height - height
             tableView.isScrollEnabled = false
             indicator.isHidden = true
         } else {

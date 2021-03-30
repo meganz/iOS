@@ -60,8 +60,8 @@ class MeterTable {
         }
         
         self.minDecibels = minDecibels
-        
-        decibelResolution = minDecibels / Float(tableSize - 1)
+        let size = Float(tableSize - 1)
+        decibelResolution = minDecibels / size
         scaleFactor = 1.0 / decibelResolution
         
         let minAmp = dbToAmp(Double(minDecibels))
