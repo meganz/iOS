@@ -81,18 +81,10 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:navigationViewController];
     self.searchController.searchResultsUpdater = locationSearchTVC;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.dimsBackgroundDuringPresentation = YES;
+    self.searchController.obscuresBackgroundDuringPresentation = YES;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     self.searchController.searchBar.translucent = NO;
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-    } else {
-        self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-        self.searchController.searchBar.translucent = NO;
-        self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
-        self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.view addSubview:self.searchController.searchBar];
-    }
+    self.navigationItem.searchController = self.searchController;
     
     self.navigationItem.title = NSLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
     [self updateAppearance];

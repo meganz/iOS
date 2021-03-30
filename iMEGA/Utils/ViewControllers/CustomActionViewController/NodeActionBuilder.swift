@@ -199,7 +199,7 @@ final class NodeActionBuilder {
                     if isChildVersion {
                         nodeActions.append(NodeAction.revertVersionAction())
                     }
-                    nodeActions.append(NodeAction.removeAction())
+                    nodeActions.append(NodeAction.removeVersionAction())
                 } else {
                     nodeActions.append(NodeAction.renameAction())
                     nodeActions.append(NodeAction.copyAction())
@@ -260,7 +260,7 @@ final class NodeActionBuilder {
                     if isChildVersion {
                         nodeActions.append(NodeAction.revertVersionAction())
                     }
-                    nodeActions.append(NodeAction.removeAction())
+                    nodeActions.append(NodeAction.removeVersionAction())
                 } else if displayMode == .chatAttachment {
                     nodeActions.append(NodeAction.infoAction())
                     if isMediaFile {

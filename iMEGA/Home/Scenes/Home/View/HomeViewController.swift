@@ -196,14 +196,7 @@ final class HomeViewController: UIViewController {
     private enum Constant {
         static let slidePanelRoundCornerHeight: CGFloat = 20 // This value need to be same as `constraintToTopPosition`
     }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.iPhoneDevice {
-            return .portrait
-        }
-        
-        return .all
-    }
+
 
     // MARK: - View Setup
 
@@ -231,11 +224,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func setupSearchResultExtendedLayout() {
-        if #available(iOS 11, *) {
-            edgesForExtendedLayout = .top
-        } else {
-            edgesForExtendedLayout = []
-        }
+        edgesForExtendedLayout = .top
         extendedLayoutIncludesOpaqueBars = true
     }
 
@@ -364,14 +353,10 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: SlidePanelAnimationControllerDelegate {
 
     private func navigationBarTransitionColors(for trait: UITraitCollection) -> (UIColor, UIColor) {
-        if #available(iOS 12, *) {
-            switch trait.userInterfaceStyle {
-            case .dark:
-                return (.mnz_black1C1C1E(), .black)
-            default:
-                return (.white, .mnz_grayF7F7F7())
-            }
-        } else {
+        switch trait.userInterfaceStyle {
+        case .dark:
+            return (.mnz_black1C1C1E(), .black)
+        default:
             return (.white, .mnz_grayF7F7F7())
         }
     }
@@ -595,7 +580,6 @@ extension HomeViewController: RecentNodeActionDelegate {
 
 extension HomeViewController: HomeSearchControllerDelegate {
     func didSelect(searchText: String) {
-        guard #available(iOS 11, *) else { return }
         navigationItem.searchController?.searchBar.text = searchText
     }
 }

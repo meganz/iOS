@@ -128,16 +128,12 @@
 }
 
 - (BOOL)isHEVCOutputForImageSource:(CGImageSourceRef)source outputImageUTIType:(NSString *)UTIType {
-    if (@available(iOS 11.0, *)) {
-        CFStringRef sourceType = CGImageSourceGetType(source);
-        CFStringRef newType = (__bridge CFStringRef)UTIType;
-        if (UTIType.length == 0) {
-            return UTTypeConformsTo(sourceType, (__bridge CFStringRef)AVFileTypeHEIC);
-        } else {
-            return UTTypeConformsTo(newType, (__bridge CFStringRef)AVFileTypeHEIC);
-        }
+    CFStringRef sourceType = CGImageSourceGetType(source);
+    CFStringRef newType = (__bridge CFStringRef)UTIType;
+    if (UTIType.length == 0) {
+        return UTTypeConformsTo(sourceType, (__bridge CFStringRef)AVFileTypeHEIC);
     } else {
-        return NO;
+        return UTTypeConformsTo(newType, (__bridge CFStringRef)AVFileTypeHEIC);
     }
 }
 

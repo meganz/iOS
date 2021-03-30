@@ -53,7 +53,9 @@ class EnlargementView: UIView {
     }
     
     var singleSideAddedWidth: CGFloat {
-        return enlarge ? ((width - originalWidth) / 2.0) : ((originalWidth - width) / 2.0)
+        let enlargeWidth = (width - originalWidth) / 2.0
+        let normalWidth = (originalWidth - width) / 2.0
+        return enlarge ? enlargeWidth : normalWidth
     }
     
     func updateUI() {

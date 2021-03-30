@@ -11,7 +11,7 @@ struct RecentNodesUseCase: RecentNodesUseCaseProtocol {
     init(repo: RecentNodesRepositoryProtocol) {
         self.repo = repo
     }
-
+    
     func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], QuickAccessWidgetErrorEntity>) -> Void) {
         repo.getAllRecentActionBuckets(completion: completion)
     }

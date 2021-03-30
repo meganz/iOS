@@ -31,9 +31,6 @@ static MEGALogger *_megaLogger = nil;
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
     
     [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"logging"];
     
@@ -67,9 +64,6 @@ static MEGALogger *_megaLogger = nil;
 #endif
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults setBool:NO forKey:@"logging"];

@@ -36,8 +36,6 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
     if (self.totalBytes) {
         self.totalBytes(transfer);
     }
@@ -49,9 +47,7 @@
     }
 }
 
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {    
     if (self.completion) {
         self.completion(transfer);
     }

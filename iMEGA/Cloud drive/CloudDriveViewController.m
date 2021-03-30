@@ -114,7 +114,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case DisplayModeRubbishBin: {
-            [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"remove"]];
+            [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"rubbishBin"]];
             break;
         }
             
@@ -220,14 +220,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.shouldRemovePlayerDelegate) {
         [AudioPlayerManager.shared removeDelegate:self];
     }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -852,10 +844,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = NO;
-    }
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
     for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
@@ -1225,30 +1215,28 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)requestReview {
-    if (@available(iOS 10.3, *)) {
-        static BOOL alreadyPresented = NO;
-        if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-            alreadyPresented = YES;
-            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-            NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
-            if (rateUsDate) {
-                NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
-                                                                  fromDate:rateUsDate
-                                                                    toDate:[NSDate date]
-                                                                   options:NSCalendarWrapComponents].weekOfYear;
-                if (weeks < 17) {
-                    return;
-                }
-            } else {
-                NSTimeInterval sixteenWeeksAgo = -16 * 7 * 24 * 60 * 60;
-                rateUsDate = [NSDate dateWithTimeIntervalSinceNow:sixteenWeeksAgo];
-                [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+    static BOOL alreadyPresented = NO;
+    if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+        alreadyPresented = YES;
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+        NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
+        if (rateUsDate) {
+            NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
+                                                              fromDate:rateUsDate
+                                                                toDate:[NSDate date]
+                                                               options:NSCalendarWrapComponents].weekOfYear;
+            if (weeks < 17) {
                 return;
             }
-            [SKStoreReviewController requestReview];
-            rateUsDate = [NSDate date];
+        } else {
+            NSTimeInterval sixteenWeeksAgo = -16 * 7 * 24 * 60 * 60;
+            rateUsDate = [NSDate dateWithTimeIntervalSinceNow:sixteenWeeksAgo];
             [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+            return;
         }
+        [SKStoreReviewController requestReview];
+        rateUsDate = [NSDate date];
+        [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
     }
 }
 
@@ -1469,7 +1457,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                     [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
                 } else {
-                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
+                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                        [self didSelectNode:newFolderNode];
+                    }];
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
                 }
             }
@@ -1529,7 +1520,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }]];
     
     if (self.displayMode == DisplayModeRubbishBin) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -1569,12 +1560,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],

@@ -127,10 +127,8 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         cell.separatorView.layer.borderColor = UIColor.mnz_separator(for: traitCollection).cgColor
         cell.separatorView.layer.borderWidth = 0.5
         
-        if #available(iOS 11.0, *) {
-            cell.thumbnailImageView.accessibilityIgnoresInvertColors = true
-            cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
-        }
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = true
+        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
         
         return cell
     }

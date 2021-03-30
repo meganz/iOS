@@ -13,39 +13,43 @@ class FileExplorerGridCell: UICollectionViewCell {
     
     var viewModel: FileExplorerGridCellViewModel? {
         didSet {
-            guard let viewModel = viewModel else {
-                return
-            }
-            
-            viewModel.loadThumbnail {  [weak self] image, nodeHandle in
-                asyncOnMain {
-                    guard let self = self, nodeHandle == self.viewModel?.nodeHandle else { return }
-                    
-                    let thumbnailImageView = viewModel.hasThumbnail ? self.thumbnailImageView : self.thumbnailIconImageView
-                    thumbnailImageView?.image = image
-                    thumbnailImageView?.isHidden = false
-                }
-            }
-            
-            if viewModel.isTakenDown,
-               let takenDownAttributedText = NSAttributedString.mnz_attributedString(
-                fromImageNamed: "isTakedown",
-                fontCapHeight: nameLabel.font.capHeight
-               ) {
-                let mutableAttributedText = NSMutableAttributedString(string: viewModel.name)
-                mutableAttributedText.append(takenDownAttributedText)
-                nameLabel.attributedText = mutableAttributedText
-            } else {
-                nameLabel.text = viewModel.name
-                infoLabel.text = viewModel.sizeDescription
-            }
-            
-            thumbnailPlayImageView.isHidden = !viewModel.isVideo
-            
-            allowsSelection = viewModel.allowsSelection
-            markSelection = viewModel.markSelection
-            setupAppearance(with: traitCollection)
+            configViewModel()
         }
+    }
+    
+    private func configViewModel() {
+        guard let viewModel = viewModel else {
+            return
+        }
+        
+        viewModel.loadThumbnail {  [weak self] image, nodeHandle in
+            asyncOnMain {
+                guard let self = self, nodeHandle == self.viewModel?.nodeHandle else { return }
+                
+                let thumbnailImageView = viewModel.hasThumbnail ? self.thumbnailImageView : self.thumbnailIconImageView
+                thumbnailImageView?.image = image
+                thumbnailImageView?.isHidden = false
+            }
+        }
+        
+        if viewModel.isTakenDown,
+           let takenDownAttributedText = NSAttributedString.mnz_attributedString(
+            fromImageNamed: "isTakedown",
+            fontCapHeight: nameLabel.font.capHeight
+           ) {
+            let mutableAttributedText = NSMutableAttributedString(string: viewModel.name)
+            mutableAttributedText.append(takenDownAttributedText)
+            nameLabel.attributedText = mutableAttributedText
+        } else {
+            nameLabel.text = viewModel.name
+            infoLabel.text = viewModel.sizeDescription
+        }
+        
+        thumbnailPlayImageView.isHidden = !viewModel.isVideo
+        
+        allowsSelection = viewModel.allowsSelection
+        markSelection = viewModel.markSelection
+        setupAppearance(with: traitCollection)
     }
     
     private var allowsSelection: Bool = false {

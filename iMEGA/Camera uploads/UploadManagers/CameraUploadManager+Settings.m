@@ -118,10 +118,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setConvertHEICPhoto:(BOOL)convertHEICPhoto {
-    if (![self isHEVCFormatSupported]) {
-        return;
-    }
-    
     [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
 }
 
@@ -159,10 +155,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setConvertHEVCVideo:(BOOL)convertHEVCVideo {
-    if (![self isHEVCFormatSupported]) {
-        return;
-    }
-    
     [NSUserDefaults.standardUserDefaults setBool:convertHEVCVideo forKey:ShouldConvertHEVCVideoKey];
     
     if (convertHEVCVideo && [NSUserDefaults.standardUserDefaults objectForKey:HEVCToH264CompressionQualityKey] == nil) {
@@ -175,10 +167,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setHEVCToH264CompressionQuality:(CameraUploadVideoQuality)HEVCToH264CompressionQuality {
-    if (![self isHEVCFormatSupported]) {
-        return;
-    }
-    
     [NSUserDefaults.standardUserDefaults setInteger:HEVCToH264CompressionQuality forKey:HEVCToH264CompressionQualityKey];
 }
 
@@ -252,14 +240,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     return show;
 }
 
-+ (BOOL)isHEVCFormatSupported {
-    if (@available(iOS 11.0, *)) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 + (BOOL)canBackgroundUploadBeStarted {
     return CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways && CLLocationManager.significantLocationChangeMonitoringAvailable;
 }
@@ -302,18 +282,10 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 #pragma mark - camera upload v2 migration
 
 + (BOOL)hasMigratedToCameraUploadsV2 {
-    if (![self isHEVCFormatSupported]) {
-        return YES;
-    }
-    
     return [NSUserDefaults.standardUserDefaults boolForKey:HasMigratedToCameraUploadsV2Key];
 }
 
 + (void)setMigratedToCameraUploadsV2:(BOOL)migratedToCameraUploadsV2 {
-    if (![self isHEVCFormatSupported]) {
-        return;
-    }
-    
     [NSUserDefaults.standardUserDefaults setBool:migratedToCameraUploadsV2 forKey:HasMigratedToCameraUploadsV2Key];
 }
 

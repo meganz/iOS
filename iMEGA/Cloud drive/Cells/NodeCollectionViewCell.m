@@ -24,19 +24,15 @@
         self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"00A886"].CGColor;
     } else {
         self.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
-        if (@available(iOS 12.0, *)) {
-            switch (self.traitCollection.userInterfaceStyle) {
-                case UIUserInterfaceStyleUnspecified:
-                case UIUserInterfaceStyleLight: {
-                    self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"F7F7F7"].CGColor;
-                }
-                    break;
-                case UIUserInterfaceStyleDark: {
-                    self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"545458"].CGColor;
-                }
+        switch (self.traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"F7F7F7"].CGColor;
             }
-        } else {
-            self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"F7F7F7"].CGColor;
+                break;
+            case UIUserInterfaceStyleDark: {
+                self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"545458"].CGColor;
+            }
         }
     }
 }
@@ -82,28 +78,22 @@
         self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
     }
 
-    if (@available(iOS 11.0, *)) {
-        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     [self setupAppearance];
 }
 
 - (void)setupAppearance {
     [self setSelected:NO];
     
-    if (@available(iOS 12.0, *)) {
-        switch (self.traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
-            }
-                break;
-            case UIUserInterfaceStyleDark: {
-                self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"1C1C1E"];
-            }
+    switch (self.traitCollection.userInterfaceStyle) {
+        case UIUserInterfaceStyleUnspecified:
+        case UIUserInterfaceStyleLight: {
+            self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
         }
-    } else {
-        self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
+            break;
+        case UIUserInterfaceStyleDark: {
+            self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"1C1C1E"];
+        }
     }
 }
 

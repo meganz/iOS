@@ -95,9 +95,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     func addRecentsViewController(_ recentViewController: RecentsViewController) {
         move(recentViewController.view, toContainerView: recentsContainerView)
         let panGesture = UIPanGestureRecognizer()
-        if #available(iOS 11, *) {
-            panGesture.name = "Recents Panel Pan Gesture"
-        }
+        panGesture.name = "Recents Panel Pan Gesture"
         panGesture.addTarget(self, action: #selector(didPan(_:)))
         panGesture.delegate = self
 
@@ -109,9 +107,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     func addOfflineViewController(_ offlineViewController: OfflineViewController) {
         move(offlineViewController.view, toContainerView: offlineContainerView)
         let panGesture = UIPanGestureRecognizer()
-        if #available(iOS 11, *) {
-            panGesture.name = "Offline Panel Pan Gesture"
-        }
+        panGesture.name = "Offline Panel Pan Gesture"
         panGesture.addTarget(self, action: #selector(didPan(_:)))
         panGesture.delegate = self
 

@@ -185,7 +185,7 @@ extension ChatViewController {
             }
         } else {
             addToChatViewController.transitioningDelegate = self
-            if UIDevice.current.iPhone5X , #available(iOS 14.0, *) {
+            if UIDevice.current.deviceName() == "iPhone SE 1st" , #available(iOS 14.0, *) {
                 // to fix https://testrail.systems.mega.nz/index.php?/tests/view/1052975
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.present(viewController: addToChatViewController)
@@ -206,16 +206,10 @@ extension ChatViewController {
                 return
         }
         
-        var collectionViewInset = accessoryView.frame.height
-        if #available(iOS 11.0, *) {
-            collectionViewInset -= window.safeAreaInsets.bottom
-        }
+        let collectionViewInset = accessoryView.frame.height - window.safeAreaInsets.bottom
         
         if messagesCollectionView.contentInset.bottom != collectionViewInset {
-            var oldInset = messagesCollectionView.contentInset.bottom
-            if #available(iOS 11.0, *) {
-                oldInset = messagesCollectionView.adjustedContentInset.bottom
-            }
+            let oldInset = messagesCollectionView.adjustedContentInset.bottom
             
             messagesCollectionView.contentInset.bottom = collectionViewInset
             messagesCollectionView.scrollIndicatorInsets.bottom = collectionViewInset

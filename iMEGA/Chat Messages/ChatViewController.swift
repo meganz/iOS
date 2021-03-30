@@ -316,10 +316,6 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         return super.collectionView(collectionView, cellForItemAt: indexPath)
@@ -482,10 +478,7 @@ class ChatViewController: MessagesViewController {
         
         chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
         
-        var contentInset = messagesCollectionView.contentInset.bottom
-        if #available(iOS 11.0, *) {
-            contentInset = messagesCollectionView.adjustedContentInset.bottom
-        }
+        let contentInset = messagesCollectionView.adjustedContentInset.bottom
         
         chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
         view.layoutIfNeeded()

@@ -39,10 +39,8 @@ class SetLinkPasswordViewController: UIViewController {
         passwordView.passwordTextField.delegate = self
         confirmPasswordView.passwordTextField.delegate = self
 
-        if #available(iOS 12.0, *) {
-            passwordView.passwordTextField.textContentType = .password
-            confirmPasswordView.passwordTextField.textContentType = .newPassword
-        }
+        passwordView.passwordTextField.textContentType = .password
+        confirmPasswordView.passwordTextField.textContentType = .newPassword
         
         passwordView.passwordTextField.becomeFirstResponder()
         

@@ -43,10 +43,8 @@
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
     self.thumbnailImageView.image = [UIImage imageNamed:@"multiplePhotos"];
-    if (@available(iOS 11.0, *)) {
-        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
@@ -139,10 +137,8 @@
     
     MEGANode *node  = [self.nodesArray objectAtIndex:indexPath.row];
     [itemCell.avatarImageView mnz_setThumbnailByNode:node];
-    if (@available(iOS 11.0, *)) {
-        itemCell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-        itemCell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    itemCell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    itemCell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     itemCell.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
     itemCell.videoDurationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";

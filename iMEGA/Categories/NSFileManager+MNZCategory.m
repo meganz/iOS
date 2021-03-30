@@ -146,17 +146,15 @@
 #pragma mark - Properties
 
 - (uint64_t)mnz_fileSystemFreeSizeWithError:(NSError *)error {
-    if (@available(iOS 11.0, *)) {
-        uint64_t totalFreeSpace = 0;
-        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:NSHomeDirectory()];
-        NSDictionary *results = [fileURL resourceValuesForKeys:@[NSURLVolumeAvailableCapacityForImportantUsageKey] error:&error];
-        if (!results) {
-            MEGALogError(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
-        } else {
-            MEGALogDebug(@"Available capacity for important usage: %@", results[NSURLVolumeAvailableCapacityForImportantUsageKey]);
-            totalFreeSpace = ((NSString *)results[NSURLVolumeAvailableCapacityForImportantUsageKey]).longLongValue;
-            return totalFreeSpace;
-        }
+    uint64_t totalFreeSpace = 0;
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:NSHomeDirectory()];
+    NSDictionary *results = [fileURL resourceValuesForKeys:@[NSURLVolumeAvailableCapacityForImportantUsageKey] error:&error];
+    if (!results) {
+        MEGALogError(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
+    } else {
+        MEGALogDebug(@"Available capacity for important usage: %@", results[NSURLVolumeAvailableCapacityForImportantUsageKey]);
+        totalFreeSpace = ((NSString *)results[NSURLVolumeAvailableCapacityForImportantUsageKey]).longLongValue;
+        return totalFreeSpace;
     }
     
     NSDictionary *attributesOfHomeDirectoryDictionary = [self attributesOfFileSystemForPath:NSHomeDirectory() error:&error];

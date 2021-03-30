@@ -7,7 +7,7 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
-
+    
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void) {
         getFavouriteNodes(limitCount: 0, completion: completion)
     }
@@ -32,4 +32,5 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
             }
         })
     }
+
 }

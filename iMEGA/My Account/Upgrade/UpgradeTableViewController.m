@@ -142,10 +142,6 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     self.navigationController.toolbarHidden = YES;
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

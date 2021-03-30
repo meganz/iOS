@@ -15,9 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *firstSectionLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *seedQrImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageViewWidthLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageViewHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UITextView *seedTextView;
 @property (weak, nonatomic) IBOutlet UIView *seedTextViewView;
 
@@ -33,14 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        self.firstSectionLabel.font = [UIFont systemFontOfSize:12.0f];
-        self.seedQrImageTopLayoutConstraint.constant = 16.f;
-        self.seedQrImageViewHeightLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
-        self.seedQrImageViewWidthLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
-        self.seedTextView.font = [UIFont systemFontOfSize:14.0f];
-    }
-    
     self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"");
     
     self.firstSectionLabel.userInteractionEnabled = YES;
@@ -54,14 +43,6 @@
     [self.seedTextView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnTextView:)]];
     
     [self updateAppearance];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -121,8 +102,8 @@
     return seedSplitInGroupsOfFourCharacters;
 }
 
-- (void)youNeedATwoFactorAuthenticationAppAlertWithTitle:(NSString *)title {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+- (void)youNeedATwoFactorAuthenticationAppAlertWithTitle:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Authenticator app required", @"Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device") message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"App Store" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/search"];

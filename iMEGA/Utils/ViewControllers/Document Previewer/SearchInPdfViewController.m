@@ -7,15 +7,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray<PDFSelection *> *searchResults NS_AVAILABLE_IOS(11.0);
+@property (strong, nonatomic) NSMutableArray<PDFSelection *> *searchResults;
 @property (strong, nonatomic) UISearchBar *searchBar;
 
 @end
 
 @implementation SearchInPdfViewController
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -123,8 +120,6 @@
     [self.searchResults addObject:instance];
     [self.tableView reloadData];
 }
-
-#pragma clang diagnostic pop
 
 #pragma mark - Keyboard
 

@@ -1,7 +1,12 @@
 import MessageKit
 import MapKit
 
-extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
+extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, MessageLabelDelegate {
+    
+    func didSelectPhoneNumber(_ phoneNumber: String) {
+        guard let number = URL(string: "telprompt://" + phoneNumber.replacingOccurrences(of: " ", with: "-")) else { return }
+        UIApplication.shared.open(number)
+    }
     
     func didTapAvatar(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),

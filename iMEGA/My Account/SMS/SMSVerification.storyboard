@@ -554,80 +554,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w46-uN-maF">
-                                <rect key="frame" x="37.5" y="66.5" width="300" height="534"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="74a-cv-ZO1">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="addPhoneNumberMedium" translatesAutoresizingMaskIntoConstraints="NO" id="Abt-Sp-hru">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="128"/>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aBt-va-wFv">
-                                        <rect key="frame" x="0.0" y="226" width="300" height="98.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w46-uN-maF" userLabel="Content Stack View">
+                                        <rect key="frame" x="20" y="20" width="627" height="335"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Add Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCv-KP-OSs">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="20.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Get free 20 GB when you add your phone number. This makes it easier for your contacts to find you on MEGA." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kq-uo-FOg">
-                                                <rect key="frame" x="0.0" y="40.5" width="300" height="58"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Hqv-tM-DGx">
-                                        <rect key="frame" x="0.0" y="422" width="300" height="112"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-jD-WtR">
-                                                <rect key="frame" x="22.5" y="0.0" width="255" height="50"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="addPhoneNumberMedium" translatesAutoresizingMaskIntoConstraints="NO" id="Abt-Sp-hru">
+                                                <rect key="frame" x="0.0" y="0.0" width="627" height="127"/>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aBt-va-wFv" userLabel="Label Stack View">
+                                                <rect key="frame" x="0.0" y="135" width="627" height="80"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Add Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCv-KP-OSs">
+                                                        <rect key="frame" x="0.0" y="0.0" width="627" height="22"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Get free 20 GB when you add your phone number. This makes it easier for your contacts to find you on MEGA." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kq-uo-FOg">
+                                                        <rect key="frame" x="0.0" y="42" width="627" height="38"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="74c-oh-7CU"/>
-                                                    <constraint firstAttribute="width" constant="255" id="iRp-rB-DWR"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="K3y-eW-0zF"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                <state key="normal" title="Add Phone Number"/>
-                                                <connections>
-                                                    <action selector="didTapAddPhoneNumberButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="CRc-Pi-B1Z"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNc-u2-8ln">
-                                                <rect key="frame" x="22.5" y="62" width="255" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="DJq-ex-JqP"/>
-                                                    <constraint firstAttribute="width" constant="255" id="lB1-85-ZCk"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                <state key="normal" title="Not Now"/>
-                                                <connections>
-                                                    <action selector="didTapNotNowButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="0ow-Fy-xfx"/>
-                                                </connections>
-                                            </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7L-sh-poO">
-                                                <rect key="frame" x="22.5" y="112" width="255" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="Lon-to-rOs"/>
-                                                    <constraint firstAttribute="width" constant="255" id="f7U-Fu-UUq"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                <state key="normal" title="Don't show again"/>
-                                                <connections>
-                                                    <action selector="didTapDontShowAgainButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="92B-sY-YJu"/>
-                                                </connections>
-                                            </button>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Hqv-tM-DGx" userLabel="Button Stack View">
+                                                <rect key="frame" x="0.0" y="223" width="627" height="112"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-jD-WtR">
+                                                        <rect key="frame" x="186" y="0.0" width="255" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="74c-oh-7CU"/>
+                                                            <constraint firstAttribute="width" constant="255" id="iRp-rB-DWR"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <state key="normal" title="Add Phone Number"/>
+                                                        <connections>
+                                                            <action selector="didTapAddPhoneNumberButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="CRc-Pi-B1Z"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNc-u2-8ln">
+                                                        <rect key="frame" x="186" y="62" width="255" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="DJq-ex-JqP"/>
+                                                            <constraint firstAttribute="width" constant="255" id="lB1-85-ZCk"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <state key="normal" title="Not Now"/>
+                                                        <connections>
+                                                            <action selector="didTapNotNowButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="0ow-Fy-xfx"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7L-sh-poO">
+                                                        <rect key="frame" x="186" y="112" width="255" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="Lon-to-rOs"/>
+                                                            <constraint firstAttribute="width" constant="255" id="f7U-Fu-UUq"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <state key="normal" title="Don't show again"/>
+                                                        <connections>
+                                                            <action selector="didTapDontShowAgainButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="92B-sY-YJu"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstItem="w46-uN-maF" firstAttribute="top" secondItem="74a-cv-ZO1" secondAttribute="top" constant="20" id="EWd-JW-1a0"/>
+                                    <constraint firstItem="w46-uN-maF" firstAttribute="centerX" secondItem="74a-cv-ZO1" secondAttribute="centerX" id="Ndd-bv-pEs"/>
+                                    <constraint firstAttribute="bottom" secondItem="w46-uN-maF" secondAttribute="bottom" constant="20" id="YSa-fC-bNu"/>
+                                    <constraint firstItem="w46-uN-maF" firstAttribute="centerY" secondItem="74a-cv-ZO1" secondAttribute="centerY" id="Zm7-is-FLo"/>
+                                    <constraint firstAttribute="trailing" secondItem="w46-uN-maF" secondAttribute="trailing" constant="20" id="dQJ-QP-bnA"/>
+                                    <constraint firstItem="w46-uN-maF" firstAttribute="leading" secondItem="74a-cv-ZO1" secondAttribute="leading" constant="20" id="pe5-cf-894"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="w46-uN-maF" firstAttribute="width" secondItem="2aS-id-RQ0" secondAttribute="width" multiplier="0.8" id="TvL-ah-N9d"/>
-                            <constraint firstItem="w46-uN-maF" firstAttribute="centerX" secondItem="etF-Iz-rXx" secondAttribute="centerX" id="fO7-iq-n6D"/>
-                            <constraint firstItem="w46-uN-maF" firstAttribute="centerY" secondItem="etF-Iz-rXx" secondAttribute="centerY" id="ovq-F3-vGk"/>
-                            <constraint firstItem="w46-uN-maF" firstAttribute="height" secondItem="2aS-id-RQ0" secondAttribute="height" multiplier="0.8" id="tXh-iJ-iLO"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="2aS-id-RQ0"/>
+                        <constraints>
+                            <constraint firstItem="74a-cv-ZO1" firstAttribute="leading" secondItem="2aS-id-RQ0" secondAttribute="leading" id="5Zv-EV-2fB"/>
+                            <constraint firstItem="2aS-id-RQ0" firstAttribute="trailing" secondItem="74a-cv-ZO1" secondAttribute="trailing" id="LLS-6Y-tcK"/>
+                            <constraint firstItem="2aS-id-RQ0" firstAttribute="bottom" secondItem="74a-cv-ZO1" secondAttribute="bottom" id="oLS-oQ-tLo"/>
+                            <constraint firstItem="74a-cv-ZO1" firstAttribute="top" secondItem="2aS-id-RQ0" secondAttribute="top" id="rSw-GK-IE6"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="addPhoneNumberButton" destination="cQA-jD-WtR" id="6Wr-de-8Ax"/>

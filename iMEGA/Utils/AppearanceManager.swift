@@ -32,9 +32,7 @@ class AppearanceManager: NSObject {
         UIProgressView.appearance().backgroundColor = UIColor.clear
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        if #available(iOS 10, *) {
-            UITabBar.appearance().unselectedItemTintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        }
+        UITabBar.appearance().unselectedItemTintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UITabBar.appearance().tintColor = UIColor.mnz_red(for: traitCollection)
         UITabBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
         
