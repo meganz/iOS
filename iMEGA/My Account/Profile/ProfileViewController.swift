@@ -172,7 +172,10 @@ enum SessionSectionRow: Int {
                     expandAvatarView()
                 }
             } else {
-                if (avatarViewHeightConstraint.constant - avatarExpandedPosition) / (avatarCollapsedPosition - avatarExpandedPosition) > 0.5 {
+                let height = avatarViewHeightConstraint.constant - avatarExpandedPosition
+                let position = avatarCollapsedPosition - avatarExpandedPosition
+                
+                if (height / position) > 0.5 {
                     collapseAvatarView()
                 } else {
                     expandAvatarView()

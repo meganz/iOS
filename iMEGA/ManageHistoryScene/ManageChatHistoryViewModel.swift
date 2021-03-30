@@ -77,12 +77,12 @@ final class ManageChatHistoryViewModel: ViewModelType {
     // MARK: - Private
     
     private func historyRetentionPickerValueToUInt(_ unitsRow: Int, _ measurementsRow: Int) -> UInt {
-        let hoursDaysWeeksMonthsOrYearValue: UInt = UInt(unitsRow + 1)
-        let measuramentsComponentValue: Array<UInt> = [UInt(secondsInAHour), UInt(secondsInADay), UInt(secondsInAWeek), UInt(secondsInAMonth_30), UInt(secondsInAYear)]
-        let hoursDaysWeeksMonthsOrYear = measurementsRow
-        let historyRetentionValue = hoursDaysWeeksMonthsOrYearValue * measuramentsComponentValue[hoursDaysWeeksMonthsOrYear]
+        let hoursDaysWeeksMonthsOrYearValue = unitsRow + 1
+        let secondsInYear = Int(truncatingIfNeeded: secondsInAYear)
+        let measurement = [secondsInAHour, secondsInADay, secondsInAWeek, secondsInAMonth_30, secondsInYear][measurementsRow]
+        let historyRetentionValue = hoursDaysWeeksMonthsOrYearValue * measurement
         
-        return historyRetentionValue
+        return UInt(truncatingIfNeeded: historyRetentionValue)
     }
     
     private func setHistoryRetentionOption(_ historyRetentionValue: Int) {

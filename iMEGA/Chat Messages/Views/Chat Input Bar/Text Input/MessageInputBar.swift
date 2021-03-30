@@ -124,12 +124,9 @@ class MessageInputBar: UIView {
         }
         
         editViewHeightConstraint.constant = 0
-        
-        messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight
-            + messageTextViewCoverViewTopConstraint.constant
-            + messageTextViewCoverViewBottomConstraint.constant
-            + messageTextView.textContainerInset.top
-            + messageTextView.textContainerInset.bottom
+        let inset: CGFloat = messageTextView.textContainerInset.top + messageTextView.textContainerInset.bottom
+        let cover: CGFloat = messageTextViewCoverViewTopConstraint.constant + messageTextViewCoverViewBottomConstraint.constant
+        messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight + inset + cover
         
         updateAppearance()
     }
@@ -258,11 +255,9 @@ class MessageInputBar: UIView {
     // MARK: - Private methods
     
     private func heightWhenExpanded(topConstraintValueWhenExpanded: CGFloat) -> CGFloat {
-        return UIScreen.main.bounds.height -
-            (topConstraintValueWhenExpanded
-                + messageTextViewBottomConstraintDefaultValue
-                + (messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0)
-                + editViewHeightConstraint.constant)
+        let keyboard = messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0
+        let insetHeight = topConstraintValueWhenExpanded + messageTextViewBottomConstraintDefaultValue + keyboard + editViewHeightConstraint.constant
+        return UIScreen.main.bounds.height - insetHeight
     }
     
     private func configureEditField() {
@@ -366,11 +361,9 @@ class MessageInputBar: UIView {
         semiTransparentView.alpha = 0.0
         semiTransparentView.isHidden = false
 
-        let topConstraintValue: CGFloat = UIScreen.main.bounds.height
-            - ((messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0)
-                + messageTextViewBottomConstraint.constant
-                + messageTextView.intrinsicContentSize.height
-                + editViewHeightConstraint.constant)
+        let keyboard = messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0
+        let contentHeight = keyboard + messageTextViewBottomConstraint.constant + messageTextView.intrinsicContentSize.height + editViewHeightConstraint.constant
+        let topConstraintValue = UIScreen.main.bounds.height - contentHeight
 
         editViewTopConstraint.constant = topConstraintValue
         layoutIfNeeded()

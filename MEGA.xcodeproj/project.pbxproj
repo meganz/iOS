@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -495,7 +495,6 @@
 		5DA32DBC24EA49600075B613 /* UIImage+Manipulate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DBB24EA49600075B613 /* UIImage+Manipulate.swift */; };
 		5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */; };
 		5DA32DC124EA923D0075B613 /* UserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DC024EA923D0075B613 /* UserAlert.swift */; };
-		5DA32DC524EA936D0075B613 /* FileSystemImageCacheClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DC424EA936D0075B613 /* FileSystemImageCacheClient.swift */; };
 		5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */; };
 		5DA9759924B6CD6C00FBD045 /* UIControl.State+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
@@ -1454,12 +1453,12 @@
 		B67A2C7F251755FC00B40D89 /* PreferenceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C7E251755FC00B40D89 /* PreferenceRepositoryProtocol.swift */; };
 		B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C852517EABE00B40D89 /* CredentialRepositoryProtocol.swift */; };
 		B67A2C8D2517EE6600B40D89 /* L10nRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C8C2517EE6600B40D89 /* L10nRepository.swift */; };
-		B67B17EE25CAACB70022D6C0 /* SDKAvatarClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient.swift */; };
-		B67B182025CAACC00022D6C0 /* SDKUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66F250D9C0200D74666 /* SDKUserClient.swift */; };
+		B67B17EE25CAACB70022D6C0 /* SDKAvatarClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient+Additions.swift */; };
+		B67B182025CAACC00022D6C0 /* SDKUserClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66F250D9C0200D74666 /* SDKUserClient+Additions.swift */; };
 		B67B189025CAAEB40022D6C0 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D675250DBAAB00D74666 /* StoreUserClient.swift */; };
 		B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D671250DBA0B00D74666 /* CGSize.swift */; };
 		B67B189A25CAAEBE0022D6C0 /* StoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D673250DBA3900D74666 /* StoreUser.swift */; };
-		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient.swift */; };
+		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
 		B6831C0A25B65C7D0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
@@ -1546,6 +1545,7 @@
 		B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026B5258308E900D29CB6 /* BackupRecorder.swift */; };
 		B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */; };
 		B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
+		B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */; };
 		BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */; };
 		BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */; };
 		BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */; };
@@ -1770,7 +1770,6 @@
 		C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */; };
 		C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */; };
 		C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */; };
-		C45321AE2592546E008BAA79 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45321AD2592546E008BAA79 /* UIViewController+Additions.swift */; };
 		C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390CC256587BF0026F215 /* MEGASlider.swift */; };
 		C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390D62565BB840026F215 /* MEGASelectedButton.swift */; };
 		C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */; };
@@ -1820,9 +1819,9 @@
 		C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */; };
 		C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */; };
 		C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D673250DBA3900D74666 /* StoreUser.swift */; };
-		C4F0C913259E10190063C5C5 /* SDKAvatarClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient.swift */; };
+		C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient+Additions.swift */; };
 		C4F0C91C259E10200063C5C5 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		C4F0C91D259E10240063C5C5 /* SDKUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66F250D9C0200D74666 /* SDKUserClient.swift */; };
+		C4F0C91D259E10240063C5C5 /* SDKUserClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66F250D9C0200D74666 /* SDKUserClient+Additions.swift */; };
 		C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */; };
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
@@ -2428,8 +2427,8 @@
 		5D31674624FCA8FD0032492F /* UIViewController+ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ErrorHandling.swift"; sourceTree = "<group>"; };
 		5D31674A24FCA9330032492F /* DevicePermissionAlerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePermissionAlerting.swift; sourceTree = "<group>"; };
 		5D31674C24FCA9880032492F /* UIViewController+DevicePermissionAlerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DevicePermissionAlerting.swift"; sourceTree = "<group>"; };
-		5D33D66B250D9BDD00D74666 /* SDKAvatarClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKAvatarClient.swift; sourceTree = "<group>"; };
-		5D33D66F250D9C0200D74666 /* SDKUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKUserClient.swift; sourceTree = "<group>"; };
+		5D33D66B250D9BDD00D74666 /* SDKAvatarClient+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKAvatarClient+Additions.swift"; sourceTree = "<group>"; };
+		5D33D66F250D9C0200D74666 /* SDKUserClient+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKUserClient+Additions.swift"; sourceTree = "<group>"; };
 		5D33D671250DBA0B00D74666 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		5D33D673250DBA3900D74666 /* StoreUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUser.swift; sourceTree = "<group>"; };
 		5D33D675250DBAAB00D74666 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
@@ -2536,7 +2535,6 @@
 		5DA32DBB24EA49600075B613 /* UIImage+Manipulate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Manipulate.swift"; sourceTree = "<group>"; };
 		5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKUserAlertsClient.swift; sourceTree = "<group>"; };
 		5DA32DC024EA923D0075B613 /* UserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlert.swift; sourceTree = "<group>"; };
-		5DA32DC424EA936D0075B613 /* FileSystemImageCacheClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemImageCacheClient.swift; sourceTree = "<group>"; };
 		5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyleFactory.swift; sourceTree = "<group>"; };
 		5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl.State+Hashable.swift"; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
@@ -3422,7 +3420,7 @@
 		B67A2C7E251755FC00B40D89 /* PreferenceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceRepositoryProtocol.swift; sourceTree = "<group>"; };
 		B67A2C852517EABE00B40D89 /* CredentialRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialRepositoryProtocol.swift; sourceTree = "<group>"; };
 		B67A2C8C2517EE6600B40D89 /* L10nRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nRepository.swift; sourceTree = "<group>"; };
-		B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemImageCacheClient.swift; sourceTree = "<group>"; };
+		B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileSystemImageCacheClient+Additions.swift"; sourceTree = "<group>"; };
 		B67B18EF25CB80690022D6C0 /* MEGA.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MEGA.xctestplan; sourceTree = "<group>"; };
 		B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
@@ -3552,6 +3550,7 @@
 		B6E7A8E22503897A00CD6AC2 /* PreferenceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceWrapper.swift; sourceTree = "<group>"; };
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
+		B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemImageCacheClient.swift; sourceTree = "<group>"; };
 		BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.release.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -3771,7 +3770,6 @@
 		C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaybackTests.swift; sourceTree = "<group>"; };
-		C45321AD2592546E008BAA79 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
 		C45390CC256587BF0026F215 /* MEGASlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASlider.swift; sourceTree = "<group>"; };
 		C45390D62565BB840026F215 /* MEGASelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASelectedButton.swift; sourceTree = "<group>"; };
 		C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
@@ -4907,7 +4905,6 @@
 				BFE6E55D25535DEB00050DCA /* UITableViewCell+Additions.swift */,
 				BF3809E72577494700689A63 /* UITableView+Additions.swift */,
 				C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */,
-				C45321AD2592546E008BAA79 /* UIViewController+Additions.swift */,
 				C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */,
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
 				BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */,
@@ -5715,9 +5712,9 @@
 		5D33D66A250D9BC900D74666 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				5D33D66B250D9BDD00D74666 /* SDKAvatarClient.swift */,
-				5D33D66F250D9C0200D74666 /* SDKUserClient.swift */,
-				B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient.swift */,
+				5D33D66B250D9BDD00D74666 /* SDKAvatarClient+Additions.swift */,
+				5D33D66F250D9C0200D74666 /* SDKUserClient+Additions.swift */,
+				B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -6303,7 +6300,7 @@
 		5DF249E024F3965F003FED76 /* FileSystem */ = {
 			isa = PBXGroup;
 			children = (
-				5DA32DC424EA936D0075B613 /* FileSystemImageCacheClient.swift */,
+				B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */,
 				5D0E254F25073404005848F3 /* LocalFileSystemFolders.swift */,
 			);
 			path = FileSystem;
@@ -8967,7 +8964,6 @@
 				137361881A6664C300B740E8 /* Resources */,
 				942254FF1EDC03150074C51A /* Embed App Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script */,
-				B6CB4E4C253EFA8A0009E87F /* Crashlytics */,
 				54B2F3203E01F695C1D764F2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -8993,7 +8989,6 @@
 				7794AED0231E4E0A0039C1D2 /* Sources */,
 				7794AED1231E4E0A0039C1D2 /* Frameworks */,
 				7794AED2231E4E0A0039C1D2 /* Resources */,
-				B6873AD725A6C72A00BBD15A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -9012,7 +9007,6 @@
 				83199F0D25556CD900344531 /* Sources */,
 				83199F0E25556CD900344531 /* Frameworks */,
 				83199F0F25556CD900344531 /* Resources */,
-				B6873AE225A6C7B700BBD15A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -9031,7 +9025,6 @@
 				831B490A256FED6F0086002B /* Sources */,
 				831B490B256FED6F0086002B /* Frameworks */,
 				831B490C256FED6F0086002B /* Resources */,
-				B6873AF525A6C83A00BBD15A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -9050,7 +9043,6 @@
 				942254D81EDC03130074C51A /* Sources */,
 				942254D91EDC03130074C51A /* Frameworks */,
 				942254DA1EDC03130074C51A /* Resources */,
-				B6873A5725A6C28000BBD15A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -9069,7 +9061,6 @@
 				942254E71EDC03140074C51A /* Sources */,
 				942254E81EDC03140074C51A /* Frameworks */,
 				942254E91EDC03140074C51A /* Resources */,
-				B6873A6225A6C3C300BBD15A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -9088,7 +9079,6 @@
 				943F8B0B1EF26E9C00AFD89F /* Sources */,
 				943F8B0C1EF26E9C00AFD89F /* Frameworks */,
 				943F8B0D1EF26E9C00AFD89F /* Resources */,
-				B6873AA625A6C66800BBD15A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -9221,7 +9211,7 @@
 				};
 			};
 			buildConfigurationList = 137361851A6664C300B740E8 /* Build configuration list for PBXProject "MEGA" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -9750,146 +9740,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B6873A5725A6C28000BBD15A /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		B6873A6225A6C3C300BBD15A /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		B6873AA625A6C66800BBD15A /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		B6873AD725A6C72A00BBD15A /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		B6873AE225A6C7B700BBD15A /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		B6873AF525A6C83A00BBD15A /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		B6CB4E4C253EFA8A0009E87F /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = Crashlytics;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
 		C4BEDEAE5B76A0F7B4B12BDD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -10409,7 +10259,6 @@
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				5D8303E7256270800082CA18 /* BannerEntity.swift in Sources */,
 				5D4244D22512005500EE544D /* NodeSearchRepository.swift in Sources */,
-				C45321AE2592546E008BAA79 /* UIViewController+Additions.swift in Sources */,
 				830C26AF25DFCE5300E9B56E /* FavouriteNodesUseCase.swift in Sources */,
 				5D79EDD4251C71B500C0307A /* SearchHintTableViewCell.swift in Sources */,
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
@@ -10610,6 +10459,7 @@
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				5D60927E255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift in Sources */,
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
+				B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */,
 				A86B9F642316D6AB00F35E7A /* FLEXKeychainQuery.m in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				A80B66E125E7F72000486EC5 /* NodeEntity.swift in Sources */,
@@ -11006,8 +10856,6 @@
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				837DC7A9256D196400CA289E /* GetLinkStringTableViewCell.swift in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
-				5DA32DC524EA936D0075B613 /* FileSystemImageCacheClient.swift in Sources */,
-				5DA32DC524EA936D0075B613 /* FileSystemImageCacheClient.swift in Sources */,
 				C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */,
 				A86B9F6F2316D6AB00F35E7A /* FLEXTableLeftCell.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
@@ -11413,9 +11261,9 @@
 			files = (
 				BF6E8D1B25B53F58003A125A /* MockPSARepository.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
-				B67B182025CAACC00022D6C0 /* SDKUserClient.swift in Sources */,
+				B67B182025CAACC00022D6C0 /* SDKUserClient+Additions.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */,
-				C4F0C91D259E10240063C5C5 /* SDKUserClient.swift in Sources */,
+				C4F0C91D259E10240063C5C5 /* SDKUserClient+Additions.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
 				5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */,
@@ -11426,7 +11274,7 @@
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				A83CFEA025DAAAF300622675 /* ThrottlerTest.swift in Sources */,
 				5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */,
-				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient.swift in Sources */,
+				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				B67B189025CAAEB40022D6C0 /* StoreUserClient.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
@@ -11459,9 +11307,9 @@
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
-				C4F0C913259E10190063C5C5 /* SDKAvatarClient.swift in Sources */,
+				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
-				B67B17EE25CAACB70022D6C0 /* SDKAvatarClient.swift in Sources */,
+				B67B17EE25CAACB70022D6C0 /* SDKAvatarClient+Additions.swift in Sources */,
 				B66BA2472514DD2C009787BD /* MockPreferenceUseCase.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
@@ -11638,6 +11486,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -11661,7 +11510,10 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -11712,6 +11564,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
@@ -11731,7 +11584,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 20111353;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -11760,7 +11612,10 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -11771,15 +11626,20 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC,
+					"$(inherited)",
+				);
 				VERSIONING_SYSTEM = "";
 			};
 			name = Debug;
@@ -11823,7 +11683,10 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -11834,6 +11697,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
@@ -11841,7 +11705,12 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC,
+					"$(inherited)",
+				);
 				VERSIONING_SYSTEM = "";
 			};
 			name = Release;
@@ -11877,7 +11746,11 @@
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -11896,10 +11769,13 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -11934,7 +11810,11 @@
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -11951,10 +11831,13 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGANotifications";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -11991,7 +11874,11 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12006,10 +11893,12 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios iMEGA/Vendor/Karere/bindings/Objective-C";
+				USER_HEADER_SEARCH_PATHS = (
+					iMEGA/Vendor/SDK/bindings/ios,
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+				);
 			};
 			name = Debug;
 		};
@@ -12046,7 +11935,11 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12059,10 +11952,12 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAWidget";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios iMEGA/Vendor/Karere/bindings/Objective-C";
+				USER_HEADER_SEARCH_PATHS = (
+					iMEGA/Vendor/SDK/bindings/ios,
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+				);
 			};
 			name = Release;
 		};
@@ -12089,7 +11984,11 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.9.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -12098,7 +11997,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAIntent";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -12127,14 +12025,17 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.9.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAIntent";
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -12164,7 +12065,11 @@
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12175,7 +12080,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -12204,7 +12113,11 @@
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12215,7 +12128,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -12255,7 +12172,11 @@
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12270,7 +12191,11 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPicker/Supporting Files/MEGAPicker-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_VERSION = 5.0;
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -12310,7 +12235,11 @@
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12324,7 +12253,11 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPicker/Supporting Files/MEGAPicker-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_VERSION = 5.0;
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -12365,7 +12298,11 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12378,7 +12315,11 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -12419,7 +12360,11 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
@@ -12432,7 +12377,11 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C $(inherited)";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -12469,7 +12418,11 @@
 				);
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(inherited)",
@@ -12485,7 +12438,10 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+				);
 			};
 			name = Debug;
 		};
@@ -12514,7 +12470,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(inherited)",
@@ -12529,7 +12489,10 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
+				USER_HEADER_SEARCH_PATHS = (
+					"iMEGA/Vendor/SDK/bindings/ios/**",
+					"iMEGA/Vendor/Karere/bindings/Objective-C",
+				);
 			};
 			name = Release;
 		};

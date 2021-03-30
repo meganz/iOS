@@ -15,7 +15,7 @@ extension UploadFromURL {
         let megaSDK = MEGASdkManager.sharedMEGASdk()
         let uploadDirectory = fileManager.uploadsDirectory() as NSString
 
-        return Self { url, parentNodeHandle in
+        return Self { (url, parentNodeHandle) -> Void in
             let localFilePath = uploadDirectory.appendingPathComponent(url.lastPathComponent)
             try? fileManager.moveItem(atPath: url.path, toPath: localFilePath)
 
