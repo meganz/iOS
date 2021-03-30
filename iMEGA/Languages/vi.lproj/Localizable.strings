@@ -777,7 +777,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc hủy bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu vào dưới đây.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Tài khoản của bạn đã bị hủy bỏ thành công.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Loại Bỏ Thành Viên";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Đang chát với";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện nghiêm ngặt với công nghệ bảo mật đầu-cuối (người dùng kiểm soát) cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1637,9 +1639,9 @@
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản. Nghĩa là trong trường hợp có người biết mật khẩu để lén vào tài khoản sẽ không thể vào được, và buộc phải nhập thêm đoạn mã 6 chữ số mà chỉ chủ sở hữu tài khoản mới có.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"Authenticator app required"="Authenticator app required";
+"Authenticator app required"="Cần sử dụng app lập xác minh";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Cần phải có cài app lập xác minh cho thiết bị này";
+"youNeedATwoFactorAuthenticationApp"="Xin lỗi, việc xác minh 2-bước không thể kích hoạt được cho thiết bị của bạn. Xin mở App Store và cài đặt một app Lập Xác Minh.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Cần phải có một app lập xác minh để bật tính năng XM2B với MEGA. Bạn có thể tải và cài đặt Google Authenticator, Duo Mobile, Authy hoặc Microsoft Authenticator app về thiết bị của mình.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
