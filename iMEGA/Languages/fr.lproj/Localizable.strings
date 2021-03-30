@@ -467,7 +467,7 @@
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Erreur de droits";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="Vérifier vos droits pour ce dossier";
+"permissionMessage"="Vérifiez vos droits pour ce dossier";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Le dossier a été partagé";
 /* Success message for sharing multiple folders. */
@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour supprimer votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Votre compte a été annulé avec succès.";
+"accountCanceledSuccessfully"="Votre compte a été supprimé avec succès.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Fermer le compte";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Supprimer le participant";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Conversation avec";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Chargement impossible. [RED]Touchez pour réessayer[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA protège votre conversation grâce au chiffrement de bout en bout (contrôlé par l’utilisateur) apportant ainsi une garantie de sécurité essentielle.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1637,9 +1639,9 @@
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte. Cela signifie que même si quelqu’un connaissait votre mot de passe, cette personne ne pourrait pas y accéder sans avoir aussi le code à 6 chiffres auquel vous seul pourrez accéder.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"Authenticator app required"="Authenticator app required";
+"Authenticator app required"="Une appli d’authentification est requise";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Vous avez besoin d’une appli d’authentification à deux facteurs sur cet appareil";
+"youNeedATwoFactorAuthenticationApp"="Nous sommes désolés, mais l’authentification à deux facteurs ne peut pas être activée sur votre appareil. Veuillez ouvrir l’App Store pour installer une appli d’authentification.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Il vous faut une appli d’authentification pour activer l’A2F avec MEGA. Vous pouvez télécharger et installer l’appli Google Authenticator, Duo Mobile, Authy ou Microsoft Authenticator pour votre téléphone ou votre tablette.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1881,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Votre paiement pour l’abonnement %1 a échoué.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Votre abonnement Pro arrivera à expiration dans un jour.";
+"Your PRO membership plan will expire in 1 day."="Votre abonnement Pro arrivera à expiration demain.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Votre abonnement Pro arrivera à expiration dans %1 jours.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -2163,7 +2165,7 @@
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Vous avez atteint la limite quotidienne";
 /* Error message that will be shown when the code introduced do not match with the one you received */
-"The verification code doesn't match."="Le code de vérification ne correspond pas.";
+"The verification code doesn't match."="Le code de confirmation ne correspond pas.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Le code est erroné. Veuillez essayer et envoyer de nouveau.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2589,4 +2591,4 @@
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="L’appareil n’a pas assez d’espace libre pour que MEGA fonctionne correctement.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libérez de l’espace en supprimant des applis que vous n’utilisez plus ou des fichiers vidéo volumineux dans votre galerie. Vous pouvez gérer votre mémoire dans %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libérez de l’espace en supprimant des applis que vous n’utilisez plus ou des fichiers vidéo volumineux dans votre galerie.Vous pouvez gérer votre mémoire dans %@";

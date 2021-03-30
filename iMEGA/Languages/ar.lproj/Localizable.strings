@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="هذه هي الخطوة الأخيرة لحذف حسابك. ستفقد بشكل دائم جميع البيانات المخزنة في السحابة. الرجاء إدخال كلمة المرور الخاصة بك أدناه.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="تم إلغاء حسابك بنجاح.";
+"accountCanceledSuccessfully"="تم حذف حسابك بنجاح.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="إغلاق الحساب";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="إزالة مشارك";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="يتحادث مع";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA تحمي محادثاتك بتشفير من طرف إلى طرف (بتحكم المستخدم نفسه) وبضمانات السلامة الأساسية:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1881,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="عملية الدفع للخطة %1 لم تنجح";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="ستنتهي صلاحية اشتراك برو Pro الخاص بك في يوم واحد.";
+"Your PRO membership plan will expire in 1 day."="ستنتهي صلاحية اشتراك برو Pro الخاص بك غداً.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="ستنتهي صلاحية اشتراك برو Pro الخاص بك في %1 يوم.";
 /* The professional pricing plan which the user was on expired one day ago. */

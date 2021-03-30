@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Este é o último passo para excluir a sua conta. Todos os dados armazenados na sua nuvem de arquivos serão permanentemente deletados. Por favor, digite sua senha abaixo para confirmar.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="A sua conta foi cancelada.";
+"accountCanceledSuccessfully"="A sua conta foi excluída.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Encerrar a conta";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Remover participante";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat com";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="O MEGA protege o seu chat com criptografia de ponta a ponta (controlada pelo usuário), proporcionando garantias de segurança essenciais:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1881,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="O seu pagamento para o plano %1 não foi concluído.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="O seu plano Pro expirará em 1 dia.";
+"Your PRO membership plan will expire in 1 day."="O seu plano Pro expirará amanhã.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="O seu plano Pro expirará em %1 dias.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -2589,4 +2591,4 @@
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="O armazenamento disponível no seu dispositivo não é suficiente para o MEGA funcionar corretamente.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Você pode liberar espaço excluindo aplicativos que você já não usa, ou arquivos de vídeo grandes que estiverem na sua galeria. Você pode gerenciar o seu armazenamento em %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Você pode liberar espaço excluindo aplicativos que você já não usa, ou arquivos de vídeo grandes que estiverem na sua galeria.Você pode gerenciar o seu armazenamento em %@";

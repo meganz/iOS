@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="계정을 삭제하는 마지막 단계입니다. 클라우드에 저장된 모든 데이터를 잃게 됩니다. 아래에 비밀번호를 입력하세요.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="계정이 성공적으로 취소되었습니다.";
+"accountCanceledSuccessfully"="계정이 성공적으로 삭제되었습니다.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="계정 닫기";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="참가자 제거";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="대화중인 사람";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="불러올 수 없습니다. [RED]탭하여 다시 시도하세요[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 제어하는) 암호화를 통해 보호합니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1637,9 +1639,9 @@
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다. 당신만이 접근할 수 있는 6자리 코드가 없으면, 당신의 비밀번호를 알고 있을지라도 접근할 수 없습니다.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"Authenticator app required"="Authenticator app required";
+"Authenticator app required"="인증기 앱 필요";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="이 기기에 2단계 인증 앱이 필요합니다";
+"youNeedATwoFactorAuthenticationApp"="죄송하지만, 당신의 기기에서 2단계 인증을 활성화할 수 없습니다. App Store를 열고 인증기 앱을 설치하세요.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대 전화 또는 태블릿용 Google 인증기, Duo Mobile, Authy 또는 Microsoft 인증기 앱을 다운로드하고 설치할 수 있습니다.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1881,9 +1883,9 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="%1 요금제에 대한 지불이 처리되지 않았습니다.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Pro 회원권이 1일 이내에 만료됩니다.";
+"Your PRO membership plan will expire in 1 day."="당신의 Pro 회원권이 내일 만료됩니다.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Pro 회원권이 %1일 이내에 만료됩니다.";
+"Your PRO membership plan will expire in %1 days."="당신의 Pro 회원권이 %1일 이내에 만료됩니다.";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="당신의 Pro 요금제가 1일 전에 만료되었습니다";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2587,6 +2589,6 @@
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="오프라인 섹션에서 파일에 빠르게 접근";
 /* Dialog title for the no enough device storage screen */
-"The device does not have enough space for MEGA to run properly."="MEGA가 충분한 수준의 기기 저장 공간을 확보하지 못하였습니다.";
+"The device does not have enough space for MEGA to run properly."="기기에 MEGA가 적절히 작동할 수준의 충분한 공간이 없습니다.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="사용하지 않는 앱을 삭제하거나 갤러리에서 큰 동영상 파일을 삭제하여 공간을 확보하세요. 다음의 메뉴에서 저장소를 관리할 수 있습니다 %@";
