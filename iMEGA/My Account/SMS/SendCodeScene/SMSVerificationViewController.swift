@@ -200,19 +200,11 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     }
 
     private func enableAutomaticAdjustmentContentInsetsBehavior() {
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .automatic
-        } else {
-            automaticallyAdjustsScrollViewInsets = true
-        }
+        scrollView.contentInsetAdjustmentBehavior = .automatic
     }
 
     private func disableAutomaticAdjustmentContentInsetsBehavior() {
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
     }
 
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {

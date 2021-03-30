@@ -29,7 +29,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -516,7 +516,7 @@
 - (NodeTableViewCell *)linkSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorSharedLink;
-    [cell configureCellForNode:node delegate:self api:MEGASdkManager.sharedMEGASdk];
+    [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
     //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
     cell.linkImageView.hidden = YES;
     
@@ -640,12 +640,7 @@
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor  = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
@@ -987,11 +982,7 @@
 }
 
 - (void)configureAccessibilityForCell:(SharedItemsTableViewCell *)cell {
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
-        cell.delegate = self;
-    }
+    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1097,9 +1088,6 @@
 - (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
     [self shouldStartEditingModeAtIndex:indexPath];
 }
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
     
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
@@ -1131,8 +1119,6 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
 }
-
-#pragma clang diagnostic pop
     
 #pragma mark - UISearchBarDelegate
 
@@ -1349,62 +1335,6 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
-}
-
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
-    if (direction == MGSwipeDirectionLeftToRight) {
-        return NO;
-    }
-    
-    return !self.isEditing;
-}
-
-- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
-    
-    swipeSettings.transition = MGSwipeTransitionDrag;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
-    expansionSettings.fillOnTrigger = NO;
-    expansionSettings.threshold = 2;
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    if (direction == MGSwipeDirectionRightToLeft) {
-        if (self.incomingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShareGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_leaveSharingInViewController:self];
-                return YES;
-            }];
-            [shareButton iconTintColor:UIColor.whiteColor];
-            
-            return @[shareButton];
-        } else if (self.outgoingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShareGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_removeSharing];
-                return YES;
-            }];
-            [shareButton iconTintColor:UIColor.whiteColor];
-            
-            return @[shareButton];
-        } else if (self.linksButton.selected) {
-            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeLinkGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_removeLink];
-                return YES;
-            }];
-            [removeLinkButton iconTintColor:UIColor.whiteColor];
-            
-            return @[removeLinkButton];
-        } else {
-            return nil;
-        }
-    } else {
-        return nil;
-    }
 }
 
 #pragma mark - NodeActionViewControllerDelegate

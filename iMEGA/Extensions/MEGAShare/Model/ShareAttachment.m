@@ -70,12 +70,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 #pragma mark - Naming
 
 + (NSString *)suggestedUniqueNameWithItemProvider:(NSItemProvider *)itemProvider {
-    NSString *suggestedName = nil;
-    
-    if (@available(iOS 11.0, *)) {
-        suggestedName = [ShareAttachment suggestedUniqueNameWithString:itemProvider.suggestedName];
-    }
-    
+    NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithString:itemProvider.suggestedName];
     return suggestedName;
 }
 

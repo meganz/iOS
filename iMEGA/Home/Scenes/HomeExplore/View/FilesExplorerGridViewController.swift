@@ -48,12 +48,6 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
     }
     
-    override func configureSearchController(_ searchController: UISearchController) {
-        addSearchBarViewIfNeeded()
-        searchBarView.addSubview(searchController.searchBar)
-        searchController.searchBar.autoPinEdgesToSuperviewEdges()
-    }
-    
     override func removeSearchController(_ searchController: UISearchController) {
         guard let searchBar = searchBarView.subviews.first,
               searchBar == searchController.searchBar else {
@@ -105,24 +99,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     
     private func addCollectionView() {
         view.addSubview(collectionView)
-        if #available(iOS 11.0, *) {
-            collectionView.autoPinEdgesToSuperviewSafeArea()
-        } else {
-            collectionView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-            addSearchBarViewIfNeeded()
-            collectionView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor).isActive = true
-        }
-    }
-    
-    private func addSearchBarViewIfNeeded() {
-        guard searchBarView.superview == nil else { return }
-        view.addSubview(searchBarView)
-        searchBarView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        searchBarView.heightAnchor.constraint(
-            equalTo: view.heightAnchor,
-            multiplier: 0,
-            constant: 50
-        ).isActive = true
+        collectionView.autoPinEdgesToSuperviewSafeArea()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -142,8 +119,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
 
     private func calculateColumnCount() -> Int {
         var containerWidth = UIScreen.main.bounds.width - layout.sectionInset.left - layout.sectionInset.right;
-        if #available(iOS 11.0, *),
-           let keyWindow = UIApplication.shared.keyWindow {
+        if let keyWindow = UIApplication.shared.keyWindow {
             containerWidth = containerWidth - keyWindow.safeAreaInsets.left - keyWindow.safeAreaInsets.right;
         }
         let columns = Int((containerWidth - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))

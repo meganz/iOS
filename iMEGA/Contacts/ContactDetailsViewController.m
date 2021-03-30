@@ -163,9 +163,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];

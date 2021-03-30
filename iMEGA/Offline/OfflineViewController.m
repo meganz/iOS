@@ -421,10 +421,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = NO;
-    }
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
     self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
 
@@ -913,12 +911,7 @@ static NSString *kisDirectory = @"kisDirectory";
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],

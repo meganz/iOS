@@ -769,10 +769,8 @@
         [cell.cancelButton setImage:[UIImage mnz_permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     }
     
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     if (tableView.isEditing) {
         UIView *view = UIView.alloc.init;

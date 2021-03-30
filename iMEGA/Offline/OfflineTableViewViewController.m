@@ -18,7 +18,7 @@
 static NSString *kFileName = @"kFileName";
 static NSString *kPath = @"kPath";
 
-@interface OfflineTableViewViewController () <MGSwipeTableCellDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface OfflineTableViewViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -173,10 +173,6 @@ static NSString *kPath = @"kPath";
         cell.selectedBackgroundView = view;
     }
     
-    if (@available(iOS 11.0, *)) {} else {
-        cell.delegate = self;
-    }
-    
     return cell;
 }
 
@@ -236,9 +232,6 @@ static NSString *kPath = @"kPath";
     [self setTableViewEditing:YES animated:YES];
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -257,51 +250,6 @@ static NSString *kPath = @"kPath";
     }
     deleteAction.backgroundColor = UIColor.mnz_redError;
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
-}
-
-#pragma clang diagnostic pop
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
-    if (self.tableView.isEditing) {
-        return NO;
-    }
-    
-    if (direction == MGSwipeDirectionLeftToRight) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
-    
-    swipeSettings.transition = MGSwipeTransitionDrag;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
-    expansionSettings.fillOnTrigger = NO;
-    expansionSettings.threshold = 2;
-    
-    if (direction == MGSwipeDirectionRightToLeft) {
-        
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
-            NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:offlineCell.itemNameString];
-            [self.offline showRemoveAlertWithConfirmAction:^{
-                [self.offline removeOfflineNodeCell:itemPath];
-            } andCancelAction:^{
-                [self.offline setEditMode:NO];
-            }];
-            return YES;
-        }];
-        [deleteButton iconTintColor:[UIColor whiteColor]];
-        
-        return @[deleteButton];
-    }
-    else {
-        return nil;
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

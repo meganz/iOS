@@ -478,10 +478,7 @@ class ChatViewController: MessagesViewController {
         
         chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
         
-        var contentInset = messagesCollectionView.contentInset.bottom
-        if #available(iOS 11.0, *) {
-            contentInset = messagesCollectionView.adjustedContentInset.bottom
-        }
+        let contentInset = messagesCollectionView.adjustedContentInset.bottom
         
         chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
         view.layoutIfNeeded()

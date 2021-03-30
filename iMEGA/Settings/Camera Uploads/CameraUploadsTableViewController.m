@@ -210,16 +210,14 @@
     [footerTitles addObject:[self titleForCameraUploadFooter]];
     
     // video upload section
-    [sections addObject:@[CameraUploadManager.isHEVCFormatSupported ? self.videoUploadInfoCell : self.videoUploadSwitchCell]];
+    [sections addObject:@[self.videoUploadInfoCell]];
     [headerTitles addObject:@""];
     [footerTitles addObject:@""];
     
     // photo format section
-    if (CameraUploadManager.isHEVCFormatSupported) {
-        [sections addObject:@[self.HEICCell, self.JPGCell]];
-        [headerTitles addObject:NSLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
-        [footerTitles addObject:NSLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
-    }
+    [sections addObject:@[self.HEICCell, self.JPGCell]];
+    [headerTitles addObject:NSLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
+    [footerTitles addObject:NSLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
     
     // Target folder
     [sections addObject:@[self.targetFolderCell]];

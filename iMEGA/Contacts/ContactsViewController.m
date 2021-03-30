@@ -59,9 +59,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 
-@property (weak, nonatomic) IBOutlet UIView *searchFixedView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchFixedViewHeightConstraint;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
 @property (strong, nonatomic) NSString *insertedEmail;
@@ -713,12 +710,7 @@
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
@@ -935,14 +927,8 @@
         case ContactsModeChatCreateGroup:
         case ContactsModeChatStartConversation: {
             self.searchController.hidesNavigationBarDuringPresentation = NO;
-            if (@available(iOS 11.0, *)) {
-                self.navigationItem.searchController = self.searchController;
-                self.navigationItem.hidesSearchBarWhenScrolling = NO;
-            } else {
-                self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
-                [self.searchFixedView addSubview:self.searchController.searchBar];
-                self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            }
+            self.navigationItem.searchController = self.searchController;
+            self.navigationItem.hidesSearchBarWhenScrolling = NO;
             break;
         }
            
@@ -951,17 +937,8 @@
             break;
             
         default: {
-            if (@available(iOS 11.0, *)) {
-                self.navigationItem.searchController = self.searchController;
-                self.navigationItem.hidesSearchBarWhenScrolling = YES;
-            } else {
-                if (!self.tableView.tableHeaderView) {
-                    self.tableView.tableHeaderView = self.searchController.searchBar;
-                    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-                    self.definesPresentationContext = YES;
-                    self.searchController.hidesNavigationBarDuringPresentation = YES;
-                }
-            }
+            self.navigationItem.searchController = self.searchController;
+            self.navigationItem.hidesSearchBarWhenScrolling = YES;
             break;
         }
     }
@@ -1999,12 +1976,6 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchVisibleUsersArray = nil;
-    
-    if (@available(iOS 11.0, *)) {} else {
-        if (!MEGAReachabilityManager.isReachable) {
-            self.tableView.tableHeaderView = nil;
-        }
-    }
     
     if (self.contactsMode == ContactsModeDefault) {
         self.tableView.tableHeaderView = self.contactsTableViewHeader;

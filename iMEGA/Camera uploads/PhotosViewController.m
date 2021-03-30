@@ -455,11 +455,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     }
     
     if (self.currentState == MEGACameraUploadsStateEnableVideo && !CameraUploadManager.isVideoUploadEnabled) {
-        if (CameraUploadManager.isHEVCFormatSupported) {
-            [self pushVideoUploadSettings];
-        } else {
-            [self pushCameraUploadSettings];
-        }
+        [self pushVideoUploadSettings];
     } else {
         [self pushCameraUploadSettings];
     }
@@ -528,12 +524,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
@@ -678,9 +669,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
     cell.thumbnailImageView.hidden = self.browsingIndexPath && self.browsingIndexPath == indexPath;
     
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     
     return cell;
 }
@@ -779,9 +768,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    if (@available(iOS 11.0, *)) {
-        view.layer.zPosition = 0.0;
-    }
+    view.layer.zPosition = 0.0;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {

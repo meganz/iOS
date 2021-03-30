@@ -206,16 +206,10 @@ extension ChatViewController {
                 return
         }
         
-        var collectionViewInset = accessoryView.frame.height
-        if #available(iOS 11.0, *) {
-            collectionViewInset -= window.safeAreaInsets.bottom
-        }
+        let collectionViewInset = accessoryView.frame.height - window.safeAreaInsets.bottom
         
         if messagesCollectionView.contentInset.bottom != collectionViewInset {
-            var oldInset = messagesCollectionView.contentInset.bottom
-            if #available(iOS 11.0, *) {
-                oldInset = messagesCollectionView.adjustedContentInset.bottom
-            }
+            let oldInset = messagesCollectionView.adjustedContentInset.bottom
             
             messagesCollectionView.contentInset.bottom = collectionViewInset
             messagesCollectionView.scrollIndicatorInsets.bottom = collectionViewInset

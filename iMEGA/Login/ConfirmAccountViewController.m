@@ -63,14 +63,10 @@
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
-    if (@available(iOS 11.0, *)) {
-        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-    }
+    self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     
     self.passwordView.passwordTextField.delegate = self;
-    if (@available(iOS 11.0, *)) {
-        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
-    }
+    self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

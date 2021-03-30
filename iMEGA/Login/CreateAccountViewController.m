@@ -91,9 +91,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (self.emailString) {
         self.emailInputView.inputTextField.text = self.emailString;
     }
-    if (@available(iOS 11.0, *)) {
-        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-    }
+    self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
@@ -102,10 +100,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
-    if (@available(iOS 12.0, *)) {
-        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
-        self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-    }
+    self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+    self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     
     [self.createAccountButton setTitle:NSLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     

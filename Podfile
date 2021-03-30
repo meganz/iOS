@@ -1,11 +1,21 @@
 # Uncomment the next line to define a global platform for your project
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '10.0'
+platform :ios, '12.1'
+inhibit_all_warnings!
+use_frameworks!
+
 workspace 'iMEGA'
 
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+    end
+  end
+end
+
 abstract_target 'iMEGA' do
-  use_frameworks!
   pod 'SDWebImageWebPCoder'
   pod 'Firebase/Crashlytics'
 

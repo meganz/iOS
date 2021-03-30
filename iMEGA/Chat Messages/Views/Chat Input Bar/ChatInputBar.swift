@@ -141,7 +141,7 @@ class ChatInputBar: UIView {
     
     // observation: By default the returned left and right safe area insets (super) are wrong when orientation is changed from portrait to landscape and back to portrait. Hence taking it from window.
     override var safeAreaInsets: UIEdgeInsets {
-        if #available(iOS 11.0, *), let window = window {
+        if let window = window {
             let edgeInsets = super.safeAreaInsets
             return UIEdgeInsets(top: edgeInsets.top, left: window.safeAreaInsets.left, bottom: edgeInsets.bottom, right: window.safeAreaInsets.right)
         } else { }

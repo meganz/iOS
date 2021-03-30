@@ -843,10 +843,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = NO;
-    }
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
     for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
@@ -1216,30 +1214,28 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)requestReview {
-    if (@available(iOS 10.3, *)) {
-        static BOOL alreadyPresented = NO;
-        if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-            alreadyPresented = YES;
-            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-            NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
-            if (rateUsDate) {
-                NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
-                                                                  fromDate:rateUsDate
-                                                                    toDate:[NSDate date]
-                                                                   options:NSCalendarWrapComponents].weekOfYear;
-                if (weeks < 17) {
-                    return;
-                }
-            } else {
-                NSTimeInterval sixteenWeeksAgo = -16 * 7 * 24 * 60 * 60;
-                rateUsDate = [NSDate dateWithTimeIntervalSinceNow:sixteenWeeksAgo];
-                [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+    static BOOL alreadyPresented = NO;
+    if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+        alreadyPresented = YES;
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+        NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
+        if (rateUsDate) {
+            NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
+                                                              fromDate:rateUsDate
+                                                                toDate:[NSDate date]
+                                                               options:NSCalendarWrapComponents].weekOfYear;
+            if (weeks < 17) {
                 return;
             }
-            [SKStoreReviewController requestReview];
-            rateUsDate = [NSDate date];
+        } else {
+            NSTimeInterval sixteenWeeksAgo = -16 * 7 * 24 * 60 * 60;
+            rateUsDate = [NSDate dateWithTimeIntervalSinceNow:sixteenWeeksAgo];
             [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+            return;
         }
+        [SKStoreReviewController requestReview];
+        rateUsDate = [NSDate date];
+        [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
     }
 }
 
@@ -1563,12 +1559,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
