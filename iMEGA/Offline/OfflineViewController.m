@@ -1062,7 +1062,7 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
             [self removeOfflineNodeCell:itemPath];
         } andCancelAction:nil];
