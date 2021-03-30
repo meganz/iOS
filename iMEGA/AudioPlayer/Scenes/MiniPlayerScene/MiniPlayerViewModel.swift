@@ -200,6 +200,9 @@ final class MiniPlayerViewModel: ViewModelType {
         case .onPlayPause:
             playerHandler.playerTogglePlay()
         case .playItem(let item):
+            if playerHandler.currentRepeatMode() == .repeatOne {
+                playerHandler.playerRepeatAll(active: true)
+            }
             playerHandler.play(item: item)
         case .onClose:
             closeMiniPlayer()
