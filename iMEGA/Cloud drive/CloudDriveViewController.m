@@ -115,7 +115,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case DisplayModeRubbishBin: {
-            [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"remove"]];
+            [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"rubbishBin"]];
             break;
         }
             
@@ -1523,7 +1523,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }]];
     
     if (self.displayMode == DisplayModeRubbishBin) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
