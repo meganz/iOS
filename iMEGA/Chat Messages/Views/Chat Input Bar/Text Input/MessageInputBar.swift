@@ -89,10 +89,7 @@ class MessageInputBar: UIView {
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
     private let editViewTopConstraintValueWhenCollapsed: CGFloat = 38.0
     private var editViewTopConstraintValueWhenExpanded: CGFloat? {
-        var minHeight = minTopPaddingWhenExpanded
-        if #available(iOS 11.0, *) {
-            minHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
-        }
+        let minHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
         
         // The text view should be (statusBarHeight + 67.0) from the top of the screen
         return minHeight + 67.0
@@ -287,9 +284,7 @@ class MessageInputBar: UIView {
         messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         expandedTextViewCoverView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
-        if #available(iOS 12.0, *) {
-            messageTextView.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark : .light
-        }
+        messageTextView.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark : .light
     }
     
     private func registerKeyboardNotifications() {

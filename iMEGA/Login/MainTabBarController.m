@@ -266,12 +266,8 @@
 #pragma mark - Private
 
 - (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
-    if (@available(iOS 11.0, *)) {
-        if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-            tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        } else {
-            tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-        }
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     } else {
         tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }

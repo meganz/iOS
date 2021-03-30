@@ -87,18 +87,6 @@ https://github.com/rolandleth/LTHPasscodeViewController/blob/master/LICENSE.txt
 
 --------------------------------------------------------------------
 
-#### MGSwipeTableCell
-https://github.com/MortimerGoro/MGSwipeTableCell
-
-Copyright (c) 2018 Imanol Fernandez @MortimerGoro
-
-###### License:
-The MIT License (MIT)
-
-https://github.com/MortimerGoro/MGSwipeTableCell/blob/master/LICENSE
-
---------------------------------------------------------------------
-
 #### PhoneNumberKit
 https://github.com/marmelroy/PhoneNumberKit.git
 

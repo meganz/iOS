@@ -89,9 +89,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
     self.avatarImageView.userInteractionEnabled = YES;
     
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     self.addPhoneNumberView.hidden = YES;
     
     [self configAddPhoneNumberTexts];

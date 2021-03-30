@@ -24,12 +24,7 @@ class ExplorerBaseViewController: UIViewController {
             tabBarController.view.addSubview(toolbar)
             toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             toolbar.autoPinEdge(.top, to: .top, of: tabBarController.tabBar)
-            let bottomAnchor: NSLayoutYAxisAnchor
-            if #available(iOS 11.0, *) {
-                bottomAnchor = tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor
-            } else {
-                bottomAnchor = tabBarController.tabBar.bottomAnchor
-            }
+            let bottomAnchor: NSLayoutYAxisAnchor = tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor
             toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
             toolbar.autoPinEdge(.leading, to: .leading, of: tabBarController.tabBar)
             toolbar.autoPinEdge(.trailing, to: .trailing, of: tabBarController.tabBar)

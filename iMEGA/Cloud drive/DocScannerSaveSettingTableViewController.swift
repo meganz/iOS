@@ -336,29 +336,27 @@ extension DocScannerSaveSettingTableViewController {
         let fileType = DocScanExportFileType(rawValue: storedExportFileTypeKey)
         var tempPaths: [String] = []
         if fileType == .pdf {
-            if #available(iOS 11.0, *) {
-                let pdfDoc = PDFDocument()
-                docs?.enumerated().forEach {
-                    if let resizedImage = shrinkedImage(image: $0.element),
-                    let pdfPage = PDFPage(image: resizedImage) {
-                        pdfDoc.insert(pdfPage, at: $0.offset)
-                    } else {
-                        MEGALogDebug(String(format: "could not create PdfPage at index %d", $0.offset))
-                    }
-                }
-                
-                if let data = pdfDoc.dataRepresentation() {
-                    let fileName = "\(self.fileName).pdf"
-                    let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
-                    do {
-                        try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
-                        tempPaths.append(tempPath)
-                    } catch {
-                        MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
-                    }
+            let pdfDoc = PDFDocument()
+            docs?.enumerated().forEach {
+                if let resizedImage = shrinkedImage(image: $0.element),
+                   let pdfPage = PDFPage(image: resizedImage) {
+                    pdfDoc.insert(pdfPage, at: $0.offset)
                 } else {
-                    MEGALogDebug("Cannot convert pdf doc to data representation")
+                    MEGALogDebug(String(format: "could not create PdfPage at index %d", $0.offset))
                 }
+            }
+            
+            if let data = pdfDoc.dataRepresentation() {
+                let fileName = "\(self.fileName).pdf"
+                let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
+                do {
+                    try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
+                    tempPaths.append(tempPath)
+                } catch {
+                    MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
+                }
+            } else {
+                MEGALogDebug("Cannot convert pdf doc to data representation")
             }
         } else if fileType == .jpg {
             docs?.enumerated().forEach {

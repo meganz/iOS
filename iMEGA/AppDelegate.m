@@ -195,9 +195,6 @@
         [Helper clearSession];
         [Helper deletePasscode];
         [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
-        if (@available(iOS 12.0, *)) {} else {
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
     }
     
     [AppearanceManager setupAppearance:self.window.traitCollection];
@@ -321,10 +318,6 @@
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTasks) {
         [self beginBackgroundTaskWithName:@"PendingTasks"];
-    }
-    
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
     }
     
     if (self.privacyView == nil) {

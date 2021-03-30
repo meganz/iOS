@@ -65,15 +65,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
-    if (@available(iOS 11.0, *)) {
-        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-    }
+    self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
-    if (@available(iOS 11.0, *)) {
-        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
-    }
+    self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
     
     [self.loginButton setTitle:NSLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
 

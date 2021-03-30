@@ -71,12 +71,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
-            if (@available(iOS 12.0, *)) {
-                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
-                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-            }
-            
-            
+            self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
+            self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             
             break;
@@ -97,10 +93,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.confirmEmailInputView.inputTextField.delegate = self;
             self.confirmEmailInputView.inputTextField.tag = ConfirmEmailTextFieldTag;
             self.confirmEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
-            if (@available(iOS 11.0, *)) {
-                self.theNewEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-                self.confirmEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-            }
+            self.theNewEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+            self.confirmEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
             
             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             
@@ -121,10 +115,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
-            if (@available(iOS 12.0, *)) {
-                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
-                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-            }
+            self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
+            self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
 
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             

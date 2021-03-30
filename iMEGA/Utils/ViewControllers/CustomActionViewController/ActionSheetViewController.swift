@@ -97,12 +97,8 @@ class ActionSheetViewController: UIViewController {
     }
     
     func layoutViews(to size: CGSize) {
-        var bottomHeight: CGFloat = 0
+        let bottomHeight: CGFloat = view.safeAreaInsets.bottom * 2.0
         let layoutThreshold = size.height * 0.3
-        if #available(iOS 11.0, *) {
-            bottomHeight = view.safeAreaInsets.bottom * 2
-        }
-        
         let actionCount = actions.count * 60
         let actionHeight = CGFloat(actionCount) + bottomHeight + 20.0
         let headerHeight = headerView?.bounds.height ?? 0.0

@@ -310,16 +310,12 @@
 }
 
 - (void)addSearchBar {
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-    }
+    self.navigationItem.searchController = self.searchController;
 }
 
 - (void)hideSearchBarIfNotActive {
-    if (@available(iOS 11.0, *)) {
-        self.searchController.active = false;
-        self.navigationItem.searchController = nil;
-    }
+    self.searchController.active = false;
+    self.navigationItem.searchController = nil;
 }
     
 - (void)showDecryptionAlert {
@@ -1025,9 +1021,6 @@
             [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
             [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
             [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
-            if (@available(iOS 12.0, *)) {} else {
-                [NSUserDefaults.standardUserDefaults synchronize];
-            }
             
             [self reloadUI];
             

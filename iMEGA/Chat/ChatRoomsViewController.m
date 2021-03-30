@@ -796,15 +796,8 @@
     self.searchController.delegate = self;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = YES;
-    } else {
-        self.tableView.tableHeaderView = self.searchController.searchBar;
-        [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-        self.definesPresentationContext = YES;
-        self.searchController.hidesNavigationBarDuringPresentation = YES;
-    }
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = YES;
 }
 
 - (void)showOptionsForChatAtIndexPath:(NSIndexPath *)indexPath {
@@ -1281,9 +1274,6 @@
     }
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
 
@@ -1315,8 +1305,6 @@
         }
     }
 }
-
-#pragma clang diagnostic pop
 
 #pragma mark - UIScrolViewDelegate
 
@@ -1486,11 +1474,7 @@
                         self.archivedChatEmptyState.hidden = YES;
                     }
                     if (self.chatListItemArray.count == 0) {
-                        if (@available(iOS 11.0, *)) {
-                            self.navigationItem.searchController = nil;
-                        } else {
-                            self.tableView.tableHeaderView = nil;
-                        }
+                        self.navigationItem.searchController = nil;
                     }
                     break;
                     

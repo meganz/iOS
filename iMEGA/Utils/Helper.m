@@ -460,9 +460,6 @@ static MEGAIndexer *indexer;
     } else {
         [NSUserDefaults.standardUserDefaults setInteger:SortingPreferenceSameForAll forKey:MEGASortingPreference];
         [NSUserDefaults.standardUserDefaults setInteger:selectedSortOrderType forKey:MEGASortingPreferenceType];
-        if (@available(iOS 12.0, *)) {} else {
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
         
         [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(SortingPreferenceSameForAll), MEGASortingPreferenceType : @(selectedSortOrderType)}];
     }
@@ -729,7 +726,7 @@ static MEGAIndexer *indexer;
     UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
     searchController.searchBar.delegate = searchBarDelegate;
-    searchController.dimsBackgroundDuringPresentation = NO;
+    searchController.obscuresBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
     
@@ -854,9 +851,6 @@ static MEGAIndexer *indexer;
 
     //Set default values on logout
     [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];

@@ -17,7 +17,7 @@
 #import "CloudDriveViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate>
+@interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIView *bucketHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *bucketHeaderParentFolderNameLabel;
@@ -173,7 +173,7 @@
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
     cell.cellFlavor = NodeTableViewCellFlavorCloudDrive;
-    [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
+    [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
  
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
@@ -284,9 +284,6 @@
     [self setTableViewEditing:YES animated:YES];
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
     if (node == nil || [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
@@ -355,91 +352,6 @@
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];
-}
-
-#pragma clang diagnostic pop
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
-    if (direction == MGSwipeDirectionLeftToRight) {
-        return NO;
-    }
-    return !self.tableView.isEditing;
-}
-
-- (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
-    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    nodeCell.moreButton.hidden = YES;
-}
-
-- (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
-    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    nodeCell.moreButton.hidden = NO;
-}
-
-- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
-    
-    swipeSettings.transition = MGSwipeTransitionDrag;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
-    expansionSettings.fillOnTrigger = NO;
-    expansionSettings.threshold = 2;
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
-    if (node == nil) {
-        return nil;
-    }
-    
-    if (direction == MGSwipeDirectionRightToLeft) {
-        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
-            return nil;
-        }
-        
-        if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
-            MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
-            if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
-                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                    [node mnz_restore];
-                    return YES;
-                }];
-                [restoreButton iconTintColor:[UIColor whiteColor]];
-                
-                return @[restoreButton];
-            }
-        } else {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"share"] backgroundColor:UIColor.systemOrangeColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-                [self presentViewController:activityVC animated:YES completion:nil];
-                return YES;
-            }];
-            [shareButton iconTintColor:[UIColor whiteColor]];
-            
-            MGSwipeButton *rubbishBinButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"rubbishBin"] backgroundColor:UIColor.mnz_redError padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_moveToTheRubbishBinWithCompletion:^{
-                    [self setTableViewEditing:NO animated:YES];
-                }];
-                
-                return YES;
-            }];
-            [rubbishBinButton iconTintColor:UIColor.whiteColor];
-            if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-                
-                MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                    [node mnz_downloadNode];
-                    return YES;
-                }];
-                [downloadButton iconTintColor:[UIColor whiteColor]];
-                
-                return @[rubbishBinButton, shareButton, downloadButton];
-            } else {
-                return @[rubbishBinButton, shareButton];
-            }
-        }
-    }
-    
-    return nil;
 }
 
 @end

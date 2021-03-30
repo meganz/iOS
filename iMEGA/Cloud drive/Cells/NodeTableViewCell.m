@@ -57,7 +57,7 @@
     }
 }
 
-- (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api {
+- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
     
     BOOL isDownloaded = NO;
@@ -138,12 +138,8 @@
         self.versionedImageView.hidden = YES;
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
-        self.delegate = delegate;
-    }
+    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     self.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
@@ -158,10 +154,8 @@
     MEGANode *node = nodesArray.firstObject;
     [self.thumbnailImageView mnz_imageForNode:node];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
-    if (@available(iOS 11.0, *)) {
-        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     NSString *title;
     if (nodesArray.count == 1) {

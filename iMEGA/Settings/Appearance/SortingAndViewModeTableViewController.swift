@@ -222,9 +222,6 @@ class SortingAndViewModeTableViewController: UITableViewController {
             }
             
             UserDefaults.standard.set(indexPath.row, forKey: MEGAViewModePreference)
-            if #available(iOS 12, *) {} else {
-                UserDefaults.standard.synchronize()
-            }
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: MEGAViewModePreference), object: nil, userInfo: [MEGAViewModePreference : indexPath.row])
             
