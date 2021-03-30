@@ -121,14 +121,6 @@
 
 #pragma mark - Rotation
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (UIDevice.currentDevice.iPhoneDevice) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     

@@ -28,7 +28,8 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         psaView.translatesAutoresizingMaskIntoConstraints = false
         psaView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor).isActive = true
         psaView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor).isActive = true
-        self.psaViewBottomConstraint = psaView.bottomAnchor.constraint(equalTo: tabBarController.view.bottomAnchor, constant: -tabBarController.tabBar.bounds.height)
+        let tabbarHeight = tabBarController.tabBar.bounds.height
+        self.psaViewBottomConstraint = tabBarController.view.bottomAnchor.constraint(equalTo: psaView.bottomAnchor, constant: tabbarHeight)
         self.psaViewBottomConstraint?.isActive = true
         
         self.hidePSAView(false)
@@ -47,13 +48,11 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     }
     
     func adjustPSAViewFrame() {
-        guard let bottomConstraint = psaViewBottomConstraint,
-              let tabBar = tabBarController?.tabBar,
-              bottomConstraint.constant != -tabBar.bounds.height else {
-            return
-        }
+        guard let tabBar = tabBarController?.tabBar else { return }
+        let constant: CGFloat = -tabBar.bounds.height
+        guard psaViewBottomConstraint?.constant != constant else { return }
         
-        psaViewBottomConstraint?.constant = -tabBar.bounds.height
+        psaViewBottomConstraint?.constant = constant
         currentPSAView()?.layoutIfNeeded()
     }
     

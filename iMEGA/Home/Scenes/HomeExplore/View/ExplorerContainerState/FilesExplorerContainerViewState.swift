@@ -82,10 +82,6 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         filesExplorerViewController?.toggleSelectAllNodes()
     }
     
-    func configureSearchController(_ searchController: UISearchController) {
-        filesExplorerViewController?.configureSearchController(searchController)
-    }
-    
     func removeSearchController(_ searchController: UISearchController) {
         filesExplorerViewController?.removeSearchController(searchController)
     }

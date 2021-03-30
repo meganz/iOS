@@ -118,11 +118,7 @@ final class AudioPlayerViewController: UIViewController {
     private func updateRepeatButtonAppearance(status: RepeatMode) {
         switch status {
         case .none:
-            if #available(iOS 12.0, *) {
-                repeatButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white: .black
-            } else {
-                repeatButton.tintColor = .black
-            }
+            repeatButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white: .black
         case .loop, .repeatOne:
             repeatButton.tintColor = UIColor.mnz_green00A382()
         }
@@ -131,12 +127,7 @@ final class AudioPlayerViewController: UIViewController {
     private func updateShuffleButtonAppearance(status: Bool) {
         shuffleButton.setTitleColor(UIColor.mnz_green00A382(), for: .selected)
         shuffleButton.setImage(UIImage(named: "shuffleAudio"), for: .normal)
-        
-        if #available(iOS 12.0, *) {
-            shuffleButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
-        } else {
-            shuffleButton.tintColor = .black
-        }
+        shuffleButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
     }
     
     private func refreshStateOfLoadingView(_ enable: Bool) {

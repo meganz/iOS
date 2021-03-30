@@ -56,12 +56,8 @@ class AppearanceTableViewController: UITableViewController {
         nightIconLabel.textColor = UIColor.white
         minimalIconLabel.textColor = UIColor.white
         
-        if #available(iOS 10.3, *) {
-            let alternateIconName = UIApplication.shared.alternateIconName
-            selectIcon(with: alternateIconName)
-        } else {
-            selectIcon(with: nil)
-        }
+        let alternateIconName = UIApplication.shared.alternateIconName
+        selectIcon(with: alternateIconName)
         
         updateAppearance()
     }
@@ -140,18 +136,16 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func changeAppIcon(to iconName: String?) {
-        if #available(iOS 10.3, *) {
-            if UIApplication.shared.supportsAlternateIcons {
-                let alternateIconName = UIApplication.shared.alternateIconName
-                UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
-                    if let error = error {
-                        MEGALogError("App icon failed to change due to \(error.localizedDescription)")
-                    } else {
-                        self.selectIcon(with: iconName)
-                        self.resetPreviousIcon(with: alternateIconName)
-                    }
-                })
-            }
+        if UIApplication.shared.supportsAlternateIcons {
+            let alternateIconName = UIApplication.shared.alternateIconName
+            UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
+                if let error = error {
+                    MEGALogError("App icon failed to change due to \(error.localizedDescription)")
+                } else {
+                    self.selectIcon(with: iconName)
+                    self.resetPreviousIcon(with: alternateIconName)
+                }
+            })
         }
     }
     

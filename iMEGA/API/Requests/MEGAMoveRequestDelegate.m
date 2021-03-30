@@ -100,7 +100,7 @@
                 }
             }
             
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"rubbishBin"] status:message];
         } else {
             if (self.restore) {
                 [SVProgressHUD dismiss];

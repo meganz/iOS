@@ -59,9 +59,7 @@ class FilesExplorerContainerViewController: UIViewController {
         currentState.showContent()
         showMoreRightBarButton()
         configureSearchBar()
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -155,12 +153,8 @@ class FilesExplorerContainerViewController: UIViewController {
     }
     
     func configureSearchBar() {
-        if #available(iOS 11.0, *) {
-            if navigationItem.searchController == nil {
-                navigationItem.searchController = searchController
-            }
-        } else {
-            currentState.configureSearchController(searchController)
+        if navigationItem.searchController == nil {
+            navigationItem.searchController = searchController
         }
     }
     

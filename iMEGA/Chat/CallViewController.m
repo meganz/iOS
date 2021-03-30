@@ -200,10 +200,6 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {    
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -385,10 +381,6 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalAudio"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallCameraSwitched"];
-    
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
 }
 
 - (void)updateAudioOutputImage {
@@ -499,9 +491,6 @@
     [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
     [[NSUserDefaults standardUserDefaults] setBool:self.switchCameraButton.selected forKey:@"oneOnOneCallCameraSwitched"];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
     
     [self.timer invalidate];
     

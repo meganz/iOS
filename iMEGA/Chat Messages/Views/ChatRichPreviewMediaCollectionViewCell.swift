@@ -148,7 +148,11 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         }
         
         let megaMessage = chatMessage.message
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
+        let messageKind: MessageKind = .text(megaMessage.content)
+        let dummyMssage = ConcreteMessageType(sender: message.sender,
+                                              messageId: message.messageId,
+                                              sentDate: message.sentDate,
+                                              kind: messageKind)
 
         let maxWidth = messageContainerMaxWidth(for: dummyMssage)
 
@@ -159,7 +163,8 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
                 return containerSize
             }
             
-            return CGSize(width: max(maxWidth, containerSize.width), height: containerSize.height + 104)
+            let width = max(maxWidth, containerSize.width)
+            return CGSize(width: width, height: containerSize.height + 104)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }

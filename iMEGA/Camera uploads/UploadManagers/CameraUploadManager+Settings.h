@@ -44,7 +44,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 #pragma mark - readonly properties
 
 @property (class, readonly, getter=isLivePhotoSupported) BOOL livePhotoSupported;
-@property (class, readonly, getter=isHEVCFormatSupported) BOOL HEVCFormatSupported;
 @property (class, readonly, getter=shouldShowCameraUploadBoardingScreen) BOOL showCameraUploadBoardingScreen;
 @property (class, readonly, getter=shouldScanLivePhotosForVideos) BOOL scanLivePhotosForVideos;
 @property (class, readonly) BOOL canBackgroundUploadBeStarted;

@@ -162,10 +162,6 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -462,9 +458,6 @@
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.video forKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.audio forKey:@"groupCallLocalAudio"];
     [[NSUserDefaults standardUserDefaults] setBool:self.switchCameraButton.selected forKey:@"groupCallCameraSwitched"];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
     
     [self.timer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -609,12 +602,7 @@
 
 - (void)updateDuration {
     NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-    if (@available(iOS 11.0, *)) {
-        self.navigationSubtitleLabel.text = [NSString mnz_stringFromTimeInterval:interval];
-    } else {
-        self.navigationItem.titleView =  [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:[NSString mnz_stringFromTimeInterval:interval]];
-        [self.navigationItem.titleView sizeToFit];
-    }
+    self.navigationSubtitleLabel.text = [NSString mnz_stringFromTimeInterval:interval];
 }
 
 - (void)updateParticipants {
@@ -805,9 +793,6 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalAudio"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallCameraSwitched"];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
 }
 
 - (void)configureInitialUI {

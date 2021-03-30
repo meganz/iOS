@@ -59,13 +59,14 @@ final class NodeOpener {
         let nodeName = (node.name as NSString)
         if nodeName.mnz_isImagePathExtension || nodeName.mnz_isVideoPathExtension {
             let nodes = allNodes ?? [node]
-            let index = UInt(nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0)
+            let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
+            let mediaNodes = NSMutableArray(array: nodes)
             guard let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
-                withMediaNodes: NSMutableArray(array: nodes),
+                withMediaNodes: mediaNodes,
                 api: MEGASdkManager.sharedMEGASdk(),
                 displayMode: .cloudDrive,
                 presenting: .none,
-                preferredIndex: index
+                preferredIndex: UInt(truncatingIfNeeded: index)
             ) else { return }
             navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
             return

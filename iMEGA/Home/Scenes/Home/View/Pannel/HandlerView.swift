@@ -55,14 +55,10 @@ final class HandlerView: UIView {
     }
 
     private func themeColor(of trait: UITraitCollection) -> (UIColor, UIColor) {
-        if #available(iOS 12.0, *) {
-            switch trait.userInterfaceStyle {
-            case .dark: return (.mnz_black1C1C1E(), .white)
-            case .light: return (.white, .mnz_black1C1C1E())
-            default: return (.white, .mnz_black1C1C1E())
-            }
-        } else {
-            return (.white, .mnz_black1C1C1E())
+        switch trait.userInterfaceStyle {
+        case .dark: return (.mnz_black1C1C1E(), .white)
+        case .light: return (.white, .mnz_black1C1C1E())
+        default: return (.white, .mnz_black1C1C1E())
         }
     }
         // MARK: - UIView overrides

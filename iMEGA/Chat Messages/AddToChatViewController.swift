@@ -368,10 +368,7 @@ fileprivate struct SafeArea {
     let height: CGFloat
     
     init() {
-        var safeAreaInsets: UIEdgeInsets = .zero
-        if #available(iOS 11.0, *) {
-            safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
-        }
+        let safeAreaInsets: UIEdgeInsets = UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
         self.width = UIScreen.main.bounds.width - (safeAreaInsets.left + safeAreaInsets.right)
         self.height = UIScreen.main.bounds.height - (safeAreaInsets.top + safeAreaInsets.bottom)
     }

@@ -93,9 +93,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
         if chatRoom.isGroup {
             bestAttemptContent?.title = chatRoom.title ?? ""
-            if #available(iOS 12.0, *) {
-                bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
-            }
+            bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
         }
         setupDisplayName(displayName: displayName, for: chatRoom)
         
@@ -299,9 +297,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent?.subtitle = displayName
         } else {
             bestAttemptContent?.title = displayName
-            if #available(iOS 12.0, *) {
-                bestAttemptContent?.summaryArgument = displayName
-            }
+            bestAttemptContent?.summaryArgument = displayName
         }
     }
     

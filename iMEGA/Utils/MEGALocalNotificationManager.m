@@ -79,9 +79,7 @@
                 }
                 
                 content.threadIdentifier = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId] ?: @"";
-                if (@available(iOS 12.0, *)) {
-                    content.summaryArgument = self.chatRoom.title;
-                }
+                content.summaryArgument = self.chatRoom.title;
                 
                 if (self.message.type == MEGAChatMessageTypeAttachment) {
                     MEGANodeList *nodeList = self.message.nodeList;

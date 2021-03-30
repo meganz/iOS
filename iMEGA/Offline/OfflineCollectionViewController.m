@@ -180,9 +180,7 @@ static NSString *kPath = @"kPath";
         cell.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
     }
 
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     [cell setupAppearance];
     
     return cell;
@@ -273,9 +271,7 @@ static NSString *kPath = @"kPath";
 
 - (NSInteger)calculateColumnCount {
     CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds) - self.layout.sectionInset.left - self.layout.sectionInset.right;
-    if (@available(iOS 11.0, *)) {
-        containerWidth = containerWidth - UIApplication.sharedApplication.keyWindow.safeAreaInsets.left - UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
-    }
+    containerWidth = containerWidth - UIApplication.sharedApplication.keyWindow.safeAreaInsets.left - UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
     NSInteger columns = ((containerWidth) / ThumbnailSizeWidth);
 
     return MAX(2, columns);

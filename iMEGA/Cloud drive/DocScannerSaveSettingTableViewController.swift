@@ -338,31 +338,29 @@ extension DocScannerSaveSettingTableViewController {
         let scanQuality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey))
         var tempPaths: [String] = []
         if fileType == .pdf {
-            if #available(iOS 11.0, *) {
-                let pdfDoc = PDFDocument()
-                docs?.enumerated().forEach {
-                    if let quality = scanQuality,
-                       let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: quality),
-                       let shrinkedImage = UIImage(data: shrinkedImageData),
-                       let pdfPage = PDFPage(image: shrinkedImage) {
-                        pdfDoc.insert(pdfPage, at: $0.offset)
-                    } else {
-                        MEGALogDebug(String(format: "could not create PdfPage at index %d", $0.offset))
-                    }
-                }
-                
-                if let data = pdfDoc.dataRepresentation() {
-                    let fileName = "\(self.fileName).pdf"
-                    let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
-                    do {
-                        try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
-                        tempPaths.append(tempPath)
-                    } catch {
-                        MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
-                    }
+            let pdfDoc = PDFDocument()
+            docs?.enumerated().forEach {
+                if let quality = scanQuality,
+                   let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: quality),
+                   let shrinkedImage = UIImage(data: shrinkedImageData),
+                   let pdfPage = PDFPage(image: shrinkedImage) {
+                    pdfDoc.insert(pdfPage, at: $0.offset)
                 } else {
-                    MEGALogDebug("Cannot convert pdf doc to data representation")
+                    MEGALogDebug(String(format: "could not create PdfPage at index %d", $0.offset))
                 }
+            }
+            
+            if let data = pdfDoc.dataRepresentation() {
+                let fileName = "\(self.fileName).pdf"
+                let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
+                do {
+                    try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
+                    tempPaths.append(tempPath)
+                } catch {
+                    MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
+                }
+            } else {
+                MEGALogDebug("Cannot convert pdf doc to data representation")
             }
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
