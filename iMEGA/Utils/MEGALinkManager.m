@@ -387,7 +387,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case URLTypeHandleLink:
-            MEGALinkManager.nodeToPresentBase64Handle = [url.mnz_afterSlashesString substringFromIndex:1];
+            MEGALinkManager.nodeToPresentBase64Handle = url.fragment;
             [MEGALinkManager presentNode];
             
             break;
@@ -639,9 +639,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)handleContactLink {
-    NSString *afterSlashesString = [MEGALinkManager.linkURL mnz_afterSlashesString];
-    NSRange rangeOfPrefix = [afterSlashesString rangeOfString:@"C!"];
-    NSString *contactLinkHandle = [afterSlashesString substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
+    NSString *path = [MEGALinkManager.linkURL absoluteString];
+    NSRange rangeOfPrefix = [path rangeOfString:@"C!"];
+    NSString *contactLinkHandle = [path substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
     uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
 
     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
