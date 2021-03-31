@@ -13,6 +13,7 @@
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const void *chatIdTagKey = &chatIdTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;

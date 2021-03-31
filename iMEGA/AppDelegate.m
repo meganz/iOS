@@ -552,7 +552,7 @@
             NSURL *universalLinkURL = userActivity.webpageURL;
             if (universalLinkURL) {
                 MEGALinkManager.linkURL = universalLinkURL;
-                [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", [universalLinkURL mnz_afterSlashesString]]]];
+                [self manageLink:universalLinkURL];
             }
         }
         return YES;
