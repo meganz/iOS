@@ -42,7 +42,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     public init(messageCollectionView: MessagesCollectionView) {
         self.messageCollectionView = messageCollectionView
         super.init()
-//        NotificationCenter.default.addObserver(self, selector: #selector(didChangeAudioRoute), name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeAudioRoute), name: AVAudioSession.routeChangeNotification, object: nil)
 
     }
     
@@ -56,18 +56,18 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-    @objc func didChangeAudioRoute() {
-
+    @objc func didChangeAudioRoute(_ notification: Notification) {
+        proximityChanged()
     }
     
     @objc func proximityChanged() {
-            
-        if UIDevice.current.proximityState {
-            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
-        } else {
-            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        DispatchQueue.main.async {
+            if UIDevice.current.proximityState {
+                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(false)
+            } else {
+                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(true)
+            }
         }
-        
     }
 
     // MARK: - Methods
