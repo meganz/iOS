@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nKV-wF-xCm">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nKV-wF-xCm">
                                 <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -277,7 +277,7 @@
                                     <outlet property="delegate" destination="4jb-uN-Eto" id="aTN-D5-5O9"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nEj-Ji-K4x">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEj-Ji-K4x">
                                 <rect key="frame" x="0.0" y="44" width="414" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="zPE-QJ-FoW"/>
@@ -288,6 +288,7 @@
                         <constraints>
                             <constraint firstItem="iIe-3e-qN1" firstAttribute="leading" secondItem="nKV-wF-xCm" secondAttribute="leading" id="8Yz-XF-IOD"/>
                             <constraint firstItem="iIe-3e-qN1" firstAttribute="trailing" secondItem="nEj-Ji-K4x" secondAttribute="trailing" id="GdB-Px-vJo"/>
+                            <constraint firstItem="nKV-wF-xCm" firstAttribute="top" secondItem="iIe-3e-qN1" secondAttribute="top" id="Ool-zV-MM9"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="trailing" secondItem="iIe-3e-qN1" secondAttribute="trailing" id="bCe-5b-pLt"/>
                             <constraint firstItem="nEj-Ji-K4x" firstAttribute="leading" secondItem="iIe-3e-qN1" secondAttribute="leading" id="dd5-aN-TAn"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="top" secondItem="nEj-Ji-K4x" secondAttribute="bottom" id="xxg-ZM-dpF"/>
