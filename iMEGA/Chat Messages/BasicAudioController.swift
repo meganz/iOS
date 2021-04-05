@@ -42,7 +42,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     public init(messageCollectionView: MessagesCollectionView) {
         self.messageCollectionView = messageCollectionView
         super.init()
-//        NotificationCenter.default.addObserver(self, selector: #selector(didChangeAudioRoute), name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeAudioRoute), name: AVAudioSession.routeChangeNotification, object: nil)
 
     }
     
@@ -56,18 +56,18 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-    @objc func didChangeAudioRoute() {
-
+    @objc func didChangeAudioRoute(_ notification: Notification) {
+        proximityChanged()
     }
     
     @objc func proximityChanged() {
-            
-        if UIDevice.current.proximityState {
-            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
-        } else {
-            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        DispatchQueue.main.async {
+            if UIDevice.current.proximityState {
+                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(false)
+            } else {
+                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(true)
+            }
         }
-        
     }
 
     // MARK: - Methods
@@ -104,6 +104,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     ///   - message: The `MessageType` that contain the audio item to be played.
     ///   - audioCell: The `AudioMessageCell` that needs to be updated while audio is playing.
     open func playSound(for message: MessageType, in audioCell: AudioMessageCell) {
+        
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidStart()
+        }
         
         guard let chatMessage = message as? ChatMessage, let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
             return
@@ -144,11 +148,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         } catch {
             MEGALogInfo("Failed to set audio mode to default")
         }
+
         proximityChanged()
-        
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.audioInterruptionDidStart()
-        }
     }
 
     /// Used to pause the audio sound
@@ -168,6 +169,11 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
             audioCell.waveView.stopAnimating()
+        }
+        
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            let activeCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(!activeCall)
         }
     }
 
