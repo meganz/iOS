@@ -20,13 +20,7 @@ class ContactsGroupsViewController: UIViewController {
         newGroupChatLabel.text = NSLocalizedString("New Group Chat", comment: "Text button for init a group chat")
         
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.barTintColor = .white
-            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
-        }
+        navigationItem.searchController = searchController
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         
         updateAppearance()

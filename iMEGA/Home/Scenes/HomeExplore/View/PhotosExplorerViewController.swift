@@ -49,8 +49,8 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         AudioPlayerManager.shared.addDelegate(self)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         AudioPlayerManager.shared.removeDelegate(self)
     }
     
@@ -166,6 +166,8 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         configureToolbarButtons()
         showToolbar()
         viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
+        
+        audioPlayer(hidden: true)
     }
     
     override func endEditingMode() {
@@ -179,10 +181,18 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         configureBarButtons()
         hideToolbar()
         viewModel.dispatch(.updateTitleToDefault)
+        
+        audioPlayer(hidden: false)
     }
     
     override func selectedNodes() -> [MEGANode]? {
         listSource?.selectedNodes
+    }
+    
+    private func audioPlayer(hidden: Bool) {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.playerHidden(hidden, presenter: self)
+        }
     }
 }
 

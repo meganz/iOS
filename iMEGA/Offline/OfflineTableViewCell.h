@@ -1,6 +1,5 @@
-#import "MGSwipeTableCell.h"
 
-@interface OfflineTableViewCell : MGSwipeTableCell
+@interface OfflineTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;

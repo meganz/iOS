@@ -84,7 +84,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared playerPause];
+        [AudioPlayerManager.shared audioInterruptionDidStart];
     }
 }
 
@@ -139,6 +139,10 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                   object:nil];
     
     [self stopStreaming];
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
+    }
         
     if (![AudioPlayerManager.shared isPlayerAlive]) {
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
@@ -169,10 +173,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
             [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
         }
     }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - Private

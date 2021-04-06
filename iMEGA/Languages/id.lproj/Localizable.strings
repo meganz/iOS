@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Password anda mudah ditebak. Coba untuk membuat password yang lebih panjang. Kombinasikan huruf besar & huruf kecil. Tambahkan sepcial characters. Jangan gunakan nama atau kata yang dapat ditemukan di kamus.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Sedang";
+"PasswordStrengthMedium"="Sedang";
 /*  */
 "passwordMedium"="Password anda cukup kuat, namun disarankan untuk lebih memperkuat password anda lagi.";
 /*  */
@@ -777,9 +777,9 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link pembatalan telah habis.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk membatalkan akun anda. Anda akan selamanya kehilangan data yang anda simpan di cloud. Harap masukan password anda di bawah ini.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk menghapus akun Anda. Anda akan kehilangan semua data yang disimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Akun anda berhasil dibatalkan.";
+"accountCanceledSuccessfully"="Akun anda berhasil dihapus.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Tutup akun";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Hapus Partisipan";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chatting dengan";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1434,7 +1436,7 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Proses enkripsi berarti kami tidak dapat akses atau merubah password anda jadi anda HARUS mengingat nya (kecuali anda memiliki back up Recovery Key) atau anda akan kehilangan akses ke file tersimpan anda.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
+"generalDescriptionVideoChat"="Obrolan video MEGA yang dienkripsi pengguna ujung ke ujung memungkinkan privasi total, dan telah tersedia melalui browser sejak 2016. Ini telah diperluas ke aplikasi seluler kami, dengan riwayat obrolan dapat diakses di berbagai perangkat. Pengguna juga dapat dengan mudah menambahkan file ke obrolan dari MEGA Cloud Drive mereka.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA menawarkan penyimpanan gratis 50 GB yang murah hati untuk semua pengguna terdaftar dengan pencapaian bonus, dan menawarkan paket berbayar dengan batas yang jauh lebih tinggi:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="Kualitas video yang diunggah ke obrolan";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Kualitas video";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Rendah";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Sedang";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Tinggi";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Mempersiapkan...";
@@ -1634,8 +1638,10 @@
 "whatIsTwoFactorAuthentication"="Autentikasi Dua Faktor adalah lapisan keamanan kedua untuk akun Anda.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Autentikasi Dua Faktor adalah lapisan keamanan kedua untuk akun Anda. Yang berarti bahwa bahkan jika seseorang mengetahui kata sandi Anda, mereka tidak dapat mengaksesnya, tanpa juga memiliki akses ke kode enam digit yang hanya Anda miliki aksesnya.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Aplikasi Authenticator diperlukan";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Anda memerlukan aplikasi autentikasi dua faktor di perangkat ini";
+"youNeedATwoFactorAuthenticationApp"="Maaf, autentikasi dua faktor tidak dapat diaktifkan di perangkat anda. Silakan buka App Store untuk memasang aplikasi Authenticator.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Anda memerlukan aplikasi authenticator untuk mengaktifkan 2FA di MEGA. Anda dapat mengunduh dan memasang aplikasi Google Authenticator, Duo Mobile, Authy, atau Microsoft Authenticator untuk ponsel atau tablet Anda.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2065,7 +2071,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ada masalah dengan pembayaran terakhir anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Akun bisnis anda telah kedaluwarsa";
+"Your business account is expired"="Akun Bisnis anda telah kedaluwarsa";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Terjadi masalah saat memproses pembayaran anda. MEGA terbatas hanya untuk melihat sampai masalah ini telah diperbaiki di browser web desktop.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2128,7 +2134,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Tidak mungkin mendapatkan konten file ini, karena tidak dikodekan dalam UTF-8 atau ISO / IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pembayaran lewat jatuh tempo";
-/* */
+/* Business account status */
 "Active"="Aktif";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Wewenang:";
@@ -2577,8 +2583,12 @@
 /* Text description for the QuickAccess widget */
 "Quickly access files on Recents, Favourites, or Offline section"="Akses file dengan cepat di Terbaru, Favorit, atau bagian Offline";
 /* Text description for the Favourites QuickAccess widget */
-"Quickly access files on Favourites section"="Quickly access files from your Favourites section";
+"Quickly access files on Favourites section"="Akses file dengan cepat dari bagian Favorit anda";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="Quickly access files from your Recents section";
+"Quickly access files on Recents section"="Akses file dengan cepat dari bagian Terbaru anda";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Quickly access files from your Offline section";
+"Quickly access files on Offline section"="Akses file dengan cepat dari bagian Offline anda";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="Perangkat tidak memiliki cukup ruang untuk MEGA untuk bekerja dengan baik.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Kosongkan sebagian ruang dengan menghapus aplikasi yang tidak lagi anda gunakan atau file video besar di galeri anda.Anda dapat mengelola penyimpanan anda di %@";

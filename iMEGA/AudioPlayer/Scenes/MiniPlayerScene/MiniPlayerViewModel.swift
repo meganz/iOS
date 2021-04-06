@@ -3,10 +3,10 @@ import Foundation
 enum MiniPlayerAction: ActionType {
     case onViewDidLoad
     case onPlayPause
-    case play(MovementDirection)
+    case playItem(AudioPlayerItem)
     case onClose
     case `deinit`
-    case showPlayer(MEGAHandle?, String?)
+    case showPlayer(MEGANode?, String?)
 }
 
 protocol MiniPlayerViewRouting: Routing {
@@ -39,6 +39,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
+    var playerType: PlayerType = .default
     
     // MARK: - Init
     init(fileLink: String?,
@@ -82,14 +83,23 @@ final class MiniPlayerViewModel: ViewModelType {
                 router.dismiss()
                 return
             }
+            playerType = .fileLink
             initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node == node.handle }) else {
-                router.dismiss()
+                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
+                
+                guard let track = streamingInfoUseCase?.info(from: node) else {
+                    router.dismiss()
+                    return
+                }
+                
+                playerType = .default
+                initialize(tracks: [track], currentTrack: track)
                 return
             }
+            playerType = isFolderLink ? .folderLink : .default
             initialize(tracks: children, currentTrack: currentTrack)
         }
     }
@@ -103,6 +113,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         
+        playerType = .offline
         initialize(tracks: files, currentTrack: currentTrack)
     }
     
@@ -110,11 +121,15 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
+        playerHandler.autoPlay(enable: playerType != .fileLink)
         playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
     }
 
     private func preparePlayer() {
+        if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
+            streamingInfoUseCase?.startServer()
+        }
         if let node = node {
             initialize(with: node)
         } else if let offlineFilePaths = filePaths {
@@ -165,19 +180,8 @@ final class MiniPlayerViewModel: ViewModelType {
         }
     }
     
-    private func showFullScreenPlayer(_ nodeHandle: MEGAHandle?, path: String?) {
-        if let nodeHandle = nodeHandle {
-            invokeCommand?(.showLoading(true))
-            loadNode(from: nodeHandle, url: path) { [weak self] node in
-                self?.invokeCommand?(.showLoading(false))
-                
-                if let node = node {
-                    self?.router.showPlayer(node: node, filePath: nil)
-                }
-            }
-        } else if let filePath = path {
-            router.showPlayer(node: nil, filePath: filePath)
-        }
+    private func showFullScreenPlayer(_ node: MEGANode?, path: String?) {
+        router.showPlayer(node: node, filePath: path)
     }
     
     private func closeMiniPlayer() {
@@ -195,14 +199,17 @@ final class MiniPlayerViewModel: ViewModelType {
             shouldInitializePlayer ? preparePlayer() : configurePlayer()
         case .onPlayPause:
             playerHandler.playerTogglePlay()
-        case .play(let direction):
-            playerHandler.play(direction: direction)
+        case .playItem(let item):
+            if playerHandler.currentRepeatMode() == .repeatOne {
+                playerHandler.playerRepeatAll(active: true)
+            }
+            playerHandler.play(item: item)
         case .onClose:
             closeMiniPlayer()
         case .deinit:
             playerHandler.removePlayer(listener: self)
-        case .showPlayer(let nodeHandle, let filePath):
-            showFullScreenPlayer(nodeHandle, path: filePath)
+        case .showPlayer(let node, let filePath):
+            showFullScreenPlayer(node, path: filePath)
         }
     }
 }
@@ -221,12 +228,10 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
-        guard let thumbnail = thumbnail else { return }
         invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
     }
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {
-        guard let thumbnail = thumbnail else { return }
         invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
     }
     
@@ -235,7 +240,7 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
         invokeCommand?(.change(currentItem: currentItem, indexPath: indexPath))
     }
     
-    func audio(player: AVQueuePlayer, reloadCurrent item: AudioPlayerItem?) {
+    func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
         guard let currentItem = item else { return }
         invokeCommand?(.reload(currentItem: currentItem))
     }

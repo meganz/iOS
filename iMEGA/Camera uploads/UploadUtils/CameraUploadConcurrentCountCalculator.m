@@ -21,9 +21,7 @@
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationStatesChangedNotification:) name:UIDeviceBatteryLevelDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationStatesChangedNotification:) name:NSProcessInfoPowerStateDidChangeNotification object:nil];
     
-    if (@available(iOS 11.0, *)) {
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationStatesChangedNotification:) name:NSProcessInfoThermalStateDidChangeNotification object:nil];
-    }
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationStatesChangedNotification:) name:NSProcessInfoThermalStateDidChangeNotification object:nil];
 }
 
 - (void)stopCalculatingConcurrentCount {
@@ -69,18 +67,11 @@
 }
 
 - (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsInMainThread {
-    if (@available(iOS 11.0, *)) {
-        return [self calculateCameraUploadConcurrentCountsByThermalState:NSProcessInfo.processInfo.thermalState
-                                                        applicationState:UIApplication.sharedApplication.applicationState
-                                                            batteryState:UIDevice.currentDevice.batteryState
-                                                            batteryLevel:UIDevice.currentDevice.batteryLevel
-                                                   isLowPowerModeEnabled:NSProcessInfo.processInfo.isLowPowerModeEnabled];
-    } else {
-        return [self calculateCameraUploadConcurrentCountsByApplicationState:UIApplication.sharedApplication.applicationState
-                                                                batteryState:UIDevice.currentDevice.batteryState
-                                                                batteryLevel:UIDevice.currentDevice.batteryLevel
-                                                       isLowPowerModeEnabled:NSProcessInfo.processInfo.isLowPowerModeEnabled];
-    }
+    return [self calculateCameraUploadConcurrentCountsByThermalState:NSProcessInfo.processInfo.thermalState
+                                                    applicationState:UIApplication.sharedApplication.applicationState
+                                                        batteryState:UIDevice.currentDevice.batteryState
+                                                        batteryLevel:UIDevice.currentDevice.batteryLevel
+                                               isLowPowerModeEnabled:NSProcessInfo.processInfo.isLowPowerModeEnabled];
 }
 
 - (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState applicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled {
@@ -125,7 +116,7 @@
     }
 }
 
-- (CameraUploadConcurrentCounts)concurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState API_AVAILABLE(ios(11.0)) {
+- (CameraUploadConcurrentCounts)concurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState {
     switch (thermalState) {
         case NSProcessInfoThermalStateCritical:
             return MakeCounts(PhotoUploadConcurrentCountInThermalStateCritical, VideoUploadConcurrentCountInThermalStateCritical);

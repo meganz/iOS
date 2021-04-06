@@ -113,6 +113,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
     
@@ -195,9 +196,6 @@
         [Helper clearSession];
         [Helper deletePasscode];
         [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
-        if (@available(iOS 12.0, *)) {} else {
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
     }
     
     [AppearanceManager setupAppearance:self.window.traitCollection];
@@ -321,10 +319,6 @@
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTasks) {
         [self beginBackgroundTaskWithName:@"PendingTasks"];
-    }
-    
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
     }
     
     if (self.privacyView == nil) {
@@ -558,7 +552,7 @@
             NSURL *universalLinkURL = userActivity.webpageURL;
             if (universalLinkURL) {
                 MEGALinkManager.linkURL = universalLinkURL;
-                [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", [universalLinkURL mnz_afterSlashesString]]]];
+                [self manageLink:universalLinkURL];
             }
         }
         return YES;
@@ -1064,6 +1058,45 @@ void uncaughtExceptionHandler(NSException *exception) {
     }];
 }
 
+- (void)handleTransferQuotaError:(MEGAError *)error transfer:(MEGATransfer *)transfer sdk:(MEGASdk *)sdk {
+    switch (transfer.type) {
+        case MEGATransferTypeDownload:
+            [self handleDownloadQuotaError:error sdk:sdk];
+            break;
+        case MEGATransferTypeUpload:
+            [self handleStorageQuotaError:error sdk:sdk];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)handleDownloadQuotaError:(MEGAError *)error sdk:(MEGASdk *)sdk {
+    if (error.type == MEGAErrorTypeApiEOverQuota) {
+        [SVProgressHUD dismiss];
+        if (error.value != 0) {
+            NSString *title = NSLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
+            NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
+            UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
+            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
+        }
+    }
+}
+
+- (void)handleStorageQuotaError:(MEGAError *)error sdk:(MEGASdk *)sdk {
+    if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
+        [SVProgressHUD dismiss];
+        if (error.value == 0) {
+            NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+            NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
+            UIImage *image = [sdk mnz_accountDetails].storageMax.longLongValue > [sdk mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
+        }
+    }
+}
+
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -1204,9 +1237,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             dispatch_semaphore_signal(semaphore);
         }
     }]];
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC));
     dispatch_semaphore_wait(semaphore, timeout);
-    [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
+//    [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
 }
 
 - (void)presentLogoutFromOtherClientAlert {
@@ -1888,27 +1921,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+- (void)onTransferTemporaryError:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     MEGALogDebug(@"onTransferTemporaryError %td", error.type)
-    if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-        [SVProgressHUD dismiss];
-        
-        if (error.value) { // Bandwidth overquota error
-            NSString *title = NSLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
-            NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
-            UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
-            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
-        } else { // Storage overquota error
-            NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-            NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
-            UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
-        }
-    }
+    [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
 }
 
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+- (void)onTransferFinish:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (transfer.type != MEGATransferTypeUpload && transfer.isStreamingTransfer) {
         return;
     }
@@ -1916,7 +1934,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     //Delete transfer from dictionary file even if we get an error
     MEGANode *node = nil;
     if ([transfer type] == MEGATransferTypeDownload) {
-        node = [api nodeForHandle:transfer.nodeHandle];
+        node = [sdk nodeForHandle:transfer.nodeHandle];
         if (!node) {
             node = [transfer publicNode];
         }
@@ -1947,20 +1965,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (error.type) {
         switch (error.type) {
-            MEGAErrorTypeApiEgoingOverquota:
-            MEGAErrorTypeApiEOverQuota: {
-                NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
-                UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                [self presentUpgradeViewControllerTitle:title detail:detail image:image];
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
+            case MEGAErrorTypeApiEgoingOverquota:
+            case MEGAErrorTypeApiEOverQuota:
+                [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
                 break;
-            }
-                
             case MEGAErrorTypeApiEBusinessPastDue:
                 [self presentAccountExpiredAlertIfNeeded];
                 break;
-                
             default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = NSLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
@@ -1988,7 +1999,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (replaceRange.location != NSNotFound) {
                 MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+                [[MEGAStore shareInstance] insertOfflineNode:node api:sdk path:[result decomposedStringWithCanonicalMapping]];
                 if (@available(iOS 14.0, *)) {
                     [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
                 }

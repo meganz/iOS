@@ -11,7 +11,7 @@ protocol AudioPlayerStateProtocol {
     func togglePlay()
     func playNext(_ completion: @escaping () -> Void)
     func playPrevious(_ completion: @escaping () -> Void)
-    func play(_ direction: MovementDirection, completion: @escaping () -> Void)
+    func play(item: AudioPlayerItem, completion: @escaping () -> Void)
     func isShuffleMode() -> Bool
     func shuffle(_ active: Bool)
     func isRepeatAllMode() -> Bool
@@ -73,9 +73,9 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?)
     @objc optional func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?)
-    @objc optional func audio(player: AVQueuePlayer, reloadCurrent item: AudioPlayerItem?)
     @objc optional func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, entireQueue: [AudioPlayerItem]?)
+    @objc optional func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool)
     @objc optional func audioPlayerWillStartBlockingAction()
     @objc optional func audioPlayerDidFinishBlockingAction()
     @objc optional func audioPlayerDidPausePlayback()
@@ -98,6 +98,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func aboutUpdateCurrentIndexPath(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidPausePlayback(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidResumePlayback(_ observer: AudioPlayerObserversProtocol)
+    func aboutAudioPlayerConfiguration(_ observer: AudioPlayerObserversProtocol)
 }
 
 //MARK: - Audio Player Handler
@@ -108,6 +109,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
     func isShuffleEnabled() -> Bool
+    func autoPlay(enable: Bool)
     func isPlayerPlaying() -> Bool
     func isPlayerPaused() -> Bool
     func isPlayerAlive() -> Bool
@@ -130,7 +132,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerPause()
     func playerPlay()
     func playNext()
-    func play(direction: MovementDirection)
+    func play(item: AudioPlayerItem)
     func playerRepeatAll(active: Bool)
     func playerRepeatOne(active: Bool)
     func playerRepeatDisabled()
@@ -149,8 +151,11 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func removeMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol)
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController)
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool)
-    func playerStayVisible(_ visible: Bool, presenter: UIViewController)
+    func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()
+    func audioInterruptionDidStart()
+    func audioInterruptionDidEndNeedToResume(_ resume: Bool)
+    func remoteCommandEnabled(_ enabled: Bool)
 }
 
 //MARK: - Mini Audio Player Handlers Functions

@@ -79,18 +79,17 @@ class VoiceClipInputBar: UIView {
     }
     
     private func trashViewPaddingWhenRecording() -> CGFloat {
-        var buttonsPadding = -(bounds.width / 2.0) + (trashView.bounds.width / 2.0) + padding
-        if #available(iOS 11.0, *) {
-            buttonsPadding += safeAreaInsets.left
-        }
+        let boundWidth = bounds.width / 2.0
+        let viewWidth = trashView.bounds.width / 2.0
+        
+        var buttonsPadding = viewWidth - boundWidth + padding
+        buttonsPadding += safeAreaInsets.left
         return buttonsPadding
     }
     
     private func sendViewPaddingWhenRecording() -> CGFloat {
         var sendViewPadding = (bounds.width / 2.0) - (sendView.bounds.width / 2.0) - padding
-        if #available(iOS 11.0, *) {
-            sendViewPadding -= safeAreaInsets.right
-        }
+        sendViewPadding -= safeAreaInsets.right
         return sendViewPadding
     }
     

@@ -46,20 +46,15 @@
     NSString *activityType = [self activityType];
     BOOL activityValue = !([activityType isEqualToString:MEGAUIActivityTypeOpenIn] || [activityType isEqualToString:MEGAUIActivityTypeGetLink] || [activityType isEqualToString:MEGAUIActivityTypeRemoveLink] || [activityType isEqualToString:MEGAUIActivityTypeShareFolder] || [activityType isEqualToString:MEGAUIActivityTypeSaveToCameraRoll] || [activityType isEqualToString:MEGAUIActivityTypeRemoveSharing] || [activityType isEqualToString:MEGAUIActivityTypeSendToChat]);
     if (activityValue) {
-        if (self.node.isFile) {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:^(MEGATransfer *transfer) {
+        if (self.node.isFile && [self.node mnz_downloadNodeTopPriority]) {
+            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:^(MEGATransfer *transfer) {
                 @strongify(self)
                 
                 if (transfer.nodeHandle == self.node.handle) {
                     
                     self.transfer = transfer;
                     float percentage = (transfer.transferredBytes.floatValue/transfer.totalBytes.floatValue);
-                    
-                    if (![UIApplication.mnz_presentingViewController isKindOfClass:UIAlertController.class] && UIApplication.mnz_presentingViewController != self.alertController) {
-                        
-                        [UIApplication.mnz_presentingViewController presentViewController:self.alertController animated:YES completion:nil];
-                    }
-                    
+
                     self.progressView.progress = percentage;
                     
                 }
@@ -70,7 +65,7 @@
                     [self.alertController dismissViewControllerAnimated:YES completion:nil];
                     dispatch_semaphore_signal(semaphore);
                 }
-            } onError:^(MEGAError *error) {
+            } onError:^(MEGATransfer *transfer, MEGAError *error) {
                 @strongify(self)
                 
                 [self cancel];
@@ -80,9 +75,14 @@
             }];
             
             [self.api addMEGATransferDelegate:delegate];
-            
-            [self.node mnz_downloadNode];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (![UIApplication.mnz_presentingViewController isKindOfClass:UIAlertController.class] && UIApplication.mnz_presentingViewController != self.alertController && !self.alertController.presentingViewController) {
+                    [UIApplication.mnz_presentingViewController presentViewController:self.alertController animated:YES completion:nil];
+                }
+                
+            });
             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+            [self.api removeMEGATransferDelegate:delegate];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.alertController dismissViewControllerAnimated:YES completion:nil];
             });

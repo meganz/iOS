@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="รหัสผ่านของคุณอาจคาดเดาได้ง่าย ลองใช้รหัสผ่านของคุณให้ยาวขึ้นกว่าเดิม รวมไปถึงใช้ตัวอักษรตัวพิมพ์ใหญ่และตัวพิมพ์เล็ก เพิ่มตัวอักษรพิเศษเข้าไปด้วย ที่สำคัญอย่าใช้ชื่อหรือคำที่มีในพจนานุกรม";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="ปานกลาง";
+"PasswordStrengthMedium"="ปานกลาง";
 /*  */
 "passwordMedium"="รหัสผ่านของคุณพร้อมที่จะดำเนินการต่อไปแล้ว แต่เราก็ยังคงแนะนำให้คุณใช้รหัสผ่านที่คาดเดาได้ยากต่อไปอีก";
 /*  */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="เอาผู้เข้าร่วมออก";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="กำลังสนทนากับ";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA ปกป้องแชทของคุณด้วยกระบวนการเข้ารหัสลับแบบต้นทางถึงปลายทาง (ผู้ใช้เป็นผู้ควบคุม) การเข้ารหัสจะเป็นการรับรองความปลอดภัยที่สำคัญ:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="คุณภาพของวิดีโอที่อัปโหลดไปยังการแชท";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="คุณภาพวีดีโอ";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="ต่ำ";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="ปานกลาง";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="สูง";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="ต้นฉบับ";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="กำลังจัดเตรียม...";
@@ -1634,6 +1638,8 @@
 "whatIsTwoFactorAuthentication"="การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ ซึ่งหมายความว่าแม้จะมีคนรู้จักรหัสผ่านของคุณ พวกเขาจะไม่สามารถเข้าถึงข้อมูลของคุณได้ เพราะต้องใช้รหัสหกหลักสำหรับการรับรองความถูกต้องก่อนทุกครั้ง";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="คุณต้องมีแอปตัวรับรองความถูกต้องสำหรับอุปกรณ์นี้";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
@@ -2128,7 +2134,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="ไม่สามารถรับเนื้อหาของไฟล์นี้เนื่องจากไม่ได้เข้ารหัสเป็น UTF-8 หรือ ISO/IEC 8859-1";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="การชำระเงินล่าช้า";
-/* */
+/* Business account status */
 "Active"="กำลังใช้งาน";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="บทบาท:";
@@ -2582,3 +2588,7 @@
 "Quickly access files on Recents section"="เข้าถึงไฟล์ได้อย่างรวดเร็วจากส่วนล่าสุดของคุณ";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="เข้าถึงไฟล์ได้อย่างรวดเร็วจากส่วนออฟไลน์ของคุณ";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="MEGA มีพื้นที่เก็บข้อมูลอุปกรณ์ไม่เพียงพอที่จะทำงานได้อย่างถูกต้อง";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="เพิ่มพื้นที่ว่างโดยการลบแอปที่คุณไม่ใช้แล้วหรือไฟล์วิดีโอขนาดใหญ่ในแกลเลอรีของคุณคุณสามารถจัดการพื้นที่เก็บข้อมูลของคุณได้ที่ %@";

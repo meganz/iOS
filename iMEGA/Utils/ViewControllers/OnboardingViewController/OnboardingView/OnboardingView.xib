@@ -64,7 +64,7 @@
                         <constraint firstAttribute="trailingMargin" secondItem="Y42-PF-RT6" secondAttribute="trailingMargin" id="74V-sW-M79"/>
                         <constraint firstItem="Y42-PF-RT6" firstAttribute="top" secondItem="1DH-aQ-KVR" secondAttribute="topMargin" id="FOo-2p-nH4"/>
                         <constraint firstAttribute="trailing" secondItem="KFa-t7-nrT" secondAttribute="trailing" constant="26" id="XWG-OM-yFp"/>
-                        <constraint firstItem="Y42-PF-RT6" firstAttribute="height" secondItem="1DH-aQ-KVR" secondAttribute="height" multiplier="0.6" id="ZL2-ZN-8Q5"/>
+                        <constraint firstItem="Y42-PF-RT6" firstAttribute="height" secondItem="1DH-aQ-KVR" secondAttribute="height" multiplier="0.5" id="ZL2-ZN-8Q5"/>
                         <constraint firstItem="Y42-PF-RT6" firstAttribute="leadingMargin" secondItem="1DH-aQ-KVR" secondAttribute="leadingMargin" id="dnW-Mo-rJn"/>
                         <constraint firstItem="0TT-bw-7KQ" firstAttribute="centerX" secondItem="1DH-aQ-KVR" secondAttribute="centerX" id="lDL-cI-cSC"/>
                         <constraint firstItem="KFa-t7-nrT" firstAttribute="leading" secondItem="1DH-aQ-KVR" secondAttribute="leading" constant="26" id="qD0-WM-Okk"/>

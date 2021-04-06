@@ -72,16 +72,6 @@ class NicknameViewController: UIViewController {
         }
     }
 
-    // MARK: - Orientation method.
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.iPhone4X || UIDevice.current.iPhone5X {
-            return [.portrait, .portraitUpsideDown]
-        }
-
-        return .all
-    }
-
     // MARK: - Private methods.
 
     private func saveNickname() {

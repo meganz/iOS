@@ -5,11 +5,10 @@
 
 @protocol SearchInPdfViewControllerProtocol
 
-- (void)didSelectSearchResult:(PDFSelection *)result API_AVAILABLE(ios(11.0));
+- (void)didSelectSearchResult:(PDFSelection *)result;
 
 @end
 
-API_AVAILABLE(ios(11.0))
 @interface SearchInPdfViewController : UIViewController
 
 @property (strong, nonatomic) PDFDocument *pdfDocument;

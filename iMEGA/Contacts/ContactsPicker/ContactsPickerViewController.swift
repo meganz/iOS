@@ -79,14 +79,8 @@ class ContactsPickerViewController: UIViewController {
     private func addSearchController() {
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         searchController.hidesNavigationBarDuringPresentation = false
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.barTintColor = .white
-            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
-        }
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func configureView() {

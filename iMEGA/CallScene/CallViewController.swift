@@ -154,7 +154,7 @@ struct CallManagerUseCase: CallManagerUseCaseProtocol {
     
     let megaCallManager: MEGACallManager
 
-    init(megaCallManager: MEGACallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager) {
+    init(megaCallManager: MEGACallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager!) {
         self.megaCallManager = megaCallManager
     }
 

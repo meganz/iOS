@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Parola ta este ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Medie";
+"PasswordStrengthMedium"="Medie";
 /*  */
 "passwordMedium"="Parola ta este suficientă de bună pentru a continua, dar este recomandat să o faci mai puternică parola pe viitor.";
 /*  */
@@ -777,9 +777,9 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ți anula contul. Vei pierde definitiv toate datele stocate în cloud. Te rugăm să introduci parola mai jos.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ți șterge contul. Vei pierde definitiv toate datele stocate în unitatea cloud. Te rugăm să introduci parola mai jos.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Contul tău a fost anulat cu succes.";
+"accountCanceledSuccessfully"="Contul tău a fost șters cu succes.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Închide contul";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Elimină participantul";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat împreună cu";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA îți protejează conversațiile cu criptare (controlată de utilizator) capăt-la-capăt, oferind asigurări esențiale de siguranță:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="Calitatea videoclipurilor încărcate într-un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Calitate video";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Scăzut(ă)";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Medie";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Ridicat(ă)";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Se pregătește...";
@@ -1634,8 +1638,10 @@
 "whatIsTwoFactorAuthentication"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticator app required";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Ai nevoie de o aplicație de autentificare cu doi factori pe acest dispozitiv";
+"youNeedATwoFactorAuthenticationApp"="Ne pare rău, autentificarea cu doi factori nu poate fi activată pe dispozitiv. Te rugăm să deschizi App Store pentru a instala o aplicație de autentificare.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa 2FA pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1877,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Plata pentru planul %1 nu a avut succes.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru Pro va expira peste 1 zi.";
+"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru Pro va expira mâine.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru Pro va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -2128,7 +2134,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nu a fost posibil să se obțină conținutul acestui fișier, deoarece nu este codificat nici în UTF-8, nici în ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Plată restantă";
-/* */
+/* Business account status */
 "Active"="Activă";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
@@ -2582,3 +2588,7 @@
 "Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Quickly access files from your Offline section";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";

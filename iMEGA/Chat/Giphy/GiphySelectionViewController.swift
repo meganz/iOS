@@ -38,12 +38,8 @@ class GiphySelectionViewController: UIViewController {
         
         searchController.searchBar.delegate = mainView
         searchController.delegate = mainView
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
-        } else {
-           navigationItem.titleView = searchController.searchBar
-        }
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         navigationController?.isToolbarHidden = false
         let giphyIconItem = UIBarButtonItem(image: UIImage(named: "poweredByGIPHY"), style: .plain, target: nil, action: nil)

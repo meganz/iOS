@@ -57,6 +57,8 @@
     MEGALogDebug(@"[StoreKit] Purchase product \"%@\"", product.productIdentifier);
     if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
+            [SVProgressHUD show];
+            
             SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
             NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
             paymentRequest.applicationUsername = base64UserHandle;
@@ -78,9 +80,9 @@
 
 - (void)restorePurchase {
     if ([SKPaymentQueue canMakePayments]) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+        [SVProgressHUD show];
         
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"allowPurchase_title", nil) message:NSLocalizedString(@"allowPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -129,9 +131,6 @@
     
     for(SKPaymentTransaction *transaction in transactions) {
         switch (transaction.transactionState) {
-            case SKPaymentTransactionStatePurchasing:
-                break;
-                
             case SKPaymentTransactionStatePurchased: {
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 
@@ -146,7 +145,7 @@
                 
                 [_delegate successfulPurchase:self];
                 
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 
                 break;
@@ -160,8 +159,9 @@
                     shouldSubmitReceiptOnRestore = NO;
                 }
                 
+                [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-
+                
                 break;
                 
             case SKPaymentTransactionStateFailed:
@@ -171,46 +171,29 @@
                     [_delegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
                 }
                 
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
                 
-            case SKPaymentTransactionStateDeferred:
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                
+            default:
                 break;
         }
     }
-}
-
-- (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
     if ([queue.transactions count] == 0) {
         [self.restoreDelegate incompleteRestore];
     }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.restoreDelegate failedRestore:error.code message:error.localizedDescription];
 }
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    }
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];        
-    }
     if (error.type) {
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.

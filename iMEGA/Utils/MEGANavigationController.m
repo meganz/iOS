@@ -24,32 +24,6 @@
     }
 }
 
-- (BOOL)shouldAutorotate {
-    if ([self.topViewController respondsToSelector:@selector(shouldAutorotate)]) {
-        return [self.topViewController shouldAutorotate];
-    } else {
-        return YES;
-    }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {    
-    if (self.topViewController.presentedViewController) {
-        if ([self.topViewController.presentedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-            return [self.topViewController.presentedViewController supportedInterfaceOrientations];
-        }
-    } else {
-        if ([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-            return [self.topViewController supportedInterfaceOrientations];
-        }
-    }
-    
-    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    } else {
-        return UIInterfaceOrientationMaskAll;
-    }
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

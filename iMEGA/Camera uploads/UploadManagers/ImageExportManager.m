@@ -75,11 +75,9 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 
 - (NSOperationQueue *)exportQueueForDataUTI:(NSString *)dataUTI outputTypeUTI:(NSString *)outputUTI {
     NSOperationQueue *queue = self.generalExportOperationQueue;
-    if (@available(iOS 11.0, *)) {
-        if (UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC)) {
-            if (outputUTI.length == 0 || [dataUTI isEqualToString:outputUTI]) {
-                queue = self.HEICExportOperationQueue;
-            }
+    if (UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC)) {
+        if (outputUTI.length == 0 || [dataUTI isEqualToString:outputUTI]) {
+            queue = self.HEICExportOperationQueue;
         }
     }
     

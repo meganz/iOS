@@ -99,13 +99,16 @@ extension ChatViewController: MessagesDisplayDelegate {
             return
         }
         accessoryView.isHidden = false
-
         let button = UIButton()
-        button.setImage(UIImage(named: "forward")?.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         accessoryView.addSubview(button)
         button.frame = accessoryView.bounds
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
         accessoryView.clipsToBounds = true
+        if let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed {
+            button.setImage(UIImage(named: "triangle")?.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+        } else {
+            button.setImage(UIImage(named: "forward")?.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+        }
     }
     
     func configureAvatarView(_ avatarView: AvatarView,
@@ -119,7 +122,7 @@ extension ChatViewController: MessagesDisplayDelegate {
                     return
                 }
             }
-
+            
             let chatInitials = initials(for: message)
             let avatar = Avatar(image: avatarImage(for: message), initials: chatInitials)
             avatarView.set(avatar: avatar)

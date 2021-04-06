@@ -6,9 +6,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     
     [self setup];
 }

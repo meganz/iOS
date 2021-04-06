@@ -32,13 +32,9 @@ import UIKit
         textView.isSelectable = true
         textView.dataDetectorTypes = .all
 
-        if #available(iOS 11.0, *) {
-            if let customFont = UIFont(name: "menlo", size: UIFont.labelFontSize) {
-                textView.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: customFont)
-                textView.adjustsFontForContentSizeCategory = true
-            }
-        } else {
-            textView.font = UIFont.preferredFont(forTextStyle: .body)
+        if let customFont = UIFont(name: "menlo", size: UIFont.labelFontSize) {
+            textView.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: customFont)
+            textView.adjustsFontForContentSizeCategory = true
         }
 
         view.addSubview(textView)
@@ -51,21 +47,12 @@ import UIKit
             textView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             textView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
         ])
-
-        if #available(iOS 11.0, *) {
-            let guide = view.safeAreaLayoutGuide
-            NSLayoutConstraint.activate([
-                textView.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0),
-                guide.bottomAnchor.constraint(equalToSystemSpacingBelow: textView.bottomAnchor, multiplier: 1.0)
-            ])
-
-        } else {
-            let standardSpacing: CGFloat = 8.0
-            NSLayoutConstraint.activate([
-                textView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: standardSpacing),
-                bottomLayoutGuide.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: standardSpacing)
-            ])
-        }
+        
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0),
+            guide.bottomAnchor.constraint(equalToSystemSpacingBelow: textView.bottomAnchor, multiplier: 1.0)
+        ])
 
         let image = UIImage.init(named: "share")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(shareButtonTapped(sender:)))

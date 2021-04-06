@@ -94,6 +94,8 @@
 }
 
 - (MOAssetUploadRecord *)createLivePhotoRecordForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withParsedIdentifier:(NSString *)parsedIdentifier {
+    if (context == nil) return nil;
+    
     MOAssetUploadRecord *livePhotoRecord = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:context];
     livePhotoRecord.localIdentifier = parsedIdentifier;
     livePhotoRecord.status = @(CameraAssetUploadStatusNotStarted);

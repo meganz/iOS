@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="La tua password è facilmente intuibile. Rendi la tua password più lunga. Combina lettere maiuscole e minuscole. Aggiungi caratteri speciali. Non utilizzare nomi o parole del dizionario";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Media";
+"PasswordStrengthMedium"="Media";
 /*  */
 "passwordMedium"="La tua password è abbastanza sicura per procedere, ma ti raccomandiamo di rafforzarla ulteriormente in futuro.";
 /*  */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Rimuovi partecipante";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chattando con";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA protegge la tua chat con una criptazione end-to-end (controllata dall'utente) provvedendo un'assicurazione di sicurezza essenziale:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="Qualità dei video caricati in una chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Qualità dei video";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Bassa";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Media";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Alta";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Originale";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Preparando...";
@@ -1634,8 +1638,10 @@
 "whatIsTwoFactorAuthentication"="L'autenticazione a due fattori è un secondo livello di sicurezza per il tuo account.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="L'autenticazione a due fattori è un secondo livello di sicurezza per il tuo account.Che significa che anche se qualcuno sa la tua password non può accedere al tuo account, senza avere accesso anche al numero di 6 cifre a cui hai accesso solo tu.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="App autenticatrice richiesta";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Hai bisogno di un'applicazione per l'autenticazione a due fattori su questo dispositivo";
+"youNeedATwoFactorAuthenticationApp"="Ci dispiace, l’autenticazione a due fattori non può essere attivata sul tuo dispositivo. Per favore, apri l’App Store per installare un’app autenticatrice.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Hai bisogno di un'applicazione di autenticazione per attivare l'autenticazione a due fattori (2FA) su MEGA. Puoi scaricare ed installare le app di Google Authenticator, Duo Mobile, Authy o Microsoft Authenticator per il tuo telefono o tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -2065,7 +2071,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="C'è stato un problema con il tuo ultimo pagamento. Per favore, accedi a MEGA utilizzando un browser desktop per maggiori informazioni.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Il tuo account business è scaduto";
+"Your business account is expired"="Il tuo account Business è scaduto";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="C'è stato un problema nel processo del tuo ultimo pagamento. MEGA è limitato alla visualizzazione finché questo problema non sarà aggiustato su un browser desktop.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2128,7 +2134,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Non è stato possibile ottenere il contenuto di questo file, in quanto non è codificato in UTF-8 né ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pagamento in ritardo";
-/* */
+/* Business account status */
 "Active"="Attiva";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Ruolo:";
@@ -2582,3 +2588,7 @@
 "Quickly access files on Recents section"="Accesso veloce ai file dalla tua sezione Recenti";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Accesso veloce ai file dalla tua sezione Offline";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="Il dispositivo non ha abbastanza spazio libero affinché MEGA possa funzionare correttamente.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera un po’ di spazio eliminando le app che non usi più o i video di grandi dimensioni nella tua galleria.Puoi gestire il tuo spazio in %@";

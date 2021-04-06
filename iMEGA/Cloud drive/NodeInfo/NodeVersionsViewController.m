@@ -15,7 +15,7 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
-@interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, NodeActionViewControllerDelegate, MEGADelegate> {
+@interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, NodeActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
 }
 
@@ -123,7 +123,7 @@
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorVersions;
-    [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
+    [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {
         for (MEGANode *tempNode in self.selectedNodesArray) {
@@ -240,9 +240,6 @@
     return sectionFooter;
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
@@ -287,8 +284,6 @@
     
     return [UISwipeActionsConfiguration configurationWithActions:rightActions];
 }
-
-#pragma clang diagnostic pop
 
 #pragma mark - Private
 
@@ -476,73 +471,6 @@
     
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeForIndexPath:indexPath] delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
-}
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
-    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
-    if (direction == MGSwipeDirectionLeftToRight || (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull)) {
-        return NO;
-    }
-    return !self.isEditing;
-}
-
-- (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
-    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    nodeCell.moreButton.hidden = YES;
-}
-
-- (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
-    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    nodeCell.moreButton.hidden = NO;
-}
-
-- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
-              swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
-    
-    swipeSettings.transition = MGSwipeTransitionDrag;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
-    expansionSettings.fillOnTrigger = NO;
-    expansionSettings.threshold = 2;
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = [self nodeForIndexPath:indexPath];
-    
-    if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [node mnz_downloadNode];
-            return YES;
-        }];
-        downloadButton.tintColor = UIColor.whiteColor;
-        
-        return @[downloadButton];
-    } else if (direction == MGSwipeDirectionRightToLeft) {
-        
-        NSMutableArray *rightButtons = [NSMutableArray new];
-        self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
-
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [self removeAction:nil];
-            return YES;
-        }];
-        deleteButton.tintColor = UIColor.whiteColor;
-        [rightButtons addObject:deleteButton];
-        
-        if (indexPath.section != 0) {
-            MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [self revertAction:nil];
-                return YES;
-            }];
-            revertButton.tintColor = UIColor.whiteColor;
-            [rightButtons addObject:revertButton];
-        }
-
-        return rightButtons;
-    } else {
-        return nil;
-    }
 }
 
 #pragma mark - NodeActionViewControllerDelegate

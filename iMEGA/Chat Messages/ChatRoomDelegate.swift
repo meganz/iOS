@@ -686,9 +686,26 @@ extension ChatRoomDelegate: MEGATransferDelegate {
         guard let appData = transfer.appData else {
             return
         }
-        if appData.contains("\(chatRoom.chatId)") {
+        if appData.contains("\(chatRoom.chatId)"), transfer.type == .upload {
             insertTransfer(transfer)
             chatViewController?.checkTransferPauseStatus()
+        } else if appData.contains("downloadAttachToMessageID") {
+            let messageID = transfer.mnz_extractMessageIDFromAppData()
+            
+            chatMessages = chatMessages.map({ (chatMessage) -> MessageType in
+                
+                if var chatMessage = chatMessage as? ChatMessage, chatMessage.messageId ==  messageID {
+                    chatMessage.transfer = transfer
+                    return chatMessage
+                }
+
+                return chatMessage
+            })
+            
+            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+            if isLastSectionVisible() {
+                chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
+            }
         }
     }
 
@@ -704,6 +721,23 @@ extension ChatRoomDelegate: MEGATransferDelegate {
                 }
 
                 return chatMessage
+            }
+        } else if appData.contains("downloadAttachToMessageID") {
+            let messageID = transfer.mnz_extractMessageIDFromAppData()
+            
+            chatMessages = chatMessages.map({ (chatMessage) -> MessageType in
+                
+                if var chatMessage = chatMessage as? ChatMessage, chatMessage.messageId ==  messageID {
+                    chatMessage.transfer = transfer
+                    return chatMessage
+                }
+
+                return chatMessage
+            })
+            
+            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+            if isLastSectionVisible() {
+                chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
             }
         }
     }
@@ -723,4 +757,5 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             }
         }
     }
+    
 }

@@ -79,6 +79,8 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         if listSource?.selectedNodes == nil {
             listSource?.setEditingMode()
         }
+        
+        audioPlayer(hidden: true)
     }
     
     override func endEditingMode() {
@@ -87,6 +89,8 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         tableView.setEditing(false, animated: true)
         hideToolbar()
         listSource?.endEditingMode()
+        
+        audioPlayer(hidden: false)
     }
     
     override func updateContentView(_ height: CGFloat) {

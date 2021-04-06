@@ -14,8 +14,12 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
         self.traitCollection = traitCollection
     }
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        indexPath.section != 0 ? indexPath : nil
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? PlaylistItemTableViewCell,
+        guard indexPath.section != 0, let cell = tableView.cellForRow(at: indexPath) as? PlaylistItemTableViewCell,
               let item = cell.item else {
             return
         }
@@ -26,7 +30,7 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? PlaylistItemTableViewCell,
+        guard indexPath.section != 0, let cell = tableView.cellForRow(at: indexPath) as? PlaylistItemTableViewCell,
               let item = cell.item else {
             return
         }

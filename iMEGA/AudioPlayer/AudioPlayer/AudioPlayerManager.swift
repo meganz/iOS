@@ -9,6 +9,11 @@ import Foundation
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
     
+    override private init() {
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(closePlayer), name: Notification.Name.MEGALogout, object: nil)
+    }
+    
     func currentPlayer() -> AudioPlayer? {
         player
     }
@@ -35,6 +40,10 @@ import Foundation
     
     func isShuffleEnabled() -> Bool {
         player?.isShuffleMode() ?? false
+    }
+    
+    func autoPlay(enable: Bool) {
+        player?.isAutoPlayEnabled = enable
     }
     
     func currentRepeatMode() -> RepeatMode {
@@ -84,15 +93,26 @@ import Foundation
     }
     
     func playerTogglePlay() {
-        player?.togglePlay()
+        player?.resetAudioSessionCategoryIfNeeded()
+        checkIfCallExist(then: player?.togglePlay)
+    }
+    
+    private func checkIfCallExist(then clousure: (() -> Void)?) {
+        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
+            Helper.cannotPlayContentDuringACallAlert()
+        } else {
+            clousure?()
+        }
     }
     
     func playerPause() {
-        player?.pause()
+        player?.resetAudioSessionCategoryIfNeeded()
+        checkIfCallExist(then: player?.pause)
     }
     
     func playerPlay() {
-        player?.play()
+        player?.resetAudioSessionCategoryIfNeeded()
+        checkIfCallExist(then: player?.play)
     }
     
     func playNext() {
@@ -102,9 +122,9 @@ import Foundation
         }
     }
     
-    func play(direction: MovementDirection) {
+    func play(item: AudioPlayerItem) {
         player?.blockAudioPlayerInteraction()
-        player?.play(direction) { [weak self] in
+        player?.play(item: item) { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
         }
     }
@@ -184,13 +204,13 @@ import Foundation
         player = nil
     }
     
-    func playerStayVisible(_ visible: Bool, presenter: UIViewController) {
+    func playerHidden(_ hidden: Bool, presenter: UIViewController) {
         guard presenter.conforms(to: AudioPlayerPresenterProtocol.self) else { return }
         
-        if visible {
-            miniPlayerHandlerListenerManager.notify{$0.showMiniPlayer()}
-        } else {
+        if hidden {
             miniPlayerHandlerListenerManager.notify{$0.hideMiniPlayer()}
+        } else {
+            miniPlayerHandlerListenerManager.notify{$0.showMiniPlayer()}
         }
         
         player?.updateContentViews()
@@ -200,13 +220,13 @@ import Foundation
         player?.add(presenterListener: delegate)
         
         guard let vc = delegate as? UIViewController else { return }
-        playerStayVisible(isPlayerAlive(), presenter: vc)
+        playerHidden(!isPlayerAlive(), presenter: vc)
         miniPlayerRouter?.updatePresenter(vc)
     }
     
     func removeDelegate(_ delegate: AudioPlayerPresenterProtocol) {
         guard let vc = delegate as? UIViewController else { return }
-        playerStayVisible(false, presenter: vc)
+        playerHidden(true, presenter: vc)
         
         player?.remove(presenterListener: delegate)
     }
@@ -227,5 +247,25 @@ import Foundation
         guard let miniPlayerVC = miniPlayerVC else { return }
         
         miniPlayerHandlerListenerManager.notify{$0.initMiniPlayer(viewController: miniPlayerVC)}
+    }
+    
+    func audioInterruptionDidStart() {
+        NotificationCenter.default.post(name: Notification.Name.MEGAAudioPlayerInterruption,
+                                        object: nil,
+                                        userInfo: [AVAudioSessionInterruptionTypeKey: AVAudioSession.InterruptionType.began.rawValue])
+    }
+    
+    func audioInterruptionDidEndNeedToResume(_ resume: Bool) {
+        let userInfo = resume ? [AVAudioSessionInterruptionTypeKey: AVAudioSession.InterruptionType.ended.rawValue,
+                                 AVAudioSessionInterruptionOptionKey: AVAudioSession.InterruptionOptions.shouldResume.rawValue] :
+                                [AVAudioSessionInterruptionTypeKey: AVAudioSession.InterruptionType.ended.rawValue]
+        
+        NotificationCenter.default.post(name: Notification.Name.MEGAAudioPlayerInterruption,
+                                        object: nil,
+                                        userInfo: userInfo)
+    }
+    
+    func remoteCommandEnabled(_ enabled: Bool) {
+        enabled ? player?.enableRemoteCommands() : player?.disableRemoteCommands()
     }
 }

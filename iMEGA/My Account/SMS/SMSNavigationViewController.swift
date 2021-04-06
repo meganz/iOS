@@ -10,8 +10,4 @@ class SMSNavigationViewController: UINavigationController {
     override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return topViewController?.supportedInterfaceOrientations ?? .all
-    }
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,12 +20,6 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="2MO-Hx-S56">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehf-ps-u3s">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="ZC5-8z-8Gv"/>
-                                        </constraints>
-                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vQg-Tw-mTR">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <subviews>
@@ -47,11 +42,11 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
+                                        <viewLayoutGuide key="safeArea" id="OxS-Fw-9CC"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="MeM-05-cdU"/>
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="12" bottom="8" trailing="18"/>
-                                        <viewLayoutGuide key="safeArea" id="OxS-Fw-9CC"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="Q3j-DD-Xws" appends="YES" id="SnQ-VL-78e"/>
                                         </connections>
@@ -59,15 +54,12 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="vQg-Tw-mTR" firstAttribute="leading" secondItem="2MO-Hx-S56" secondAttribute="leading" id="Cjg-7w-M0B"/>
-                                    <constraint firstItem="ehf-ps-u3s" firstAttribute="leading" secondItem="2MO-Hx-S56" secondAttribute="leading" id="Gkr-um-1be"/>
                                     <constraint firstAttribute="trailing" secondItem="vQg-Tw-mTR" secondAttribute="trailing" id="jgC-3w-Bd9"/>
-                                    <constraint firstItem="ehf-ps-u3s" firstAttribute="top" secondItem="2MO-Hx-S56" secondAttribute="top" id="o8s-2e-k0r"/>
-                                    <constraint firstAttribute="trailing" secondItem="ehf-ps-u3s" secondAttribute="trailing" id="rSe-ua-yTI"/>
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pgB-IN-pdt">
                                 <rect key="frame" x="0.0" y="60" width="414" height="676"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="contactOnMegaCell" id="Pfd-Un-pkc" customClass="ContactOnMegaTableViewCell" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="60"/>
@@ -142,6 +134,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="4x9-97-ATj"/>
                         <constraints>
                             <constraint firstItem="2MO-Hx-S56" firstAttribute="top" secondItem="4x9-97-ATj" secondAttribute="top" id="734-mo-LUg"/>
                             <constraint firstItem="pgB-IN-pdt" firstAttribute="top" secondItem="2MO-Hx-S56" secondAttribute="bottom" id="FaW-Ad-FOq"/>
@@ -151,13 +144,11 @@
                             <constraint firstItem="pgB-IN-pdt" firstAttribute="leading" secondItem="4x9-97-ATj" secondAttribute="leading" id="dyS-Hg-cI6"/>
                             <constraint firstItem="4x9-97-ATj" firstAttribute="bottom" secondItem="pgB-IN-pdt" secondAttribute="bottom" id="pvf-T9-uhB"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="4x9-97-ATj"/>
                     </view>
                     <navigationItem key="navigationItem" id="llu-uF-7mZ"/>
                     <connections>
                         <outlet property="inviteContactLabel" destination="BTR-eF-60E" id="hk1-kp-C21"/>
                         <outlet property="inviteContactView" destination="vQg-Tw-mTR" id="hXa-wF-snD"/>
-                        <outlet property="searchFixedView" destination="ehf-ps-u3s" id="bAh-nb-s8t"/>
                         <outlet property="tableView" destination="pgB-IN-pdt" id="tfl-qH-dvZ"/>
                     </connections>
                 </viewController>
@@ -203,11 +194,11 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
+                                        <viewLayoutGuide key="safeArea" id="Pab-KL-218"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="3zI-jg-Uoj"/>
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="12" bottom="8" trailing="18"/>
-                                        <viewLayoutGuide key="safeArea" id="Pab-KL-218"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="Sv2-Gu-Lfu" appends="YES" id="XA9-6D-aVj"/>
                                         </connections>
@@ -217,19 +208,19 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAQ-ax-Ad6">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="0.66666666666666663"/>
+                                                <viewLayoutGuide key="safeArea" id="qyx-18-IYM"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="DEb-tG-Hab"/>
                                                     <constraint firstAttribute="height" constant="0.5" id="psM-os-ZCf"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="safeArea" id="qyx-18-IYM"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyI-Cj-fkg">
                                                 <rect key="frame" x="60" y="0.0" width="354" height="0.66666666666666663"/>
+                                                <viewLayoutGuide key="safeArea" id="hSj-o5-1W2"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="c83-Mi-kO3"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="safeArea" id="hSj-o5-1W2"/>
                                             </view>
                                         </subviews>
                                     </stackView>
@@ -255,11 +246,11 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
+                                        <viewLayoutGuide key="safeArea" id="cXH-NI-EmE"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="8iq-2M-I6C"/>
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="12" bottom="8" trailing="18"/>
-                                        <viewLayoutGuide key="safeArea" id="cXH-NI-EmE"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="qhZ-cX-WdS" appends="YES" id="nhC-MD-QV0"/>
                                         </connections>
@@ -269,19 +260,19 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YA1-H0-5AQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="0.33333333333333331"/>
+                                                <viewLayoutGuide key="safeArea" id="VWs-xl-h1P"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="9mr-qo-LOI"/>
                                                     <constraint firstAttribute="width" constant="60" id="drL-Ug-Ec6"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="safeArea" id="VWs-xl-h1P"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQs-Ju-56a">
                                                 <rect key="frame" x="60" y="0.0" width="354" height="0.33333333333333331"/>
+                                                <viewLayoutGuide key="safeArea" id="KIk-4Q-lLU"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="dTP-ox-OcY"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="safeArea" id="KIk-4Q-lLU"/>
                                             </view>
                                         </subviews>
                                     </stackView>
@@ -307,11 +298,11 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
+                                        <viewLayoutGuide key="safeArea" id="BcC-6w-eaX"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="NeS-ak-fjG"/>
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="12" bottom="8" trailing="19"/>
-                                        <viewLayoutGuide key="safeArea" id="BcC-6w-eaX"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="exd-78-q2N" appends="YES" id="oTG-jj-NDu"/>
                                         </connections>
@@ -321,19 +312,19 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fvu-PE-nho">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="0.66666666666666663"/>
+                                                <viewLayoutGuide key="safeArea" id="Yu9-3m-F6m"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="0zC-M4-e7A"/>
                                                     <constraint firstAttribute="height" constant="0.5" id="Dnj-cK-A64"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="safeArea" id="Yu9-3m-F6m"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4F-As-zRM">
                                                 <rect key="frame" x="60" y="0.0" width="354" height="0.66666666666666663"/>
+                                                <viewLayoutGuide key="safeArea" id="lHZ-4b-Dx2"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="ycv-FN-D3w"/>
                                                 </constraints>
-                                                <viewLayoutGuide key="safeArea" id="lHZ-4b-Dx2"/>
                                             </view>
                                         </subviews>
                                     </stackView>
@@ -359,11 +350,11 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
+                                        <viewLayoutGuide key="safeArea" id="Q1N-Tc-rqj"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="lXU-yV-PiM"/>
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="12" bottom="8" trailing="18"/>
-                                        <viewLayoutGuide key="safeArea" id="Q1N-Tc-rqj"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="Uyt-uO-bM3" appends="YES" id="m2J-xx-2d2"/>
                                         </connections>
@@ -376,7 +367,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JfD-mA-mTx">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="474.33333333333326"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="contactOnMegaCell" id="VCo-a3-iBg" customClass="ContactOnMegaTableViewCell" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
@@ -452,6 +443,7 @@
                                 </variation>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="q3r-T3-EW0"/>
                         <constraints>
                             <constraint firstItem="o7k-Z0-tYI" firstAttribute="width" secondItem="q3r-T3-EW0" secondAttribute="width" multiplier="0.5" id="4q5-yJ-61c"/>
                             <constraint firstItem="gyA-r6-djF" firstAttribute="leading" secondItem="q3r-T3-EW0" secondAttribute="leading" id="BYf-6b-5F2"/>
@@ -465,7 +457,6 @@
                             <constraint firstItem="q3r-T3-EW0" firstAttribute="bottom" secondItem="o7k-Z0-tYI" secondAttribute="bottom" id="tbQ-u4-9ho"/>
                             <constraint firstAttribute="bottom" secondItem="gyA-r6-djF" secondAttribute="bottom" id="xSz-Xc-ItB"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="q3r-T3-EW0"/>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="4q5-yJ-61c"/>
@@ -610,7 +601,7 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="bLa-md-M4w"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhC-PG-pnt">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhC-PG-pnt">
                                                 <rect key="frame" x="82" y="626" width="250" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="Avb-FE-vQM"/>
@@ -662,6 +653,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="jLo-S8-Lgk"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Sig-ob-yBQ" firstAttribute="trailing" secondItem="jLo-S8-Lgk" secondAttribute="trailing" id="MLx-9c-P7s"/>
@@ -671,7 +663,6 @@
                             <constraint firstItem="Sig-ob-yBQ" firstAttribute="top" secondItem="9Hr-hN-JIj" secondAttribute="top" id="wBH-bo-hDh"/>
                             <constraint firstItem="Sig-ob-yBQ" firstAttribute="bottom" secondItem="jLo-S8-Lgk" secondAttribute="bottom" id="wIz-BN-RHJ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="jLo-S8-Lgk"/>
                     </view>
                     <connections>
                         <outlet property="descriptionLabel" destination="2mm-gZ-cRE" id="Zwy-zx-wOE"/>
@@ -699,5 +690,8 @@
         <image name="inviteToChat" width="40" height="40"/>
         <image name="scan QR code" width="40" height="40"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

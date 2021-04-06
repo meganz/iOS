@@ -36,11 +36,9 @@ class MegaAvatarView: UIView {
         firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background().cgColor
         firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / 2
         
-        if #available(iOS 11.0, *) {
-            avatarImageView.accessibilityIgnoresInvertColors            = true
-            firstPeerAvatarImageView.accessibilityIgnoresInvertColors   = true
-            secondPeerAvatarImageView.accessibilityIgnoresInvertColors  = true
-        }
+        avatarImageView.accessibilityIgnoresInvertColors            = true
+        firstPeerAvatarImageView.accessibilityIgnoresInvertColors   = true
+        secondPeerAvatarImageView.accessibilityIgnoresInvertColors  = true
     }
     
     @objc func configure(mode: MegaAvatarViewMode) {

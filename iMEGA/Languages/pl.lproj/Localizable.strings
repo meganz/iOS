@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Twoje hasło można łatwo odgadnąć. Spróbuj zwiększyć swoje hasło. Połącz wielkie i małe litery. Dodaj znaki specjalne. Nie używaj nazw ani słów słownikowych.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Średnie";
+"PasswordStrengthMedium"="Średnie";
 /*  */
 "passwordMedium"="Twoje hasło jest wystarczająco bezpieczne aby kontynuować, ale rekomendujemy wzmocnienie hasła później.";
 /*  */
@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Jest to ostatni krok do usunięcia konta. W ten sposób trwale utracisz wszystkie dane przechowywane w chmurze. Wpisz swoje hasło poniżej.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Twoje konto zostało pomyślnie anulowane.";
+"accountCanceledSuccessfully"="Twoje konto zostało pomyślnie usunięte.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zamknij konto";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Usuń uczestników";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Rozmowa z";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Nie można załadować. [RED]Kliknij aby ponowić[/RED].";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po stronie użytkownika.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="Jakość filmów wgrywanych do czatu:";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Jakość wideo";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Niska";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Średnie";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Wysoka";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Oryginalny";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Przygotowywanie...";
@@ -1634,8 +1638,10 @@
 "whatIsTwoFactorAuthentication"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta. Co oznacza, że nawet jeśli ktoś zna twoje hasło, nie może uzyskać do niego dostępu, nie mając dostępu do sześciocyfrowego kodu, do którego masz dostęp.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Wymagana aplikacja Authenticator";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Potrzebujesz aplikacji uwierzytelniania dwustopniowego na tym urządzeniu";
+"youNeedATwoFactorAuthenticationApp"="Przykro nam, ale uwierzytelnianie dwuetapowe nie może być włączone na Twoim urządzeniu. Otwórz sklep App Store, aby zainstalować aplikację Authenticator.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Potrzebujesz aplikacji uwierzytelniającej, by włączyć 2FA na MEGA. Możesz pobrać i zainstalować aplikację Google Authenticator, Duo Mobile, Authy lub Microsoft Authenticator na swój telefon lub tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1877,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Twoja płatność za konto %1 nie powiodła się.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Twój plan Pro wygaśnie za 1 dzień.";
+"Your PRO membership plan will expire in 1 day."="Twoje konto Pro wygaśnie jutro.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Twój plan Pro wygaśnie za %1 dni.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -2065,7 +2071,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Wystąpił problem z ostatnią płatnością. Proszę uzyskać dostęp do MEGA za pomocą przeglądarki na pulpicie, aby uzyskać więcej informacji.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Twoje konto firmowe wygasło";
+"Your business account is expired"="Konto biznesowe wygasło";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Wystąpił problem z przetwarzaniem Twojej płatności. Wyświetlanie MEGA jest ograniczone tylko do momentu rozwiązania tego problemu w przeglądarce internetowej na komputerze.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2128,7 +2134,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Opłata zaległa";
-/* */
+/* Business account status */
 "Active"="Aktywne";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rola:";
@@ -2582,3 +2588,7 @@
 "Quickly access files on Recents section"="Szybki dostęp do plików z sekcji Ostatnio dodane";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Szybki dostęp do plików z sekcji Offline";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="Urządzenie nie ma wystarczająco dużo miejsca, aby MEGA działała prawidłowo.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Zwolnij trochę miejsca, usuwając aplikacje, których już nie używasz, lub duże pliki wideo w swojej galerii. Możesz zarządzać swoją pamięcią masową w %@";

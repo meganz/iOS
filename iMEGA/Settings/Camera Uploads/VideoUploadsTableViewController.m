@@ -133,14 +133,10 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     if (CameraUploadManager.isVideoUploadEnabled) {
-        if (CameraUploadManager.isHEVCFormatSupported) {
-            if (CameraUploadManager.shouldConvertHEVCVideo) {
-                numberOfSections = VideoUploadsSectionCount;
-            } else {
-                numberOfSections = VideoUploadsSectionCount - 1;
-            }
+        if (CameraUploadManager.shouldConvertHEVCVideo) {
+            numberOfSections = VideoUploadsSectionCount;
         } else {
-            numberOfSections = 1;
+            numberOfSections = VideoUploadsSectionCount - 1;
         }
     } else {
         numberOfSections = 1;

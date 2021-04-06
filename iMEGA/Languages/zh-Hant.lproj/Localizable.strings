@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="您的密碼太容易被猜到了。請使用更長的密碼。結合大小寫字母，或添加特殊字符。請避免使用名字或字典中的單詞。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="普通";
+"PasswordStrengthMedium"="普通";
 /*  */
 "passwordMedium"="您的密碼已足以繼續，但仍建議可再加強密碼強度。";
 /*  */
@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="您的帳號已成功註銷。";
+"accountCanceledSuccessfully"="您的帳號已成功刪除。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="註銷帳戶";
 /* Title for the action that allows to remove a file or folder */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="移除此位成員";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="聊天對象";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="無法載入。 [RED]點此重試[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保護您的聊天隱私（保障使用者終端到終端，用戶控制之隱私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="上傳到對話中的影片品質";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="影片品質";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="低";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="普通";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="高";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="原始檔";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="準備中...";
@@ -1634,8 +1638,10 @@
 "whatIsTwoFactorAuthentication"="雙重驗證是您帳戶的第二層安全保護。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="雙重驗證是您帳戶的第二層安全保護。這意味著，即使有人知道您的密碼，他們也無法存取您的帳戶，且無法獲得只有您能讀取的六位碼。";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="需要身份驗證器應用程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用雙重驗證程式";
+"youNeedATwoFactorAuthenticationApp"="很抱歉，您的裝置無法啟用雙重驗證。請打開App Store來安裝Authenticator應用程式。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要身份驗證應用程式才能在MEGA上啟用雙重驗證。您可以在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1877,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="您的 %1付款不成功。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="您的專業版會員將在一天內到期。";
+"Your PRO membership plan will expire in 1 day."="您的專業版會員將在明天到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="您的專業版會員將在%1天內到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -2128,8 +2134,8 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="付款逾期";
-/* */
-"Active"="登入";
+/* Business account status */
+"Active"="有效的";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="職稱:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2582,3 +2588,7 @@
 "Quickly access files on Recents section"="快速存取近期活動的檔案";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="快速存取離線存取的檔案";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間來讓MEGA正確的運行";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="請刪除您沒在使用的應用程式或相簿裡大容量的影片檔案以釋放一些空間。您可以在%@管理您的儲存空間。";

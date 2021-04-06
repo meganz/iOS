@@ -61,7 +61,9 @@ final class AudioPlaylistViewModel: ViewModelType {
             selectedItems = [AudioPlayerItem]()
         }
         
-        selectedItems?.append(item)
+        if !(selectedItems?.contains(item) ?? true) {
+            selectedItems?.append(item)
+        }
     }
     
     private func removeSelected(_ item: AudioPlayerItem) {

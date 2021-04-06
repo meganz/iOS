@@ -172,7 +172,10 @@ enum SessionSectionRow: Int {
                     expandAvatarView()
                 }
             } else {
-                if (avatarViewHeightConstraint.constant - avatarExpandedPosition) / (avatarCollapsedPosition - avatarExpandedPosition) > 0.5 {
+                let height = avatarViewHeightConstraint.constant - avatarExpandedPosition
+                let position = avatarCollapsedPosition - avatarExpandedPosition
+                
+                if (height / position) > 0.5 {
                     collapseAvatarView()
                 } else {
                     expandAvatarView()
@@ -298,34 +301,40 @@ enum SessionSectionRow: Int {
     func presentChangeViewController(changeType: ChangeType) -> Void {
         let changePasswordViewController = UIStoryboard.init(name: "ChangeCredentials", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
-        if changeType == .email {
+        if changeType == .email || changeType == .password {
             switch twoFactorAuthStatus {
             case .unknown:
-                 guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
+                guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
                     return
-                 }
-                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                }
+                
+                var rowToReload: Int = 0
+                let rowsForProfileSectionArray = rowsForProfileSection()
+                if changeType == .email {
+                    rowToReload = rowsForProfileSectionArray.firstIndex(of: .changeEmail) ?? 0
+                } else if changeType == .password {
+                    rowToReload = rowsForProfileSectionArray.firstIndex(of: .changePassword) ?? 0
+                }
+                
+                MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     self.twoFactorAuthStatus = request.flag ? .enabled : .disabled
-                    self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-                    if self.navigationController?.children.count != 2 {
-                        return
-                    }
+                    self.tableView.reloadRows(at: [IndexPath(row: rowToReload, section: ProfileTableViewSection.profile.rawValue)], with: .automatic)
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
                     navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
                     
                     self.present(navigationController, animated: true, completion: nil)
-                 }))
-                 twoFactorAuthStatus = .querying
-                 tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+                }))
+                twoFactorAuthStatus = .querying
+                tableView.reloadRows(at: [IndexPath(row: rowToReload, section: ProfileTableViewSection.profile.rawValue)], with: .automatic)
             case .querying:
                 return
             case .disabled, .enabled:
-                    changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .enabled
-                    let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
-                    navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
-                    
-                    present(navigationController, animated: true, completion: nil)
+                changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .enabled
+                let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+                navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
+                
+                present(navigationController, animated: true, completion: nil)
             }
         } else {
             let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
@@ -363,6 +372,19 @@ enum SessionSectionRow: Int {
         }
 
         return DateFormatter.dateMediumWithWeekday()
+    }
+    
+    func updateCellInRelationWithTwoFactorStatus(cell: ProfileTableViewCell) {
+        switch twoFactorAuthStatus {
+        case .unknown, .disabled, .enabled:
+            cell.nameLabel?.isEnabled = true
+            cell.accessoryView = nil
+        case .querying:
+            cell.nameLabel?.isEnabled = false
+            let activityIndicator = UIActivityIndicatorView(style: .gray)
+            activityIndicator.startAnimating()
+            cell.accessoryView = activityIndicator
+        }
     }
 
     // MARK: - IBActions
@@ -453,16 +475,7 @@ extension ProfileViewController: UITableViewDataSource {
                 let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? ""))
                 cell.nameLabel.text = hasPhotoAvatar ? NSLocalizedString("Change Photo", comment: "Button that allows the user the change a photo, e.g. his avatar photo ") : NSLocalizedString("Add Photo", comment: "Button that allows the user the add a photo, e.g avatar photo")
             case .changeEmail:
-                switch twoFactorAuthStatus {
-                case .unknown, .disabled, .enabled:
-                    cell.nameLabel?.isEnabled = true
-                    cell.accessoryView = nil
-                case .querying:
-                    cell.nameLabel?.isEnabled = false
-                    let activityIndicator = UIActivityIndicatorView(style: .gray)
-                    activityIndicator.startAnimating()
-                    cell.accessoryView = activityIndicator
-                }
+                updateCellInRelationWithTwoFactorStatus(cell: cell)
                 cell.nameLabel.text = NSLocalizedString("Change Email", comment: "The title of the alert dialog to change the email associated to an account.")
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
@@ -479,6 +492,7 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 }
             case .changePassword:
+                updateCellInRelationWithTwoFactorStatus(cell: cell)
                 cell.nameLabel.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password")
             }
             return cell

@@ -4,6 +4,8 @@ extension AudioPlayer {
     func registerAudioPlayerEvents() {
         audioQueueObserver = queuePlayer?.observe(\.currentItem, options: [.new, .old], changeHandler: audio(player:didChangeItem:))
         audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options:  [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
+        audioQueueNewItemObserver = queuePlayer?.observe(\.currentItem, options: .initial, changeHandler: audio(player:didStartPlayingCurrentItem:))
+        audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .initial, changeHandler: audio(player:didChangePlayerRate:))
         audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: audio(player:didChangeTimeControlStatus:))
         audioQueueWaitingObserver = queuePlayer?.observe(\.reasonForWaitingToPlay, options: [.new, .old], changeHandler: audio(player:reasonForWaitingToPlay:))
         audioQueueBufferEmptyObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferEmpty, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferEmpty:))
@@ -15,6 +17,8 @@ extension AudioPlayer {
     func unregisterAudioPlayerEvents() {
         audioQueueObserver?.invalidate()
         audioQueueStatusObserver?.invalidate()
+        audioQueueNewItemObserver?.invalidate()
+        audioQueueRateObserver?.invalidate()
         audioQueueWaitingObserver?.invalidate()
         audioQueueStallObserver?.invalidate()
         audioQueueBufferEmptyObserver?.invalidate()
@@ -27,6 +31,7 @@ extension AudioPlayer {
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: AVAudioSession.interruptionNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(changeRoute:)), name: AVAudioSession.routeChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogout(notification:)), name: Notification.Name.MEGALogout, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: Notification.Name.MEGAAudioPlayerInterruption, object: nil)
     }
     
     func unregisterAudioPlayerNotifications() {
@@ -44,8 +49,6 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             repeatLastItem()
         } else {
             notify([aboutCurrentItem, aboutCurrentItemAndQueue, aboutCurrentThumbnail, aboutUpdateCurrentIndexPath])
-            setupNowPlaying()
-            
             guard let oldValue = value.oldValue as? AudioPlayerItem else { return }
             
             reset(item: oldValue)
@@ -58,18 +61,18 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     func audio(player: AVQueuePlayer, didChangeTimeControlStatus value: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>) {
         switch (player.timeControlStatus) {
         case .paused:
+            isPaused = true
             invalidateTimer()
             notify(aboutCurrentState)
             
         case .playing:
+            isPaused = false
             setTimer()
             notify([aboutCurrentItem, aboutCurrentThumbnail])
             
         default:
             break
         }
-        
-        setupNowPlaying()
     }
     
     // listening for change event when player stops playback
@@ -87,7 +90,15 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     
     // Listening for current item status change
     func audio(playerItem: AVPlayerItem, didChangeCurrentItemStatus value: NSKeyValueObservedChange<AVPlayerItem.Status>) {
-        // To know the audio player current status you can see it with: playerItem.status
+        refreshNowPlayingInfo()
+    }
+    
+    func audio(player: AVQueuePlayer, didStartPlayingCurrentItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
+        refreshNowPlayingInfo()
+    }
+    
+    func audio(player: AVQueuePlayer, didChangePlayerRate value: NSKeyValueObservedChange<Float>) {
+        refreshNowPlayingInfo()
     }
     
     // listening for buffer is empty
@@ -120,33 +131,59 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .began:
-            pause()
-            notify(aboutAudioPlayerDidPausePlayback)
-        case .ended:
-            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            guard !isAudioPlayerInterrupted, !isPaused else { return }
             
-            if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
-                play()
-                notify(aboutAudioPlayerDidResumePlayback)
+            if #available(iOS 10.3, *) {
+                if let isAudioSessionSuspended = userInfo[AVAudioSessionInterruptionWasSuspendedKey] as? Bool, isAudioSessionSuspended {
+                    MEGALogDebug("[AudioPlayer] The Audio Session was deactivated by the system")
+                    return
+                }
             }
+            
+            MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
+            isAudioPlayerInterrupted = true
+            pause()
+            
+            setAudioSession(active: false)
+            
+            disableRemoteCommands()
+            
+        case .ended:
+            guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            
+            MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
+            
+            setAudioSession(active: true)
+            
+            isAudioPlayerInterrupted = false
+            enableRemoteCommands()
+            if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
+                resetAudioSessionCategoryIfNeeded()
+                play()
+            }
+            
         default: break
         }
+        
+        notify(aboutCurrentState)
     }
     
     @objc func audioPlayer(changeRoute notification: Notification) {
-        guard let userInfo = notification.userInfo,
+        guard !isAudioPlayerInterrupted,
+              let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
               let type = AVAudioSession.RouteChangeReason(rawValue: typeValue) else { return }
         
         switch type {
-        case .categoryChange:
-            if isPlaying {
-                pause()
-                notify(aboutAudioPlayerDidPausePlayback)
-            }
+        case .oldDeviceUnavailable:
+            MEGALogDebug("[AudioPlayer] AVAudioSessionRouteChangeReason OldDeviceunavailable")
+            if !isAudioPlayerInterrupted { pause() }
+            
         default:
             break
         }
+        
+        notify(aboutCurrentState)
     }
     
     @objc func didReceiveLogout(notification: Notification) {

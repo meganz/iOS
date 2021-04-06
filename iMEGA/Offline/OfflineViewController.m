@@ -139,6 +139,11 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [AudioPlayerManager.shared removeDelegate:self];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
@@ -149,12 +154,6 @@ static NSString *kisDirectory = @"kisDirectory";
         self.selectedItems = nil;
         [self setEditMode:NO];
     }
-    
-    [AudioPlayerManager.shared removeDelegate:self];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -425,10 +424,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = NO;
-    }
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
     self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
 
@@ -917,12 +914,7 @@ static NSString *kisDirectory = @"kisDirectory";
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
@@ -953,6 +945,10 @@ static NSString *kisDirectory = @"kisDirectory";
         
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
+    }
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared playerHidden:editing presenter:self];
     }
 }
 
@@ -1066,7 +1062,7 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
             [self removeOfflineNodeCell:itemPath];
         } andCancelAction:nil];
