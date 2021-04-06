@@ -15,17 +15,13 @@ final class MEGASelectedButton: UIButton {
     }
     
     func setRightTintColor() {
-        if #available(iOS 12.0, *) {
-            imageView?.image?.withRenderingMode(.alwaysTemplate)
-            switch traitCollection.userInterfaceStyle {
-            case .dark:
-                tintColor = isSelected ? .mnz_green00A382() : .white
-            case .light:
-                tintColor = isSelected ? .mnz_green00A382() : .black
-            default: break
-            }
-        } else {
+        imageView?.image?.withRenderingMode(.alwaysTemplate)
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
             tintColor = isSelected ? .mnz_green00A382() : .white
+        case .light:
+            tintColor = isSelected ? .mnz_green00A382() : .black
+        default: break
         }
     }
 }
@@ -37,16 +33,12 @@ class MEGAPlayerButton: UIButton {
                               duration: 0.3,
                               options: .curveEaseInOut,
                               animations: {
-                                if #available(iOS 12.0, *) {
-                                    switch self.traitCollection.userInterfaceStyle {
-                                    case .dark:
-                                        self.backgroundColor = self.isHighlighted ? .mnz_gray333333() : UIColor.clear
-                                    case .light:
-                                        self.backgroundColor = self.isHighlighted ? .mnz_whiteEFEFEF() : UIColor.clear
-                                    default: break
-                                    }
-                                } else {
+                                switch self.traitCollection.userInterfaceStyle {
+                                case .dark:
+                                    self.backgroundColor = self.isHighlighted ? .mnz_gray333333() : UIColor.clear
+                                case .light:
                                     self.backgroundColor = self.isHighlighted ? .mnz_whiteEFEFEF() : UIColor.clear
+                                default: break
                                 }
                               },
                               completion: nil)

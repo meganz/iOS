@@ -6,19 +6,17 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         
         bottomView?.removeFromSuperview()
         
-        addChild(viewController)
         view.addSubview(miniPlayerView)
-        viewController.didMove(toParent: self)
         
-        miniPlayerView.autoSetDimension(.height, toSize: 60.0)
-        miniPlayerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
-        miniPlayerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-   
-        if #available(iOS 11.0, *) {
-            miniPlayerView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: tabBar.frame.size.height - view.safeAreaInsets.bottom)
-        } else {
-            miniPlayerView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: tabBar.frame.size.height)
-        }
+        miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        bottomViewBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBar.frame.size.height)
+        bottomViewBottomConstraint.isActive = true
+        
+        miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        miniPlayerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
         bottomView = miniPlayerView
         
         shouldUpdateProgressViewLocation()
@@ -28,9 +26,9 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         if let navController = selectedViewController as? UINavigationController, (navController.viewControllers.last?.conforms(to: AudioPlayerPresenterProtocol.self) ?? false) {
             if bottomView == nil {
                 AudioPlayerManager.shared.showMiniPlayer()
-            } else {
-                bottomView?.isHidden = false
             }
+            
+            bottomView?.isHidden = false
         }
     }
     
@@ -49,13 +47,11 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         bottomView = nil
     }
     
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
+    @objc func refreshBottomConstraint() {
+        guard bottomView != nil else { return }
         
-        coordinator.animate(alongsideTransition: { _ in
-            self.resetMiniPlayerContainer()
-            self.showMiniPlayer()
-        })
+        bottomViewBottomConstraint.constant = -tabBar.frame.size.height
+        bottomView?.layoutIfNeeded()
     }
     
     @objc func shouldShowMiniPlayer() {

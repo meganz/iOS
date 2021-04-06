@@ -21,8 +21,13 @@ extension NodeSearchRepository {
         searchQueue.qualityOfService = .userInteractive
         
         return Self(
-            search: { (searchText, nodeHandle, completionAction) in
-                let searchRootNode = nodeHandle == nil ? sdk.rootNode : sdk.node(forHandle: nodeHandle!)
+            search: { (searchText: String, nodeHandle: MEGAHandle?, completionAction: (@escaping ([NodeEntity]) -> Void)) -> () -> Void in
+                let searchRootNode: MEGANode?
+                if let handle = nodeHandle {
+                    searchRootNode = sdk.node(forHandle: handle)
+                } else {
+                    searchRootNode = sdk.rootNode
+                }
 
                 guard let rootNode = searchRootNode else {
                     completionAction([])
@@ -35,7 +40,7 @@ extension NodeSearchRepository {
                     parentNode: rootNode,
                     text: searchText,
                     cancelToken: cancelToken
-                ) { foundNodes, _ in
+                ) { (foundNodes, _) -> Void in
                     guard let foundNodes = foundNodes else {
                         completionAction([])
                         return
@@ -52,7 +57,7 @@ extension NodeSearchRepository {
                 }
             },
 
-            cancel: { cancelAction in
+            cancel: { cancelAction -> Void in
                 cancelAction()
             }
         )

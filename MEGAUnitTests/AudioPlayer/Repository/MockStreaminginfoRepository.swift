@@ -31,4 +31,6 @@ struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
         case .success: return AudioPlayerItem.mockItem.url
         }
     }
+    
+    func isLocalHTTPProxyServerRunning() -> Bool { return false }
 }

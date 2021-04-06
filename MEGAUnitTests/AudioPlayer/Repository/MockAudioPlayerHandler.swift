@@ -17,7 +17,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var addPlayerTracks_calledTimes = 0
     var addPlayerListener_calledTimes = 0
     var removePlayerListener_calledTimes = 0
-    var playDirection_calledTimes = 0
+    var playItem_calledTimes = 0
     
     func isPlayerDefined() -> Bool { false }
     func isPlayerEmpty() -> Bool { false }
@@ -78,8 +78,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         playNext_calledTimes += 1
     }
     
-    func play(direction: MovementDirection) {
-        playDirection_calledTimes += 1
+    func play(item: AudioPlayerItem) {
+        playItem_calledTimes += 1
     }
     
     func playerRepeatAll(active: Bool) {
@@ -100,7 +100,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func playerPlaylistItems() -> [AudioPlayerItem]? { nil}
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {}
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {}
-    func playerStayVisible(_ visible: Bool, presenter: UIViewController) {}
+    func playerHidden(_ hidden: Bool, presenter: UIViewController) {}
     func closePlayer() {}
     func isPlayerPlaying() -> Bool { true }
     func isPlayerPaused() -> Bool { false }
@@ -112,4 +112,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func isShuffleEnabled() -> Bool { false }
     func currentRepeatMode() -> RepeatMode { RepeatMode.none }
     func refreshCurrentItemState() {}
+    func autoPlay(enable: Bool) {}
+    func audioInterruptionDidStart() {}
+    func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}
+    func remoteCommandEnabled(_ enabled: Bool) {}
 }

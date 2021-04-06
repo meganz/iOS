@@ -89,9 +89,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
     self.avatarImageView.userInteractionEnabled = YES;
     
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     self.addPhoneNumberView.hidden = YES;
     
     [self configAddPhoneNumberTexts];
@@ -123,14 +121,26 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
-    
-    [AudioPlayerManager.shared removeDelegate:self];
+    NSInteger index = self.navigationController.viewControllers.count-1;
+    if (![self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] &&
+        !self.isMovingFromParentViewController) {
+        [AudioPlayerManager.shared removeDelegate:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
     [AudioPlayerManager.shared addDelegate:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSInteger index = self.navigationController.viewControllers.count-1;
+    if ([self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] ||
+        self.isMovingFromParentViewController) {
+        [AudioPlayerManager.shared removeDelegate:self];
+    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

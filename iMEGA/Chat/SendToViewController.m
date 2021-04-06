@@ -641,9 +641,7 @@
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
         
-        if (@available(iOS 11.0, *)) {
-            cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-        }
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
         
         for (MEGAUser *tempUser in self.selectedUsersMutableArray) {
             if ([tempUser.email isEqualToString:user.email]) {

@@ -59,9 +59,7 @@ class FilesExplorerContainerViewController: UIViewController {
         currentState.showContent()
         showMoreRightBarButton()
         configureSearchBar()
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,8 +67,8 @@ class FilesExplorerContainerViewController: UIViewController {
         AudioPlayerManager.shared.addDelegate(self)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         AudioPlayerManager.shared.removeDelegate(self)
     }
     
@@ -134,6 +132,12 @@ class FilesExplorerContainerViewController: UIViewController {
         navigationItem.rightBarButtonItem = selectAllBarButtonItem
     }
     
+    func audioPlayer(hidden: Bool) {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.playerHidden(hidden, presenter: self)
+        }
+    }
+    
     //MARK:- Actions
 
     @objc private func moreButtonItemSelected(_ button: UIBarButtonItem) {
@@ -149,12 +153,8 @@ class FilesExplorerContainerViewController: UIViewController {
     }
     
     func configureSearchBar() {
-        if #available(iOS 11.0, *) {
-            if navigationItem.searchController == nil {
-                navigationItem.searchController = searchController
-            }
-        } else {
-            currentState.configureSearchController(searchController)
+        if navigationItem.searchController == nil {
+            navigationItem.searchController = searchController
         }
     }
     

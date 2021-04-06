@@ -78,13 +78,8 @@ final class RegionListViewController: UIViewController, ViewType {
         view.wrap(tableView)
         
         definesPresentationContext = true
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.barTintColor = .mnz_backgroundElevated(traitCollection)
-        }
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         updateAppearance()
     }

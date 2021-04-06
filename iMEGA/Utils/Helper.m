@@ -314,6 +314,10 @@ static MEGAIndexer *indexer;
 }
 
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
+    [self downloadNode:node folderPath:folderPath isFolderLink:isFolderLink isTopPriority:NO];
+}
+
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink isTopPriority:(BOOL)isTopPriority {
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
     if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderInboxError", nil)];
@@ -329,7 +333,15 @@ static MEGAIndexer *indexer;
     
     NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
-    [api startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
+    if (isTopPriority) {
+        [api startDownloadTopPriorityWithNode:[api authorizeNode:node] localPath:relativeFilePath appData:nil];
+    } else {
+        [api startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
+    }
+}
+
++ (void)downloadNodeTopPriority:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
+    [self downloadNode:node folderPath:folderPath isFolderLink:isFolderLink isTopPriority:YES];
 }
 
 + (void)copyNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
@@ -460,9 +472,6 @@ static MEGAIndexer *indexer;
     } else {
         [NSUserDefaults.standardUserDefaults setInteger:SortingPreferenceSameForAll forKey:MEGASortingPreference];
         [NSUserDefaults.standardUserDefaults setInteger:selectedSortOrderType forKey:MEGASortingPreferenceType];
-        if (@available(iOS 12.0, *)) {} else {
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
         
         [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(SortingPreferenceSameForAll), MEGASortingPreferenceType : @(selectedSortOrderType)}];
     }
@@ -717,6 +726,7 @@ static MEGAIndexer *indexer;
     
     UILabel *label = [[UILabel alloc] init];
     [label setNumberOfLines:[subtitle isEqualToString:@""] ? 1 : 2];
+    [label setLineBreakMode:NSLineBreakByClipping];
     
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAttributedText:titleMutableAttributedString];
@@ -728,7 +738,7 @@ static MEGAIndexer *indexer;
     UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
     searchController.searchBar.delegate = searchBarDelegate;
-    searchController.dimsBackgroundDuringPresentation = NO;
+    searchController.obscuresBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
     
@@ -853,9 +863,6 @@ static MEGAIndexer *indexer;
 
     //Set default values on logout
     [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
-    if (@available(iOS 12.0, *)) {} else {
-        [NSUserDefaults.standardUserDefaults synchronize];
-    }
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];

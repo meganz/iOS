@@ -475,13 +475,9 @@ extension UIColor {
     // MARK: - Input bar
     class func mnz_inputbarButtonBackground(_ traitCollection: UITraitCollection) -> UIColor? {
         let primaryGray = mnz_primaryGray(for: traitCollection)
-        if #available(iOS 12.0, *) {
-            return (traitCollection.userInterfaceStyle == .dark)
-                ? primaryGray.withAlphaComponent(0.2)
-                : primaryGray.withAlphaComponent(0.04)
-        } else {
-            return primaryGray.withAlphaComponent(0.04)
-        }
+        return (traitCollection.userInterfaceStyle == .dark)
+            ? primaryGray.withAlphaComponent(0.2)
+            : primaryGray.withAlphaComponent(0.04)
     }
     
     class func mnz_inputbarButtonImageTint(_ traitCollection: UITraitCollection) -> UIColor {

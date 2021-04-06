@@ -12,7 +12,7 @@
         _clientId = session.clientId;
         _video = session.hasVideo;
         _audio = session.hasAudio;
-        _networkQuality = session.networkQuality;
+//        _networkQuality = session.networkQuality;
     }
     return self;
 }

@@ -10,4 +10,10 @@ extension UIView {
          leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -insets.left),
          trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: insets.right)].activate()
     }
+    
+    static func makeFlexiView(for axis: NSLayoutConstraint.Axis) -> UIView {
+        let view = UIView()
+        view.setContentCompressionResistancePriority(.defaultLow, for: axis)
+        return view
+    }
 }

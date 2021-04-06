@@ -71,13 +71,15 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
-            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-                MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
-                return
+              let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,
+              message.transfer?.state != .failed else {
+            MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
+            return
         }
         
         selectedMessages = [message]
         forwardSelectedMessages()
+        
     }
     
     func didSelectURL(_ url: URL) {
@@ -111,12 +113,24 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         }
     }
     
+    func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+              let messagesDataSource = messagesCollectionView.messagesDataSource,
+              let chatMessage = messagesDataSource.messageForItem(at: indexPath,
+                                                                  in: messagesCollectionView) as? ChatMessage,
+              let transfer = chatMessage.transfer,
+              transfer.state == .failed else { return }
+        
+        MEGASdkManager.sharedMEGASdk().retryTransfer(transfer)
+        messagesCollectionView.reloadData()
+    }
+    
     func didTapMessage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
             let messagesDataSource = messagesCollectionView.messagesDataSource,
             let chatMessage = messagesDataSource.messageForItem(at: indexPath,
                                                                 in: messagesCollectionView) as? ChatMessage else { return }
-        if chatMessage.transfer != nil {
+        if let transfer = chatMessage.transfer, transfer.type == .upload {
             checkTransferPauseStatus()
             if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
                 guard let cell = cell as? AudioMessageCell else {
@@ -145,7 +159,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                 }
                 
                 if let node = node,
-                    (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension ) {
+                    (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                     let attachments = messages.filter { (message) -> Bool in
                         guard let localChatMessage = message as? ChatMessage else {
                             return false
@@ -165,8 +179,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                         if chatRoom.isPreview {
                             tempNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
                         }
-                        if tempNode != nil {
-                            mediaNodesArray.append(tempNode!)
+                        if let tempNode = tempNode,
+                           (tempNode.name.mnz_isImagePathExtension || tempNode.name.mnz_isVideoPathExtension) {
+                            mediaNodesArray.append(tempNode)
                         }
                     }
                     let idx = attachments.firstIndex { message -> Bool in

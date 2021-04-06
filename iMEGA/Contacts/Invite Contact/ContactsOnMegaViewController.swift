@@ -23,9 +23,6 @@ import UIKit
         
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         searchController.hidesNavigationBarDuringPresentation = false
-        if #available(iOS 11, *) {} else {
-            searchFixedView.addSubview(searchController.searchBar)
-        }
         
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         tableView.register(ContactsPermissionBottomView().nib(), forHeaderFooterViewReuseIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier())
@@ -66,11 +63,7 @@ import UIKit
     }
     
     func hideSearchAndInviteViews() {
-        if #available(iOS 11, *) {
-            navigationItem.searchController = nil
-        } else {
-            searchFixedView.isHidden = true
-        }
+        navigationItem.searchController = nil
         
         inviteContactView.isHidden = true
     }
@@ -112,12 +105,8 @@ import UIKit
     
     private func showSearch() {
         let shouldSearchBarBeHidden = inviteContactView.isHidden || contacts().count == 0 || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
-        if #available(iOS 11, *) {
-            searchFixedView.isHidden = true
-            navigationItem.searchController = shouldSearchBarBeHidden ? nil : searchController
-        } else {
-            searchFixedView.isHidden = shouldSearchBarBeHidden
-        }
+        searchFixedView.isHidden = true
+        navigationItem.searchController = shouldSearchBarBeHidden ? nil : searchController
     }
     
     // MARK: Actions

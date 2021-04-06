@@ -17,7 +17,8 @@ class PhotoGridViewDelegate: NSObject {
 
 extension PhotoGridViewDelegate {
     private var cellSize: CGSize {
-        let cellWidth = collectionView.bounds.width / CGFloat(cellsPerRow())
+        let number: CGFloat = CGFloat(cellsPerRow())
+        let cellWidth: CGFloat = collectionView.bounds.width / number
         return CGSize(width: cellWidth, height: cellWidth)
     }
 }

@@ -92,7 +92,7 @@ platform :ios do
         pretty: "- %s",
         date_format: "short",
         match_lightweight_tag: false,
-        merge_commit_filtering: "exclude_merges"
+        merge_commit_filtering: "include_merges"
     )
 
     # Upload the IPA to Appcenter.
@@ -163,7 +163,7 @@ platform :ios do
       pretty: "- %s",
       date_format: "short",
       match_lightweight_tag: false,
-      merge_commit_filtering: "exclude_merges"
+      merge_commit_filtering: "include_merges"
     )
 
     api_key = app_store_connect_api_key(

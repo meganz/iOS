@@ -70,12 +70,6 @@ final class PhotoGridViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    // MARK:- Orientation method.
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-       .portrait
-    }
-    
     // MARK:- Private methods.
     
     private func showDetail(indexPath: IndexPath) {

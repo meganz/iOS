@@ -4,8 +4,15 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     
     func setProgressCompleted(_ position: TimeInterval) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
-        currentItem.seek(to: CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale))
-        notify(aboutCurrentState)
+        
+        let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
+        guard CMTIME_IS_VALID(time) else { return }
+        
+        currentItem.seek(to: time) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.notify(self.aboutCurrentState)
+            self.refreshNowPlayingInfo()
+        }
     }
     
     func resetPlayerItems() {
@@ -44,6 +51,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
             }
         }
+        
+        notify(aboutCurrentItemAndQueue)
     }
     
     func removeLoopItems() {
@@ -59,24 +68,36 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         ((currentIndex + 1)..<tracks.count).forEach { index in
             queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
         }
+        
+        notify(aboutCurrentItemAndQueue)
     }
 
     func repeatLastItem() {
-        guard queuePlayer != nil,
-              let currentItem = currentItem(),
-              let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+        guard queuePlayer != nil else { return }
         
-        let lastItem = currentIndex > 0 ? tracks[currentIndex - 1] : nil
-        
-        if lastItem != nil, itemToRepeat?.node == lastItem?.node {
-            notify(aboutTheBeginningOfBlockingAction)
-            playPrevious() { [weak self] in
-                guard let `self` = self else { return }
-                self.notify(self.aboutTheEndOfBlockingAction)
+        if currentItem() == nil {
+            guard let lastItem = tracks.last else { return }
+            queuePlayer?.remove(lastItem)
+            queuePlayer?.replaceCurrentItem(with: lastItem)
+            lastItem.seek(to: .zero)
+        } else {
+            guard let currentItem = currentItem(),
+                  let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+            
+            let lastItem = currentIndex > 0 ? tracks[currentIndex - 1] : nil
+            
+            if let lastItem = lastItem,
+               let itemToRepeat = itemToRepeat,
+               lastItem == itemToRepeat {
+                notify(aboutTheBeginningOfBlockingAction)
+                playPrevious() { [weak self] in
+                    guard let `self` = self else { return }
+                    self.notify(self.aboutTheEndOfBlockingAction)
+                }
             }
+            
+            currentItem.seek(to: .zero)
         }
-        
-        currentItem.seek(to: .zero)
     }
     
     @objc func play() {
@@ -99,7 +120,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         } else {
             if queuePlayer?.items().count ?? 0 == tracks.count {
                 guard let currentItem = queuePlayer?.currentItem as? AudioPlayerItem else {
-                    notify(aboutTheEndOfBlockingAction)
+                    completion()
                     return
                 }
                 
@@ -138,8 +159,25 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
     }
     
-    @objc func play(_ direction: MovementDirection, completion: @escaping () -> Void) {
-        direction == .up ? playNext(completion): playPrevious(completion)
+    @objc func play(item: AudioPlayerItem, completion: @escaping () -> Void) {
+        guard let queuePlayer = queuePlayer,
+              let index = tracks.firstIndex(where: {$0 == item}) else {
+            completion()
+            return
+        }
+        
+        queuePlayer.remove(item)
+        queuePlayer.replaceCurrentItem(with: item)
+        
+        queuePlayer.items().filter({$0 != item}).forEach {
+            queuePlayer.remove($0)
+        }
+        
+        ((index + 1)..<tracks.count).forEach { index in
+            queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
+        }
+        
+        completion()
     }
     
     @objc func isShuffleMode() -> Bool {
@@ -190,8 +228,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func setProgressCompleted(_ percentage: Float) {
         guard let queuePlayer = queuePlayer,
               let currentItem = queuePlayer.currentItem else { return }
-        currentItem.seek(to: CMTime(seconds: CMTimeGetSeconds(currentItem.duration) * Double(percentage), preferredTimescale: currentItem.duration.timescale))
-        notify(aboutCurrentState)
+        
+        setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
     @objc func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
@@ -267,6 +305,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
 extension AVQueuePlayer {
     func secureInsert(_ item: AVPlayerItem, after afterItem: AVPlayerItem?) {
         guard items().filter({item == $0}).isEmpty else { return }
-        insert(item, after: afterItem)
+        if canInsert(item, after: afterItem), item.status != .failed {
+            insert(item, after: afterItem)
+        }
     }
 }

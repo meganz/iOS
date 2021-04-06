@@ -1,9 +1,11 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIFont (MNZCategory)
 
-+ (UIFont *)mnz_defaultFontForPureEmojiStringWithEmojis:(NSUInteger)emojiCount;
++ (nullable UIFont *)mnz_defaultFontForPureEmojiStringWithEmojis:(NSUInteger)emojiCount;
 
 /**
  Returns a system font object that is the same size as the receiver but which has the specified weight instead.
@@ -24,3 +26,5 @@
 - (UIFont *)italic;
 
 @end
+
+NS_ASSUME_NONNULL_END

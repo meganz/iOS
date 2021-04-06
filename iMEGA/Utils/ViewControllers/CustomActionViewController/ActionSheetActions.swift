@@ -109,7 +109,7 @@ extension NodeAction {
     }
     
     class func removeAction() -> NodeAction {
-        return NodeAction(title: NSLocalizedString("remove", comment: "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "remove"), type: .remove)
+        return NodeAction(title: NSLocalizedString("remove", comment: "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "rubbishBin"), type: .remove)
     }
     
     class func leaveSharingAction() -> NodeAction {
@@ -155,7 +155,7 @@ extension NodeAction {
     }
     
     class func removeVersionAction() -> NodeAction {
-        return NodeAction(title: NSLocalizedString("delete", comment: "Text for a destructive action for some item. A node version for example."), detail: nil, image: UIImage(named: "remove"), type: .remove)
+        return NodeAction(title: NSLocalizedString("delete", comment: "Text for a destructive action for some item. A node version for example."), detail: nil, image: UIImage(named: "delete"), type: .remove)
     }
     
     class func selectAction() -> NodeAction {

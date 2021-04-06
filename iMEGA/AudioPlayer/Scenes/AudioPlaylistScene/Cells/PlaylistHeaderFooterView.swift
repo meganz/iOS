@@ -35,7 +35,7 @@ final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
     private func updateAppearance() {
         contentView.backgroundColor = .mnz_backgroundElevated(traitCollection)
         
-        typeLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        typeLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         typeLabel.textColor = .mnz_green00A886()
         
         separatorView.backgroundColor = UIColor.mnz_gray3C3C43().withAlphaComponent(0.29)

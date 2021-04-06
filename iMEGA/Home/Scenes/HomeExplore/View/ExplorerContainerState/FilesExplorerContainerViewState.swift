@@ -82,10 +82,6 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         filesExplorerViewController?.toggleSelectAllNodes()
     }
     
-    func configureSearchController(_ searchController: UISearchController) {
-        filesExplorerViewController?.configureSearchController(searchController)
-    }
-    
     func removeSearchController(_ searchController: UISearchController) {
         filesExplorerViewController?.removeSearchController(searchController)
     }
@@ -120,6 +116,10 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     
     func updateContentView(_ height: CGFloat) {
         filesExplorerViewController?.updateContentView(height)
+    }
+    
+    func audioPlayer(hidden: Bool) {
+        containerViewController.audioPlayer(hidden: hidden)
     }
     
     // MARK: - Private methods.

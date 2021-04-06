@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @warning don't hold a reference to the returned context object, unless you can manage the lifecycle of the context object by youself. Otherwise your reference would become invalid upon logout, which would lead to crash.
  */
-@property (readonly) NSManagedObjectContext *viewContext;
+@property (readonly, nullable) NSManagedObjectContext *viewContext;
 
 - (instancetype)initWithModelName:(NSString *)name storeURL:(nullable NSURL *)URL;
 
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @warning don't hold a reference to the returned context object, unless you can manage the lifecycle of the context object by youself. Otherwise your reference would become invalid upon logout, which would lead to crash.
  */
-- (NSManagedObjectContext *)newBackgroundContext;
+- (nullable NSManagedObjectContext *)newBackgroundContext;
 
 - (void)performBackgroundTask:(void (^)(NSManagedObjectContext *))block;
 

@@ -115,7 +115,9 @@ extension FilesExplorerListSourceProtocol {
     }
     
     func toggleSelectAllNodes() {
-        selectedNodes = Set(selectedNodes ?? []) == Set(nodes ?? []) ? [] : nodes
+        let selectedSet = Set(selectedNodes ?? [])
+        let nodeSet = Set(nodes ?? [])
+        selectedNodes = selectedSet == nodeSet ? [] : nodes
         tableView.reloadData()
     }
     

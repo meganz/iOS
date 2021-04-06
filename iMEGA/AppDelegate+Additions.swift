@@ -212,3 +212,16 @@ extension AppDelegate {
         }
     }
 }
+
+// MARK: SQLite disk full
+extension AppDelegate {
+    @objc func didReceiveSQLiteDiskFullNotification() {
+        DispatchQueue.main.async {
+            guard self.blockingWindow == nil else { return }
+            let window = UIWindow(frame: UIScreen.main.bounds)
+            window.windowLevel = .alert + 1
+            DiskFullBlockingViewRouter(window: window).start()
+            self.blockingWindow = window
+        }
+    }
+}

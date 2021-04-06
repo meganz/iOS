@@ -131,7 +131,6 @@
 }
 
 - (void)presentProductUnavailableAlertController {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -165,14 +164,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         if (self.monthlyProduct) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             [[MEGAPurchase sharedInstance] purchaseProduct:self.monthlyProduct];
         } else {
             [self presentProductUnavailableAlertController];
         }
     } else {
         if (self.yearlyProduct) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             [[MEGAPurchase sharedInstance] purchaseProduct:self.yearlyProduct];
         } else {
             [self presentProductUnavailableAlertController];

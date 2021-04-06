@@ -9,21 +9,6 @@
 @property (nonatomic, readonly) BOOL iPhoneDevice;
 
 /**
- * @brief YES if the device is an iPhone 4 or 4S or and iPod (4th Generation), otherwise NO.
- */
-@property (nonatomic, readonly) BOOL iPhone4X;
-
-/**
- * @brief YES if the device is an iPhone 5, 5C, 5S, SE + iPod (5th, 6th Generation), otherwise NO.
- */
-@property (nonatomic, readonly) BOOL iPhone5X;
-
-/**
- * @brief YES if the device is an iPhone 6, 6S, otherwise NO.
- */
-@property (nonatomic, readonly) BOOL iPhone6X;
-
-/**
  * @brief YES if the device is an iPhone 6 Plus, 6S Plus otherwise NO.
  */
 @property (nonatomic, readonly) BOOL iPhone6XPlus;

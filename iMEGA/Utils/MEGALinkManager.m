@@ -387,7 +387,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case URLTypeHandleLink:
-            MEGALinkManager.nodeToPresentBase64Handle = [url.mnz_afterSlashesString substringFromIndex:1];
+            MEGALinkManager.nodeToPresentBase64Handle = url.fragment;
             [MEGALinkManager presentNode];
             
             break;
@@ -639,9 +639,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)handleContactLink {
-    NSString *afterSlashesString = [MEGALinkManager.linkURL mnz_afterSlashesString];
-    NSRange rangeOfPrefix = [afterSlashesString rangeOfString:@"C!"];
-    NSString *contactLinkHandle = [afterSlashesString substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
+    NSString *path = [MEGALinkManager.linkURL absoluteString];
+    NSRange rangeOfPrefix = [path rangeOfString:@"C!"];
+    NSString *contactLinkHandle = [path substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
     uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
 
     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
@@ -651,9 +651,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
         [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeContact forKey:MEGALastPublicTypeAccessed];
         [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
-        if (@available(iOS 12.0, *)) {} else {
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
     } onError:^(MEGAError *error) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
@@ -760,9 +757,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
         [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
         [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
-        if (@available(iOS 12.0, *)) {} else {
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
         
         [SVProgressHUD dismiss];
     }];

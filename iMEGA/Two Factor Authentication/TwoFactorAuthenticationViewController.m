@@ -314,7 +314,7 @@
             [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
             if (self.twoFAMode == TwoFactorAuthenticationChangePassword) {
-                [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             } else if (self.twoFAMode == TwoFactorAuthenticationChangePasswordFromLogout) {
                 [MEGASdkManager.sharedMEGASdk logout];
             }

@@ -29,7 +29,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -189,10 +189,6 @@
     if (self.shouldRemovePlayerDelegate) {
         [AudioPlayerManager.shared removeDelegate:self];
     }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -368,7 +364,7 @@
         [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }
     
-    [self setEditing:NO animated:YES];
+    [self endEditingMode];
 }
 
 - (void)selectedSharesOfSelectedNodes {
@@ -382,7 +378,7 @@
 
 - (void)removeSelectedOutgoingShares {
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedSharesMutableArray.count completion:^{
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
         [self reloadUI];
     }];
     
@@ -391,7 +387,7 @@
         [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
     
-    [self setEditing:NO animated:YES];
+    [self endEditingMode];
 }
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -520,7 +516,7 @@
 - (NodeTableViewCell *)linkSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorSharedLink;
-    [cell configureCellForNode:node delegate:self api:MEGASdkManager.sharedMEGASdk];
+    [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
     //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
     cell.linkImageView.hidden = YES;
     
@@ -554,11 +550,23 @@
     self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
-- (void)shouldStartEditingModeAtIndex:(NSIndexPath *)indexPath {
+- (void)startEditingModeAtIndex:(NSIndexPath *)indexPath {
     [self setEditing:YES animated:YES];
     [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     [self configToolbarItemsForSharedItems];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self audioPlayerHidden:YES];
+}
+
+- (void)endEditingMode {
+    [self setEditing:NO animated:YES];
+    [self audioPlayerHidden:NO];
+}
+
+- (void)audioPlayerHidden:(BOOL)hidden {
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared playerHidden:hidden presenter:self];
+    }
 }
 
 #pragma mark - Utils
@@ -589,7 +597,7 @@
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     if (self.tableView.isEditing) {
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
     } else {
         __weak __typeof__(self) weakSelf = self;
         UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
@@ -644,12 +652,7 @@
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor;
-            if (@available(iOS 11.0, *)) {
-                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            } else {
-                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
-            }
+            NSLayoutAnchor *bottomAnchor  = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
@@ -770,7 +773,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         for (MEGANode *n in _selectedNodesMutableArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
-                [self setEditing:NO animated:YES];
+                [self endEditingMode];
                 return;
             }
         }
@@ -781,7 +784,7 @@
             [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
         
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
     }
 }
 
@@ -915,7 +918,7 @@
         for (MEGANode *node in self.selectedNodesMutableArray) {
             [node mnz_removeLink];
         }
-        [self setEditing:NO animated:YES];
+        [self endEditingMode];
     }
 }
 
@@ -991,11 +994,7 @@
 }
 
 - (void)configureAccessibilityForCell:(SharedItemsTableViewCell *)cell {
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
-        cell.delegate = self;
-    }
+    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1099,18 +1098,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    [self shouldStartEditingModeAtIndex:indexPath];
+    [self startEditingModeAtIndex:indexPath];
 }
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
     
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (self.incomingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_leaveSharingInViewController:self];
-            [self setEditing:NO animated:YES];
+            [self endEditingMode];
         }];
         shareAction.image = [UIImage imageNamed:@"leaveShareGesture"];
         shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1118,7 +1114,7 @@
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeSharing];
-            [self setEditing:NO animated:YES];
+            [self endEditingMode];
         }];
         shareAction.image = [UIImage imageNamed:@"removeShareGesture"];
         shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1126,7 +1122,7 @@
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeLink];
-            [self setEditing:NO animated:YES];
+            [self endEditingMode];
         }];
         removeLinkAction.image = [UIImage imageNamed:@"removeLinkGesture"];
         removeLinkAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1135,8 +1131,6 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
 }
-
-#pragma clang diagnostic pop
     
 #pragma mark - UISearchBarDelegate
 
@@ -1228,17 +1222,17 @@
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesMutableArray.count == 0) {
-                [self setEditing:NO animated:YES];
+                [self endEditingMode];
             }
             if (self.selectedNodesMutableArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesMutableArray.firstObject;
                 MEGANode *nodePressed = self.incomingButton.selected ? [self.incomingNodesMutableArray objectOrNilAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectOrNilAtIndex:indexPath.row];
                 if (nodeSelected.handle == nodePressed.handle) {
-                    [self setEditing:NO animated:YES];
+                    [self endEditingMode];
                 }
             }
         } else {
-            [self shouldStartEditingModeAtIndex:indexPath];
+            [self startEditingModeAtIndex:indexPath];
         }
     }
     
@@ -1353,62 +1347,6 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
-}
-
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
-    if (direction == MGSwipeDirectionLeftToRight) {
-        return NO;
-    }
-    
-    return !self.isEditing;
-}
-
-- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
-    
-    swipeSettings.transition = MGSwipeTransitionDrag;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
-    expansionSettings.fillOnTrigger = NO;
-    expansionSettings.threshold = 2;
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    if (direction == MGSwipeDirectionRightToLeft) {
-        if (self.incomingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShareGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_leaveSharingInViewController:self];
-                return YES;
-            }];
-            [shareButton iconTintColor:UIColor.whiteColor];
-            
-            return @[shareButton];
-        } else if (self.outgoingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShareGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_removeSharing];
-                return YES;
-            }];
-            [shareButton iconTintColor:UIColor.whiteColor];
-            
-            return @[shareButton];
-        } else if (self.linksButton.selected) {
-            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeLinkGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [node mnz_removeLink];
-                return YES;
-            }];
-            [removeLinkButton iconTintColor:UIColor.whiteColor];
-            
-            return @[removeLinkButton];
-        } else {
-            return nil;
-        }
-    } else {
-        return nil;
-    }
 }
 
 #pragma mark - NodeActionViewControllerDelegate

@@ -180,9 +180,9 @@ struct CallDurationInfo {
 
 extension CallViewModel: CallsCallbacksUseCaseProtocol {
     func createdSession(_ session: MEGAChatSession, in chatId: MEGAHandle) {
-        let newParticipant = CallParticipantEntity(chatId: chatId, participantId: session.peerId, clientId: session.clientId, networkQuality: session.networkQuality, name: participantName(for: session.peerId))
-        callParticipants.append(newParticipant)
-        invokeCommand?(.insertParticipant(callParticipants))
+//        let newParticipant = CallParticipantEntity(chatId: chatId, participantId: session.peerId, clientId: session.clientId, networkQuality: session.networkQuality, name: participantName(for: session.peerId))
+//        callParticipants.append(newParticipant)
+//        invokeCommand?(.insertParticipant(callParticipants))
     }
     
     func destroyedSession(_ session: MEGAChatSession) {

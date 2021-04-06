@@ -6,6 +6,7 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
     func configureNavigationBarToDefault()
     func showMoreButton(_ show: Bool)
     func showSelectButton(_ show: Bool)
+    func audioPlayer(hidden: Bool)
 }
 
 class FilesExplorerViewController: ExplorerBaseViewController {
@@ -73,6 +74,10 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     func updateContentView(_ height: CGFloat) {
         fatalError("updateContentView(_:) needs to be implemented by the subclass ")
+    }
+    
+    func audioPlayer(hidden: Bool) {
+        delegate?.audioPlayer(hidden: hidden)
     }
 }
 

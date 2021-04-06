@@ -39,17 +39,17 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     }
     
     func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
-        repository.joinActiveCall(for: chatId, withVideo: enableVideo) { [weak self] in
-            switch $0 {
-            case .success(let call):
-                completion(.success(call))
-                if call.sessionsPeerId.size > 0 {
-                    self?.createActiveSessions(for: call)
-                }
-            case .failure(_):
-                completion(.failure(.generic))
-            }
-        }
+//        repository.joinActiveCall(for: chatId, withVideo: enableVideo) { [weak self] in
+//            switch $0 {
+//            case .success(let call):
+//                completion(.success(call))
+//                if call.sessionsPeerId.size > 0 {
+//                    self?.createActiveSessions(for: call)
+//                }
+//            case .failure(_):
+//                completion(.failure(.generic))
+//            }
+//        }
     }
     
     func enableLocalVideo(for chatId: MEGAHandle, delegate: MEGAChatVideoDelegate, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
@@ -61,11 +61,11 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     }
     
     private func createActiveSessions(for call: MEGAChatCall) {
-        for index in 0...call.sessionsPeerId.size - 1 {
-            if let session = call.session(forPeer: call.sessionsPeerId.megaHandle(at: index), clientId: call.sessionsClientId.megaHandle(at: index)) {
-                createdSession(session, in: call.chatId)
-            }
-        }
+//        for index in 0...call.sessionsPeerId.size - 1 {
+//            if let session = call.session(forPeer: call.sessionsPeerId.megaHandle(at: index), clientId: call.sessionsClientId.megaHandle(at: index)) {
+//                createdSession(session, in: call.chatId)
+//            }
+//        }
     }
 }
 

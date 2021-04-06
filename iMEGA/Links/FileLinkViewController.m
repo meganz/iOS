@@ -68,9 +68,7 @@
     
     [self processRequestResult];
     
-    if (@available(iOS 11.0, *)) {
-        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
@@ -81,10 +79,6 @@
     [super viewWillAppear:animated];
     
     [self setNavigationBarTitleLabel];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

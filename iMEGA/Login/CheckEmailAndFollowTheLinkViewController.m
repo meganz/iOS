@@ -15,14 +15,11 @@
 
 @interface CheckEmailAndFollowTheLinkViewController () <UITextFieldDelegate, MEGAGlobalDelegate>
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mailImageTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *mailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *awaitingEmailConfirmationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkYourEmailLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *checkYourEmailBottomLayoutConstraint;
 @property (weak, nonatomic) IBOutlet InputView *emailInputView;
 @property (weak, nonatomic) IBOutlet UILabel *misspelledLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resendButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *resendButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
@@ -44,14 +41,6 @@
     self.email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
     self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
     self.base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
-    
-    if (UIDevice.currentDevice.iPhone4X) {
-        self.mailImageTopLayoutConstraint.constant = 24.0f;
-        self.checkYourEmailBottomLayoutConstraint.constant = 6.0f;
-        self.resendButtonTopLayoutConstraint.constant = 20.0f;
-    } else if (UIDevice.currentDevice.iPhone5X) {
-        self.mailImageTopLayoutConstraint.constant = 24.0f;
-    }
 
     self.awaitingEmailConfirmationLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
     self.checkYourEmailLabel.text = NSLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
@@ -68,9 +57,7 @@
     
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
-    if (@available(iOS 11.0, *)) {
-        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-    }
+    self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,14 +80,6 @@
             [self updateAppearance];
         }
     }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (UIDevice.currentDevice.iPhoneDevice) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - Private

@@ -93,6 +93,7 @@
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path {
     if (!node.base64Handle || !path) return;
+    if (self.managedObjectContext == nil) return;
     
     MOOfflineNode *offlineNode = [NSEntityDescription insertNewObjectForEntityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
 
@@ -108,6 +109,8 @@
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -123,6 +126,8 @@
 }
 
 - (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -146,6 +151,8 @@
 }
 
 - (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -157,7 +164,6 @@
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return [array firstObject];
-
 }
 
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
@@ -167,6 +173,8 @@
 }
 
 - (void)removeAllOfflineNodes {
+    if (self.managedObjectContext == nil) return;
+    
     NSFetchRequest *allOfflineNodes = [[NSFetchRequest alloc] init];
     [allOfflineNodes setEntity:[NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext]];
     [allOfflineNodes setIncludesPropertyValues:NO]; //only fetch the managedObjectID
@@ -183,6 +191,8 @@
 }
 
 - (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder {
+    if (self.managedObjectContext == nil) return @[];
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -208,6 +218,7 @@
     NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:userHandle];
     
     if (!base64userHandle) return;
+    if (self.managedObjectContext == nil) return;
     
     MOUser *moUser          = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:self.managedObjectContext];
     moUser.base64userHandle = base64userHandle;
@@ -296,6 +307,8 @@
 }
 
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle context:(NSManagedObjectContext *)context {
+    if (context == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:context];
     
     NSFetchRequest *request = [NSFetchRequest.alloc init];
@@ -304,13 +317,17 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:userHandle]];
     [request setPredicate:predicate];
     
-    NSError *error;
-    NSArray *array = [context executeFetchRequest:request error:&error];
+    __block NSArray<MOUser *> *array;
+    [context performBlockAndWait:^{
+        array = [context executeFetchRequest:request error:nil];
+    }];
     
     return [array firstObject];
 }
 
 - (MOUser *)fetchUserWithEmail:(NSString *)email {
+    if (self.managedObjectContext == nil) return nil;
+    
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -328,6 +345,8 @@
 #pragma mark - MOChatDraft entity
 
 - (void)insertOrUpdateChatDraftWithChatId:(uint64_t)chatId text:(NSString *)text {
+    if (self.managedObjectContext == nil) return;
+    
     MOChatDraft *moChatDraft = [self fetchChatDraftWithChatId:chatId];
     if (!text.mnz_isEmpty) {
         if (moChatDraft) {
@@ -365,6 +384,8 @@
 #pragma mark - MOMediaDestination entity
 
 - (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale {
+    if (self.managedObjectContext == nil) return;
+    
     MOMediaDestination *moMediaDestination = [self fetchMediaDestinationWithFingerprint:fingerprint];
     
     if (moMediaDestination) {
@@ -411,6 +432,8 @@
 #pragma mark - MOUploadTransfer entity
 
 - (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle {
+    if (self.managedObjectContext == nil) return;
+    
     MOUploadTransfer *mOUploadTransfer = [NSEntityDescription insertNewObjectForEntityForName:@"MOUploadTransfer" inManagedObjectContext:self.managedObjectContext];
     mOUploadTransfer.localIdentifier = localIdentifier;
     mOUploadTransfer.parentNodeHandle = [NSNumber numberWithUnsignedLongLong:parentNodeHandle];
@@ -469,6 +492,7 @@
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
     NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.stack.newBackgroundContext;
+    if (context == nil) return;
     
     MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage"
                                                         inManagedObjectContext:context];
@@ -504,9 +528,12 @@
 - (NSArray<MOMessage *> *)fetchMessagesWithContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [MOMessage fetchRequest];
     
-    NSError *error;
+    __block NSArray<MOMessage *> *messages;
+    [context performBlockAndWait:^{
+        messages = [context executeFetchRequest:request error:nil];
+    }];
     
-    return [context executeFetchRequest:request error:&error];
+    return messages;
 }
 
 - (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {

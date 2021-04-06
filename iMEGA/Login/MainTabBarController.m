@@ -78,6 +78,7 @@
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
+    [self refreshBottomConstraint];
     
     if (self.psaViewModel != nil) {
         [self adjustPSAFrameIfNeededWithPsaViewModel:self.psaViewModel];
@@ -93,6 +94,7 @@
                                                name:UIApplicationWillEnterForegroundNotification
                                              object:nil];
     [self.view setNeedsLayout];
+    [AudioPlayerManager.shared addMiniPlayerHandler:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -108,35 +110,7 @@
     
     [self showCameraUploadV2MigrationScreenIfNeeded];
     
-    [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self shouldShowMiniPlayer];
-}
-
-- (BOOL)shouldAutorotate {
-    if ([self.selectedViewController respondsToSelector:@selector(shouldAutorotate)]) {
-        return [self.selectedViewController shouldAutorotate];
-    } else {
-        return YES;
-    }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([self.selectedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-        if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-            if ([self.selectedViewController isEqual:self.moreNavigationController]) {
-                return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-            }
-            
-            return [self.selectedViewController supportedInterfaceOrientations];
-        }
-        
-        if ([self.selectedViewController isEqual:self.moreNavigationController]) {
-            return UIInterfaceOrientationMaskAll;
-        }
-        return [self.selectedViewController supportedInterfaceOrientations];
-    } else {
-        return UIInterfaceOrientationMaskAll;
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -293,12 +267,8 @@
 #pragma mark - Private
 
 - (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
-    if (@available(iOS 11.0, *)) {
-        if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-            tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        } else {
-            tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-        }
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     } else {
         tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }

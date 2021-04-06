@@ -184,7 +184,7 @@ class ChatViewController: MessagesViewController {
             }
             
             let megaMessage = chatMessage.message
-            if megaMessage.isManagementMessage || chatMessage.transfer != nil {
+            if megaMessage.isManagementMessage || chatMessage.transfer?.type == .upload {
                 return
             }
             let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
@@ -314,10 +314,6 @@ class ChatViewController: MessagesViewController {
         }) { [weak self] _ in
             self?.relayoutChatInputBarIfNeeded()
         }
-    }
-    
-    override var shouldAutorotate: Bool {
-        return true
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -482,10 +478,7 @@ class ChatViewController: MessagesViewController {
         
         chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
         
-        var contentInset = messagesCollectionView.contentInset.bottom
-        if #available(iOS 11.0, *) {
-            contentInset = messagesCollectionView.adjustedContentInset.bottom
-        }
+        let contentInset = messagesCollectionView.adjustedContentInset.bottom
         
         chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
         view.layoutIfNeeded()

@@ -213,6 +213,8 @@
         return;
     }
     
+    if (CameraUploadRecordManager.shared.backgroundContext == nil) return;
+    
     MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:CameraUploadRecordManager.shared.backgroundContext];
     record.localIdentifier = asset.localIdentifier;
     record.status = @(CameraAssetUploadStatusNotStarted);

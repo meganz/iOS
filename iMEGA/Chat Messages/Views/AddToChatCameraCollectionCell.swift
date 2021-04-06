@@ -120,11 +120,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     }
     
     private func updateCameraIconImageView() {
-        if #available(iOS 12.0, *) {
-            cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (DevicePermissionsHelper.isVideoPermissionAuthorized() ? #imageLiteral(resourceName: "cameraIconWhite") : #imageLiteral(resourceName: "cameraIcon"))
-        } else {
-            cameraIconImageView.image = DevicePermissionsHelper.isVideoPermissionAuthorized() ? #imageLiteral(resourceName: "cameraIconWhite") : #imageLiteral(resourceName: "cameraIcon")
-        }
+        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (DevicePermissionsHelper.isVideoPermissionAuthorized() ? #imageLiteral(resourceName: "cameraIconWhite") : #imageLiteral(resourceName: "cameraIcon"))
     }
     
     private func updateAppearance() {

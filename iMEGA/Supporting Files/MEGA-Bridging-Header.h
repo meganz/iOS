@@ -39,7 +39,6 @@
 #import "MEGATransferList+MNZCategory.h"
 #import "AVAudioSession+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "NSURL+MNZCategory.h"
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import "UITableView+MNZCategory.h"

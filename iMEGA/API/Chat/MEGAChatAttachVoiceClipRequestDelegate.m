@@ -22,10 +22,6 @@
 
 #pragma mark - MEGAChatRequestDelegate
 
-- (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
-    [super onChatRequestStart:api request:request];
-}
-
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     [super onChatRequestFinish:api request:request error:error];
     

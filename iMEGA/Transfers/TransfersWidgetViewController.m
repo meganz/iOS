@@ -28,7 +28,7 @@
 #import "MEGANavigationController.h"
 #import "MEGA-Swift.h"
 
-@interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, MGSwipeTableCellDelegate, TransferActionViewControllerDelegate>
+@interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
@@ -175,10 +175,6 @@ static TransfersWidgetViewController* instance = nil;
     [MEGASdkManager.sharedMEGASdkFolder removeMEGATransferDelegate:self];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -267,7 +263,7 @@ static TransfersWidgetViewController* instance = nil;
         if (transfer.state == MEGATransferStateComplete) {
             NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
             cell.selectedBackgroundView = UIView.new;
-            [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
+            [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
             return cell;
 
         } else {
@@ -796,22 +792,6 @@ static TransfersWidgetViewController* instance = nil;
             break;
     }
     return image;
-}
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
-    return !self.tableView.isEditing;
-}
-
-- (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
-    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    nodeCell.moreButton.hidden = YES;
-}
-
-- (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
-    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    nodeCell.moreButton.hidden = NO;
 }
 
 #pragma mark - MEGARequestDelegate

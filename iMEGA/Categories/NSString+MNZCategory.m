@@ -145,6 +145,11 @@ static NSString* const B = @"[B]";
     }
 }
 
+- (NSString *)mnz_appDataToDownloadAttachToMessageID:(uint64_t)messageID {
+    return [self stringByAppendingString:[NSString stringWithFormat:@">downloadAttachToMessageID=%llu", messageID]];
+   
+}
+
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {
     return (coordinates ? [self stringByAppendingString:[NSString stringWithFormat:@">setCoordinates=%@", coordinates]] : self);
 }

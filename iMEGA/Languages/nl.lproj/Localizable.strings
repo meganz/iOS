@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Uw wachtwoord is makkelijk te raden. Probeer uw wachtwoord langer te maken. Combineer hoofdletter en kleine letters. Voeg speciale tekens toe. Gebruik geen namen of woordenboek woorden.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Middelmatig";
+"PasswordStrengthMedium"="Middelmatig";
 /*  */
 "passwordMedium"="Uw wachtwoord is sterk genoeg om door te gaan, echter raden wij u aan uw wachtwoord sterker te maken.";
 /*  */
@@ -125,7 +125,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href=\"terms\">Algemene Overeenkomst</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S] als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s end-to-end encryptie</a>.";
+"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S]als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s end-to-end codering</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Vul uw naam in";
 /* Error text shown when you have not written the same password */
@@ -779,7 +779,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Dit is de laatste stap om uw account te verwijderen. U verlies al uw gegevens die opgeslagen zijn in de cloud. Voer uw wachtwoord hieronder in.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Uw account is succesvol geannuleerd.";
+"accountCanceledSuccessfully"="Uw account is succesvol verwijderd.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Beëindig account";
 /* Title for the action that allows to remove a file or folder */
@@ -858,7 +858,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Bevestig nieuw e-mailadres";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Verander e-mailadres";
+"Change Email"="Wijzig E-mailadres";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Het nieuwe en het oude e-mailadres mogen niet hetzelfde zijn.";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1255,6 +1255,8 @@
 "removeParticipant"="Verwijder Deelnemer";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="In gesprek met";
+/* Explanation when loading voice message error */
+"Couldn't load. [RED]Tap to retry[/RED]"="Kan niet laden. [RED]Tik om opnieuw te proberen[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA beschermt uw chat met end-to-end encryptie (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1452,11 +1454,13 @@
 "qualityOfVideosUploadedToAChat"="Kwaliteit van video's geüpload in een chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Video Kwaliteit";
-/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Laag";
-/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
+/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
+"medium"="Middelmatig";
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Hoog";
-/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="Orgineel";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Voorbereiden...";
@@ -1634,8 +1638,10 @@
 "whatIsTwoFactorAuthentication"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account. Wat betekend dat zelfs als iemand uw wachtwoord weet ze geen toegang hebben zonder het, zonder ook toegang te hebben tot de zes cijferige code waar alleen u toegang tot heeft.";
+/* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"Authenticator app required"="Authenticatie applicatie vereist";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="U heeft een twee-stap authenticatie applicatie nodig op dit apparaat";
+"youNeedATwoFactorAuthenticationApp"="Het spijt ons, maar tweefactorauthenticatie kan niet worden ingeschakeld op uw apparaat. Open de Applicatie Store om een ​​Authenticator-applicatie te installeren.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="U heeft een authenticatie applicatie nodig om 2FA in te schakelen op MEGA.U kunt de applicatie Google Authenticator, Duo Mobile, Authy of Microsoft Authenticator downloaden en installeren voor uw telefoon of tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1877,7 +1883,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Uw betaling voor het %1 abonnement is mislukt.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Uw Pro-lidmaatschap verloopt over 1 dag.";
+"Your PRO membership plan will expire in 1 day."="Uw Pro lidmaatschap abonnement verloopt morgen.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Uw Pro-lidmaatschapsplan verloopt over %1 dagen.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -2065,11 +2071,11 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Er is een probleem opgetreden met uw laatste betaling. Ga naar MEGA via een desktopbrowser voor meer informatie.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Uw zakelijke account is verlopen";
+"Your business account is expired"="Uw Zakelijke account is verlopen";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Er is een probleem opgetreden bij het verwerken van uw betaling. MEGA kan alleen worden bekeken totdat dit probleem is opgelost in een desktop webbrowser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]/ U kunt alleen door uw gegevens bladeren.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]. U kunt alleen door uw gegevens bladeren.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Hoewel MEGA geen toegang heeft tot uw gegevens, heeft uw zakelijke accountbeheerder de mogelijkheid om de camera-uploads in uw gebruikersaccount te beheren en te bekijken";
 /* */
@@ -2128,7 +2134,7 @@
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Het was niet mogelijk om de inhoud van dit bestand te verkrijgen, omdat het niet gecodeerd is in UTF-8 of ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Betaling over tijd";
-/* */
+/* Business account status */
 "Active"="Actief";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
@@ -2407,7 +2413,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Wachtwoord opnieuw instellen";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Deze koppeling is niet beschikbaar doordat de account van de gebruiker voor grove schending van de MEGA's [A]Servicevoorwaarden[/A] is gesloten.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Deze koppeling is niet beschikbaar doordat de account van de gebruiker voor grove schending van de MEGA’s [A]Algemene Voorwaarden[/A] is gesloten.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Er werd gerapporteerd dat deze map/dit bestand aanstootgevende inhoud bevat, zoals uitbuitingsmateriaal voor kinderen, gewelddadig extremisme of bestialiteit. Het account van de link maker is gesloten en de volledige details, inclusief het IP-adres, zijn aan de autoriteiten verstrekt.";
 /* Text used to show the user that some resource is not available */
@@ -2582,3 +2588,7 @@
 "Quickly access files on Recents section"="Krijg snel toegang tot bestanden vanuit uw sectie Recent";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Krijg snel toegang tot bestanden vanuit uw Offline sectie";
+/* Dialog title for the no enough device storage screen */
+"The device does not have enough space for MEGA to run properly."="MEGA heeft niet genoeg apparaat opslag om correct te werken.";
+/* Dialog description for the no enough device storage screen */
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Maak ruimte vrij door applicaties die u niet meer gebruikt of grote videobestanden in uw galerij te verwijderen. U kunt uw opslag beheren in %@";

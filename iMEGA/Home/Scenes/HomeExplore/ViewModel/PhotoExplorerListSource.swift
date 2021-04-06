@@ -62,7 +62,9 @@ class PhotoExplorerListSource: NSObject {
     
     func toggleSelectAllNodes() {
         let allNodes = nodesByDay.reduce([], +)
-        selectedNodes = Set(selectedNodes ?? []) == Set(allNodes) ? [] : allNodes
+        let selectedSet = Set(selectedNodes ?? [])
+        let allNodeSet = Set(allNodes)
+        selectedNodes = selectedSet == allNodeSet ? [] : allNodes
         // update the marker for the visible items
         collectionView.visibleCells.forEach { cell in
             guard let cell = cell as? PhotoExplorerCollectionCell else { return }

@@ -11,7 +11,6 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
     RegulationSectionCookiePolicy,
     RegulationSectionCookieSettings,
     RegulationSectionTermsOfService,
-    RegulationSectionDataProtectionRegulation,
 };
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -34,7 +33,6 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
 @property (weak, nonatomic) IBOutlet UILabel *cookiePolicyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cookieSettingsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dataProtectionRegulationLabel;
 
 @end
 
@@ -52,10 +50,6 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
     [super viewWillAppear:animated];
     
     [self setupUI];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -91,7 +85,6 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
     self.cookiePolicyLabel.text = NSLocalizedString(@"Cookie Policy", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy'");
     self.cookieSettingsLabel.text = NSLocalizedString(@"Cookie Settings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
     self.termsOfServiceLabel.text = NSLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
-    self.dataProtectionRegulationLabel.text = NSLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
 - (void)updateAppearance {
@@ -135,10 +128,6 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
                         
                     case RegulationSectionTermsOfService:
                         [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
-                        break;
-                        
-                    case RegulationSectionDataProtectionRegulation:
-                        [[NSURL URLWithString:@"https://mega.nz/gdpr"] mnz_presentSafariViewController];
                         break;
                 }
             }

@@ -163,9 +163,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
+    self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
@@ -199,14 +197,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

@@ -93,7 +93,7 @@ extension DocAndAudioListSource {
         }
                 
         cell?.cellFlavor = .explorerView
-        cell?.configureCell(for: node, delegate: nil, api: MEGASdkManager.sharedMEGASdk())
+        cell?.configureCell(for: node, api: MEGASdkManager.sharedMEGASdk())
         cell?.setSelectedBackgroundView(withColor: .clear)
         
         if tableView.isEditing,
@@ -134,7 +134,6 @@ extension DocAndAudioListSource {
 
 // MARK:- Swipe gesture UITableViewDelegate
 
-@available(iOS 11.0, *)
 extension DocAndAudioListSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 

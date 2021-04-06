@@ -61,18 +61,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    [AudioPlayerManager.shared addDelegate:self];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    [AudioPlayerManager.shared removeDelegate:self];
-}
-
 - (void)removeFromParentViewController {
     [super removeFromParentViewController];
     
@@ -268,6 +256,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
             cloudDriveVC.nodes = recentActionBucket.nodesList;
             cloudDriveVC.recentActionBucket = recentActionBucket;
             cloudDriveVC.displayMode = DisplayModeRecents;
+            cloudDriveVC.shouldRemovePlayerDelegate = NO;
             
             UINavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:cloudDriveVC];
             [self.delegate showSelectedNodeInViewController:navigationController];

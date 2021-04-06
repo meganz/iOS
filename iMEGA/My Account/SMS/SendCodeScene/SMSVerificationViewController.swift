@@ -60,14 +60,6 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return [.portrait, .portraitUpsideDown]
-        } else {
-            return .all
-        }
-    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -208,19 +200,11 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     }
 
     private func enableAutomaticAdjustmentContentInsetsBehavior() {
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .automatic
-        } else {
-            automaticallyAdjustsScrollViewInsets = true
-        }
+        scrollView.contentInsetAdjustmentBehavior = .automatic
     }
 
     private func disableAutomaticAdjustmentContentInsetsBehavior() {
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
     }
 
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {
@@ -276,11 +260,12 @@ final class SMSVerificationViewController: UIViewController, ViewType {
 extension SMSVerificationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !headerImageView.isHidden else { return }
-
+        
         let offset = scrollView.contentOffset
         if offset.y < 0 {
             var transform = CATransform3DTranslate(CATransform3DIdentity, 0, offset.y, 0)
-            let scaleFactor = 1 + (-1 * offset.y / (headerImageView.frame.height / 2))
+            let factor = offset.y / (headerImageView.frame.height / 2)
+            let scaleFactor = 1 - factor
             transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
             headerImageView.layer.transform = transform
         } else {

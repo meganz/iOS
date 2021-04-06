@@ -219,6 +219,10 @@
     return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
 }
 
+- (BOOL)mnz_downloadNodeTopPriority {
+    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk] isTopPriority:YES];
+}
+
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController {
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
     
@@ -262,10 +266,14 @@
 }
 
 - (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api {
+    return [self mnz_downloadNodeWithApi:api isTopPriority:NO];
+}
+
+- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api isTopPriority:(BOOL)isTopPriority {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink];
+            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink isTopPriority:isTopPriority];
             return YES;
         } else {
             return NO;

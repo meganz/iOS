@@ -33,7 +33,7 @@ struct OfflineQuickAccessWidget: Widget {
             QuickAccessWidgetView(entry: entry)
         }
         .configurationDisplayName(NSLocalizedString("Quick Access", comment: "Title for the QuickAccess widget"))
-        .description(NSLocalizedString("Quickly access files on Favourites section", comment: "Text description for the Favourites QuickAccess widget"))
+        .description(NSLocalizedString("Quickly access files on Offline section", comment: "Text description for the Offline QuickAccess widget"))
         .supportedFamilies([.systemLarge])
     }
 }

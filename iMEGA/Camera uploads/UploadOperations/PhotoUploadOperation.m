@@ -164,11 +164,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 }
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
-    if (@available(iOS 11.0, *)) {
-        return [CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC);
-    } else {
-        return NO;
-    }
+    return [CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC);
 }
 
 #pragma mark - cancel operation

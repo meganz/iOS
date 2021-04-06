@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-@property (weak, nonatomic) IBOutlet PDFView *pdfView NS_AVAILABLE_IOS(11.0);
+@property (weak, nonatomic) IBOutlet PDFView *pdfView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *thumbnailBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *openInBarButtonItem;
@@ -47,7 +47,7 @@
 @property (nonatomic) NSString *nodeFilePath;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
-@property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
+@property (nonatomic) PDFSelection *searchedItem;
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
@@ -93,17 +93,15 @@
         [MEGASdkManager.sharedMEGASdk cancelTransfer:previewDocumentTransfer];
     }
     
-    if (@available(iOS 11.0, *)) {
-        if (!self.pdfView.hidden) {
-            CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
-            size_t page = CGPDFPageGetPageNumber(pageRef);
-            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
-            if (page == 1) {
-                [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
-            } else {
-                if (fingerprint && ![fingerprint isEqualToString:@""]) {
-                    [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:page] timescale:nil];
-                }
+    if (!self.pdfView.hidden) {
+        CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
+        size_t page = CGPDFPageGetPageNumber(pageRef);
+        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
+        if (page == 1) {
+            [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
+        } else {
+            if (fingerprint && ![fingerprint isEqualToString:@""]) {
+                [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:page] timescale:nil];
             }
         }
     }
@@ -118,10 +116,6 @@
         self.previewController.view.frame = self.view.bounds;
     } completion:nil];
     
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -154,13 +148,9 @@
 }
 
 - (void)loadPreview {
-    if (@available(iOS 11.0, *)) {
-        NSURL *url = [self documentUrl];
-        if ([url.pathExtension isEqualToString:@"pdf"]) {
-            [self loadPdfKit:url];
-        } else {
-            [self loadQLController];
-        }
+    NSURL *url = [self documentUrl];
+    if ([url.pathExtension isEqualToString:@"pdf"]) {
+        [self loadPdfKit:url];
     } else {
         [self loadQLController];
     }
@@ -389,12 +379,8 @@
                     return;
                 }
             }
-            if (@available(iOS 11.0, *)) {
-                if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-                    [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
-                } else {
-                    [self loadQLController];
-                }
+            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
             } else {
                 [self loadQLController];
             }
@@ -502,9 +488,6 @@
         [node navigateToParentAndPresent];
     }];
 }
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (IBAction)searchTapped:(id)sender {
     UINavigationController *searchInPdfNavigation = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchInPdfNavigationID"];
@@ -632,11 +615,7 @@
 #pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (@available(iOS 11.0, *)) {
-        return self.pdfView.document.pageCount;
-    } else {
-        return 0;
-    }
+    return self.pdfView.document.pageCount;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -667,7 +646,5 @@
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:result.pages.firstObject];
 }
-
-#pragma clang diagnostic pop
 
 @end

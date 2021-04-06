@@ -8,6 +8,7 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     // MARK: - Private properties
@@ -113,8 +114,8 @@ final class MiniPlayerViewController: UIViewController {
         }
     }
     
-    private func userInteraction(enable: Bool) {
-        collectionView.isUserInteractionEnabled = enable
+    private func userInteraction(enabled: Bool) {
+        collectionView.isUserInteractionEnabled = enabled
     }
     
     private func refreshStateOfLoadingView(_ enable: Bool) {
@@ -134,7 +135,9 @@ final class MiniPlayerViewController: UIViewController {
         collectionView.backgroundColor = .clear
         progressView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
         imageView.layer.cornerRadius = 8.0
-        separatorView.layer.addBorder(edge: .top, color: UIColor.mnz_gray848484().withAlphaComponent(0.35), thickness: 0.5)
+        
+        separatorView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
+        separatorHeightConstraint.constant = 0.5
     }
     
     // MARK: - UI actions
@@ -164,24 +167,23 @@ final class MiniPlayerViewController: UIViewController {
             updateCurrent(indexPath: indexPath, item: currentItem)
         case .showLoading(let show):
             refreshStateOfLoadingView(show)
-        case .enableUserInteraction(let enable):
-            userInteraction(enable: enable)
+        case .enableUserInteraction(let enabled):
+            userInteraction(enabled: enabled)
         }
     }
 }
 
 extension MiniPlayerViewController: MiniPlayerActionsDelegate {
-    
-    func play(direction: MovementDirection) {
-        viewModel.dispatch(.play(direction))
+    func play(index: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: index) as? MiniPlayerItemCollectionViewCell,
+              let item = cell.item else { return }
         
-        guard let cell = collectionView.visibleCells.first as? MiniPlayerItemCollectionViewCell,
-              let indexPath = collectionView.indexPath(for: cell) else { return }
+        viewModel.dispatch(.playItem(item))
         
-        lastMovementIndexPath = indexPath
+        lastMovementIndexPath = index
     }
     
-    func showPlayer(node: MEGAHandle, filePath: String?) {
+    func showPlayer(node: MEGANode, filePath: String?) {
         viewModel.dispatch(.showPlayer(node, filePath))
     }
     
