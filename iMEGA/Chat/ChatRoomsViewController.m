@@ -1534,7 +1534,7 @@
             break;
         }
             
-        case MEGAChatConnectionInProgress:
+        case MEGAChatCallStatusHasLocalStream:
             if (!self.chatRoomOnGoingCall) {
                 self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
             }
