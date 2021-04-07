@@ -20,6 +20,12 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="2MO-Hx-S56">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                 <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehf-ps-u3s">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="ZC5-8z-8Gv"/>
+                                        </constraints>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vQg-Tw-mTR">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <subviews>
@@ -54,7 +60,10 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="vQg-Tw-mTR" firstAttribute="leading" secondItem="2MO-Hx-S56" secondAttribute="leading" id="Cjg-7w-M0B"/>
+                                    <constraint firstItem="ehf-ps-u3s" firstAttribute="leading" secondItem="2MO-Hx-S56" secondAttribute="leading" id="Gkr-um-1be"/>
                                     <constraint firstAttribute="trailing" secondItem="vQg-Tw-mTR" secondAttribute="trailing" id="jgC-3w-Bd9"/>
+                                    <constraint firstItem="ehf-ps-u3s" firstAttribute="top" secondItem="2MO-Hx-S56" secondAttribute="top" id="o8s-2e-k0r"/>
+                                    <constraint firstAttribute="trailing" secondItem="ehf-ps-u3s" secondAttribute="trailing" id="rSe-ua-yTI"/>
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pgB-IN-pdt">
@@ -149,6 +158,7 @@
                     <connections>
                         <outlet property="inviteContactLabel" destination="BTR-eF-60E" id="hk1-kp-C21"/>
                         <outlet property="inviteContactView" destination="vQg-Tw-mTR" id="hXa-wF-snD"/>
+                        <outlet property="searchFixedView" destination="ehf-ps-u3s" id="bAh-nb-s8t"/>
                         <outlet property="tableView" destination="pgB-IN-pdt" id="tfl-qH-dvZ"/>
                     </connections>
                 </viewController>
