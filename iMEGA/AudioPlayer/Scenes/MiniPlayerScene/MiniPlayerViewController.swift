@@ -10,6 +10,7 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
     
     // MARK: - Private properties
     private var miniPlayerSource: MiniPlayerDataSource? {
@@ -23,6 +24,7 @@ final class MiniPlayerViewController: UIViewController {
         }
     }
     private var lastMovementIndexPath: IndexPath?
+    private let containerViewDefaultMargin: CGFloat = 12.0
     
     // MARK: - Internal properties
     var viewModel: MiniPlayerViewModel!
@@ -43,6 +45,7 @@ final class MiniPlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+        updateAppearance()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -138,6 +141,9 @@ final class MiniPlayerViewController: UIViewController {
         
         separatorView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
         separatorHeightConstraint.constant = 0.5
+        
+        containerViewLeadingConstraint.constant = UIDevice.current.orientation.isLandscape && UIDevice.current.iPhoneDevice ?
+            containerViewDefaultMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.left ?? 0.0) : containerViewDefaultMargin
     }
     
     // MARK: - UI actions
