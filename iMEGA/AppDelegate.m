@@ -1720,6 +1720,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self.quickAccessWidgetManager createWidgetItemData];
             }
             
+            [self presentBusinessExpiredViewIfNeeded];
+            
             break;
         }
             
