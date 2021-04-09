@@ -30,6 +30,8 @@
 @property (getter=shouldEndCallWhenConnect) BOOL endCallWhenConnect;
 @property (getter=shouldMuteAudioWhenConnect) BOOL muteAudioWhenConnect;
 
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, MEGAChatCall *> *endedCalls;
+
 @end
 
 @implementation MEGAProviderDelegate
@@ -53,6 +55,8 @@
     
     [MEGASdkManager.sharedMEGAChatSdk addChatCallDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk addChatDelegate:self];
+    
+    _endedCalls = NSMutableDictionary.new;
     
     return self;
 }
@@ -147,6 +151,7 @@
     
     MEGALogDebug(@"[CallKit] Report end call reason %ld", (long)callEndedReason);
     if (callEndedReason) {
+        self.endedCalls[@(call.callId)] = call;
         [self.provider reportCallWithUUID:call.uuid endedAtDate:nil reason:callEndedReason];
     }
     [self.megaCallManager removeCallByUUID:call.uuid];
@@ -185,18 +190,29 @@
     CXCallUpdate *update = [self callUpdateWithValue:value localizedCallerName:callerName hasVideo:hasVideo];
     
     __weak __typeof__(self) weakSelf = self;
-    [self.provider reportNewIncomingCallWithUUID:uuid update:update completion:^(NSError * _Nullable error) {
-        if (error) {
-            MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
-        } else {
-            MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
-            if (call) {
-                [weakSelf.megaCallManager addCall:call];
+    
+    MEGAChatCall *endedCall = self.endedCalls[@(callId)];
+    if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground && endedCall) {
+        MEGALogWarning(@"[CallKit] A VoIP push has been received for an ended call and the application is in foreground");
+    } else {
+        [self.provider reportNewIncomingCallWithUUID:uuid update:update completion:^(NSError * _Nullable error) {
+            if (error) {
+                MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
             } else {
-                [weakSelf.megaCallManager addCallWithCallId:callId uuid:uuid];
+                MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+                if (call) {
+                    [weakSelf.megaCallManager addCall:call];
+                } else {
+                    if (endedCall) {
+                        MEGALogWarning(@"[CallKit] A VoIP push has been received for an ended call and the application is in background. End the call after reporting the incoming call");
+                        [self reportEndCall:endedCall];
+                    } else {
+                        [weakSelf.megaCallManager addCallWithCallId:callId uuid:uuid];
+                    }
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 - (CXCallUpdate *)callUpdateWithValue:(NSString *)value localizedCallerName:(NSString *)name hasVideo:(BOOL)hasVideo {
