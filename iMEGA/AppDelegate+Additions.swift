@@ -126,11 +126,13 @@ extension AppDelegate {
             }
 
             if let stringDictionary = request.megaStringDictionary {
-                stringDictionary.forEach { key, value in
-                    let userHandle = MEGASdk.handle(forBase64UserHandle: key)
-
-                    if let nickname = value.base64URLDecoded {
-                        store.updateUser(withUserHandle: userHandle, nickname: nickname, context: context)
+                context.performAndWait {
+                    stringDictionary.forEach { key, value in
+                        let userHandle = MEGASdk.handle(forBase64UserHandle: key)
+                        
+                        if let nickname = value.base64URLDecoded {
+                            store.updateUser(withUserHandle: userHandle, nickname: nickname, context: context)
+                        }
                     }
                 }
 
