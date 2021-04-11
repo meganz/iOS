@@ -192,9 +192,11 @@ import Foundation
     }
     
     func closePlayer() {
-        player?.close()
-        player?.updateContentViews()
+        player?.close() {
+            AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
+        }
         
+        player?.updateContentViews()
         miniPlayerHandlerListenerManager.notify{$0.closeMiniPlayer()}
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
