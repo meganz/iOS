@@ -30,7 +30,6 @@ extension AudioPlayer {
     func registerAudioPlayerNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: AVAudioSession.interruptionNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(changeRoute:)), name: AVAudioSession.routeChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogout(notification:)), name: Notification.Name.MEGALogout, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: Notification.Name.MEGAAudioPlayerInterruption, object: nil)
     }
     
@@ -184,9 +183,5 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         }
         
         notify(aboutCurrentState)
-    }
-    
-    @objc func didReceiveLogout(notification: Notification) {
-        close()
     }
 }
