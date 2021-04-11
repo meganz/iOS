@@ -73,13 +73,23 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
 
     func repeatLastItem() {
-        guard queuePlayer != nil else { return }
+        guard let queuePlayer = queuePlayer else { return }
         
+        // the current item is nil only when the audio player has played the last track of the playlist
         if currentItem() == nil {
             guard let lastItem = tracks.last else { return }
-            queuePlayer?.remove(lastItem)
-            queuePlayer?.replaceCurrentItem(with: lastItem)
-            lastItem.seek(to: .zero)
+            
+            let resumePlaying = isPlaying
+            
+            if resumePlaying {
+                queuePlayer.pause()
+            }
+            queuePlayer.secureInsert(lastItem, after: nil)
+            
+            if resumePlaying {
+                queuePlayer.play()
+            }
+            
         } else {
             guard let currentItem = currentItem(),
                   let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
@@ -96,7 +106,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 }
             }
             
-            currentItem.seek(to: .zero)
+            currentItem.seek(to: .zero, completionHandler: nil)
         }
     }
     
@@ -138,21 +148,17 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     @objc func playPrevious(_ completion: @escaping () -> Void) {
-        guard let currentItem = queuePlayer?.currentItem as? AudioPlayerItem else {
+        guard let queuePlayer = queuePlayer,
+              let currentIndex = tracks.firstIndex(where: {$0 == currentItem()}) else {
             completion()
             return
         }
         
-        if let currentIndex = tracks.firstIndex(where:{$0 == currentItem}), currentIndex > 0 {
+        if currentIndex > 0 {
             let previousItem = tracks[currentIndex - 1]
-            queuePlayer?.remove(previousItem)
-            queuePlayer?.replaceCurrentItem(with: previousItem)
-            queuePlayer?.secureInsert(currentItem, after: previousItem)
-            
-            previousItem.seek(to: .zero)
-            completion()
+            play(item: previousItem, completion: completion)
         } else {
-            currentItem.seek(to: .zero) { _ in
+            queuePlayer.currentItem?.seek(to: .zero) { _ in
                 self.isPlaying ? self.play() : self.pause()
                 completion()
             }
@@ -161,20 +167,52 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     
     @objc func play(item: AudioPlayerItem, completion: @escaping () -> Void) {
         guard let queuePlayer = queuePlayer,
-              let index = tracks.firstIndex(where: {$0 == item}) else {
+              let index = tracks.firstIndex(where: {$0 == item}),
+              let currentIndex = tracks.firstIndex(where: {$0 == currentItem()}) else {
             completion()
             return
         }
         
-        queuePlayer.remove(item)
-        queuePlayer.replaceCurrentItem(with: item)
-        
-        queuePlayer.items().filter({$0 != item}).forEach {
-            queuePlayer.remove($0)
-        }
-        
-        ((index + 1)..<tracks.count).forEach { index in
-            queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
+        if currentIndex > index {
+            let resumePlaying = isPlaying
+            
+            if resumePlaying {
+                // pause the audio player to avoid playback issues
+                queuePlayer.pause()
+            }
+            
+            // remove item before insert it to avoid duplicates
+            queuePlayer.remove(item)
+            queuePlayer.secureInsert(item, after: queuePlayer.currentItem)
+            
+            // remove the playlist tracks before update it with the correct tracks
+            queuePlayer.items().filter({$0 != item}).forEach {
+                queuePlayer.remove($0)
+            }
+            
+            // insert following items to the playlist
+            ((index + 1)..<tracks.count).forEach { index in
+                queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
+            }
+            
+            if resumePlaying {
+                queuePlayer.play()
+            }
+        } else if currentIndex == index {
+            queuePlayer.currentItem?.seek(to: .zero) {_ in
+                completion()
+                return
+            }
+        } else {
+            queuePlayer.items()
+                .compactMap{ $0 as? AudioPlayerItem }
+                .filter({
+                    guard let trackIndex = tracks.firstIndex(of: $0),
+                          trackIndex < index else { return false }
+                    return true
+                }).forEach {
+                    queuePlayer.remove($0)
+                }
         }
         
         completion()
@@ -238,7 +276,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         notify(aboutTheBeginningOfBlockingAction)
         
         queuePlayer.remove(movedItem)
-        movedItem.seek(to: .zero)
+        movedItem.seek(to: .zero, completionHandler: nil)
         
         let afterItem = queuePlayer.items()[position.previous().row]
         
@@ -298,7 +336,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     func reset(item: AudioPlayerItem) {
-        item.seek(to: .zero)
+        item.seek(to: .zero, completionHandler: nil)
     }
 }
 
