@@ -57,6 +57,9 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     }
 
     @objc func didChangeAudioRoute(_ notification: Notification) {
+        guard state == .playing else {
+            return
+        }
         proximityChanged()
     }
     
