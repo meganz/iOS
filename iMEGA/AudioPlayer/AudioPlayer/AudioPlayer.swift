@@ -43,7 +43,7 @@ final class AudioPlayer: NSObject {
   
     //MARK: - Internal Computed Properties
     var currentIndex: Int? {
-        queuePlayer?.items().firstIndex(where:{($0 as? AudioPlayerItem)?.node == currentItem()?.node})
+        queuePlayer?.items().firstIndex(where:{$0 as? AudioPlayerItem == currentItem()})
     }
     
     var currentName: String? {
