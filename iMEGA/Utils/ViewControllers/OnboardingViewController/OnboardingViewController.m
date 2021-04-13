@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIButton *primaryButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondaryButton;
+@property (weak, nonatomic) IBOutlet UIButton *thirdButton;
 
 @end
 
@@ -41,7 +42,9 @@
             [self.primaryButton setTitle:NSLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
             
             [self.secondaryButton setTitle:NSLocalizedString(@"login", @"Button title which triggers the action to login in your MEGA account") forState:UIControlStateNormal];
-            
+           
+            [self.thirdButton setTitle:NSLocalizedString(@"Join Meeting as Guest", @"Button title which triggers the action to join meeting as Guest") forState:UIControlStateNormal];
+
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
                 onboardingViewEncryption.type = OnboardingViewTypeEncryptionInfo;
@@ -58,7 +61,7 @@
         case OnboardingTypePermissions:
             self.scrollView.userInteractionEnabled = NO;
             self.pageControl.hidden = YES;
-            
+            self.thirdButton.hidden = YES;
             [self.primaryButton setTitle:NSLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand") forState:UIControlStateNormal];
             
             [self.secondaryButton setTitle:NSLocalizedString(@"notNow", nil) forState:UIControlStateNormal];
@@ -162,6 +165,8 @@
     
     [self.primaryButton mnz_setupPrimary:self.traitCollection];
     [self.secondaryButton mnz_setupBasic:self.traitCollection];
+    [self.thirdButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+
 }
 
 #pragma mark - Targets
@@ -246,6 +251,20 @@
         case OnboardingTypePermissions:
             [self nextPageOrDismiss];
             break;
+    }
+}
+
+- (IBAction)thirdButtonTapped:(UIButton *)sender {
+    switch (self.type) {
+        case OnboardingTypeDefault: {
+            MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self];
+            [router start];
+            break;
+        }
+            
+        case OnboardingTypePermissions: {
+            break;
+        }
     }
 }
 

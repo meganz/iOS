@@ -1960,8 +1960,12 @@
 "Enabled"="Enabled";
 /* Text button for init a group chat with link. */
 "New Chat Link"="New Chat Link";
+/* Text button for init a Meeting. */
+"New Meeting"="New Meeting";
 /* Text button for init a group chat */
 "New Group Chat"="New Group Chat";
+/* Meeting Title */
+"%@ Meeting"="%@ Meeting";
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Multiple Images title shown in recents section of webclient */

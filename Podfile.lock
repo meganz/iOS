@@ -61,6 +61,7 @@ PODS:
     - InputBarAccessoryView/Core (= 4.3.3)
   - InputBarAccessoryView/Core (4.3.3)
   - ISEmojiView (0.2.6)
+  - "Keyboard+LayoutGuide (1.6.0)"
   - libwebp (1.1.0):
     - libwebp/demux (= 1.1.0)
     - libwebp/mux (= 1.1.0)
@@ -100,6 +101,7 @@ DEPENDENCIES:
   - GCDWebServer
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
+  - "Keyboard+LayoutGuide"
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
@@ -122,6 +124,7 @@ SPEC REPOS:
     - GoogleUtilities
     - Haptica
     - InputBarAccessoryView
+    - "Keyboard+LayoutGuide"
     - libwebp
     - nanopb
     - PanModal
@@ -169,6 +172,7 @@ SPEC CHECKSUMS:
   Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
   InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
+  "Keyboard+LayoutGuide": db44b1764e2bb5d9824cc9cea9d9006cd4442045
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
@@ -179,6 +183,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: b3601f140afd3093afed29e3ad18e1a736c6a44d
+PODFILE CHECKSUM: 527698bb65e61b9e2b7daf112c4d96346afeb45e
 
 COCOAPODS: 1.10.0

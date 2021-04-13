@@ -63,6 +63,10 @@ static const void *base64HandleKey = &base64HandleKey;
     }
 }
 
+- (void)mnz_setImageUsingCurrentUserAvatarOrColor {
+    [self mnz_setImageAvatarOrColorForUserHandle:MEGASdkManager.sharedMEGASdk.myUser.handle];
+}
+
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {
     if (node.hasThumbnail) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
