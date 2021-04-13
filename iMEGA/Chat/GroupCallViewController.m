@@ -851,29 +851,29 @@
         }
     }];
     
-    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:NO delegate:startCallRequestDelegate];
 }
 
 - (void)startOutgoingCall {
     __weak __typeof(self) weakSelf = self;
     
     MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type) {
-            [weakSelf dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-            weakSelf.callId = weakSelf.call.callId;
-            [weakSelf.megaCallManager addCall:weakSelf.call];
-            [weakSelf.megaCallManager startCall:weakSelf.call];
-            
-            [self.collectionView reloadData];
-            MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
-            
-            [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
-        }
+//        if (error.type) {
+//            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+//        } else {
+//            weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+//            weakSelf.callId = weakSelf.call.callId;
+//            [weakSelf.megaCallManager addCall:weakSelf.call];
+//            [weakSelf.megaCallManager startCall:weakSelf.call];
+//            
+//            [self.collectionView reloadData];
+//            MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
+//            
+//            [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
+//        }
     }];
     
-    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:NO delegate:startCallRequestDelegate];
 }
 
 - (void)configureUserOnFocus:(MEGAGroupCallPeer *)peerSelected manual:(BOOL)manual {

@@ -21,6 +21,7 @@
 		2F04634024BFF13900A47A81 /* ChatMessageActionMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */; };
 		2F0986762511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0986752511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift */; };
 		2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0986792511BA8900E959C2 /* RichPreviewDialogView.swift */; };
+		2F0CB0C2260028EC002CB24F /* MeetingCreatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */; };
 		2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */; };
 		2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */; };
 		2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F147787244D2DF30069B264 /* GeoLocationView.xib */; };
@@ -76,6 +77,8 @@
 		2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */; };
 		2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */; };
 		2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */; };
+		2FA61993261D2FFA00663034 /* MeetingCreatingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */; };
+		2FA619A7261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */; };
 		2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */; };
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
 		2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */; };
@@ -85,6 +88,8 @@
 		2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
+		2FB90D9626098A450097D154 /* MeetingJoinAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB90D9526098A450097D154 /* MeetingJoinAlertRouter.swift */; };
+		2FB90DB026098A850097D154 /* MeetingJoinAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB90DAF26098A850097D154 /* MeetingJoinAlertViewController.swift */; };
 		2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
 		2FBBE78925E4544C00B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
 		2FBBE87325E5D54200B760BC /* ImportTextActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBE87225E5D54100B760BC /* ImportTextActivity.swift */; };
@@ -98,9 +103,14 @@
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
 		2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */; };
 		2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */; };
+		2FDC6B9A260A9E00005A22B6 /* MeetingJoinAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC6B99260A9DFF005A22B6 /* MeetingJoinAlertViewModel.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
+		2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */; };
 		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
+		2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */; };
+		2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */; };
+		2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */; };
 		32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
@@ -1831,7 +1841,6 @@
 		C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */; };
 		C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D673250DBA3900D74666 /* StoreUser.swift */; };
 		C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient+Additions.swift */; };
-		C4F0C91C259E10200063C5C5 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */; };
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
@@ -1982,6 +1991,7 @@
 		2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageActionMenuViewController.swift; sourceTree = "<group>"; };
 		2F0986752511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewDialogCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F0986792511BA8900E959C2 /* RichPreviewDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPreviewDialogView.swift; sourceTree = "<group>"; };
+		2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingUseCase.swift; sourceTree = "<group>"; };
 		2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewController.swift; sourceTree = "<group>"; };
 		2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F147787244D2DF30069B264 /* GeoLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeoLocationView.xib; sourceTree = "<group>"; };
@@ -2039,12 +2049,16 @@
 		2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyGifsRequestModel.swift; sourceTree = "<group>"; };
 		2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyResponseModel.swift; sourceTree = "<group>"; };
 		2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomNewMessageIndicatorView.swift; sourceTree = "<group>"; };
+		2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingRepository.swift; sourceTree = "<group>"; };
+		2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingRepositoryProtocol.swift; sourceTree = "<group>"; };
 		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewAttachmentCell.swift; sourceTree = "<group>"; };
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewController.swift; sourceTree = "<group>"; };
+		2FB90D9526098A450097D154 /* MeetingJoinAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingJoinAlertRouter.swift; sourceTree = "<group>"; };
+		2FB90DAF26098A850097D154 /* MeetingJoinAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingJoinAlertViewController.swift; sourceTree = "<group>"; };
 		2FBBE87225E5D54100B760BC /* ImportTextActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextActivity.swift; sourceTree = "<group>"; };
 		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		2FBF393424BEACA600ED0931 /* ReactionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPickerViewController.swift; sourceTree = "<group>"; };
@@ -2056,11 +2070,16 @@
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewViewController.swift; sourceTree = "<group>"; };
 		2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewView.swift; sourceTree = "<group>"; };
+		2FDC6B99260A9DFF005A22B6 /* MeetingJoinAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingJoinAlertViewModel.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
+		2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingView.swift; sourceTree = "<group>"; };
 		2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepLinkingTests.m; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
+		2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewController.swift; sourceTree = "<group>"; };
+		2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewRouter.swift; sourceTree = "<group>"; };
+		2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModel.swift; sourceTree = "<group>"; };
 		3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -4374,6 +4393,16 @@
 			path = Giphy;
 			sourceTree = "<group>";
 		};
+		2FB90D9226098A070097D154 /* JoinMeetingScene */ = {
+			isa = PBXGroup;
+			children = (
+				2FB90D9526098A450097D154 /* MeetingJoinAlertRouter.swift */,
+				2FB90DAF26098A850097D154 /* MeetingJoinAlertViewController.swift */,
+				2FDC6B99260A9DFF005A22B6 /* MeetingJoinAlertViewModel.swift */,
+			);
+			name = JoinMeetingScene;
+			sourceTree = "<group>";
+		};
 		2FD6A26925745B0A00C1997E /* PasteImagePreviewViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4400,6 +4429,17 @@
 				2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */,
 			);
 			path = FDFullscreenPopGesture;
+			sourceTree = "<group>";
+		};
+		2FFCF39E25FB1A1500E1718D /* StartMeetingScene */ = {
+			isa = PBXGroup;
+			children = (
+				2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */,
+				2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */,
+				2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */,
+				2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */,
+			);
+			path = StartMeetingScene;
 			sourceTree = "<group>";
 		};
 		41136FB91E1692650031C516 /* Views */ = {
@@ -6856,6 +6896,7 @@
 			isa = PBXGroup;
 			children = (
 				838A7B5525D55EFA00767DB0 /* CallsUseCase.swift */,
+				2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -6864,6 +6905,7 @@
 			isa = PBXGroup;
 			children = (
 				838A7B6825D5678C00767DB0 /* CallsRepository.swift */,
+				2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -6872,6 +6914,7 @@
 			isa = PBXGroup;
 			children = (
 				838A7B7B25D5679F00767DB0 /* CallsRepositoryProtocol.swift */,
+				2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -6978,6 +7021,8 @@
 		83E1B16125CBF4BF00C18548 /* CallScene */ = {
 			isa = PBXGroup;
 			children = (
+				2FB90D9226098A070097D154 /* JoinMeetingScene */,
+				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
 				83E1B16425CBF4E600C18548 /* CallViewController.swift */,
 				83E1B17625CC517600C18548 /* Calls.storyboard */,
 				83B42F3B25D2E59D00AAA88F /* CallViewRouter.swift */,
@@ -9973,6 +10018,7 @@
 				5DFBF1F024F4AEC700BB662B /* UploadFilesUseCaseProtocol.swift in Sources */,
 				B6AADEAF25188F8D009A874C /* SMSRepositoryProtocol.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
+				2FB90D9626098A450097D154 /* MeetingJoinAlertRouter.swift in Sources */,
 				83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				BF7EBD24244E8AFC0015255F /* UIImageView+Additions.swift in Sources */,
@@ -10048,6 +10094,7 @@
 				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,
 				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
+				2FDC6B9A260A9E00005A22B6 /* MeetingJoinAlertViewModel.swift in Sources */,
 				A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */,
 				5D92DD1424BFE2B200D7D13B /* Date+Comparion.swift in Sources */,
 				A86B9F272316D6AB00F35E7A /* FLEXTableViewSection.m in Sources */,
@@ -10116,6 +10163,7 @@
 				C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */,
+				2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */,
 				830C269B25DFCABC00E9B56E /* QuickAccessWidgetErrorEntity.swift in Sources */,
 				2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */,
 				5B12D03B241273D5006C3907 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
@@ -10186,6 +10234,7 @@
 				BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */,
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
@@ -10299,6 +10348,7 @@
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
 				5D2AF57F24F4A711000B2F29 /* UploadFromAlbum.swift in Sources */,
 				A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */,
+				2FA61993261D2FFA00663034 /* MeetingCreatingRepository.swift in Sources */,
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
 				B63AEB0F2511BDB9000B8517 /* AchievementErrorEntity.swift in Sources */,
 				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
@@ -10306,6 +10356,7 @@
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */,
+				2FB90DB026098A850097D154 /* MeetingJoinAlertViewController.swift in Sources */,
 				A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */,
 				41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */,
 				83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */,
@@ -10500,6 +10551,7 @@
 				5D342A3D2537ED7600039273 /* PhotoExplorerCollectionCell.swift in Sources */,
 				5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
+				2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */,
 				C45D791B2593AAB100EB6C2F /* MiniPlayerSource.swift in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
@@ -10555,6 +10607,7 @@
 				B662B86E24F32ED70089376A /* RegionEntity.swift in Sources */,
 				C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */,
 				5D8DC6B5248CB1D70067A4F9 /* UIButton+BackgroundColor.swift in Sources */,
+				2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
 				BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */,
@@ -10876,6 +10929,7 @@
 				A80B66F525E80D2000486EC5 /* RecentActionBucketEntity.swift in Sources */,
 				BFCEE8B425102D9600D43448 /* IndexSet+Additions.swift in Sources */,
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
+				2F0CB0C2260028EC002CB24F /* MeetingCreatingUseCase.swift in Sources */,
 				5D9DC3CC253EB7AF0055F4C4 /* Debouncer.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */,
@@ -10887,6 +10941,7 @@
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,
 				5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */,
 				83C570E422E5BFCF00216896 /* ParseManager.swift in Sources */,
+				2FA619A7261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift in Sources */,
 				83C570EB22E5BFCF00216896 /* MetadataManager.swift in Sources */,
 				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
 				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
@@ -11373,7 +11428,6 @@
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
-				C4F0C91C259E10200063C5C5 /* BuildFile in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				BF08AA1425CB58DE009DE3D2 /* MEGANode+FilePaths_Tests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,

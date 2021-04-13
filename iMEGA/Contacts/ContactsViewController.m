@@ -981,6 +981,10 @@
     [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
+- (void)newMeeting {
+    
+}
+
 - (void)showEmailContactPicker {
     MEGANavigationController *contactsPickerNavigation = [MEGANavigationController.alloc initWithRootViewController:[ContactsPickerViewController instantiateWithContactKeys:@[CNContactEmailAddressesKey] delegate:self]];
     [self presentViewController:contactsPickerNavigation animated:YES completion:nil];
@@ -1345,7 +1349,7 @@
             
         case ContactsModeChatStartConversation: {
             if (section == 0) {
-                numberOfRows = 3;
+                numberOfRows = 4;
             } else if (section == 1) {
                 if (self.recentsArray.count > 3) {
                     numberOfRows = 3;
@@ -1728,8 +1732,10 @@
                     [self addContact:[self.tableView cellForRowAtIndexPath:indexPath]];
                 } else if (indexPath.row == 1) {
                     [self startGroup];
-                } else {
+                } else if (indexPath.row == 2) {
                     [self newChatLink];
+                } else if (indexPath.row == 3) {
+                    [self newMeeting];
                 }
             } else if (indexPath.section == 1) {
                 [self dismissViewControllerAnimated:YES completion:^{

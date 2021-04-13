@@ -49,7 +49,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
     
     func startChatCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
-        chatSdk.startChatCall(chatId, enableVideo: enableVideo, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
+        chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: true, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
             if error?.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                     completion(.failure(.generic))

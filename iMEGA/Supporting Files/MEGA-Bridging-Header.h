@@ -162,3 +162,4 @@
 #import "MEGALocalImageView.h"
 #import "GroupCallCollectionViewCell.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
+#import "UIControl+YYAdd.h"

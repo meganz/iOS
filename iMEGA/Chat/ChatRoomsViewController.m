@@ -34,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *meetingBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateTitle;
@@ -103,6 +104,7 @@
         }
     }
     self.addBarButtonItem.accessibilityLabel = NSLocalizedString(@"startConversation", comment: "start a chat/conversation");
+    self.meetingBarButtonItem.accessibilityLabel = NSLocalizedString(@"New Meeting", @"Text button for init a Meeting.");
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     switch (self.chatRoomsType) {
@@ -1001,6 +1003,26 @@
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
     [self showStartConversation];
+}
+
+- (IBAction)meetingTapped:(UIBarButtonItem *)sender {
+    @weakify(self)
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"New Meeting", nil) detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+        @strongify(self)
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self];
+        [router start];
+    }]];
+    
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Join Meeting", nil) detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+        @strongify(self)
+        MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self];
+        [router start];
+    }]];
+    
+    ActionSheetViewController *moreMinimizedActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
+    [self presentViewController:moreMinimizedActionSheet animated:YES completion:nil];
 }
 
 - (IBAction)optionsTapped:(UIBarButtonItem *)sender {
