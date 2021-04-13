@@ -17,12 +17,12 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     }
     
     func testAudioPlayerPlayNext() {
-        let expectaction = expectation(description: "Play next item")
+        let expect = expectation(description: "Play next item")
         XCTAssertNotNil(player.currentIndex)
         XCTAssertTrue(player.currentIndex == 0)
         let nextItem = tracks[(player.currentIndex ?? 0) + 1]
         player.playNext() {
-            expectaction.fulfill()
+            expect.fulfill()
         }
         
         waitForExpectations(timeout: 0.5) { error in
@@ -33,7 +33,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     }
     
     func testAudioPlayerPlayPrevious() {
-        let expectaction = expectation(description: "Play previous item")
+        let expect = expectation(description: "Play previous item")
         let currentItem = tracks[(player.currentIndex ?? 0)]
         XCTAssertNotNil(player.currentIndex)
         XCTAssertTrue(player.currentIndex == 0)
@@ -45,12 +45,76 @@ final class AudioPlayerPlaybackTests: XCTestCase {
             self.player.playPrevious() {
                 XCTAssertNotNil(self.player.currentItem)
                 XCTAssertTrue(currentItem == self.player.currentItem())
-                expectaction.fulfill()
+                expect.fulfill()
             }
         }
         
         waitForExpectations(timeout: 0.5) { error in
             XCTAssertNil(error)
+        }
+    }
+    
+    func testAudioPlayerRewindForward() throws {
+        let expect = expectation(description: "Rewind forward")
+        let audioPlayer = AudioPlayer()
+        audioPlayer.add(tracks: [AudioPlayerItem(name: "Track 1",
+                                                 url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
+                                                 node: nil)])
+        let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
+        let currentTime = queuePlayer.currentTime()
+        XCTAssertTrue(CMTIME_IS_VALID(currentTime))
+        var observer: NSKeyValueObservation?
+        
+        audioPlayer.play()
+        
+        observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
+            switch (qPlayer.timeControlStatus) {
+            case .playing:
+                audioPlayer.rewindForward(duration: CMTime(seconds: audioPlayer.defaultRewindInterval, preferredTimescale: qPlayer.currentTime().timescale)) { _ in
+                    XCTAssertTrue(currentTime.seconds + audioPlayer.defaultRewindInterval == qPlayer.currentTime().seconds)
+                    expect.fulfill()
+                }
+            default:
+                break
+            }
+        }
+
+        waitForExpectations(timeout: 3.0) { error in
+            XCTAssertNil(error)
+            observer?.invalidate()
+        }
+    }
+    
+    func testAudioPlayerRewindBackward() throws {
+        let expect = expectation(description: "Rewind backward")
+        let audioPlayer = AudioPlayer()
+        audioPlayer.add(tracks: [AudioPlayerItem(name: "Track 1",
+                                                 url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
+                                                 node: nil)])
+        let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
+        let currentTime = queuePlayer.currentTime()
+        XCTAssertTrue(CMTIME_IS_VALID(currentTime))
+        var observer: NSKeyValueObservation?
+        
+        audioPlayer.play()
+            
+        observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
+            switch (qPlayer.timeControlStatus) {
+            case .playing:
+                audioPlayer.rewindBackward { _ in
+                    XCTAssertTrue(currentTime.seconds <= audioPlayer.defaultRewindInterval ?
+                                    qPlayer.currentTime().seconds == 0 :
+                                    currentTime.seconds == qPlayer.currentTime().seconds + audioPlayer.defaultRewindInterval)
+                    expect.fulfill()
+                }
+            default:
+                break
+            }
+        }
+
+        waitForExpectations(timeout: 3.0) { error in
+            XCTAssertNil(error)
+            observer?.invalidate()
         }
     }
     

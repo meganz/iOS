@@ -12,6 +12,7 @@ protocol AudioPlayerStateProtocol {
     func playNext(_ completion: @escaping () -> Void)
     func playPrevious(_ completion: @escaping () -> Void)
     func play(item: AudioPlayerItem, completion: @escaping () -> Void)
+    func rewind(direction: RewindDirection)
     func isShuffleMode() -> Bool
     func shuffle(_ active: Bool)
     func isRepeatAllMode() -> Bool
@@ -127,11 +128,13 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func delete(items: [AudioPlayerItem])
     func playerProgressCompleted(percentage: Float)
     func playerShuffle(active: Bool)
+    func goBackward()
     func playPrevious()
     func playerTogglePlay()
     func playerPause()
     func playerPlay()
     func playNext()
+    func goForward()
     func play(item: AudioPlayerItem)
     func playerRepeatAll(active: Bool)
     func playerRepeatOne(active: Bool)
