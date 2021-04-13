@@ -1,6 +1,17 @@
 import Foundation
 
+enum RewindDirection {
+    case backward, forward
+}
+
 extension AudioPlayer: AudioPlayerStateProtocol {
+    
+    private func refreshCurrentState(refresh: Bool) {
+        if refresh {
+            notify(aboutCurrentState)
+            refreshNowPlayingInfo()
+        }
+    }
     
     func setProgressCompleted(_ position: TimeInterval) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
@@ -8,11 +19,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
         guard CMTIME_IS_VALID(time) else { return }
         
-        currentItem.seek(to: time) { [weak self] _ in
-            guard let `self` = self else { return }
-            self.notify(self.aboutCurrentState)
-            self.refreshNowPlayingInfo()
-        }
+        currentItem.seek(to: time, completionHandler: refreshCurrentState)
     }
     
     func resetPlayerItems() {
@@ -216,6 +223,61 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
         
         completion()
+    }
+    
+    func rewind(direction: RewindDirection) {
+        guard let queuePlayer = queuePlayer,
+              let currentItem = queuePlayer.currentItem,
+              CMTIME_IS_VALID(currentItem.duration),
+              currentItem.duration >= .zero else { return }
+        
+        switch direction {
+        case .backward:
+            rewindBackward(completion: refreshCurrentState)
+        case .forward:
+            rewindForward(duration: currentItem.duration, completion: refreshCurrentState)
+        }
+    }
+    
+    func rewindBackward(completion: @escaping (Bool) -> Void) {
+        guard let queuePlayer = queuePlayer,
+              let currentItem = queuePlayer.currentItem,
+              CMTIME_IS_VALID(queuePlayer.currentTime()) else {
+            completion(false)
+            return
+        }
+        
+        let futureTime = queuePlayer.currentTime() - CMTime(seconds: defaultRewindInterval, preferredTimescale: currentItem.duration.timescale)
+        
+        guard CMTIME_IS_VALID(futureTime) else {
+            completion(false)
+            return
+        }
+        
+        queuePlayer.seek(to: futureTime < .zero ? .zero : futureTime) { _ in
+            completion(true)
+        }
+    }
+    
+    func rewindForward(duration: CMTime, completion: @escaping (Bool) -> Void) {
+        guard let queuePlayer = queuePlayer,
+              let currentItem = queuePlayer.currentItem,
+              CMTIME_IS_VALID(queuePlayer.currentTime()),
+              CMTIME_IS_VALID(duration) else {
+            completion(false)
+            return
+        }
+        
+        let futureTime = queuePlayer.currentTime() + CMTime(seconds: defaultRewindInterval, preferredTimescale: currentItem.duration.timescale)
+        
+        guard CMTIME_IS_VALID(futureTime) else {
+            completion(false)
+            return
+        }
+        
+        queuePlayer.seek(to: futureTime > duration ? duration : futureTime) { _ in
+            completion(true)
+        }
     }
     
     @objc func isShuffleMode() -> Bool {
