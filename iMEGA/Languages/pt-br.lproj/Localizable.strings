@@ -296,6 +296,10 @@
 "Location"="Localização";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Clipe de áudio";
+/* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
+"new_text_file"="Novo arquivo de texto";
+/* Hint text shown on the new text file alert. */
+"file_name"="Nome do arquivo";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nova Pasta";
 /* Hint text shown on the create folder alert. */
@@ -446,6 +450,10 @@
 "rename"="Renomear";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Digite o novo nome";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
+/* Title for the action that allows you to replace a file. */
+"replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mover para a Lixeira";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1256,7 +1264,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat com";
 /* Explanation when loading voice message error */
-"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
+"Couldn't load. [RED]Tap to retry[/RED]"="Não foi possível carregar. [RED]Toque aqui para tentar novamente[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="O MEGA protege o seu chat com criptografia de ponta a ponta (controlada pelo usuário), proporcionando garantias de segurança essenciais:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -2591,4 +2599,4 @@
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="O armazenamento disponível no seu dispositivo não é suficiente para o MEGA funcionar corretamente.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Você pode liberar espaço excluindo aplicativos que você já não usa, ou arquivos de vídeo grandes que estiverem na sua galeria.Você pode gerenciar o seu armazenamento em %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Você pode liberar espaço excluindo aplicativos que você já não usar, ou arquivos de vídeo grandes que estiverem na sua galeria. Você pode gerenciar o seu armazenamento em %@";

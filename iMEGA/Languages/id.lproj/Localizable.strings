@@ -153,7 +153,7 @@
 /* Title for the file link view */
 "fileLink"="Pranala berkas";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Bukan";
+"openButton"="Buka";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="File yang anda coba untuk download lebih besar dari memori yang tersedia.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -296,6 +296,10 @@
 "Location"="Lokasi";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Klip Suara";
+/* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
+"new_text_file"="File Teks Baru";
+/* Hint text shown on the new text file alert. */
+"file_name"="Nama file";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
@@ -446,6 +450,10 @@
 "rename"="Ubah nama";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Masukkan nama baru";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
+/* Title for the action that allows you to replace a file. */
+"replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Pindahkan ke Sampah";
 /* Success message shown when you have moved 1 file to the rubbish bin */
