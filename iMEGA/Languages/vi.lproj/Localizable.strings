@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA không tạo được liên kết an ninh tới SSL. Thiết bị bạn đang sử dụng có thể đang dùng mạng WiFi công cộng có yêu cầu một số điều kiện khi kết nối.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="Nội dung mà bạn muốn truy cập không có cho tài khoản hiện đang được đăng nhập. Xin thử đăng nhập với một tài khoản trùng khớp hiện có trên phiên bản nền web di động.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin kiên nhẫn chờ...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Mật khẩu này quá dễ đoán. Hãy thử tạo một mật khẩu dài hơn. Bao gồm chữ thường và chữ in HOA. Thêm các ký tự đặc biệt. Đừng dùng tên hay những từ thông dụng.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Trung Bình";
+"PasswordStrengthMedium"="Thường";
 /*  */
 "passwordMedium"="Mật khẩu của bạn đủ tốt để tiến hành, nhưng khuyên bạn nên làm mật khẩu khó hơn trong tương lai.";
 /*  */
@@ -267,9 +267,9 @@
 /* Button title to 'Save' the selected option */
 "save"="Lưu";
 /* Sort by option (1/6). This one orders the files alphabethically*/
-"nameAscending"="tên (tăng dần)";
+"nameAscending"="tên (a → z)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="tên (giảm dần)";
+"nameDescending"="tên (z → a)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
 "largest"="Lớn nhất";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
@@ -283,9 +283,9 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Chụp ảnh";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
-"Scan Document"="Quyét Tài Liệu";
+"Scan Document"="Quét Tài Liệu";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Hình ảnh";
+"Photos"="Hình Ảnh";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Gọi thoại";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -296,6 +296,10 @@
 "Location"="Vị trí";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Tin nhắn thoại";
+/* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
+"new_text_file"="Tệp Tin Văn Bản Mới";
+/* Hint text shown on the new text file alert. */
+"file_name"="Tên tệp";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư Mục Mới";
 /* Hint text shown on the create folder alert. */
@@ -305,7 +309,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Đã có một thư mục với cái tên này rồi";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="Quét Tài Liệu không khả dụng";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Đã có một tệp tin với cái tên này rồi";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -381,7 +385,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Chạm vào tệp để đổi tên";
 /* */
-"sendToContact"="Gửi cho người khác";
+"sendToContact"="Gửi đến người khác";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Các cuộc chát";
 /* Toast text upon sending a single file to chat */
@@ -446,6 +450,10 @@
 "rename"="Đổi tên";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Nhập tên mới";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
+/* Title for the action that allows you to replace a file. */
+"replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -515,7 +523,7 @@
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d mục được chọn";
 /* Title of the Offline section */
-"offline"="Ngoại tuyến";
+"offline"="Ngoại Tuyến";
 /* Title of the Contacts section */
 "contactsTitle"="Sổ Liên Lạc";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
@@ -535,7 +543,7 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Mục Chia Sẻ";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Mục Nhận Đuợc";
+"incoming"="Mục Nhận Được";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Mục Gửi Đi";
 /* Text shown to explain with how many contacts you have shared a folder */
@@ -617,7 +625,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Thùng rác";
+"rubbishBinLabel"="Thùng Rác";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Nâng Cao";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -669,7 +677,7 @@
 /* Title to show for upload in background */
 "Upload in Background"="Tải Lên trong Nền";
 /* Title for the location based background upload message */
-"Enable location services for background upload"="Bật dịch vụ dịnh vị để cho phép việc tải lên được chạy nền";
+"Enable location services for background upload"="Bật dịch vụ dịnh vị để cho phép việc tải lên được chạy trong nền";
 /* Message for the location based background upload when the location data access is not denied by users */
 "MEGA can periodically start camera uploads in background when your location changes."="MEGA sẽ được thường xuyên thực hiện việc tải lên trong nền dựa vào các thay đổi vị trí của người dùng.";
 /* Message for the location based background upload when the location data access is denied by users */
@@ -779,7 +787,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu vào dưới đây.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Tài khoản của bạn đã bị hủy bỏ thành công.";
+"accountCanceledSuccessfully"="Tài khoản đã xóa bỏ thành công.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Đóng tài khoản";
 /* Title for the action that allows to remove a file or folder */
@@ -882,21 +890,21 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Xóa Dữ Liệu Được Lưu";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Tài khoản sẽ đăng xuất và tất cả tệp tin lưu về ngoại tuyến sẽ xóa khỏi máy sau 10 lần nhập sai mã";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Tùy Chọn Mã Số";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Mã 4 Số";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Mã 6 Số";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Mã Chữ Số Tùy Ý";
 /* Menu item */
 "help"="Thắc Mắc Cần Trợ Giúp";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Thư Viện Hướng Dẫn";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Tham gia Beta";
+"Join Beta"="Tham Gia Beta";
 /* Title to rate the app */
 "rateUsLabel"="Đánh giá app";
 /* Title of the Transfers section */
@@ -906,7 +914,7 @@
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="Đang Truyền";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
-"Completed"="Hoàn tất";
+"Completed"="Hoàn Tất";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Phiên Tải Xuống";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1040,7 +1048,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng Pro để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
-"Storage"="Lưu trữ";
+"Storage"="Lưu Trữ";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Bị giới hạn";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1054,17 +1062,17 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Cước phí thường niên rẻ hơn 17% so với chi trả 12 tháng riêng rẽ";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói dịch vụ hiện tại, xin liên hệ với đội trợ giúp để có một [A]gói cước theo nhu cầu[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Gói Hiện Tại:";
 /* A label which shows the user's current PRO plan. */
 "Current plan"="Gói hiện tại";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgrade to a custom plan";
+"Upgrade to a custom plan"="Nâng cấp thành gói cước theo nhu cầu";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Ask us how you can upgrade to a custom plan:";
+"Ask us how you can upgrade to a custom plan:"="Hỏi chúng tôi về cách mua gói cước theo nhu cầu sử dụng:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
-"requestAPlan"="Yêu cầu gói cước đặt biệt";
+"requestAPlan"="Yêu cầu gói cước đặc biệt";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Chọn hạng thành viên:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1256,7 +1264,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Đang chát với";
 /* Explanation when loading voice message error */
-"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
+"Couldn't load. [RED]Tap to retry[/RED]"="Không tải được. [RED]Chạm để thử lại[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện nghiêm ngặt với công nghệ bảo mật đầu-cuối (người dùng kiểm soát) cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1430,7 +1438,7 @@
 "Unknown error"="Lỗi không xác định được";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA là một dịch vụ lưu trữ điện toán đám mây đuợc bảo mật toàn quyền từ phía người sử dụng thông qua trình duyệt web hiện hành. Không giống như các hãng khác, dữ liệu của bạn được mã hóa tuyệt đối, không ai mở được ngay cả MEGA và chỉ có thiết bị bạn sử dụng mới giải mã được.";
+"generalDescriptionParagraph1"="MEGA là một dịch vụ lưu trữ điện toán đám mây đuợc bảo mật người dùng làm chủ thông qua trình duyệt web hiện hành. Không giống như các hãng khác, dữ liệu của bạn được mã hóa tuyệt đối, không ai mở được ngay cả MEGA và chỉ có thiết bị bạn sử dụng mới giải mã được.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Đăng tải tệp tin bạn có từ smartphone hay máy tính bảng của mình, dễ dàng tra cứu, lưu trữ, tải về lại, truyền, xem, sửa, đổi tên hay xóa đi ngay bất cứ khi nào bạn mướn, từ bất kể nơi đâu, mọi thiết bị, mọi lúc. Chi sẻ thư mục vớI các tên liên hệ trong danh bạ và xem hoạt động chỉnh sửa của họ theo thời gian.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1457,7 +1465,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Thấp";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Trung Bình";
+"medium"="Thường";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Cao";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1475,7 +1483,7 @@
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Các mã QR cũ sẽ bị vô hiệu hóa.";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
-"My QR code"="Mã QR của tài khoản này:";
+"My QR code"="Mã QR của TK";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Quét Mã";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1483,7 +1491,7 @@
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Mã không phù hợp";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
-"codeScanned"="Quét mã hoàn thành";
+"codeScanned"="Quét mã xong";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Đã chia sẻ cho:";
 /* Item menu option upon right click on one or multiple files. */
@@ -1551,7 +1559,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Tiến hành đăng xuất";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to log out, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="Bạn đang chuẩn bị tiến hành đăng xuất tài khoản, xin thử kiểm tra rằng bạn có nhớ mật khẩu. Nếu quên mất, bạ sẽ mất quyền truy cập vào dữ liệu MEGA của mình.";
 /* state previous to import a file */
 "loading"="Đang tải...";
 /*   */
@@ -1563,11 +1571,11 @@
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Khởi động lại MEGAsync";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Tiếp tục xem tại điểm tạm dừng?";
+"resumePlayback"="Tiếp tục phát?";
 /* Message to show the user info (name and time) about the resume of the video */
 "continueOrRestartVideoMessage"="%1$s sẽ được tiếp tục tại mốc %2$s";
 /*  */
-"resume"="Tiếp tục truyền tải";
+"resume"="Tiếp tục truyền";
 /* Title to preview document */
 "previewContent"="Xem Trước Nội Dung";
 /* Title of the notification for a missed call */
@@ -1765,9 +1773,9 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Đang lưu vào Ảnh…";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="All Media";
+"All Media"="Tất Cả Media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Downloading %@";
+"Downloading %@"="Đang tải về %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Đã lưu vào Ảnh";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -1883,7 +1891,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Quá trình thanh toán cho gói %1 không thành công.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Gói thành viên hạng Pro sẽ hết hạn trong 1 ngày.";
+"Your PRO membership plan will expire in 1 day."="Gói thành viên hạng Pro sẽ hết hạn vào ngày mai.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Tài khoản hạng Pro sẽ hết hạn trong %1 ngày tới.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -1963,7 +1971,7 @@
 /* Text button for init a group chat */
 "New Group Chat"="Nhóm Chát Mới";
 /* Title for the recents section. */
-"Recents"="Hoạt Động Gần Đây";
+"Recents"="Sử Dụng Mới Đây";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 tệp Hình Ảnh";
 /* Multiple videos title shown in recents section of web client. */
@@ -2135,7 +2143,7 @@
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Thánh toán bị quá hạn";
 /* Business account status */
-"Active"="Còn";
+"Active"="Hoạt động";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Chức vụ:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2209,7 +2217,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
 /* Alert header for asking permission to resume transfers*/
-"Resume Transfers?"="Tiếp Tục Phiên Truyền Tải?";
+"Resume Transfers?"="Tiếp Tục Các Truyền Tải?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Chất Lượng Hình Ảnh";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2225,7 +2233,7 @@
 /* Setting title for Doc scan view */
 "Save Settings"="Tùy Chọn Khi Lưu";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="Dạng tệp";
+"File Type"="Dạng Tệp";
 /* export Quality Option for Scan document */
 "best"="Tốt nhất";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
@@ -2299,7 +2307,7 @@
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Chúng tôi đã gửi thông báo vào địa chỉ email <b>%@</b> của quý khách vào ngày <b>%@</b> nhưng quý khách vẫn còn %@ tệp tin chiếm tới <b>%@</b> trong tài khoản MEGA, quý khách cần phải nâng câp lên <b>%@</b> để đáp ứng dung lượng.</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.*/
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Chúng tôi đã gửi thông báo tới địa chỉ email <b>%@</b> của quý khách vào ngày <b>%@</b> nhưng quý khách vẫn còn %@ tệp tin chiến tới <b>%@</b> trong tài khoản MEGA, xin quý khách liên hệ với đội trợ giúp để mua thuê bao theo nhu cầu đáp ứng việc lưu trữ.</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Chúng tôi đã gửi thông báo tới địa chỉ email <b>%@</b> của quý khách vào ngày <b>%@</b> nhưng quý khách vẫn còn %@ tệp tin chiến tới <b>%@</b> trong tài khoản MEGA, xin quý khách liên hệ với đội trợ giúp để mua gói cước theo nhu cầu đáp ứng việc lưu trữ.</paragraph>";
 /* Over Disk Quota of number of days*/
 "%d days"="%d ngày";
 /* Over Disk Quota of must act immediately to save your data*/
@@ -2421,35 +2429,35 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email đã được gửi đi rồi. Xin chờ vài phút trước khi gửi lại cái mới.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Quản Lý Lịch Sử Chát";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="History Clearing";
+"History Clearing"="Dọn Dẹp Lịch Sử";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Automatically delete messages older than a certain amount of time.";
+"Automatically delete messages older than a certain amount of time"="Tự động xóa đi các tin nhắn đã tồn đọng trong một khoảng thời gian.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Tự động xóa các tin nhắn đã có lâu hơn một ngày.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Tự động xóa các tin nhắn đã có lâu hơn một tuần.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
-"Automatically delete messages older than one month"="Automatically delete messages older than one month.";
+"Automatically delete messages older than one month"="Tự động xóa các tin nhắn đã có lâu hơn một tháng.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"Automatically delete messages older than %1"="Tự động xóa các tin nhắn đã có lâu hơn %1";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Xóa tất cả tin nhắn và tệp tin đã chia sẻ trong cuộc trò chuyện này. Việc này sẽ không thể hoàn tác.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Clear Messages Older Than";
+"Clear Messages Older Than"="Xóa Các Tin Nhắn Đã Có Lâu Hơn";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="One Day";
+"One Day"="Một Ngày";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="One Week";
+"One Week"="Một Tuần";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="One Month";
+"One Month"="Một Tháng";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Custom…";
+"Custom..."="Chỉnh…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] đã thay đổi thời gian tự động xóa tin nhắn đã có lâu là[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] đã vô hiệu tính năng tự động xóa tin nhắn đã có lâu.[/B]";
 /*  */
 "hour"="giờ";
 /*  */
@@ -2463,9 +2471,9 @@
 /*  */
 "weeks"="tuần";
 /*  */
-"1 week"="1 week";
+"1 week"="1 tuần";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 tuần";
 /*  */
 "month"="tháng";
 /*  */
@@ -2487,13 +2495,13 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Đang phát";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn dời thư mục Camera Uploads vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Tải Lên Tệp Tin";
 /* Text title for shortcuts, ie in the widget */
 "Shortcuts"="Lối Tắt";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Khởi động ứng dụng MEGA để thực hiện tác vụ";
 /* Title for document explorer view */
 "Documents"="Tệp Tài Liệu";
 /* Title for audio explorer view */
@@ -2517,7 +2525,7 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Trang chủ";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Văn bản";
+"Docs"="Văn Bản";
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có mã giải khóa. Ban có muốn chia sẻ mã bây giờ không?";
 /* Title for password protect link alert */
@@ -2533,7 +2541,7 @@
 /* Cookie dialog header */
 "Before You Continue"="Trước khi tiếp tục";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Chúng tôi sử dụng không gian lưu trữ nội bộ và các công nghệ tương tự (“Cookies”) để cung cấp dịch vụ của chúng tôi cho khách hàng, nâng cao trải nghiệm của khách hàng với các dịch vụ của chúng tôi và tùy chỉnh các quảng cáo mà khách hàng thấy, bao gồm cả thông qua các bên thứ ba. Xin chấp nhận việc sử dụng Cookies của chúng tôi hoặc tùy chỉnh theo ý thích trong phần Cài Đặt Cookie. Đọc thêm về [A]Chính Sách Cookie[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Chấp Nhận Cookies";
 /* Cookie settings dialog text. */
@@ -2541,7 +2549,7 @@
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "Always On"="Luôn Bật";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Cần thiết để cung cấp cho quý khách chức năng quan trọng và quyền truy cập an toàn vào các dịch vụ của chúng tôi. Vì thế, các mục này không cần yêu cầu sự đồng ý.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Cần thiết để cung cấp cho quý khách chức năng quan trọng và quyền truy cập an toàn vào các dịch vụ của chúng tôi. Vì thế, các mục này không yêu cầu sự đồng ý.";
 /* Cookie settings dialog text. */
 "Preference Cookies"="Cookies Theo Ý Thích";
 /* Cookie settings dialog text. */
@@ -2557,7 +2565,7 @@
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Cookies Bên Thứ Ba";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Đây là những Cookies được kiểm soát bởi ai đó không phải từ phía chúng tôi; chúng tôi sử dụng các Cookies này để cung cấp các chức năng được mô tả ở trên. Việc không chấp nhận các Cookie này sẽ có các tác động khác nhau tùy thuộc vào loại Cookies của bên thứ ba. Clíck vào ‘Thêm Thông Tin’ bên dưới để biết chi tiết về tất cả các Cookies của bên thứ ba mà chúng tôi sử dụng.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Đây là những Cookies được kiểm soát bởi ai đó không phải từ phía chúng tôi; chúng tôi sử dụng các Cookies này để cung cấp các chức năng được mô tả ở trên. Việc không chấp nhận các Cookie này sẽ có các tác động khác nhau tùy thuộc vào loại Cookies của bên thứ ba. Clíck vào “Thêm Thông Tin” bên dưới để biết chi tiết về tất cả các Cookies của bên thứ ba mà chúng tôi sử dụng.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Thêm Thông Tin";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
@@ -2579,16 +2587,16 @@
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="XEM THÊM";
 /* Title for the QuickAccess widget */
-"Quick Access"="Quick Access";
+"Quick Access"="Truy Cập Nhanh";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or the Offline section";
+"Quickly access files on Recents, Favourites, or Offline section"="Truy cập nhanh vào tệp tin trong phần Gần Đây, Ưa Thích, và Lưu Ngoại Tuyến";
 /* Text description for the Favourites QuickAccess widget */
-"Quickly access files on Favourites section"="Quickly access files from your Favourites section";
+"Quickly access files on Favourites section"="Truy cập nhanh vào các tệp tin trong phần Ưa Thích";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="Quickly access files from your Recents section";
+"Quickly access files on Recents section"="Truy cập nhanh vào các tệp tin trong phần Sử Dụng Mới Đây";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Quickly access files from your Offline section";
+"Quickly access files on Offline section"="Truy cập nhanh vào các tệp tin trong phần Lưu Ngoại Tuyến";
 /* Dialog title for the no enough device storage screen */
-"The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
+"The device does not have enough space for MEGA to run properly."="Thiết bị này không đủ không gian để MEGA chạy bình thường.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Giảm tải không gian bằng cách xóa đi các ứng dụng không có sử dụng hoặc các video có kích thước lớn trong thư viện ảnh. Quản lý không gian trong phần %@";
