@@ -25,6 +25,7 @@ final class AudioPlayer: NSObject {
     var listenerManager = ListenerManager<AudioPlayerObserversProtocol>()
     var presenterListenerManager = ListenerManager<AudioPlayerPresenterProtocol>()
     let preloadMetadataMaxItems = 3
+    let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
     var opQueue = OperationQueue() {
         didSet {

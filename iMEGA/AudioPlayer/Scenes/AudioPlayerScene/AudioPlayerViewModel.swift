@@ -7,6 +7,8 @@ enum AudioPlayerAction: ActionType {
     case onPlayPause
     case onNext
     case onPrevious
+    case onGoBackward
+    case onGoForward
     case onRepeatPressed
     case showPlaylist
     case initMiniPlayer
@@ -240,6 +242,10 @@ final class AudioPlayerViewModel: ViewModelType {
                 repeatItemsState = .loop
             }
             playerHandler.playNext()
+        case .onGoBackward:
+            playerHandler.goBackward()
+        case .onGoForward:
+            playerHandler.goForward()
         case .onRepeatPressed:
             switch repeatItemsState {
             case .none: repeatItemsState = .loop
