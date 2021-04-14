@@ -82,8 +82,7 @@ class ContactsGroupsViewController: UIViewController {
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
-        let messagesVC = ChatViewController()
-        messagesVC.chatRoom = chatRoom;
+        let messagesVC = ChatViewController(chatRoom: chatRoom)
         navigationController?.pushViewController(messagesVC, animated: true)
     }
     
@@ -97,13 +96,11 @@ class ContactsGroupsViewController: UIViewController {
             guard let users = users as? [MEGAUser] else {
                 return
             }
-
-            let messagesVC = ChatViewController()
-
+            
             if keyRotation {
                 MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(usersArray: users, title: groupName, completion: { chatRoom in
                     self?.addNewChatToList(chatRoom: chatRoom)
-                    messagesVC.chatRoom = chatRoom
+                    let messagesVC = ChatViewController(chatRoom: chatRoom)
                     self?.navigationController?.pushViewController(messagesVC, animated: true)
                 })
             } else {
@@ -112,21 +109,23 @@ class ContactsGroupsViewController: UIViewController {
                         return
                     }
                     self?.addNewChatToList(chatRoom: chatRoom)
-                    messagesVC.chatRoom = chatRoom
                     if getChatlink {
-                        MEGASdkManager.sharedMEGAChatSdk().createChatLink(messagesVC.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
+                        MEGASdkManager.sharedMEGAChatSdk().createChatLink(chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
                             if error.type == .MEGAChatErrorTypeOk {
+                                let messagesVC = ChatViewController(chatRoom: chatRoom)
                                 messagesVC.publicChatWithLinkCreated = true
                                 messagesVC.publicChatLink = URL(string: request.text)
                                 self?.navigationController?.pushViewController(messagesVC, animated: true)
                             }
                         }))
                     } else {
+                        let messagesVC = ChatViewController(chatRoom: chatRoom)
                         self?.navigationController?.pushViewController(messagesVC, animated: true)
                     }
                 }))
             }
         }
+        
         present(contactsNavigation, animated: true, completion: nil)
     }
 }

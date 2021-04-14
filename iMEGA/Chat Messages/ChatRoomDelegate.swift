@@ -92,8 +92,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
-        chatViewController?.chatRoom = chat
+        
+        if (chat == nil) {
+            return
+        }
+        
+        chatViewController?.update(chatRoom: chat)
         chatRoom = chat
+
         switch chat.changes {
         case .participants:
             if UIApplication.mnz_visibleViewController() == chatViewController {

@@ -1057,9 +1057,12 @@
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
-    chatViewController.chatRoom = chatRoom;
+    if (chatRoom == nil) {
+        MEGALogDebug(@"ChatRoom is empty");
+        return;
+    }
     
+    ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
     [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
