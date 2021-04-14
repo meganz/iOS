@@ -25,6 +25,7 @@ final class AudioPlayer: NSObject {
     var listenerManager = ListenerManager<AudioPlayerObserversProtocol>()
     var presenterListenerManager = ListenerManager<AudioPlayerPresenterProtocol>()
     let preloadMetadataMaxItems = 3
+    let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
     var opQueue = OperationQueue() {
         didSet {
@@ -32,6 +33,7 @@ final class AudioPlayer: NSObject {
             opQueue.maxConcurrentOperationCount = preloadMetadataMaxItems
         }
     }
+    var onClosePlayerCompletion: (() -> Void)?
     
     //MARK: - Private properties
     private let assetQueue = DispatchQueue(label: "player.queue", qos: .utility)
@@ -43,7 +45,7 @@ final class AudioPlayer: NSObject {
   
     //MARK: - Internal Computed Properties
     var currentIndex: Int? {
-        queuePlayer?.items().firstIndex(where:{($0 as? AudioPlayerItem)?.node == currentItem()?.node})
+        queuePlayer?.items().firstIndex(where:{$0 as? AudioPlayerItem == currentItem()})
     }
     
     var currentName: String? {
@@ -108,13 +110,20 @@ final class AudioPlayer: NSObject {
         if let config = config { audioPlayerConfig = config }
     }
     
-    @objc func close() {
+    deinit {
+        queuePlayer = nil
+        onClosePlayerCompletion?()
+    }
+    
+    @objc func close(_ completion: @escaping () -> Void) {
+        onClosePlayerCompletion = completion
+        if isPlaying {
+            pause()
+        }
         unregisterAudioPlayerEvents()
         invalidateTimer()
         unregisterRemoteControls()
         unregisterAudioPlayerNotifications()
-        queuePlayer = nil
-        setDefaultAudioSession()
     }
     
     private func setupPlayer() {
@@ -153,16 +162,6 @@ final class AudioPlayer: NSObject {
         setAudioSession(active: active)
     }
     
-    func setDefaultAudioSession() {
-        do {
-        try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
-        try AVAudioSession.sharedInstance().setMode(.voiceChat)
-        try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch {
-            MEGALogError("[AudioPlayer] Restore default AVAudioSession Error: \(error.localizedDescription)")
-        }
-    }
-    
     func setAudioSession(active: Bool) {
         do {
             try active ? AVAudioSession.sharedInstance().setActive(active) :
@@ -173,10 +172,9 @@ final class AudioPlayer: NSObject {
     }
     
     func resetAudioSessionCategoryIfNeeded() {
-        if AVAudioSession.sharedInstance().category != .playback ||
-            AVAudioSession.sharedInstance().categoryOptions != .defaultToSpeaker {
+        if AVAudioSession.sharedInstance().category != .playback {
             do {
-                try AVAudioSession.sharedInstance().setCategory(.playback, options: [.defaultToSpeaker])
+                try AVAudioSession.sharedInstance().setCategory(.playback)
             } catch {
                 MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
             }
@@ -254,11 +252,14 @@ extension AudioPlayer: AudioPlayerTimerProtocol {
             invalidateTimer()
         }
         
-        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
+        timer = Timer(timeInterval: 0.01, repeats: true) { [weak self] _ in
             guard let `self` = self else { return }
             self.notify(self.aboutCurrentState)
         }
         endBackgroundTask()
+        
+        guard let timer = timer else { return }
+        RunLoop.current.add(timer, forMode: .common)
     }
     
     func invalidateTimer() {

@@ -1,11 +1,13 @@
 @testable import MEGA
 
 final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
+    var goBackward_calledTimes = 0
     var playPrevious_calledTimes = 0
     var togglePlay_calledTimes = 0
     var pause_calledTimes = 0
     var play_calledTimes = 0
     var playNext_calledTimes = 0
+    var goForward_calledTimes = 0
     var updateProgressCompleted_calledTimes = 0
     var onShuffle_calledTimes = 0
     var onRepeatAll_calledTimes = 0
@@ -57,6 +59,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func playerShuffle(active: Bool) {
         onShuffle_calledTimes += 1
     }
+    
+    func goBackward() {
+        goBackward_calledTimes += 1
+    }
    
     func playPrevious() {
         playPrevious_calledTimes += 1
@@ -78,6 +84,13 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         playNext_calledTimes += 1
     }
     
+<<<<<<< HEAD
+=======
+    func goForward() {
+        goForward_calledTimes += 1
+    }
+    
+>>>>>>> c071294f1b0714f2aaa97622eef1cad966523be9
     func play(item: AudioPlayerItem) {
         playItem_calledTimes += 1
     }

@@ -54,25 +54,47 @@
     [container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription * _Nonnull storeDescription, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"error when to create core data stack %@", error);
-            [[FIRCrashlytics crashlytics] recordError:error];
-            
             if (shouldConfigFileProtection) {
                 [self addProtectionToURL:self.storeURL];
-                abort();
+                [self abortAppWithError:error];
             } else {
                 if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
                     container = [self newPersistentContainerByConfigFileProtection:YES];
-                } else if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_FULL) {
+                } else if ([self isDiskFullError:error]) {
                     container = nil;
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
                 } else {
-                    abort();
+                    [self abortAppWithError:error];
                 }
             }
         }
     }];
 
     return container;
+}
+
+- (void)abortAppWithError:(NSError *)error {
+    if (error.userInfo[NSSQLiteErrorDomain] != nil) {
+        NSInteger sqliteErrorCode = [error.userInfo[NSSQLiteErrorDomain] integerValue];
+        NSError *sqliteError = [NSError errorWithDomain:NSSQLiteErrorDomain code:sqliteErrorCode userInfo:nil];
+        [[FIRCrashlytics crashlytics] recordError:sqliteError];
+    } else {
+        [[FIRCrashlytics crashlytics] recordError:error];
+    }
+    
+    abort();
+}
+
+- (BOOL)isDiskFullError:(NSError *)error {
+    if ([error.domain isEqualToString:NSSQLiteErrorDomain] && error.code == SQLITE_FULL) {
+        return YES;
+    }
+    
+    if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_FULL) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - managed object contexts

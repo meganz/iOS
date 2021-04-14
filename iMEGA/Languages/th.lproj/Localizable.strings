@@ -296,6 +296,10 @@
 "Location"="ตำแหน่งที่ตั้ง";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="คลิปเสียง";
+/* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
+"new_text_file"="ไฟล์ข้อความใหม่";
+/* Hint text shown on the new text file alert. */
+"file_name"="ชื่อไฟล์";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="โฟล์เดอร์ใหม่";
 /* Hint text shown on the create folder alert. */
@@ -446,6 +450,10 @@
 "rename"="เปลี่ยนชื่อ";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="กรอกชื่อใหม่";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
+/* Title for the action that allows you to replace a file. */
+"replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="ย้ายไปที่ถังขยะ";
 /* Success message shown when you have moved 1 file to the rubbish bin */

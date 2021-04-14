@@ -37,11 +37,17 @@ final class AudioPlayerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .onPlayPause, expectedCommands: [])
         XCTAssertEqual(playerHandler.togglePlay_calledTimes, 1)
         
+        test(viewModel: viewModel, action: .onGoBackward, expectedCommands: [])
+        XCTAssertEqual(playerHandler.goBackward_calledTimes, 1)
+        
         test(viewModel: viewModel, action: .onPrevious, expectedCommands: [])
         XCTAssertEqual(playerHandler.playPrevious_calledTimes, 1)
         
         test(viewModel: viewModel, action: .onNext, expectedCommands: [])
         XCTAssertEqual(playerHandler.playNext_calledTimes, 1)
+        
+        test(viewModel: viewModel, action: .onGoForward, expectedCommands: [])
+        XCTAssertEqual(playerHandler.goForward_calledTimes, 1)
         
         test(viewModel: viewModel, action: .onRepeatPressed, expectedCommands:[.updateRepeat(status: .loop)])
         XCTAssertEqual(playerHandler.onRepeatAll_calledTimes, 1)
