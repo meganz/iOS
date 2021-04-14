@@ -97,6 +97,7 @@ final class BackupRegister {
                                   backupType: .cameraUploads,
                                   targetNode: node,
                                   folderPath: MEGACameraUploadsFolderPath,
+                                  backupName: NSLocalizedString("cameraUploadsLabel", comment: ""),
                                   state: .active,
                                   delegate: HeartbeatRequestDelegate { [sdk = self.sdk] result in
                                     switch result {

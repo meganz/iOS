@@ -296,6 +296,10 @@
 "Location"="位置";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="语音剪辑";
+/* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
+"new_text_file"="新文本文档";
+/* Hint text shown on the new text file alert. */
+"file_name"="文件名";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新建文件夹";
 /* Hint text shown on the create folder alert. */
@@ -446,6 +450,10 @@
 "rename"="重命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="输入新名字";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
+/* Title for the action that allows you to replace a file. */
+"replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="移至垃圾桶";
 /* Success message shown when you have moved 1 file to the rubbish bin */

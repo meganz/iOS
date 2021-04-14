@@ -130,6 +130,15 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AVAudioSession.sharedInstance mnz_configureAVSessionForCall];
+    }
+}
+
 //- (void)viewWillAppear:(BOOL)animated {
 //    [super viewWillAppear:animated];
 //    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
@@ -478,6 +487,7 @@
 }
 
 - (IBAction)hideCall:(UIButton *)sender {
+<<<<<<< HEAD
 //    MEGAChatSession *remoteSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
 //    if (remoteSession.hasVideo) {
 //        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:remoteSession.peerId cliendId:remoteSession.clientId delegate:self.remoteVideoImageView];
@@ -498,6 +508,25 @@
 //    [self.timer invalidate];
 //
 //    [self dismissViewControllerAnimated:YES completion:nil];
+=======
+    MEGAChatSession *remoteSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
+    if (remoteSession.hasVideo) {
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:remoteSession.peerId cliendId:remoteSession.clientId delegate:self.remoteVideoImageView];
+    }
+    
+    if (!self.localVideoImageView.hidden) {        
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
+    }
+    
+    
+    [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.switchCameraButton.selected forKey:@"oneOnOneCallCameraSwitched"];
+    
+    [self.timer invalidate];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+>>>>>>> c071294f1b0714f2aaa97622eef1cad966523be9
 }
 
 - (IBAction)switchCamera:(UIButton *)sender {

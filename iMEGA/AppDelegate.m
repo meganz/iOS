@@ -1672,7 +1672,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case MEGARequestTypeFetchNodes: {
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
-            [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
@@ -1720,6 +1719,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (@available(iOS 14.0, *)) {
                 [self.quickAccessWidgetManager createWidgetItemData];
             }
+            
+            [self presentBusinessExpiredViewIfNeeded];
             
             break;
         }

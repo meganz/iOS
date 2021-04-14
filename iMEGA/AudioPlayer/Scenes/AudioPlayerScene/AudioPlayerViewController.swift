@@ -14,9 +14,11 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     @IBOutlet weak var timeSliderView: MEGASlider!
+    @IBOutlet weak var goBackwardButton: MEGAPlayerButton!
     @IBOutlet weak var previousButton: MEGAPlayerButton!
     @IBOutlet weak var playPauseButton: MEGAPlayerButton!
     @IBOutlet weak var nextButton: MEGAPlayerButton!
+    @IBOutlet weak var goForwardButton: MEGAPlayerButton!
     @IBOutlet weak var shuffleButton: MEGASelectedButton!
     @IBOutlet weak var repeatButton: MEGASelectedButton!
     @IBOutlet weak var bottomView: UIView!
@@ -161,9 +163,11 @@ final class AudioPlayerViewController: UIViewController {
     
     private func userInteraction(enable: Bool) {
         timeSliderView.isUserInteractionEnabled = enable
+        goBackwardButton.isEnabled = enable
         previousButton.isEnabled = enable
         playPauseButton.isEnabled = enable
         nextButton.isEnabled = enable
+        goForwardButton.isEnabled = enable
         if viewModel.playerType != .fileLink {
             shuffleButton.isEnabled = enable
             repeatButton.isEnabled = enable
@@ -257,6 +261,10 @@ final class AudioPlayerViewController: UIViewController {
         viewModel.dispatch(.onShuffle(active: shuffleButton.isSelected))
     }
     
+    @IBAction func goBackwardsButtonAction(_ sender: Any) {
+        viewModel.dispatch(.onGoBackward)
+    }
+    
     @IBAction func previousButtonAction(_ sender: Any) {
         viewModel.dispatch(.onPrevious)
     }
@@ -267,6 +275,10 @@ final class AudioPlayerViewController: UIViewController {
     
     @IBAction func nextButtonAction(_ sender: Any) {
         viewModel.dispatch(.onNext)
+    }
+    
+    @IBAction func goForwardButtonAction(_ sender: Any) {
+        viewModel.dispatch(.onGoForward)
     }
     
     @IBAction func repeatButtonAction(_ sender: Any) {

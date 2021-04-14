@@ -209,8 +209,8 @@ class ChatViewController: MessagesViewController {
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatDelegate)
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatCallDelegate)
 
-        previewerView.isHidden = chatRoom.previewersCount == 0
-        previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
+        previewerView.isHidden = chatRoom?.previewersCount == 0
+        previewerView.previewersLabel.text = "\(chatRoom?.previewersCount ?? 0)"
         configureNavigationBar()
                 
         NotificationCenter.default.addObserver(self,
@@ -553,7 +553,13 @@ class ChatViewController: MessagesViewController {
             let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath)  else {
                 return false
         }
-        return messages[indexPath.section].sender.senderId == messages[previousMessageIndexPath.section].sender.senderId
+        
+        guard let currentSenderId = messages[safe: indexPath.section]?.sender.senderId,
+              let previousSenderId = messages[safe: previousMessageIndexPath.section]?.sender.senderId else {
+            return false
+        }
+        
+        return currentSenderId == previousSenderId
     }
     
     func avatarImage(for message: MessageType) -> UIImage? {

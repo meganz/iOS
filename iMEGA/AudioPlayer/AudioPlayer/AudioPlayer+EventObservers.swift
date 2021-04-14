@@ -15,22 +15,33 @@ extension AudioPlayer {
     }
     
     func unregisterAudioPlayerEvents() {
-        audioQueueObserver?.invalidate()
-        audioQueueStatusObserver?.invalidate()
-        audioQueueNewItemObserver?.invalidate()
-        audioQueueRateObserver?.invalidate()
-        audioQueueWaitingObserver?.invalidate()
-        audioQueueStallObserver?.invalidate()
-        audioQueueBufferEmptyObserver?.invalidate()
-        audioQueueBufferAlmostThereObserver?.invalidate()
-        audioQueueBufferFullObserver?.invalidate()
-        metadataQueueFinishAllOperationsObserver?.invalidate()
+        if #available(iOS 11.0, *) {
+            audioQueueObserver?.invalidate()
+            audioQueueStatusObserver?.invalidate()
+            audioQueueNewItemObserver?.invalidate()
+            audioQueueRateObserver?.invalidate()
+            audioQueueWaitingObserver?.invalidate()
+            audioQueueStallObserver?.invalidate()
+            audioQueueBufferEmptyObserver?.invalidate()
+            audioQueueBufferAlmostThereObserver?.invalidate()
+            audioQueueBufferFullObserver?.invalidate()
+            metadataQueueFinishAllOperationsObserver?.invalidate()
+        } else {
+            removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.rate))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.timeControlStatus))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.reasonForWaitingToPlay))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem.isPlaybackBufferEmpty))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem.isPlaybackLikelyToKeepUp))
+            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem.isPlaybackBufferFull))
+            removeObserver(self, forKeyPath: #keyPath(OperationQueue.operationCount))
+        }
     }
     
     func registerAudioPlayerNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: AVAudioSession.interruptionNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(changeRoute:)), name: AVAudioSession.routeChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogout(notification:)), name: Notification.Name.MEGALogout, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: Notification.Name.MEGAAudioPlayerInterruption, object: nil)
     }
     
@@ -184,9 +195,5 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         }
         
         notify(aboutCurrentState)
-    }
-    
-    @objc func didReceiveLogout(notification: Notification) {
-        close()
     }
 }

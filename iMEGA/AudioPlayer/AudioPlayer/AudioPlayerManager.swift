@@ -85,6 +85,10 @@ import Foundation
         player?.shuffle(active)
     }
     
+    func goBackward() {
+        player?.rewind(direction: .backward)
+    }
+    
     func playPrevious() {
         player?.blockAudioPlayerInteraction()
         player?.playPrevious() { [weak self] in
@@ -120,6 +124,10 @@ import Foundation
         player?.playNext() { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
         }
+    }
+    
+    func goForward() {
+        player?.rewind(direction: .forward)
     }
     
     func play(item: AudioPlayerItem) {
@@ -192,9 +200,11 @@ import Foundation
     }
     
     func closePlayer() {
-        player?.close()
-        player?.updateContentViews()
+        player?.close() {
+            AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
+        }
         
+        player?.updateContentViews()
         miniPlayerHandlerListenerManager.notify{$0.closeMiniPlayer()}
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)

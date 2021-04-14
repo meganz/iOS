@@ -321,6 +321,7 @@ static TransfersWidgetViewController* instance = nil;
     if (self.completedButton.selected) {
         
         MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
+        if (transfer == nil) return;
         
         if (tableView.isEditing) {
             [self.selectedTransfers addObject:transfer];
