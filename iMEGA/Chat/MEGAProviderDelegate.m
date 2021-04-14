@@ -263,18 +263,6 @@
     }
 }
 
-- (void)sendAudioPlayerInterruptDidStartNotificationIfNeeded {
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared audioInterruptionDidStart];
-    }
-}
-
-- (void)sendAudioPlayerInterruptDidEndNotificationIfNeeded {
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
-    }
-}
-    
 - (void)reportEndCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report end call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
     
