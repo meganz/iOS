@@ -147,10 +147,13 @@ extension ChatViewController {
                 
                 showSuccess = chatIdNumbers?.count ?? 0 > 1
             } else if chatIdNumbers?.count == 1 && self.chatRoom.isPreview {
-                let chatId = chatIdNumbers?.first!.uint64Value
-                let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId!)
-                let messagesVC = ChatViewController()
-                messagesVC.chatRoom = chatRoom
+                
+                guard let chatId = chatIdNumbers?.first?.uint64Value,
+                      let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
+                    MEGALogDebug("Cannot find chatRoom chat")
+                    return
+                }
+                let messagesVC = ChatViewController(chatRoom: chatRoom)
                 self.replaceCurrentViewController(withViewController: messagesVC)
             } else {
                 showSuccess = true
