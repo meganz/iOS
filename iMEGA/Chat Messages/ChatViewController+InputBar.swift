@@ -12,8 +12,7 @@ extension ChatViewController {
             return nil
         }
            
-        if let chatRoom = chatRoom,
-            chatRoom.isPublicChat,
+        if chatRoom.isPublicChat,
             chatRoom.isPreview,
         !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
             return joinInputBar
@@ -132,8 +131,11 @@ extension ChatViewController {
             dismissChatRoom()
         } else {
             let delegate = MEGAChatGenericRequestDelegate { (request, error) in
-                let chatViewController = ChatViewController()
-                chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle)
+                guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
+                    MEGALogDebug("ChatRoom not found with chat handle \(request.chatHandle)")
+                    return
+                }
+                let chatViewController = ChatViewController(chatRoom: chatRoom)
                 self.closeChatRoom()
                 self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
                 button.isEnabled = true
@@ -242,13 +244,15 @@ extension ChatViewController {
             }
         } else {
             let createChatGroupRequestDelegate = MEGAChatGenericRequestDelegate { request, error in
-                let newChatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle)
+                guard let newChatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
+                    MEGALogDebug("Cannot find chatRoom chat id \(request.chatHandle)")
+                    return
+                }
                 if getChatLink {
                     let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {
-                            let chatViewController = ChatViewController()
+                            let chatViewController = ChatViewController(chatRoom: newChatRoom)
                             chatViewController.publicChatWithLinkCreated = true
-                            chatViewController.chatRoom = newChatRoom
                             chatViewController.publicChatLink = URL(string: request.text)
                             self.replaceCurrentViewController(withViewController: chatViewController)
                             SVProgressHUD.setDefaultMaskType(.none)
@@ -256,12 +260,7 @@ extension ChatViewController {
                         }
                     }
                     
-                    guard let chatId = newChatRoom?.chatId else {
-                        fatalError("could not create chatlink The chat id is nil")
-                    }
-
-                    
-                    MEGASdkManager.sharedMEGAChatSdk().createChatLink(chatId, delegate: genericRequestDelegate)
+                    MEGASdkManager.sharedMEGAChatSdk().createChatLink(newChatRoom.chatId, delegate: genericRequestDelegate)
                 } else {
                     self.open(chatRoom: newChatRoom)
                 }
@@ -284,9 +283,8 @@ extension ChatViewController {
         return (navController, contactsViewController)
     }
     
-    private func open(chatRoom: MEGAChatRoom?) {
-        let chatViewController = ChatViewController()
-        chatViewController.chatRoom = chatRoom
+    private func open(chatRoom: MEGAChatRoom) {
+        let chatViewController = ChatViewController(chatRoom: chatRoom)
         replaceCurrentViewController(withViewController: chatViewController)
         SVProgressHUD.setDefaultMaskType(.none)
         SVProgressHUD.dismiss()
