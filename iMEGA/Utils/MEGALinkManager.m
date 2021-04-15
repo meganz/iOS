@@ -641,6 +641,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 + (void)handleContactLink {
     NSString *path = [MEGALinkManager.linkURL absoluteString];
     NSRange rangeOfPrefix = [path rangeOfString:@"C!"];
+    if (rangeOfPrefix.location == NSNotFound) {
+        return;
+    }
     NSString *contactLinkHandle = [path substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
     uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
 
