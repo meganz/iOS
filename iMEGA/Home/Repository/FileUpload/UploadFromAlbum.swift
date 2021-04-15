@@ -15,7 +15,7 @@ extension UploadFromAlbum {
         
         return Self { assets, parentNodeHandle in
             assets.forEach { identifier in
-                megaStore?.insertUploadTransfer(withLocalIdentifier: identifier, parentNodeHandle: parentNodeHandle)
+                megaStore.insertUploadTransfer(withLocalIdentifier: identifier, parentNodeHandle: parentNodeHandle)
             }
             Helper.startPendingUploadTransferIfNeeded()
         }

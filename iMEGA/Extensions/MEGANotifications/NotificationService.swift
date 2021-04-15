@@ -176,7 +176,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 let base64messageId = MEGASdk.base64Handle(forUserHandle: msgId) ?? ""
                 let base64chatId = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
                 MEGALogDebug("Post notification: message \(base64messageId) found in chat \(base64chatId)")
-                MEGAStore.shareInstance()?.insertMessage(msgId, chatId: chatId)
+                MEGAStore.shareInstance().insertMessage(msgId, chatId: chatId)
             }
         }
         
@@ -231,8 +231,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         bestAttemptContent?.categoryIdentifier = "nz.mega.chat.message"
         
-        if let moMessage = MEGAStore.shareInstance()?.fetchMessage(withChatId: chatId, messageId: msgId) {
-            MEGAStore.shareInstance()?.delete(moMessage)
+        if let moMessage = MEGAStore.shareInstance().fetchMessage(withChatId: chatId, messageId: msgId) {
+            MEGAStore.shareInstance().delete(moMessage)
             postNotification(withError: "Already notified")
         }
         

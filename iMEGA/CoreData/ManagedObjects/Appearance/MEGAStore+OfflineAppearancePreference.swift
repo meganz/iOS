@@ -14,7 +14,7 @@ extension MEGAStore {
             offlineAppearancePreference.sortType = NSNumber.init(value: sortType)
         }
         
-        MEGAStore.shareInstance()?.save(context)
+        MEGAStore.shareInstance().save(context)
     }
     
     @objc func insertOrUpdateOfflineViewMode(path: String, viewMode: Int) {
@@ -28,7 +28,7 @@ extension MEGAStore {
             offlineAppearancePreference.viewMode = NSNumber.init(value: viewMode)
         }
         
-        MEGAStore.shareInstance()?.save(context)
+        MEGAStore.shareInstance().save(context)
     }
     
     @objc func fetchOfflineAppearancePreference(path: String) -> OfflineAppearancePreference? {
@@ -77,7 +77,7 @@ extension MEGAStore {
             MEGALogDebug("Deleted OfflineAppearancePreference \(offlineAppearancePreference)")
             context.delete(offlineAppearancePreference)
             
-            MEGAStore.shareInstance()?.save(context)
+            MEGAStore.shareInstance().save(context)
         }
     }
     

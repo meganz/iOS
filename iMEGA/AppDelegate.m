@@ -1401,7 +1401,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                         [sdk getUserAttributeType:MEGAUserAttributeLastname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeUserAlias]) {
-                        [self fetchContactsNickname];
+                        [self updateContactsNickname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
                         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
@@ -1686,7 +1686,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [self requestUserName];
             [self requestContactsFullname];
-            [self fetchContactsNickname];
+            [self updateContactsNickname];
             
             [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
             
@@ -1801,7 +1801,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 }
             } else if (request.paramType == MEGAUserAttributeAlias) {
-                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle nickname:request.name context:nil];
+                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle nickname:request.name];
             }
             break;
         }

@@ -20,7 +20,7 @@ extension MEGAStore {
             transferObject.filepath = filepath
             transferObject.chatRoomId = chatRoomId
             transferObject.transferTag = transferTag
-            MEGAStore.shareInstance()?.save(context)
+            MEGAStore.shareInstance().save(context)
         }
     }
     
@@ -30,7 +30,7 @@ extension MEGAStore {
             transfer.nodeHandle = nodeHandle
             transfer.appData = appData
         }
-        MEGAStore.shareInstance()?.save(context)
+        MEGAStore.shareInstance().save(context)
         
         if transfers.isEmpty {
             MEGALogError("ChatUploadTransfer object does not exists")
@@ -116,7 +116,7 @@ extension MEGAStore {
             do {
                 if let object = try context.fetch(fetchRequest).first {
                     context.delete(object)
-                    MEGAStore.shareInstance()?.save(context)
+                    MEGAStore.shareInstance().save(context)
                 } else {
                     MEGALogError("Could not find ChatUploadTransfer object to delete")
                 }

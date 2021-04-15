@@ -23,9 +23,7 @@
 }
 
 - (void)setMnz_nickname:(NSString *)mnz_nickname {
-    [MEGAStore.shareInstance updateUserWithUserHandle:self.handle
-                                               nickname:mnz_nickname
-                                              context:nil];
+    [MEGAStore.shareInstance updateUserWithUserHandle:self.handle nickname:mnz_nickname];
 }
 
 - (NSString *)mnz_displayName {

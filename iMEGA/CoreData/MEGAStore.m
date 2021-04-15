@@ -1,6 +1,7 @@
 
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
+#import "CoreDataErrorHandler.h"
 
 @interface MEGAStore ()
 
@@ -63,30 +64,26 @@
     return newStoreURL;
 }
 
-- (void)saveContext {
-    if ([NSThread isMainThread]) {
-        NSError *error = nil;
-        if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
-            MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    } else {
-        [self saveContext:self.managedObjectContext];
-    }
-}
-
 - (void)saveContext:(NSManagedObjectContext *)context {
     [context performBlockAndWait:^{
         NSError *error = nil;
         if (context.hasChanges && ![context save:&error]) {
             MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
-            abort();
+            [self handleSaveContextError:error];
         }
         
         if (context.parentContext != nil) {
             [self saveContext:context.parentContext];
         }
     }];
+}
+
+- (void)handleSaveContextError:(NSError *)error {
+    if ([CoreDataErrorHandler isSQLiteFullError:error]) {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
+    } else {
+        [CoreDataErrorHandler abortAppWithError:error];
+    }
 }
 
 #pragma mark - MOOfflineNode entity
@@ -105,7 +102,7 @@
 
     MEGALogDebug(@"Save context: insert offline node: %@", offlineNode);
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
@@ -169,7 +166,7 @@
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
     [self.managedObjectContext deleteObject:offlineNode];
     MEGALogDebug(@"Save context - remove offline node: %@", offlineNode);
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (void)removeAllOfflineNodes {
@@ -187,7 +184,7 @@
         [self.managedObjectContext deleteObject:offNode];
     }
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder {
@@ -229,7 +226,7 @@
     
     MEGALogDebug(@"Save context - insert user: %@", moUser.description);
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname {
@@ -237,7 +234,7 @@
     
     if (moUser) {
         moUser.firstname = firstname;
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -246,7 +243,7 @@
     
     if (moUser) {
         moUser.lastname = lastname;
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -255,24 +252,19 @@
     
     if (moUser) {
         moUser.email = email;
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
-- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname context:(NSManagedObjectContext *)context {
-    MOUser *moUser;
-    if (context != nil) {
-        moUser = [self fetchUserWithUserHandle:userHandle context:context];
-    } else {
-        moUser = [self fetchUserWithUserHandle:userHandle];
-    }
-
-    if (moUser) {
-        moUser.nickname = nickname;
-        if (context == nil && NSThread.isMainThread) {
-            [self saveContext];
+- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname {
+    NSManagedObjectContext *context = [self.stack newBackgroundContext];
+    [context performBlockAndWait:^{
+        MOUser *moUser = [self fetchUserWithUserHandle:userHandle context:context];
+        if (moUser) {
+            moUser.nickname = nickname;
+            [self saveContext:context];
         }
-    }
+    }];
 }
 
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname {
@@ -280,7 +272,7 @@
     
     if (moUser) {
         moUser.firstname = firstname;
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -289,7 +281,7 @@
 
     if (moUser) {
         moUser.lastname = lastname;
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -298,7 +290,7 @@
 
     if (moUser) {
         moUser.nickname = nickname;
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -366,7 +358,7 @@
         MEGALogDebug(@"Save context - remove chat draft with chatId %@", moChatDraft.chatId);
     }
 
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (MOChatDraft *)fetchChatDraftWithChatId:(uint64_t)chatId {
@@ -402,7 +394,7 @@
         MEGALogDebug(@"Save context - insert media destination with fingerprint %@ and destination %@", moMediaDestination.fingerprint, moMediaDestination.destination);
     }
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint {
@@ -414,7 +406,7 @@
         MEGALogDebug(@"Save context - remove media destination with fingerprint %@", moMediaDestination.fingerprint);
     }
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint {
@@ -440,7 +432,7 @@
     
     MEGALogDebug(@"Save context - insert MOUploadTransfer with local identifier %@", localIdentifier);
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
@@ -449,7 +441,7 @@
         
         MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
         
-        [self saveContext];
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -485,7 +477,7 @@
         [self.managedObjectContext deleteObject:uploadTransfer];
     }
     
-    [self saveContext];
+    [self saveContext:self.managedObjectContext];
 }
 
 #pragma mark - MOMessage entity

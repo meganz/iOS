@@ -6,7 +6,7 @@ extension MEGAChatMessage {
             return nil
         }
         
-        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: userHandle(at: index)),
+        if let user = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle(at: index)),
             let nickname = user.nickname,
             !nickname.isEmpty {
             return nickname

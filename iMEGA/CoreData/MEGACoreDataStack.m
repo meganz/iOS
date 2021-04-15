@@ -1,4 +1,5 @@
 #import "MEGACoreDataStack.h"
+#import "CoreDataErrorHandler.h"
 @import Firebase;
 @import SQLite3;
 
@@ -56,45 +57,21 @@
             MEGALogError(@"error when to create core data stack %@", error);
             if (shouldConfigFileProtection) {
                 [self addProtectionToURL:self.storeURL];
-                [self abortAppWithError:error];
+                [CoreDataErrorHandler abortAppWithError:error];
             } else {
                 if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
                     container = [self newPersistentContainerByConfigFileProtection:YES];
-                } else if ([self isDiskFullError:error]) {
+                } else if ([CoreDataErrorHandler isSQLiteFullError:error]) {
                     container = nil;
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
                 } else {
-                    [self abortAppWithError:error];
+                    [CoreDataErrorHandler abortAppWithError:error];
                 }
             }
         }
     }];
 
     return container;
-}
-
-- (void)abortAppWithError:(NSError *)error {
-    if (error.userInfo[NSSQLiteErrorDomain] != nil) {
-        NSInteger sqliteErrorCode = [error.userInfo[NSSQLiteErrorDomain] integerValue];
-        NSError *sqliteError = [NSError errorWithDomain:NSSQLiteErrorDomain code:sqliteErrorCode userInfo:nil];
-        [[FIRCrashlytics crashlytics] recordError:sqliteError];
-    } else {
-        [[FIRCrashlytics crashlytics] recordError:error];
-    }
-    
-    abort();
-}
-
-- (BOOL)isDiskFullError:(NSError *)error {
-    if ([error.domain isEqualToString:NSSQLiteErrorDomain] && error.code == SQLITE_FULL) {
-        return YES;
-    }
-    
-    if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_FULL) {
-        return YES;
-    }
-    
-    return NO;
 }
 
 #pragma mark - managed object contexts
