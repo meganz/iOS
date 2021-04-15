@@ -22,6 +22,8 @@ protocol AudioPlayerStateProtocol {
     func isDefaultRepeatMode() -> Bool
     func setProgressCompleted(_ percentage: Float)
     func setProgressCompleted(_ position: TimeInterval)
+    func progressDragEventBegan()
+    func progressDragEventEnded()
     func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func deletePlaylist(items: [AudioPlayerItem])
     func resetPlayerItems()
@@ -127,6 +129,8 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem])
     func playerProgressCompleted(percentage: Float)
+    func playerProgressDragEventBegan()
+    func playerProgressDragEventEnded()
     func playerShuffle(active: Bool)
     func goBackward()
     func playPrevious()

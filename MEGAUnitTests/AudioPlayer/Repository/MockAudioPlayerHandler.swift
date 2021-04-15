@@ -9,6 +9,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var playNext_calledTimes = 0
     var goForward_calledTimes = 0
     var updateProgressCompleted_calledTimes = 0
+    var progressDragEventBeganCalledTimes = 0
+    var progressDragEventEndedCalledTimes = 0
     var onShuffle_calledTimes = 0
     var onRepeatAll_calledTimes = 0
     var onRepeatOne_calledTimes = 0
@@ -54,6 +56,14 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func playerProgressCompleted(percentage: Float) {
         updateProgressCompleted_calledTimes += 1
+    }
+    
+    func playerProgressDragEventBegan() {
+        progressDragEventBeganCalledTimes += 1
+    }
+    
+    func playerProgressDragEventEnded() {
+        progressDragEventEndedCalledTimes += 1
     }
     
     func playerShuffle(active: Bool) {
