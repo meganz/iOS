@@ -91,7 +91,7 @@ extension ChatViewController {
 
     func loadDraft() {
         if let chatInputBar = inputAccessoryView as? ChatInputBar,
-            let text = MEGAStore.shareInstance()?.fetchChatDraft(withChatId: chatRoom.chatId)?.text,
+            let text = MEGAStore.shareInstance().fetchChatDraft(withChatId: chatRoom.chatId)?.text,
             !text.isEmpty {
             chatInputBar.set(text: text, showKeyboard: false)
         }
@@ -102,7 +102,7 @@ extension ChatViewController {
             return
         }
         
-        MEGAStore.shareInstance()?.insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : chatInputBar.text)
+        MEGAStore.shareInstance().insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : chatInputBar.text)
     }
     
     func presentShareLocation(editing:Bool = false) {

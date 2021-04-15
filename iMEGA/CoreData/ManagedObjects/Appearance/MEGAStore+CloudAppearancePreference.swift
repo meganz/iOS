@@ -14,7 +14,7 @@ extension MEGAStore {
             cloudAppearancePreference.sortType = NSNumber.init(value: sortType)
         }
         
-        MEGAStore.shareInstance()?.save(context)
+        MEGAStore.shareInstance().save(context)
     }
     
     @objc func insertOrUpdateCloudViewMode(handle: UInt64, viewMode: Int) {
@@ -28,7 +28,7 @@ extension MEGAStore {
             cloudAppearancePreference.viewMode = NSNumber.init(value: viewMode)
         }
         
-        MEGAStore.shareInstance()?.save(context)
+        MEGAStore.shareInstance().save(context)
     }
     
     @objc func fetchCloudAppearancePreference(handle: UInt64) -> CloudAppearancePreference? {
@@ -77,7 +77,7 @@ extension MEGAStore {
             MEGALogDebug("Delete CloudAppearancePreference \(cloudAppearancePreference)")
             context.delete(cloudAppearancePreference)
             
-            MEGAStore.shareInstance()?.save(stack.viewContext)
+            MEGAStore.shareInstance().save(stack.viewContext)
         } else {
             MEGALogError("Failed to delete CloudAppearancePreference \(handle), it does not exist on Core Data.")
         }
@@ -93,6 +93,6 @@ extension MEGAStore {
             context.delete(cloudAppearancePreference)
         }
         
-        MEGAStore.shareInstance()?.save(context)
+        MEGAStore.shareInstance().save(context)
     }
 }

@@ -579,7 +579,7 @@ class ChatViewController: MessagesViewController {
 
     func initials(for message: MessageType) -> String {
 
-        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
+        if let user = MEGAStore.shareInstance().fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
             return (user.displayName as NSString).mnz_initialForAvatar()
         }
 
