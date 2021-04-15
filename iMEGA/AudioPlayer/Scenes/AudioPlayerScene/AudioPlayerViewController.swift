@@ -227,7 +227,7 @@ final class AudioPlayerViewController: UIViewController {
         if viewModel.playerType == .fileLink {
             bottomView.backgroundColor = .mnz_Elevated(traitCollection)
             view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-            bottomView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
+            bottomView.layer.addBorder(edge: .top, color: UIColor.mnz_grayBABABC(), thickness: 0.5)
         } else {
             view.backgroundColor = .mnz_backgroundElevated(traitCollection)
             viewModel.dispatch(.refreshRepeatStatus)
