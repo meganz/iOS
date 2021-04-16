@@ -87,7 +87,6 @@ final class AudioPlayerViewController: UIViewController {
         currentTimeLabel.text = currentTime
         remainingTimeLabel.text = remainingTime
         timeSliderView.setValue(percentage, animated: false)
-        MEGALogDebug("[AudioPlayer] slider percentage\(percentage)")
         playPauseButton.setImage(isPlaying ? UIImage(named: "pause") : UIImage(named: "play"), for: .normal)
         
         if timeSliderView.value == 1.0 {

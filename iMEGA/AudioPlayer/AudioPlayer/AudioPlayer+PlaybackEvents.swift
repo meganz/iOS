@@ -336,12 +336,10 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     @objc func progressDragEventBegan() {
-        MEGALogDebug("[AudioPlayer] invalidate timer during drag event")
         invalidateTimer()
     }
     
     @objc func progressDragEventEnded() {
-        MEGALogDebug("[AudioPlayer] set timer when the drag event finalizes")
         setTimer()
     }
     
