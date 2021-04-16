@@ -3,48 +3,70 @@ import XCTest
 
 final class AudioPlayerPlaybackTests: XCTestCase {
     
-    let player = AudioPlayer()
-    let tracks = AudioPlayerItem.mockArray
-
-    override func setUp() {
-        super.setUp()
-        player.add(tracks: tracks)
+    var audioPlayer = AudioPlayer()
+    var tracks: [AudioPlayerItem] = []
+    
+    override func setUpWithError() throws {
+        let file1URL = try XCTUnwrap(Bundle.main.url(forResource: "incoming_voice_video_call_iOS9", withExtension: "mp3"))
+        let file2URL = try XCTUnwrap(Bundle.main.url(forResource: "incoming_voice_video_call", withExtension: "mp3"))
+        
+        let track1 = AudioPlayerItem(name: "file 1", url: file1URL, node: nil)
+        let track2 = AudioPlayerItem(name: "file 2", url: file2URL, node: nil)
+        
+        tracks.append(contentsOf: [track1, track2])
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        tracks.removeAll()
     }
 
     func testAudioPlayerSetup() throws {
-        XCTAssertTrue(player.tracks.count == tracks.count)
-        XCTAssertTrue(player.isPlaying)
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
+        XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
+        XCTAssertTrue(audioPlayer.isPlaying)
     }
     
-    func testAudioPlayerPlayNext() {
+    func testAudioPlayerPlayNext() throws {
         let expect = expectation(description: "Play next item")
-        XCTAssertNotNil(player.currentIndex)
-        XCTAssertTrue(player.currentIndex == 0)
-        let nextItem = tracks[(player.currentIndex ?? 0) + 1]
-        player.playNext() {
+        
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
+        XCTAssertNotNil(audioPlayer.currentIndex)
+        XCTAssertTrue(audioPlayer.currentIndex == 0)
+        
+        let nextItem = audioPlayer.tracks[(audioPlayer.currentIndex ?? 0) + 1]
+        
+        audioPlayer.playNext() {
             expect.fulfill()
         }
         
         waitForExpectations(timeout: 0.5) { error in
             XCTAssertNil(error)
-            XCTAssertNotNil(self.player.currentItem)
-            XCTAssertTrue(nextItem == self.player.currentItem())
+            XCTAssertNotNil(self.audioPlayer.currentItem)
+            XCTAssertTrue(nextItem == self.audioPlayer.currentItem())
         }
     }
     
-    func testAudioPlayerPlayPrevious() {
+    func testAudioPlayerPlayPrevious() throws {
         let expect = expectation(description: "Play previous item")
-        let currentItem = tracks[(player.currentIndex ?? 0)]
-        XCTAssertNotNil(player.currentIndex)
-        XCTAssertTrue(player.currentIndex == 0)
-        let nextItem = tracks[(player.currentIndex ?? 0) + 1]
-        player.playNext() {
-            XCTAssertNotNil(self.player.currentItem)
-            XCTAssertTrue(nextItem == self.player.currentItem())
+        
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
+        XCTAssertNotNil(audioPlayer.currentIndex)
+        XCTAssertTrue(audioPlayer.currentIndex == 0)
+        
+        let currentItem = try XCTUnwrap(audioPlayer.currentItem())
+        let nextItem = audioPlayer.tracks[(audioPlayer.currentIndex ?? 0) + 1]
+        
+        audioPlayer.playNext() {
+            XCTAssertNotNil(self.audioPlayer.currentItem)
+            XCTAssertTrue(nextItem == self.audioPlayer.currentItem())
             
-            self.player.playPrevious() {
-                XCTAssertNotNil(self.player.currentItem)
-                XCTAssertTrue(currentItem == self.player.currentItem())
+            self.audioPlayer.playPrevious() {
+                XCTAssertNotNil(self.audioPlayer.currentItem)
+                XCTAssertTrue(currentItem == self.audioPlayer.currentItem())
                 expect.fulfill()
             }
         }
@@ -56,22 +78,18 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     
     func testAudioPlayerRewindForward() throws {
         let expect = expectation(description: "Rewind forward")
-        let audioPlayer = AudioPlayer()
-        audioPlayer.add(tracks: [AudioPlayerItem(name: "Track 1",
-                                                 url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
-                                                 node: nil)])
+        
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
         let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
         let currentTime = queuePlayer.currentTime()
         XCTAssertTrue(CMTIME_IS_VALID(currentTime))
-        var observer: NSKeyValueObservation?
         
-        audioPlayer.play()
-        
-        observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
+        let observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
             switch (qPlayer.timeControlStatus) {
             case .playing:
-                audioPlayer.rewindForward(duration: CMTime(seconds: audioPlayer.defaultRewindInterval, preferredTimescale: qPlayer.currentTime().timescale)) { _ in
-                    XCTAssertTrue(currentTime.seconds + audioPlayer.defaultRewindInterval == qPlayer.currentTime().seconds)
+                self.audioPlayer.rewindForward(duration: CMTime(seconds: self.audioPlayer.defaultRewindInterval, preferredTimescale: qPlayer.currentTime().timescale)) { _ in
+                    XCTAssertTrue(currentTime.seconds + self.audioPlayer.defaultRewindInterval == qPlayer.currentTime().seconds)
                     expect.fulfill()
                 }
             default:
@@ -81,30 +99,26 @@ final class AudioPlayerPlaybackTests: XCTestCase {
 
         waitForExpectations(timeout: 3.0) { error in
             XCTAssertNil(error)
-            observer?.invalidate()
+            observer.invalidate()
         }
     }
     
     func testAudioPlayerRewindBackward() throws {
         let expect = expectation(description: "Rewind backward")
-        let audioPlayer = AudioPlayer()
-        audioPlayer.add(tracks: [AudioPlayerItem(name: "Track 1",
-                                                 url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
-                                                 node: nil)])
+        
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
         let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
         let currentTime = queuePlayer.currentTime()
         XCTAssertTrue(CMTIME_IS_VALID(currentTime))
-        var observer: NSKeyValueObservation?
         
-        audioPlayer.play()
-            
-        observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
+        let observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
             switch (qPlayer.timeControlStatus) {
             case .playing:
-                audioPlayer.rewindBackward { _ in
-                    XCTAssertTrue(currentTime.seconds <= audioPlayer.defaultRewindInterval ?
+                self.audioPlayer.rewindBackward { _ in
+                    XCTAssertTrue(currentTime.seconds <= self.audioPlayer.defaultRewindInterval ?
                                     qPlayer.currentTime().seconds == 0 :
-                                    currentTime.seconds == qPlayer.currentTime().seconds + audioPlayer.defaultRewindInterval)
+                                    currentTime.seconds == qPlayer.currentTime().seconds + self.audioPlayer.defaultRewindInterval)
                     expect.fulfill()
                 }
             default:
@@ -114,37 +128,46 @@ final class AudioPlayerPlaybackTests: XCTestCase {
 
         waitForExpectations(timeout: 3.0) { error in
             XCTAssertNil(error)
-            observer?.invalidate()
+            observer.invalidate()
         }
     }
     
     func testAudioPlayerPause() {
-        player.togglePlay()
-        XCTAssertTrue(player.isPaused)
-        player.togglePlay()
-        XCTAssertTrue(player.isPlaying)
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
+        audioPlayer.togglePlay()
+        XCTAssertTrue(audioPlayer.isPaused)
+        audioPlayer.togglePlay()
+        XCTAssertTrue(audioPlayer.isPlaying)
     }
     
     func testAudioPlayerDeleteItem() throws {
-        XCTAssertTrue(player.tracks.count == tracks.count)
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
+        XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
         let lastTrack = try XCTUnwrap(tracks.last)
-        player.deletePlaylist(items: [lastTrack])
-        XCTAssertTrue(player.tracks.count == tracks.count - 1)
+        audioPlayer.deletePlaylist(items: [lastTrack])
+        XCTAssertTrue(audioPlayer.tracks.count == tracks.count - 1)
     }
     
-    func testAudioPlayerInsertItemInPlaylist() {
-        let tracksNumber = player.tracks.count
-        let track = AudioPlayerItem.mockItem
-        player.insertInQueue(item: track, afterItem: nil)
-        XCTAssertTrue(player.tracks.count == tracksNumber + 1)
+    func testAudioPlayerInsertItemInPlaylist() throws {
+        XCTAssertTrue(tracks.count > 0)
+        let track = try XCTUnwrap(tracks.last)
+        tracks.removeLast()
+        audioPlayer.add(tracks: tracks)
+        let tracksNumber = audioPlayer.tracks.count
+        audioPlayer.insertInQueue(item: track, afterItem: nil)
+        XCTAssertTrue(audioPlayer.tracks.count == tracksNumber + 1)
     }
     
-    func testAudioPlayerMoveItems() {
-        XCTAssertTrue(player.tracks.count == tracks.count)
-        let firstTrack = player.tracks.first
-        XCTAssertNotNil(firstTrack)
-        let tracks = player.tracks
-        player.move(of: firstTrack ?? AudioPlayerItem.mockItem, to: IndexPath(row: player.tracks.count - 1, section: 0), direction: .down)
-        XCTAssertFalse(tracks.elementsEqual(player.tracks))
+    func testAudioPlayerMoveItems() throws {
+        XCTAssertTrue(tracks.count > 0)
+        audioPlayer.add(tracks: tracks)
+        XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
+        let track = try XCTUnwrap(tracks.first)
+        audioPlayer.move(of: track, to: IndexPath(row: audioPlayer.tracks.count - 1, section: 0), direction: .down)
+        let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
+        let playerTracks = try XCTUnwrap(queuePlayer.items() as? [AudioPlayerItem])
+        XCTAssertFalse(tracks.elementsEqual(playerTracks))
     }
 }
