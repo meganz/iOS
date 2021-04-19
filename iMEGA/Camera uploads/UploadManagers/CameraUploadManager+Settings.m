@@ -214,16 +214,8 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 #pragma mark - readonly properties
 
-+ (BOOL)isLivePhotoSupported {
-    if (@available(iOS 9.1, *)) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 + (BOOL)shouldScanLivePhotosForVideos {
-    return [self isLivePhotoSupported] && [self shouldUploadVideosForLivePhotos];
+    return [self shouldUploadVideosForLivePhotos];
 }
 
 + (BOOL)shouldShowCameraUploadBoardingScreen {
