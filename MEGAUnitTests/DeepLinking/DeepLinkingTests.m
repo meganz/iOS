@@ -41,10 +41,13 @@
 }
 
 - (void)testDeepLinkShouldReturnConfirmationLinkType {
-    NSURL *url = [NSURL URLWithString:@"https://mega.nz/confirm"];
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ"];
     XCTAssertEqual([url mnz_type], URLTypeConfirmationLink);
     
     XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/confirm?a=sdf&b=123"] mnz_type], URLTypeConfirmationLink);
+    
+    XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/#confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ"] mnz_type], URLTypeConfirmationLink);
+
 }
 
 - (void)testDeepLinkShouldReturnOpenInLinkType {
@@ -145,6 +148,9 @@
 - (void)testDeepLinkShouldReturnTypePublicChatLinkType {
     NSURL *url = [NSURL URLWithString:@"https://mega.nz/chat/X1FRRCaL#a7qjLayRnqR0fFHpov8DrA"];
     XCTAssertEqual([url mnz_type], URLTypePublicChatLink);
+        
+    NSURL *url1 = [NSURL URLWithString:@"mega://chat/5LpjxQAa#N_fC9cHlBXXWdbfpWQHrRg"];
+    XCTAssertEqual([url1 mnz_type], URLTypePublicChatLink);
     
     XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/chat/X1FRRCaL?a=sdf&b=123#a7qjLayRnqR0fFHpov8DrA"] mnz_type], URLTypePublicChatLink);
 }
