@@ -307,7 +307,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
         case URLTypeConfirmationLink: {
             MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [MEGAQuerySignupLinkRequestDelegate.alloc initWithCompletion:nil urlType:MEGALinkManager.urlType];
-            [MEGASdkManager.sharedMEGASdk querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            NSString *link = url.mnz_MEGAURL;
+            if ([url.path hasPrefix:@"/confirm"]) {
+                link = [link stringByReplacingOccurrencesOfString:@"confirm" withString:@"#confirm"];
+            }
+            [MEGASdkManager.sharedMEGASdk querySignupLink:link delegate:querySignupLinkRequestDelegate];
             break;
         }
             
