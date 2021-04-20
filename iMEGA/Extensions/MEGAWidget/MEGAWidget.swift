@@ -7,12 +7,7 @@ import Firebase
 struct MEGAWidgetsBundle: SwiftUI.WidgetBundle {
     init() {
         FirebaseApp.configure()
-        
-        NSSetUncaughtExceptionHandler { (exception) in
-            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
-            MEGALogError("Stack trace: \(exception.callStackSymbols)")
-        }
-        
+        UncaughtExceptionHandler.registerHandler()
         setupLogging()
     }
     

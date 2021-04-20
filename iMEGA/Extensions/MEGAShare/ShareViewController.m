@@ -66,6 +66,7 @@
     self = [super init];
     if (self) {
         [FIRApp configure];
+        [UncaughtExceptionHandler registerHandler];
     }
     return self;
 }
@@ -73,7 +74,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         switch ([request type]) {
           
@@ -432,11 +432,6 @@
         }
     }
     return newestDate;
-}
-
-void uncaughtExceptionHandler(NSException *exception) {
-    MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
-    MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
 }
 
 #pragma mark - Share Extension
