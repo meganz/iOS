@@ -77,11 +77,15 @@
 #pragma mark - managed object contexts
 
 - (NSManagedObjectContext *)viewContext {
-    return self.persistentContainer.viewContext;
+    NSManagedObjectContext *context = self.persistentContainer.viewContext;
+    context.mergePolicy = NSOverwriteMergePolicy;
+    return context;
 }
 
 - (NSManagedObjectContext *)newBackgroundContext {
-    return self.persistentContainer.newBackgroundContext;
+    NSManagedObjectContext *context = self.persistentContainer.newBackgroundContext;
+    context.mergePolicy = NSOverwriteMergePolicy;
+    return context;
 }
 
 - (void)performBackgroundTask:(void (^)(NSManagedObjectContext * _Nonnull))block {
