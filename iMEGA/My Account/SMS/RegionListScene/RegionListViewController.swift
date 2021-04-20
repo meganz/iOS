@@ -109,7 +109,7 @@ extension RegionListViewController: UITableViewDelegate {
         }
         
         if searchController.isActive {
-            dismiss(animated: false) {
+            dismiss(animated: true) {
                 routeToSelectedRegion()
             }
         } else {
