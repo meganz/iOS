@@ -16,6 +16,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
 #import "MEGAGenericRequestDelegate.h"
+#import "MEGAPicker-Swift.h"
 
 @import Firebase;
 
@@ -45,6 +46,7 @@
     self = [super initWithCoder:coder];
     if (self) {
         [FIRApp configure];
+        [UncaughtExceptionHandler registerHandler];
     }
     return self;
 }
