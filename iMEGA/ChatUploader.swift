@@ -78,7 +78,7 @@
     private func cleanupDatabase() {
         guard let context = store.stack?.newBackgroundContext() else  { return }
         
-        context.perform {
+        context.performAndWait {
             let transferList = MEGASdkManager.sharedMEGASdk().transfers
             MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
             let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
@@ -107,27 +107,29 @@
     }
     
     private func updateDatabase(withChatRoomIdString chatRoomIdString: String, context: NSManagedObjectContext) {
-        let allTransfers = store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
-        let index = allTransfers.firstIndex(where: { $0.nodeHandle == nil })
-        if let totalIndexes = (index == nil) ? allTransfers.count : index {
-            (0..<totalIndexes).forEach { index in
-                let transfer = allTransfers[index]
-                if let handle = transfer.nodeHandle,
-                   let nodeHandle = UInt64(handle),
-                   let chatRoomId = UInt64(chatRoomIdString) {
-                    
-                    if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
-                        MEGASdkManager.sharedMEGAChatSdk().attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
-                    } else {
-                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoomId, node: nodeHandle)
+        context.performAndWait {
+            let allTransfers = store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
+            let index = allTransfers.firstIndex(where: { $0.nodeHandle == nil })
+            if let totalIndexes = (index == nil) ? allTransfers.count : index {
+                (0..<totalIndexes).forEach { index in
+                    let transfer = allTransfers[index]
+                    if let handle = transfer.nodeHandle,
+                       let nodeHandle = UInt64(handle),
+                       let chatRoomId = UInt64(chatRoomIdString) {
+                        
+                        if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
+                            MEGASdkManager.sharedMEGAChatSdk().attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
+                        } else {
+                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoomId, node: nodeHandle)
+                        }
+                        
+                        MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")
+                        context.delete(transfer)
                     }
-                    
-                    MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")
-                    context.delete(transfer)
                 }
+                
+                store.save(context)
             }
-            
-            store.save(context)
         }
     }
 }
@@ -143,7 +145,7 @@ extension ChatUploader: MEGATransferDelegate {
         
         cleanupDatabaseIfRequired()
         
-        context.perform {
+        context.performAndWait {
             let allTransfers = self.store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
             if let transferTask = allTransfers.filter({ $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}).first {
                 transferTask.transferTag = String(transfer.tag)
@@ -179,7 +181,7 @@ extension ChatUploader: MEGATransferDelegate {
         MEGALogInfo("[ChatUploader] upload complete File path \(transfer.path ?? "No file path found")")
         
         transfer.mnz_moveFileToDestinationIfVoiceClipData()
-        context.perform {
+        context.performAndWait {
             self.store.updateChatUploadTransfer(filepath: transfer.path,
                                                 chatRoomId: chatRoomIdString,
                                                 nodeHandle: String(transfer.nodeHandle),
