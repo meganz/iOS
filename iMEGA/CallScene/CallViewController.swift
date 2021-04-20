@@ -127,12 +127,12 @@ extension CallsViewController: UICollectionViewDataSource {
             if cell.videoImageView.isHidden {
                 cell.videoImageView.isHidden = false
                 //Confirm that re adding remote video doesn't crash
-                MEGASdkManager.sharedMEGAChatSdk().addChatRemoteVideo(participant.chatId, peerId: participant.participantId, cliendId: participant.clientId, delegate: cell.videoImageView)
+                MEGASdkManager.sharedMEGAChatSdk().addChatRemoteVideo(participant.chatId, cliendId: participant.clientId, hiRes: false, delegate: cell.videoImageView)
                 cell.avatarImageView.isHidden = true
             }
         } else {
             if cell.avatarImageView.isHidden {
-                MEGASdkManager.sharedMEGAChatSdk().removeChatRemoteVideo(participant.chatId, peerId: participant.participantId, cliendId: participant.clientId, delegate: cell.videoImageView)
+                MEGASdkManager.sharedMEGAChatSdk().removeChatRemoteVideo(participant.chatId, cliendId: participant.clientId, hiRes: false, delegate: cell.videoImageView)
                 cell.avatarImageView.isHidden = false
                 cell.videoImageView.isHidden = true
             }

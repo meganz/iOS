@@ -502,7 +502,7 @@
                 }
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO enableAudio:YES delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
         self.navigationSubtitleLabel.text = NSLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
@@ -570,7 +570,8 @@
             }
         }
         if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
-            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
+            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress)) {
+//                if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
                 MEGALogDebug(@"[Audio] Enable loud speaker, category changed, but speaker was enabled");
                 [self enableLoudspeaker];
             }
@@ -694,7 +695,7 @@
     
     MEGAGroupCallPeer *previousPeerSelected = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
     if (!self.peerTalkingVideoView.hidden && previousPeerSelected) {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:previousPeerSelected.peerId cliendId:previousPeerSelected.clientId delegate:self.peerTalkingVideoView];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId cliendId:previousPeerSelected.clientId hiRes:NO delegate:self.peerTalkingVideoView];
         MEGALogDebug(@"[Group Call] Remove user focused remote video %p for peer %llu in client %llu --> %s", self.peerTalkingVideoView, previousPeerSelected.peerId, previousPeerSelected.clientId, __PRETTY_FUNCTION__);
     }
 }
@@ -880,7 +881,7 @@
     //if previous manual selected participant has video, remove it
     MEGAGroupCallPeer *previousPeerSelected = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
     if (previousPeerSelected && !self.peerTalkingVideoView.hidden) {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:previousPeerSelected.peerId cliendId:previousPeerSelected.clientId delegate:self.peerTalkingVideoView];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId cliendId:previousPeerSelected.clientId hiRes:NO delegate:self.peerTalkingVideoView];
         MEGALogDebug(@"[Group Call] Remove user focused remote video %p for peer %llu in client %llu --> %s", self.peerTalkingVideoView, previousPeerSelected.peerId, previousPeerSelected.clientId, __PRETTY_FUNCTION__);
     }
     
@@ -895,9 +896,9 @@
     }
     
     //configure large view for manual selected participant
-    MEGAChatSession *chatSessionManualMode = [self.call sessionForPeer:self.peerManualMode.peerId clientId:self.peerManualMode.clientId];
+    MEGAChatSession *chatSessionManualMode = [self.call sessionForClientId:self.peerManualMode.clientId];
     if (chatSessionManualMode.hasVideo) {
-        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionManualMode.peerId cliendId:chatSessionManualMode.clientId  delegate:self.peerTalkingVideoView];
+        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId cliendId:chatSessionManualMode.clientId hiRes:NO delegate:self.peerTalkingVideoView];
         MEGALogDebug(@"[Group Call] Add user focused remote video %p for peer %llu in client %llu --> %s", self.peerTalkingVideoView, chatSessionManualMode.peerId, chatSessionManualMode.clientId, __PRETTY_FUNCTION__);
         self.peerTalkingVideoView.hidden = NO;
         self.peerTalkingImageView.hidden = YES;

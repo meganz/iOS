@@ -135,8 +135,10 @@
                     self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
                     break;
                     
-                case MEGAChatCallStatusRingIn:
-                    self.chatLastMessage.text = NSLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                case MEGAChatCallStatusUserNoPresent:
+                    if (call.isRinging) {
+                        self.chatLastMessage.text = NSLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                    }
                     break;
                     
                 default:

@@ -5,22 +5,22 @@ extension ChatViewController {
         if chatRoom.ownPrivilege == .standard || chatRoom.ownPrivilege == .moderator {
             if (MEGASdkManager.sharedMEGAChatSdk().hasCall(inChatRoom: chatRoom.chatId)),
                 MEGAReachabilityManager.isReachable() {
-                let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId)
-                if !chatRoom.isGroup && call?.status == .destroyed {
+                guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
                     return
                 }
-                if MEGASdkManager.sharedMEGAChatSdk().chatCalls(withState: .inProgress)?.size == 1 && call?.status != .inProgress {
+                if !chatRoom.isGroup && call.status == .destroyed {
+                    return
+                }
+                if MEGASdkManager.sharedMEGAChatSdk().chatCalls(withState: .inProgress)?.size == 1 && call.status != .inProgress {
                     self.hideTopBannerButton()
                 } else {
-                    if call?.status == .inProgress {
-                        configureTopBannerButtonForInProgressCall(call!)
-                    } else if call?.status == .userNoPresent
-                                || call?.status == .requestSent
-                                || call?.status == .ringIn {
-                        configureTopBannerButtonForActiveCall(call!)
-                    } else if call?.status == .reconnecting {
-                        setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
-                        showTopBannerButton()
+                    if call.status == .inProgress {
+                        configureTopBannerButtonForInProgressCall(call)
+                    } else if call.status == .userNoPresent || call.isRinging {
+                        configureTopBannerButtonForActiveCall(call)
+//                    } else if call?.status == .reconnecting {
+//                        setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+//                        showTopBannerButton()
                     }
                 }
             } else {
@@ -69,9 +69,9 @@ extension ChatViewController {
 
             setTopBannerButton(title: String(format: NSLocalizedString("Touch to return to call %@", comment: "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_turquoise(for: traitCollection))
             timer = Timer(timeInterval: 1, repeats: true, block: { _ in
-                if self.chatCall?.status == .reconnecting {
-                    return
-                }
+//                if self.chatCall?.status == .reconnecting {
+//                    return
+//                }
                 let time = Date().timeIntervalSince1970 - startTime + initDuration
 
                 self.setTopBannerButton(title: String(format: NSLocalizedString("Touch to return to call %@", comment: "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_turquoise(for: self.traitCollection))
@@ -81,9 +81,9 @@ extension ChatViewController {
     }
 
     private func configureTopBannerButtonForInProgressCall(_ call: MEGAChatCall) {
-        if chatCall?.status == .reconnecting {
-            setTopBannerButton(title: NSLocalizedString("You are back!", comment: "Title shown when the user reconnect in a call."), color: UIColor.mnz_turquoise(for: traitCollection))
-        }
+//        if chatCall?.status == .reconnecting {
+//            setTopBannerButton(title: NSLocalizedString("You are back!", comment: "Title shown when the user reconnect in a call."), color: UIColor.mnz_turquoise(for: traitCollection))
+//        }
         initTimerForCall(call)
         showTopBannerButton()
     }
@@ -112,13 +112,13 @@ extension ChatViewController: MEGAChatCallDelegate {
             return
         }
         switch call.status {
-        case .userNoPresent, .requestSent:
+        case .userNoPresent:
             configureTopBannerButtonForActiveCall(call)
             configureNavigationBar()
         case .inProgress:
             configureTopBannerButtonForInProgressCall(call)
-        case .reconnecting:
-            setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+//        case .reconnecting:
+//            setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
         case .destroyed:
             timer?.invalidate()
             configureNavigationBar()
