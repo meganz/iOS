@@ -419,13 +419,14 @@
             }
         }
     }
-    
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
-    chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
-    
-    [self updateBackBarButtonItem:chatViewController.chatRoom.unreadCount];
-    
-    [self.navigationController pushViewController:chatViewController animated:YES];
+
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    if (chatRoom != nil) {
+        [self updateBackBarButtonItem:chatRoom.unreadCount];
+        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+        [self.navigationController pushViewController:chatViewController animated:YES];
+
+    }
 }
 
 
@@ -448,14 +449,16 @@
         }
     }
 
-    ChatViewController *messagesVC = [[ChatViewController alloc] init];
-    messagesVC.publicChatWithLinkCreated = YES;
-    messagesVC.publicChatLink = [NSURL URLWithString:publicLink];
-    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    
+    if (chatRoom != nil) {
+        [self updateBackBarButtonItem:chatRoom.unreadCount];
 
-    [self updateBackBarButtonItem:messagesVC.chatRoom.unreadCount];
-
-    [self.navigationController pushViewController:messagesVC animated:YES];
+        ChatViewController *messagesVC = [ChatViewController.alloc initWithChatRoom:chatRoom];
+        messagesVC.publicChatWithLinkCreated = YES;
+        messagesVC.publicChatLink = [NSURL URLWithString:publicLink];
+        [self.navigationController pushViewController:messagesVC animated:YES];
+    }
 }
 
 - (void)showStartConversation {
@@ -710,20 +713,19 @@
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
-    chatViewController.chatRoom = chatRoom;
-    
-    [self updateBackBarButtonItem:chatRoom.unreadCount];
-    
-    [self.navigationController pushViewController:chatViewController animated:YES];
+    if (chatRoom != nil) {
+        [self updateBackBarButtonItem:chatRoom.unreadCount];
+
+        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+        [self.navigationController pushViewController:chatViewController animated:YES];
+    }
 }
 
 - (void)createChatRoomWithUserAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
     
     [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-        ChatViewController *chatViewController = [ChatViewController.alloc init];
-        chatViewController.chatRoom = chatRoom;
+        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
         [self.navigationController pushViewController:chatViewController animated:YES];
     }];
     
@@ -937,20 +939,19 @@
 }
 
 - (void)blockCompletionsForCreateChatInContacts:(ContactsViewController *)contactsVC {
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
     
     contactsVC.userSelected = ^void(NSArray *users) {
         if (users.count == 1) {
             MEGAUser *user = users.firstObject;
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
             if (chatRoom) {
-                chatViewController.chatRoom = chatRoom;
                 dispatch_async(dispatch_get_main_queue(), ^(void){
+                    ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 });
             } else {
                 [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                    chatViewController.chatRoom = chatRoom;
+                    ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 }];
             }
@@ -958,32 +959,39 @@
     };
     
     contactsVC.chatSelected = ^(uint64_t chatId) {
-        chatViewController.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self.navigationController pushViewController:chatViewController animated:YES];
-        });
+        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
+        if (chatRoom != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+                [self.navigationController pushViewController:chatViewController animated:YES];
+            });
+        }
     };
     
     contactsVC.createGroupChat = ^void(NSArray *users, NSString *groupName, BOOL keyRotation, BOOL getChatLink) {
         if (keyRotation) {
             [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUsersArray:users title:groupName completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                chatViewController.chatRoom = chatRoom;
+                ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
                 [self.navigationController pushViewController:chatViewController animated:YES];
             }];
         } else {
             MEGAChatGenericRequestDelegate *createChatGroupRequestDelegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
-                chatViewController.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
-                if (getChatLink) {
-                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
-                        if (!error.type) {
-                            chatViewController.publicChatWithLinkCreated = YES;
-                            chatViewController.publicChatLink = [NSURL URLWithString:request.text];
-                            [self.navigationController pushViewController:chatViewController animated:YES];
-                        }
-                    }];
-                    [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatViewController.chatRoom.chatId delegate:delegate];
-                } else {
-                    [self.navigationController pushViewController:chatViewController animated:YES];
+                MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
+                if (chatRoom != nil) {
+                    if (getChatLink) {
+                        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+                            if (!error.type) {
+                                ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+                                chatViewController.publicChatWithLinkCreated = YES;
+                                chatViewController.publicChatLink = [NSURL URLWithString:request.text];
+                                [self.navigationController pushViewController:chatViewController animated:YES];
+                            }
+                        }];
+                        [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatRoom.chatId delegate:delegate];
+                    } else {
+                        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+                        [self.navigationController pushViewController:chatViewController animated:YES];
+                    }
                 }
             }];
             [MEGASdkManager.sharedMEGAChatSdk createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users] title:groupName delegate:createChatGroupRequestDelegate];
@@ -1134,16 +1142,16 @@
 
 - (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
     if (@available(iOS 13.0, *)) {
-        if (self.chatRoomsType == ChatRoomsTypeDefault && indexPath.section < 2) {
-            return nil;
-        }
         MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-        ChatViewController *chatViewController = [ChatViewController.alloc init];
+        
+        if ((self.chatRoomsType == ChatRoomsTypeDefault && indexPath.section < 2) || chatRoom == nil) {
+            return nil;
+        }
+
         UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+            ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
             chatViewController.previewMode = YES;
-            chatViewController.chatRoom = chatRoom;
-            
             return chatViewController;
             
         } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
@@ -1409,11 +1417,13 @@
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
-    chatViewController.previewMode = YES;
-    chatViewController.chatRoom = chatRoom;
+    if (chatRoom != nil) {
+        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+        chatViewController.previewMode = YES;
+        return chatViewController;
+    }
     
-    return chatViewController;
+    return nil;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {

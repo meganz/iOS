@@ -22,7 +22,7 @@ final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositoryProtoc
     }
     
     func getUsername() -> String {
-        let user = MEGAStore.shareInstance()?.fetchUser(withEmail: sdk.myEmail)
+        let user = MEGAStore.shareInstance().fetchUser(withEmail: sdk.myEmail)
         if let userName = user?.displayName,
             userName.count > 0 {
             return userName

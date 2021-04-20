@@ -307,7 +307,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
         case URLTypeConfirmationLink: {
             MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [MEGAQuerySignupLinkRequestDelegate.alloc initWithCompletion:nil urlType:MEGALinkManager.urlType];
-            [MEGASdkManager.sharedMEGASdk querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            NSString *link = url.mnz_MEGAURL;
+            if ([url.path hasPrefix:@"/confirm"]) {
+                link = [link stringByReplacingOccurrencesOfString:@"confirm" withString:@"#confirm"];
+            }
+            [MEGASdkManager.sharedMEGASdk querySignupLink:link delegate:querySignupLinkRequestDelegate];
             break;
         }
             
@@ -641,6 +645,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 + (void)handleContactLink {
     NSString *path = [MEGALinkManager.linkURL absoluteString];
     NSRange rangeOfPrefix = [path rangeOfString:@"C!"];
+    if (rangeOfPrefix.location == NSNotFound) {
+        return;
+    }
     NSString *contactLinkHandle = [path substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
     uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
 
@@ -787,12 +794,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
     
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    if (chatRoom == nil) {
+        return;
+    }
+    
     if ([rootViewController isKindOfClass:MainTabBarController.class]) {
-     
-        ChatViewController *chatViewController = [ChatViewController.alloc init];
-        chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
         chatViewController.publicChatLink = publicChatLink;
-        
         
         MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
         mainTBC.selectedIndex = TabTypeChat;
@@ -805,9 +814,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
         }
     } else {
-        ChatViewController *chatViewController = [ChatViewController.alloc init];
-           chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-           chatViewController.publicChatLink = publicChatLink;
+        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+        chatViewController.publicChatLink = publicChatLink;
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:chatViewController];
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];

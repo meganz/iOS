@@ -104,43 +104,23 @@ extension AppDelegate {
         UIApplication.mnz_presentingViewController().present(cookieDialogCustomModalAlert, animated: true, completion: nil)
     }
 
-    @objc func fetchContactsNickname() {
-        guard let megaStore = MEGAStore.shareInstance(),
-              let privateQueueContext = megaStore.stack?.newBackgroundContext() else {
-            return
-        }
-
-        privateQueueContext.perform {
-            self.requestNicknames(context: privateQueueContext, store: megaStore) {
-                OperationQueue.main.addOperation {
-                    NotificationCenter.default.post(name: Notification.Name(MEGAAllUsersNicknameLoaded), object: nil)
-                }
-            }
-        }
-    }
-
-    private func requestNicknames(context: NSManagedObjectContext, store: MEGAStore, completionBlock: @escaping (() -> Void)) {
+    @objc func updateContactsNickname() {
         let requestDelegate = MEGAGenericRequestDelegate { request, error in
-            if error.type != .apiOk {
-                return
+            guard error.type == .apiOk else { return }
+            guard let stringDictionary = request.megaStringDictionary else { return }
+            
+            let names = stringDictionary.compactMap { (key, value) -> (MEGAHandle, String)? in
+                guard let nickname = value.base64URLDecoded else { return nil }
+                return (MEGASdk.handle(forBase64UserHandle: key), nickname)
             }
-
-            if let stringDictionary = request.megaStringDictionary {
-                context.performAndWait {
-                    stringDictionary.forEach { key, value in
-                        let userHandle = MEGASdk.handle(forBase64UserHandle: key)
-                        
-                        if let nickname = value.base64URLDecoded {
-                            store.updateUser(withUserHandle: userHandle, nickname: nickname, context: context)
-                        }
-                    }
-                }
-
-                store.save(context)
-                completionBlock()
+            
+            MEGAStore.shareInstance().updateUserNicknames(by: names)
+            
+            OperationQueue.main.addOperation {
+                NotificationCenter.default.post(name: Notification.Name(MEGAAllUsersNicknameLoaded), object: nil)
             }
         }
-
+        
         MEGASdkManager.sharedMEGASdk().getUserAttributeType(.alias, delegate: requestDelegate)
     }
 

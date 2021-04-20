@@ -15,28 +15,16 @@ extension AudioPlayer {
     }
     
     func unregisterAudioPlayerEvents() {
-        if #available(iOS 11.0, *) {
-            audioQueueObserver?.invalidate()
-            audioQueueStatusObserver?.invalidate()
-            audioQueueNewItemObserver?.invalidate()
-            audioQueueRateObserver?.invalidate()
-            audioQueueWaitingObserver?.invalidate()
-            audioQueueStallObserver?.invalidate()
-            audioQueueBufferEmptyObserver?.invalidate()
-            audioQueueBufferAlmostThereObserver?.invalidate()
-            audioQueueBufferFullObserver?.invalidate()
-            metadataQueueFinishAllOperationsObserver?.invalidate()
-        } else {
-            removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.rate))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.timeControlStatus))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.reasonForWaitingToPlay))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem.isPlaybackBufferEmpty))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem.isPlaybackLikelyToKeepUp))
-            removeObserver(self, forKeyPath: #keyPath(AVQueuePlayer.currentItem.isPlaybackBufferFull))
-            removeObserver(self, forKeyPath: #keyPath(OperationQueue.operationCount))
-        }
+        audioQueueObserver?.invalidate()
+        audioQueueStatusObserver?.invalidate()
+        audioQueueNewItemObserver?.invalidate()
+        audioQueueRateObserver?.invalidate()
+        audioQueueWaitingObserver?.invalidate()
+        audioQueueStallObserver?.invalidate()
+        audioQueueBufferEmptyObserver?.invalidate()
+        audioQueueBufferAlmostThereObserver?.invalidate()
+        audioQueueBufferFullObserver?.invalidate()
+        metadataQueueFinishAllOperationsObserver?.invalidate()
     }
     
     func registerAudioPlayerNotifications() {
@@ -144,11 +132,9 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         case .began:
             guard !isAudioPlayerInterrupted, !isPaused else { return }
             
-            if #available(iOS 10.3, *) {
-                if let isAudioSessionSuspended = userInfo[AVAudioSessionInterruptionWasSuspendedKey] as? Bool, isAudioSessionSuspended {
-                    MEGALogDebug("[AudioPlayer] The Audio Session was deactivated by the system")
-                    return
-                }
+            if let isAudioSessionSuspended = userInfo[AVAudioSessionInterruptionWasSuspendedKey] as? Bool, isAudioSessionSuspended {
+                MEGALogDebug("[AudioPlayer] The Audio Session was deactivated by the system")
+                return
             }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")

@@ -3,6 +3,8 @@ import Foundation
 enum AudioPlayerAction: ActionType {
     case onViewDidLoad
     case updateCurrentTime(percentage: Float)
+    case progressDragEventBegan
+    case progressDragEventEnded
     case onShuffle(active: Bool)
     case onPlayPause
     case onNext
@@ -228,6 +230,10 @@ final class AudioPlayerViewModel: ViewModelType {
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .updateCurrentTime(let percentage):
             playerHandler.playerProgressCompleted(percentage: percentage)
+        case .progressDragEventBegan:
+            playerHandler.playerProgressDragEventBegan()
+        case .progressDragEventEnded:
+            playerHandler.playerProgressDragEventEnded()
         case .onShuffle(let active):
             playerHandler.playerShuffle(active: active)
         case .onPrevious:

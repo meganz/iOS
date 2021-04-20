@@ -18,7 +18,7 @@
 
 #pragma mark - Singleton Lifecycle
 
-+ (MEGAStore *)shareInstance;
++ (nonnull MEGAStore *)shareInstance;
 
 #pragma mark - MOOfflineNode entity
 
@@ -36,8 +36,7 @@
 - (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
-// Context is optional, passing nil will use the default main queue context.
-- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname context:(NSManagedObjectContext *)context;
+- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname;
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname;
 - (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname;
 - (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname;

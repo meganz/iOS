@@ -6,11 +6,8 @@ class ChatViewController: MessagesViewController {
     // MARK: - Properties
     let sdk = MEGASdkManager.sharedMEGASdk()
 
-    @objc var chatRoom: MEGAChatRoom! {
-        didSet {
-            update()
-        }
-    }
+    @objc private(set) var chatRoom: MEGAChatRoom
+    
     var chatCall: MEGAChatCall?
 
     @objc var publicChatLink: URL?
@@ -143,6 +140,15 @@ class ChatViewController: MessagesViewController {
         updateToolbarState()
     }
     
+    @objc init(chatRoom: MEGAChatRoom) {
+        self.chatRoom = chatRoom
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
@@ -163,6 +169,10 @@ class ChatViewController: MessagesViewController {
         
     }
     
+    @objc func update(chatRoom: MEGAChatRoom) {
+        self.chatRoom = chatRoom
+        update()
+    }
     
      @objc private func longPressed(_ gesture: UIGestureRecognizer) {
         
@@ -209,8 +219,8 @@ class ChatViewController: MessagesViewController {
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatDelegate)
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatCallDelegate)
 
-        previewerView.isHidden = chatRoom?.previewersCount == 0
-        previewerView.previewersLabel.text = "\(chatRoom?.previewersCount ?? 0)"
+        previewerView.isHidden = chatRoom.previewersCount == 0
+        previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
                 
         NotificationCenter.default.addObserver(self,
@@ -569,7 +579,7 @@ class ChatViewController: MessagesViewController {
 
     func initials(for message: MessageType) -> String {
 
-        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
+        if let user = MEGAStore.shareInstance().fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
             return (user.displayName as NSString).mnz_initialForAvatar()
         }
 
