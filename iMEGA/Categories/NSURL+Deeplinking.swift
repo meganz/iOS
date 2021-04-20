@@ -20,6 +20,7 @@ enum DeeplinkPathKey: String {
 enum DeeplinkFragmentKey: String {
     case file = "!"
     case folder = "F!"
+    case confirmation = "confirm"
     case encrypted = "P!"
     case newSignUp = "newsignup"
     case backup = "backup"
@@ -29,7 +30,24 @@ enum DeeplinkFragmentKey: String {
     case recover = "recover"
     case contact = "C!"
     case openChatSection = "fm/chat"
+    case publicChat = "chat"
 
+    // https://mega.nz/# + Base64Handle
+    case handle
+}
+
+enum DeeplinkHostKey: String {
+
+    case chatPeerOptions = "chatPeerOptions"
+    case publicChat = "chat"
+    
+    case shortcutUpload = "widget.shortcut.uploadFile"
+    case shortcutScanDocument = "widget.shortcut.scanDocument"
+    case shortcutStartConversation = "widget.shortcut.startConversation"
+    case shortcutAddContact = "widget.shortcut.addContact"
+    case shortcutRecent = "widget.quickaccess.recents"
+    case shortcutFavourites = "widget.quickaccess.favourites"
+    case shortcutOffline = "widget.quickaccess.offline"
     // https://mega.nz/# + Base64Handle
     case handle
 }
@@ -66,6 +84,8 @@ extension NSURL {
             return .fileLink
         } else if fragment.hasPrefix(DeeplinkFragmentKey.folder.rawValue) {
             return .folderLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.confirmation.rawValue) {
+            return .confirmationLink
         } else if fragment.hasPrefix(DeeplinkFragmentKey.encrypted.rawValue) {
             return .encryptedLink
         } else if fragment.hasPrefix(DeeplinkFragmentKey.newSignUp.rawValue) {
@@ -84,6 +104,8 @@ extension NSURL {
             return .contactLink
         } else if fragment.hasPrefix(DeeplinkFragmentKey.openChatSection.rawValue) {
             return .openChatSectionLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.publicChat.rawValue) {
+            return .publicChatLink
         } else if !fragment.isEmpty {
             return .handleLink
         }
@@ -92,22 +114,25 @@ extension NSURL {
     }
     
     private func parseMEGASchemeURL() -> URLType {
-        if host == "chatPeerOptions" {
+ 
+        if host == DeeplinkHostKey.chatPeerOptions.rawValue {
             return .chatPeerOptionsLink
-        } else if host == "widget.shortcut.uploadFile" {
+        } else if host == DeeplinkHostKey.publicChat.rawValue {
+            return .publicChatLink
+        } else if host == DeeplinkHostKey.shortcutUpload.rawValue {
             return .uploadFile
-        } else if host == "widget.shortcut.scanDocument" {
+        } else if host == DeeplinkHostKey.shortcutScanDocument.rawValue {
             return .scanDocument
-        } else if host == "widget.shortcut.startConversation" {
+        } else if host == DeeplinkHostKey.shortcutStartConversation.rawValue {
             return .startConversation
-        } else if host == "widget.shortcut.addContact" {
+        } else if host == DeeplinkHostKey.shortcutAddContact.rawValue {
             return .addContact
-        }  else if host == "widget.quickaccess.recents" {
+        }  else if host == DeeplinkHostKey.shortcutRecent.rawValue {
             return .showRecents
-        } else if host == "widget.quickaccess.favourites" {
+        } else if host == DeeplinkHostKey.shortcutFavourites.rawValue {
             guard let path = path, !path.isEmpty else { return .showFavourites }
             return .presentNode
-        } else if host == "widget.quickaccess.offline" {
+        } else if host == DeeplinkHostKey.shortcutOffline.rawValue  {
             guard let path = path, !path.isEmpty else { return .showOffline }
             return .presentOfflineFile
         }

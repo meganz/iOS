@@ -886,7 +886,7 @@
         self.itemListViewHeightConstraint.constant = 110;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        ItemListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ItemListViewControllerID"];
+        ItemListViewController *usersList = [[UIStoryboard storyboardWithName:@"ItemListViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"ItemListViewControllerID"];
         self.itemListVC = usersList;
         self.itemListVC.itemListDelegate = self;
         [self addChildViewController:usersList];
@@ -1061,9 +1061,12 @@
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
-    ChatViewController *chatViewController = [ChatViewController.alloc init];
-    chatViewController.chatRoom = chatRoom;
+    if (chatRoom == nil) {
+        MEGALogDebug(@"ChatRoom is empty");
+        return;
+    }
     
+    ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
     [self.navigationController pushViewController:chatViewController animated:YES];
 }
 

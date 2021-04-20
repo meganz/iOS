@@ -81,6 +81,14 @@ import Foundation
         player?.setProgressCompleted(percentage)
     }
     
+    func playerProgressDragEventBegan() {
+        player?.progressDragEventBegan()
+    }
+    
+    func playerProgressDragEventEnded() {
+        player?.progressDragEventEnded()
+    }
+    
     func playerShuffle(active: Bool) {
         player?.shuffle(active)
     }

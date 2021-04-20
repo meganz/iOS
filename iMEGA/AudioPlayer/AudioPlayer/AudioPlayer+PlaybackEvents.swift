@@ -17,7 +17,10 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
         
         let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
-        guard CMTIME_IS_VALID(time) else { return }
+        guard CMTIME_IS_VALID(time) else {
+            MEGALogDebug("[AudioPlayer] setProgressCompleted invalid time: \(time) timeInterval: \(position)")
+            return
+        }
         
         currentItem.seek(to: time, completionHandler: refreshCurrentState)
     }
@@ -330,6 +333,14 @@ extension AudioPlayer: AudioPlayerStateProtocol {
               let currentItem = queuePlayer.currentItem else { return }
         
         setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
+    }
+    
+    @objc func progressDragEventBegan() {
+        invalidateTimer()
+    }
+    
+    @objc func progressDragEventEnded() {
+        setTimer()
     }
     
     @objc func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {

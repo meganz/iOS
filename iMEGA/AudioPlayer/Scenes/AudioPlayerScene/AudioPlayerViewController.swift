@@ -13,7 +13,12 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var remainingTimeLabel: UILabel!
-    @IBOutlet weak var timeSliderView: MEGASlider!
+    @IBOutlet weak var timeSliderView: MEGASlider! {
+        didSet {
+            timeSliderView.minimumValue = 0
+            timeSliderView.maximumValue = 1
+        }
+    }
     @IBOutlet weak var goBackwardButton: MEGAPlayerButton!
     @IBOutlet weak var previousButton: MEGAPlayerButton!
     @IBOutlet weak var playPauseButton: MEGAPlayerButton!
@@ -22,6 +27,7 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var shuffleButton: MEGASelectedButton!
     @IBOutlet weak var repeatButton: MEGASelectedButton!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var toolbarView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var gotoplaylistButton: UIButton!
@@ -29,6 +35,7 @@ final class AudioPlayerViewController: UIViewController {
     
     private var toolbarConfigurator: AudioPlayerFileToolbarConfigurator?
     private var shadowLayer: CAShapeLayer?
+    private var pendingDragEvent: Bool = false
 
     // MARK: - Internal properties
     var viewModel: AudioPlayerViewModel!
@@ -79,11 +86,15 @@ final class AudioPlayerViewController: UIViewController {
     private func updatePlayerStatus(currentTime: String, remainingTime: String, percentage: Float, isPlaying: Bool) {
         currentTimeLabel.text = currentTime
         remainingTimeLabel.text = remainingTime
-        timeSliderView.value = percentage
+        timeSliderView.setValue(percentage, animated: false)
         playPauseButton.setImage(isPlaying ? UIImage(named: "pause") : UIImage(named: "play"), for: .normal)
         
         if timeSliderView.value == 1.0 {
             timeSliderView.cancelTracking(with: nil)
+            if pendingDragEvent {
+                viewModel.dispatch(.progressDragEventEnded)
+                pendingDragEvent = false
+            }
         }
     }
     
@@ -205,6 +216,7 @@ final class AudioPlayerViewController: UIViewController {
         shuffleButton.isUserInteractionEnabled = !active
         repeatButton.isUserInteractionEnabled = !active
         dataStackView.alignment = active ? .leading : .center
+        toolbarView.isHidden = active
         
         updateAppearance()
     }
@@ -227,7 +239,7 @@ final class AudioPlayerViewController: UIViewController {
         if viewModel.playerType == .fileLink {
             bottomView.backgroundColor = .mnz_Elevated(traitCollection)
             view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-            bottomView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
+            bottomView.layer.addBorder(edge: .top, color: UIColor.mnz_grayBABABC(), thickness: 0.5)
         } else {
             view.backgroundColor = .mnz_backgroundElevated(traitCollection)
             viewModel.dispatch(.refreshRepeatStatus)
@@ -289,7 +301,18 @@ final class AudioPlayerViewController: UIViewController {
         viewModel.dispatch(.showPlaylist)
     }
     
-    @IBAction func timeSliderValueChangeAction(_ sender: Any) {
+    @IBAction func timeSliderValueChangeAction(_ sender: Any, forEvent event: UIEvent) {
+        guard let touchEvent = event.allTouches?.first else { return }
+        switch touchEvent.phase {
+        case .began:
+            viewModel.dispatch(.progressDragEventBegan)
+            pendingDragEvent = true
+        case .ended:
+            viewModel.dispatch(.progressDragEventEnded)
+            pendingDragEvent = false
+        default: break
+        }
+        
         viewModel.dispatch(.updateCurrentTime(percentage: timeSliderView.value))
     }
     

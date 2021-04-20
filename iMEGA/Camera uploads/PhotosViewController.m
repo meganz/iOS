@@ -419,7 +419,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (MEGANode *)nodeFromIndexPath:(NSIndexPath * _Nonnull)indexPath {
-    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSDictionary *dict = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
+    if (dict == nil) {return nil;}
     NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     return [array objectOrNilAtIndex:indexPath.row];
@@ -626,7 +627,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:section];
+    NSDictionary *dict = [self.photosByMonthYearArray objectOrNilAtIndex:section];
+    if (dict == nil) {return 0;}
     NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     
@@ -666,7 +668,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
     cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     cell.thumbnailVideoDurationLabel.text = (node.name.mnz_isVideoPathExtension && node.duration > -1) ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
-
+    
     cell.thumbnailImageView.hidden = self.browsingIndexPath && self.browsingIndexPath == indexPath;
     
     cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -684,11 +686,13 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         }
         
         
-        NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-        NSString *month = dict.allKeys.firstObject;
-                
-        NSString *dateString = [NSString stringWithFormat:@"%@", month];
-        [headerView.dateLabel setText:dateString];
+        NSDictionary *dict = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
+        if (dict != nil) {
+            NSString *month = dict.allKeys.firstObject;
+            
+            NSString *dateString = [NSString stringWithFormat:@"%@", month];
+            [headerView.dateLabel setText:dateString];
+        }
         
         return headerView;
     } else {
@@ -856,10 +860,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
                 [self setEditing:NO animated:YES];
             }
             if (self.selectedItemsDictionary.count == 1) {
-                NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+                NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
+                if (monthPhotosDictionary == nil) {return;}
                 NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
                 NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
-                MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
+                MEGANode *nodeSelected = [monthPhotosArray objectOrNilAtIndex:indexPath.row];
+                if (nodeSelected == nil) {return;}
                 if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodeSelected.handle]]) {
                     [self setEditing:NO animated:YES];
                 }
@@ -887,10 +893,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
-    NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
+    if (monthPhotosDictionary == nil) {return nil;}
     NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
-    MEGANode *node = [monthPhotosArray objectAtIndex:indexPath.row];
+    MEGANode *node = [monthPhotosArray objectOrNilAtIndex:indexPath.row];
+    if (node == nil) {return nil;}
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
         MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
         
