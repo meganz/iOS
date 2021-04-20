@@ -335,13 +335,12 @@ extension DocScannerSaveSettingTableViewController {
             return []
         }
         let fileType = DocScanExportFileType(rawValue: storedExportFileTypeKey)
-        let scanQuality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey))
+        let scanQuality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)) ?? .best
         var tempPaths: [String] = []
         if fileType == .pdf {
             let pdfDoc = PDFDocument()
             docs?.enumerated().forEach {
-                if let quality = scanQuality,
-                   let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: quality),
+                if let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: scanQuality),
                    let shrinkedImage = UIImage(data: shrinkedImageData),
                    let pdfPage = PDFPage(image: shrinkedImage) {
                     pdfDoc.insert(pdfPage, at: $0.offset)
@@ -364,8 +363,7 @@ extension DocScannerSaveSettingTableViewController {
             }
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
-                if let quality = scanQuality,
-                   let data = $0.element.shrinkedImageData(docScanQuality: quality) {
+                if let data = $0.element.shrinkedImageData(docScanQuality: scanQuality) {
                     let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
