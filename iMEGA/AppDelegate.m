@@ -658,14 +658,14 @@
         if ([self.window.rootViewController.presentedViewController isKindOfClass:CheckEmailAndFollowTheLinkViewController.class]) {
             CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = (CheckEmailAndFollowTheLinkViewController *)self.window.rootViewController.presentedViewController;
             if (checkEmailAndFollowTheLinkVC.presentedViewController) {
-                [checkEmailAndFollowTheLinkVC.presentedViewController dismissViewControllerAnimated:NO completion:^{
+                [checkEmailAndFollowTheLinkVC.presentedViewController dismissViewControllerAnimated:YES completion:^{
                     if (completion) completion();
                 }];
             } else {
                 if (completion) completion();
             }
         } else {
-            [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
+            [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
                 if (completion) completion();
             }];
         }
