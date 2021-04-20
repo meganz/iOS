@@ -1152,9 +1152,12 @@
         
         UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if (self.presentedViewController != nil) {
-                [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+                [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+                    [self showEmailContactPicker];
+                }];
+            } else {
+                [self showEmailContactPicker];
             }
-            [self showEmailContactPicker];
         }];
         [addContactAlertController addAction:addFromContactsAlertAction];
         

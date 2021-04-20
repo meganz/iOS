@@ -807,7 +807,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         mainTBC.selectedIndex = TabTypeChat;
         
         if (mainTBC.presentedViewController) {
-            [mainTBC dismissViewControllerAnimated:NO completion:^{
+            [mainTBC dismissViewControllerAnimated:YES completion:^{
                 [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
             }];
         } else {
