@@ -1566,21 +1566,21 @@
             break;
         }
             
-        case MEGAChatCallStatusHasLocalStream:
-            if (!self.chatRoomOnGoingCall) {
-                self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
-            }
-            break;
+//        case MEGAChatCallStatusHasLocalStream:
+//            if (!self.chatRoomOnGoingCall) {
+//                self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+//            }
+//            break;
             
         case MEGAChatCallStatusJoining:
             [self showTopBannerButton:call];
             [self configureTopBannerButtonForInProgressCall:call];
             break;
             
-        case MEGAChatCallStatusReconnecting:
-            self.reconnecting = YES;
-            [self setTopBannerButtonTitle:NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
-            break;
+//        case MEGAChatCallStatusReconnecting:
+//            self.reconnecting = YES;
+//            [self setTopBannerButtonTitle:NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
+//            break;
             
         case MEGAChatCallStatusDestroyed: {
             [self.timer invalidate];

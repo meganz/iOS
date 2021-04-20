@@ -93,7 +93,7 @@
                 if (self.call) {
                     self.callId = self.call.callId;
                     
-                    self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+//                    self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                     [self.megaCallManager addCall:self.call];
                     [self.megaCallManager startCall:self.call];
                 } else {
@@ -273,7 +273,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO enableAudio:YES delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
         self.statusCallLabel.text = NSLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
@@ -294,7 +294,8 @@
             }
         }
         if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
-            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
+            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress)) {
+//                if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
                 MEGALogDebug(@"[Audio] Enable loud speaker, category changed, but speaker was enabled");
                 [self enableLoudspeaker];
             }
@@ -541,20 +542,18 @@
                     [self initDurationTimer];
                     self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = YES;
                 }
-                break;
-            }
-                
-            case MEGAChatSessionStatusInitial:
                 if (self.isReconnecting) {
                     self.reconnecting = NO;
                     self.statusCallLabel.text = NSLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
                 } else {
                     self.statusCallLabel.text = NSLocalizedString(@"connecting", nil);
                 }
+                break;
+            }
 
             case MEGAChatSessionStatusDestroyed:
                 if (session.hasVideo) {
-                    [MEGASdkManager.sharedMEGAChatSdk removeChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId cliendId:session.clientId delegate:self.remoteVideoImageView];
+                    [MEGASdkManager.sharedMEGAChatSdk removeChatRemoteVideo:self.chatRoom.chatId cliendId:session.clientId hiRes:NO delegate:self.remoteVideoImageView];
                     self.remoteVideoImageView.hidden = YES;
                 }
                 break;
@@ -569,13 +568,13 @@
         self.localVideoImageView.userInteractionEnabled = session.hasVideo;
         if (session.hasVideo) {
             if (self.remoteVideoImageView.hidden) {
-                [MEGASdkManager.sharedMEGAChatSdk addChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId cliendId:session.clientId delegate:self.remoteVideoImageView];
+                [MEGASdkManager.sharedMEGAChatSdk addChatRemoteVideo:self.chatRoom.chatId cliendId:session.clientId hiRes:NO delegate:self.remoteVideoImageView];
                 self.remoteVideoImageView.hidden = NO;
                 self.remoteAvatarImageView.hidden = YES;
             }
         } else {
             if (!self.remoteVideoImageView.hidden) {
-                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId cliendId:session.clientId delegate:self.remoteVideoImageView];
+                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId cliendId:session.clientId hiRes:NO delegate:self.remoteVideoImageView];
                 self.remoteVideoImageView.hidden = YES;
                 if (self.localVideoImageView.hidden) {
                     self.remoteAvatarImageView.hidden = UIDevice.currentDevice.iPadDevice ? NO : self.view.frame.size.width > self.view.frame.size.height;
@@ -605,24 +604,6 @@
     }
 
     switch (call.status) {
-        case MEGAChatCallStatusInitial:
-            break;
-            
-        case MEGAChatCallStatusHasLocalStream:
-            break;
-            
-        case MEGAChatCallStatusRequestSent:
-            break;
-            
-        case MEGAChatCallStatusRingIn:
-            break;
-            
-        case MEGAChatCallStatusJoining:
-            break;
-            
-        case MEGAChatCallStatusInProgress:
-            break;
-            
         case MEGAChatCallStatusTerminatingUserParticipation:
             if (!self.localVideoImageView.hidden) {
                 [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
@@ -654,11 +635,11 @@
             break;
         }
             
-        case MEGAChatCallStatusReconnecting:
-            [self.timer invalidate];
-            self.reconnecting = YES;
-            self.statusCallLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again");
-            break;
+//        case MEGAChatCallStatusReconnecting:
+//            [self.timer invalidate];
+//            self.reconnecting = YES;
+//            self.statusCallLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again");
+//            break;
         
         default:
             break;

@@ -963,7 +963,7 @@ class ChatViewController: MessagesViewController {
         let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId)
         
         if let call = call {
-            callType = (call.status == .ringIn) ? .incoming : .active
+            callType = call.isRinging ? .incoming : .active
         }
         
         if chatRoom.isGroup {

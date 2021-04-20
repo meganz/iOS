@@ -25,7 +25,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
         if chatSdk.chatConnectionState(chatId) == .online {
-            chatSdk.answerChatCall(chatId, enableVideo: false, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in
+            chatSdk.answerChatCall(chatId, enableVideo: false, enableAudio: true, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in
                 if error?.type == .MEGAChatErrorTypeOk {
                     guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                         completion(.failure(.generic))
@@ -115,7 +115,7 @@ extension CallsRepository: MEGAChatCallDelegate {
         
         if session.hasChanged(.status) {
             switch session.status {
-            case .initial:
+            case .inProgress:
                 callbacksDelegate?.createdSession(session, in: chatId)
                 break
             case .destroyed:
@@ -144,11 +144,7 @@ extension CallsRepository: MEGAChatCallDelegate {
             break
         case .initial:
             break
-        case .hasLocalStream:
-            break
-        case .requestSent:
-            break
-        case .ringIn:
+        case .connecting:
             break
         case .joining:
             break
@@ -158,8 +154,8 @@ extension CallsRepository: MEGAChatCallDelegate {
             callbacksDelegate?.callTerminated()
         case .userNoPresent:
             break
-        case .reconnecting:
-            break
+//        case .reconnecting:
+//            break
         @unknown default:
             fatalError("Call status has an unkown status")
         }

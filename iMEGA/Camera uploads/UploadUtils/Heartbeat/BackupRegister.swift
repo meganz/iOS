@@ -97,8 +97,7 @@ final class BackupRegister {
                                   backupType: .cameraUploads,
                                   targetNode: node,
                                   folderPath: MEGACameraUploadsFolderPath,
-                                  //TODO: Uncomment the below code. Since the iOS meeting base branch is pointing to the custom SDK branch, the below parameter is not available. Hence had to comment it.
-//                                  backupName: NSLocalizedString("cameraUploadsLabel", comment: ""),
+                                  backupName: NSLocalizedString("cameraUploadsLabel", comment: ""),
                                   state: .active,
                                   delegate: HeartbeatRequestDelegate { [sdk = self.sdk] result in
                                     switch result {

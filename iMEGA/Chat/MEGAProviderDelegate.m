@@ -307,7 +307,7 @@
     
     if (action.callUUID) {
         if (@available(iOS 14.0, *)) {
-            if (call.status != MEGAChatCallStatusRingIn) {
+            if (call.status != MEGAChatCallStatusUserNoPresent && call.isRinging) {
                 [action fulfill];
                 return;
             }
@@ -445,18 +445,20 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     switch (call.status) {
-        case MEGAChatCallStatusRequestSent:
-            self.outgoingCall = YES;
-            [self.provider reportOutgoingCallWithUUID:call.uuid startedConnectingAtDate:nil];
-            [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
-            break;
+//        case MEGAChatCallStatusRequestSent:
+//            self.outgoingCall = YES;
+//            [self.provider reportOutgoingCallWithUUID:call.uuid startedConnectingAtDate:nil];
+//            [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
+//            break;
             
-        case MEGAChatCallStatusRingIn: {
-            NSUUID *uuid = [self.megaCallManager uuidForChatId:call.chatId callId:call.callId];
-            if (uuid) {
-                [self updateCall:call];
+        case MEGAChatCallStatusUserNoPresent: {
+            if (call.isRinging) {
+                NSUUID *uuid = [self.megaCallManager uuidForChatId:call.chatId callId:call.callId];
+                if (uuid) {
+                    [self updateCall:call];
+                }
+                [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
             }
-            [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
             break;
         }
             
@@ -526,7 +528,7 @@
     if (self.chatId.unsignedLongLongValue == chatId && newState == MEGAChatConnectionOnline && self.callId) {
         MEGAChatCall *call = [api chatCallForCallId:self.callId.unsignedLongLongValue];
         if (call) {
-            if (call.status == MEGAChatCallStatusRingIn) {
+            if (call.status == MEGAChatCallStatusUserNoPresent && call.isRinging) {
                 if (self.shouldAnswerCallWhenConnect) {
                     MEGALogDebug(@"[CallKit] Answer call when connect %@", call);
                     [api answerChatCall:call.chatId enableVideo:NO];
