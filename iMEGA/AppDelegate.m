@@ -112,7 +112,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    [UncaughtExceptionHandler registerHandler];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
@@ -934,12 +934,6 @@
         }
     }
 }
-
-void uncaughtExceptionHandler(NSException *exception) {
-    MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
-    MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
-}
-
 
 - (void)performCall {
     if (self.chatRoom.isGroup) {

@@ -1470,6 +1470,11 @@
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
 		B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
+		B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
+		B699016F262F91D200176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
+		B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
+		B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
+		B6990193262F93AA00176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
 		B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */; };
 		B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */; };
 		B69D6B3725C0D211002A96ED /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69D6B3625C0D211002A96ED /* RequestDelegate.swift */; };
@@ -3445,6 +3450,7 @@
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
 		B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFunctions.swift; sourceTree = "<group>"; };
+		B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UncaughtExceptionHandler.swift; sourceTree = "<group>"; };
 		B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundRefreshPerformer.h; sourceTree = "<group>"; };
 		B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundRefreshPerformer.m; sourceTree = "<group>"; };
 		B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSNavigationViewController.swift; sourceTree = "<group>"; };
@@ -4624,6 +4630,7 @@
 				83E3460B25B5DB6D006F2AD6 /* Widget */,
 				0D8DD97625B513830084FE6F /* FolderContentStat.swift */,
 				0D30D86125BFA14A00C26367 /* Tab.swift */,
+				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -10561,6 +10568,7 @@
 				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
 				A86B9F4C2316D6AB00F35E7A /* FLEXFieldEditorViewController.m in Sources */,
+				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				83C570E322E5BFCF00216896 /* MetadataParsing.swift in Sources */,
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
@@ -10866,6 +10874,7 @@
 				774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */,
 				774941E32410EAFB00FC5CB6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				774941DB240FF69800FC5CB6 /* MEGAStore.m in Sources */,
+				B699016F262F91D200176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B205D1B2449AD3200EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
@@ -10950,6 +10959,7 @@
 				8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */,
 				8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */,
 				836924C5258269B000658F6C /* NSFileManager+MNZCategory.m in Sources */,
+				B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				83E3465725B6E0D0006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				830C275425E51FEC00E9B56E /* DateFormatting.swift in Sources */,
 				8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */,
@@ -11062,6 +11072,7 @@
 				2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				BF6E8F7625C0C835003A125A /* String+Additions.swift in Sources */,
 				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
+				B6990193262F93AA00176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
@@ -11149,6 +11160,7 @@
 				773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */,
 				777AC33F21AD420F00E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
+				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
 				77D7E853243719E0005D2795 /* MEGAFunctions.swift in Sources */,
