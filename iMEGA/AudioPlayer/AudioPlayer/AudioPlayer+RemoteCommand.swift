@@ -31,7 +31,7 @@ extension AudioPlayer {
         nowPlayingInfo[MPMediaItemPropertyTitle] = item.name
         nowPlayingInfo[MPMediaItemPropertyArtist] = item.artist
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.duration.seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.asset.duration.seconds
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: isPaused ? 0.0 : 1.0)
         if let artwork = item.artwork {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { size in

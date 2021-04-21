@@ -83,11 +83,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
          contentStack.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
          contentStack.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor)].activate()
         
-        if #available(iOS 11.0, *) {
-            [contentStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -35)].activate()
-        } else {
-            [contentStack.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: -35)].activate()
-        }
+        [contentStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -35)].activate()
     }
     
     // MARK: view configuration

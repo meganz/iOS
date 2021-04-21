@@ -83,7 +83,7 @@
         self.navigationItem.rightBarButtonItem = manageBarButtonItem;
     }
     
-    [[MEGAPurchase sharedInstance] setDelegate:self];
+    [MEGAPurchase.sharedInstance.purchaseDelegateMutableArray addObject:self];
     isPurchased = NO;
     
     self.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
@@ -103,7 +103,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGAPurchase sharedInstance] setDelegate:nil];
+    if (self.isMovingFromParentViewController) {
+        [MEGAPurchase.sharedInstance.purchaseDelegateMutableArray removeObject:self];
+    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

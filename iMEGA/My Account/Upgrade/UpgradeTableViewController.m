@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    MEGAPurchase.sharedInstance.restoreDelegate = self;
+    [MEGAPurchase.sharedInstance.restoreDelegateMutableArray addObject:self];
     self.purchased = NO;
     
     self.numberFormatter = NSNumberFormatter.alloc.init;
@@ -138,6 +138,10 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGAPurchase.sharedInstance.restoreDelegateMutableArray removeObject:self];
+    }
     
     self.navigationController.toolbarHidden = YES;
 }
