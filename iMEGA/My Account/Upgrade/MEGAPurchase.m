@@ -25,6 +25,9 @@
     self = [super init];
     if (self != nil) {
         [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
+        self.purchaseDelegateMutableArray = NSMutableArray.new;
+        self.restoreDelegateMutableArray = NSMutableArray.new;
+        self.pricingsDelegateMutableArray = NSMutableArray.new;
     }
     return self;
 }
@@ -107,7 +110,9 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.pricingsDelegate pricingsReady];
+        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingsDelegateMutableArray) {
+            [pricingsDelegate pricingsReady];
+        }
     });
 }
 
@@ -143,7 +148,9 @@
                     [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
                 }
                 
-                [_delegate successfulPurchase:self];
+                for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
+                    [delegate successfulPurchase:self];
+                }
                 
                 [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -155,7 +162,9 @@
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (shouldSubmitReceiptOnRestore) {
                     [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
-                    [self.restoreDelegate successfulRestore:self];
+                    for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
+                        [restoreDelegate successfulRestore:self];
+                    }
                     shouldSubmitReceiptOnRestore = NO;
                 }
                 
@@ -168,7 +177,11 @@
                 MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
                 
                 if (transaction.error.code != SKErrorPaymentCancelled) {
-                    [_delegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
+                    for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
+                        if ([purchaseDelegate respondsToSelector:@selector(failedPurchase:message:)]) {
+                            [purchaseDelegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
+                        }
+                    }
                 }
                 
                 [SVProgressHUD dismiss];
@@ -183,12 +196,21 @@
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
     if ([queue.transactions count] == 0) {
-        [self.restoreDelegate incompleteRestore];
+        for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
+            if ([restoreDelegate respondsToSelector:@selector(incompleteRestore)]) {
+                [restoreDelegate incompleteRestore];
+            }
+        }
     }
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
-    [self.restoreDelegate failedRestore:error.code message:error.localizedDescription];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
+        if ([restoreDelegate respondsToSelector:@selector(failedRestore:message:)]) {
+            [restoreDelegate failedRestore:error.code message:error.localizedDescription];
+        }
+    }
 }
 
 #pragma mark - MEGARequestDelegate

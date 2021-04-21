@@ -50,7 +50,6 @@
 #import "PreviewDocumentViewController.h"
 #import "SearchOperation.h"
 #import "SharedItemsViewController.h"
-#import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
 
 @import Photos;
@@ -1199,18 +1198,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
-            [self showUpgradeTVC];
+            [UpgradeAccountRouter.new presentUpgradeTVC];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
             alreadyPresented = YES;
         }
-    }
-}
-
-- (void)showUpgradeTVC {
-    if ([MEGAPurchase sharedInstance].products.count > 0) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
-        [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
 

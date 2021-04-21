@@ -24,11 +24,10 @@ class DocScannerDetailTableCell: UITableViewCell {
             detailTextLabel?.text = UserDefaults.standard.string(forKey: DocScannerSaveSettingTableViewController.keys.docScanExportFileTypeKey)
         case .Quality:
             textLabel?.text = NSLocalizedString("Quality", comment: "Quality title, used in changing the export quality of scaned doc")
-            if let quality = DocScanQuality(rawValue:
-                UserDefaults.standard.float(forKey: DocScannerSaveSettingTableViewController.keys.docScanQualityKey)
-                ) {
-                detailTextLabel?.text = quality.description
-            }
+            let quality = DocScanQuality(
+                rawValue: UserDefaults.standard.float(forKey: DocScannerSaveSettingTableViewController.keys.docScanQualityKey)
+            ) ?? .best
+            detailTextLabel?.text = quality.description
         }
     }
 }
