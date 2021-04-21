@@ -13,7 +13,6 @@
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
-#import "UpgradeTableViewController.h"
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
 
@@ -106,10 +105,7 @@
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.firstCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                    
-                    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    [UpgradeAccountRouter.new presentUpgradeTVC];
                 }];
             };
             

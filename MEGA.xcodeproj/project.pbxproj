@@ -234,6 +234,7 @@
 		5B51E2E124597A39009379BA /* MOUser+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51E2DF24597A39009379BA /* MOUser+CoreDataProperties.m */; };
 		5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B51E2E224597CD9009379BA /* MEGAStore+MOUser.swift */; };
 		5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
+		5B5512DE25DB0EA00010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5512DB25DB0E9F0010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift */; };
 		5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */; };
 		5B594C2F2541DEBD00A43507 /* HistoryRetentionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B594C2E2541DEBD00A43507 /* HistoryRetentionUseCase.swift */; };
 		5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5974E2202858050011E819 /* SafariServices.framework */; };
@@ -257,6 +258,8 @@
 		5B72739E240D4310005816AB /* defaultIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739C240D430F005816AB /* defaultIcon@3x.png */; };
 		5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739D240D4310005816AB /* defaultIcon@2x.png */; };
 		5B7273A1240D4F71005816AB /* SortingAndViewModeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */; };
+		5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76EBA225DE8D9000CE77F2 /* UpgradeAccountFactory.swift */; };
+		5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76EBD425DE8DF800CE77F2 /* UpgradeAccountRouter.swift */; };
 		5B784DBF259A0E8E00CE752B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */; };
 		5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */; };
@@ -2289,6 +2292,7 @@
 		5B51E2DF24597A39009379BA /* MOUser+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MOUser+CoreDataProperties.m"; path = "iMEGA/CoreData/ManagedObjects/MOUser+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		5B51E2E024597A39009379BA /* MOUser+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOUser+CoreDataProperties.h"; path = "iMEGA/CoreData/ManagedObjects/MOUser+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		5B51E2E224597CD9009379BA /* MEGAStore+MOUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAStore+MOUser.swift"; sourceTree = "<group>"; };
+		5B5512DB25DB0E9F0010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeToPro.swift"; sourceTree = "<group>"; };
 		5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANode+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANode+MNZCategory.m"; sourceTree = "<group>"; };
 		5B594C2E2541DEBD00A43507 /* HistoryRetentionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRetentionUseCase.swift; sourceTree = "<group>"; };
@@ -2319,6 +2323,8 @@
 		5B72739D240D4310005816AB /* defaultIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "defaultIcon@2x.png"; path = "App Icons/defaultIcon@2x.png"; sourceTree = "<group>"; };
 		5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingAndViewModeTableViewController.swift; sourceTree = "<group>"; };
 		5B72A14B20D3A69C007FE4FD /* URLType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLType.h; sourceTree = "<group>"; };
+		5B76EBA225DE8D9000CE77F2 /* UpgradeAccountFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountFactory.swift; sourceTree = "<group>"; };
+		5B76EBD425DE8DF800CE77F2 /* UpgradeAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountRouter.swift; sourceTree = "<group>"; };
 		5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallViewController.h; sourceTree = "<group>"; };
 		5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallViewController.m; sourceTree = "<group>"; };
 		5B7B4C9E1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAInviteContactRequestDelegate.h; path = API/Requests/MEGAInviteContactRequestDelegate.h; sourceTree = "<group>"; };
@@ -4766,6 +4772,8 @@
 				5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */,
 				41A66D051AE7900F007D7E20 /* UpgradeTableViewController.h */,
 				41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */,
+				5B76EBA225DE8D9000CE77F2 /* UpgradeAccountFactory.swift */,
+				5B76EBD425DE8DF800CE77F2 /* UpgradeAccountRouter.swift */,
 				41A66D0B1AE7A0FE007D7E20 /* ProductTableViewCell.h */,
 				41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */,
 				41D14F6C1B85F6D40005A27A /* ProductDetailViewController.h */,
@@ -5475,6 +5483,7 @@
 			isa = PBXGroup;
 			children = (
 				5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */,
+				5B5512DB25DB0E9F0010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift */,
 				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
@@ -9987,6 +9996,7 @@
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				A86B9F6D2316D6AB00F35E7A /* FLEXSystemLogTableViewCell.m in Sources */,
 				2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */,
+				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
 				A86B9F302316D6AB00F35E7A /* FLEXViewControllerExplorerViewController.m in Sources */,
 				83E345CD25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
@@ -10464,6 +10474,7 @@
 				5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */,
 				B63AEB0B2511BD74000B8517 /* GetSMSErrorEntity.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
+				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				A86B9F512316D6AB00F35E7A /* FLEXArgumentInputStructView.m in Sources */,
 				BF46B81225A6A524008641BB /* PSARepositoryProtocol.swift in Sources */,
@@ -10684,6 +10695,7 @@
 				B6AADEC9251896A8009A874C /* AuthRepositoryProtocol.swift in Sources */,
 				B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */,
 				8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */,
+				5B5512DE25DB0EA00010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,

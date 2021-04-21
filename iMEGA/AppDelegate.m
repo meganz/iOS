@@ -748,9 +748,9 @@
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
                     if (MEGAPurchase.sharedInstance.products.count > 0) {
-                        [self showChooseAccountType];
+                        [UpgradeAccountRouter.new presentChooseAccountType];
                     } else {
-                        [MEGAPurchase.sharedInstance setPricingsDelegate:self];
+                        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
                         self.chooseAccountTypeLater = YES;
                     }
                     self.newAccount = NO;
@@ -1013,15 +1013,6 @@
     }
 }
 
-- (void)showChooseAccountType {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    upgradeTVC.chooseAccountType = YES;
-    
-    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-}
-
 - (void)initProviderDelegate {
     if (self.megaProviderDelegate == nil) {
         self.megaCallManager = MEGACallManager.new;
@@ -1107,10 +1098,7 @@
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                    
-                    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+                    [UpgradeAccountRouter.new presentUpgradeTVC];
                 } else {
                     // Redirect to my account if the products are not available
                     [self.mainTBC setSelectedIndex:4];
@@ -1360,10 +1348,10 @@
 
 - (void)pricingsReady {
     if (self.showChooseAccountTypeLater) {
-        [self showChooseAccountType];
+        [UpgradeAccountRouter.new presentChooseAccountType];
         
         self.chooseAccountTypeLater = NO;
-        [[MEGAPurchase sharedInstance] setPricingsDelegate:nil];
+        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
     }
 }
 
