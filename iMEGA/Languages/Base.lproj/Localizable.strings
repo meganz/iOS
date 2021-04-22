@@ -258,6 +258,8 @@
 "queued"="Queued";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Paused";
+/* Possible state of a transfer. When the transfer was cancelled */
+"Cancelled"="Cancelled";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Completing…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
