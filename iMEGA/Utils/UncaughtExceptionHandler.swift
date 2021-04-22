@@ -20,6 +20,7 @@ private extension NSException {
                 code: 0,
                 userInfo: [NSLocalizedFailureReasonErrorKey: reason ?? "",
                            NSLocalizedDescriptionKey: name,
-                           NSLocalizedFailureErrorKey: userInfo ?? [:]])
+                           NSLocalizedFailureErrorKey: userInfo ?? [:],
+                           NSDebugDescriptionErrorKey: callStackSymbols])
     }
 }
