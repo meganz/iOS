@@ -69,4 +69,12 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     }];
 }
 
++ (NSError *)mnz_cameraUploadCoreDataException:(NSException *)exception {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorCoreDataException userInfo:@{
+        NSLocalizedDescriptionKey : exception.name ?: @"",
+        NSLocalizedFailureReasonErrorKey : exception.reason ?: @"core data exception",
+        NSLocalizedRecoverySuggestionErrorKey : exception.userInfo ?: @{}
+    }];
+}
+
 @end
