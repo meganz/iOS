@@ -94,13 +94,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         playNext_calledTimes += 1
     }
     
-<<<<<<< HEAD
-=======
     func goForward() {
         goForward_calledTimes += 1
     }
     
->>>>>>> c071294f1b0714f2aaa97622eef1cad966523be9
     func play(item: AudioPlayerItem) {
         playItem_calledTimes += 1
     }
