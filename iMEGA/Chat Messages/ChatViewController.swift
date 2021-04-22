@@ -578,12 +578,15 @@ class ChatViewController: MessagesViewController {
     }
 
     func initials(for message: MessageType) -> String {
-
-        if let user = MEGAStore.shareInstance().fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
-            return (user.displayName as NSString).mnz_initialForAvatar()
+        guard let userHandle = UInt64(message.sender.senderId) else {
+            return ""
         }
 
-        if let peerFullname = chatRoom.participantName(forUserHandle:UInt64(message.sender.senderId)!) {
+        if let displayName = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)?.displayName {
+            return (displayName as NSString).mnz_initialForAvatar()
+        }
+
+        if let peerFullname = chatRoom.participantName(forUserHandle: userHandle) {
             return (peerFullname as NSString).mnz_initialForAvatar()
         }
 
