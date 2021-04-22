@@ -6,6 +6,8 @@
 #import "SavedIdentifierParser.h"
 #import "NSURL+CameraUpload.h"
 #import "MEGACoreDataStack.h"
+#import "CoreDataErrorHandler.h"
+#import "NSError+CameraUpload.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 7;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
@@ -291,44 +293,53 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 
 - (BOOL)updateUploadRecord:(MOAssetUploadRecord *)record withStatus:(CameraAssetUploadStatus)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
-    [self.backgroundContext performBlockAndWait:^{
-        record.status = @(status);
-        if (status == CameraAssetUploadStatusFailed) {
-            if (record.errorPerLaunch == nil) {
-                record.errorPerLaunch = [self createErrorRecordPerLaunchForLocalIdentifier:record.localIdentifier];
+    @try {
+        [self.backgroundContext performBlockAndWait:^{
+            record.status = @(status);
+            if (status == CameraAssetUploadStatusFailed) {
+                if (record.errorPerLaunch == nil) {
+                    record.errorPerLaunch = [self createErrorRecordPerLaunchForLocalIdentifier:record.localIdentifier];
+                }
+                record.errorPerLaunch.errorCount = @(record.errorPerLaunch.errorCount.unsignedIntegerValue + 1);
+                
+                if (record.errorPerLogin == nil) {
+                    record.errorPerLogin = [self createErrorRecordPerLoginForLocalIdentifier:record.localIdentifier];
+                }
+                record.errorPerLogin.errorCount = @(record.errorPerLogin.errorCount.unsignedIntegerValue + 1);
+                
+                MEGALogInfo(@"[Camera Upload] %@ upload failed with error per launch count: %@, error per login count: %@", record, record.errorPerLaunch.errorCount, record.errorPerLogin.errorCount);
+            } else if (status == CameraAssetUploadStatusDone) {
+                MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
+                if (errorPerLaunch) {
+                    [self.backgroundContext deleteObject:errorPerLaunch];
+                }
+                
+                MOAssetUploadErrorPerLogin *errorPerLogin = [record errorPerLogin];
+                if (errorPerLogin) {
+                    [self.backgroundContext deleteObject:errorPerLogin];
+                }
             }
-            record.errorPerLaunch.errorCount = @(record.errorPerLaunch.errorCount.unsignedIntegerValue + 1);
             
-            if (record.errorPerLogin == nil) {
-                record.errorPerLogin = [self createErrorRecordPerLoginForLocalIdentifier:record.localIdentifier];
-            }
-            record.errorPerLogin.errorCount = @(record.errorPerLogin.errorCount.unsignedIntegerValue + 1);
+            [self.backgroundContext save:&coreDataError];
             
-            MEGALogInfo(@"[Camera Upload] %@ upload failed with error per launch count: %@, error per login count: %@", record, record.errorPerLaunch.errorCount, record.errorPerLogin.errorCount);
-        } else if (status == CameraAssetUploadStatusDone) {
-            MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
-            if (errorPerLaunch) {
-                [self.backgroundContext deleteObject:errorPerLaunch];
+            if (record.errorPerLaunch.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount || record.errorPerLogin.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
             }
-            
-            MOAssetUploadErrorPerLogin *errorPerLogin = [record errorPerLogin];
-            if (errorPerLogin) {
-                [self.backgroundContext deleteObject:errorPerLogin];
-            }
+        }];
+        
+    } @catch (NSException *exception) {
+        if ([CoreDataErrorHandler hasSQLiteFullErrorInException:exception]) {
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
+        } else {
+            coreDataError = [NSError mnz_cameraUploadCoreDataException:exception];
+        }
+    } @finally {
+        if (error != NULL) {
+            *error = coreDataError;
         }
         
-        [self.backgroundContext save:&coreDataError];
-        
-        if (record.errorPerLaunch.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount || record.errorPerLogin.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount) {
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-        }
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
+        return coreDataError == nil;
     }
-    
-    return coreDataError == nil;
 }
 
 #pragma mark - delete records
