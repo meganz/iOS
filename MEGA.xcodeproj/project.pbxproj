@@ -60,6 +60,9 @@
 		2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */; };
 		2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */; };
 		2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */; };
+		2F879C592629261A00D2FA78 /* JoinMegaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F879C582629261A00D2FA78 /* JoinMegaViewController.swift */; };
+		2F879C63262926B900D2FA78 /* JoinMegaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F879C62262926B900D2FA78 /* JoinMegaView.swift */; };
+		2F879C6D2629291C00D2FA78 /* JoinMegaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F879C6C2629291C00D2FA78 /* JoinMegaRouter.swift */; };
 		2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */; };
 		2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
 		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
@@ -104,6 +107,7 @@
 		2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */; };
 		2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */; };
 		2FDC6B9A260A9E00005A22B6 /* MeetingJoinAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC6B99260A9DFF005A22B6 /* MeetingJoinAlertViewModel.swift */; };
+		2FDDC6242630DE100060E02A /* JoinMegaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */; };
 		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
@@ -2043,6 +2047,9 @@
 		2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextMessageViewCell.swift; sourceTree = "<group>"; };
 		2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditCollectionOverlayView.swift; sourceTree = "<group>"; };
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
+		2F879C582629261A00D2FA78 /* JoinMegaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaViewController.swift; sourceTree = "<group>"; };
+		2F879C62262926B900D2FA78 /* JoinMegaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaView.swift; sourceTree = "<group>"; };
+		2F879C6C2629291C00D2FA78 /* JoinMegaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaRouter.swift; sourceTree = "<group>"; };
 		2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionCollectionViewCell.xib; sourceTree = "<group>"; };
 		2F9F110F2508A3E700896DFF /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
@@ -2079,6 +2086,7 @@
 		2FD6A26C25745B2C00C1997E /* PasteImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewViewController.swift; sourceTree = "<group>"; };
 		2FD6A3292574A73500C1997E /* PasteImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewView.swift; sourceTree = "<group>"; };
 		2FDC6B99260A9DFF005A22B6 /* MeetingJoinAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingJoinAlertViewModel.swift; sourceTree = "<group>"; };
+		2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaViewModel.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingView.swift; sourceTree = "<group>"; };
@@ -4348,6 +4356,17 @@
 				2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */,
 			);
 			path = ReactionView;
+			sourceTree = "<group>";
+		};
+		2F879C4D2629251200D2FA78 /* JoinMegaScene */ = {
+			isa = PBXGroup;
+			children = (
+				2F879C582629261A00D2FA78 /* JoinMegaViewController.swift */,
+				2F879C6C2629291C00D2FA78 /* JoinMegaRouter.swift */,
+				2F879C62262926B900D2FA78 /* JoinMegaView.swift */,
+				2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */,
+			);
+			path = JoinMegaScene;
 			sourceTree = "<group>";
 		};
 		2F9F110E2508A3E700896DFF /* Managers */ = {
@@ -7037,6 +7056,7 @@
 		83E1B16125CBF4BF00C18548 /* CallScene */ = {
 			isa = PBXGroup;
 			children = (
+				2F879C4D2629251200D2FA78 /* JoinMegaScene */,
 				2FB90D9226098A070097D154 /* JoinMeetingScene */,
 				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
 				83E1B16425CBF4E600C18548 /* CallViewController.swift */,
@@ -10001,6 +10021,7 @@
 				BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
 				B662B87724F75FEF0089376A /* CheckSMSUseCase.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
+				2FDDC6242630DE100060E02A /* JoinMegaViewModel.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
 				A86B9F282316D6AB00F35E7A /* FLEXCarouselCell.m in Sources */,
 				83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */,
@@ -10140,6 +10161,7 @@
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				830C26C325DFDCD400E9B56E /* RecentNodesRepositoryProtocol.swift in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
+				2F879C592629261A00D2FA78 /* JoinMegaViewController.swift in Sources */,
 				BFE6909325351F7700CD21F9 /* PhotosExplorerRouter.swift in Sources */,
 				B63AE685250EF66C000B8517 /* SMSStateEntity.swift in Sources */,
 				A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */,
@@ -10484,6 +10506,7 @@
 				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,
 				BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */,
+				2F879C6D2629291C00D2FA78 /* JoinMegaRouter.swift in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
@@ -10946,6 +10969,7 @@
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */,
 				BF5E3495255C8FD10055395E /* FilesExplorerViewController.swift in Sources */,
+				2F879C63262926B900D2FA78 /* JoinMegaView.swift in Sources */,
 				A80B66F525E80D2000486EC5 /* RecentActionBucketEntity.swift in Sources */,
 				BFCEE8B425102D9600D43448 /* IndexSet+Additions.swift in Sources */,
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
