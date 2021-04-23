@@ -852,7 +852,7 @@
         }
     }];
     
-    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:NO delegate:startCallRequestDelegate];
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:YES delegate:startCallRequestDelegate];
 }
 
 - (void)startOutgoingCall {
@@ -874,7 +874,7 @@
 //        }
     }];
     
-    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:NO delegate:startCallRequestDelegate];
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:YES delegate:startCallRequestDelegate];
 }
 
 - (void)configureUserOnFocus:(MEGAGroupCallPeer *)peerSelected manual:(BOOL)manual {

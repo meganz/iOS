@@ -1,5 +1,6 @@
 import UIKit
 import MessageKit
+import KeyboardLayoutGuide
 
 class ChatViewController: MessagesViewController {
 
@@ -51,13 +52,16 @@ class ChatViewController: MessagesViewController {
     // topbanner
     var timer: Timer?
     var initDuration: TimeInterval?
-    var topBannerButtonTopConstraint: NSLayoutConstraint?
-    lazy var topBannerButton: UIButton = {
-          let button = UIButton()
-          button.setTitleColor(.white, for: .normal)
-          button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-          return button
-      }()
+
+    lazy var joinCallButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+        button.setTitle(NSLocalizedString("Join Call", comment: ""), for: .normal)
+        button.layer.cornerRadius = 20
+        button.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
+        return button
+    }()
     
     lazy var previewerView: PreviewersView = {
         let view = PreviewersView.instanceFromNib
@@ -161,7 +165,7 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
-        configureTopBannerButton()
+        configureJoinCallButton()
         configurePreviewerButton()
         addObservers()
         addChatBottomInfoScreenToView()
@@ -645,16 +649,16 @@ class ChatViewController: MessagesViewController {
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
     
-    private func configureTopBannerButton() {
-          view.addSubview(topBannerButton)
-          topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
-          topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
-          topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
-          topBannerButton.autoSetDimension(.height, toSize: 44)
-          topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
-          topBannerButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
-          topBannerButton.isHidden = true
-      }
+    private func configureJoinCallButton() {
+        view.addSubview(joinCallButton)
+        joinCallButton.autoSetDimension(.height, toSize: 40)
+        joinCallButton.autoSetDimension(.width, toSize: 120, relation: .greaterThanOrEqual)
+        joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30).isActive = true
+        joinCallButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
+        joinCallButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        joinCallButton.isHidden = true
+    }
+    
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
