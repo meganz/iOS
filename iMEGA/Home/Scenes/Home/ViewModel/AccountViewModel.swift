@@ -68,25 +68,13 @@ extension HomeAccountViewModel: HomeAccountViewModelInputs {
     }
 
     func viewIsAppearing() {
-        loadAvatarImageIfAvatarIsMissing()
+        loadAvatarImage()
     }
 }
 
 // MARK: - Load Avatar Image
 
 extension HomeAccountViewModel {
-
-    private func loadAvatarImageIfAvatarIsMissing() {
-        guard avatarImage != nil else {
-            loadAvatarImage()
-            return
-        }
-
-        guard case .success = avatarImage else {
-            loadAvatarImage()
-            return
-        }
-    }
 
     private func loadAvatarImage() {
         if let cachedAvatarImage = megaAvatarUseCase.getCachedAvatarImage() {
