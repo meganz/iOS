@@ -226,5 +226,10 @@
     XCTAssertEqual([url1 mnz_type], URLTypePresentOfflineFile);
 }
 
+- (void)testDeepLinkShouldReturnTypeDefault {
+    NSURL *url = [NSURL URLWithString:@"https://example.com/data.csv#row=4"];
+    XCTAssertEqual([url mnz_type], URLTypeDefault);
+}
+
 
 @end
