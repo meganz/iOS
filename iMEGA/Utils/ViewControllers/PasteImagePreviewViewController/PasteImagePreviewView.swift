@@ -16,7 +16,7 @@ class PasteImagePreviewView: UIView {
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIPasteboard.general.image
+        imageView.image = UIPasteboard.general.loadImage()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.mnz_(fromHexString: "DAD9DD").cgColor
