@@ -57,6 +57,8 @@ final class AudioPlayerViewModel: ViewModelType {
         case enableUserInteraction(_ enable: Bool)
         case didPausePlayback
         case didResumePlayback
+        case shuffleAction(enabled: Bool)
+        case goToPlaylistAction(enabled: Bool)
     }
     
     var playerType: PlayerType = .default
@@ -160,10 +162,20 @@ final class AudioPlayerViewModel: ViewModelType {
         }
         
         switch playerType {
-        case .default, .folderLink: invokeCommand?(.configureDefaultPlayer)
-        case .offline: invokeCommand?(.configureOfflinePlayer)
-        case .fileLink: invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: NSLocalizedString("fileLink", comment: "")))
+        case .default, .folderLink:
+            invokeCommand?(.configureDefaultPlayer)
+            updateTracksActionStatus(enabled: tracks.count > 1)
+        case .offline:
+            invokeCommand?(.configureOfflinePlayer)
+            updateTracksActionStatus(enabled: tracks.count > 1)
+        case .fileLink:
+            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: NSLocalizedString("fileLink", comment: "")))
         }
+    }
+    
+    private func updateTracksActionStatus(enabled: Bool) {
+        invokeCommand?(.shuffleAction(enabled: enabled))
+        invokeCommand?(.goToPlaylistAction(enabled: enabled))
     }
 
     // MARK: - Node Initialize
