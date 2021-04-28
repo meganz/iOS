@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Hai già richiesto un link di conferma per quell'indirizzo email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Per favore, vai nel tuo inbox e clicca il link per confermare il tuo nuovo indirizzo email.";
+"emailIsChanging_description"="Per favore, vai nella tua casella dei messaggi e clicca sul link per confermare il tuo nuovo indirizzo email.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Per favore, inserisci la tua password per verificare il tuo indirizzo email";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Ripristino interrotto";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="La richiesta è stata cancellata o l'acquisto non può essere recuperato. Per favore, riprova o contatta ios@mega.nz";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Fai l’upgrade a Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Accedi a opzioni solo Pro, come impostare una password e una data di scadenza ai link pubblici.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Attiva modalità DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */

@@ -451,9 +451,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Digite o novo nome";
 /* Alert title to ask if user want to rename the file. %@ is a place holder.*/
-"rename_file_alert_title"="Rename File %@?";
+"rename_file_alert_title"="Renomear o arquivo %@?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Substituir";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mover para a Lixeira";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Você já solicitou um link de confirmação para esse endereço de email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Acesse a sua caixa de entrada e clique no link para confirmar o seu novo endereço de email.";
+"emailIsChanging_description"="Por favor, acesse a sua caixa de entrada e clique no link para confirmar o seu novo endereço de email.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu email";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Restauração foi interrompida";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="A solicitação foi cancelada ou a compra principal não foi restaurada. Por favor, tente novamente ou envie uma mensagem para ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Fazer o upgrade a Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Tenha acesso a recursos Pro exclusivos, como a proteção adicional por senha e a definição de datas de validade para arquivos públicos.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Ativar o modo de depuração";
 /* Alert message shown when the DEBUG mode is enabled */

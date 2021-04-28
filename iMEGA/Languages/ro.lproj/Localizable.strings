@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Te rugăm să accesezi e-mailul și să dai clic pe link pentru a confirma adresa nouă de e-mail.";
+"emailIsChanging_description"="Te rugăm să accesezi e-mailul și să dai clic pe link pentru a-ți confirma noua adresă de e-mail.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Te rugăm să introduci parola pentru a-ți verifica adresa de e-mail";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Fie cererea a fost anulată, fie achiziționarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Upgradează la Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Accesează funcțiile unice Pro precum setarea protecției prin parolă și datele de expirare pentru fișierele publice.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activează modul DEPANARE";
 /* Alert message shown when the DEBUG mode is enabled */

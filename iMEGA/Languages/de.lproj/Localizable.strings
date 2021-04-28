@@ -79,73 +79,73 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Bitte melden Sie sich an.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie sich zunächst einloggen. Bitte benutzen Sie hierzu ihre bestehende E-Mail-Adresse. Klicken Sie dann erneut auf den Bestäigungslink.";
+"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Account erstellen";
+"createAccount"="Create Account";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Ungültige E-Mail-Adresse und/oder Passwort. Bitte versuchen Sie es noch einmal.";
+"invalidMailOrPassword"="Invalid email and/or password. Please try again";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Zuviele Fehlversuche. Bitte warten Sie bis %@ und versuchen Sie es dann erneut.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Bitte klicken Sie auf den Link, den Sie per E-Mail erhalten haben, um Ihren Account zu bestätigen.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Ihr Account wurde gesperrt. Bitte setzen Sie sich mit support@mega.nz in Verbindung.";
+"accountBlocked"="Your account has been blocked. Please contact support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Bitte geben Sie eine gültige E-Mail-Adresse ein";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="Das Format der E-Mail-Adresse ist ungültig.";
+"theEmailAddressFormatIsInvalid"="The email address format is invalid";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Geben Sie ein gültiges Passwort ein";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="E-mail";
+"emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="Passwort";
+"passwordPlaceholder"="Password";
 /*  */
-"pleaseStrengthenYourPassword"="Bitte wählen Sie ein stärkeres Passwort.";
+"pleaseStrengthenYourPassword"="Please strengthen your password.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Sehr schwach";
+"veryWeak"="Very weak";
 /*  */
-"weak"="Schwach";
+"weak"="Weak";
 /*  */
-"passwordVeryWeakOrWeak"="Ihr Passwort ist zu einfach. Versuchen Sie ein längeres Passwort, kombinieren Sie Groß- und Kleinbuchstaben. Fügen Sie Sonderzeichen und Zahlen hinzu. Benutzen Sie keine Namen oder gebräuchliche Wörter.";
+"passwordVeryWeakOrWeak"="Your password is easily guessed. Try making your password longer. Combine uppercase and lowercase letters. Add special characters. Do not use names or dictionary words.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Mittel";
+"PasswordStrengthMedium"="Medium";
 /*  */
-"passwordMedium"="Ihr Passwort ist ausreichend, wir empfehlen jedoch, Ihr Passwort noch weiter zu verbessern.";
+"passwordMedium"="Your password is good enough to proceed, but it is recommended to strengthen your password further.";
 /*  */
-"good"="Gut";
+"good"="Good";
 /*  */
-"passwordGood"="Dieses Passwort wird den üblichen Angriffen von außen standhalten. Bitte stellen Sie sicher, dass Sie es nicht vergessen.";
+"passwordGood"="This password will withstand most typical brute-force attacks. Please ensure that you will remember it.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
-"strong"="Stark";
+"strong"="Strong";
 /*  */
-"passwordStrong"="Dieses Passwort wird auch gut ausgestatteten Angreifern standhalten. Bitte stellen Sie sicher, dass Sie es nicht vergessen.";
+"passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href=\"terms\">Allgemeinen Geschäftsbedingungen</a> zu";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
 "agreeWithLosingPasswordYouLoseData"="Mir ist klar, dass ich [S]bei Passwortverlust meine Daten nicht mehr entschlüsseln kann.[/S] Mehr Informationen zum Thema <a href=\"terms\">Ende-zu-Ende-Verschlüsselung</a>.";
 /* Error text shown when you have not entered a correct name */
-"nameInvalidFormat"="Gültigen Namen eingeben";
+"nameInvalidFormat"="Enter a valid name";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Passwörter stimmen nicht überein";
+"passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um ein MEGA-Konto zu erstellen.";
+"termsCheckboxUnselected"="You need to agree with the Terms of Service to register an account on MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
-"termsForLosingPasswordCheckboxUnselected"="Bitte bestätigen Sie, dass Ihnen die Konsequenzen eines Passwortverlusts bewusst sind.";
+"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Unter dieser E-Mail-Adresse ist bereits ein MEGA-Account registriert.";
+"emailAlreadyRegistered"="This email address has already registered an account with MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="Ein Bestätigungslink ist Ihnen per E-Mail zugegangen.";
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Zur Aktivierung Ihres Accounts geben Sie bitte Ihr Passwort ein";
+"confirmText"="Please enter your password to confirm your account";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="Account aktivieren";
+"Confirm account"="Confirm account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="Falsches Passwort";
+"passwordWrong"="Wrong password";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Diese E-Mail-Adresse ist bereits belegt.";
+"emailAlreadyInUse"="Error. This email address is already in use.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bitte geben Sie Speicherplatz frei";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -153,7 +153,7 @@
 /* Title for the file link view */
 "fileLink"="Link zur Datei";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Öffnen";
+"openButton"="Open";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Diese Datei ist größer als der verfügbare Speicherplatz.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -161,17 +161,17 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link nicht verfügbar";
 /* */
-"fileLinkUnavailableText1"="Dies könnte eine der folgenden Ursachen haben:";
+"fileLinkUnavailableText1"="This could be due to the following reasons:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Die Datei wurde aufgrund einer Verletzung der AGB entfernt.";
+"fileLinkUnavailableText2"="The file has been removed because of a ToS/AUP violation.";
 /* */
-"fileLinkUnavailableText3"="Ungültiger URL - der Link, den Sie öffnen möchten, existiert nicht";
+"fileLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /* */
-"fileLinkUnavailableText4"="Die Datei wurde vom Benutzer gelöscht.";
+"fileLinkUnavailableText4"="The file has been deleted by the user.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestartet";
 /* Title for the folder link view */
-"folderLink"="Ordnerlink";
+"folderLink"="Folder Link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -179,29 +179,29 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Der Ordner '%@' kann nicht erstellt werden";
 /* */
-"folderLinkUnavailableText1"="Dies könnte eine der folgenden Ursachen haben:";
+"folderLinkUnavailableText1"="This could be due to the following reasons:";
 /* */
-"folderLinkUnavailableText2"="Der Ordner-Link wurde aufgrund eines AGB/AUP-Verstoßes entfernt.";
+"folderLinkUnavailableText2"="The folder link has been removed because of a ToS/AUP violation.";
 /* */
-"folderLinkUnavailableText3"="Ungültiger URL - der Link, den Sie öffnen möchten, existiert nicht";
+"folderLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /* */
-"folderLinkUnavailableText4"="Der Ordner-Link wurde von dem Nutzer deaktiviert.";
+"folderLinkUnavailableText4"="The folder link has been disabled by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Keine Internetverbindung";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Keine Dateien im Ordner";
+"emptyFolder"="Empty Folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Keine Dateien vorhanden";
+"cloudDriveEmptyState_title"="No files in your Cloud Drive";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Dateien hinzufügen";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="Keine Treffer";
+"noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Der Papierkorb ist leer";
+"cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Keine Dateien für Offlinezugriff gespeichert";
+"offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Keine Kontakte";
+"contactsEmptyState_title"="No Contacts";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Keine Ordnerfreigaben an Sie vorhanden";
 /* Title shown when there's no outgoing Shared Items */
@@ -213,7 +213,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invite to MEGA";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Einladung versandt";
+"inviteSent"="Invite Sent";
 /* Button title to allow the user postpone an action */
 "later"="Später";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -225,27 +225,27 @@
 /* Success message shown when you Cancelled a contact request */
 "requestCancelled"="Einladung storniert";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Ersuchen gelöscht";
+"requestDeleted"="Request deleted";
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="Keine Anfragen vorhanden";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Angehaltene Transfers";
+"transfersEmptyState_titlePaused"="Paused Transfers";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Keine Transfers";
+"transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Keine Downloads";
+"transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Keine Uploads";
+"transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d Datei";
+"oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d Dateien";
+"files"="%d files";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d Ordner";
+"oneFolder"="%d folder";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d Ordner";
+"folders"="%d folders";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 Ordner • 1 Datei";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
@@ -255,29 +255,29 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 Ordner • %d Dateien";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Bereit";
+"queued"="Queued";
 /* A label to indicate a paused state for a transfer item (upload/download). */
-"paused"="Angehalten";
+"paused"="Paused";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
-"Completing..."="Abschluss...";
+"Completing..."="Completing…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Wiederholung...";
 /* Section title of the 'Sort by' */
-"sortTitle"="Sortierung nach";
+"sortTitle"="Sort by";
 /* Button title to 'Save' the selected option */
-"save"="Speichern";
+"save"="Save";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Name (aufsteigend)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="Name (absteigend)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="Größte";
+"largest"="Largest";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="Kleinste";
+"smallest"="Smallest";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="Neueste";
+"newest"="Newest";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="Älteste";
+"oldest"="Oldest";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -285,19 +285,19 @@
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Fotos";
+"Photos"="Photos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Voice";
 /* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Kontakt";
+"Contact"="Contact";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Start Group";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Ort";
+"Location"="Location";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
-"new_text_file"="Neue Textdatei";
+"new_text_file"="New Text File";
 /* Hint text shown on the new text file alert. */
 "file_name"="File name";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -641,7 +641,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Datenschutzerklärung";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie-Richtlinien";
+"Cookie Policy"="Cookie Policy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "Cookie Settings"="Cookie-Einstellungen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Sie haben einen Bestätigungslink für diese E-Mail-Adresse angefordert.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Bitte sehen Sie in Ihrem Posteingang nach und klicken Sie auf den Bestätigungslink, um die neue Adresse zu bestätigen.";
+"emailIsChanging_description"="Please go to your inbox and click the link to confirm your new email address.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Geben Sie Ihr Passwort ein, um Ihre E-Mail-Adresse zu bestätigen";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Wiederherstellung angehalten";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Der Vorgang wurde storniert, oder der vorhergehende Kauf konnte nicht wiederhergestellt werden. Bitte versuchen Sie es erneut, oder kontaktieren Sie ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Auf Pro umsteigen";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Zugriff auf Pro-spezifische Features wie Passwortschutz und Gültigkeitsbegrenzung exportierter Links";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG-Modus aktivieren";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Der Chatverlauf wird komplett gelöscht. Sind Sie sicher?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chatverlauf gelöscht";
+"Chat History has Been Cleared"="Der Chatverlauf wurde gelöscht";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history has not been successfully cleared";
 /* 'Next' button in a dialog */

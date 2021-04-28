@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Anda telah me-request link konfirmasi untuk alamat email tersebut.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Harap pergi ke inbox anda dan klik link untuk men-konfirmasi alamat e-mail baru anda.";
+"emailIsChanging_description"="Silakan masuk ke kotak masuk Anda dan klik tautan untuk mengonfirmasi alamat email baru Anda.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Harap masukan password anda untuk mem-verifikasi alamat email anda";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Restore dihentikan";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Antara request telah dibatalkan atau pembelian sebelumnya tidak dapat dikembalikan. Harap coba kembali lagi nanti, atau kontak ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Upgrade ke Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Akses fitur untuk Pro seperti mengatur password protection dan expiration dates untuk file umum.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Nyalakan mode DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Anda yakin ingin menghapus seluruh riwayat pesan dari percakapan ini?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Histori obrolan telah dihapus";
+"Chat History has Been Cleared"="Riwayat obrolan telah dihapus";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="Sebuah kesalahan telah terjadi. Riwayat obrolan belum berhasil dihapus";
 /* 'Next' button in a dialog */
@@ -1264,7 +1268,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chatting dengan";
 /* Explanation when loading voice message error */
-"Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
+"Couldn't load. [RED]Tap to retry[/RED]"="Tidak dapat memuat. [RED]Ketuk untuk mencoba lagi[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1891,7 +1895,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Pembayaran anda untuk plan %1 tidak berhasil.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Membership Pro anda akan habis dalam 1 hari.";
+"Your PRO membership plan will expire in 1 day."="Membership Pro anda akan habis besok.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Membership Pro anda akan habis dalam %1 hari.";
 /* The professional pricing plan which the user was on expired one day ago. */

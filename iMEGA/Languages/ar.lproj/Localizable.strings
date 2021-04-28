@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="لقد طلبت بالفعل رابط التأكيد لعنوان البريد الإلكتروني.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="يرجى الدخول إلى صندوق البريد الوارد الخاص بك وانقر على الرابط لتأكيد عنوان البريد الإلكتروني الجديد.";
+"emailIsChanging_description"="يرجى الذهاب الى صندوق الوارد في بريدك الالكتروني والضغط على الرابط المرسل اليك لتأكيد بريدك الالكتروني.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="يرجى إدخال كلمة المرور للتحقق من عنوان البريد الإلكتروني الخاص بك";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="الاستعادة توقفت";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="إما أنك ألغيت الطلب أو المشتريات لايمكن استعادتها. الرجاء المحاولة لاحقا أو تواصل معنا على ios@mega.nz";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="قم بترقية حسابك إلى برو Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="الحصول على ميزات برو Pro فقط مثل إعدادات الحماية بكلمة مرور وتواريخ انتهاء الصلاحية للملفات العامة.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="تمكين نظام التعديل";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="هل أنت متأكد أنك تريد مسح محفوظات الرسائل بالكامل لهذه المحادثة؟";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="تم محو سجل المحادثة";
+"Chat History has Been Cleared"="تم مسح سجل المحادثة";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="حدث خطأ. لم يتم مسح سجل المحادثة بنجاح";
 /* 'Next' button in a dialog */
