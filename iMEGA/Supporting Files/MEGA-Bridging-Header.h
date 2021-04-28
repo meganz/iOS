@@ -34,6 +34,7 @@
 #import "UIView+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "MEGATransfer+MNZCategory.h"
 #import "MEGATransferList+MNZCategory.h"

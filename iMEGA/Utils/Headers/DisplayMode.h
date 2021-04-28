@@ -16,4 +16,5 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeChatAttachment,
     DisplayModeChatSharedFiles,
     DisplayModePreviewDocument,
+    DisplayModeTextEditor
 };

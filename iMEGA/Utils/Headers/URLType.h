@@ -28,5 +28,6 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeShowOffline,
     URLTypePresentNode,
     URLTypePresentOfflineFile,
+    URLTypeNewTextFile,
     URLTypeTotal
 };

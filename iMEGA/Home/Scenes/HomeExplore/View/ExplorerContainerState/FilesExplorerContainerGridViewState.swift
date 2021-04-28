@@ -21,7 +21,6 @@ class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
             let nextState = self.transitionToState(matching: FilesExplorerContainerListViewState.identifier)
             nextState.showContent()
         }
-
         containerViewController.showPreferences(
             withViewPreferenceAction: viewPreferenceAction,
             sender: sender

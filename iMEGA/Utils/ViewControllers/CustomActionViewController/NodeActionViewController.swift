@@ -28,6 +28,28 @@ class NodeActionViewController: ActionSheetViewController {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
         self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, sender: sender)
     }
+    
+    init?(
+        nodeHandle: MEGAHandle,
+        delegate: NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        sender: Any) {
+        
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
+        self.node = node
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .build()
+    }
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
         self.node = node

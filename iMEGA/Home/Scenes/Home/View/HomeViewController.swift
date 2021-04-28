@@ -470,6 +470,8 @@ extension HomeViewController {
         switch source {
         case .photos:
             uploadViewModel.inputs.didTapUploadFromPhotoAlbum()
+        case .textFile:
+            uploadViewModel.inputs.didTapUploadFromNewTextFile()
         case .capture:
             uploadViewModel.inputs.didTapUploadFromCamera()
         case .imports:

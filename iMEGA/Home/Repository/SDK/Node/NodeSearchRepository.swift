@@ -46,7 +46,7 @@ extension NodeSearchRepository {
                         return
                     }
                     let sdkNodes = foundNodes.map { node in
-                        NodeEntity(with: node)
+                        NodeEntity(node: node)
                     }
                     completionAction(sdkNodes)
                 }

@@ -25,7 +25,7 @@ final class HomeScreenFactory: NSObject {
         )
 
         let uploadViewModel = HomeUploadingViewModel(
-            uploadFilesUseCase: UploadFileUseCase(
+            uploadFilesUseCase: HomeUploadFileUseCase(
                 uploadFromAlbum: .live,
                 uploadFromURL: .live,
                 uploadFromLocalPath: .live

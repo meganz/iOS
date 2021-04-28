@@ -5,6 +5,7 @@ enum HomeLocalisation: String {
     // MARK: - File Uploading Options
 
     case photos
+    case textFile
     case capture
     case imports
     case documentScan
@@ -25,6 +26,11 @@ enum HomeLocalisation: String {
                 "choosePhotoVideo", comment:
                 "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA"
             )
+        case .textFile:
+            return NSLocalizedString(
+                "new_text_file", comment:
+                "Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA"
+            )
         case .capture:
             return NSLocalizedString(
                 "capturePhotoVideo", comment:
@@ -40,7 +46,6 @@ enum HomeLocalisation: String {
                 "Scan Document", comment:
                 "Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA"
             )
-
 
         case .uploadWithNumber:
             return NSLocalizedString(

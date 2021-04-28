@@ -12,7 +12,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionDocumentProvider,
     BrowserActionShareExtension,
     BrowserActionSelectFolder,
-    BrowserActionNewHomeUpload
+    BrowserActionNewHomeUpload,
+    BrowserActionNewFileSave
 };
 
 @protocol BrowserViewControllerDelegate <NSObject>
