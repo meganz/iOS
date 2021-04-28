@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */; };
 		0D30D86225BFA14A00C26367 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30D86125BFA14A00C26367 /* Tab.swift */; };
 		0D8D4D1325B7C57500C7B7FE /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */; };
 		0D8DD97725B513830084FE6F /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8DD97625B513830084FE6F /* FolderContentStat.swift */; };
@@ -1966,6 +1967,7 @@
 /* Begin PBXFileReference section */
 		082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; sourceTree = "<group>"; };
 		0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEGAUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
 		0D30D86125BFA14A00C26367 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Additions.swift"; sourceTree = "<group>"; };
 		0D8DD97625B513830084FE6F /* FolderContentStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentStat.swift; sourceTree = "<group>"; };
@@ -4951,6 +4953,7 @@
 				0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */,
 				C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */,
 				83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */,
+				0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -10171,6 +10174,7 @@
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
+				0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
