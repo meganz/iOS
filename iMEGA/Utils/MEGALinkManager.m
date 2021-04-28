@@ -478,6 +478,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
             break;
             
+        case URLTypeNewTextFile:
+            [[CreateTextFileAlertViewRouter.alloc initWithPresenter:UIApplication.mnz_presentingViewController] start];
+            break;
+            
         default:
             break;
     }

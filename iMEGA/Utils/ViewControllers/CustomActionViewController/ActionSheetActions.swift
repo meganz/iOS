@@ -182,6 +182,10 @@ extension NodeAction {
         return NodeAction(title: NSLocalizedString("Thumbnail View", comment: "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
     }
     
+    class func textEditorAction() -> NodeAction {
+        return NodeAction(title: NSLocalizedString("edit", comment: "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "edittext"), type: .editTextFile)
+    }
+    
     class func forwardAction() -> NodeAction {
         return NodeAction(title: NSLocalizedString("forward", comment: "Item of a menu to forward a message chat to another chatroom"), detail: nil, image: UIImage(named: "forwardToolbar"), type: .forward)
     }

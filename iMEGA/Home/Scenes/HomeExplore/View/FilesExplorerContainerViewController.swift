@@ -178,9 +178,25 @@ class FilesExplorerContainerViewController: UIViewController {
             self?.currentState.setEditingMode()
         }
         
+        var customizeActions:Array<ActionSheetAction>? = []
+        if (viewModel.getExplorerType() == .document) {
+            let newFileAction = ActionSheetAction(
+                title: HomeLocalisation.textFile.rawValue,
+                detail: nil,
+                image: UIImage(named: "textfile"),
+                style: .default) {
+                CreateTextFileAlertViewRouter(presenter: self.navigationController).start()
+            }
+            customizeActions?.append(newFileAction)
+        }
+        
         var actionList = [sortPreferenceAction, selectAction]
         if let action = viewPreferenceAction {
             actionList.insert(action, at: 0)
+        }
+        
+        if let actions = customizeActions {
+            actionList = actions + actionList
         }
         
         let actionSheetVC: ActionSheetViewController

@@ -84,6 +84,23 @@ static NSString* const B = @"[B]";
     return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }
 
+- (BOOL)mnz_isEditableTextFilePathExtension {
+    return self.mnz_isWebCodePathExtension || self.mnz_isTextPathExtension;
+}
+
+- (BOOL)mnz_isTextPathExtension {
+    NSArray<NSString *> *supportedExtensions = @[@"txt",
+                                                 @"ans",
+                                                 @"ascii",
+                                                 @"log",
+                                                 @"wpd",
+                                                 @"json",
+                                                 @"md"
+    ];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
 - (BOOL)mnz_isWebCodePathExtension {
     NSArray<NSString *> *supportedExtensions = @[@"action",
                                                  @"adp",
@@ -126,7 +143,34 @@ static NSString* const B = @"[B]";
                                                  @"stm",
                                                  @"wss",
                                                  @"yaws",
-                                                 @"zhtml"];
+                                                 @"zhtml",
+                                                 @"xml",
+                                                 @"js",
+                                                 @"jar",
+                                                 @"java",
+                                                 @"class",
+                                                 @"php",
+                                                 @"php3",
+                                                 @"php4",
+                                                 @"php5",
+                                                 @"phtml",
+                                                 @"inc",
+                                                 @"pl",
+                                                 @"py",
+                                                 @"sql",
+                                                 @"accdb",
+                                                 @"db",
+                                                 @"dbf",
+                                                 @"mdb",
+                                                 @"pdb",
+                                                 @"c",
+                                                 @"cpp",
+                                                 @"h",
+                                                 @"cs",
+                                                 @"sh",
+                                                 @"vb",
+                                                 @"swift"
+    ];
     
     return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }

@@ -25,7 +25,7 @@ final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
     }
 
     func ownerFolder(of node: MEGAHandle) -> NodeEntity? {
-        return sdkNodeClient.findOwnerNode(node).map(NodeEntity.init(with:))
+        return sdkNodeClient.findOwnerNode(node).map(NodeEntity.init(node: ))
     }
 
     func loadThumbnail(

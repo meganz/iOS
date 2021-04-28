@@ -8,6 +8,6 @@ extension MEGANodeList {
     
     var toNodeEntities: [NodeEntity] {
         guard (size?.intValue ?? 0) > 0 else { return [] }
-        return (0..<size.intValue).compactMap({ NodeEntity(with: node(at: $0)) })
+        return (0..<size.intValue).compactMap({ NodeEntity(node: node(at: $0)) })
     }
 }

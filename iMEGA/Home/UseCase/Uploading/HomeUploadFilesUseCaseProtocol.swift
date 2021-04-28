@@ -1,6 +1,6 @@
 import Foundation
 
-protocol UploadFilesUseCaseProtocol {
+protocol HomeUploadFilesUseCaseProtocol {
 
     /// Will return uploading options for current user.
     func uploadOptions() -> [FileUploadOption]
@@ -31,13 +31,13 @@ protocol UploadFilesUseCaseProtocol {
 
 }
 
-final class UploadFileUseCase: UploadFilesUseCaseProtocol {
+final class HomeUploadFileUseCase: HomeUploadFilesUseCaseProtocol {
 
     func uploadOptions() -> [FileUploadOption] {
         if #available(iOS 13, *) {
-            return [.photos, .documentScan, .camera, .imports]
+            return [.photos, .textFile, .documentScan, .camera, .imports]
         } else {
-            return [.photos, .camera, .imports]
+            return [.photos, .textFile, .camera, .imports]
         }
     }
 
@@ -90,6 +90,7 @@ final class UploadFileUseCase: UploadFilesUseCaseProtocol {
 
 enum FileUploadOption {
     case photos
+    case textFile
     case camera
     case imports
     case documentScan

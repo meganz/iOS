@@ -45,6 +45,7 @@
 
 @property (nonatomic) QLPreviewController *previewController;
 @property (nonatomic) NSString *nodeFilePath;
+@property (nonatomic, nullable) NSString * textContent;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
 @property (nonatomic) PDFSelection *searchedItem;
@@ -149,7 +150,11 @@
 
 - (void)loadPreview {
     NSURL *url = [self documentUrl];
-    if ([url.pathExtension isEqualToString:@"pdf"]) {
+    self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
+    if (self.textContent != nil
+        && ([url.path mnz_isEditableTextFilePathExtension] || url.pathExtension.length == 0)) {
+        [self loadTextView];
+    } else if ([url.pathExtension isEqualToString:@"pdf"]) {
         [self loadPdfKit:url];
     } else {
         [self loadQLController];
@@ -194,14 +199,12 @@
     }
 }
 
-- (void)presentWebCodeViewController {
-    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-    }];
+- (void)loadTextView {
+    UITextView *textView = [[UITextView alloc] init];
+    [self.view addSubview:textView];
+    [textView autoPinEdgesToSuperviewSafeArea];
+    [textView setEditable:NO];
+    textView.text = self.textContent;
 }
 
 - (void)import {
@@ -368,23 +371,7 @@
     }
     
     if (self.isViewLoaded && self.view.window) {
-        if (transfer.path.mnz_isWebCodePathExtension) {
-            [self presentWebCodeViewController];
-        } else {
-            if (transfer.path.pathExtension.length == 0) {
-                NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentTransfer.path];
-                NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
-                if (fileString.length) {
-                    [self presentWebCodeViewController];
-                    return;
-                }
-            }
-            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
-            } else {
-                [self loadQLController];
-            }
-        }
+        [self loadPreview];
     }
 }
 

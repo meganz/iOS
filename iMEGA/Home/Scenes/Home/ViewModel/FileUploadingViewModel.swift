@@ -9,6 +9,8 @@ protocol HomeUploadingViewModelInputs {
     // MARK: - Event for user tapping uploading options
 
     func didTapUploadFromPhotoAlbum()
+    
+    func didTapUploadFromNewTextFile()
 
     func didTapUploadFromCamera()
 
@@ -48,6 +50,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         return uploadFilesUseCase.uploadOptions().map { source in
             switch source {
             case .photos: return FileUploadingSourceItem(source: .photos)
+            case .textFile: return FileUploadingSourceItem(source: .textFile)
             case .camera: return FileUploadingSourceItem(source: .capture)
             case .imports: return FileUploadingSourceItem(source: .imports)
             case .documentScan: return FileUploadingSourceItem(source: .documentScan)
@@ -67,9 +70,13 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
                     guard let self = self else { return }
                     self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
                 }
-                self.router.didTrigger(from: .album(selectionHandler))
+                self.router.upload(from: .album(selectionHandler))
             }
         }
+    }
+    
+    func didTapUploadFromNewTextFile() {
+        router.upload(from: .textFile)
     }
 
     func didTapUploadFromCamera() {
@@ -82,7 +89,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
                     guard let self = self else { return }
                     self.uploadFile(fromFilePath: filePath, to: targetNode)
                 }
-                self.router.didTrigger(from: .camera(selectionHandler))
+                self.router.upload(from: .camera(selectionHandler))
             }
             self.notifyUpdate?(self.outputs)
         }
@@ -93,7 +100,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
             guard let self = self else { return }
             self.uploadFile(fromURL: url, to: targetNode)
         }
-        router.didTrigger(from: .imports(selectionHandler))
+        router.upload(from: .imports(selectionHandler))
     }
 
     func didTapUploadFromDocumentScan() {
@@ -104,7 +111,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
                 self.error = error
                 self.notifyUpdate?(self.outputs)
             case .success:
-                self.router.didTrigger(from: .documentScan)
+                self.router.upload(from: .documentScan)
             }
         }
     }
@@ -168,14 +175,14 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     // MARK: - Use Cases
 
-    private let uploadFilesUseCase: UploadFilesUseCaseProtocol
+    private let uploadFilesUseCase: HomeUploadFilesUseCaseProtocol
 
     private let devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol
 
     private let reachabilityUseCase: ReachabilityUseCaseProtocol
 
     init(
-        uploadFilesUseCase: UploadFilesUseCaseProtocol,
+        uploadFilesUseCase: HomeUploadFilesUseCaseProtocol,
         devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol,
         reachabilityUseCase: ReachabilityUseCaseProtocol,
         router: FileUploadingRouter
@@ -198,6 +205,7 @@ struct FileUploadingSourceItem {
     var title: String {
         switch source {
         case .photos: return HomeLocalisation.photos.rawValue
+        case .textFile: return HomeLocalisation.textFile.rawValue
         case .capture: return HomeLocalisation.capture.rawValue
         case .imports: return HomeLocalisation.imports.rawValue
         case .documentScan: return HomeLocalisation.documentScan.rawValue
@@ -206,6 +214,7 @@ struct FileUploadingSourceItem {
     var icon: UIImage {
         switch source {
         case .photos: return UIImage(named: "saveToPhotos")!
+        case .textFile: return UIImage(named: "textfile")!
         case .capture: return UIImage(named: "capture")!
         case .imports: return UIImage(named: "import")!
         case .documentScan: return UIImage(named: "scanDocument")!
@@ -216,6 +225,7 @@ struct FileUploadingSourceItem {
 
     enum Source {
         case photos
+        case textFile
         case capture
         case imports
         case documentScan

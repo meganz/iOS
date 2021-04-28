@@ -15,6 +15,7 @@ enum DeeplinkPathKey: String {
     case publicChat = "/chat"
     case loginrequired = "/loginrequired"
     case achievements = "/achievements"
+    case newTextFile = "/newText"
 }
 
 enum DeeplinkFragmentKey: String {
@@ -180,6 +181,8 @@ extension NSURL {
             return .loginRequiredLink
         } else if path.hasPrefix(DeeplinkPathKey.achievements.rawValue) {
             return .achievementsLink
+        } else if path.hasPrefix(DeeplinkPathKey.newTextFile.rawValue) {
+            return .newTextFile
         }
         
         if fragment != nil {

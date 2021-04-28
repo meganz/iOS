@@ -3,11 +3,17 @@ import CoreServices
 import VisionKit
 
 final class FileUploadingRouter {
-
-    func didTrigger(from source: FileUploading) {
+    private var browserVCDelegate: TargetFolderBrowserVCDelegate?
+    
+    @available(iOS 13.0, *)
+    private lazy var vNDocumentCameraVCDelegate: VNDocumentCameraVCDelegate? = nil
+    
+    func upload(from source: FileUploadSource) {
         switch source {
         case .album(let completion):
             presentPhotoAlbumSelection(completion: completion)
+        case .textFile:
+            CreateTextFileAlertViewRouter(presenter: navigationController).start()
         case .camera(let completion):
             presentCameraViewController(withCompletion: completion)
         case .imports(let completion):
@@ -114,9 +120,8 @@ final class FileUploadingRouter {
         asyncOnMain { [weak self] in
             guard let self = self else { return }
             let scanViewController = VNDocumentCameraViewController()
-            let scanViewControllerDelegate = DocumentScanViewControllerDelegate()
-            scanViewControllerDelegate.completion = { [weak self, scanViewControllerDelegate] images in
-                _ = scanViewControllerDelegate
+            let vNDocumentCameraVCDelegate = VNDocumentCameraVCDelegate()
+            vNDocumentCameraVCDelegate.completion = { [weak self] images in
                 asyncOnMain {
                     guard let self = self else { return }
                     scanViewController.dismiss(animated: true, completion: nil)
@@ -125,7 +130,8 @@ final class FileUploadingRouter {
                     self.navigationController?.present(documentScanViewController, animated: true, completion: nil)
                 }
             }
-            scanViewController.delegate = scanViewControllerDelegate
+            scanViewController.delegate = vNDocumentCameraVCDelegate
+            self.vNDocumentCameraVCDelegate = vNDocumentCameraVCDelegate
             self.navigationController?.present(scanViewController, animated: true, completion: nil)
         }
     }
@@ -145,14 +151,13 @@ final class FileUploadingRouter {
     private func presentDestinationFolderBrowser(with completion: @escaping (MEGANode) -> Void) {
         let browserViewController = UIStoryboard(name: "Cloud", bundle: nil)
             .instantiateViewController(withIdentifier: "BrowserViewControllerID") as! BrowserViewController
-        let delegate = TargetFolderBrowserViewControllerDelegate()
-        delegate.completion = { [delegate] node in
-            _ = delegate
+        browserVCDelegate = TargetFolderBrowserVCDelegate()
+        browserVCDelegate?.completion = { node in
             completion(node)
             browserViewController.dismiss(animated: true, completion: nil)
         }
 
-        browserViewController.browserViewControllerDelegate = delegate
+        browserViewController.browserViewControllerDelegate = browserVCDelegate
         browserViewController.browserAction = .newHomeUpload
         let browserNavigationController = MEGANavigationController(rootViewController: browserViewController)
         browserNavigationController.setToolbarHidden(false, animated: false)
@@ -172,9 +177,12 @@ final class FileUploadingRouter {
 
     // MARK: - Event Source
 
-    enum FileUploading {
+    enum FileUploadSource {
         // Upload from photo album
         case album(_ completion: ([PHAsset], MEGANode) -> Void)
+        
+        // Upload from new text file
+        case textFile
 
         // Upload from camera
         case camera(_ completion: (String, MEGANode) -> Void)
@@ -214,19 +222,18 @@ fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentMenuDelegat
     }
 }
 
-fileprivate final class TargetFolderBrowserViewControllerDelegate: NSObject, BrowserViewControllerDelegate {
+final class TargetFolderBrowserVCDelegate: NSObject, BrowserViewControllerDelegate {
     var completion: ((MEGANode) -> Void)?
 
     func upload(toParentNode parentNode: MEGANode!) {
         asyncOnMain(weakify(self) {
             $0.completion?(parentNode)
-            $0.completion = nil
         })
     }
 }
 
 @available(iOS 13, *)
-fileprivate final class DocumentScanViewControllerDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
+fileprivate final class VNDocumentCameraVCDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
     var completion: (([UIImage]) -> Void)?
 
     func documentCameraViewController(
@@ -238,7 +245,6 @@ fileprivate final class DocumentScanViewControllerDelegate: NSObject, VNDocument
         }
         asyncOnMain(weakify(self) {
             $0.completion?(scanedImages)
-            $0.completion = nil
         })
     }
 }

@@ -23,7 +23,7 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
                     guard let node = sdk.node(forHandle: handle.uint64Value) else {
                         return nil
                     }
-                    return NodeEntity(with: node)
+                    return NodeEntity(node: node)
                 }
                 
                 completion(.success(favouritesNodesArray))

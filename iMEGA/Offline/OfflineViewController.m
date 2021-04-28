@@ -367,7 +367,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!fileName.mnz_isMultimediaPathExtension && !fileName.mnz_isWebCodePathExtension) {
+                if (!fileName.mnz_isMultimediaPathExtension) {
                     offsetIndex++;
                 }
             }
@@ -416,7 +416,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
                     }
-                } else if (!fileName.mnz_isWebCodePathExtension) {
+                } else {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
                 }
@@ -586,7 +586,18 @@ static NSString *kisDirectory = @"kisDirectory";
     NSInteger selectedIndexFile = [[item objectForKey:kIndex] integerValue];
     previewController.currentPreviewItemIndex = selectedIndexFile;
     
-    [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (self.viewModePreference) {
+        case ViewModePreferencePerFolder:
+            break;
+            
+        case ViewModePreferenceList:
+            [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            break;
+            
+        case ViewModePreferenceThumbnail:
+            [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+            break;
+    }
     
     return previewController;
 }
@@ -630,10 +641,24 @@ static NSString *kisDirectory = @"kisDirectory";
     return numberOfRows;
 }
 
-- (MEGANavigationController *)webCodeViewControllerWithFilePath:(NSString *)filePath {
-    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
+- (MEGANavigationController *)previewDocumentViewControllerForIndexPath:(NSIndexPath *)indexPath {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+    PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+    previewController.filePath = self.previewDocumentPath;
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    switch (self.viewModePreference) {
+        case ViewModePreferencePerFolder:
+            break;
+            
+        case ViewModePreferenceList:
+            [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            break;
+            
+        case ViewModePreferenceThumbnail:
+            [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+            break;
+    }
     return navigationController;
 }
 
@@ -846,53 +871,10 @@ static NSString *kisDirectory = @"kisDirectory";
                 }
             }
         } else {
-            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
-            if (previewController == nil) {
-                return;
-            }
-            [self presentViewController:previewController animated:YES completion:nil];
+            [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
         }
-        
-    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-        previewController.filePath = self.previewDocumentPath;
-        if (@available(iOS 13.0, *)) {
-            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        }
-        
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        switch (self.viewModePreference) {
-            case ViewModePreferencePerFolder:
-                break;
-                
-            case ViewModePreferenceList:
-                [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
-                break;
-                
-            case ViewModePreferenceThumbnail:
-                [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
-                break;
-        }
-    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
-        MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
-        [self presentViewController:navigationController animated:YES completion:nil];
     } else {
-        if (self.previewDocumentPath.pathExtension.length == 0) {
-            NSData *fileData = [NSData dataWithContentsOfFile:self.previewDocumentPath];
-            NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
-            if (fileString.length) {
-                MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
-                [self presentViewController:navigationController animated:YES completion:nil];
-                return;
-            }
-        }
-        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
-        if (previewController == nil) {
-            return;
-        }
-        [self presentViewController:previewController animated:YES completion:nil];
+        [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     }
 }
 
@@ -1232,34 +1214,10 @@ static NSString *kisDirectory = @"kisDirectory";
         if (asset.playable) {
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
             return megaAVViewController;
-        } else {
-            return [self qlPreviewControllerForIndexPath:indexPath];
         }
-    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-        previewController.filePath = self.previewDocumentPath;
-        if (@available(iOS 13.0, *)) {
-            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        }
-        
-        [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        return navigationController;
-    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
-        return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
-    } else {
-        if (self.previewDocumentPath.pathExtension.length == 0) {
-            NSData *fileData = [NSData dataWithContentsOfFile:self.previewDocumentPath];
-            NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
-            if (fileString.length) {
-                return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
-            }
-        }
-        return [self qlPreviewControllerForIndexPath:indexPath];
     }
     
-    return nil;
+    return [self previewDocumentViewControllerForIndexPath:indexPath];
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
