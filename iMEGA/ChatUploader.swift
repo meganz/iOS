@@ -6,7 +6,8 @@
     private let store = MEGAStore.shareInstance()
     
     private var isDatabaseCleanupTaskCompleted: Bool?
-    
+    private let uploaderQueue = DispatchQueue(label: "ChatUploaderQueue")
+
     private override init() { super.init() }
     
     @objc func setup() {
@@ -49,7 +50,7 @@
         cleanupDatabaseIfRequired()
         guard let context = store.stack?.newBackgroundContext() else { return }
         
-        context.perform {
+        context.performAndWait {
             MEGALogInfo("[ChatUploader] inserted new entry File path \(filepath)")
             // insert into database only if the duplicate path does not exsist - "allowDuplicateFilePath" parameter
             self.store.insertChatUploadTransfer(withFilepath: filepath,
@@ -109,7 +110,11 @@
     private func updateDatabase(withChatRoomIdString chatRoomIdString: String, context: NSManagedObjectContext) {
         context.performAndWait {
             let allTransfers = store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
+            allTransfers.forEach { transfer in
+                MEGALogInfo("[ChatUploader] transfer index \(transfer.index) with file path \(transfer.filepath)")
+            }
             let index = allTransfers.firstIndex(where: { $0.nodeHandle == nil })
+            MEGALogInfo("[ChatUploader] transfer found at index \(index ?? -1)")
             if let totalIndexes = (index == nil) ? allTransfers.count : index {
                 (0..<totalIndexes).forEach { index in
                     let transfer = allTransfers[index]
@@ -117,14 +122,21 @@
                        let nodeHandle = UInt64(handle),
                        let chatRoomId = UInt64(chatRoomIdString) {
                         
+                        let dispatchGroup = DispatchGroup()
+                        dispatchGroup.enter()
+
+                        let requestDelegate = MEGAChatAttachNodeRequestDelegate { _, _ in
+                            dispatchGroup.leave()
+                        }
                         if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
-                            MEGASdkManager.sharedMEGAChatSdk().attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
+                            MEGASdkManager.sharedMEGAChatSdk().attachVoiceMessage(toChat: chatRoomId, node: nodeHandle, delegate: requestDelegate)
                         } else {
-                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoomId, node: nodeHandle)
+                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoomId, node: nodeHandle, delegate: requestDelegate)
                         }
                         
                         MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")
                         context.delete(transfer)
+                        dispatchGroup.wait()
                     }
                 }
                 
@@ -137,58 +149,62 @@
 extension ChatUploader: MEGATransferDelegate {
     
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        guard transfer.type == .upload,
-              let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
-              let context = store.stack?.newBackgroundContext() else {
-            return
-        }
-        
-        cleanupDatabaseIfRequired()
-        
-        context.performAndWait {
-            let allTransfers = self.store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
-            if let transferTask = allTransfers.filter({ $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}).first {
-                transferTask.transferTag = String(transfer.tag)
-                MEGALogInfo("[ChatUploader] updating existing row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
-            } else {
-                self.store.insertChatUploadTransfer(withFilepath: transfer.path,
-                                                    chatRoomId: chatRoomIdString,
-                                                    transferTag: String(transfer.tag),
-                                                    allowDuplicateFilePath: true,
-                                                    context: context)
-                MEGALogInfo("[ChatUploader] inserting a new row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
+        uploaderQueue.async {
+            guard transfer.type == .upload,
+                  let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
+                  let context = self.store.stack?.newBackgroundContext() else {
+                return
             }
             
-            self.store.save(context)
+            self.cleanupDatabaseIfRequired()
+            
+            context.performAndWait {
+                let allTransfers = self.store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
+                if let transferTask = allTransfers.filter({ $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}).first {
+                    transferTask.transferTag = String(transfer.tag)
+                    MEGALogInfo("[ChatUploader] updating existing row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
+                } else {
+                    self.store.insertChatUploadTransfer(withFilepath: transfer.path,
+                                                        chatRoomId: chatRoomIdString,
+                                                        transferTag: String(transfer.tag),
+                                                        allowDuplicateFilePath: true,
+                                                        context: context)
+                    MEGALogInfo("[ChatUploader] inserting a new row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
+                }
+                
+                self.store.save(context)
+            }
         }
     }
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        guard transfer.type == .upload,
-              let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
-              let context = store.stack?.newBackgroundContext() else {
-            return
-        }
-        
-        if (error.type == .apiEExist) {
-            store.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
-                                           transferTag: String(transfer.tag),
-                                           context: context)
-            MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
-            return;
-        }
-        
-        MEGALogInfo("[ChatUploader] upload complete File path \(transfer.path ?? "No file path found")")
-        
-        transfer.mnz_moveFileToDestinationIfVoiceClipData()
-        context.performAndWait {
-            self.store.updateChatUploadTransfer(filepath: transfer.path,
-                                                chatRoomId: chatRoomIdString,
-                                                nodeHandle: String(transfer.nodeHandle),
-                                                transferTag: String(transfer.tag),
-                                                appData: transfer.appData,
-                                                context: context)
-            self.updateDatabase(withChatRoomIdString: chatRoomIdString, context: context)
+        uploaderQueue.async {
+            guard transfer.type == .upload,
+                  let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
+                  let context = self.store.stack?.newBackgroundContext() else {
+                return
+            }
+            
+            if (error.type == .apiEExist) {
+                self.store.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
+                                               transferTag: String(transfer.tag),
+                                               context: context)
+                MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+                return;
+            }
+            
+            MEGALogInfo("[ChatUploader] upload complete File path \(transfer.path ?? "No file path found")")
+            
+            transfer.mnz_moveFileToDestinationIfVoiceClipData()
+            context.performAndWait {
+                self.store.updateChatUploadTransfer(filepath: transfer.path,
+                                                    chatRoomId: chatRoomIdString,
+                                                    nodeHandle: String(transfer.nodeHandle),
+                                                    transferTag: String(transfer.tag),
+                                                    appData: transfer.appData,
+                                                    context: context)
+                self.updateDatabase(withChatRoomIdString: chatRoomIdString, context: context)
+            }
         }
     }
     

@@ -156,3 +156,4 @@
 #import "MEGAPurchase.h"
 #import "UIImage+YYAdd.h"
 #import "CameraUploadManager.h"
+#import "MEGAChatAttachNodeRequestDelegate.h"
