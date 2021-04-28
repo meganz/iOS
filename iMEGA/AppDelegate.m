@@ -1222,6 +1222,8 @@
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC));
     dispatch_semaphore_wait(semaphore, timeout);
     [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
+    [MEGASdkManager.sharedMEGASdk deleteMegaApi];
+    [MEGASdkManager.sharedMEGASdkFolder deleteMegaApi];
 }
 
 - (void)presentLogoutFromOtherClientAlert {
