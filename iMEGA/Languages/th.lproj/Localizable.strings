@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="คุณได้ส่งคำขอลิงก์ยืนยันสำหรับที่อยู่อีเมลนั้นแล้ว";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="กรุณาไปที่กล่องจดหมายและคลิกลิงก์เพื่อยืนยันอีเมลใหม่ของคุณ";
+"emailIsChanging_description"="กรุณาไปที่กล่องจดหมายและคลิกลิงก์เพื่อยืนยันที่อยู่อีเมลใหม่ของคุณ";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="กรุณาใส่รหัสผ่านเพื่อตรวจสอบที่อยู่อีเมลของคุณ";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="การกู้คืนหยุดทำงาน";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือไม่สามารถคืนการสั่งซื้อ กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="อัปเกรดเป็นบัญชี Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="การเข้าถึงฟีเจอร์เฉพาะบัญชี Pro เช่น การตั้งค่าการป้องกันด้วยรหัสผ่านและวันหมดอายุสำหรับไฟล์สาธารณะ";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="เปิดใช้งานโหมดดีบัก";
 /* Alert message shown when the DEBUG mode is enabled */

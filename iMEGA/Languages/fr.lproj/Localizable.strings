@@ -451,9 +451,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Saisissez le nouveau nom";
 /* Alert title to ask if user want to rename the file. %@ is a place holder.*/
-"rename_file_alert_title"="Rename File %@ ?";
+"rename_file_alert_title"="Renommer le fichier %@ ?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Remplacer";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Déplacer vers la corbeille";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -641,7 +641,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politique sur les Témoins de navigation";
+"Cookie Policy"="Politique des témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "Cookie Settings"="Paramètres des Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Vous avez déjà demandé un lien de confirmation pour cette adresse courriel.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Veuillez vous rendre dans votre boîte de réception et cliquer sur le lien pour confirmer votre nouvelle adresse courriel.";
+"emailIsChanging_description"="Veuillez aller dans votre boîte de réception et cliquer sur le lien pour confirmer votre nouvelle adresse courriel.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Veuillez saisir votre mot de passe pour confirmer votre adresse courriel";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="La restauration est interrompue";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Passer à un compte Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Accédez aux fonctions propres aux comptes Pro telles que la protection par mot de passe et les dates d’expiration pour les fichiers publics.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */

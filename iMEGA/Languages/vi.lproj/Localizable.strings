@@ -451,9 +451,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Nhập tên mới";
 /* Alert title to ask if user want to rename the file. %@ is a place holder.*/
-"rename_file_alert_title"="Rename File %@?";
+"rename_file_alert_title"="Đổi Tên %@?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Thay thế";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Bạn đã yêu cầu gửi một đường liên kết xác thực cho địa chỉ email này rồi.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Xin truy cập hộp thư email của bạn, tìm thư và click vào đường liên kết để xác minh địa chỉ email.";
+"emailIsChanging_description"="Xin kiểm tra hộp thư và click vào đường liên kết để xác thực địa chỉ email mới.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Xin nhập mật khẩu để xác thực đây là email của bạn";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Việc khôi phục đã dừng lại";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây. Xin thử lại sau, hoặc liên hệ ios@mega.nz để được trợ giúp.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Nâng cấp lên hạng Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Sử dụng các tính mà chỉ có hạng Pro mới có, như đặt mật khẩu và gia hạn thời gian truy cập cho từng tệp tin muốn chia sẻ.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Bật chế độ DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Lịch sử chát được được dọn sạch";
+"Chat History has Been Cleared"="Lịch sử tin nhắn chát đã được dọn sạch";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="Lỗi phát sinh. Lịch sử cuộc chát chưa được xóa sạch";
 /* 'Next' button in a dialog */
@@ -1268,9 +1272,9 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện nghiêm ngặt với công nghệ bảo mật đầu-cuối (người dùng kiểm soát) cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Đảo Bảo Bí Mật.[/S] Chỉ có tác giả hay người sở hữu và người được giao quyền sử dụng mới có thể giải mã và đọc nội dung.";
+"confidentialityExplanation"="[S]Đảo Bảo An Ninh.[/S] Chỉ có tác giả hay người sở hữu và người được giao quyền sử dụng mới có thể giải mã và đọc nội dung.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Độ Xác Thực.[/S] Hệ thống được đảm bảo rằng các dữ liệu nhận được từ người gửi sẽ hiển thị rõ ràng, và nội dung đó sẽ được nguyên vẹn và không bị chế tác trong quá trình truyền tải.";
+"authenticityExplanation"="[S]Bảo Vệ Xác Thực.[/S] Hệ thống đảm bảo rằng các dữ liệu nhận được từ người gửi sẽ hiển thị rõ ràng, và nội dung giữ nguyên vẹn và không bị chế tác trong quá trình truyền tải.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Không tìm thấy cuộc chát";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -2431,7 +2435,7 @@
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
 "Manage Chat History"="Quản Lý Lịch Sử Chát";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="Dọn Dẹp Lịch Sử";
+"History Clearing"="Tự Dọn Lịch Sử";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="Tự động xóa đi các tin nhắn đã tồn đọng trong một khoảng thời gian.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
@@ -2523,7 +2527,7 @@
 /* Photo Explorer Screen: No images in the accoun t*/
 "No images found"="Không có ảnh nào";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Trang chủ";
+"Home"="Trang Chủ";
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Văn Bản";
 /* Message shown when a link is shared with separated key */

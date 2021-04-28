@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="U heeft al een bevestigingskoppeling voor dat e-mailadres gevraagd.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Ga alstublieft naar uw inbox en klik op de koppeling om uw nieuwe e-mailadres te bevestigen.";
+"emailIsChanging_description"="Ga naar uw inbox en klik de koppeling om uw nieuwe email te bevestigen.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Vul alstublieft uw wachtwoord in om uw e-mailadres te controleren";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Herstel gestopt";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Uw verzoek is geannuleerd of de voorafgaande aankoop kon niet worden hersteld. Probeer alstublieft later opnieuw of neem contact op met ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Upgraden naar Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve PRO account functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chatgeschiedenis is gewist";
+"Chat History has Been Cleared"="Gespreksgeschiedenis is gewist";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="Een fout heeft opgetreden. De chat geschiedenis is niet succesvol gewist";
 /* 'Next' button in a dialog */

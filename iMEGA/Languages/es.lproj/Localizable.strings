@@ -451,9 +451,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introduce otro nombre";
 /* Alert title to ask if user want to rename the file. %@ is a place holder.*/
-"rename_file_alert_title"="Rename File %@?";
+"rename_file_alert_title"="¿Renombrar archivo %@?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Sustituir";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mover a la Papelera";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ya has solicitado un enlace de confirmación para esa dirección de correo electrónico.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Por favor accede a tu bandeja de entrada y pulsa el enlace para confirmar tu nuevo correo electrónico.";
+"emailIsChanging_description"="Accede a tu bandeja de entrada y haz clic en el enlace para confirmar tu nueva dirección de correo electrónico.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Introduce la contraseña para verificar tu dirección de correo electrónico";
 /* The [X] will be replaced with the e-mail address. */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Restauración cancelada";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="La petición ha sido cancelada o la compra anterior no se ha podido restaurar. Por favor, inténtalo de nuevo más tarde o contacta con ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Ampliar cuenta a Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Accede a las características de una cuenta Pro, como configurar la protección por contraseña o la fecha de caducidad para archivos públicos.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activar modo depuración";
 /* Alert message shown when the DEBUG mode is enabled */
