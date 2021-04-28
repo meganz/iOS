@@ -244,6 +244,11 @@ final class AudioPlayer: NSObject {
             $0.updateContentView(isPlaying ? 60: 0)
         }
     }
+    
+    func playerTracksContains(url: URL) -> Bool {
+        tracks.compactMap{$0.url}
+            .contains(url)
+    }
 }
 
 extension AudioPlayer: AudioPlayerTimerProtocol {
