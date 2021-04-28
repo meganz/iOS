@@ -48,6 +48,10 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
     }
     
+    func resetAudioPlayerConfiguration() {
+        audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
+    }
+    
     func updateQueueWithLoopItems() {
         guard let queuePlayer = queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed,

@@ -178,6 +178,10 @@ import Foundation
         player?.tracks
     }
     
+    func playerTracksContains(url: URL) -> Bool {
+        player?.playerTracksContains(url: url) ?? false
+    }
+    
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
         if let node = node {
             AudioPlayerViewRouter(node: node, fileLink: fileLink, isFolderLink: isFolderLink, presenter: presenter, playerHandler: self).start()
@@ -285,5 +289,9 @@ import Foundation
     
     func remoteCommandEnabled(_ enabled: Bool) {
         enabled ? player?.enableRemoteCommands() : player?.disableRemoteCommands()
+    }
+    
+    func resetAudioPlayerConfiguration() {
+        player?.resetAudioPlayerConfiguration()
     }
 }

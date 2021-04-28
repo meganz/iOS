@@ -121,9 +121,33 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
+        resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
         playerHandler.autoPlay(enable: playerType != .fileLink)
         playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
+    }
+    
+    private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) {
+        switch playerType {
+        case .default:
+            if let currentNode = playerHandler.playerCurrentItem()?.node {
+                guard let nextCurrentNode = nextCurrentTrack.node,
+                      nextCurrentNode.parentHandle != currentNode.parentHandle else { return }
+            }
+            
+        case .folderLink:
+            guard !playerHandler.playerTracksContains(url: nextCurrentTrack.url) else { return }
+            
+        case .offline:
+            let nextCurrentItemDirectoryURL = nextCurrentTrack.url.deletingLastPathComponent()
+            guard let currentItemDirectoryURL = playerHandler.playerCurrentItem()?.url.deletingLastPathComponent(),
+                  nextCurrentItemDirectoryURL != currentItemDirectoryURL else { return }
+            
+        default:
+            break
+        }
+        
+        playerHandler.resetAudioPlayerConfiguration()
     }
 
     private func preparePlayer() {
