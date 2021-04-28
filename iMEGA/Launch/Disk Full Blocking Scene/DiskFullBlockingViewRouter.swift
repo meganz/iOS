@@ -19,6 +19,8 @@ final class DiskFullBlockingViewRouter: NSObject, DiskFullBlockingViewRouting {
     
     func manageDiskSpace() {
         MEGASdkManager.sharedMEGAChatSdk().deleteMegaChatApi()
+        MEGASdkManager.sharedMEGASdk().deleteMegaApi()
+        MEGASdkManager.sharedMEGASdkFolder().deleteMegaApi()
         exit(0)
     }
 }
