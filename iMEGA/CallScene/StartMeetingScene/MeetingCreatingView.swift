@@ -8,6 +8,8 @@ class MeetingCreatingView: UIView {
     private let containerView = UIView()
     private lazy var localVideoImageView: MEGALocalImageView = {
         let localVideoImageView = MEGALocalImageView()
+        localVideoImageView.isHidden = true
+        localVideoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
         viewModel.dispatch(.addChatLocalVideo(delegate: localVideoImageView))
         return localVideoImageView
     } ()
@@ -169,8 +171,7 @@ class MeetingCreatingView: UIView {
             vc.title = name.isEmpty ? meetingNameInputTextfield.placeholder : name
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
-
-            switchCameraButton.flex.display(isSelected ? .flex : .none)
+            localVideoImageView.isHidden = !isSelected
             containerView.flex.layout()
         case .updateSpeakerButton(enabled: let isSelected):
             enableDisableSpeakerButton.isSelected = isSelected

@@ -155,18 +155,22 @@
 
 - (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath {
     self.permissionsImageView.hidden = YES;
-    if (indexPath.row == 0) {
-        self.nameLabel.text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-        self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-    } else if (indexPath.row == 1) {
-        self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
-        self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-    } else if (indexPath.row == 2) {
-        self.nameLabel.text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
-        self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
-    } else if (indexPath.row == 3) {
-        self.nameLabel.text = NSLocalizedString(@"New Meeting", @"Text button for init a Meeting.");
-        self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
+    switch (indexPath.row) {
+        case ContactsStartConversationNewGroupChat:
+            self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
+            break;
+        case ContactsStartConversationNewChatLink:
+            self.nameLabel.text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
+            break;
+        case ContactsStartConversationNewMeeting:
+            self.nameLabel.text = NSLocalizedString(@"New Meeting", @"Text button for init a Meeting.");
+            self.avatarImageView.image = [UIImage imageNamed:@"newMeeting"];
+            break;
+        case ContactsStartConversationJoinMeeting:
+            self.nameLabel.text = NSLocalizedString(@"Join Meeting", @"Text button for joining a Meeting.");
+            self.avatarImageView.image = [UIImage imageNamed:@"joinMeeting"];
+            break;
     }
     self.shareLabel.hidden = YES;
 }

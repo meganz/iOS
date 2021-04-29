@@ -114,6 +114,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                     if videoPermission {
                         self.isVideoEnabled = !self.isVideoEnabled
                         if self.isVideoEnabled {
+                            self.meetingUseCase.setChatVideoInDevices(type: .front)
                             self.meetingUseCase.openVideoDevice()
                         } else {
                             self.meetingUseCase.releaseDevice()
