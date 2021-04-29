@@ -982,7 +982,13 @@
 }
 
 - (void)newMeeting {
-    
+    MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self];
+    [router start];
+}
+
+- (void)joinMeeting {
+    MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self];
+    [router start];
 }
 
 - (void)showEmailContactPicker {
@@ -1731,14 +1737,19 @@
             
         case ContactsModeChatStartConversation: {
             if (indexPath.section == 0) {
-                if (indexPath.row == 0) {
-                    [self addContact:[self.tableView cellForRowAtIndexPath:indexPath]];
-                } else if (indexPath.row == 1) {
-                    [self startGroup];
-                } else if (indexPath.row == 2) {
-                    [self newChatLink];
-                } else if (indexPath.row == 3) {
-                    [self newMeeting];
+                switch (indexPath.row) {
+                    case ContactsStartConversationNewGroupChat:
+                        [self startGroup];
+                        break;
+                    case ContactsStartConversationNewChatLink:
+                        [self newChatLink];
+                        break;
+                    case ContactsStartConversationNewMeeting:
+                        [self newMeeting];
+                        break;
+                    case ContactsStartConversationJoinMeeting:
+                        [self joinMeeting];
+                        break;
                 }
             } else if (indexPath.section == 1) {
                 [self dismissViewControllerAnimated:YES completion:^{

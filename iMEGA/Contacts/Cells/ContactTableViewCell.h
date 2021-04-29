@@ -1,5 +1,13 @@
 #import <UIKit/UIKit.h>
 
+
+typedef NS_ENUM(NSUInteger, ContactsStartConversation) {
+    ContactsStartConversationNewGroupChat = 0,
+    ContactsStartConversationNewChatLink,
+    ContactsStartConversationNewMeeting,
+    ContactsStartConversationJoinMeeting
+};
+
 @protocol ContactTableViewCellDelegate<NSObject>
 @optional
 - (void)notificationSwitchValueChanged:(UISwitch *)sender;
