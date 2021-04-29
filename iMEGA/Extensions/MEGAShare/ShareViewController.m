@@ -19,7 +19,6 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAShare-Swift.h"
 #import "MEGATransferDelegate.h"
-#import "MEGAShare-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
@@ -313,10 +312,6 @@
         
         [self presentViewController:self.loginRequiredNC animated:YES completion:nil];
     }
-}
-
-- (IBAction)openMegaTouchUpInside:(id)sender {
-    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
 }
 
 - (void)loginToMEGA {

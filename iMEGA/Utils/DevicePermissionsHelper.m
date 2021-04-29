@@ -98,6 +98,7 @@
 }
 
 + (void)alertPermissionWithTitle:(NSString *)title message:(NSString *)message completionHandler:(void (^)(void))handler {
+#ifdef MAIN_APP_TARGET
     UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     [permissionsAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil]];
@@ -105,10 +106,12 @@
         if (handler) {
             handler();
         }
+        
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }]];
     
     [UIApplication.mnz_presentingViewController presentViewController:permissionsAlertController animated:YES completion:nil];
+#endif
 }
 
 
@@ -135,6 +138,7 @@
 }
 
 + (void)modalNotificationsPermission {
+#ifdef MAIN_APP_TARGET
     CustomModalAlertViewController *permissionsModal = CustomModalAlertViewController.alloc.init;
     __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
@@ -146,6 +150,7 @@
     permissionsModal.firstCompletion = ^{
         [self notificationsPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
+                
                 [UIApplication.sharedApplication registerForRemoteNotifications];
             }
             [weakPermissionsModal dismissViewControllerAnimated:YES completion:nil];
@@ -153,6 +158,7 @@
     };
     
     [UIApplication.mnz_presentingViewController presentViewController:permissionsModal animated:YES completion:nil];
+#endif
 }
 
 #pragma mark - Permissions status

@@ -7,17 +7,12 @@ use_frameworks!
 
 workspace 'iMEGA'
 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
-    end
-  end
-end
-
 abstract_target 'iMEGA' do
   pod 'SDWebImageWebPCoder'
   pod 'Firebase/Crashlytics'
+  pod 'SVProgressHUD', :git => 'https://github.com/meganz/SVProgressHUD.git', :branch => 'shadow_customization'
+  pod 'PureLayout', :git => 'https://github.com/PureLayout/PureLayout.git'
+  pod 'GKContactImage', :git => 'https://github.com/meganz/GKContactImage.git'
 
   target 'MEGA' do
     # Pods for MEGA
@@ -78,6 +73,22 @@ abstract_target 'iMEGA' do
   target 'MEGAWidgetExtension' do
     pod 'YYCategories'
     # Pods for MEGAWidgetExtension
+
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    
+    target.build_configurations.each do |config|
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+    end
+    
+    if target.name.end_with? "ProgressHUD"
+      target.build_configurations.each do |config|
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = ['$(inherited)', 'SV_APP_EXTENSIONS=1']
+      end
+    end
 
   end
 end

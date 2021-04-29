@@ -48,6 +48,7 @@ PODS:
     - GCDWebServer/Core
   - GCDWebServer/WebUploader (3.5.4):
     - GCDWebServer/Core
+  - GKContactImage (0.0.4)
   - GoogleDataTransport (8.1.0):
     - nanopb (~> 2.30906.0)
   - GoogleUtilities/Environment (7.1.1):
@@ -80,10 +81,12 @@ PODS:
   - PanModal (1.2.7)
   - PinLayout (1.9.3)
   - PromisesObjC (1.2.12)
+  - PureLayout (3.1.8)
   - SDWebImage/Core (5.10.2)
   - SDWebImageWebPCoder (0.8.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
+  - SVProgressHUD (2.2.6)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
@@ -98,12 +101,15 @@ DEPENDENCIES:
   - FlexLayout
   - FMDB
   - GCDWebServer
+  - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
   - PanModal
   - PinLayout
+  - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
   - SDWebImageWebPCoder
+  - SVProgressHUD (from `https://github.com/meganz/SVProgressHUD.git`, branch `shadow_customization`)
   - YYCategories
 
 SPEC REPOS:
@@ -135,22 +141,38 @@ EXTERNAL SOURCES:
   DZNEmptyDataSet:
     :commit: 3db6295
     :git: https://github.com/meganz/DZNEmptyDataSet.git
+  GKContactImage:
+    :git: https://github.com/meganz/GKContactImage.git
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
   MessageKit:
     :git: https://github.com/lhr000lhrmega/MessageKit.git
+  PureLayout:
+    :git: https://github.com/PureLayout/PureLayout.git
+  SVProgressHUD:
+    :branch: shadow_customization
+    :git: https://github.com/meganz/SVProgressHUD.git
 
 CHECKOUT OPTIONS:
   DZNEmptyDataSet:
     :commit: 3db6295
     :git: https://github.com/meganz/DZNEmptyDataSet.git
+  GKContactImage:
+    :commit: d5a05ae1cc6b49d0673d13f4b1981d1fe5be718a
+    :git: https://github.com/meganz/GKContactImage.git
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
   MessageKit:
     :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
     :git: https://github.com/lhr000lhrmega/MessageKit.git
+  PureLayout:
+    :commit: 3bcbfe370f85b81254de4d6b9df3dd4a70d4ca89
+    :git: https://github.com/PureLayout/PureLayout.git
+  SVProgressHUD:
+    :commit: cba8a0f4504ba1f9ae3e56ac3699fa1b50096b60
+    :git: https://github.com/meganz/SVProgressHUD.git
 
 SPEC CHECKSUMS:
   CHTCollectionViewWaterfallLayout: 5f241d2480ab4939aa0d1ad4981de9eef1fbe60d
@@ -164,6 +186,7 @@ SPEC CHECKSUMS:
   FlexLayout: 025dd153bd5618dcc9f93ef914106d7dc2a86fdc
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
+  GKContactImage: fee93c0311deb91f1aca8f1c337dbb0b6f68a119
   GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
@@ -175,10 +198,12 @@ SPEC CHECKSUMS:
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PinLayout: 4d8733121f8687edcc8f00c19bf1379d12808767
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  PureLayout: a4afb3d79dd958564ce33d22c89f407280d8e6a8
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
   SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
+  SVProgressHUD: 6ed134667e9ebb2f33679e8273cd48fd3fa349e5
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: b3601f140afd3093afed29e3ad18e1a736c6a44d
+PODFILE CHECKSUM: ddd9c68778400c3159b1c73f41d5f2ada339dc23
 
 COCOAPODS: 1.10.0
