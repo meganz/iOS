@@ -333,7 +333,7 @@
 
         if (self.browserAction == BrowserActionDocumentProvider) {
             self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-        } else if (self.browserAction == BrowserActionNewHomeUpload || self.browserAction == BrowserActionNewFileSave) {
+        } else if (self.browserAction == BrowserActionNewHomeUpload) {
             self.navigationItem.title = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
         }
     } else {

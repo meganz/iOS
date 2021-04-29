@@ -94,12 +94,16 @@ extension TextEditorViewController: ViewType {
                 target: self,
                 action: #selector(cancelTapped)
             )
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
+            let saveButton = UIBarButtonItem(
                 title: textEditorModel.rightButtonTitle,
                 style: .plain,
                 target: self,
                 action: #selector(saveTapped)
             )
+            let attribute: [NSAttributedString.Key : Any] = [.font: UIFont.boldSystemFont(ofSize: 16)]
+            saveButton.setTitleTextAttributes(attribute, for: .normal)
+            
+            navigationItem.rightBarButtonItem = saveButton
         } else {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: textEditorModel.leftButtonTitle,

@@ -152,11 +152,6 @@ final class TextEditorViewModel: ViewModelType {
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
                 }
-                do {
-                    try FileManager.default.removeItem(atPath: tempPath)
-                } catch {
-                    return
-                }
                 
                 switch result {
                 case .failure(_):
