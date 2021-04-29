@@ -690,7 +690,7 @@
 
 - (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
-    if (addContactFromEmailAlertController) {
+    if ([addContactFromEmailAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
     }
