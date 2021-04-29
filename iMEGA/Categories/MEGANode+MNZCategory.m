@@ -963,7 +963,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     BOOL shouldReturn = YES;
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (renameAlertController) {
+    if ([renameAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         shouldReturn = rightButtonAction.enabled;
     }
@@ -974,7 +974,7 @@
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (renameAlertController) {
+    if ([renameAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         BOOL enableRightButton = NO;
         

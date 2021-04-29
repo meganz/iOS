@@ -170,7 +170,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 - (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    if (alertController) {
+    if ([alertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         BOOL enableRightButton = NO;
         if ((textField.text.length > 0) && ![textField.text isEqualToString:self.chatRoom.title] && ![[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""] && ([textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] < 31)) {

@@ -59,7 +59,7 @@
 
 - (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (alertController) {
+    if ([alertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }

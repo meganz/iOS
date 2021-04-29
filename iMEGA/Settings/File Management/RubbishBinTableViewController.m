@@ -81,7 +81,7 @@
 
 - (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {
     UIAlertController *scheduleRubbishBinClearingAlertController = (UIAlertController *)self.presentedViewController;
-    if (scheduleRubbishBinClearingAlertController) {
+    if ([scheduleRubbishBinClearingAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *doneAction = scheduleRubbishBinClearingAlertController.actions.lastObject;
         doneAction.enabled = textField.text.mnz_isDecimalNumber;
     }

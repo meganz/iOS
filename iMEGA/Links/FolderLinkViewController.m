@@ -393,7 +393,7 @@
 
 - (void)decryptionTextFieldDidChange:(UITextField *)textField {
     UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
-    if (decryptionAlertController) {
+    if ([decryptionAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
         okAction.enabled = !textField.text.mnz_isEmpty;
     }
