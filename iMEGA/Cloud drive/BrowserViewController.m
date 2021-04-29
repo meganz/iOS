@@ -121,7 +121,7 @@
         if (self.searchController.isActive) {
             float yCorrection = self.selectorView.hidden ? 0 : 44;
             
-            self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height + yCorrection, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
+            self.searchController.view.frame = CGRectMake(0, self.view.safeAreaInsets.top + yCorrection, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
             self.searchController.searchBar.superview.frame = CGRectMake(0, 0, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
         }
     } completion:nil];
@@ -1013,7 +1013,7 @@
 
 - (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        [self openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     }
 }
 
