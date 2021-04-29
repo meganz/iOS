@@ -191,7 +191,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         checkDelaysWithMessage(message)
-        contentHandler(bestAttemptContent)
+        
+        if (message?.status == .seen) || message?.isDeleted ?? false {
+            contentHandler(UNNotificationContent()) // Don't deliver the notification to the user.
+        } else {
+            contentHandler(bestAttemptContent)
+        }
     }
     
     private func removePreviousGenericNotifications() {
