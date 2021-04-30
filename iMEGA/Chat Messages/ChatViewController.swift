@@ -51,13 +51,41 @@ class ChatViewController: MessagesViewController {
     // topbanner
     var timer: Timer?
     var initDuration: TimeInterval?
-    var topBannerButtonTopConstraint: NSLayoutConstraint?
-    lazy var topBannerButton: UIButton = {
-          let button = UIButton()
-          button.setTitleColor(.white, for: .normal)
-          button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-          return button
-      }()
+    var topBannerViewTopConstraint: NSLayoutConstraint?
+    var topBannerLabel: UILabel?
+    var topBannerMicrophoneMuted: UIImageView?
+    var topBannerVideoEnabled: UIImageView?
+    lazy var topBannerView: UIView = {
+        topBannerLabel = UILabel()
+        topBannerLabel?.textColor = .white
+        
+        topBannerMicrophoneMuted = UIImageView(image: UIImage(named: "userMuted-banner"))
+        topBannerVideoEnabled = UIImageView(image: UIImage(named: "callSlots-banner"))
+        topBannerMicrophoneMuted?.isHidden = true
+        topBannerVideoEnabled?.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            topBannerMicrophoneMuted!.widthAnchor.constraint(equalToConstant: 16),
+            topBannerMicrophoneMuted!.heightAnchor.constraint(equalToConstant: 16),
+            topBannerVideoEnabled!.widthAnchor.constraint(equalToConstant: 16),
+            topBannerVideoEnabled!.heightAnchor.constraint(equalToConstant: 16)
+        ])
+        
+        let stackView = UIStackView(arrangedSubviews: [topBannerLabel!, topBannerMicrophoneMuted!, topBannerVideoEnabled!])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let view = UIView()
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        return view
+    }()
     
     lazy var previewerView: PreviewersView = {
         let view = PreviewersView.instanceFromNib
@@ -161,7 +189,7 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
-        configureTopBannerButton()
+        configureTopBanner()
         configurePreviewerButton()
         addObservers()
         addChatBottomInfoScreenToView()
@@ -222,6 +250,7 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
+        checkIfChatHasActiveCall()
                 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(becomeFirstResponder),
@@ -237,7 +266,7 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkIfChatHasActiveCall()
+        
         reloadInputViews()
         TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
         
@@ -648,15 +677,16 @@ class ChatViewController: MessagesViewController {
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
     
-    private func configureTopBannerButton() {
-          view.addSubview(topBannerButton)
-          topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
-          topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
-          topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
-          topBannerButton.autoSetDimension(.height, toSize: 44)
-          topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
-          topBannerButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
-          topBannerButton.isHidden = true
+    private func configureTopBanner() {
+        view.addSubview(topBannerView)
+        topBannerViewTopConstraint = topBannerView.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
+        topBannerView.autoPinEdge(toSuperviewEdge: .leading)
+        topBannerView.autoPinEdge(toSuperviewEdge: .trailing)
+        topBannerView.autoSetDimension(.height, toSize: 44)
+        topBannerView.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(joinActiveCall)))
+        topBannerView.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+        topBannerLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+        topBannerView.isHidden = true
       }
     
     private func configurePreviewerButton() {
