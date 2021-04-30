@@ -187,8 +187,8 @@ class GetLinkViewController: UIViewController {
     private func copyLinkToPasteboard(atIndex index: Int?) {
         guard let copyImage = UIImage(named: "copy") else { return }
         if getLinkVM.multilink {
-            if let index = index {
-                UIPasteboard.general.string = nodes[index].publicLink
+            if let index = index, let link = nodes[safe: index]?.publicLink {
+                UIPasteboard.general.string = link
                 SVProgressHUD.show(copyImage, status: NSLocalizedString("Link Copied to Clipboard", comment: "Message shown when the link has been copied to the Clipboard"))
             } else {
                 UIPasteboard.general.string = nodes.compactMap { $0.publicLink }.joined(separator: " ")
