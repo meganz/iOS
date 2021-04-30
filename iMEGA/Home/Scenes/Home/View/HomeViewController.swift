@@ -344,7 +344,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func activateSearch() {
-        let _ = searchBarView.becomeFirstResponder()
+        let _ = searchBarView?.becomeFirstResponder()
     }
 }
 
@@ -633,11 +633,11 @@ extension HomeViewController: MEGASearchBarViewDelegate {
 
     func didFinishSearchSessionOnSearchController(_ searchController: MEGASearchBarView) {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        searchResultViewController.willMove(toParent: nil)
-        searchResultContainerView.constraints.deactivate()
-        searchResultViewController.view.removeFromSuperview()
-        searchResultViewController.removeFromParent()
-        searchResultContainerView.removeFromSuperview()
+        searchResultViewController?.willMove(toParent: nil)
+        searchResultContainerView?.constraints.deactivate()
+        searchResultViewController?.view.removeFromSuperview()
+        searchResultViewController?.removeFromParent()
+        searchResultContainerView?.removeFromSuperview()
         searchResultContainerView = nil
     }
 }
