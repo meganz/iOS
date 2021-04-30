@@ -1594,7 +1594,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     for (MEGANode *node in self.selectedNodesArray) {
         if ([node mnz_downloadNode]) {
-            [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+            [self.cdTableView.tableView reloadData];
         } else {
             return;
         }
@@ -1797,8 +1797,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+        [self.cdTableView.tableView reloadData];
     }
 }
 
@@ -1843,8 +1842,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:self.nodesIndexPathMutableDictionary[base64Handle]];
+        [self.cdTableView.tableView reloadData];
     }
 }
 
@@ -1878,7 +1876,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             if ([node mnz_downloadNode]) {
-                [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+                [self.cdTableView.tableView reloadData];
             }
             break;
             
