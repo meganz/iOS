@@ -22,7 +22,7 @@ abstract_target 'iMEGA' do
   target 'MEGA' do
     # Pods for MEGA
     pod 'MessageKit', :git => 'https://github.com/lhr000lhrmega/MessageKit.git'
-    pod 'PanModal'
+    pod 'PanModal', :git => 'https://github.com/ilia3546/PanModal.git', :commit => 'ba721e8'
     pod 'FlexLayout'
     pod 'PinLayout'
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'

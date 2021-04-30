@@ -117,7 +117,6 @@
 #import "LoginViewController.h"
 #import "SelectableTableViewCell.h"
 #import <PureLayout/PureLayout.h>
-#import "UIImage+GKContact.h"
 #import "NSAttributedString+MNZCategory.h"
 #import <SDWebImage/SDWebImage.h>
 #import "MEGACreateFolderRequestDelegate.h"
@@ -133,7 +132,6 @@
 #import "CopyrightWarningViewController.h"
 #import "UICollectionView+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
-#import "UIImage+GKContact.h"
 #import "MEGAUserAlert.h"
 #import "NodeTableViewCell.h"
 #import "NodeCollectionViewCell.h"
@@ -162,4 +160,6 @@
 #import "MEGALocalImageView.h"
 #import "GroupCallCollectionViewCell.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
+#import "MEGAGroupCallPeer.h"
 #import "UIControl+YYAdd.h"
+#import "MEGAProviderDelegate.h"

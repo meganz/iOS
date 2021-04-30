@@ -4,8 +4,9 @@ protocol MeetingCreatingUseCaseProtocol {
     func openVideoDevice()
     func releaseDevice()
     func videoDevices() -> [String]
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<MEGAChatRoom, CallsErrorEntity>) -> Void)
+    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
     func getUsername() -> String
+    func getCall(forChatId chatId: UInt64) -> CallEntity?
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate)
 
 }
@@ -41,12 +42,16 @@ struct MeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         repository.videoDevices()
     }
     
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<MEGAChatRoom, CallsErrorEntity>) -> Void) {
+    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
         repository.startChatCall(meetingName: meetingName, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
     }
     
     func getUsername() -> String {
         repository.getUsername()
+    }
+    
+    func getCall(forChatId chatId: UInt64) -> CallEntity? {
+        repository.getCall(forChatId: chatId)
     }
     
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate) {

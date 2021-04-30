@@ -83,9 +83,7 @@
 }
 
 - (void)addCall:(MEGAChatCall *)call {
-    MEGALogDebug(@"[CallKit] Add call %@", call);
-    [self.callsDictionary setObject:@(call.callId) forKey:call.uuid];
-    [self printAllCalls];
+    [self addCallWithCallId:call.callId uuid:call.uuid];
 }
 
 - (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid {
@@ -129,6 +127,11 @@
     memcpy(tempUuid + sizeof(chatId), &callId, sizeof(callId));
     NSUUID *uuid = [NSUUID.alloc initWithUUIDBytes:tempUuid];
     return uuid;
+}
+
+- (void)startCallWithChatId:(MEGAHandle)chatId {
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
+    [self startCall:call];
 }
 
 #pragma mark - Private

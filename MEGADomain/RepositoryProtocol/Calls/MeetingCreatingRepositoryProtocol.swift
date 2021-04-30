@@ -4,6 +4,7 @@ protocol MeetingCreatingRepositoryProtocol {
     func releaseDevice()
     func videoDevices() -> [String]
     func getUsername() -> String
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<MEGAChatRoom, CallsErrorEntity>) -> Void)
+    func getCall(forChatId chatId: UInt64) -> CallEntity?
+    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate)
 }

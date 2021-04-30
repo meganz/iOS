@@ -229,26 +229,26 @@
 }
 
 - (void)callUpdateVideoForCall:(MEGAChatCall *)call {
-//    if (call.uuid == nil) {
-//        return;
-//    }
-//
-//    CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
-//    callUpdate.hasVideo = NO;
-//
-//    if (call.hasLocalVideo) {
-//        callUpdate.hasVideo = YES;
-//    } else {
-//        for (int i = 0; i < call.sessionsPeerId.size; i++) {
-//            MEGAChatSession *session = [call sessionForPeer:[call.sessionsPeerId megaHandleAtIndex:i] clientId:[call.sessionsClientId megaHandleAtIndex:i]];
-//            if (session.hasVideo) {
-//                callUpdate.hasVideo = YES;
-//                break;
-//            }
-//        }
-//    }
-//
-//    [self.provider reportCallWithUUID:call.uuid updated:callUpdate];
+    if (call.uuid == nil) {
+        return;
+    }
+    
+    CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
+    callUpdate.hasVideo = NO;
+
+    if (call.hasLocalVideo) {
+        callUpdate.hasVideo = YES;
+    } else {
+        for (int i = 0; i < call.sessionsClientId.size; i++) {
+            MEGAChatSession *session = [call sessionForClientId:[call.sessionsClientId megaHandleAtIndex:i]];
+            if (session.hasVideo) {
+                callUpdate.hasVideo = YES;
+                break;
+            }
+        }
+    }
+    
+    [self.provider reportCallWithUUID:call.uuid updated:callUpdate];
 }
 
 - (void)sendAudioPlayerInterruptDidStartNotificationIfNeeded {
@@ -301,8 +301,10 @@
 
 - (void)provider:(CXProvider *)provider performAnswerCallAction:(CXAnswerCallAction *)action {
     uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
+    uint64_t chatid = [self.megaCallManager chatIdForUUID:action.callUUID];
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatid];
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatid];
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
     
     if (action.callUUID) {
@@ -312,51 +314,63 @@
                 return;
             }
         }
-        uint64_t chatid = [self.megaCallManager chatIdForUUID:action.callUUID];
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatid];
+        
+
         if (call == nil) {
             self.answerCallWhenConnect = YES;
         }
-        if (chatRoom.isGroup) {
-            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+        
+//        MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+//            if (error.type == MEGAChatErrorTypeOk) {
+//                [self answerWithCall:call chatRoom:chatRoom presenter:UIApplication.mnz_presentingViewController];
+//            }
+//        }];
+//        
+//        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:chatid enableVideo:NO enableAudio:NO delegate:answerCallRequestDelegate];
+
+        
+        
+        
+//        if (chatRoom.isGroup) {
+//            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
 //            groupCallVC.videoCall = call.hasVideoInitialCall;
-            groupCallVC.chatRoom = chatRoom;
-            groupCallVC.megaCallManager = self.megaCallManager;
-            groupCallVC.callId = callId;
-            groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
+//            groupCallVC.chatRoom = chatRoom;
+//            groupCallVC.megaCallManager = self.megaCallManager;
+//            groupCallVC.callId = callId;
+//            groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
-            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
-                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
-                }];
-            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
-                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
-                }];
-            } else {
-                [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
-            }
-        } else {
-            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-            callVC.chatRoom  = chatRoom;
+//            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
+//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+//                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+//                }];
+//            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+//                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+//                }];
+//            } else {
+//                [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+//            }
+//        } else {
+//            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+//            callVC.chatRoom  = chatRoom;
 //            callVC.videoCall = call.hasVideoInitialCall;
-            callVC.callType = CallTypeIncoming;
-            callVC.megaCallManager = self.megaCallManager;
-            callVC.callId = callId;
-            callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+//            callVC.callType = CallTypeIncoming;
+//            callVC.megaCallManager = self.megaCallManager;
+//            callVC.callId = callId;
+//            callVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
-            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class] || [UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class])  {
-                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-                }];
-            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
-                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-                }];
-            } else {
-                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-            }
-        }
+//            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class] || [UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class])  {
+//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+//                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+//                }];
+//            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+//                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+//                }];
+//            } else {
+//                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+//            }
+//        }
         [action fulfill];
         [self disablePasscodeIfNeeded];
     } else {
@@ -372,7 +386,7 @@
     
     if (action.callUUID) {
         if (call) {
-            [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
+//            [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
         } else {
             self.endCallWhenConnect = YES;
             self.muteAudioWhenConnect = self.answerCallWhenConnect = NO;

@@ -22,6 +22,10 @@ extension ChatViewController {
 //                        setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
 //                        showTopBannerButton()
                     }
+//                    } else if call?.status == .reconnecting {
+//                        setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
+//                        showTopBannerButton()
+//                    }
                 }
             } else {
                 hideJoinButton()

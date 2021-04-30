@@ -71,6 +71,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidthConstraint;
 
 @property (strong, nonatomic) MEGAUser *user;
 @property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
@@ -107,7 +108,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self.avatarImageView mnz_setImageAvatarOrColorForUserHandle:self.userHandle];
     self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     
-    [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
+    if (self.contactDetailsMode != ContactDetailsModeMeeting) {
+        [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
+    } else {
+        NSString *backButtonTitle = NSLocalizedString(@"close", @"");
+        [self.backButton setImage:nil forState:UIControlStateNormal];
+        [self.backButton setTitle:backButtonTitle forState:UIControlStateNormal];
+        CGSize size = CGSizeMake(CGFLOAT_MAX, self.backButton.bounds.size.height);
+        self.backButtonWidthConstraint.constant = [backButtonTitle sizeForFont:self.backButton.titleLabel.font size:size mode:NSLineBreakByTruncatingMiddle].width + 20;
+    }
     self.messageLabel.text = NSLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).");
     self.callLabel.text = NSLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call");
     self.videoLabel.text = NSLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");
@@ -610,6 +619,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         return;
     }
     
+    if (self.contactDetailsMode == ContactDetailsModeMeeting) {
+        self.callButton.enabled = self.videoCallButton.enabled = NO;
+        return;
+    }
+    
     if (self.chatRoom) {
         if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
             self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
@@ -708,6 +722,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             sections = self.sectionsForContactFromGroupChat;
             break;
             
+        case ContactDetailsModeMeeting:
+            sections = self.sectionsForContactFromMeeting;
+            break;
+            
         default:
             break;
     }
@@ -744,6 +762,14 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     return [sections copy];
 }
 
+- (NSArray<NSNumber *> *)sectionsForContactFromMeeting {
+    if (self.shouldAllowToAddContact) {
+        return @[@(ContactDetailsSectionAddParticipantToContact)];
+    }
+    
+    return nil;
+}
+
 - (NSArray<NSNumber *> *)addSharedFoldersSectionIfNeededToSections:(NSArray<NSNumber *> *)inputSections {
     NSMutableArray *sections = NSMutableArray.new;
     [sections addObjectsFromArray:inputSections];
@@ -777,7 +803,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (IBAction)backTouchUpInside:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.contactDetailsMode == ContactDetailsModeMeeting) {
+        [self dismissViewControllerAnimated:true completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)messageTouchUpInside:(id)sender {

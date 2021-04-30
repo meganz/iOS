@@ -2596,6 +2596,10 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="My Account";
+/* Contacts selection screen header: Invite contacts to meetings */
+"Invite Participants" = "Invite Participants";
+/* Meetings: Floating panel participants count header */
+"In the meeting (%d)" = "In the meeting (%d)";
 /* Text for title for favourite nodes */
 "Favourites"="Favourites";
 /* Text describing that there is not any node marked as favourite */
@@ -2612,6 +2616,8 @@
 "Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Quickly access files from your Offline section";
+/* Meetings: End a call */
+"End"="End";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
 /* Dialog description for the no enough device storage screen */

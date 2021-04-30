@@ -6,6 +6,25 @@ class BaseAction: NSObject {
     var accessoryView: UIView?
     var image: UIImage?
     var style: UIAlertAction.Style = .default
+    
+    override var hash: Int {
+        var hasher = Hasher()
+        hasher.combine(title?.hash)
+        hasher.combine(detail?.hash)
+        hasher.combine(accessoryView?.hash)
+        hasher.combine(image?.hash)
+        hasher.combine(style.hashValue)
+        return hasher.finalize()
+    }
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let otherObject = object as? BaseAction else { return false }
+        return title == otherObject.title
+            && detail == otherObject.detail
+            && accessoryView == otherObject.accessoryView
+            && image == otherObject.image
+            && style == otherObject.style
+    }
 }
 
 class ActionSheetAction: BaseAction {

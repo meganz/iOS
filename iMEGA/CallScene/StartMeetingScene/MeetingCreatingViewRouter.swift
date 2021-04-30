@@ -29,9 +29,9 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         baseViewController?.dismiss(animated: true)
     }
     
-    func goToMeetingRoom(chatRoom: MEGAChatRoom) {
-        let callRouter = CallViewRouter(presenter: baseViewController!, chatRoom: chatRoom, callType: .active, initialVideoCall: true)
-        callRouter.start()
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity) {
+        guard let baseViewController = baseViewController else { return }
+        MeetingContainerRouter(presenter: baseViewController, chatRoom: chatRoom, call: call).start()
     }
     
 }

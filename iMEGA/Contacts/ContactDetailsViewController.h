@@ -6,7 +6,8 @@
 typedef NS_ENUM (NSInteger, ContactDetailsMode) {
     ContactDetailsModeDefault = 0,
     ContactDetailsModeFromChat,
-    ContactDetailsModeFromGroupChat
+    ContactDetailsModeFromGroupChat,
+    ContactDetailsModeMeeting
 };
 
 @interface ContactDetailsViewController : UIViewController

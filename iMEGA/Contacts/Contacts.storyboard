@@ -1518,6 +1518,7 @@
                         <outlet property="avatarImageView" destination="zaL-ex-F72" id="aNV-nw-hXz"/>
                         <outlet property="avatarViewHeightConstraint" destination="csr-68-mjE" id="nzD-4h-meN"/>
                         <outlet property="backButton" destination="GvB-7x-xSI" id="NeF-lP-AFw"/>
+                        <outlet property="backButtonWidthConstraint" destination="tXo-aC-f6v" id="1Cn-62-deo"/>
                         <outlet property="callButton" destination="YvS-yH-yBW" id="uxM-YW-0X1"/>
                         <outlet property="callLabel" destination="l0B-M2-sCX" id="Bv6-ZM-Q7A"/>
                         <outlet property="emailLabel" destination="YTm-wg-etC" id="JxN-WX-ztN"/>

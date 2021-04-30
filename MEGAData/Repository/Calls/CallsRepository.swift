@@ -11,11 +11,11 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     private var callbacksDelegate: CallsCallbacksRepositoryProtocol?
 
     private var callId: MEGAHandle?
-    private var call: MEGAChatCall?
+    private var call: CallEntity?
     
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
-            self.call = call
+            self.call = CallEntity(with: call)
             self.callId = call.callId
         }
 
@@ -23,7 +23,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         self.callbacksDelegate = callbacksDelegate
     }
     
-    func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
+    func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
         if chatSdk.chatConnectionState(chatId) == .online {
             chatSdk.answerChatCall(chatId, enableVideo: false, enableAudio: true, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in
                 if error?.type == .MEGAChatErrorTypeOk {
@@ -31,9 +31,10 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
                         completion(.failure(.generic))
                         return
                     }
-                    self?.call = call
-                    self?.callId = call.callId
-                    completion(.success(call))
+                    let callEntity = CallEntity(with: call)
+                    self?.call = callEntity
+                    self?.callId = callEntity.callId
+                    completion(.success(callEntity))
                 } else {
                     switch error?.type {
                     case .MEGAChatErrorTooMany:
@@ -48,16 +49,16 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         }
     }
     
-    func startChatCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
-        chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: true, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
+    func startChatCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+        chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
             if error?.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                     completion(.failure(.generic))
                     return
                 }
-                self?.call = call
+                self?.call = CallEntity(with: call)
                 self?.callId = call.callId
-                completion(.success(call))
+                completion(.success(CallEntity(with: call)))
             } else {
                 switch error?.type {
                 case .MEGAChatErrorTooMany:
@@ -69,24 +70,23 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         }))
     }
     
-    func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<MEGAChatCall, CallsErrorEntity>) -> Void) {
+    func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
         guard let activeCall = chatSdk.chatCall(forChatId: chatId) else {
             completion(.failure(.generic))
             return
         }
         if activeCall.status == .userNoPresent {
-            startChatCall(for: chatId, withVideo: enableVideo, completion: completion)
+            startChatCall(for: chatId, withVideo: enableVideo, enableAudio: enableAudio, completion: completion)
         } else {
-            call = activeCall
+            call = CallEntity(with: activeCall)
             callId = activeCall.callId
-            completion(.success(activeCall))
+            completion(.success(CallEntity(with: activeCall)))
         }
     }
     
-    func enableLocalVideo(for chatId: MEGAHandle, delegate: MEGAChatVideoDelegate, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { [weak self] (error) in
+    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
             if error?.type == .MEGAChatErrorTypeOk {
-                self?.chatSdk.addChatLocalVideo(chatId, delegate: delegate)
                 completion(.success)
             } else {
                 completion(.failure(.chatLocalVideoNotEnabled))
@@ -94,15 +94,42 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         }))
     }
     
-    func disableLocalVideo(for chatId: MEGAHandle, delegate: MEGAChatVideoDelegate, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { [weak self] (error) in
+    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
             if error?.type == .MEGAChatErrorTypeOk {
-                self?.chatSdk.addChatLocalVideo(chatId, delegate: delegate)
                 completion(.success)
             } else {
                 completion(.failure(.chatLocalVideoNotDisabled))
             }
         }))
+    }
+    
+    func videoDeviceSelected() -> String? {
+        chatSdk.videoDeviceSelected()
+    }
+    
+    func selectCamera(withLocalizedName localizedName: String) {
+        chatSdk.setChatVideoInDevices(localizedName)
+    }
+    
+    func hangCall(for callId: MEGAHandle) {
+        chatSdk.hangChatCall(callId)
+    }
+    
+    func endCall(for callId: MEGAHandle) {
+        chatSdk.endChatCall(callId)
+    }
+    
+    func addPeer(toCall call: CallEntity, peerId: UInt64) {
+        chatSdk.invite(toChat: call.chatId, user: peerId, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+    }
+    
+    func removePeer(fromCall call: CallEntity, peerId: UInt64) {
+        chatSdk.remove(fromChat: call.chatId, userHandle: peerId)
+    }
+    
+    func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
+        chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.moderator.rawValue)
     }
 }
 
@@ -116,10 +143,10 @@ extension CallsRepository: MEGAChatCallDelegate {
         if session.hasChanged(.status) {
             switch session.status {
             case .inProgress:
-                callbacksDelegate?.createdSession(session, in: chatId)
+                callbacksDelegate?.createdSession(ChatSessionEntity(with: session), in: chatId)
                 break
             case .destroyed:
-                callbacksDelegate?.destroyedSession(session)
+                callbacksDelegate?.destroyedSession(ChatSessionEntity(with: session), in: chatId)
                 break
             default:
                 break
@@ -127,19 +154,18 @@ extension CallsRepository: MEGAChatCallDelegate {
         }
         
         if session.hasChanged(.remoteAvFlags) {
-            callbacksDelegate?.avFlagsUpdated(for: session)
+            callbacksDelegate?.avFlagsUpdated(for: ChatSessionEntity(with: session), in: chatId)
         }
     }
     
     func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
         if (callId == call.callId) {
-            self.call = call;
+            self.call = CallEntity(with: call)
         } else {
             return;
         }
         
         switch call.status {
-        
         case .undefined:
             break
         case .initial:

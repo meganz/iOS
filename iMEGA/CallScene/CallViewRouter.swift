@@ -3,40 +3,46 @@
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     private weak var navigationController: UINavigationController?
+    private weak var containerViewModel: MeetingContainerViewModel?
+    private(set) weak var viewModel: CallViewModel?
     
-    private let chatRoom: MEGAChatRoom
-    private let callType: CallType
+    private let chatRoom: ChatRoomEntity
     private var initialVideoCall: Bool
 
-    @objc init(presenter: UIViewController, chatRoom: MEGAChatRoom, callType: CallType, initialVideoCall: Bool = false) {
+    init(presenter: UIViewController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, initialVideoCall: Bool = false) {
         self.presenter = presenter
+        self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.callType = callType
         self.initialVideoCall = initialVideoCall
         super.init()
     }
     
     func build() -> UIViewController {
-        let vm = CallViewModel(router: self, callManager: CallManagerUseCase(), callsUseCase: CallsUseCase(repository: CallsRepository()), userAttributesUseCase: UserAttributesUseCase(repository: UserAttributesRepository()), chatRoom: chatRoom, callType: callType, initialVideoCall: initialVideoCall)
+        guard let containerViewModel = containerViewModel else { return UIViewController() }
+        let vm = CallViewModel(router: self, containerViewModel: containerViewModel, callManager: CallManagerUseCase(), callsUseCase: CallsUseCase(repository: CallsRepository()), userAttributesUseCase: UserAttributesUseCase(repository: UserAttributesRepository()), captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()), chatRoom: chatRoom, initialVideoCall: initialVideoCall)
         
         let nc = UIStoryboard(name: "Calls", bundle: nil).instantiateViewController(withIdentifier: "CallNavigationControllerID") as! UINavigationController
         let vc = nc.topViewController as! CallsViewController
         vc.viewModel = vm
         baseViewController = vc
-        
+        viewModel = vm
         return vc
     }
     
     @objc func start() {
-        guard let nav = build().navigationController else { return }
+        guard let nav = build().navigationController, let presenter = presenter else { return }
         navigationController = nav
-        nav.modalPresentationStyle = .fullScreen
-        nav.modalTransitionStyle = .crossDissolve
-        presenter?.present(nav, animated: true, completion: nil)
-    }
-    
-    func dismiss() {
-        navigationController?.dismiss(animated: true, completion: nil)
+        
+        presenter.addChild(nav)
+        presenter.view.addSubview(nav.view)
+        nav.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            nav.view.leadingAnchor.constraint(equalTo: presenter.view.leadingAnchor),
+            nav.view.trailingAnchor.constraint(equalTo: presenter.view.trailingAnchor),
+            nav.view.topAnchor.constraint(equalTo: presenter.view.topAnchor),
+            nav.view.bottomAnchor.constraint(equalTo: presenter.view.bottomAnchor)
+        ])
+        nav.didMove(toParent: presenter)
     }
 
     func dismissAndShowPasscodeIfNeeded() {

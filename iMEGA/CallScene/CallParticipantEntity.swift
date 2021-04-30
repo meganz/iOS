@@ -6,20 +6,40 @@ enum CallParticipantAudioVideoFlag {
 }
 
 final class CallParticipantEntity: Equatable {
+    enum AttendeeType {
+        case moderator
+        case particpant
+        case guest
+    }
+    
     let chatId: MEGAHandle
     let participantId: MEGAHandle
     let clientId: MEGAHandle
     var networkQuality: Int
-    var name: String?
+    var email: String?
+    var attendeeType: AttendeeType
+    var isInContactList: Bool
     var video: CallParticipantAudioVideoFlag = .unknown
     var audio: CallParticipantAudioVideoFlag = .unknown
     
-    init(chatId: MEGAHandle, participantId: MEGAHandle, clientId: MEGAHandle, networkQuality: Int, name: String?) {
+    init(chatId: MEGAHandle,
+         participantId: MEGAHandle,
+         clientId: MEGAHandle,
+         networkQuality: Int,
+         email: String?,
+         attendeeType: AttendeeType,
+         isInContactList: Bool,
+         video: CallParticipantAudioVideoFlag = .unknown,
+         audio: CallParticipantAudioVideoFlag = .unknown) {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
         self.networkQuality = networkQuality
-        self.name = name
+        self.email = email
+        self.attendeeType = attendeeType
+        self.isInContactList = isInContactList
+        self.video = video
+        self.audio = audio
     }
     
     static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
@@ -27,3 +47,50 @@ final class CallParticipantEntity: Equatable {
     }
 }
 
+extension CallParticipantEntity {
+    convenience init(session: ChatSessionEntity, chatId: MEGAHandle) {
+        var attendeeType: AttendeeType = .guest
+        
+        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) {
+            switch chatRoom.peerPrivilege(byHandle: session.peerId) {
+            case MEGAChatRoomPrivilege.moderator.rawValue:
+                attendeeType = .moderator
+            case MEGAChatRoomPrivilege.standard.rawValue:
+                attendeeType = .particpant
+            default:
+                attendeeType = .guest
+            }
+        }
+        
+        let contactList = MEGASdkManager.sharedMEGASdk().contacts()
+        let isInContactList = (0..<contactList.size.intValue).compactMap(contactList.user(at:)).contains(where: { $0.handle == session.peerId })
+        
+        self.init(chatId: chatId,
+                  participantId: session.peerId,
+                  clientId: session.clientId,
+                  networkQuality: 0,
+                  email: MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: session.peerId),
+                  attendeeType: attendeeType,
+                  isInContactList: isInContactList,
+                  video: session.hasVideo ? .on : .off,
+                  audio: session.hasAudio ? .on : .off)
+    }
+    
+    static func myself(chatId: MEGAHandle) -> CallParticipantEntity? {
+        guard let user = MEGASdkManager.sharedMEGASdk().myUser,
+              let email = MEGASdkManager.sharedMEGASdk().myEmail,
+              let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
+            return nil
+        }
+        
+        let participant = CallParticipantEntity(chatId: chatId,
+                                                participantId: user.handle,
+                                                clientId: 0,
+                                                networkQuality: 0,
+                                                email: email,
+                                                attendeeType: ChatRoomEntity(with: chatRoom).ownPrivilege == .moderator ? .moderator : .particpant,
+                                                isInContactList: false)
+        
+        return participant
+    }
+}

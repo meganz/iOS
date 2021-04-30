@@ -31,7 +31,6 @@ final class CallsViewController: UIViewController, ViewType {
     @IBOutlet private weak var titleView: CallTitleView!
     @IBOutlet private weak var localVideoImageView: MEGALocalImageView!
 
-
     //banner announcements
     //own avatar
     
@@ -62,8 +61,13 @@ final class CallsViewController: UIViewController, ViewType {
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
         case .switchLayoutMode:
             break
-        case .switchLocalVideo:
-            localVideoImageView.isHidden = !localVideoImageView.isHidden
+        case .switchLocalVideo(let on):
+            if on {
+                viewModel.addVideo(delegate: localVideoImageView)
+            } else {
+                viewModel.removeVideo(delegate: localVideoImageView)
+            }
+            localVideoImageView.isHidden = !on
         case .updateName(let name):
             titleView.configure(title: name, subtitle: nil)
         case .updateDuration(let duration):
@@ -80,6 +84,8 @@ final class CallsViewController: UIViewController, ViewType {
         case .updateParticipantAvFlagsAt(let index, let participants):
             callParticipants = participants
             collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+        case .updatedCameraPosition(let position):
+            localVideoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
         }
     }
     
@@ -121,7 +127,8 @@ extension CallsViewController: UICollectionViewDataSource {
             fatalError("Error dequeueReusableCell CallParticipantCell")
         }
         let participant = callParticipants[indexPath.item]
-        cell.avatarImageView.mnz_setImage(forUserHandle: participant.participantId, name: participant.name)
+        // TODO: Fetch the name using the usecase
+//        cell.avatarImageView.mnz_setImage(forUserHandle: participant.participantId, name: participant.name)
         
         if participant.video == .on {
             if cell.videoImageView.isHidden {
@@ -145,8 +152,8 @@ extension CallsViewController: UICollectionViewDataSource {
 protocol CallManagerUseCaseProtocol {
     func endCall(callId: MEGAHandle, chatId: MEGAHandle)
     func muteUnmuteCall(callId: MEGAHandle, chatId: MEGAHandle, muted: Bool)
-    func addCall(_ call: MEGAChatCall)
-    func startCall(_ call: MEGAChatCall)
+    func addCall(_ call: CallEntity)
+    func startCall(_ call: CallEntity)
 }
 
 // MARK: - Use case implementation -
@@ -158,12 +165,12 @@ struct CallManagerUseCase: CallManagerUseCaseProtocol {
         self.megaCallManager = megaCallManager
     }
 
-    func addCall(_ call: MEGAChatCall) {
-        megaCallManager.add(call)
+    func addCall(_ call: CallEntity) {
+        megaCallManager.addCall(withCallId: call.callId, uuid: call.uuid)
     }
     
-    func startCall(_ call: MEGAChatCall) {
-        megaCallManager.start(call)
+    func startCall(_ call: CallEntity) {
+        megaCallManager.startCall(withChatId: call.chatId)
     }
     
     func endCall(callId: MEGAHandle, chatId: MEGAHandle) {

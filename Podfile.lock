@@ -103,7 +103,7 @@ DEPENDENCIES:
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
   - "Keyboard+LayoutGuide"
   - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
-  - PanModal
+  - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
   - PinLayout
   - SDWebImageWebPCoder
   - YYCategories
@@ -127,7 +127,6 @@ SPEC REPOS:
     - "Keyboard+LayoutGuide"
     - libwebp
     - nanopb
-    - PanModal
     - PinLayout
     - PromisesObjC
     - SDWebImage
@@ -143,6 +142,9 @@ EXTERNAL SOURCES:
     :tag: 0.2.6
   MessageKit:
     :git: https://github.com/lhr000lhrmega/MessageKit.git
+  PanModal:
+    :commit: ba721e8
+    :git: https://github.com/ilia3546/PanModal.git
 
 CHECKOUT OPTIONS:
   DZNEmptyDataSet:
@@ -154,6 +156,9 @@ CHECKOUT OPTIONS:
   MessageKit:
     :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
     :git: https://github.com/lhr000lhrmega/MessageKit.git
+  PanModal:
+    :commit: ba721e8
+    :git: https://github.com/ilia3546/PanModal.git
 
 SPEC CHECKSUMS:
   CHTCollectionViewWaterfallLayout: 5f241d2480ab4939aa0d1ad4981de9eef1fbe60d
@@ -183,6 +188,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 527698bb65e61b9e2b7daf112c4d96346afeb45e
+PODFILE CHECKSUM: 42508f7d0f0d41c5ba48f780a3f787d17333e85a
 
 COCOAPODS: 1.10.0

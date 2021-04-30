@@ -149,6 +149,13 @@ class ChatViewController: MessagesViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    convenience init(chatId: UInt64) {
+        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
+            fatalError("No chatroom found with chat id \(chatId)")
+        }
+        self.init(chatRoom: chatRoom)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -961,13 +968,45 @@ class ChatViewController: MessagesViewController {
     @objc func cancelSelecting() {
         setEditing(false, animated: true)
     }
+    
+    private func startOutGoingCall() {
+        let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
+            guard let self = self,
+                  let error = error, error.type == .MEGAChatErrorTypeOk else {
+                MEGALogDebug("Cannot start a call")
+                return
+            }
+            
+            self.startMeetingUI()
+        }
+        
+        MEGASdkManager.sharedMEGAChatSdk().startChatCall(chatRoom.chatId, enableVideo: false, enableAudio: true, delegate: startCallDelegate)
+    }
+    
+    private func answerCall() {
+        let delegate = MEGAChatAnswerCallRequestDelegate { error in
+            if error?.type == .MEGAChatErrorTypeOk {
+                self.startMeetingUI()
+            }
+        }
+        MEGASdkManager.sharedMEGAChatSdk().answerChatCall(chatRoom.chatId, enableVideo: false, enableAudio: true, delegate: delegate)
+    }
+    
+    private func startMeetingUI() {
+        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
+        
+        let callEntity = CallEntity(with: call)
+        let chatRoomEntity = ChatRoomEntity(with: chatRoom)
+        
+        MeetingContainerRouter(presenter: self, chatRoom: chatRoomEntity, call: callEntity).start()
+    }
 
     func openCallViewWithVideo(videoCall: Bool) {
         var callType = CallType.outgoing
         let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId)
         
         if let call = call {
-            callType = call.isRinging ? .incoming : .active
+            callType = (call.isRinging && call.status == .userNoPresent) ? .incoming : .active
         }
         
         if chatRoom.isGroup {
@@ -979,32 +1018,19 @@ class ChatViewController: MessagesViewController {
                 }
                 return
             }
-            
-            let groupCallVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupCallViewControllerID") as! GroupCallViewController
-            groupCallVC.callType = callType
-            if let call = call {
-                groupCallVC.callId = call.callId
-            }
-            groupCallVC.videoCall = videoCall
-            groupCallVC.chatRoom = chatRoom
-            groupCallVC.modalTransitionStyle = .crossDissolve
-            groupCallVC.modalPresentationStyle = .fullScreen
-            groupCallVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
-            present(viewController: groupCallVC)
-        } else {
-            let callVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "CallViewControllerID") as! CallViewController
-            callVC.chatRoom = chatRoom
-            callVC.videoCall = videoCall
-            callVC.callType = callType
-            if let call = call {
-                callVC.callId = call.callId
-            }
-            callVC.modalTransitionStyle = .crossDissolve
-            callVC.modalPresentationStyle = .fullScreen
-            callVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
-            present(viewController: callVC)
-
         }
+        
+        switch callType {
+        case .incoming:
+            answerCall()
+        case .outgoing:
+            startOutGoingCall()
+        case .active:
+            startMeetingUI()
+        @unknown default:
+            fatalError()
+        }
+
         
     }
     
