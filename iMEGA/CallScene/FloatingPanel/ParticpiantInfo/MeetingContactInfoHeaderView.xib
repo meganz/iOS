@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MeetingContactInfoHeaderView" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="426" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contacts" translatesAutoresizingMaskIntoConstraints="NO" id="iUY-Tc-ntX">
+                    <rect key="frame" x="18" y="22" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Sn4-T8-vb2"/>
+                        <constraint firstAttribute="width" constant="40" id="kFi-fa-PcA"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rQ4-iH-rUu">
+                    <rect key="frame" x="66" y="23" width="350" height="38"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKf-p2-RTe">
+                            <rect key="frame" x="0.0" y="0.0" width="350" height="18"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name@email.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9TL-NN-nTt">
+                            <rect key="frame" x="0.0" y="22" width="350" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJq-eB-ziA">
+                    <rect key="frame" x="0.0" y="79" width="426" height="1"/>
+                    <color key="backgroundColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ngp-0C-3u2"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="rQ4-iH-rUu" firstAttribute="leading" secondItem="iUY-Tc-ntX" secondAttribute="trailing" constant="8" id="2iL-lv-UbN"/>
+                <constraint firstItem="rQ4-iH-rUu" firstAttribute="centerY" secondItem="iUY-Tc-ntX" secondAttribute="centerY" id="5da-pf-E1V"/>
+                <constraint firstItem="QJq-eB-ziA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="HGD-Up-ZLH"/>
+                <constraint firstAttribute="trailing" secondItem="QJq-eB-ziA" secondAttribute="trailing" id="JcL-l7-790"/>
+                <constraint firstAttribute="bottom" secondItem="QJq-eB-ziA" secondAttribute="bottom" id="UnH-Pb-mZu"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="rQ4-iH-rUu" secondAttribute="trailing" constant="10" id="YoV-XF-QeB"/>
+                <constraint firstItem="iUY-Tc-ntX" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="-18" id="dQT-UI-I9a"/>
+                <constraint firstItem="iUY-Tc-ntX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="hLK-LG-SWG"/>
+                <constraint firstItem="iUY-Tc-ntX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="r1D-Jn-7e8"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="avatarImageView" destination="iUY-Tc-ntX" id="Zjj-zT-SvM"/>
+                <outlet property="emailLabel" destination="9TL-NN-nTt" id="XJI-QW-TsS"/>
+                <outlet property="nameLabel" destination="eKf-p2-RTe" id="R2r-Pq-Ema"/>
+            </connections>
+            <point key="canvasLocation" x="-339.13043478260875" y="124.55357142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon-contacts" width="24" height="24"/>
+    </resources>
+</document>

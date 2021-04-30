@@ -32,7 +32,12 @@ final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositoryProtoc
 
     }
     
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<MEGAChatRoom, CallsErrorEntity>) -> Void) {
+    func getCall(forChatId chatId: UInt64) -> CallEntity? {
+        guard let call = chatSdk.chatCall(forChatId: chatId) else { return nil }
+        return CallEntity(with: call)
+    }
+    
+    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
         
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
             guard let chatroom = self?.chatSdk.chatRoom(forChatId: request.chatHandle) else {
@@ -44,7 +49,7 @@ final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositoryProtoc
                         completion(.failure(.generic))
                         return
                     }
-                    completion(.success(chatroom))
+                    completion(.success(ChatRoomEntity(with: chatroom)))
                 } else {
                     completion(.failure(.generic))
                 }

@@ -1,0 +1,228 @@
+import UIKit
+import PanModal
+
+final class MeetingFloatingPanelViewController: UIViewController {
+
+    @IBOutlet private weak var dragIndicatorView: UIView!
+    @IBOutlet private weak var backgroundView: UIView!
+    @IBOutlet private weak var participantsCountLabel: UILabel!
+    @IBOutlet private weak var participantsTableView: UITableView!
+
+    @IBOutlet private weak var cameraQuickActionView: MeetingQuickActionView!
+    @IBOutlet private weak var muteQuickActionView: MeetingQuickActionView!
+    @IBOutlet private weak var endQuickActionView: MeetingQuickActionView!
+    @IBOutlet private weak var speakerQuickActionView: MeetingSpeakerQuickActionView!
+    @IBOutlet private weak var flipQuickActionView: MeetingQuickActionView!
+
+    @IBOutlet private weak var optionsStackView: UIStackView!
+    @IBOutlet private var inviteParticpicantsView: UIView!
+    
+    @IBOutlet private weak var optionsStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var optionsStackViewBottomConstraint: NSLayoutConstraint!
+
+    private var callParticipants: [CallParticipantEntity] = []
+    private let viewModel: MeetingFloatingPanelViewModel
+    private let userImageUseCase: UserImageUseCaseProtocol
+    private let userUseCase: UserUseCaseProtocol
+    private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    
+    init(viewModel: MeetingFloatingPanelViewModel,
+         userImageUseCase: UserImageUseCaseProtocol,
+         userUseCase: UserUseCaseProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol) {
+        self.viewModel = viewModel
+        self.userImageUseCase = userImageUseCase
+        self.userUseCase = userUseCase
+        self.chatRoomUseCase = chatRoomUseCase
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        backgroundView.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1176470588, alpha: 0.88)
+        backgroundView.layer.cornerRadius = 13.0
+        dragIndicatorView.layer.cornerRadius = 2.5
+        updateInTheMeetingLabel()
+        participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
+        
+        let quickActionProperties = MeetingQuickActionView.Properties(
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: .mnz_gray474747(), selected: .white)
+        )
+        let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
+        quickActions.forEach { $0?.properties = quickActionProperties }
+        
+        viewModel.invokeCommand = { [weak self] in
+            self?.executeCommand($0)
+        }
+        viewModel.dispatch(.onViewReady)
+    }
+    
+    // MARK: - Dispatch action
+    func executeCommand(_ command: MeetingFloatingPanelViewModel.Command) {
+        switch command {
+        case .configView(let isUserAModerator, let isOneToOneMeeting, let callParticipants):
+            updateUI(isMyselfAModerator: isUserAModerator, isOneToOneMeeting: isOneToOneMeeting, callParticipants: callParticipants)
+        case .enabledLoudSpeaker(let enabled):
+            speakerQuickActionView?.isSelected = enabled
+        case .microphoneMuted(let muted):
+            if let myHandle = userUseCase.myHandle,
+               let participant = callParticipants.filter({ $0.participantId == myHandle }).first {
+                participant.audio = muted ? .off : .on
+                participantsTableView.reloadData()
+            }
+            muteQuickActionView.isSelected = muted
+        case .updatedCameraPosition(let position):
+            updatedCameraPosition(position)
+        case .cameraTurnedOn(let on):
+            if let myHandle = userUseCase.myHandle,
+               let participant = callParticipants.filter({ $0.participantId == myHandle }).first {
+                participant.video = on ? .on : .off
+                participantsTableView.reloadData()
+            }
+            cameraQuickActionView.isSelected = on
+        case .reloadParticpantsList(let participants):
+            callParticipants = participants
+            participantsTableView?.reloadData()
+        case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
+            selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func hangCall(_ sender: UIButton) {
+        viewModel.dispatch(.hangCall)
+    }
+    
+    @IBAction func shareLink(_ sender: UIButton) {
+        viewModel.dispatch(.shareLink(presenter: self, sender: sender))
+    }
+    
+    @IBAction func inviteParticipants(_ sender: UIButton) {
+        viewModel.dispatch(.inviteParticipants(presenter: self))
+    }
+    
+    // MARK: - Actions buttons
+    
+    @IBAction func toggleCameraOnTapped(_ sender: UIButton) {
+        viewModel.dispatch(.turnCamera(on: !cameraQuickActionView.isSelected))
+    }
+    
+    @IBAction func toggleMuteTapped(_ sender: UIButton) {
+        viewModel.dispatch(.muteUnmuteCall(mute: !muteQuickActionView.isSelected))
+    }
+    
+    @IBAction func switchSpeakersTapped(_ sender: UIButton) {
+        speakerQuickActionView.isSelected = !speakerQuickActionView.isSelected
+        viewModel.dispatch(speakerQuickActionView.isSelected ? .enableLoudSpeaker : .disableLoudSpeaker)
+    }
+    
+    @IBAction func switchCameraTapped(_ sender: UIButton) {
+        viewModel.dispatch(.switchCamera(backCameraOn: !flipQuickActionView.isSelected))
+    }
+    
+    //MARK:- Private methods
+    
+    private func updatedCameraPosition(_ position: CameraPosition) {
+        flipQuickActionView.isSelected = position == .back
+        executeCommand(.cameraTurnedOn(on: true))
+    }
+    
+    private func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
+        if isBluetoothRouteAvailable {
+            speakerQuickActionView?.addRoutingView()
+        } else {
+            speakerQuickActionView?.removeRoutingView()
+        }
+        speakerQuickActionView?.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
+    }
+    
+    private func updateUI(isMyselfAModerator: Bool, isOneToOneMeeting: Bool, callParticipants: [CallParticipantEntity]) {
+        endQuickActionView.icon = UIImage(named: isMyselfAModerator ? "endCallMeetingAction" : "hangCallMeetingAction")
+        endQuickActionView.name = NSLocalizedString(isMyselfAModerator ? "End" : "Leave", comment: "")
+        
+        if isOneToOneMeeting {
+            optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+            optionsStackViewHeightConstraint.constant = 0.0
+            optionsStackViewBottomConstraint.constant = 0.0
+        } else if !isMyselfAModerator && inviteParticpicantsView.superview != nil {
+            inviteParticpicantsView.removeFromSuperview()
+        } else if isMyselfAModerator && inviteParticpicantsView.superview == nil {
+            optionsStackView.addArrangedSubview(inviteParticpicantsView)
+        }
+        
+        self.callParticipants = callParticipants
+        participantsTableView.reloadData()
+        updateInTheMeetingLabel()
+    }
+    
+    private func updateInTheMeetingLabel() {
+        participantsCountLabel.text = String(format: NSLocalizedString("In the meeting (%d)", comment: ""), callParticipants.count)
+    }
+}
+
+extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        callParticipants.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
+        cell.viewModel = MeetingParticipantViewModel(attendee: callParticipants[indexPath.row],
+                                                     userImageUseCase: userImageUseCase,
+                                                     userUseCase: userUseCase,
+                                                     chatRoomUseCase: chatRoomUseCase) { [weak self] participant, button in
+            guard let self = self else { return }
+            self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, attendee: participant))
+        }
+        return cell
+    }
+}
+
+extension MeetingFloatingPanelViewController: PanModalPresentable {
+    var panScrollable: UIScrollView? {
+        participantsTableView
+    }
+    
+    var longFormHeight: PanModalHeight {
+        .maxHeight
+    }
+    
+    var shortFormHeight: PanModalHeight {
+        .contentHeight(164.0)
+    }
+    
+    var panModalBackgroundColor: UIColor {
+        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+    }
+    
+    var anchorModalToLongForm: Bool {
+        false
+    }
+    
+    var allowsTapToDismiss: Bool {
+        false
+    }
+    
+    var allowsDragToDismiss: Bool {
+        false
+    }
+    
+    var backgroundInteraction: PanModalBackgroundInteraction {
+        .forward
+    }
+    
+    var showDragIndicator: Bool {
+        false
+    }
+    
+    var topOffset: CGFloat {
+        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else { return 0.0 }
+        return rootVC.view.safeAreaInsets.top
+    }
+}

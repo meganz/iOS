@@ -18,4 +18,6 @@
 - (uint64_t)chatIdForUUID:(NSUUID *)uuid;
 - (NSUUID *)uuidForChatId:(uint64_t)chatId callId:(uint64_t)callId;
 
+
+- (void)startCallWithChatId:(MEGAHandle)callId;
 @end

@@ -230,6 +230,7 @@
     
     switch (self.contactsMode) {
         case ContactsModeChatAddParticipant:
+        case ContactsModeInviteParticipants:
             self.itemListView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
             break;
             
@@ -314,13 +315,15 @@
         }
             
         case ContactsModeChatAddParticipant:
+        case ContactsModeInviteParticipants:
         case ContactsModeChatAttachParticipant: {
             self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
-            self.addParticipantBarButtonItem.title = NSLocalizedString(@"ok", nil);
+            self.addParticipantBarButtonItem.title = (self.contactsMode == ContactsModeInviteParticipants) ? NSLocalizedString(@"invite", nil) : NSLocalizedString(@"ok", nil);
             [self setTableViewEditing:YES animated:NO];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
             self.navigationController.toolbarHidden = YES;
+            self.addParticipantBarButtonItem.enabled = !(self.contactsMode == ContactsModeInviteParticipants);
             break;
         }
             
@@ -444,7 +447,8 @@
             break;
         }
         
-        case ContactsModeChatAddParticipant: {
+        case ContactsModeChatAddParticipant:
+        case ContactsModeInviteParticipants: {
             for (MEGAUser *user in visibleContactsArray) {
                 if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
                     [usersArray addObject:user];
@@ -685,6 +689,9 @@
                 self.navigationItem.title = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             }
             break;
+        case ContactsModeInviteParticipants:
+            self.navigationItem.title = NSLocalizedString(@"Invite Participants", @"Menu item to add participants to a chat");
+            break;
     }
 }
 
@@ -759,7 +766,7 @@
     if (!self.selectedUsersArray) {
         self.selectedUsersArray = [NSMutableArray new];
         [self.deleteBarButtonItem setEnabled:NO];
-        if (self.contactsMode == ContactsModeChatAddParticipant) {
+        if (self.contactsMode == ContactsModeChatAddParticipant || self.contactsMode == ContactsModeInviteParticipants) {
             self.addParticipantBarButtonItem.enabled = NO;
         }
     }
@@ -925,7 +932,8 @@
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatAddParticipant:
         case ContactsModeChatCreateGroup:
-        case ContactsModeChatStartConversation: {
+        case ContactsModeChatStartConversation:
+        case ContactsModeInviteParticipants: {
             self.searchController.hidesNavigationBarDuringPresentation = NO;
             self.navigationItem.searchController = self.searchController;
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
@@ -960,6 +968,7 @@
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatCreateGroup:
         case ContactsModeShareFoldersWith:
+        case ContactsModeInviteParticipants:
             if (self.searchController.isActive) {
                 [self.searchController.searchBar resignFirstResponder];
             }
@@ -1622,7 +1631,8 @@
         }
         
         case ContactsModeChatAddParticipant:
-        case ContactsModeChatAttachParticipant: {
+        case ContactsModeChatAttachParticipant:
+        case ContactsModeInviteParticipants: {
             if (section == 1) {
                 heightForHeader = 35.0f;
             }
@@ -1775,6 +1785,7 @@
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatCreateGroup:
         case ContactsModeShareFoldersWith:
+        case ContactsModeInviteParticipants:
             if (tableView.isEditing) {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
                 if (!user) {
@@ -1842,12 +1853,15 @@
             if (self.contactsMode != ContactsModeChatStartConversation) {
                 self.deleteBarButtonItem.enabled = NO;
             }
-            if (self.contactsMode == ContactsModeChatAddParticipant) {
+            if (self.contactsMode == ContactsModeChatAddParticipant || self.contactsMode == ContactsModeInviteParticipants) {
                 self.addParticipantBarButtonItem.enabled = NO;
             }
         }
         
-        if (self.contactsMode != (ContactsModeChatAddParticipant|ContactsModeChatAttachParticipant|ContactsModeChatCreateGroup)) {
+        if (self.contactsMode != ContactsModeChatAddParticipant
+            || self.contactsMode != ContactsModeChatAttachParticipant
+            || self.contactsMode != ContactsModeChatCreateGroup
+            || self.contactsMode != ContactsModeInviteParticipants) {
             if (self.searchController.searchBar.isFirstResponder) {
                 self.searchController.searchBar.text = @"";
             }
@@ -2191,7 +2205,7 @@
     [self.selectedUsersArray removeObject:item];
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
-        if (self.contactsMode == ContactsModeChatAddParticipant) {
+        if (self.contactsMode == ContactsModeChatAddParticipant || self.contactsMode == ContactsModeInviteParticipants) {
             self.addParticipantBarButtonItem.enabled = NO;
         }
     }

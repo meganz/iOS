@@ -4,6 +4,7 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeDefault = 0,
     ContactsModeShareFoldersWith,
     ContactsModeFolderSharedWith,
+    ContactsModeInviteParticipants,
     ContactsModeChatStartConversation,
     ContactsModeChatAddParticipant,
     ContactsModeChatAttachParticipant,
@@ -29,7 +30,7 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
-@property (nonatomic, copy) void(^userSelected)(NSArray *);
+@property (nonatomic, copy) void(^userSelected)(NSArray<MEGAUser *> *);
 @property (nonatomic, copy) void(^chatSelected)(uint64_t);
 @property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL);
 
