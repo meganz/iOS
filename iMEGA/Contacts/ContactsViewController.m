@@ -2044,6 +2044,11 @@
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
     if (self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
         UIBarButtonItem *sender = self.contactsMode == ContactsModeShareFoldersWith ? self.navigationItem.leftBarButtonItem : self.navigationItem.rightBarButtonItem;
+        
+        if (sender == nil) {
+            return;
+        }
+        
         UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:sender withConfirmAction:^{
             [self dismissViewControllerAnimated:YES completion:nil];
         }];

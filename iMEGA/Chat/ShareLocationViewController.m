@@ -197,9 +197,9 @@
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
+    UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
+    if (popoverPresentationController) {
         alertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
         CGRect rect = CGRectMake(self.mapOptionsView.frame.origin.x, self.mapOptionsView.frame.origin.y, self.mapOptionsView.frame.size.width, self.mapOptionsView.frame.size.height - 45);
         popoverPresentationController.sourceRect = rect;
         popoverPresentationController.sourceView = self.view;
