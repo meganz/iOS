@@ -205,8 +205,10 @@ extension TextEditorViewController: ViewType {
     }
     
     @objc private func cancelTapped() {
+        guard let barButton = navigationItem.leftBarButtonItem else { return }
+        
         let discardChangesAC = UIAlertController().discardChanges(
-            fromBarButton: navigationItem.leftBarButtonItem,
+            fromBarButton: barButton,
             withConfirmAction: {
                 self.viewModel.dispatch(.cancel)
             }
