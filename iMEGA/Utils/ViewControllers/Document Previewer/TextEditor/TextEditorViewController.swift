@@ -3,9 +3,9 @@ final class TextEditorViewController: UIViewController {
     private var fileName: String?
     
     private lazy var textView: UITextView = UITextView()
-    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    private lazy var progressView: UIProgressView = UIProgressView()
-    private lazy var imageView: UIImageView = UIImageView()
+    private weak var activityIndicator: UIActivityIndicatorView?
+    private weak var progressView: UIProgressView?
+    private weak var imageView: UIImageView?
     
     init(viewModel: TextEditorViewModel) {
         self.viewModel = viewModel
@@ -19,7 +19,7 @@ final class TextEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
+        setupTextView()
         
         viewModel.invokeCommand = { [weak self] command in
             DispatchQueue.main.async {
@@ -30,22 +30,9 @@ final class TextEditorViewController: UIViewController {
         viewModel.dispatch(.setUpView)
     }
     
-    private func setupViews() {
+    private func setupTextView() {
         view.addSubview(textView)
         textView.autoPinEdgesToSuperviewSafeArea()
-        
-        view.addSubview(activityIndicator)
-        activityIndicator.autoCenterInSuperview()
-        
-        view.addSubview(progressView)
-        progressView.autoSetDimension(.width, toSize: 150)
-        progressView.autoCenterInSuperview()
-        
-        view.addSubview(imageView)
-        imageView.autoSetDimension(.height, toSize: 80)
-        imageView.autoSetDimension(.width, toSize: 80)
-        imageView.autoAlignAxis(toSuperviewMarginAxis: .vertical)
-        imageView.autoPinEdge(.bottom, to: .top, of: activityIndicator, withOffset: -20)
     }
 }
 
@@ -55,6 +42,8 @@ extension TextEditorViewController: ViewType {
         switch command {
         case .configView(let textEditorModel):
             configView(textEditorModel)
+        case .setupLoadViews:
+            setUpLoadViews()
         case .updateProgressView(let percentage):
             setProgressView(percentage)
         case .editFile:
@@ -69,6 +58,10 @@ extension TextEditorViewController: ViewType {
             SVProgressHUD.dismiss()
         case .showError(let error):
             SVProgressHUD.showError(withStatus: error)
+        case .startDownload(let status):
+            startDownload(status: status)
+        case .downloadToOffline:
+            viewModel.dispatch(.downloadToOffline)
         }
     }
     
@@ -77,11 +70,19 @@ extension TextEditorViewController: ViewType {
         navigationItem.title = textEditorModel.textFile.fileName
         
         if textEditorModel.textEditorMode == .load {
-            imageView.mnz_setImage(forExtension: NSString(string: textEditorModel.textFile.fileName).pathExtension)
+            imageView?.mnz_setImage(forExtension: NSString(string: textEditorModel.textFile.fileName).pathExtension)
         } else {
-            imageView.isHidden = true
-            activityIndicator.isHidden = true
-            progressView.isHidden = true
+            imageView?.isHidden = true
+            activityIndicator?.isHidden = true
+            progressView?.isHidden = true
+        }
+        
+        if textEditorModel.textEditorMode == .view {
+            configToolbar(accessLevel: textEditorModel.accessLevel ?? .unknown)
+            navigationController?.setToolbarHidden(false, animated: true)
+        } else {
+            toolbarItems = nil
+            navigationController?.setToolbarHidden(true, animated: true)
         }
         
         textView.text = textEditorModel.textFile.content
@@ -120,10 +121,31 @@ extension TextEditorViewController: ViewType {
         }
     }
     
+    private func setUpLoadViews() {
+        let activityIndicator = UIActivityIndicatorView()
+        view.addSubview(activityIndicator)
+        activityIndicator.autoCenterInSuperview()
+        self.activityIndicator = activityIndicator
+        
+        let progressView = UIProgressView()
+        view.addSubview(progressView)
+        progressView.autoSetDimension(.width, toSize: 150)
+        progressView.autoCenterInSuperview()
+        self.progressView = progressView
+        
+        let imageView = UIImageView()
+        view.addSubview(imageView)
+        imageView.autoSetDimension(.height, toSize: 80)
+        imageView.autoSetDimension(.width, toSize: 80)
+        imageView.autoAlignAxis(toSuperviewMarginAxis: .vertical)
+        imageView.autoPinEdge(.bottom, to: .top, of: activityIndicator, withOffset: -20)
+        self.imageView = imageView
+    }
+    
     private func setProgressView(_ percentage: Float) {
-        activityIndicator.stopAnimating()
-        progressView.isHidden = false
-        progressView.setProgress(percentage, animated: true)
+        activityIndicator?.stopAnimating()
+        progressView?.isHidden = false
+        progressView?.setProgress(percentage, animated: true)
     }
     
     private func editFile() {
@@ -202,6 +224,62 @@ extension TextEditorViewController: ViewType {
     private func startLoading() {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
+    }
+    
+    private func startDownload(status: String) {
+        if let hudImage = UIImage(named: "hudDownload") {
+            SVProgressHUD.setDefaultMaskType(.none)
+            SVProgressHUD.show(hudImage, status: status)
+        }
+    }
+    
+    private func configToolbar(accessLevel: NodeAccessTypeEntity) {
+        let flexibleItem =
+            UIBarButtonItem(
+                barButtonSystemItem: .flexibleSpace,
+                target: nil,
+                action: nil
+            )
+        let downloadBarButtonItem =
+            UIBarButtonItem(
+                image: UIImage(named: "offline"),
+                style: .plain,
+                target: self,
+                action: #selector(downloadTapped)
+            )
+        var toolbarItems = [downloadBarButtonItem, flexibleItem]
+        if accessLevel == .owner {
+            let shareBarButtonItem =
+                UIBarButtonItem(
+                    image: UIImage(named: "share"),
+                    style: .plain,
+                    target: self,
+                    action: #selector(shareTapped(button:))
+                )
+            toolbarItems.append(shareBarButtonItem)
+        } else {
+            let importBarButtonItem =
+                UIBarButtonItem(
+                    image: UIImage(named: "import"),
+                    style: .plain,
+                    target: self,
+                    action: #selector(importTapped)
+                )
+            toolbarItems.append(importBarButtonItem)
+        }
+        self.toolbarItems = toolbarItems
+    }
+    
+    @objc private func downloadTapped() {
+        viewModel.dispatch(.downloadToOffline)
+    }
+    
+    @objc private func shareTapped(button: UIBarButtonItem) {
+        viewModel.dispatch(.share(sender: button))
+    }
+    
+    @objc private func importTapped() {
+        viewModel.dispatch(.importNode)
     }
     
     @objc private func cancelTapped() {

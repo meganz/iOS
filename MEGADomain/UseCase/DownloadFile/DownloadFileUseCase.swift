@@ -1,6 +1,6 @@
 // MARK: - Use case protocol -
 protocol DownloadFileUseCaseProtocol {
-    func DownloadFile(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
+    func downloadToTempFolder(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
 }
 
 // MARK: - Use case implementation -
@@ -11,7 +11,7 @@ struct DownloadFileUseCase: DownloadFileUseCaseProtocol {
         self.repo = repo
     }
     
-    func DownloadFile(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        repo.downloadFile(nodeHandle: nodeHandle, progress: progress, completion: completion)
+    func downloadToTempFolder(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+        repo.downloadToTempFolder(nodeHandle: nodeHandle, progress: progress, completion: completion)
     }
 }

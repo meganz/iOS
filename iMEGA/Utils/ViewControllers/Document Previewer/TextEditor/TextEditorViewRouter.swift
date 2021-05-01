@@ -30,21 +30,20 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let uploadUC = UploadFileUseCase(repo: UploadFileRepository(sdk: sdk))
         let downloadUC = DownloadFileUseCase(repo: DownloadFileRepository(sdk: sdk))
+        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk))
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
             textEditorMode: textEditorMode,
             uploadFileUseCase: uploadUC,
             downloadFileUseCase: downloadUC,
+            nodeActionUseCase: nodeActionUC,
             parentHandle: parentHandle,
             nodeHandle: nodeHandle
         )
         let vc = TextEditorViewController(viewModel: vm)
         baseViewController = vc
         
-        if textEditorMode == .load {
-            vm.dispatch(.downloadFile)
-        }
         let nav = MEGANavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         return nav
@@ -117,26 +116,54 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         vc.executeCommand(.editFile)
     }
     
-    private func download(_ node: MEGANode) {
-        guard let vc = baseViewController else { return }
-        node.mnz_fileLinkDownload(from: vc, isFolderLink: false)
+    private func downloadToOffline() {
+        guard let vc = baseViewController as? TextEditorViewController else { return }
+        vc.executeCommand(.downloadToOffline)
     }
     
-    private func sendToChat(_ node: MEGANode) {
-        guard let vc = baseViewController else { return }
+    func importNode(nodeHandle: MEGAHandle?) {
+        guard let nodeHandle = nodeHandle,
+              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+            return
+        }
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
+            guard let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController
+            else { return }
+            browserVC.selectedNodesArray = [node]
+            browserVC.browserAction = .import
+            let browserNC = MEGANavigationController(rootViewController: browserVC)
+            browserNC.setToolbarHidden(false, animated: false)
+            baseViewController?.present(browserNC, animated: true, completion: nil)
+        }
+    }
+    
+    private func sendToChat(nodeHandle: MEGAHandle?) {
+        guard let vc = baseViewController,
+              let nodeHandle = nodeHandle,
+              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+            return
+        }
         node.mnz_sendToChat(in: vc)
     }
     
-    private func share(_ node: MEGANode, _ sender: Any) {
-        baseViewController?.present(UIActivityViewController(forNodes: [node], sender: sender), animated: true, completion: nil)
+    func share(nodeHandle: MEGAHandle?, sender button: Any) {
+        guard let nodeHandle = nodeHandle,
+              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+            return
+        }
+        
+        baseViewController?.present(UIActivityViewController(forNodes: [node], sender: button), animated: true, completion: nil)
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
+        let nodeHandle: MEGAHandle = node.handle
         switch action {
         case .editTextFile: editTextFile()
-        case .download: download(node)
-        case .sendToChat: sendToChat(node)
-        case .share: share(node, sender)
+        case .download: downloadToOffline()
+        case .import: importNode(nodeHandle: nodeHandle)
+        case .sendToChat: sendToChat(nodeHandle: nodeHandle)
+        case .share: share(nodeHandle: nodeHandle, sender: sender)
         default:
             break
         }

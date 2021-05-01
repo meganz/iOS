@@ -8,7 +8,9 @@ enum TextEditorViewAction: ActionType {
     case editFile
     case showActions(sender: Any)
     case cancel
-    case downloadFile
+    case downloadToOffline
+    case importNode
+    case share(sender: Any)
 }
 
 @objc enum TextEditorMode: Int, CaseIterable {
@@ -24,11 +26,14 @@ protocol TextEditorViewRouting: Routing {
     func dismissBrowserVC()
     func showActions(sender button: Any, handle: MEGAHandle?)
     func showPreviewDocVC(fromFilePath path: String)
+    func importNode(nodeHandle: MEGAHandle?)
+    func share(nodeHandle: MEGAHandle?, sender button: Any)
 }
 
 final class TextEditorViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(_ textEditorModel: TextEditorModel)
+        case setupLoadViews
         case showDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel)
         case showRenameAlert(_ textEditorRenameAlertModel: TextEditorRenameAlertModel)
         case stopLoading
@@ -36,6 +41,8 @@ final class TextEditorViewModel: ViewModelType {
         case editFile
         case updateProgressView(progress: Float)
         case showError(_ error: String)
+        case downloadToOffline
+        case startDownload(status: String)
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -46,6 +53,7 @@ final class TextEditorViewModel: ViewModelType {
     private var nodeHandle: MEGAHandle?
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadFileUseCase: DownloadFileUseCaseProtocol
+    private var nodeActionUseCase: NodeActionUseCaseProtocol
     
     init(
         router: TextEditorViewRouting,
@@ -53,6 +61,7 @@ final class TextEditorViewModel: ViewModelType {
         textEditorMode: TextEditorMode,
         uploadFileUseCase: UploadFileUseCaseProtocol,
         downloadFileUseCase: DownloadFileUseCaseProtocol,
+        nodeActionUseCase: NodeActionUseCaseProtocol,
         parentHandle: MEGAHandle? = nil,
         nodeHandle: MEGAHandle? = nil
     ) {
@@ -61,6 +70,7 @@ final class TextEditorViewModel: ViewModelType {
         self.textEditorMode = textEditorMode
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadFileUseCase = downloadFileUseCase
+        self.nodeActionUseCase = nodeActionUseCase
         self.parentHandle = parentHandle
         self.nodeHandle = nodeHandle
     }
@@ -68,7 +78,7 @@ final class TextEditorViewModel: ViewModelType {
     func dispatch(_ action: TextEditorViewAction) {
         switch action {
         case .setUpView:
-            invokeCommand?(.configView(makeTextEditorModel()))
+            setupView()
         case .saveText(let content):
             saveText(content)
         case .renameFile:
@@ -85,31 +95,23 @@ final class TextEditorViewModel: ViewModelType {
             router.showActions(sender: button, handle: nodeHandle)
         case .cancel:
             cancel()
-        case .downloadFile:
-            downloadFile()
+        case .downloadToOffline:
+            downloadToOffline()
+        case .importNode:
+            router.importNode(nodeHandle: nodeHandle)
+        case .share(sender: let button):
+            router.share(nodeHandle: nodeHandle, sender: button)
         }
     }
     
     //MARK: - Private functions
-    
-    private func makeTextEditorModel() -> TextEditorModel {
-        switch textEditorMode {
-        case .load,
-             .view:
-            return TextEditorModel(
-                leftButtonTitle: TextEditorL10n.close,
-                rightButtonTitle: nil,
-                textFile: textFile,
-                textEditorMode: textEditorMode
-            )
-        case .edit,
-             .create:
-            return TextEditorModel(
-                 leftButtonTitle: TextEditorL10n.cancel,
-                 rightButtonTitle: TextEditorL10n.save,
-                 textFile: textFile,
-                 textEditorMode: textEditorMode
-             )
+    private func setupView() {
+        if textEditorMode == .load {
+            invokeCommand?(.setupLoadViews)
+            invokeCommand?(.configView(makeTextEditorModel()))
+            downloadToTempFolder()
+        } else {
+            invokeCommand?(.configView(makeTextEditorModel()))
         }
     }
     
@@ -180,9 +182,15 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func downloadFile() {
+    private func downloadToOffline() {
+        invokeCommand?(.startDownload(status: TextEditorL10n.downloadMessage))
         guard let nodeHandle = nodeHandle else { return }
-        downloadFileUseCase.DownloadFile(nodeHandle: nodeHandle) { (transferEntity) in
+        nodeActionUseCase.downloadToOffline(nodeHandle: nodeHandle)
+    }
+    
+    private func downloadToTempFolder() {
+        guard let nodeHandle = nodeHandle else { return }
+        downloadFileUseCase.downloadToTempFolder(nodeHandle: nodeHandle) { (transferEntity) in
             guard let transferredBytes = transferEntity.transferredBytes,
                   let totalBytes = transferEntity.totalBytes
             else { return }
@@ -205,6 +213,43 @@ final class TextEditorViewModel: ViewModelType {
                 self.nodeHandle = nodeHandle
             }
         }
+    }
+    
+    private func makeTextEditorModel() -> TextEditorModel {
+        switch textEditorMode {
+        case .load:
+            return TextEditorModel(
+                leftButtonTitle: TextEditorL10n.close,
+                rightButtonTitle: nil,
+                textFile: textFile,
+                textEditorMode: textEditorMode,
+                accessLevel: nil
+            )
+        case .view:
+            return TextEditorModel(
+                leftButtonTitle: TextEditorL10n.close,
+                rightButtonTitle: nil,
+                textFile: textFile,
+                textEditorMode: textEditorMode,
+                accessLevel: nodeAccessLevel()
+            )
+        case .edit,
+             .create:
+            return TextEditorModel(
+                leftButtonTitle: TextEditorL10n.cancel,
+                rightButtonTitle: TextEditorL10n.save,
+                textFile: textFile,
+                textEditorMode: textEditorMode,
+                accessLevel: nil
+            )
+        }
+    }
+    
+    private func nodeAccessLevel() -> NodeAccessTypeEntity {
+        guard let nodeHandle = nodeHandle else {
+            return .unknown
+        }
+        return nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeHandle)
     }
     
     private func uploadTo(_ parentHandle: MEGAHandle) {

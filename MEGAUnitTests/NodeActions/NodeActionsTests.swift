@@ -249,7 +249,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessUnknown)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat]))
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .import, .sendToChat]))
     }
     
     func testTextEditorAcessRead() {
@@ -258,7 +258,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessRead)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat]))
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .import, .sendToChat]))
     }
     
     func testTextEditorAcessReadWrite() {
@@ -267,7 +267,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessReadWrite)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .sendToChat]))
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .import, .sendToChat]))
     }
     
     func testTextEditorAcessFull() {
@@ -276,7 +276,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessFull)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .sendToChat]))
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .import, .sendToChat]))
     }
     
     func testTextEditorAcessOwner() {
