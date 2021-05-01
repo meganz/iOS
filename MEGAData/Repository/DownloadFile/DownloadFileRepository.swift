@@ -5,7 +5,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func downloadFile(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func downloadToTempFolder(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let node = sdk.node(forHandle: nodeHandle) else { return }
         let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: node.base64Handle)
         let nodeFilePath = nodeFolderPath.append(pathComponent: node.name)

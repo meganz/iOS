@@ -22,4 +22,5 @@ enum TextEditorL10n {
     static let transferError = NSLocalizedString("Transfer failed:", comment: "Notification message shown when a transfer failed. Keep colon.")
     static let upload = NSLocalizedString("upload", comment: "")
     static let download = NSLocalizedString("download", comment: "")
+    static let downloadMessage = NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
 }

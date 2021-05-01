@@ -131,6 +131,9 @@ final class NodeActionBuilder {
                 nodeActions.append(NodeAction.textEditorAction())
             }
             nodeActions.append(NodeAction.downloadAction())
+            if accessLevel != .accessOwner {
+                nodeActions.append(NodeAction.importAction())
+            }
             nodeActions.append(NodeAction.sendToChatAction())
             if accessLevel == .accessOwner {
                 nodeActions.append(NodeAction.shareAction())

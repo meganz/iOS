@@ -3,6 +3,7 @@ struct TextEditorModel: Equatable {
     let rightButtonTitle: String?
     let textFile: TextFile
     let textEditorMode: TextEditorMode
+    let accessLevel: NodeAccessTypeEntity?
 }
 
 struct TextEditorDuplicateNameAlertModel: Equatable {
