@@ -32,6 +32,8 @@ final class TextEditorViewController: UIViewController {
     
     private func setupTextView() {
         view.addSubview(textView)
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.adjustsFontForContentSizeCategory = true
         textView.autoPinEdgesToSuperviewSafeArea()
     }
 }
