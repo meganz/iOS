@@ -5,6 +5,8 @@ extension SDKUserClient {
     static var foundNil: Self {
         return Self.init(currentUser: {
             return nil
+        }, hasUserLoggedIn: {
+            false
         }, userForSharedNode: { _ in
             return nil
         })
@@ -13,6 +15,8 @@ extension SDKUserClient {
     static var foundUser: Self {
         return Self(currentUser: {
             return UserSDKEntity.mockUser
+        }, hasUserLoggedIn: {
+            false
         }, userForSharedNode: { _ in
             return UserSDKEntity.mockUser
         })

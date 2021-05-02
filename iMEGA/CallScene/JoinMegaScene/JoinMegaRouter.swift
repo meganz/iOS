@@ -8,10 +8,10 @@ protocol JoinMegaRouting: Routing {
 
 class JoinMegaRouter: JoinMegaRouting {
     private weak var baseViewController: UIViewController?
-    private weak var viewControllerToPresent: UIViewController?
+    private weak var presenter: UIViewController?
     
-    init(viewControllerToPresent: UIViewController) {
-        self.viewControllerToPresent = viewControllerToPresent
+    init(presenter: UIViewController) {
+        self.presenter = presenter
     }
     
     func build() -> UIViewController {
@@ -23,12 +23,9 @@ class JoinMegaRouter: JoinMegaRouting {
     }
     
     func start() {
-        guard let viewControllerToPresent = viewControllerToPresent else {
-            return
-        }
         let nav = MEGANavigationController(rootViewController: build())
         nav.addRightCancelButton()
-        viewControllerToPresent.present(nav, animated: true, completion: nil)
+        presenter?.present(nav, animated: true)
     }
     
     // MARK: - UI Actions
@@ -38,7 +35,6 @@ class JoinMegaRouter: JoinMegaRouting {
     
     func createAccount() {
         let createAccountNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateAccountNavigationControllerID")
-        createAccountNC.modalPresentationStyle = .fullScreen
         baseViewController?.present(createAccountNC, animated: true, completion: nil)
     }
     

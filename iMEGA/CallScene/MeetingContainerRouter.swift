@@ -1,8 +1,9 @@
 
 protocol MeetingContainerRouting: Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)
-    func dismiss()
+    func dismiss(completion: (() -> Void)?)
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel)
+    func showEndMeetingOptions(presenter: UIViewController, meetingContainerViewModel: MeetingContainerViewModel)
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -25,7 +26,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoom: chatRoom,
                                                   call: call,
                                                   callsUseCase: CallsUseCase(repository: CallsRepository()),
-                                                  callManagerUseCase: CallManagerUseCase())
+                                                  callManagerUseCase: CallManagerUseCase(),
+                                                  userUseCase: UserUseCase(repo: .live))
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         return vc
@@ -45,9 +47,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         showFloatingPanel(containerViewModel: containerViewModel)
     }
     
-    func dismiss() {
+    func dismiss(completion: (() -> Void)?) {
         floatingPanelRouter?.dismiss()
-        baseViewController?.dismiss(animated: false)
+        baseViewController?.dismiss(animated: false, completion: completion)
     }
     
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel) {
@@ -57,6 +59,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         } else {
             showFloatingPanel(containerViewModel: containerViewModel)
         }
+    }
+    
+    func showEndMeetingOptions(presenter: UIViewController, meetingContainerViewModel: MeetingContainerViewModel) {
+        EndMeetingOptionsRouter(presenter: presenter, meetingContainerViewModel: meetingContainerViewModel).start()
     }
     
     //MARK:- Private methods.
