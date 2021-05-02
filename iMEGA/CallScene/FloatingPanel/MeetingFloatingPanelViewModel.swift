@@ -1,7 +1,7 @@
 
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
-    case hangCall
+    case hangCall(presenter: UIViewController)
     case shareLink(presenter: UIViewController, sender: UIButton)
     case inviteParticipants(presenter: UIViewController)
     case onContextMenuTap(presenter: UIViewController, sender: UIButton, attendee: CallParticipantEntity)
@@ -74,8 +74,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             populateParticipants()
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             invokeCommand?(.configView(isUserAModerator: isMyselfAModerator, isOneToOneMeeting: !chatRoom.isGroup, callParticipants: callParticipants))
-        case .hangCall:
-            hangCall()
+        case .hangCall(let presenter):
+            containerViewModel?.dispatch(.hangCall(presenter: presenter))
         case .shareLink(let presenter, let sender):
             chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
                 switch result {
@@ -122,10 +122,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     //MARK:- Private methods
-    
-    private func hangCall() {
-        containerViewModel?.dispatch(.hangCall)
-    }
     
     private func enableLoudSpeaker() {
         audioSessionUseCase.enableLoudSpeaker { result in

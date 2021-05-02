@@ -1,6 +1,7 @@
 
 protocol UserUseCaseProtocol {
     var myHandle: UInt64? { get }
+    var hasUserLoggedIn: Bool { get }
     func user(withHandle handle: UInt64) -> UserSDKEntity?
 }
 
@@ -8,7 +9,11 @@ struct UserUseCase: UserUseCaseProtocol {
     private let repo: SDKUserClient
     
     var myHandle: UInt64? {
-        return repo.currentUser()?.handle
+        repo.currentUser()?.handle
+    }
+    
+    var hasUserLoggedIn: Bool {
+        repo.hasUserLoggedIn()
     }
     
     init(repo: SDKUserClient) {
@@ -16,6 +21,6 @@ struct UserUseCase: UserUseCaseProtocol {
     }
     
     func user(withHandle handle: UInt64) -> UserSDKEntity? {
-        return repo.userForSharedNode(handle)
+        repo.userForSharedNode(handle)
     }
 }
