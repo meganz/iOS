@@ -63,6 +63,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.thumbnailCache = [[NSCache alloc] init];
+    
     [self configureNavigation];
     [self updateAppearance];
     
@@ -607,18 +609,24 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ThumbnailPageID" forIndexPath:indexPath];
-    UIImageView *imageView = [cell viewWithTag:100];
     UILabel *pageLabel = [cell viewWithTag:1];
     pageLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.item + 1];
-    if ([self.thumbnailCache objectForKey:[NSNumber numberWithInteger:indexPath.item]]) {
-        imageView.image = [self.thumbnailCache objectForKey:[NSNumber numberWithInteger:indexPath.item]];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *imageView = [cell viewWithTag:100];
+    NSNumber *cachedImageKey = @(indexPath.item);
+    UIImage *cachedImage = [self.thumbnailCache objectForKey:cachedImageKey];
+    if (cachedImage) {
+        imageView.image = cachedImage;
     } else {
         PDFPage *page = [self.pdfView.document pageAtIndex:indexPath.item];
-        imageView.image = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
-        [self.thumbnailCache setObject:imageView.image forKey:[NSNumber numberWithInteger:indexPath.item]];
+        if (page) {
+            imageView.image = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
+            [self.thumbnailCache setObject:imageView.image forKey:cachedImageKey];
+        }
     }
-    
-    return cell;
 }
 
 #pragma mark - SearchInPdfViewControllerProtocol
