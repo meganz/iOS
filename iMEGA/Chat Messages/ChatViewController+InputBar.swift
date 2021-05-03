@@ -80,7 +80,8 @@ extension ChatViewController {
     func replaceCurrentViewController(withViewController viewController: UIViewController,
                                       animated: Bool = true) {
         guard let navController = navigationController else {
-            fatalError("No navigation controller in the stack to push")
+            MEGALogDebug("Chat: No navigation controller in the stack to push")
+            return
         }
         
         navController.pushViewController(viewController, animated: animated)
