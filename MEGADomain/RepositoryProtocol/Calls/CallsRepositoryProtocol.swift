@@ -1,6 +1,7 @@
 
 protocol CallsRepositoryProtocol {
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol)
+    func stopListeningForCall()
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
     func startChatCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
     func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)

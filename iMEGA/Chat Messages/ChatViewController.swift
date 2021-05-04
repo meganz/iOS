@@ -969,7 +969,7 @@ class ChatViewController: MessagesViewController {
         setEditing(false, animated: true)
     }
     
-    private func startOutGoingCall() {
+    private func startOutGoingCall(isVideoEnabled: Bool) {
         let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
             guard let self = self,
                   let error = error, error.type == .MEGAChatErrorTypeOk else {
@@ -977,28 +977,28 @@ class ChatViewController: MessagesViewController {
                 return
             }
             
-            self.startMeetingUI()
+            self.startMeetingUI(isVideoEnabled: isVideoEnabled)
         }
         
-        MEGASdkManager.sharedMEGAChatSdk().startChatCall(chatRoom.chatId, enableVideo: false, enableAudio: true, delegate: startCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk().startChatCall(chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: startCallDelegate)
     }
     
-    private func answerCall() {
+    private func answerCall(isVideoEnabled: Bool) {
         let delegate = MEGAChatAnswerCallRequestDelegate { error in
             if error?.type == .MEGAChatErrorTypeOk {
-                self.startMeetingUI()
+                self.startMeetingUI(isVideoEnabled: isVideoEnabled)
             }
         }
-        MEGASdkManager.sharedMEGAChatSdk().answerChatCall(chatRoom.chatId, enableVideo: false, enableAudio: true, delegate: delegate)
+        MEGASdkManager.sharedMEGAChatSdk().answerChatCall(chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: delegate)
     }
     
-    private func startMeetingUI() {
+    private func startMeetingUI(isVideoEnabled: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         
         let callEntity = CallEntity(with: call)
         let chatRoomEntity = ChatRoomEntity(with: chatRoom)
         
-        MeetingContainerRouter(presenter: self, chatRoom: chatRoomEntity, call: callEntity).start()
+        MeetingContainerRouter(presenter: self, chatRoom: chatRoomEntity, call: callEntity, isVideoEnabled: isVideoEnabled).start()
     }
 
     func openCallViewWithVideo(videoCall: Bool) {
@@ -1006,7 +1006,7 @@ class ChatViewController: MessagesViewController {
         let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId)
         
         if let call = call {
-            callType = (call.isRinging && call.status == .userNoPresent) ? .incoming : .active
+            callType = (call.isRinging || call.status == .userNoPresent) ? .incoming : .active
         }
         
         if chatRoom.isGroup {
@@ -1022,16 +1022,14 @@ class ChatViewController: MessagesViewController {
         
         switch callType {
         case .incoming:
-            answerCall()
+            answerCall(isVideoEnabled: videoCall)
         case .outgoing:
-            startOutGoingCall()
+            startOutGoingCall(isVideoEnabled: videoCall)
         case .active:
-            startMeetingUI()
+            startMeetingUI(isVideoEnabled: videoCall)
         @unknown default:
             fatalError()
         }
-
-        
     }
     
     deinit {

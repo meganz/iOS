@@ -10,15 +10,17 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var presenter: UIViewController?
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
+    private let isVideoEnabled: Bool
     
     private weak var baseViewController: UIViewController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
     private weak var callViewRouter: CallViewRouter?
     
-    init(presenter: UIViewController, chatRoom: ChatRoomEntity, call: CallEntity) {
+    init(presenter: UIViewController, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
+        self.isVideoEnabled = isVideoEnabled
     }
     
     func build() -> UIViewController {
@@ -71,7 +73,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let callViewRouter = CallViewRouter(presenter: baseViewController,
                                             containerViewModel: containerViewModel,
                                             chatRoom: chatRoom,
-                                            initialVideoCall: false)
+                                            initialVideoCall: isVideoEnabled)
         callViewRouter.start()
         self.callViewRouter = callViewRouter
     }
@@ -81,7 +83,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
                                                              containerViewModel: containerViewModel,
                                                              chatRoom: chatRoom,
-                                                             call: call)
+                                                             call: call,
+                                                             isVideoEnabled: isVideoEnabled)
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }

@@ -14,7 +14,7 @@ enum CallViewAction: ActionType {
 
 final class CallViewModel: NSObject, ViewModelType {
     enum Command: CommandType {
-        case configView(title: String, subtitle: String)
+        case configView(title: String, subtitle: String, isVideoEnabled: Bool)
         case switchMenusVisibility
         case switchLayoutMode
         case switchLocalVideo(on: Bool)
@@ -61,6 +61,7 @@ final class CallViewModel: NSObject, ViewModelType {
     
     deinit {
         removeDelegate()
+        callsUseCase.stopListeningForCall()
     }
     
     private func initDurationTimer(_ duration: Double) {
@@ -79,7 +80,7 @@ final class CallViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CallViewAction) {
         switch action {
         case .onViewReady:
-            invokeCommand?(.configView(title: chatRoom.title ?? "Call default title", subtitle: "time is running!"))
+            invokeCommand?(.configView(title: chatRoom.title ?? "Call default title", subtitle: "time is running!", isVideoEnabled: initialVideoCall))
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
         case .tapOnView:
             invokeCommand?(.switchMenusVisibility)

@@ -18,11 +18,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isUserAModerator: true, isOneToOneMeeting: false, callParticipants: [])
+                .configView(isUserAModerator: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
+                .reloadParticpantsList(participants: [])
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -42,11 +44,67 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isUserAModerator: true, isOneToOneMeeting: true, callParticipants: [])
+                .configView(isUserAModerator: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil),
+                .reloadParticpantsList(participants: [])
+             ])
+        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
+    }
+    
+    func testAction_onViewReady_VideoCallWithFrontCamera() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false)
+        let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callsUseCase: MockCallsUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100))
+        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
+        let callUseCase = MockCallsUseCase()
+        callUseCase.videoDeviceSelectedString = "front"
+        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      call: call,
+                                                      callManagerUseCase: MockCallManagerUseCase(),
+                                                      callsUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(cameraPositionName: "back"),
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: true)
+        test(viewModel: viewModel,
+             action: .onViewReady,
+             expectedCommands: [
+                .configView(isUserAModerator: true, isOneToOneMeeting: true, isVideoEnabled: true, cameraPosition: .front),
+                .reloadParticpantsList(participants: [])
+             ])
+        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
+    }
+    
+    func testAction_onViewReady_VideoCallWithBackCamera() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false)
+        let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callsUseCase: MockCallsUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100))
+        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
+        let callUseCase = MockCallsUseCase()
+        callUseCase.videoDeviceSelectedString = "back"
+        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      call: call,
+                                                      callManagerUseCase: MockCallManagerUseCase(),
+                                                      callsUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(cameraPositionName: "back"),
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: true)
+        test(viewModel: viewModel,
+             action: .onViewReady,
+             expectedCommands: [
+                .configView(isUserAModerator: true, isOneToOneMeeting: true, isVideoEnabled: true, cameraPosition: .back),
+                .reloadParticpantsList(participants: [])
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -66,11 +124,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isUserAModerator: false, isOneToOneMeeting: false, callParticipants: [])
+                .configView(isUserAModerator: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
+                .reloadParticpantsList(participants: [])
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -90,11 +150,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isUserAModerator: false, isOneToOneMeeting: true, callParticipants: [])
+                .configView(isUserAModerator: false, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil),
+                .reloadParticpantsList(participants: [])
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -116,8 +178,11 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
+        
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController()), expectedCommands: [])
+
         XCTAssert(containerRouter.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
         XCTAssert(callUseCase.hangCall_CalledTimes == 1)
@@ -142,7 +207,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: chatRoomUseCase)
+                                                      chatRoomUseCase: chatRoomUseCase,
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 1)
     }
@@ -165,7 +231,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 0)
     }
@@ -188,7 +255,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel, action: .inviteParticipants(presenter: UIViewController()), expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
@@ -211,7 +279,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .guest, isInContactList: false)
         test(viewModel: viewModel, action: .onContextMenuTap(presenter: UIViewController(), sender: UIButton(), attendee: particpant), expectedCommands: [])
         XCTAssert(router.showContextMenu_calledTimes == 1)
@@ -235,7 +304,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: true), expectedCommands: [.microphoneMuted(muted: true)])
         XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
     }
@@ -258,7 +328,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: false), expectedCommands: [.microphoneMuted(muted: false)])
         XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
     }
@@ -284,7 +355,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
              expectedCommands: [
@@ -315,7 +387,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
              expectedCommands: [
@@ -347,7 +420,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .turnCamera(on: false),
              expectedCommands: [
@@ -376,7 +450,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: true),
@@ -407,7 +482,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: false),
@@ -438,7 +514,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: false),
@@ -469,7 +546,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         
         test(viewModel: viewModel,
              action: .enableLoudSpeaker,
@@ -499,7 +577,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         
         test(viewModel: viewModel,
              action: .disableLoudSpeaker,
@@ -529,11 +608,15 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      chatRoomUseCase: MockChatRoomUseCase())
+                                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                                      isVideoEnabled: false)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .particpant, isInContactList: false)
         test(viewModel: viewModel,
              action: .changeModeratorTo(participant: particpant),
-             expectedCommands: [.configView(isUserAModerator: false, isOneToOneMeeting: true, callParticipants: [])])
+             expectedCommands: [
+             .reloadParticpantsList(participants: [])
+             ]
+        )
     }
 }
 

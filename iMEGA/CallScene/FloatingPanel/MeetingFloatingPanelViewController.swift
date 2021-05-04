@@ -65,8 +65,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     // MARK: - Dispatch action
     func executeCommand(_ command: MeetingFloatingPanelViewModel.Command) {
         switch command {
-        case .configView(let isUserAModerator, let isOneToOneMeeting, let callParticipants):
-            updateUI(isMyselfAModerator: isUserAModerator, isOneToOneMeeting: isOneToOneMeeting, callParticipants: callParticipants)
+        case .configView(let isUserAModerator, let isOneToOneMeeting, let isVideoEnabled, let cameraPosition):
+            updateUI(isMyselfAModerator: isUserAModerator, isOneToOneMeeting: isOneToOneMeeting, isVideoEnabled: isVideoEnabled, cameraPosition: cameraPosition)
         case .enabledLoudSpeaker(let enabled):
             speakerQuickActionView?.isSelected = enabled
         case .microphoneMuted(let muted):
@@ -88,6 +88,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .reloadParticpantsList(let participants):
             callParticipants = participants
             participantsTableView?.reloadData()
+            updateInTheMeetingLabel()
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         }
@@ -142,9 +143,13 @@ final class MeetingFloatingPanelViewController: UIViewController {
         speakerQuickActionView?.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
     }
     
-    private func updateUI(isMyselfAModerator: Bool, isOneToOneMeeting: Bool, callParticipants: [CallParticipantEntity]) {
+    private func updateUI(isMyselfAModerator: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPosition?) {
         endQuickActionView.icon = UIImage(named: isMyselfAModerator ? "endCallMeetingAction" : "hangCallMeetingAction")
         endQuickActionView.name = NSLocalizedString(isMyselfAModerator ? "End" : "Leave", comment: "")
+        cameraQuickActionView.isSelected = isVideoEnabled
+        if let cameraPosition = cameraPosition {
+            flipQuickActionView.isSelected = cameraPosition == .back
+        }
         
         if isOneToOneMeeting {
             optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
@@ -155,10 +160,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
         } else if isMyselfAModerator && inviteParticpicantsView.superview == nil {
             optionsStackView.addArrangedSubview(inviteParticpicantsView)
         }
-        
-        self.callParticipants = callParticipants
-        participantsTableView.reloadData()
-        updateInTheMeetingLabel()
     }
     
     private func updateInTheMeetingLabel() {
