@@ -173,12 +173,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="HYR-2D-lR6">
-                                <rect key="frame" x="0.0" y="0.0" width="1366" height="5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnv-VE-aOp" customClass="MEGAProgressBar" customModule="MEGA" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="4"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="Ejc-N8-WgY"/>
+                                    <constraint firstAttribute="height" constant="4" id="T32-Ua-Cop"/>
                                 </constraints>
-                            </progressView>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="EGu-NF-wVj">
                                 <rect key="frame" x="12" y="4" width="1342" height="55"/>
                                 <subviews>
@@ -326,14 +327,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="tnv-VE-aOp" firstAttribute="leading" secondItem="qQj-Ew-MRr" secondAttribute="leading" id="1kS-by-tUR"/>
+                            <constraint firstItem="tnv-VE-aOp" firstAttribute="top" secondItem="qQj-Ew-MRr" secondAttribute="top" id="78W-yn-0Eb"/>
+                            <constraint firstItem="tnv-VE-aOp" firstAttribute="bottom" secondItem="EGu-NF-wVj" secondAttribute="top" id="Eyk-8e-bD0"/>
                             <constraint firstItem="EGu-NF-wVj" firstAttribute="centerX" secondItem="qQj-Ew-MRr" secondAttribute="centerX" id="JOy-mw-Wt1"/>
                             <constraint firstItem="s8c-nN-xgS" firstAttribute="leading" secondItem="qQj-Ew-MRr" secondAttribute="leading" id="LDM-My-OKe"/>
-                            <constraint firstAttribute="leading" secondItem="HYR-2D-lR6" secondAttribute="leading" id="Ptc-We-iov"/>
                             <constraint firstItem="s8c-nN-xgS" firstAttribute="top" secondItem="EGu-NF-wVj" secondAttribute="bottom" id="WMw-fx-J6F"/>
                             <constraint firstItem="s8c-nN-xgS" firstAttribute="centerX" secondItem="qQj-Ew-MRr" secondAttribute="centerX" id="YkK-Un-Eaj"/>
-                            <constraint firstAttribute="trailing" secondItem="HYR-2D-lR6" secondAttribute="trailing" id="aql-eu-uRh"/>
-                            <constraint firstAttribute="top" secondItem="HYR-2D-lR6" secondAttribute="top" id="gRU-wC-2Oq"/>
-                            <constraint firstItem="EGu-NF-wVj" firstAttribute="top" secondItem="HYR-2D-lR6" secondAttribute="bottom" id="lUH-dV-eAf"/>
+                            <constraint firstAttribute="trailing" secondItem="tnv-VE-aOp" secondAttribute="trailing" id="fSy-NE-OkL"/>
                             <constraint firstItem="EGu-NF-wVj" firstAttribute="leading" secondItem="qQj-Ew-MRr" secondAttribute="leading" constant="12" id="wJP-8B-6sr"/>
                         </constraints>
                     </view>
@@ -345,7 +346,7 @@
                         <outlet property="containerViewLeadingConstraint" destination="wJP-8B-6sr" id="hf8-im-Bg7"/>
                         <outlet property="imageView" destination="hJ8-aJ-enC" id="KUf-ki-9V5"/>
                         <outlet property="playPauseButtonImageView" destination="opy-fa-KYK" id="K3T-Ig-Ydy"/>
-                        <outlet property="progressView" destination="HYR-2D-lR6" id="ka1-wc-eHO"/>
+                        <outlet property="progressBarView" destination="tnv-VE-aOp" id="ImW-nw-RDp"/>
                         <outlet property="separatorHeightConstraint" destination="uW8-f0-TJU" id="lv9-xq-2Au"/>
                         <outlet property="separatorView" destination="s8c-nN-xgS" id="QKo-Ac-m37"/>
                         <outlet property="stackView" destination="EGu-NF-wVj" id="CBw-9c-RT6"/>

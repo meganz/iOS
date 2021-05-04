@@ -65,7 +65,7 @@ final class AudioPlayer: NSObject {
     }
     
     var currentTime: Double {
-        guard let currentItem = queuePlayer?.currentItem else { return 0.0 }
+        guard let currentItem = queuePlayer?.currentItem, CMTimeGetSeconds(currentItem.currentTime()) > 0 else { return 0.0 }
         
         return CMTimeGetSeconds(currentItem.currentTime())
     }
