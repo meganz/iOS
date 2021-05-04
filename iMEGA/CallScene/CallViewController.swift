@@ -54,9 +54,12 @@ final class CallsViewController: UIViewController, ViewType {
     // MARK: - Execute command
     func executeCommand(_ command: CallViewModel.Command) {
         switch command {
-        case .configView(let title, let subtitle):
+        case .configView(let title, let subtitle, let isVideoEnabled):
             titleView.configure(title: title, subtitle: subtitle)
             configureLocalVideoImage()
+            if isVideoEnabled {
+                executeCommand(.switchLocalVideo(on: isVideoEnabled))
+            }
         case .switchMenusVisibility:
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
         case .switchLayoutMode:

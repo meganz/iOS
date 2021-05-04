@@ -23,6 +23,11 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         self.callbacksDelegate = callbacksDelegate
     }
     
+    func stopListeningForCall() {
+        chatSdk.remove(self)
+        self.callbacksDelegate = nil
+    }
+    
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
         if chatSdk.chatConnectionState(chatId) == .online {
             chatSdk.answerChatCall(chatId, enableVideo: false, enableAudio: true, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in

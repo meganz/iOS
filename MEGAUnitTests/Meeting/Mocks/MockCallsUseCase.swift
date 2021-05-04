@@ -1,7 +1,9 @@
 @testable import MEGA
 
 final class MockCallsUseCase: CallsUseCaseProtocol {
+    
     var startListeningForCall_CalledTimes = 0
+    var stopListeningForCall_CalledTimes = 0
     var callCompletion: Result<CallEntity, CallsErrorEntity> = .failure(.generic)
     var enableDisableVideoCompletion: Result<Void, CallsErrorEntity> = .failure(.generic)
     var videoDeviceSelectedString: String?
@@ -15,6 +17,10 @@ final class MockCallsUseCase: CallsUseCaseProtocol {
 
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol) {
         startListeningForCall_CalledTimes += 1
+    }
+    
+    func stopListeningForCall() {
+        stopListeningForCall_CalledTimes += 1
     }
     
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {

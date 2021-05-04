@@ -20,7 +20,7 @@ enum MeetingCameraType: Int {
 
 protocol MeetingCreatingViewRouting: Routing {
     func dismiss()
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity)
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool)
 }
 
 final class MeetingCreatingViewModel: ViewModelType {
@@ -98,12 +98,13 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private func startChatCall() {
         meetingUseCase.startChatCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: isMicroPhoneEnabled) { [weak self] in
+            guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
-                guard let call = self?.meetingUseCase.getCall(forChatId: chatRoom.chatId) else { return }
-                self?.router.goToMeetingRoom(chatRoom: chatRoom, call: call)
+                guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else { return }
+                self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
             case .failure(_):
-                self?.router.dismiss()
+                self.router.dismiss()
             }
         }
     }

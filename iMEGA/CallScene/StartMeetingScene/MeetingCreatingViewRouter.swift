@@ -29,9 +29,9 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         baseViewController?.dismiss(animated: true)
     }
     
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity) {
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
         guard let baseViewController = baseViewController else { return }
-        MeetingContainerRouter(presenter: baseViewController, chatRoom: chatRoom, call: call).start()
+        MeetingContainerRouter(presenter: baseViewController, chatRoom: chatRoom, call: call, isVideoEnabled: isVideoEnabled).start()
     }
     
 }

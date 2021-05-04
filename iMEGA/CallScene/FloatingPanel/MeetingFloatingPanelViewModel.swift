@@ -15,7 +15,10 @@ enum MeetingFloatingPanelAction: ActionType {
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(isUserAModerator: Bool, isOneToOneMeeting: Bool, callParticipants: [CallParticipantEntity])
+        case configView(isUserAModerator: Bool,
+                        isOneToOneMeeting: Bool,
+                        isVideoEnabled: Bool,
+                        cameraPosition: CameraPosition?)
         case enabledLoudSpeaker(enabled: Bool)
         case microphoneMuted(muted: Bool)
         case updatedCameraPosition(position: CameraPosition)
@@ -36,9 +39,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var isSpeakerEnabled = false
+    private var isVideoEnabled = false
     private var isMyselfAModerator: Bool {
         return chatRoom.ownPrivilege == .moderator
     }
+    var invokeCommand: ((Command) -> Void)?
 
     init(router: MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
@@ -49,7 +54,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol) {
+         chatRoomUseCase: ChatRoomUseCaseProtocol,
+         isVideoEnabled: Bool) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
@@ -60,9 +66,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.devicePermissionUseCase = devicePermissionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.isVideoEnabled = isVideoEnabled
     }
     
-    var invokeCommand: ((Command) -> Void)?
+    deinit {
+        callsUseCase.stopListeningForCall()
+    }
     
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
@@ -73,7 +82,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             populateParticipants()
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
-            invokeCommand?(.configView(isUserAModerator: isMyselfAModerator, isOneToOneMeeting: !chatRoom.isGroup, callParticipants: callParticipants))
+            invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
+                                       isOneToOneMeeting: !chatRoom.isGroup,
+                                       isVideoEnabled: isVideoEnabled,
+                                       cameraPosition: isVideoEnabled ? (isBackCameraSelected() ? .back : .front) : nil))
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         case .hangCall(let presenter):
             containerViewModel?.dispatch(.hangCall(presenter: presenter))
         case .shareLink(let presenter, let sender):
@@ -117,7 +130,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .changeModeratorTo(let newModerator):
             newModerator.attendeeType = .moderator
             callsUseCase.makePeerAModerator(inCall: call, peerId: newModerator.participantId)
-            invokeCommand?(.configView(isUserAModerator: isMyselfAModerator, isOneToOneMeeting: !chatRoom.isGroup, callParticipants: callParticipants))
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
     
@@ -215,6 +228,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 guard let self = self else { return }
                 switch result {
                 case .success:
+                    self.isVideoEnabled = on
                     self.invokeCommand?(.cameraTurnedOn(on: on))
                     self.invokeCommand?(.updatedCameraPosition(position: self.isBackCameraSelected() ? .back : .front))
                 case .failure(_):
@@ -227,6 +241,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             callsUseCase.disableLocalVideo(for: chatRoom.chatId) { result in
                 switch result {
                 case .success:
+                    self.isVideoEnabled = on
                     self.invokeCommand?(.cameraTurnedOn(on: on))
                 case .failure(_):
                     MEGALogDebug("Error disabling local video")
@@ -251,20 +266,20 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
 extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
     func attendeeJoined(attendee: CallParticipantEntity) {
         callParticipants.append(attendee)
-        invokeCommand?(.configView(isUserAModerator: isMyselfAModerator, isOneToOneMeeting: !chatRoom.isGroup, callParticipants: callParticipants))
+        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
     
     func attendeeLeft(attendee: CallParticipantEntity) {
         if let index = callParticipants.firstIndex(of: attendee) {
             callParticipants.remove(at: index)
-            invokeCommand?(.configView(isUserAModerator: isMyselfAModerator, isOneToOneMeeting: !chatRoom.isGroup, callParticipants: callParticipants))
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
     
     func updateAttendee(_ attendee: CallParticipantEntity) {
         if let index = callParticipants.firstIndex(of: attendee) {
             callParticipants[index] = attendee
-            invokeCommand?(.configView(isUserAModerator: isMyselfAModerator, isOneToOneMeeting: !chatRoom.isGroup, callParticipants: callParticipants))
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
     
