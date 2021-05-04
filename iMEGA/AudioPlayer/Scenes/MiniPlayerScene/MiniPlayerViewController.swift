@@ -1,7 +1,7 @@
 import UIKit
 
 final class MiniPlayerViewController: UIViewController {
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressBarView: MEGAProgressBar!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var playPauseButtonImageView: UIImageView!
     @IBOutlet weak var closeButtonImageView: UIButton!
@@ -46,6 +46,7 @@ final class MiniPlayerViewController: UIViewController {
         super.viewDidLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
         updateAppearance()
+        progressBarView.setNeedsDisplay()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -76,7 +77,7 @@ final class MiniPlayerViewController: UIViewController {
     
     // MARK: - Private functions
     private func updatePlayback(_ percentage: Float, _ isPlaying: Bool) {
-        progressView.progress = percentage
+        progressBarView.setProgress(progress: CGFloat(percentage), animated: false)
         playPauseButtonImageView.image = isPlaying ? UIImage(named: "miniplayerPause") : UIImage(named: "miniplayerPlay")
     }
     
@@ -136,7 +137,7 @@ final class MiniPlayerViewController: UIViewController {
     private func updateAppearance() {
         view.backgroundColor = .mnz_mainBars(for: traitCollection)
         collectionView.backgroundColor = .clear
-        progressView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
+        progressBarView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
         imageView.layer.cornerRadius = 8.0
         
         separatorView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
