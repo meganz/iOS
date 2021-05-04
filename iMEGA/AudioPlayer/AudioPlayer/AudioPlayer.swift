@@ -191,26 +191,6 @@ final class AudioPlayer: NSObject {
         self.tracks = tracks
     }
     
-    func shuffleQueue() {
-        guard var playerItems = queuePlayer?.items().filter({ $0 != currentItem() }) as? [AudioPlayerItem] else { return }
-    
-        playerItems.shuffle()
-        
-        var last = currentItem()
-                    
-        playerItems.forEach { item in
-            guard let playerItem = queuePlayer?.items().first(where:{($0 as? AudioPlayerItem) == item}) as? AudioPlayerItem else { return }
-            
-            queuePlayer?.remove(playerItem)
-            queuePlayer?.insert(playerItem, after: last)
-            last = playerItem
-        }
-        
-        if let items = queuePlayer?.items() as? [AudioPlayerItem] {
-            update(tracks: items)
-        }
-    }
-    
     @objc func currentItem() -> AudioPlayerItem? {
         queuePlayer?.currentItem as? AudioPlayerItem
     }

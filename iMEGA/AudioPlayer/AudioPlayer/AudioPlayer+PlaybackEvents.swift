@@ -374,6 +374,32 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 tracks.move(movedItem, to: trackPosition)
             }
         }
+        notify(aboutTheEndOfBlockingAction)
+    }
+    
+    func shuffleQueue() {
+        guard let queuePlayer = queuePlayer,
+              let currentItem = currentItem() else { return }
+        
+        notify(aboutTheBeginningOfBlockingAction)
+        
+        var playerPlaylist: [AudioPlayerItem] = queuePlayer.items()
+                                                           .compactMap({ $0 as? AudioPlayerItem})
+                                                           .filter({$0 != currentItem})
+        
+        playerPlaylist.shuffle()
+        
+        // Update the "tracks" array with the correct position for the current audio player playlist
+        let finalTracks = Array(Set(tracks).subtracting(playerPlaylist)) + playerPlaylist
+        update(tracks: finalTracks)
+        
+        // remove all playlist tracks except the current item
+        queuePlayer.items().filter({$0 != currentItem}).forEach {
+            queuePlayer.remove($0)
+        }
+        
+        // reset the playlist by inserting the following playlist items
+        playerPlaylist.forEach { queuePlayer.secureInsert($0, after: queuePlayer.items().last) }
         
         notify(aboutTheEndOfBlockingAction)
     }
