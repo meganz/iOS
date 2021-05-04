@@ -399,8 +399,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
-                return viewController;
+                if (!node.mnz_isPlayable || (node.mnz_isPlayable && node.name.mnz_isVideoPathExtension)) {
+                    UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
+                    return viewController;
+                }
             }
             break;
         }
