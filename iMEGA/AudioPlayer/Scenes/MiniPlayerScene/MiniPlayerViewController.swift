@@ -1,7 +1,7 @@
 import UIKit
 
 final class MiniPlayerViewController: UIViewController {
-    @IBOutlet weak var progressBarView: MEGAProgressBar!
+    @IBOutlet weak var progressBarView: MEGAProgressBarView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var playPauseButtonImageView: UIImageView!
     @IBOutlet weak var closeButtonImageView: UIButton!
