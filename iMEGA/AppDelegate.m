@@ -783,6 +783,8 @@
     [self showCookieDialogIfNeeded];
     
     [self showEnableTwoFactorAuthenticationIfNeeded];
+    
+    [self showLaunchTabDialogIfNeeded];
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -1642,6 +1644,7 @@
                 if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
                     [MEGALinkManager resetLinkAndURLType];
                 }
+                [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
             }
                         
             [self initProviderDelegate];
