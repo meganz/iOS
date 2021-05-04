@@ -9,6 +9,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     private var filePaths: [String]?
     private var node: MEGANode?
     private var shouldInitializePlayer: Bool = false
+    private var folderSDKLogoutRequired: Bool = false
     
     @objc convenience init(node: MEGANode?, fileLink: String?, relatedFiles: [String]?, isFolderLink: Bool, presenter: UIViewController, playerHandler: AudioPlayerHandlerProtocol) {
         self.init(fileLink: fileLink, relatedFiles: relatedFiles, isFolderLink: isFolderLink, presenter: presenter, playerHandler: playerHandler)
@@ -26,6 +27,8 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     
     @objc func build() -> UIViewController {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "MiniPlayerViewControllerID") as! MiniPlayerViewController
+        
+        folderSDKLogoutRequired = isFolderLink ?? false
     
         if shouldInitializePlayer {
             vc.viewModel = MiniPlayerViewModel(node: node,
@@ -57,6 +60,18 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     
     @objc func updatePresenter(_ presenter: UIViewController) {
         self.presenter = presenter
+    }
+    
+    func folderSDKLogout(required: Bool) {
+        folderSDKLogoutRequired = required
+    }
+    
+    func isFolderSDKLogoutRequired() -> Bool {
+        folderSDKLogoutRequired && !isAFolderLinkPresenter()
+    }
+    
+    func isAFolderLinkPresenter() -> Bool {
+        presenter?.isKind(of: FolderLinkViewController.self) ?? false
     }
     
     // MARK: - UI Actions
