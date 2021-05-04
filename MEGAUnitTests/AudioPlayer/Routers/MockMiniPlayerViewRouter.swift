@@ -11,4 +11,8 @@ final class MockMiniPlayerViewRouter: MiniPlayerViewRouting {
     func showPlayer(node: MEGANode?, filePath: String?) {
         showPlayer_calledTimes += 1
     }
+    
+    func isAFolderLinkPresenter() -> Bool {
+        true
+    }
 }
