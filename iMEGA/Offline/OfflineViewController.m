@@ -1212,8 +1212,12 @@ static NSString *kisDirectory = @"kisDirectory";
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
         if (asset.playable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
-            return megaAVViewController;
+            if (self.previewDocumentPath.mnz_isVideoPathExtension) {
+                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
+                return megaAVViewController;
+            } else {
+                return nil;
+            }
         }
     }
     
