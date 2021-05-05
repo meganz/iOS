@@ -2043,9 +2043,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="453" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-Qp-Sfr" userLabel="Middle Image View">
-                                                    <rect key="frame" x="0.0" y="26" width="14" height="8"/>
-                                                </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CU7-U2-Ogi">
                                                     <rect key="frame" x="8" y="10" width="40" height="40"/>
                                                     <subviews>
@@ -2075,32 +2072,40 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-9K-HhH">
-                                                    <rect key="frame" x="58" y="34" width="44" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PyT-92-ok0">
+                                                    <rect key="frame" x="58" y="34" width="43.666666666666657" height="12"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-9K-HhH">
+                                                            <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="12"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-Qp-Sfr" userLabel="Middle Image View">
+                                                            <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="12" id="1dA-t5-uoB"/>
+                                                                <constraint firstAttribute="width" secondItem="qEg-Qp-Sfr" secondAttribute="height" multiplier="1:1" id="Gei-or-L9f"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="fnS-9K-HhH" firstAttribute="leading" secondItem="CU7-U2-Ogi" secondAttribute="trailing" constant="10" id="5IY-5n-rz3"/>
                                                 <constraint firstItem="CU7-U2-Ogi" firstAttribute="centerY" secondItem="5Fg-de-8JP" secondAttribute="centerY" id="7LC-j5-L3a"/>
                                                 <constraint firstItem="RkJ-YH-mFt" firstAttribute="top" secondItem="CU7-U2-Ogi" secondAttribute="top" constant="3" id="DGX-sy-6Vb"/>
                                                 <constraint firstItem="RkJ-YH-mFt" firstAttribute="leading" secondItem="CU7-U2-Ogi" secondAttribute="trailing" constant="10" id="Ipa-3J-rDp"/>
+                                                <constraint firstItem="PyT-92-ok0" firstAttribute="top" secondItem="RkJ-YH-mFt" secondAttribute="bottom" constant="3" id="J70-t4-57s"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RkJ-YH-mFt" secondAttribute="trailing" constant="10" id="M8k-y2-njD"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fnS-9K-HhH" secondAttribute="trailing" constant="10" id="Nnt-g9-oeu"/>
-                                                <constraint firstItem="qEg-Qp-Sfr" firstAttribute="leading" secondItem="5Fg-de-8JP" secondAttribute="leading" id="UzQ-S6-H8b"/>
-                                                <constraint firstItem="fnS-9K-HhH" firstAttribute="top" secondItem="RkJ-YH-mFt" secondAttribute="bottom" constant="3" id="ZGz-xB-o39"/>
-                                                <constraint firstItem="qEg-Qp-Sfr" firstAttribute="centerY" secondItem="CU7-U2-Ogi" secondAttribute="centerY" id="cfS-ks-zoU"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="qEg-Qp-Sfr" secondAttribute="bottom" constant="15" id="hbU-aV-D1P"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PyT-92-ok0" secondAttribute="trailing" constant="10" id="cIb-pc-Axa"/>
+                                                <constraint firstItem="PyT-92-ok0" firstAttribute="leading" secondItem="CU7-U2-Ogi" secondAttribute="trailing" constant="10" id="h40-hk-Jln"/>
                                                 <constraint firstItem="CU7-U2-Ogi" firstAttribute="leading" secondItem="5Fg-de-8JP" secondAttribute="leading" constant="8" id="mGw-fp-RHz"/>
-                                                <constraint firstItem="RkJ-YH-mFt" firstAttribute="leading" secondItem="qEg-Qp-Sfr" secondAttribute="trailing" constant="44" id="s2k-CM-nKX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="downloadedImageView" destination="qEg-Qp-Sfr" id="CMb-YT-KcD"/>
                                             <outlet property="infoLabel" destination="fnS-9K-HhH" id="ugA-MB-sZG"/>
-                                            <outlet property="middleImageView" destination="qEg-Qp-Sfr" id="SqQ-m2-5s4"/>
                                             <outlet property="nameLabel" destination="RkJ-YH-mFt" id="AdJ-cw-xSd"/>
                                             <outlet property="thumbnailImageView" destination="JK0-Bh-FbN" id="hJP-9t-vc4"/>
                                             <outlet property="thumbnailPlayImageView" destination="cE5-QE-hB4" id="6UL-JD-tOr"/>
@@ -2361,6 +2366,7 @@
         <image name="chatIcon" width="31" height="28"/>
         <image name="contactVerified" width="14" height="14"/>
         <image name="down-arrow" width="28" height="28"/>
+        <image name="downloaded" width="12" height="12"/>
         <image name="inviteToChat" width="40" height="40"/>
         <image name="location" width="28" height="28"/>
         <image name="locationPin" width="40" height="40"/>
