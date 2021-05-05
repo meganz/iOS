@@ -1,9 +1,20 @@
 struct TextEditorModel: Equatable {
-    let leftButtonTitle: String
-    let rightButtonTitle: String?
     let textFile: TextFile
     let textEditorMode: TextEditorMode
+    var isEditable: Bool {
+        textEditorMode == .create || textEditorMode == .edit
+    }
     let accessLevel: NodeAccessTypeEntity?
+}
+
+struct NavbarItemModel: Equatable {
+    let title: String?
+    let imageName: String?
+}
+struct TextEditorNavbarItemsModel: Equatable {
+    let leftItem: NavbarItemModel
+    let rightItem: NavbarItemModel
+    let textEditorMode: TextEditorMode
 }
 
 struct TextEditorDuplicateNameAlertModel: Equatable {

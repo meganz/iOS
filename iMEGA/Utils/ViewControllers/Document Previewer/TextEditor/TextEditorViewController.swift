@@ -35,6 +35,7 @@ final class TextEditorViewController: UIViewController {
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.adjustsFontForContentSizeCategory = true
         textView.autoPinEdgesToSuperviewSafeArea()
+        registerForNotifications()
     }
 }
 
@@ -44,6 +45,8 @@ extension TextEditorViewController: ViewType {
         switch command {
         case .configView(let textEditorModel):
             configView(textEditorModel)
+        case .setupNavbarItems(let navbarItemsModel):
+            setupNavbarItems(navbarItemsModel)
         case .setupLoadViews:
             setUpLoadViews()
         case .updateProgressView(let percentage):
@@ -68,8 +71,13 @@ extension TextEditorViewController: ViewType {
     }
     
     private func configView(_ textEditorModel: TextEditorModel) {
-        textView.isEditable = (textEditorModel.textEditorMode == .create || textEditorModel.textEditorMode == .edit)
         navigationItem.title = textEditorModel.textFile.fileName
+        
+        textView.text = textEditorModel.textFile.content
+        textView.isEditable = textEditorModel.isEditable
+        if textEditorModel.isEditable {
+            textView.becomeFirstResponder()
+        }
         
         if textEditorModel.textEditorMode == .load {
             imageView?.mnz_setImage(forExtension: NSString(string: textEditorModel.textFile.fileName).pathExtension)
@@ -86,19 +94,34 @@ extension TextEditorViewController: ViewType {
             toolbarItems = nil
             navigationController?.setToolbarHidden(true, animated: true)
         }
-        
-        textView.text = textEditorModel.textFile.content
-        
-        if textView.isEditable {
-            textView.becomeFirstResponder()
+    }
+    
+    private func setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel) {
+        switch navbarItemsModel.textEditorMode {
+        case .load,
+             .view:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: textEditorModel.leftButtonTitle,
+                title: navbarItemsModel.leftItem.title,
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage(named: navbarItemsModel.rightItem.imageName ?? "moreSelected"),
+                style: .plain,
+                target: self,
+                action: #selector(moreTapped(button:))
+            )
+        case .edit,
+             .create:
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: navbarItemsModel.leftItem.title,
                 style: .plain,
                 target: self,
                 action: #selector(cancelTapped)
             )
             let saveButton = UIBarButtonItem(
-                title: textEditorModel.rightButtonTitle,
+                title: navbarItemsModel.rightItem.title,
                 style: .plain,
                 target: self,
                 action: #selector(saveTapped)
@@ -107,19 +130,6 @@ extension TextEditorViewController: ViewType {
             saveButton.setTitleTextAttributes(attribute, for: .normal)
             
             navigationItem.rightBarButtonItem = saveButton
-        } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: textEditorModel.leftButtonTitle,
-                style: .plain,
-                target: self,
-                action: #selector(closeTapped)
-            )
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: "moreSelected"),
-                style: .plain,
-                target: self,
-                action: #selector(moreTapped(button:))
-            )
         }
     }
     
@@ -332,5 +342,24 @@ extension TextEditorViewController: ViewType {
             let noChange = textField.text == fileName
             rightButtonAction?.isEnabled = (!empty && !containsInvalidChars && !noChange)
         }
+    }
+    
+    func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillChangeFrame(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object:nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillHide(notification:)), name:UIResponder.keyboardWillHideNotification, object:nil)
+    }
+    
+    @objc func keyboardWillChangeFrame(notification: NSNotification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        textView.scrollIndicatorInsets = textView.contentInset
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        textView.contentInset = .zero
+        textView.scrollIndicatorInsets = textView.contentInset
     }
 }

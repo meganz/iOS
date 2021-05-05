@@ -84,9 +84,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func showActions(sender button: Any, handle: MEGAHandle?) {
-        if handle != nil { nodeHandle = handle }
-        
+    func showActions(sender button: Any) {
         guard let nodeHandle = nodeHandle,
               let nodeActionViewController = NodeActionViewController(
                 nodeHandle: nodeHandle,

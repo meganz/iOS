@@ -24,7 +24,7 @@ protocol TextEditorViewRouting: Routing {
     func chooseParentNode(completion: @escaping (MEGAHandle) -> Void)
     func dismissTextEditorVC()
     func dismissBrowserVC()
-    func showActions(sender button: Any, handle: MEGAHandle?)
+    func showActions(sender button: Any)
     func showPreviewDocVC(fromFilePath path: String)
     func importNode(nodeHandle: MEGAHandle?)
     func share(nodeHandle: MEGAHandle?, sender button: Any)
@@ -33,6 +33,7 @@ protocol TextEditorViewRouting: Routing {
 final class TextEditorViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(_ textEditorModel: TextEditorModel)
+        case setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel)
         case setupLoadViews
         case showDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel)
         case showRenameAlert(_ textEditorRenameAlertModel: TextEditorRenameAlertModel)
@@ -92,7 +93,7 @@ final class TextEditorViewModel: ViewModelType {
         case .editFile:
             textEditorMode = .edit
         case .showActions(sender: let button):
-            router.showActions(sender: button, handle: nodeHandle)
+            router.showActions(sender: button)
         case .cancel:
             cancel()
         case .downloadToOffline:
@@ -109,9 +110,11 @@ final class TextEditorViewModel: ViewModelType {
         if textEditorMode == .load {
             invokeCommand?(.setupLoadViews)
             invokeCommand?(.configView(makeTextEditorModel()))
+            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
             downloadToTempFolder()
         } else {
             invokeCommand?(.configView(makeTextEditorModel()))
+            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
         }
     }
     
@@ -162,6 +165,7 @@ final class TextEditorViewModel: ViewModelType {
                     if self.textEditorMode == .edit {
                         self.textEditorMode = .view
                         self.invokeCommand?(.configView(self.makeTextEditorModel()))
+                        self.invokeCommand?(.setupNavbarItems(self.makeNavbarItemsModel()))
                     }
                 }
             }
@@ -179,6 +183,7 @@ final class TextEditorViewModel: ViewModelType {
         } else if textEditorMode == .edit{
             textEditorMode = .view
             invokeCommand?(.configView(makeTextEditorModel()))
+            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
         }
     }
     
@@ -210,37 +215,44 @@ final class TextEditorViewModel: ViewModelType {
                     self.router.dismissTextEditorVC()
                     self.router.showPreviewDocVC(fromFilePath: path)
                 }
-                self.nodeHandle = nodeHandle
             }
         }
     }
     
     private func makeTextEditorModel() -> TextEditorModel {
         switch textEditorMode {
-        case .load:
-            return TextEditorModel(
-                leftButtonTitle: TextEditorL10n.close,
-                rightButtonTitle: nil,
-                textFile: textFile,
-                textEditorMode: textEditorMode,
-                accessLevel: nil
-            )
         case .view:
             return TextEditorModel(
-                leftButtonTitle: TextEditorL10n.close,
-                rightButtonTitle: nil,
                 textFile: textFile,
                 textEditorMode: textEditorMode,
                 accessLevel: nodeAccessLevel()
             )
-        case .edit,
+        case .load,
+             .edit,
              .create:
             return TextEditorModel(
-                leftButtonTitle: TextEditorL10n.cancel,
-                rightButtonTitle: TextEditorL10n.save,
                 textFile: textFile,
                 textEditorMode: textEditorMode,
                 accessLevel: nil
+            )
+        }
+    }
+    
+    private func makeNavbarItemsModel() -> TextEditorNavbarItemsModel {
+        switch textEditorMode {
+        case .load,
+            .view:
+            return TextEditorNavbarItemsModel (
+                leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+                textEditorMode: textEditorMode
+            )
+        case .edit,
+             .create:
+            return TextEditorNavbarItemsModel (
+                leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
+                rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+                textEditorMode: textEditorMode
             )
         }
     }
