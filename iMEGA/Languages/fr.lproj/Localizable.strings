@@ -4,11 +4,11 @@
 "ok"="Valider";
 /* Button title to clear something */
 "clear"="Effacer";
-/* */
+/*  */
 "yes"="Oui";
-/* */
+/*  */
 "no"="Non";
-/* */
+/*  */
 "upload"="Téléverser";
 /*  */
 "error"="Erreur";
@@ -36,9 +36,9 @@
 "microphonePermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre microphone dans vos réglages";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre médiathèque (Photos) dans Réglages";
-/* Message shown when the user clicks on a confirm account link that has already been used  */
+/* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Votre compte a été activé. Veuillez vous connecter.";
-/* */
+/*  */
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Votre lien de confirmation n’est plus valide. Votre compte est peut-être déjà activé ou vous avez peut-être annulé votre inscription.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Lien invalide";
@@ -132,7 +132,7 @@
 "passwordsDoNotMatch"="Les mots de passe ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Vous devez accepter les Conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
-/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Vous devez attester que vous comprenez le danger que représente la perte de votre mot de passe";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Un compte MEGA a déjà été créé avec cette adresse courriel";
@@ -160,13 +160,13 @@
 "fileTooBigMessage_open"="Le fichier que vous tentez d’ouvrir est plus grand que la mémoire disponible.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Le lien n’est pas disponible";
-/* */
+/*  */
 "fileLinkUnavailableText1"="Les raisons suivantes pourraient en être la cause :";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Le fichier a été retiré en raison du non-respect des CGU/PUA.";
-/* */
+/*  */
 "fileLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas.";
-/* */
+/*  */
 "fileLinkUnavailableText4"="Le fichier a été supprimé par l’utilisateur.";
 /* Message shown when a download starts */
 "downloadStarted"="Le téléchargement est lancé";
@@ -178,13 +178,13 @@
 "folderTooBigMessage"="Le dossier que vous tentez de télécharger est plus grand que la mémoire disponible.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Le dossier « %@ » ne peut pas être créé";
-/* */
+/*  */
 "folderLinkUnavailableText1"="Les raisons suivantes pourraient en être la cause :";
-/* */
+/*  */
 "folderLinkUnavailableText2"="Le lien de dossier a été supprimé en raison du non-respect des CGU/PUA.";
-/* */
+/*  */
 "folderLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas.";
-/* */
+/*  */
 "folderLinkUnavailableText4"="Le lien du dossier a été désactivé par l’utilisateur.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Il n’y a pas de connexion à Internet";
@@ -258,6 +258,8 @@
 "queued"="En attente";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="En pause";
+/* Possible state of a transfer. When the transfer was cancelled */
+"Cancelled"="Annulée";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Finalisation…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -266,7 +268,7 @@
 "sortTitle"="Trier par";
 /* Button title to 'Save' the selected option */
 "save"="Enregistrer";
-/* Sort by option (1/6). This one orders the files alphabethically*/
+/* Sort by option (1/6). This one orders the files alphabethically */
 "nameAscending"="Nom (croissant)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="Nom (décroissant)";
@@ -304,7 +306,7 @@
 "newFolder"="Nouveau dossier";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nom du nouveau dossier";
-/* Title button for the create folder alert.  */
+/* Title button for the create folder alert. */
 "createFolderButton"="Créer";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Un dossier du même nom existe déjà";
@@ -380,11 +382,11 @@
 "copyKey"="Copier la clé";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Ouvrir avec…";
-/* */
+/*  */
 "uploadToMega"="Téléverser vers MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Toucher le fichier pour le renommer";
-/* */
+/*  */
 "sendToContact"="Envoyer à un contact";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Mes conversations";
@@ -446,11 +448,11 @@
 "copyFilesFolderMessage"="%d fichiers et 1 dossier ont été copiés";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] dossiers • [B] fichiers ont été copiés";
-/* Title for the action that allows you to rename a file or folder  */
+/* Title for the action that allows you to rename a file or folder */
 "rename"="Renommer";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Saisissez le nouveau nom";
-/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+/* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Renommer le fichier %@ ?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Remplacer";
@@ -850,7 +852,6 @@
 "yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé avec succès. Veuillez maintenant vous connecter à votre compte.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Envoyer";
-/* The title of the screen to park an account. */
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Remiser le compte";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -983,7 +984,7 @@
 "xDaysLeft"="Il reste %1 jours";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(La prime arrive à expiration dans [S]%1[/S] %2)";
-/* Add Phone Number title  */
+/* Add Phone Number title */
 "Add Phone Number"="Ajouter un numéro de téléphone";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Vous avez reçu %1$s d’espace de stockage et %2$s de quota de transfert pour avoir confirmé votre numéro de téléphone.";
@@ -1181,9 +1182,9 @@
 "Use Mobile Data for Videos"="Utiliser les données mobiles pour les vidéos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Absence automatique";
-/* */
+/*  */
 "xMinutes"="[X] minutes";
-/* */
+/*  */
 "1Minute"="1 minute";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="M’afficher comme absent après [X] minutes d’inactivité";
@@ -1295,7 +1296,7 @@
 "fromCloudDrive"="Du disque nuagique";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Envoyer un contact";
-/* */
+/*  */
 "done"="Terminé";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Activer les aperçus d’URL enrichis";
@@ -1305,13 +1306,13 @@
 "notNow"="Pas maintenant";
 /* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
 "Manage"="Gérer";
-/* */
+/*  */
 "never"="Jamais";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="Vous êtes sur le point de désactiver définitivement les aperçus d’URL enrichis. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Voulez-vous poursuivre ?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Supprimer l’aperçu";
-/* */
+/*  */
 "warning"="Avertissement";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Le quota de transfert est insuffisant";
@@ -1363,7 +1364,6 @@
 "Shared successfully"="A été partagé avec succès";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Échec de transfert :";
-/* MEGAError */
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Aucune erreur";
 /* Label to show that an Internal error occurs during a SDK operation. */
@@ -1440,7 +1440,6 @@
 "HTTP error"="Erreur HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
-/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA offre un service de stockage nuagique chiffré contrôlé par l’utilisateur, en utilisant des navigateurs Web normaux, mais aussi des applis dédiées pour les appareils mobiles. Contrairement aux autres fournisseurs de services de stockage nuagique, vos données ne sont chiffrées et déchiffrées que par vos appareils client et jamais par nous.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1453,7 +1452,6 @@
 "generalDescriptionParagraph4"="MEGA offre un généreux espace de stockage gratuit de 50 Go à tous les utilisateurs inscrits, avec des primes d’objectif, et propose des abonnements payants avec des limites beaucoup plus élevées :";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Abonnement Pro Léger : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 400 Go d’espace de stockage et 1 To de quota de transfert par mois.\nAbonnement Pro I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 2 To d’espace de stockage et 2 To de quota de transfert par mois.\nAbonnement Pro II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 8 To d’espace de stockage et 8 To de quota de transfert par mois.\nAbonnement Pro III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 16 To d’espace de stockage et 16 To de quota de transfert par mois.";
-/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Pour de plus amples renseignements, veuillez consulter notre site Web : https://mega.nz/\nConditions générales d’utilisation : https://mega.nz/terms\nPolitique de confidentialité : https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
@@ -1504,7 +1502,7 @@
 "versions"="Versions";
 /* Title label of a node property. */
 "location"="Emplacement";
-/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
 "type"="Type";
@@ -1562,11 +1560,11 @@
 "exportRecoveryKey"="Exporter la clé de récupération";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Poursuivre la déconnexion";
-/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Vous êtes sur le point de vous déconnecter. Veuillez essayer votre mot de passe pour vous assurer que vous en souvenez. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA.";
 /* state previous to import a file */
 "loading"="Chargement…";
-/*   */
+/*  */
 "next"="Suivant";
 /* Button title to allow the user ignore something */
 "ignore"="Ignorer";
@@ -1600,21 +1598,21 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Fin de l’appel de groupe[/A][C]. Durée : [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durée : %@";
-/* */
+/*  */
 "xSeconds"="%d secondes";
-/* */
+/*  */
 "1Second"="1 seconde";
-/* */
+/*  */
 "1Hour"="1 heure";
-/* */
+/*  */
 "xHours"="%d heures";
-/* */
+/*  */
 "1Hour1Minute"="1 heure, 1 minute";
-/* */
+/*  */
 "1HourxMinutes"="1 heure, %d minutes";
-/* */
+/*  */
 "xHours1Minute"="%d heures, 1 minute";
-/* */
+/*  */
 "xHoursxMinutes"="%1$d heures, %2$d minutes";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Le fichier n’est pas pris en charge";
@@ -1920,9 +1918,9 @@
 "Last seen %s"="Vu pour la dernière fois : %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Vu pour la dernière fois il y a longtemps";
-/* */
+/*  */
 "Today"="Aujourd’hui";
-/* */
+/*  */
 "Yesterday"="Hier";
 /* Title of the button to share a location in a chat */
 "Send This Location"="Envoyer cette position";
@@ -2056,11 +2054,11 @@
 "My chat files"="Mes fichiers de dialogue en ligne";
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="Abonnement";
-/* */
+/*  */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Si vous perdez votre clé de récupération et oubliez votre mot de passe, [B]tous vos fichiers, dossiers et messages seront inaccessibles, même pour MEGA[/B].";
-/* */
+/*  */
 "Business"="Pour entreprise";
-/* */
+/*  */
 "Administrator"="Administrateur";
 /* Business user role */
 "User"="Utilisateur";
@@ -2090,7 +2088,7 @@
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Bien que MEGA ne puisse pas accéder à vos données, l’administrateur de votre compte d’entreprise a la possibilité de contrôler et de visualiser les téléversements de l’appareil photo dans votre compte utilisateur";
-/* */
+/*  */
 "Something went wrong"="Quelque chose a mal tourné";
 /* Title of the "Links" Shared Items. */
 "Links"="Liens";
@@ -2106,7 +2104,7 @@
 "Until this morning"="Jusqu’à ce matin";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="Jusqu’à demain matin";
-/*Chat Notifications DND: Option to turn the DND on forever */
+/* Chat Notifications DND: Option to turn the DND on forever */
 "Until I turn it back on"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
@@ -2188,7 +2186,7 @@
 "Your account is already verified"="Votre compte est déjà confirmé";
 /* Place holder for enter mobile number field */
 "Your phone number"="Votre numéro de téléphone";
-/* Text related to verified phone number. Used as title or cell description.  */
+/* Text related to verified phone number. Used as title or cell description. */
 "Phone Number"="Numéro de téléphone";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Veuillez saisir le code de confirmation envoyé à";
@@ -2220,7 +2218,7 @@
 "Resume All"="Tout reprendre";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Tout effacer";
-/* Alert header for asking permission to resume transfers*/
+/* Alert header for asking permission to resume transfers */
 "Resume Transfers?"="Reprendre les transferts ?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Qualité d’image";
@@ -2252,7 +2250,7 @@
 "Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer.";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "Appearance"="Interface utilisateur";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Onglet par défaut";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tri et mode d’affichage";
@@ -2264,13 +2262,13 @@
 "Night"="Nuit";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
-/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
+/* Section title inside of Settings - User Interface, where you can change the app's launch. */
 "Launch"="Lancement";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
-/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
 "Configure default launch section."="Configurez la section de lancement par défaut.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes).";
@@ -2302,19 +2300,17 @@
 "File link unavailable"="Le lien de fichier est inaccessible";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Fichiers partagés";
-/* Over Disk Quota Screen Navigation Bar Title*/
+/* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="L’espace de stockage est plein";
 /* Over Disk Quota title message that tell customer your data at risk. */
 "Your Data is at Risk!"="Vos données sont en danger !";
-/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
- subject to deletion deadline and warning dates.*/
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Nous vous avons contacté par courriel à l’adresse <b>%@</b> le <b>%@</b>, mais vous avez encore %@ fichiers qui occupent <b>%@</b> dans votre compte MEGA, ce qui vous demande de surclasser votre compte en <b>%@</b>.</paragraph>";
-/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
- subject to deletion deadline and warning dates.*/
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Nous vous avons contacté par courriel à l’adresse <b>%@</b> le <b>%@</b>, mais vous avez encore %@ fichiers qui occupent <b>%@</b> dans votre compte MEGA, ce qui vous demande de contacter notre équipe d’assistance afin d’établir un abonnement personnalisé.</paragraph>";
-/* Over Disk Quota of number of days*/
+/* Over Disk Quota of number of days */
 "%d days"="%d jours";
-/* Over Disk Quota of must act immediately to save your data*/
+/* Over Disk Quota of must act immediately to save your data */
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Vous devez agir immédiatement afin de sauver vos données.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Il vous reste <warn>%@</warn> pour surclasser votre compte.</body>";
@@ -2484,13 +2480,13 @@
 "1 month"="1 mois";
 /* The number of months e.g. 2 months, 5 months etc. */
 "%1 months"="%1 mois";
-/* */
+/*  */
 "1 year"="1 an";
 /*  */
 "year"="an";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="PARTAGER";
-/* Search placeholder text in search bar on home screen*/
+/* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cherchez dans vos fichiers";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
@@ -2524,7 +2520,7 @@
 "TODAY"="Aujourd’hui";
 /* Section title for the photo explorer view */
 "YESTERDAY"="Hier";
-/* Photo Explorer Screen: No images in the accoun t*/
+/* Photo Explorer Screen: No images in the accoun t */
 "No images found"="Aucune image n’a été trouvée";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Accueil";
@@ -2536,11 +2532,11 @@
 "Link Password"="Mot de passe du lien";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Voulez-vous partager le mot de passe pour ce lien ?";
-/*  Accessibility message when a message is sent in chat */
+/* Accessibility message when a message is sent in chat */
 "message sent"="Le message a été envoyé";
 /* Accessibility message when a message sending fails in chat */
 "failed to send the message"="Échec d’envoi du message";
-/*  Accessibility message when a message is cancelled in chat */
+/* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="L’envoi du message a été annulé";
 /* Cookie dialog header */
 "Before You Continue"="Avant que vous ne poursuiviez";
