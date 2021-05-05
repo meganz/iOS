@@ -1426,9 +1426,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self presentScanDocument];
         }]];
     }
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController] start];
-    }]];
+    
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
         UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
         
@@ -1462,6 +1460,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         
         [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
     }]];
+    
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
+        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController] start];
+    }]];
+    
     if ([self numberOfRows]) {
         NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];

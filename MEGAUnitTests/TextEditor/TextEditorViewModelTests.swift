@@ -15,24 +15,35 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeHandle: MEGAHandle = 123
         
         var textEditorModel: TextEditorModel
+        var navbarItemsModel: TextEditorNavbarItemsModel
         
         let testModes: [TextEditorMode] = [.view, .create, .edit]
         for textEditorMode in testModes {
             if textEditorMode == .view {
                 textEditorModel = TextEditorModel(
-                    leftButtonTitle: TextEditorL10n.close,
-                    rightButtonTitle: nil,
                     textFile: textFile,
                     textEditorMode: textEditorMode,
                     accessLevel: nodeAccessLevel
                 )
             } else {
                 textEditorModel = TextEditorModel(
-                    leftButtonTitle: TextEditorL10n.cancel,
-                    rightButtonTitle: TextEditorL10n.save,
                     textFile: textFile,
                     textEditorMode: textEditorMode,
                     accessLevel: nil
+                )
+            }
+            
+            if textEditorMode == .view {
+                navbarItemsModel = TextEditorNavbarItemsModel (
+                    leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                    rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+                    textEditorMode: textEditorMode
+                )
+            } else {
+                navbarItemsModel = TextEditorNavbarItemsModel (
+                    leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
+                    rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+                    textEditorMode: textEditorMode
                 )
             }
             
@@ -47,7 +58,10 @@ final class TextEditorViewModelTests: XCTestCase {
             )
             test(viewModel: viewModel,
                  action: .setUpView,
-                 expectedCommands: [.configView(textEditorModel)]
+                 expectedCommands: [
+                    .configView(textEditorModel),
+                    .setupNavbarItems(navbarItemsModel)
+                 ]
             )
         }
     }
@@ -70,16 +84,18 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorMode: TextEditorMode = .load
         
         let textEditorLoadModel = TextEditorModel(
-            leftButtonTitle: TextEditorL10n.close,
-            rightButtonTitle: nil,
             textFile: textFile,
-            textEditorMode: .load,
+            textEditorMode: textEditorMode,
             accessLevel: nil
         )
         
+        let navbarItemsModel = TextEditorNavbarItemsModel (
+            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            textEditorMode: textEditorMode
+        )
+        
         let textEditorViewModel = TextEditorModel(
-            leftButtonTitle: TextEditorL10n.close,
-            rightButtonTitle: nil,
             textFile: textFile,
             textEditorMode: .view,
             accessLevel: nodeAccessLevel
@@ -111,6 +127,7 @@ final class TextEditorViewModelTests: XCTestCase {
                  expectedCommands: [
                     .setupLoadViews,
                     .configView(textEditorLoadModel),
+                    .setupNavbarItems(navbarItemsModel),
                     .updateProgressView(progress: percentage),
                     .configView(textEditorViewModel)
                  ]
@@ -140,11 +157,15 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorMode: TextEditorMode = .load
         
         let textEditorLoadModel = TextEditorModel(
-            leftButtonTitle: TextEditorL10n.close,
-            rightButtonTitle: nil,
             textFile: textFile,
-            textEditorMode: .load,
+            textEditorMode: textEditorMode,
             accessLevel: nil
+        )
+        
+        let navbarItemsModel = TextEditorNavbarItemsModel (
+            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            textEditorMode: textEditorMode
         )
         
         let mockNodeHandle: MEGAHandle = 123
@@ -169,6 +190,7 @@ final class TextEditorViewModelTests: XCTestCase {
              expectedCommands: [
                 .setupLoadViews,
                 .configView(textEditorLoadModel),
+                .setupNavbarItems(navbarItemsModel),
                 .updateProgressView(progress: percentage)
              ]
         )
@@ -193,11 +215,15 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorMode: TextEditorMode = .load
         
         let textEditorLoadModel = TextEditorModel(
-            leftButtonTitle: TextEditorL10n.close,
-            rightButtonTitle: nil,
             textFile: textFile,
-            textEditorMode: .load,
+            textEditorMode: textEditorMode,
             accessLevel: nil
+        )
+        
+        let navbarItemsModel = TextEditorNavbarItemsModel (
+            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            textEditorMode: textEditorMode
         )
         
         let mockNodeHandle: MEGAHandle = 123
@@ -222,6 +248,7 @@ final class TextEditorViewModelTests: XCTestCase {
              expectedCommands: [
                 .setupLoadViews,
                 .configView(textEditorLoadModel),
+                .setupNavbarItems(navbarItemsModel),
                 .updateProgressView(progress: percentage),
                 .showError(TextEditorL10n.transferError + " " + TextEditorL10n.download)
              ]
@@ -255,18 +282,25 @@ final class TextEditorViewModelTests: XCTestCase {
 
         let editContent = "edit content"
 
-        let textEditorModel = TextEditorModel(
-            leftButtonTitle: TextEditorL10n.close,
-            rightButtonTitle: nil,
+        let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
             accessLevel: nodeAccessLevel
         )
+        
+        let navbarItemsModel = TextEditorNavbarItemsModel (
+            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            textEditorMode: .view
+        )
+        
         test(viewModel: viewModel,
              action: .saveText(editContent),
-             expectedCommands: [.startLoading,
-                                .stopLoading,
-                                .configView(textEditorModel)
+             expectedCommands: [
+                .startLoading,
+                .stopLoading,
+                .configView(textEditorViewModel),
+                .setupNavbarItems(navbarItemsModel)
              ]
         )
     }
@@ -551,16 +585,24 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeHandle: mockNodeHandle
         )
 
-        let textEditorModel = TextEditorModel(
-            leftButtonTitle: TextEditorL10n.close,
-            rightButtonTitle: nil,
+        let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
             accessLevel: nodeAccessLevel
         )
+        
+        let navbarItemsModel = TextEditorNavbarItemsModel (
+            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            textEditorMode: .view
+        )
+        
         test(viewModel: viewModel,
              action: .cancel,
-             expectedCommands: [.configView(textEditorModel)]
+             expectedCommands: [
+                .configView(textEditorViewModel),
+                .setupNavbarItems(navbarItemsModel)
+             ]
         )
     }
     
@@ -688,7 +730,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         dismissBrowserVC_calledTimes += 1
     }
     
-    func showActions(sender button: Any, handle: MEGAHandle?) {
+    func showActions(sender button: Any) {
         showActions_calledTimes += 1
     }
     
