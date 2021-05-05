@@ -1846,9 +1846,21 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:self.nodesIndexPathMutableDictionary[base64Handle]];
+    if (transfer.type == MEGATransferTypeDownload) {
+        switch (self.viewModePreference) {
+            case ViewModePreferenceList:
+                [self.cdTableView reloadRowAtIndexPath:self.nodesIndexPathMutableDictionary[[MEGASdk base64HandleForHandle:transfer.nodeHandle]]];
+                break;
+            case ViewModePreferenceThumbnail:
+                if (transfer.publicNode.isFile) {
+                    [self.cdCollectionView reloadFileItem:transfer.nodeHandle];
+                } else {
+                    [self.cdCollectionView reloadFolderItem:transfer.nodeHandle];
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 
