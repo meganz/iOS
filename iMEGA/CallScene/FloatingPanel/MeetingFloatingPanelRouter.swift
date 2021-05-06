@@ -70,7 +70,10 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func start() {
         guard let viewController = build() as? PanModalPresentable & UIViewController else { return }
-        presenter?.presentPanModal(viewController)
+        viewController.modalPresentationStyle = .custom
+        viewController.modalPresentationCapturesStatusBarAppearance = true
+        viewController.transitioningDelegate = PanModalPresentationDelegate.default
+        presenter?.present(viewController, animated: true)
     }
     
     func dismiss() {

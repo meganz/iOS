@@ -2,6 +2,14 @@ import UIKit
 import PanModal
 
 final class MeetingFloatingPanelViewController: UIViewController {
+    
+    enum Constants {
+        static let viewShortFormHeight: CGFloat = 164.0
+        static let viewMaxWidth: CGFloat = 500.0
+        static let viewMaxHeight: CGFloat = 800.0
+        static let backgroundViewCornerRadius: CGFloat = 13.0
+        static let dragIndicatorCornerRadius: CGFloat = 2.5
+    }
 
     @IBOutlet private weak var dragIndicatorView: UIView!
     @IBOutlet private weak var backgroundView: UIView!
@@ -18,7 +26,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
     @IBOutlet private var inviteParticpicantsView: UIView!
     
     @IBOutlet private weak var optionsStackViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var optionsStackViewBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private var floatingViewSuperViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private var floatingViewConstantViewWidthConstraint: NSLayoutConstraint!
 
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
@@ -44,8 +54,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1176470588, alpha: 0.88)
-        backgroundView.layer.cornerRadius = 13.0
-        dragIndicatorView.layer.cornerRadius = 2.5
+        backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
+        dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
         
@@ -60,6 +70,25 @@ final class MeetingFloatingPanelViewController: UIViewController {
             self?.executeCommand($0)
         }
         viewModel.dispatch(.onViewReady)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.frame.width > Constants.viewMaxWidth {
+            self.floatingViewSuperViewWidthConstraint.isActive = false
+            self.floatingViewConstantViewWidthConstraint.isActive = true
+        } else {
+            self.floatingViewConstantViewWidthConstraint.isActive = false
+            self.floatingViewSuperViewWidthConstraint.isActive = true
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+            self?.panModalSetNeedsLayoutUpdate()
+            self?.panModalTransition(to: .shortForm)
+        }
     }
     
     // MARK: - Dispatch action
@@ -154,7 +183,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
         if isOneToOneMeeting {
             optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
             optionsStackViewHeightConstraint.constant = 0.0
-            optionsStackViewBottomConstraint.constant = 0.0
         } else if !isMyselfAModerator && inviteParticpicantsView.superview != nil {
             inviteParticpicantsView.removeFromSuperview()
         } else if isMyselfAModerator && inviteParticpicantsView.superview == nil {
@@ -195,7 +223,7 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        .contentHeight(164.0)
+        .contentHeight(Constants.viewShortFormHeight)
     }
     
     var panModalBackgroundColor: UIColor {
@@ -224,6 +252,10 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
     
     var topOffset: CGFloat {
         guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else { return 0.0 }
-        return rootVC.view.safeAreaInsets.top
+        if (view.frame.height - rootVC.view.safeAreaInsets.top) < Constants.viewMaxHeight {
+            return rootVC.view.safeAreaInsets.top
+        } else {
+            return (view.frame.height - Constants.viewMaxHeight)
+        }
     }
 }
