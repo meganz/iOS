@@ -19,7 +19,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         
         test(viewModel: viewModel, action: .didSelect(AudioPlayerItem.mockItem), expectedCommands: [.showToolbar])
         
-        test(viewModel: viewModel, action: .removeSelectedItems, expectedCommands: [.deselectAll])
+        test(viewModel: viewModel, action: .removeSelectedItems, expectedCommands: [.deselectAll, .hideToolbar])
         XCTAssertEqual(playerHandler.onDeleteItems_calledTimes, 1)
         
         test(viewModel: viewModel, action: .didDeselect(AudioPlayerItem.mockItem), expectedCommands: [.hideToolbar])
