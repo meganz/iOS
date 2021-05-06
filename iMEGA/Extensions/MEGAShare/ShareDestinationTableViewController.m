@@ -1,5 +1,5 @@
 
-#import "ShareFilesDestinationTableViewController.h"
+#import "ShareDestinationTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAShare-Swift.h"
@@ -9,7 +9,7 @@
 #import "ShareViewController.h"
 #import "UIImageView+MNZCategory.h"
 
-@interface ShareFilesDestinationTableViewController () <UITextFieldDelegate, MEGAChatDelegate>
+@interface ShareDestinationTableViewController () <UITextFieldDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) UINavigationController *navigationController;
 @property (weak, nonatomic) ShareViewController *shareViewController;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation ShareFilesDestinationTableViewController
+@implementation ShareDestinationTableViewController
 
 #pragma mark - Lifecycle
 
@@ -229,7 +229,7 @@
         [self.activeTextField resignFirstResponder];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [self.shareViewController dismissWithCompletionHandler:^{
+    [self.shareViewController hideViewWithCompletion:^{
         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
     }];
 }

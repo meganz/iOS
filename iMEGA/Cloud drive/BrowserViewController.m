@@ -557,8 +557,9 @@
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
+        __weak __typeof__(self) weakSelf = self;
         MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [self dismissAndSelectNodesIfNeeded:NO];
+            [weakSelf dismissAndSelectNodesIfNeeded:NO];
         }];
         
         for (MEGANode *n in self.selectedNodesArray) {
@@ -583,9 +584,15 @@
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
     UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
     
+    __weak __typeof__(self) weakSelf = self;
     [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        __strong __typeof__(weakSelf) strongSelf = weakSelf;
+        if (strongSelf == nil) {
+            return;
+        }
+        
         textField.placeholder = NSLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
-        [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [textField addTarget:strongSelf action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
             return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
         };
@@ -594,18 +601,23 @@
     [newFolderAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        __strong __typeof__(weakSelf) strongSelf = weakSelf;
+        if (strongSelf == nil) {
+            return;
+        }
+        
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text recursive:NO];
+            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:strongSelf.parentNode searchString:textField.text recursive:NO];
             if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                 [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                     MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                    [self pushBrowserWithParentNode:newFolderNode];
+                    [strongSelf pushBrowserWithParentNode:newFolderNode];
                 }];
                 
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:strongSelf.parentNode delegate:createFolderRequestDelegate];
             }
         }
     }];
