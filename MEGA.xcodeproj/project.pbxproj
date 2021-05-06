@@ -689,7 +689,7 @@
 		77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */; };
 		77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
-		77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */; };
+		77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */; };
 		77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
@@ -1543,6 +1543,8 @@
 		B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */; };
+		B6DC7CBC2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
+		B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
 		B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */; };
 		B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
@@ -2706,8 +2708,8 @@
 		77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+MNZCategory.h"; sourceTree = "<group>"; };
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		77F63E7E24C0A95800DEEA66 /* JoinViewState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewState.h; sourceTree = "<group>"; };
-		77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareFilesDestinationTableViewController.h; sourceTree = "<group>"; };
-		77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareFilesDestinationTableViewController.m; sourceTree = "<group>"; };
+		77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareDestinationTableViewController.h; sourceTree = "<group>"; };
+		77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDestinationTableViewController.m; sourceTree = "<group>"; };
 		77FD1FFC2359A59C004FB892 /* libwebrtc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebrtc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebrtc.a; sourceTree = "<group>"; };
 		77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvideoframebuffer_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.a; sourceTree = "<group>"; };
 		77FD1FFF2359A5A7004FB892 /* libnative_api.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_api.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_api.a; sourceTree = "<group>"; };
@@ -3568,6 +3570,8 @@
 		B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadStatus.h; sourceTree = "<group>"; };
 		B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadStatus.m; sourceTree = "<group>"; };
+		B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGASdkManager+CleanUp.h"; sourceTree = "<group>"; };
+		B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGASdkManager+CleanUp.m"; sourceTree = "<group>"; };
 		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
 		B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewRouter.swift; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
@@ -4750,6 +4754,8 @@
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
 				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
 				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
+				B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */,
+				B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */,
 				B654BF3824FF123700A3CBC8 /* MVVM-R.swift */,
 				C45390CC256587BF0026F215 /* MEGASlider.swift */,
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
@@ -7188,8 +7194,8 @@
 				5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */,
 				949CEACD1F05121D00A3A580 /* LoginRequiredViewController.h */,
 				949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */,
-				77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */,
-				77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */,
+				77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */,
+				77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */,
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
 			);
 			name = MEGAShare;
@@ -10285,6 +10291,7 @@
 				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
 				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
+				B6DC7CBC2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				5D60D50424DF77E700313955 /* Array+EmbedInStackView.swift in Sources */,
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
@@ -11291,7 +11298,7 @@
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
-				77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */,
+				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
@@ -11356,6 +11363,7 @@
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
+				B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

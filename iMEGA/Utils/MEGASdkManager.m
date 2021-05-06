@@ -9,8 +9,8 @@ static const NSInteger MaximumNOFILE = 20000;
     return [NSString stringWithFormat:@"%@/%@", MEGAiOSAppUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
+static MEGASdk *_megaSDK;
 + (MEGASdk *)sharedMEGASdk {
-    static MEGASdk *_megaSDK;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSError *error;
@@ -33,9 +33,8 @@ static const NSInteger MaximumNOFILE = 20000;
     return _megaSDK;
 }
 
+static MEGAChatSdk *_MEGAChatSdk;
 + (MEGAChatSdk *)sharedMEGAChatSdk {
-    static MEGAChatSdk *_MEGAChatSdk;
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _MEGAChatSdk = [[MEGAChatSdk alloc] init:[self sharedMEGASdk]];
@@ -45,8 +44,8 @@ static const NSInteger MaximumNOFILE = 20000;
     return _MEGAChatSdk;
 }
 
+static MEGASdk *_megaSDKFolder;
 + (MEGASdk *)sharedMEGASdkFolder {
-    static MEGASdk *_megaSDKFolder = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString *basePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
@@ -55,6 +54,12 @@ static const NSInteger MaximumNOFILE = 20000;
         [_megaSDKFolder retrySSLErrors:YES];
     });
     return _megaSDKFolder;
+}
+
++ (void)deleteSharedSdks {
+    [_MEGAChatSdk deleteMegaChatApi];
+    [_megaSDK deleteMegaApi];
+    [_megaSDKFolder deleteMegaApi];
 }
 
 @end

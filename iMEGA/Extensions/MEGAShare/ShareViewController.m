@@ -22,7 +22,8 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
-#import "ShareFilesDestinationTableViewController.h"
+#import "ShareDestinationTableViewController.h"
+#import "MEGASdkManager+CleanUp.h"
 @import Firebase;
 
 #define MNZ_ANIMATION_TIME 0.35
@@ -36,8 +37,9 @@
 @property (nonatomic) float progress;
 @property (nonatomic) NSDate *lastProgressChange;
 
-@property (nonatomic) UINavigationController *loginRequiredNC;
-@property (nonatomic) LaunchViewController *launchVC;
+@property (nonatomic, strong) UINavigationController *loginRequiredNC;
+@property (nonatomic, strong) LaunchViewController *launchVC;
+@property (nonatomic, strong) UINavigationController *shareDestinationNavigatinVC;
 
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
@@ -51,9 +53,7 @@
 @property (nonatomic) NSArray<MEGAChatListItem *> *chats;
 @property (nonatomic) NSArray<MEGAUser *> *users;
 @property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
-
-@property (nonatomic) dispatch_semaphore_t semaphore;
-@property (nonatomic) BOOL waitingSemaphore;
+@property (nonatomic, strong) MEGAGenericRequestDelegate *logoutDelegate;
 
 @end
 
@@ -70,43 +70,12 @@
     return self;
 }
 
+- (void)dealloc {
+    [self removeShareDestinationView];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-        switch ([request type]) {
-          
-            case MEGARequestTypeLogout: {
-                // if logout (not if localLogout) or session killed in other client
-                BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
-                if (request.flag || sessionInvalidateInOtherClient) {
-                    [Helper logout];
-                    [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-                    if (sessionInvalidateInOtherClient) {
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            [self dismissViewControllerAnimated:YES completion:^{
-                                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-                            }];
-                        }]];
-                        [self presentViewController:alert animated:YES completion:nil];
-                    } else {
-                        [self dismissViewControllerAnimated:YES completion:^{
-                            [self didBecomeActive];
-                        }];
-                    }
-                }
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }];
-    
-    @autoreleasepool {
-        [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:delegate];
-    }
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
@@ -123,7 +92,6 @@
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
-    self.semaphore = dispatch_semaphore_create(0);
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
@@ -162,11 +130,11 @@
         [self initChatAndStartLogging];
         [self fetchAttachments];
         
-        [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([MEGAReachabilityManager isReachable]) {
             [self loginToMEGA];
         } else {
-            [self presentFilesDestinationViewController];
+            [self addShareDestinationView];
+            [self checkPasscode];
         }
         
         if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
@@ -183,10 +151,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self fakeModalPresentation];
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self.logoutDelegate];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self.logoutDelegate];
 }
 
 - (void)willResignActive {
@@ -209,16 +179,19 @@
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
     
     if (self.pendingAssets > self.unsupportedAssets) {
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
             if (expired) {
-                [self saveStateAndLogout];
-                dispatch_semaphore_signal(self.semaphore);
-                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
-            } else {
-                if (!self.waitingSemaphore) {
-                    self.waitingSemaphore = YES;
-                    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+                dispatch_semaphore_signal(semaphore);
+                [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
+                [MEGASdkManager localLogout];
+                if (self.pendingAssets > self.unsupportedAssets) {
+                    [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
+                } else {
+                    [self.extensionContext completeRequestReturningItems:nil completionHandler:nil];
                 }
+            } else {
+                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
             }
         }];
     }
@@ -286,12 +259,6 @@
     }
 }
 
-- (void)saveStateAndLogout {
-    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
-    [[MEGASdkManager sharedMEGASdk] localLogout];
-    [[MEGASdkManager sharedMEGAChatSdk] localLogout];
-}
-
 - (void)requireLogin {
     // The user either needs to login or logged in before the current version of the MEGA app, so there is
     // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
@@ -302,10 +269,12 @@
         LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
         loginRequiredVC.navigationItem.title = @"MEGA";
         loginRequiredVC.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
+        
+        __weak __typeof__(self) weakSelf = self;
         loginRequiredVC.cancelCompletion = ^{
-            [self.loginRequiredNC dismissViewControllerAnimated:YES completion:^{
-                [self dismissWithCompletionHandler:^{
-                    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            [weakSelf.loginRequiredNC dismissViewControllerAnimated:YES completion:^{
+                [weakSelf hideViewWithCompletion:^{
+                    [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
                 }];
             }];
         };
@@ -325,16 +294,35 @@
     [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
 }
 
-- (void)presentFilesDestinationViewController {
-    UIStoryboard *shareStoryboard = [UIStoryboard storyboardWithName:@"Share" bundle:[NSBundle bundleForClass:ShareFilesDestinationTableViewController.class]];
-    UINavigationController *navigationController = [shareStoryboard instantiateViewControllerWithIdentifier:@"FilesDestinationNavigationControllerID"];
+- (UINavigationController *)shareDestinationNavigatinVC {
+    if (_shareDestinationNavigatinVC == nil) {
+        UIStoryboard *shareStoryboard = [UIStoryboard storyboardWithName:@"Share" bundle:[NSBundle bundleForClass:ShareDestinationTableViewController.class]];
+        _shareDestinationNavigatinVC = [shareStoryboard instantiateViewControllerWithIdentifier:@"FilesDestinationNavigationControllerID"];
+    }
     
-    [self addChildViewController:navigationController];
-    [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:navigationController.view];
+    return _shareDestinationNavigatinVC;
+}
+
+- (void)addShareDestinationView {
+    if (self.shareDestinationNavigatinVC.parentViewController == self) {
+        return;
+    }
     
-    [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    [self addChildViewController:self.shareDestinationNavigatinVC];
+    [self.shareDestinationNavigatinVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:self.shareDestinationNavigatinVC.view];
+}
+
+- (void)removeShareDestinationView {
+    [_shareDestinationNavigatinVC setViewControllers:@[]];
+    [_shareDestinationNavigatinVC removeFromParentViewController];
+    [_shareDestinationNavigatinVC.view removeFromSuperview];
+    _shareDestinationNavigatinVC = nil;
+}
+
+- (void)checkPasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] setDelegate:self];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         [self presentPasscode];
     }
@@ -364,17 +352,17 @@
     }];
 }
 
-- (void)dismissWithCompletionHandler:(void (^)(void))completion {
+- (void)hideViewWithCompletion:(void (^)(void))completion {
     [UIView animateWithDuration:MNZ_ANIMATION_TIME
                      animations:^{
-                         self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
-                     }
-                     completion:^(BOOL finished) {
-                         [self saveStateAndLogout];
-                         if (completion) {
-                             completion();
-                         }
-                     }];
+        self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
+    } completion:^(BOOL finished) {
+        [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
+        [MEGASdkManager localLogout];
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 - (void)copyDatabasesFromMainApp {
@@ -427,6 +415,44 @@
         }
     }
     return newestDate;
+}
+
+- (MEGAGenericRequestDelegate *)logoutDelegate {
+    if (_logoutDelegate == nil) {
+        __weak __typeof__(self) weakSelf = self;
+        _logoutDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            switch ([request type]) {
+                    
+                case MEGARequestTypeLogout: {
+                    // if logout (not if localLogout) or session killed in other client
+                    BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+                    if (request.flag || sessionInvalidateInOtherClient) {
+                        [Helper logout];
+                        [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                        if (sessionInvalidateInOtherClient) {
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                [weakSelf dismissViewControllerAnimated:YES completion:^{
+                                    [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+                                }];
+                            }]];
+                            [weakSelf presentViewController:alert animated:YES completion:nil];
+                        } else {
+                            [weakSelf dismissViewControllerAnimated:YES completion:^{
+                                [weakSelf didBecomeActive];
+                            }];
+                        }
+                    }
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+        }];
+    }
+    
+    return _logoutDelegate;
 }
 
 #pragma mark - Share Extension
@@ -789,6 +815,7 @@
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
     }
     
+    __weak __typeof__(self) weakSelf = self;
     if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
         NSString *message;
         if (self.unsupportedAssets > 0) {
@@ -798,8 +825,8 @@
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            [weakSelf hideViewWithCompletion:^{
+                [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
             }];
         }]];
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
@@ -808,12 +835,11 @@
     } else {
         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            [weakSelf hideViewWithCompletion:^{
+                [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
             }];
         });
     }
-    dispatch_semaphore_signal(self.semaphore);
 }
 
 - (void)logout {
@@ -827,8 +853,9 @@
     if (parentNode) {
         [self performUploadToParentNode:parentNode];
     } else {
-        [self dismissWithCompletionHandler:^{
-            [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Invalid destination" code:-1 userInfo:nil]];
+        __weak __typeof__(self) weakSelf = self;
+        [self hideViewWithCompletion:^{
+            [weakSelf.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Invalid destination" code:-1 userInfo:nil]];
         }];
     }
 }
@@ -877,7 +904,8 @@
             @autoreleasepool {
                 [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
             }
-            [self presentFilesDestinationViewController];
+            [self addShareDestinationView];
+            [self checkPasscode];
             break;
         }
             
