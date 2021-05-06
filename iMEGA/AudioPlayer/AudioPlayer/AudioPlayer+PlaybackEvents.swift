@@ -22,7 +22,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             return
         }
         
-        currentItem.seek(to: time, completionHandler: refreshCurrentState)
+        currentItem.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: refreshCurrentState)
     }
     
     func resetPlayerItems() {
@@ -120,7 +120,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 }
             }
             
-            currentItem.seek(to: .zero, completionHandler: nil)
+            currentItem.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
         }
     }
     
@@ -148,7 +148,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                     return
                 }
                 
-                currentItem.seek(to: .zero) { _ in
+                currentItem.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
                     self.pause()
                     completion()
                     return
@@ -172,7 +172,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             let previousItem = tracks[currentIndex - 1]
             play(item: previousItem, completion: completion)
         } else {
-            queuePlayer.currentItem?.seek(to: .zero) { _ in
+            queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
                 self.isPlaying ? self.play() : self.pause()
                 completion()
             }
@@ -213,7 +213,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 queuePlayer.play()
             }
         } else if currentIndex == index {
-            queuePlayer.currentItem?.seek(to: .zero) {_ in
+            queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) {_ in
                 completion()
                 return
             }
@@ -261,7 +261,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             return
         }
         
-        queuePlayer.seek(to: futureTime < .zero ? .zero : futureTime) { _ in
+        queuePlayer.seek(to: futureTime < .zero ? .zero : futureTime, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
             completion(true)
         }
     }
@@ -282,7 +282,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             return
         }
         
-        queuePlayer.seek(to: futureTime > duration ? duration : futureTime) { _ in
+        queuePlayer.seek(to: futureTime > duration ? duration : futureTime, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
             completion(true)
         }
     }
@@ -353,7 +353,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         notify(aboutTheBeginningOfBlockingAction)
         
         queuePlayer.remove(movedItem)
-        movedItem.seek(to: .zero, completionHandler: nil)
+        movedItem.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
         
         let afterItem = queuePlayer.items()[position.previous().row]
         
@@ -439,7 +439,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     func reset(item: AudioPlayerItem) {
-        item.seek(to: .zero, completionHandler: nil)
+        item.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
     }
 }
 
