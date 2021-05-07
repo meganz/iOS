@@ -379,6 +379,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
+    [MEGAIndexer.sharedIndexer stopIndexing];
+    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
