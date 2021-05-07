@@ -14,7 +14,7 @@
 
 @interface MEGAIndexer () <MEGATreeProcessorDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
-@property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
+@property (strong, nonatomic) NSOperationQueue *indexSerialQueue;
 @property (nonatomic) dispatch_semaphore_t semaphore;
 @property (nonatomic) NSMutableArray *base64HandlesToIndex;
 @property (nonatomic) NSMutableArray *base64HandlesIndexed;
@@ -46,7 +46,10 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
+        _indexSerialQueue = [[NSOperationQueue alloc] init];
+        _indexSerialQueue.maxConcurrentOperationCount = 1;
+        _indexSerialQueue.qualityOfService = NSQualityOfServiceBackground;
+        _indexSerialQueue.name = @"nz.mega.spotlight.nodesIndexing";
         _shouldStop = NO;
         _searchableIndex = [CSSearchableIndex defaultSearchableIndex];
         _genericFileThumbnail = [UIImage imageNamed:@"Spotlight_file"];
@@ -68,7 +71,12 @@
     if (!self.enableSpotlight) {
         return;
     }
-    dispatch_async(self.indexSerialQueue, ^{
+    
+    if (self.shouldStop) {
+        return;
+    }
+    
+    [self.indexSerialQueue addOperationWithBlock:^{
         if (![self.sharedUserDefaults boolForKey:@"treeCompleted"]) {
             [self generateAndSaveTree];
         }
@@ -77,8 +85,7 @@
         } @catch (NSException *exception) {
             MEGALogError(@"Exception during spotlight indexing: %@", exception);
         }
-    });
-    
+    }];
 }
 
 - (void)setEnableSpotlight:(BOOL)enableSpotlight {
@@ -128,9 +135,17 @@
 }
 
 - (void)indexTree {
+    if (self.shouldStop) {
+        return;
+    }
+    
     MEGALogInfo(@"[Spotlight] start indexing");
     for (NSString *base64Handle in self.base64HandlesToIndex) {
         @autoreleasepool {
+            if (self.shouldStop) {
+                break;
+            }
+            
             uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
             if (node) {
@@ -142,9 +157,7 @@
                     [self.base64HandlesIndexed addObject:base64Handle];
                 }
             }
-            if (self.shouldStop) {
-                break;
-            }
+
             if (self.base64HandlesIndexed.count%MNZ_PERSIST_EACH == 0) {
                 [self saveTree];
             }
@@ -160,6 +173,7 @@
 - (void)stopIndexing {
     MEGALogDebug(@"Stopping spotlight indexing");
     self.shouldStop = YES;
+    [self.indexSerialQueue cancelAllOperations];
 }
 
 - (void)deleteIndexTree {
@@ -274,13 +288,14 @@
     if (!nodeList) {
         return;
     }
-    dispatch_async(self.indexSerialQueue, ^{
+    
+    [self.indexSerialQueue addOperationWithBlock:^{
         NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
         MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
         for (MEGANode *node in nodesToIndex) {
             [self index:node];
         }
-    });
+    }];
 }
 
 
