@@ -3,4 +3,5 @@ enum TransferErrorEntity: Error {
     case upload
     case download
     case createDirectory
+    case couldNotFindNodeByHandle
 }

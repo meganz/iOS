@@ -203,6 +203,8 @@
 
 - (void)loadTextView {
     UITextView *textView = [[UITextView alloc] init];
+    textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    textView.adjustsFontForContentSizeCategory = YES;
     [self.view addSubview:textView];
     [textView autoPinEdgesToSuperviewSafeArea];
     [textView setEditable:NO];
