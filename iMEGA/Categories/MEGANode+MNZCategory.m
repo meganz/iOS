@@ -105,7 +105,7 @@
                 [AudioPlayerManager.shared initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC];
             }
         } else {
-            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
+            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:navigationController.viewControllers.lastObject];
             if (viewController) {
                 [navigationController presentViewController:viewController animated:YES completion:nil];
             }
@@ -114,6 +114,10 @@
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
+    return [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:nil];
+}
+
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *_Nullable)viewController {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
@@ -144,7 +148,7 @@
                 
                 return previewController;
             }
-        } else if (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0) {
+        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
             NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:nil error:nil];
             if (textContent != nil) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent];
@@ -174,7 +178,7 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            if (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0) {
+            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name];
                 NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
                 return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:nil] build];

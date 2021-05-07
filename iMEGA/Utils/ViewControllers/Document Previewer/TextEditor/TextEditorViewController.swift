@@ -73,11 +73,17 @@ extension TextEditorViewController: ViewType {
     private func configView(_ textEditorModel: TextEditorModel) {
         navigationItem.title = textEditorModel.textFile.fileName
         
+        let contentOffset = textView.contentOffset
         textView.text = textEditorModel.textFile.content
         textView.isEditable = textEditorModel.isEditable
         if textEditorModel.isEditable {
             textView.becomeFirstResponder()
+            let position = textView.closestPosition(to: contentOffset) ?? textView.beginningOfDocument
+            textView.isScrollEnabled = false
+            textView.selectedTextRange = textView.textRange(from: position, to: position)
+            textView.isScrollEnabled = true
         }
+        textView.setContentOffset(contentOffset, animated: true)
         
         if textEditorModel.textEditorMode == .load {
             imageView?.mnz_setImage(forExtension: NSString(string: textEditorModel.textFile.fileName).pathExtension)
@@ -345,11 +351,11 @@ extension TextEditorViewController: ViewType {
     }
     
     func registerForNotifications() {
-        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillChangeFrame(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object:nil)
-        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillHide(notification:)), name:UIResponder.keyboardWillHideNotification, object:nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardDidChangeFrame(notification:)), name:UIResponder.keyboardDidChangeFrameNotification, object:nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardDidHide(notification:)), name:UIResponder.keyboardDidHideNotification, object:nil)
     }
     
-    @objc func keyboardWillChangeFrame(notification: NSNotification) {
+    @objc func keyboardDidChangeFrame(notification: NSNotification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
@@ -358,7 +364,7 @@ extension TextEditorViewController: ViewType {
         textView.scrollIndicatorInsets = textView.contentInset
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardDidHide(notification: NSNotification) {
         textView.contentInset = .zero
         textView.scrollIndicatorInsets = textView.contentInset
     }

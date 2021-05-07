@@ -1,3 +1,5 @@
+@objc protocol TextFileEditable { }
+
 final class TextEditorViewRouter: NSObject {
     
     private weak var baseViewController: UIViewController?

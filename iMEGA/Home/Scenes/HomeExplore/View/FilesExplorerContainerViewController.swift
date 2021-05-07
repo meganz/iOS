@@ -1,5 +1,5 @@
 
-class FilesExplorerContainerViewController: UIViewController {
+class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     //MARK:- Private variables
     
     enum ViewPreference {

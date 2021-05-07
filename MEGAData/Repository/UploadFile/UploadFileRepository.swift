@@ -12,7 +12,10 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
     }
     
     func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let parentNode = sdk.node(forHandle: parent) else { return }
+        guard let parentNode = sdk.node(forHandle: parent) else {
+            completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
+            return
+        }
         sdk.startUploadTopPriority(withLocalPath: path, parent: parentNode, appData: nil, isSourceTemporary: true, delegate: TransferDelegate(completion: completion))
     }
 }

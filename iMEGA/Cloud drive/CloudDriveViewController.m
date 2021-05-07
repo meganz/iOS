@@ -57,7 +57,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -399,7 +399,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
+                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:self];
                 return viewController;
             }
             break;

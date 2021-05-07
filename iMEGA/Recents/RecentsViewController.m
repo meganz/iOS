@@ -22,7 +22,7 @@
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
-@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol>
+@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable>
 
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
@@ -272,7 +272,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         return alertController;
     } else {
-        return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil];
+        return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil inViewController: self];
     }
 }
 
