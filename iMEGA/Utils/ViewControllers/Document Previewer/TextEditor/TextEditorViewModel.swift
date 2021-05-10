@@ -211,6 +211,7 @@ final class TextEditorViewModel: ViewModelType {
                     self.textFile.content = try String(contentsOfFile: path)
                     self.textEditorMode = .view
                     self.invokeCommand?(.configView(self.makeTextEditorModel()))
+                    self.invokeCommand?(.setupNavbarItems(self.makeNavbarItemsModel()))
                 } catch {
                     self.router.dismissTextEditorVC()
                     self.router.showPreviewDocVC(fromFilePath: path)
@@ -240,8 +241,13 @@ final class TextEditorViewModel: ViewModelType {
     
     private func makeNavbarItemsModel() -> TextEditorNavbarItemsModel {
         switch textEditorMode {
-        case .load,
-            .view:
+        case .load:
+            return TextEditorNavbarItemsModel (
+                leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                rightItem: nil,
+                textEditorMode: textEditorMode
+            )
+            case .view:
             return TextEditorNavbarItemsModel (
                 leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
                 rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),

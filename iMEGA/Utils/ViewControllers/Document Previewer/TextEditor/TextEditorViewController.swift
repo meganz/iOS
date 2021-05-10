@@ -104,8 +104,14 @@ extension TextEditorViewController: ViewType {
     
     private func setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel) {
         switch navbarItemsModel.textEditorMode {
-        case .load,
-             .view:
+        case .load:
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: navbarItemsModel.leftItem.title,
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
+        case .view:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: navbarItemsModel.leftItem.title,
                 style: .plain,
@@ -113,7 +119,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(closeTapped)
             )
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: navbarItemsModel.rightItem.imageName ?? "moreSelected"),
+                image: UIImage(named: navbarItemsModel.rightItem?.imageName ?? "moreSelected"),
                 style: .plain,
                 target: self,
                 action: #selector(moreTapped(button:))
@@ -127,7 +133,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(cancelTapped)
             )
             let saveButton = UIBarButtonItem(
-                title: navbarItemsModel.rightItem.title,
+                title: navbarItemsModel.rightItem?.title,
                 style: .plain,
                 target: self,
                 action: #selector(saveTapped)
