@@ -2251,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Sleep naar links om te annuleren, laat los om te verzenden";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="Gebruikers Interface";
+"settings.section.userInterface"="Gebruikers Interface";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="Standaard Tabblad";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
