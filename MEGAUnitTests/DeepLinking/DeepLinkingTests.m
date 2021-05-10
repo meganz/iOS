@@ -176,6 +176,34 @@
     XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/achievements?a=sdf&b=123"] mnz_type], URLTypeAchievementsLink);
 }
 
+- (void)testDeepLinkShouldReturnTypeNewTextFileType {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/newText"];
+    XCTAssertEqual([url mnz_type], URLTypeNewTextFile);
+    
+    XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/newText?a=sdf&b=123"] mnz_type], URLTypeNewTextFile);
+}
+
+- (void)testDeepLinkShouldReturnPrivacyPolicyType {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/privacy"];
+    XCTAssertEqual([url mnz_type], URLTypeDefault);
+    
+    XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/privacy?a=sdf&b=123"] mnz_type], URLTypeDefault);
+}
+
+- (void)testDeepLinkShouldReturnCookiePolicyType {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/cookie"];
+    XCTAssertEqual([url mnz_type], URLTypeDefault);
+    
+    XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/cookie?a=sdf&b=123"] mnz_type], URLTypeDefault);
+}
+
+- (void)testDeepLinkShouldReturnTermsOfServiceType {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/terms"];
+    XCTAssertEqual([url mnz_type], URLTypeDefault);
+    
+    XCTAssertEqual([[NSURL URLWithString:@"https://mega.nz/terms?a=sdf&b=123"] mnz_type], URLTypeDefault);
+}
+
 - (void)testDeepLinkShouldReturnTypeChatPeerOptionsLinkType {
     NSURL *url = [NSURL URLWithString:@"mega://chatPeerOptions#base64UserHandle"];
     XCTAssertEqual([url mnz_type], URLTypeChatPeerOptionsLink);

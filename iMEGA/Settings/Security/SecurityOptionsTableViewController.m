@@ -35,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"securityOptions", @"Title for Security Options section")];
+    [self.navigationItem setTitle:NSLocalizedString(@"settings.section.security", @"Title for Security section")];
     
     self.twoFactorAuthenticationLabel.text = NSLocalizedString(@"twoFactorAuthentication", @"");
     self.twoFactorAuthenticationRightDetailLabel.text = @"";

@@ -40,7 +40,7 @@ class AppearanceTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("Appearance", comment: "Title of one of the Settings sections where you can customise the 'Appearance' of the app.")
+        title = NSLocalizedString("settings.section.userInterface", comment: "Title of one of the Settings sections where you can customise the 'User Interface' of the app.")
         
         defaultTabLabel.text = NSLocalizedString("Default Tab", comment: "Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.")
         
