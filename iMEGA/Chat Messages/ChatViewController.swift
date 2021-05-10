@@ -96,7 +96,7 @@ class ChatViewController: MessagesViewController {
         return chatRoomDelegate.messages
     }
 
-    var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle ?? 0), displayName: "")
+    var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle ), displayName: "")
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom)
@@ -274,6 +274,11 @@ class ChatViewController: MessagesViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: ""), style: .plain, target: self, action: #selector(dismissChatRoom))
         }
         
+        guard let publicChatLinkString = self.publicChatLink?.absoluteString else {
+            setLastMessageAsSeen()
+            loadDraft()
+            return
+        }
         if publicChatWithLinkCreated {
             let customModalAlertVC = CustomModalAlertViewController()
             customModalAlertVC.modalPresentationStyle = .overCurrentContext
@@ -286,7 +291,7 @@ class ChatViewController: MessagesViewController {
             customModalAlertVC.dismissButtonTitle = NSLocalizedString("dismiss", comment: "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
             customModalAlertVC.firstCompletion = { [weak customModalAlertVC] in
                 customModalAlertVC?.dismiss(animated: true, completion: {
-                    let activityVC = UIActivityViewController(activityItems: [self.publicChatLink?.absoluteString], applicationActivities: nil)
+                    let activityVC = UIActivityViewController(activityItems: [publicChatLinkString], applicationActivities: nil)
                     self.publicChatWithLinkCreated = false
                     if UIDevice.current.iPadDevice {
                         activityVC.popoverPresentationController?.sourceView = self.view
@@ -498,7 +503,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Interface methods
 
     @objc func updateUnreadLabel() {
-        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats ?? 0
+        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats 
         let unreadChatsString = unreadChats > 0 ? "\(unreadChats)" : ""
         
         let backBarButton = UIBarButtonItem(title: unreadChatsString, style: .plain, target: nil, action: nil)
@@ -736,7 +741,7 @@ class ChatViewController: MessagesViewController {
     }
 
     @objc func update() {
-        guard isViewLoaded, chatRoom != nil else {
+        guard isViewLoaded else {
             return
         }
 
