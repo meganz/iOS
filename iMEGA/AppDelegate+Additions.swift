@@ -212,7 +212,7 @@ extension AppDelegate {
     
     private func configAppWithNewCookieSettings() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
-        cookieSettingsUseCase.cookieSettings { [weak self] in
+        cookieSettingsUseCase.cookieSettings {
             switch $0 {
             case .success(let bitmap):
                 let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
