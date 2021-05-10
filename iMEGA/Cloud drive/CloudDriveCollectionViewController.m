@@ -199,6 +199,14 @@
     [self.collectionView reloadData];
 }
 
+- (void)reloadFileItem:(MEGAHandle)nodeHandle {
+    [self reloadItem:nodeHandle section:ThumbnailSectionFile];
+}
+
+- (void)reloadFolderItem:(MEGAHandle)nodeHandle {
+    [self reloadItem:nodeHandle section:ThumbnailSectionFolder];
+}
+
 #pragma mark - Private methods
 
 - (nullable MEGANode *)thumbnailNodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -223,6 +231,25 @@
     }
     return list.copy;
 }
+
+- (void)reloadItem:(MEGAHandle)nodeHandle section:(ThumbnailSection)section {
+    [UIView performWithoutAnimation:^{
+        if (nodeHandle) {
+            NSMutableArray *filteredArray = [NSMutableArray new];
+            [self.fileList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if (((MEGANode*)obj).handle == nodeHandle) {
+                    if (section == ThumbnailSectionFile) {
+                        [filteredArray addObject:[NSIndexPath indexPathForRow:idx inSection:ThumbnailSectionFile]];
+                    } else {
+                        [filteredArray addObject:[NSIndexPath indexPathForRow:idx inSection:ThumbnailSectionFolder]];
+                    }
+                }
+            }];
+            [self.collectionView reloadItemsAtIndexPaths:filteredArray];
+        }
+    }];
+}
+
 
 #pragma mark - getters
 

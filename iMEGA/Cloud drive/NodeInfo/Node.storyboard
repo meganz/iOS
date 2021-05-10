@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -497,34 +497,28 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRo-Ik-XtA">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CfJ-s3-SMV">
-                                                            <rect key="frame" x="0.0" y="24" width="12" height="12"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bNs-VH-D36">
+                                                            <rect key="frame" x="60" y="36" width="63" height="12"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u4D-lA-ajo" userLabel="Middle Image View">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="xVA-dN-gmN" userLabel="Arrow Image View">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="11" height="12"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="11" id="cLL-Gc-NIt"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Mqe-aU-ngt">
+                                                                    <rect key="frame" x="19" y="0.0" width="44" height="12"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="u4D-lA-ajo" userLabel="Middle Image View">
+                                                                    <rect key="frame" x="63" y="0.0" width="12" height="12"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="12" id="2UK-Zm-3LJ"/>
                                                                         <constraint firstAttribute="height" constant="12" id="zpe-kU-05A"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                            </subviews>
-                                                        </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bNs-VH-D36">
-                                                            <rect key="frame" x="60" y="36.5" width="300" height="11"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="xVA-dN-gmN" userLabel="Arrow Image View">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="11" height="11"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="11" id="8gq-g4-vYS"/>
-                                                                        <constraint firstAttribute="width" constant="11" id="cLL-Gc-NIt"/>
-                                                                    </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Mqe-aU-ngt">
-                                                                    <rect key="frame" x="19" y="0.0" width="281" height="11"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZFT-cO-qXo">
@@ -597,12 +591,10 @@
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="CfJ-s3-SMV" firstAttribute="leading" secondItem="cRo-Ik-XtA" secondAttribute="leading" id="3yg-Sn-W1V"/>
                                                         <constraint firstItem="bNs-VH-D36" firstAttribute="leading" secondItem="BaB-4P-Kpo" secondAttribute="trailing" constant="8" id="41a-b5-3GA"/>
                                                         <constraint firstItem="bNs-VH-D36" firstAttribute="centerY" secondItem="cRo-Ik-XtA" secondAttribute="centerY" multiplier="1.4" id="65D-EZ-fad"/>
-                                                        <constraint firstItem="BaB-4P-Kpo" firstAttribute="leading" secondItem="CfJ-s3-SMV" secondAttribute="trailing" id="6Ca-DE-3zu"/>
                                                         <constraint firstItem="xa6-Us-BLF" firstAttribute="centerY" secondItem="cRo-Ik-XtA" secondAttribute="centerY" multiplier="0.7" id="BIx-4r-Hvm"/>
-                                                        <constraint firstItem="ZFT-cO-qXo" firstAttribute="leading" secondItem="bNs-VH-D36" secondAttribute="trailing" constant="8" id="GaB-vY-0Si"/>
+                                                        <constraint firstItem="ZFT-cO-qXo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bNs-VH-D36" secondAttribute="trailing" constant="8" id="GaB-vY-0Si"/>
                                                         <constraint firstAttribute="height" constant="60" id="NYM-7y-XAi"/>
                                                         <constraint firstItem="BaB-4P-Kpo" firstAttribute="centerY" secondItem="cRo-Ik-XtA" secondAttribute="centerY" id="PBX-aq-bDq"/>
                                                         <constraint firstItem="ZFT-cO-qXo" firstAttribute="leading" secondItem="xa6-Us-BLF" secondAttribute="trailing" constant="8" id="W3h-B4-JMY"/>
@@ -610,7 +602,6 @@
                                                         <constraint firstAttribute="trailing" secondItem="ZFT-cO-qXo" secondAttribute="trailing" id="lYW-cY-cLR"/>
                                                         <constraint firstItem="BaB-4P-Kpo" firstAttribute="leading" secondItem="cRo-Ik-XtA" secondAttribute="leading" constant="12" id="pyR-Cn-cyW"/>
                                                         <constraint firstItem="xa6-Us-BLF" firstAttribute="leading" secondItem="BaB-4P-Kpo" secondAttribute="trailing" constant="8" id="z8g-ik-gSS"/>
-                                                        <constraint firstItem="CfJ-s3-SMV" firstAttribute="centerY" secondItem="cRo-Ik-XtA" secondAttribute="centerY" id="zZL-aS-dsI"/>
                                                     </constraints>
                                                 </view>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="9O2-gT-tQp">
@@ -631,9 +622,9 @@
                                         <connections>
                                             <outlet property="cancelButton" destination="J4I-Oy-MOC" id="nsK-Ao-ibV"/>
                                             <outlet property="downloadProgressView" destination="9O2-gT-tQp" id="3xt-Vz-Zxi"/>
+                                            <outlet property="downloadedImageView" destination="u4D-lA-ajo" id="JTq-Sk-ahY"/>
                                             <outlet property="downloadingArrowImageView" destination="xVA-dN-gmN" id="qgU-d7-4s0"/>
                                             <outlet property="infoLabel" destination="Mqe-aU-ngt" id="gfj-3H-ZRt"/>
-                                            <outlet property="middleImageView" destination="u4D-lA-ajo" id="fJ5-gT-5W7"/>
                                             <outlet property="moreButton" destination="EdJ-P9-7cj" id="ndL-Ir-2s7"/>
                                             <outlet property="nameLabel" destination="xa6-Us-BLF" id="CCb-yv-qmD"/>
                                             <outlet property="thumbnailImageView" destination="SVb-Tz-B5y" id="3Wd-y1-rMJ"/>
@@ -745,6 +736,7 @@
         <image name="delete" width="28" height="28"/>
         <image name="download" width="128" height="128"/>
         <image name="downloadQueued" width="12" height="12"/>
+        <image name="downloaded" width="12" height="12"/>
         <image name="history" width="28" height="28"/>
         <image name="hudSharedFolder" width="28" height="28"/>
         <image name="linked" width="24" height="24"/>

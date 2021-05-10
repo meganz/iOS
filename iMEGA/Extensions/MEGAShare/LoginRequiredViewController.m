@@ -1,5 +1,6 @@
 
 #import "LoginRequiredViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "MEGAShare-Swift.h"
 
@@ -46,7 +47,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
+    [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {

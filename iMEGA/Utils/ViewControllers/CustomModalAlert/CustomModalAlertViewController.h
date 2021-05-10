@@ -17,6 +17,7 @@
 @property (nonatomic) UITapGestureRecognizer *detailTapGestureRecognizer;
 
 @property (nonatomic) NSString *firstButtonTitle;
+@property (nonatomic) NSInteger firstButtonStyle;
 @property (nonatomic) NSString *secondButtonTitle;
 @property (nonatomic) NSInteger dismissButtonStyle;
 @property (nonatomic) NSString *dismissButtonTitle;

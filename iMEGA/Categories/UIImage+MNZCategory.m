@@ -5,8 +5,7 @@
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
-
-#import "UIImage+GKContact.h"
+@import GKContactImage;
 
 @implementation UIImage (MNZCategory)
 

@@ -50,7 +50,7 @@ extension ChatViewController: MessagesDataSource {
     
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         
-        guard MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) ?? false else {
+        guard MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) else {
             let loadingMessagesHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LoadingMessageReusableView.reuseIdentifier, for: indexPath)  as! LoadingMessageReusableView
             loadingMessagesHeaderView.loadingView.mnz_startShimmering()
             return loadingMessagesHeaderView

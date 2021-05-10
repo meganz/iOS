@@ -98,9 +98,6 @@
 		2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */; };
 		2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */; };
 		2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */; };
-		2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */; };
-		2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
-		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
 		2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */; };
 		2F9E1E2C24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */; };
 		2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F110F2508A3E700896DFF /* ServiceManager.swift */; };
@@ -167,12 +164,9 @@
 		415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226831A692ECC00EC7BB6 /* Settings.storyboard */; };
 		4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
-		4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */; };
-		4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
 		4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
 		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
-		415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
 		415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */; };
 		415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415E69091DABCDF90043B75F /* ChatRoomsViewController.m */; };
 		417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4178409F1AC328A600713F3C /* ChangePasswordViewController.m */; };
@@ -191,7 +185,6 @@
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
 		41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */; };
-		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */; };
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41BADDAE1A8E28FD008408B3 /* Photos.storyboard */; };
@@ -199,14 +192,9 @@
 		41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F6D1B85F6D40005A27A /* ProductDetailViewController.m */; };
 		41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F701B8603AF0005A27A /* ProductDetailTableViewCell.m */; };
 		41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
-		41D21DF01D01AE89002E6296 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */; };
-		41D21DF11D01AE89002E6296 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
-		41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
 		41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */; };
 		41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */; };
 		41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */; };
-		41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
-		41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
 		41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
@@ -636,7 +624,6 @@
 		77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */; };
 		77892EA020E5029E0020A533 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
-		77892EA220E508300020A533 /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7794AED6231E4E0A0039C1D2 /* NotificationService.swift */; };
 		7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -669,10 +656,6 @@
 		7794AF17231FDF120039C1D2 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		7794AF18231FDF180039C1D2 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
-		7794AF1A231FDF4C0039C1D2 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
-		7794AF1B231FDF550039C1D2 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
-		7794AF1C231FDF590039C1D2 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
-		7794AF1D231FDF5C0039C1D2 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
 		7794AF1F2320F52F0039C1D2 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
 		7794AF21232100F30039C1D2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
 		7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677621C80CDF002B6227 /* OnboardingViewController.m */; };
@@ -712,7 +695,7 @@
 		77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */; };
 		77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
-		77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */; };
+		77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */; };
 		77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
@@ -994,6 +977,7 @@
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */; };
+		83DF6572262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DF6571262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
 		83E3454E25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */; };
 		83E3454F25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */; };
@@ -1113,11 +1097,6 @@
 		944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
 		944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
-		945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
-		945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
-		9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
-		9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
-		9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */; };
 		9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		945605401EDD65400094EF0F /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
@@ -1144,11 +1123,6 @@
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
-		94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
-		94892C951EFBF02D00AEAC25 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
-		94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
-		94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */; };
-		94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
 		94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
@@ -1575,6 +1549,8 @@
 		B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */; };
+		B6DC7CBC2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
+		B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
 		B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */; };
 		B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
@@ -1840,6 +1816,7 @@
 		C45D79252593AD5600EB6C2F /* MiniPlayerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */; };
 		C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */; };
 		C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E402025DD1C230060E116 /* AudioPlayerManager.swift */; };
+		C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */; };
 		C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
@@ -2191,18 +2168,12 @@
 		415226881A692ECC00EC7BB6 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Helper.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		415226891A692ECC00EC7BB6 /* MEGASdkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGASdkManager.h; sourceTree = "<group>"; };
 		4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGASdkManager.m; sourceTree = "<group>"; };
-		415227361A692EEF00EC7BB6 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
-		415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		415227381A692EEF00EC7BB6 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		415227391A692EEF00EC7BB6 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		415227401A692F8D00EC7BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		415227421A692F9B00EC7BB6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4156C8081AD7E79A00F5E818 /* LTHKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHKeychainUtils.h; sourceTree = "<group>"; };
 		4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
 		4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHPasscodeViewController.h; sourceTree = "<group>"; };
 		4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LTHPasscodeViewController.m; sourceTree = "<group>"; };
-		415C6B901CE39D6100B13070 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
 		415DCF221BF48EFA00914A1E /* ContactRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactRequestsViewController.h; sourceTree = "<group>"; };
 		415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ContactRequestsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		415E69081DABCDF90043B75F /* ChatRoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoomsViewController.h; path = Chat/ChatRoomsViewController.h; sourceTree = "<group>"; };
@@ -2240,8 +2211,6 @@
 		41AC66471AB1D493003FE8DA /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
 		41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
 		41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
-		41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
-		41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
 		41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeTableViewController.h; sourceTree = "<group>"; };
 		41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasscodeTableViewController.m; sourceTree = "<group>"; };
 		41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -2256,24 +2225,11 @@
 		41D14F701B8603AF0005A27A /* ProductDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailTableViewCell.m; sourceTree = "<group>"; };
 		41D1E0B91B58F0B800982830 /* MOOfflineNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOOfflineNode.h; sourceTree = "<group>"; };
 		41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOOfflineNode.m; sourceTree = "<group>"; };
-		41D21DE71D01AE89002E6296 /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
-		41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
-		41D21DE91D01AE89002E6296 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PureLayout.h"; sourceTree = "<group>"; };
-		41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PureLayout.m"; sourceTree = "<group>"; };
-		41D21DEB1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
-		41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
-		41D21DED1D01AE89002E6296 /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
-		41D21DEE1D01AE89002E6296 /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
-		41D21DEF1D01AE89002E6296 /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
 		41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAPurchase.h; sourceTree = "<group>"; };
 		41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPurchase.m; sourceTree = "<group>"; };
 		41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewDocumentViewController.h; sourceTree = "<group>"; };
 		41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewDocumentViewController.m; sourceTree = "<group>"; };
 		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		41D8ECDA1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
-		41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
-		41D8ECDC1BCEBD3200B8FA08 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
-		41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		41DC6F701D54E7080081832C /* NSFileManager+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+MNZCategory.h"; sourceTree = "<group>"; };
 		41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+MNZCategory.m"; sourceTree = "<group>"; };
 		41DFFB091B9A3C9E0003FB72 /* pt-br */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-br"; path = "pt-br.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -2764,8 +2720,8 @@
 		77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+MNZCategory.h"; sourceTree = "<group>"; };
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		77F63E7E24C0A95800DEEA66 /* JoinViewState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewState.h; sourceTree = "<group>"; };
-		77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareFilesDestinationTableViewController.h; sourceTree = "<group>"; };
-		77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareFilesDestinationTableViewController.m; sourceTree = "<group>"; };
+		77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareDestinationTableViewController.h; sourceTree = "<group>"; };
+		77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDestinationTableViewController.m; sourceTree = "<group>"; };
 		77FD1FFC2359A59C004FB892 /* libwebrtc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebrtc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebrtc.a; sourceTree = "<group>"; };
 		77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvideoframebuffer_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.a; sourceTree = "<group>"; };
 		77FD1FFF2359A5A7004FB892 /* libnative_api.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_api.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_api.a; sourceTree = "<group>"; };
@@ -2985,6 +2941,7 @@
 		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
 		83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
+		83DF6571262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+LaunchTab.swift"; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
 		83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -3625,6 +3582,8 @@
 		B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadStatus.h; sourceTree = "<group>"; };
 		B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadStatus.m; sourceTree = "<group>"; };
+		B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGASdkManager+CleanUp.h"; sourceTree = "<group>"; };
+		B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGASdkManager+CleanUp.m"; sourceTree = "<group>"; };
 		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
 		B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewRouter.swift; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
@@ -3885,6 +3844,7 @@
 		C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSource.swift; sourceTree = "<group>"; };
 		C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDelegate.swift; sourceTree = "<group>"; };
 		C45E402025DD1C230060E116 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
+		C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAProgressBarView.swift; sourceTree = "<group>"; };
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
 		C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -4677,11 +4637,8 @@
 				41E250151D79E9EF00499A6C /* Import */,
 				41E2500E1D79E9D400499A6C /* SAMKeychain */,
 				41EC68561D76E101003EC803 /* PieChartView */,
-				41D21DE61D01AE89002E6296 /* PureLayout */,
 				413199651BD7BD5D002CD6EA /* DateTools */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
-				41B2D4191A6D06780002E29E /* GKContactImage */,
-				415227351A692EEF00EC7BB6 /* SVProgressHUD */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -4835,6 +4792,8 @@
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
 				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
 				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
+				B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */,
+				B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */,
 				B654BF3824FF123700A3CBC8 /* MVVM-R.swift */,
 				C45390CC256587BF0026F215 /* MEGASlider.swift */,
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
@@ -4849,24 +4808,6 @@
 				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		415227351A692EEF00EC7BB6 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				415C6B901CE39D6100B13070 /* SVProgressAnimatedView.h */,
-				415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */,
-				41D8ECDA1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.h */,
-				41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */,
-				41D8ECDC1BCEBD3200B8FA08 /* SVRadialGradientLayer.h */,
-				41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */,
-				415227361A692EEF00EC7BB6 /* SVProgressHUD-Prefix.pch */,
-				415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */,
-				415227381A692EEF00EC7BB6 /* SVProgressHUD.h */,
-				415227391A692EEF00EC7BB6 /* SVProgressHUD.m */,
-			);
-			name = SVProgressHUD;
-			path = Vendor/SVProgressHUD/SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */ = {
@@ -5038,16 +4979,6 @@
 			path = Help;
 			sourceTree = "<group>";
 		};
-		41B2D4191A6D06780002E29E /* GKContactImage */ = {
-			isa = PBXGroup;
-			children = (
-				41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */,
-				41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */,
-			);
-			name = GKContactImage;
-			path = Vendor/GKContactImage/Classes;
-			sourceTree = "<group>";
-		};
 		41B3B82D1AD591A80093A88D /* Passcode */ = {
 			isa = PBXGroup;
 			children = (
@@ -5204,23 +5135,6 @@
 				83E3454A25B58DDC006F2AD6 /* Widget */,
 			);
 			path = ManagedObjects;
-			sourceTree = "<group>";
-		};
-		41D21DE61D01AE89002E6296 /* PureLayout */ = {
-			isa = PBXGroup;
-			children = (
-				41D21DE71D01AE89002E6296 /* ALView+PureLayout.h */,
-				41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */,
-				41D21DE91D01AE89002E6296 /* NSArray+PureLayout.h */,
-				41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */,
-				41D21DEB1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.h */,
-				41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */,
-				41D21DED1D01AE89002E6296 /* PureLayout+Internal.h */,
-				41D21DEE1D01AE89002E6296 /* PureLayout.h */,
-				41D21DEF1D01AE89002E6296 /* PureLayoutDefines.h */,
-			);
-			name = PureLayout;
-			path = Vendor/PureLayout/PureLayout/PureLayout;
 			sourceTree = "<group>";
 		};
 		41E2500E1D79E9D400499A6C /* SAMKeychain */ = {
@@ -5615,6 +5529,7 @@
 				5D66F8C724E510510088E5FF /* PaddingLabel.swift */,
 				C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */,
 				C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */,
+				C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5699,6 +5614,7 @@
 				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
+				83DF6571262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift */,
 			);
 			path = CustomModalAlert;
 			sourceTree = "<group>";
@@ -7316,8 +7232,8 @@
 				5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */,
 				949CEACD1F05121D00A3A580 /* LoginRequiredViewController.h */,
 				949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */,
-				77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */,
-				77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */,
+				77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */,
+				77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */,
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
 			);
 			name = MEGAShare;
@@ -9385,7 +9301,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = MEGA;
 				TargetAttributes = {
 					137361891A6664C300B740E8 = {
@@ -9629,7 +9545,6 @@
 				831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */,
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
 				83B0B461242CC24E00468191 /* ChatSharedItems.storyboard in Resources */,
-				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
 				C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
@@ -9747,7 +9662,6 @@
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
-				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
 				B6873A8A25A6C5E500BBD15A /* GoogleService-Info.plist in Resources */,
 				5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
@@ -9782,7 +9696,6 @@
 				5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
-				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10179,7 +10092,6 @@
 				B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */,
 				5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
-				41D21DF01D01AE89002E6296 /* ALView+PureLayout.m in Sources */,
 				BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */,
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
 				5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */,
@@ -10424,6 +10336,7 @@
 				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
 				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
+				B6DC7CBC2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				5D60D50424DF77E700313955 /* Array+EmbedInStackView.swift in Sources */,
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
@@ -10471,13 +10384,11 @@
 				A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */,
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
 				B63AEB0F2511BDB9000B8517 /* AchievementErrorEntity.swift in Sources */,
-				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
 				2F4291E6257F2CDC00EDF780 /* MEGARecentActionBucket+MNZCategory.m in Sources */,
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */,
 				A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */,
-				41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */,
 				83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */,
 				5DAC09D324CFC5B9001B6476 /* MEGABannerView.swift in Sources */,
 				B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */,
@@ -10530,6 +10441,7 @@
 				5D6D0F562527044D002A777D /* SDKAvatarClient.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */,
+				83DF6572262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift in Sources */,
 				A86B9F7C2316D6AB00F35E7A /* FLEXHierarchyTableViewCell.m in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
 				BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */,
@@ -10595,7 +10507,6 @@
 				5BFA9618252E0E13003653EB /* ManageHistoryRepositoryProtocol.swift in Sources */,
 				B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */,
 				A86B9F742316D6AB00F35E7A /* FLEXMultiColumnTableView.m in Sources */,
-				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */,
@@ -10622,7 +10533,6 @@
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
 				5D6D95C0252039CD0098BCAC /* FileSearchHistoryRepository.swift in Sources */,
-				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
@@ -10735,7 +10645,6 @@
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
 				BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */,
 				837DC7AA256D196400CA289E /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
-				41D21DF11D01AE89002E6296 /* NSArray+PureLayout.m in Sources */,
 				B6B73E7022C9A39500ACAD48 /* SMSRegion.swift in Sources */,
 				5D0B42B6250618070057D49B /* NodeLinkRouter.swift in Sources */,
 				5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */,
@@ -10813,7 +10722,6 @@
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				5B9F5D47259DD57700BADB11 /* CookieSettingsUseCase.swift in Sources */,
 				BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */,
-				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
 				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
 				5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
@@ -10860,7 +10768,6 @@
 				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				BFAB114023CEA5C300BCE72D /* UIViewController+PhotoAlbumBrowserAdditions.swift in Sources */,
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
-				41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */,
 				BF08A9F525CA12A0009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
 				BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */,
@@ -10899,6 +10806,7 @@
 				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				BF943E9523554054001C18E0 /* String+Additions.swift in Sources */,
+				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
 				BF5E340E2559E2EC0055395E /* FilesExplorerContainerGridViewState.swift in Sources */,
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */,
@@ -11144,15 +11052,12 @@
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
 				7794AF1F2320F52F0039C1D2 /* MEGAGenericRequestDelegate.m in Sources */,
 				77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */,
-				7794AF1B231FDF550039C1D2 /* SVRadialGradientLayer.m in Sources */,
 				77FCB86723FEA269009E8032 /* DTConstants.m in Sources */,
 				774941E724165F3A00FC5CB6 /* UIDevice+MNZCategory.m in Sources */,
-				7794AF1D231FDF5C0039C1D2 /* SVProgressAnimatedView.m in Sources */,
 				774941DD2410EA7F00FC5CB6 /* MOMessage+CoreDataClass.m in Sources */,
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				A81DF35D2508FDAD009C8B60 /* Date+Formatting.swift in Sources */,
-				7794AF1A231FDF4C0039C1D2 /* SVProgressHUD.m in Sources */,
 				77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				7794AF18231FDF180039C1D2 /* SAMKeychainQuery.m in Sources */,
@@ -11162,7 +11067,6 @@
 				774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
 				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
-				7794AF1C231FDF590039C1D2 /* SVIndefiniteAnimatedView.m in Sources */,
 				5B784DBF259A0E8E00CE752B /* NSDate+MNZCategory.m in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
@@ -11311,14 +11215,12 @@
 				5BE689BA2419189400462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
-				2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */,
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
 				83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */,
 				5BE689B12419187F00462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
 				9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
-				2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */,
 				5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
 				831D61A7218738EB0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
@@ -11335,7 +11237,6 @@
 				A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */,
 				2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				BF6E8F7625C0C835003A125A /* String+Additions.swift in Sources */,
-				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
 				B6990193262F93AA00176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
@@ -11348,21 +11249,17 @@
 				5BE689892417CB3C00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
 				5B3740C8241FAA8700BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
-				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
 				9456054E1EDD7DBD0094EF0F /* OpenInActivity.m in Sources */,
-				945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */,
 				943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */,
 				8310488B21AECDBA0057400D /* DTConstants.m in Sources */,
 				832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
-				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
 				5BA81EA21FC2FF0600C8146C /* RemoveSharingActivity.m in Sources */,
 				BF6E8F6425C0C768003A125A /* MEGANode+Additions.swift in Sources */,
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
-				2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */,
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				BF08AA0025CA28AD009DE3D2 /* MEGANode+FilePath.swift in Sources */,
@@ -11406,7 +11303,6 @@
 				B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				BF943E9623554054001C18E0 /* String+Additions.swift in Sources */,
 				5B205D1A2449AD1A00EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
-				94892C951EFBF02D00AEAC25 /* SVIndefiniteAnimatedView.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,
@@ -11449,7 +11345,7 @@
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
-				77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */,
+				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
@@ -11481,7 +11377,6 @@
 				5BE689B22419187F00462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
 				5BE689B62419188D00462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				77C2E07D24BCBC0100B4894A /* ActionSheetCell.swift in Sources */,
-				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				A81DF3602508FE23009C8B60 /* Date+Formatting.swift in Sources */,
@@ -11490,7 +11385,6 @@
 				A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
-				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				A81DF35F2508FDE6009C8B60 /* DateFormatting.swift in Sources */,
@@ -11503,14 +11397,12 @@
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */,
-				94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */,
 				BFC470A424C66E4F00A23820 /* Date+Manipulation.swift in Sources */,
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */,
-				77892EA220E508300020A533 /* UIImage+GKContact.m in Sources */,
 				832F19EE2091BD8E0067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,
 				83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				B6F8CE17262823240074CBBF /* CoreDataErrorHandler.m in Sources */,
@@ -11518,6 +11410,7 @@
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
+				B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -11988,7 +11881,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -12050,7 +11943,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -12110,7 +12003,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -12170,7 +12063,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -12306,7 +12199,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -12352,7 +12245,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -12399,7 +12292,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_ENABLE_MODULES = YES;
@@ -12461,7 +12354,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_ENABLE_MODULES = YES;
@@ -12522,8 +12415,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_ENABLE_MODULES = YES;
@@ -12583,8 +12475,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_ENABLE_MODULES = YES;
