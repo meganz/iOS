@@ -84,7 +84,7 @@
     }
     
     if (self.firstButtonStyle == MEGACustomButtonStyleNone) {
-        self.dismissButtonStyle = MEGACustomButtonStylePrimary;
+        self.firstButtonStyle = MEGACustomButtonStylePrimary;
     }
     
     if (self.firstButtonTitle) {
