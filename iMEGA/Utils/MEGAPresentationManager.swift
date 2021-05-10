@@ -1,3 +1,5 @@
+import PureLayout
+
 /// This class is intended to manage custom animations for presenting view controllers.
 /// The current custom animation has a dimmed view as background and the view controller is presented from the bottom. In future designs could be needed more animations and should adapt the code.
 /// The use is simple, configure presentationStyle to UIModalPresentationCustom and save a strong reference of MEGAPresentationManager and assign as view controller transitioningDelegate.

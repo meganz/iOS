@@ -51,7 +51,7 @@ final class FileUploadingRouter {
     // MARK: - Display Import Selection View Controller
 
     private func presentImportSelection(withCompletion completion: @escaping (URL, MEGANode) -> Void) {
-        let documentMenuViewController = UIDocumentMenuViewController(
+        let documentPickerViewController = UIDocumentPickerViewController(
             documentTypes: [
                 kUTTypeContent as String,
                 kUTTypeData as String,
@@ -77,7 +77,7 @@ final class FileUploadingRouter {
             return documentImportsDelegate
         }
 
-        if let popover = documentMenuViewController.popoverPresentationController {
+        if let popover = documentPickerViewController.popoverPresentationController {
             guard let barItem = homeViewController?.navigationItem.rightBarButtonItems?.first else {
                 return
             }
@@ -85,8 +85,8 @@ final class FileUploadingRouter {
             popover.barButtonItem = barItem
         }
         
-        documentMenuViewController.delegate = documentImportsDelegate
-        navigationController?.present(documentMenuViewController, animated: true, completion: nil)
+        documentPickerViewController.delegate = documentImportsDelegate
+        navigationController?.present(documentPickerViewController, animated: true, completion: nil)
     }
 
     // MARK: - Display Camera Capture View Controller
@@ -195,23 +195,11 @@ final class FileUploadingRouter {
     }
 }
 
-fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentMenuDelegate, UIDocumentPickerDelegate {
+fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentPickerDelegate {
 
     weak var navigationController: UINavigationController?
 
     var importsURLCompletion: ((URL) -> Void)?
-
-    // MARK: - UIDocumentMenuDelegate
-
-    func documentMenu(
-        _ documentMenu: UIDocumentMenuViewController,
-        didPickDocumentPicker documentPicker: UIDocumentPickerViewController
-    ) {
-        documentPicker.delegate = self
-        asyncOnMain(weakify(navigationController) { navigationController in
-            navigationController.present(documentPicker, animated: true, completion: nil)
-        })
-    }
 
     // MARK: - UIDocumentPickerDelegate
 

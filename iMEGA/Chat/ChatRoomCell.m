@@ -76,13 +76,39 @@
 - (void)updateAppearance {
     self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    self.chatLastTime.textColor = self.unreadView.hidden ? [UIColor mnz_subtitlesForTraitCollection:self.traitCollection] : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.chatLastTime.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:NSLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString];
     self.unreadView.backgroundColor = chatRoomsTypeArchived ? [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.unreadCount.textColor = UIColor.whiteColor;
     
-    self.onCallDuration.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+}
+
+- (void)manageUnreadMessages:(NSInteger)unreadCount {
+    if (unreadCount != 0) {
+        self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
+        self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        
+        self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
+        
+        self.unreadView.hidden = NO;
+        self.unreadView.clipsToBounds = YES;
+        
+        if (unreadCount > 0) {
+            self.unreadCount.text = [NSString stringWithFormat:@"%td", unreadCount];
+        } else {
+            self.unreadCount.text = [NSString stringWithFormat:@"%td+", -unreadCount];
+        }
+    } else {
+        self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+        self.chatLastMessage.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+        self.chatLastTime.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        
+        self.unreadView.hidden = YES;
+        self.unreadCount.text = nil;
+    }
 }
 
 #pragma mark - Public
@@ -120,52 +146,48 @@
         }
     }
     
+    self.onCallDuration.hidden = YES;
+    self.activeCallImageView.hidden = YES;
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:chatListItem.chatId];
         if (call.status == MEGAChatCallStatusUserNoPresent) {
             self.activeCallImageView.hidden = NO;
-            self.onCallInfoView.hidden = YES;
         } else {
-            self.activeCallImageView.hidden = YES;
-            self.onCallInfoView.hidden = NO;
-            switch (call.status) {
-                case MEGAChatCallStatusInProgress:
-                case MEGAChatCallStatusDestroyed:
-                case MEGAChatCallStatusTerminatingUserParticipation:
-                    self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
-                    break;
-                    
-                case MEGAChatCallStatusRingIn:
-                    self.chatLastMessage.text = NSLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                    break;
-                    
-                default:
-                    self.chatLastMessage.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
-                    break;
-            }
-            if (chatListItem.isGroup) {
-                self.onCallMicImageView.hidden = [NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalAudio"];
-                self.onCallVideoImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalVideo"];
-            } else {
-                self.onCallMicImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalAudio"];
-                self.onCallVideoImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalVideo"];
-            }
-            if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
-                self.initDuration = call.duration;
-                self.baseDate = [NSDate date];
-                [self updateDuration];
-                self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+            BOOL is1on1AndThereAreNoNewMessages = !chatListItem.isGroup && self.unreadView.hidden;
+            BOOL isGroupAndThereAreNoNewMessages = chatListItem.isGroup  && chatListItem.lastMessageType == MEGAChatMessageTypeCallStarted;
+            if (is1on1AndThereAreNoNewMessages || isGroupAndThereAreNoNewMessages) {
+                switch (call.status) {
+                    case MEGAChatCallStatusInProgress:
+                    case MEGAChatCallStatusDestroyed:
+                    case MEGAChatCallStatusTerminatingUserParticipation:
+                        self.onCallDuration.hidden = NO;
+                        self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                        self.chatLastMessage.text = [self.chatLastMessage.text stringByAppendingString:@" •"];
+                        break;
+                        
+                    case MEGAChatCallStatusRingIn:
+                        self.activeCallImageView.hidden = NO;
+                        self.chatLastMessage.text = NSLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                        break;
+                        
+                    default:
+                        self.chatLastMessage.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+                        break;
+                }
+                
+                if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
+                    self.initDuration = call.duration;
+                    self.baseDate = [NSDate date];
+                    self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+                    [self updateDuration];
+                    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+                    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+                }
             }
         }
-        self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-        self.chatLastTime.hidden = YES;
-    } else {
-        self.activeCallImageView.hidden = YES;
-        self.onCallInfoView.hidden = YES;
-        self.chatLastTime.hidden = NO;
+        self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
+    
     [self updateUnreadCountChange:chatListItem.unreadCount];
     self.mutedChatImageView.hidden = !muted;
 }
@@ -187,7 +209,6 @@
     }
     
     self.activeCallImageView.hidden = YES;
-    self.onCallInfoView.hidden = YES;
     self.chatLastTime.hidden = YES;
     
     [self updateUnreadCountChange:0];
@@ -204,47 +225,20 @@
 }
 
 - (void)updateDuration {
-    //    NSTimeInterval interval = self.initDuration;
     NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
     self.onCallDuration.text = [NSString mnz_stringFromTimeInterval:interval];
 }
 
-- (void)updateUnreadCountChange:(NSInteger)unreadCount {
+- (void)updateUnreadCountChange:(NSInteger)unreadCount { //Rename?
     self.chatTitle.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
-        self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    } else {
-        if (unreadCount != 0) {
-            self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-            self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-            
-            self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
-            self.chatLastTime.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-            
-            self.unreadView.hidden = NO;
-            self.unreadView.clipsToBounds = YES;
-            
-            if (unreadCount > 0) {
-                self.unreadCount.text = [NSString stringWithFormat:@"%td", unreadCount];
-            } else {
-                self.unreadCount.text = [NSString stringWithFormat:@"%td+", -unreadCount];
-            }
-        } else {
-            self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-            self.chatLastMessage.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-            self.chatLastTime.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            
-            self.unreadView.hidden = YES;
-            self.unreadCount.text = nil;
-        }
-    }
+    [self manageUnreadMessages:unreadCount];
 }
 
 - (void)updateLastMessageForChatListItem:(MEGAChatListItem *)item {
     self.chatListItem = item;
+    
+    self.onCallDuration.hidden = YES;
     
     switch (item.lastMessageType) {
             

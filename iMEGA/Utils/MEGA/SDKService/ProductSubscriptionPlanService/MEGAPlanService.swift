@@ -42,6 +42,7 @@ final class MEGAPlanCommand: NSObject {
         planLoadingTask.start(with: api) { result in
             var taskRetaining: MEGAPlanLoadTask? = planLoadingTask
             defer { taskRetaining = nil }
+            _ = taskRetaining
 
             completionAction(result)
             completion(self, result)

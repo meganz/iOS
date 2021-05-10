@@ -4,9 +4,6 @@
 
 #import "MEGASdkManager.h"
 
-#import "SVProgressHUD.h"
-#import <PureLayout/PureLayout.h>
-
 #import "NSDate+DateTools.h"
 #import "NSFileManager+MNZCategory.h"
 #import "UIColor+MNZCategory.h"

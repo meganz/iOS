@@ -38,6 +38,7 @@ import Foundation
         task.start(with: api) { [weak self] result in
             var retainedTask: OverDiskQuotaQueryTask? = task
             defer { retainedTask = nil }
+            _ = retainedTask
 
             self?.completionAction(try? result.get())
             completion(self, result)

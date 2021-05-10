@@ -14,7 +14,7 @@ extension ChatViewController {
            
         if chatRoom.isPublicChat,
             chatRoom.isPreview,
-        !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
+            !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
             return joinInputBar
         } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue || previewMode {
             return nil
@@ -41,7 +41,7 @@ extension ChatViewController {
     
     func updateJoinView() {
         var newState: JoinViewState
-        if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
+        if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
             newState = chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue ? .joining : .leaving
         } else {
             newState = .default
