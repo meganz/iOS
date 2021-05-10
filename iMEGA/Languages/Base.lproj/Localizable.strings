@@ -1724,6 +1724,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Allow Access";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -2249,7 +2253,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="User Interface";
+"settings.section.userInterface"="User Interface";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

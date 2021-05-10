@@ -4,11 +4,11 @@
 "ok"="OK";
 /* Button title to clear something */
 "clear"="비우기";
-/*  */
+/* */
 "yes"="예";
-/*  */
+/* */
 "no"="아니오";
-/*  */
+/* */
 "upload"="업로드";
 /*  */
 "error"="오류";
@@ -36,9 +36,9 @@
 "microphonePermissions"="설정에서 MEGA 앱이 마이크에 접근할 수 있도록 해주세요";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="설정에서 MEGA 앱이 사진 라이브러리에 접근할 수 있는 권한을 주세요";
-/* Message shown when the user clicks on a confirm account link that has already been used */
+/* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="당신의 계정은 활성화되었습니다. 로그인 하세요.";
-/*  */
+/* */
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 당신의 계정이 이미 활성화되었거나 등록을 취소했을 수 있습니다.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
@@ -69,7 +69,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 잠시 기다려주세요…";
+"takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 잠시 기다려주세요...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="서버가 너무 바쁩니다. 잠시 기다리세요.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -132,7 +132,7 @@
 "passwordsDoNotMatch"="암호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
-/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
 "termsForLosingPasswordCheckboxUnselected"="비밀번호를 잊는 것에 대한 위험성을 이해하였다는데에 동의해야합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다.";
@@ -160,13 +160,13 @@
 "fileTooBigMessage_open"="열려는 파일은 사용가능한 메모리보다 큽니다.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="사용할 수 없는 링크";
-/*  */
+/* */
 "fileLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="이 파일은 이용 약관/용인 가능한 이용 정책 위반으로 삭제되었습니다.";
-/*  */
+/* */
 "fileLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
-/*  */
+/* */
 "fileLinkUnavailableText4"="이 파일은 이용자에 의해 삭제되었습니다.";
 /* Message shown when a download starts */
 "downloadStarted"="다운로드가 시작되었습니다";
@@ -178,13 +178,13 @@
 "folderTooBigMessage"="다운로드 하려는 폴더가 사용가능한 메모리보다 큽니다.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' 폴더를 생성할 수 없습니다";
-/*  */
+/* */
 "folderLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
-/*  */
+/* */
 "folderLinkUnavailableText2"="이 파일은 이용 약관/용인 가능한 이용 정책 위반으로 삭제되었습니다.";
-/*  */
+/* */
 "folderLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
-/*  */
+/* */
 "folderLinkUnavailableText4"="폴더 링크가 이용자에 의해 삭제되었습니다.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="인터넷 연결 없음";
@@ -258,17 +258,15 @@
 "queued"="대기열";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="일시정지됨";
-/* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="취소됨";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
-"Completing..."="완료중…";
+"Completing..."="완료중...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
-"Retrying..."="재시도중…";
+"Retrying..."="재시도중...";
 /* Section title of the 'Sort by' */
 "sortTitle"="정렬 기준";
 /* Button title to 'Save' the selected option */
 "save"="저장";
-/* Sort by option (1/6). This one orders the files alphabethically */
+/* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="이름 (오름차순)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="이름 (내림차순)";
@@ -306,7 +304,7 @@
 "newFolder"="새 폴더";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="새 폴더의 이름";
-/* Title button for the create folder alert. */
+/* Title button for the create folder alert.  */
 "createFolderButton"="생성";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="이미 같은 이름을 가진 폴더가 존재합니다.";
@@ -315,7 +313,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다.";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="다음에서 들여오기…";
+"uploadFrom"="다음에서 들여오기...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A]는 이미 [B]로 업로드 되었습니다";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -341,9 +339,9 @@
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="링크 관리";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="링크 생성중…";
+"generatingLink"="링크 생성중...";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="링크 생성중…";
+"generatingLinks"="링크 생성중...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="링크 복사됨";
 /* Message shown when some links have been copied to the pasteboard */
@@ -381,12 +379,12 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="키 복사";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="다른 곳에서 열기…";
-/*  */
+"openIn"="다른 곳에서 열기...";
+/* */
 "uploadToMega"="MEGA에 업로드";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="이름을 변경하려면 파일을 탭하세요";
-/*  */
+/* */
 "sendToContact"="지인에게 보내기";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="내 대화";
@@ -448,14 +446,14 @@
 "copyFilesFolderMessage"="%d 파일과 1 폴더 복사됨";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] 파일과 [B] 폴더가 복사됨";
-/* Title for the action that allows you to rename a file or folder */
+/* Title for the action that allows you to rename a file or folder  */
 "rename"="이름 바꾸기";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="새 이름을 입력하세요";
-/* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="%@ 파일의 이름을 바꿀까요?";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
 /* Title for the action that allows you to replace a file. */
-"replace"="바꾸기";
+"replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="휴지통으로 이동";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -852,6 +850,7 @@
 "yourPasswordHasBeenReset"="비밀번호가 성공적으로 재설정되었습니다. 이제 당신의 계정으로 로그인할 수 있습니다.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="보내기";
+/* The title of the screen to park an account. */
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="계정 보류";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -984,7 +983,7 @@
 "xDaysLeft"="%1일 남음";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="([S]%1[/S] %2 후 보너스 만료)";
-/* Add Phone Number title */
+/* Add Phone Number title  */
 "Add Phone Number"="전화번호 추가";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="전화번호를 인증하여서 %1$s의 무료 저장 공간과 %2$s의 전송 할당량을 받았습니다.";
@@ -1182,9 +1181,9 @@
 "Use Mobile Data for Videos"="동영상에 모바일 데이터 사용";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="자동 부재중";
-/*  */
+/* */
 "xMinutes"="[X]분";
-/*  */
+/* */
 "1Minute"="1분";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="[X]분 이상 활동이 없으면 부재중으로 표시";
@@ -1279,13 +1278,13 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="대화가 발견되지 않음";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@님이 입력중…";
+"isTyping"="%@님이 입력중...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
-"twoUsersAreTyping"="%1$s님이 [A]입력중…[/A]";
+"twoUsersAreTyping"="%1$s님이 [A]입력중...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
-"moreThanTwoUsersAreTyping"="%1$s님 외 다수가 [A]입력중…[/A]";
+"moreThanTwoUsersAreTyping"="%1$s님 외 다수가 [A]입력중...[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="%s에 메시지 작성…";
+"writeAMessage"="%s에 메시지 작성...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="대화 기록 없음";
 /* Button which allows to retry send message in chat conversation. */
@@ -1296,7 +1295,7 @@
 "fromCloudDrive"="클라우드 드라이브에서";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="연락처 보내기";
-/*  */
+/* */
 "done"="완료";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="고급 URL 미리보기 활성화";
@@ -1306,13 +1305,13 @@
 "notNow"="나중에";
 /* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
 "Manage"="관리";
-/*  */
+/* */
 "never"="절대 안함";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="고급 URL 미리보기를 영구히 해제하려고 합니다. 당신은 고급 URL 미리보기를 설정에서 다시 활성화할 수 있습니다. 진행하시겠습니까?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="미리보기 제거";
-/*  */
+/* */
 "warning"="경고";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="전송 할당량 부족";
@@ -1357,13 +1356,14 @@
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
 /* Label in login screen to inform about the chat initialization proccess */
-"connecting"="연결중…";
+"connecting"="연결중...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="올바르게 공유되었습니다";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="전송 실패:";
+/* MEGAError */
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="오류 없음";
 /* Label to show that an Internal error occurs during a SDK operation. */
@@ -1440,6 +1440,7 @@
 "HTTP error"="HTTP 오류";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA는 모바일 기기를 위한 전용 앱과 함께 표준 웹 브라우저를 통해 사용 가능한 이용자가 제어하는 암호화된 클라우드 저장소를 제공합니다. 다른 클라우드 저장소 제공자들과 달리 당신의 데이터는 절대 우리가 아니라 당신의 클라이언트 기기를 통해 암호화되고 해독됩니다.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1452,10 +1453,11 @@
 "generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Pro Lite 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 400GB의 저장 공간과 매달 1TB의 전송 할당량을 드립니다.\nPro I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 2TB의 저장 공간과 매달 2TB의 전송 할당량을 드립니다.\nPro II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 8TB의 저장 공간과 매달 8TB의 전송 할당량을 드립니다.\nPro III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 16TB의 저장 공간과 매달 16TB의 전송 할당량을 드립니다.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
-"calling..."="통화중…";
+"calling..."="통화중...";
 /* notification subtitle of incoming calls */
 "Incoming call"="전화 수신중";
 /* Button title to see the available bonus */
@@ -1473,7 +1475,7 @@
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="원본";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
-"preparing..."="준비중…";
+"preparing..."="준비중...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="QR 코드";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1502,7 +1504,7 @@
 "versions"="버전";
 /* Title label of a node property. */
 "location"="위치";
-/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="총 크기";
 /* Refers to the type of a file or folder. */
 "type"="형식";
@@ -1560,11 +1562,11 @@
 "exportRecoveryKey"="복구 키 내보내기";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="로그아웃 진행";
-/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="당신은 지금 로그아웃 하려고 합니다, 당신이 비밀번호를 기억하는지 테스트하세요. 만약 비밀번호를 잊어버리면, 당신의 MEGA 데이터에 접근할 수 없습니다.";
 /* state previous to import a file */
-"loading"="불러오는 중…";
-/*  */
+"loading"="불러오는 중...";
+/*   */
 "next"="다음";
 /* Button title to allow the user ignore something */
 "ignore"="무시";
@@ -1598,21 +1600,21 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]단체 통화 종료[/A][C]. 통화 시간: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
-/*  */
+/* */
 "xSeconds"="%d초";
-/*  */
+/* */
 "1Second"="1초";
-/*  */
+/* */
 "1Hour"="1시간";
-/*  */
+/* */
 "xHours"="%d시간";
-/*  */
+/* */
 "1Hour1Minute"="1시간 1분";
-/*  */
+/* */
 "1HourxMinutes"="1시간 %d분";
-/*  */
+/* */
 "xHours1Minute"="%d시간 1분";
-/*  */
+/* */
 "xHoursxMinutes"="%1$d시간 %2$d분";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="지원하지 않는 파일";
@@ -1773,7 +1775,7 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="사진에 저장";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="사진에 저장중…";
+"Saving to Photos…"="사진에 저장중...";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="모든 미디어";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -1817,9 +1819,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="참여자 한도를 초과하였기 때문에 통화를 시작할 수 없습니다.";
 /* Label shown while joining a public chat */
-"Joining..."="참여하는 중…";
+"Joining..."="참여하는 중...";
 /* Label shown while leaving a public chat */
-"Leaving..."="떠나는 중…";
+"Leaving..."="떠나는 중...";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="목록 보기";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1918,9 +1920,9 @@
 "Last seen %s"="최근 접속 시간: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="아주 오래 전에 마지막 접속함";
-/*  */
+/* */
 "Today"="오늘";
-/*  */
+/* */
 "Yesterday"="어제";
 /* Title of the button to share a location in a chat */
 "Send This Location"="이 위치 전송";
@@ -1951,7 +1953,7 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="통화가 진행중이면 음성 메시지를 녹음할 수 없습니다.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="녹음중…";
+"Recording..."="녹음중...";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="진행중인 통화";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -2054,11 +2056,11 @@
 "My chat files"="내 대화 파일";
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="요금제";
-/*  */
+/* */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="만약 이 복구 키도 잃어버리고 비밀번호도 잊으셨다면, [B]MEGA 조차도 당신의 모든 파일, 폴더 그리고 메시지에 접근이 불가능합니다.[/B]";
-/*  */
+/* */
 "Business"="기업용";
-/*  */
+/* */
 "Administrator"="관리자";
 /* Business user role */
 "User"="이용자";
@@ -2088,7 +2090,7 @@
 "Your account is currently [B]suspended[/B]. You can only browse your data."="당신의 계정은 현재 [B]정지[/B]되었습니다. 당신의 데이터를 탐색만할 수 있습니다.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA는 당신의 데이터에 접근할 수 없지만, 당신의 비즈니스 계정 관리자는 당신의 이용자 계정의 카메라 업로드를 보거나 제어할 수 있는 권한이 있습니다.";
-/*  */
+/* */
 "Something went wrong"="뭔가 잘못 됐습니다";
 /* Title of the "Links" Shared Items. */
 "Links"="링크";
@@ -2104,7 +2106,7 @@
 "Until this morning"="오늘 아침까지";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="내일 아침까지";
-/* Chat Notifications DND: Option to turn the DND on forever */
+/*Chat Notifications DND: Option to turn the DND on forever */
 "Until I turn it back on"="내가 다시 켤 때까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
@@ -2127,7 +2129,7 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="알림 꺼짐";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="재접속중…";
+"Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="돌아왔습니다.";
 /* Subtitle of chat screen when the chat is inactive */
@@ -2186,7 +2188,7 @@
 "Your account is already verified"="계정이 이미 인증되었습니다";
 /* Place holder for enter mobile number field */
 "Your phone number"="당신의 전화번호";
-/* Text related to verified phone number. Used as title or cell description. */
+/* Text related to verified phone number. Used as title or cell description.  */
 "Phone Number"="전화번호";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
@@ -2218,7 +2220,7 @@
 "Resume All"="모두 재개";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="모두 삭제";
-/* Alert header for asking permission to resume transfers */
+/* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="전송을 재개할까요?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="이미지 품질";
@@ -2245,12 +2247,12 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="메시지…";
+"Message..."="메시지...";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="유저 인터페이스";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
+"settings.section.userInterface"="유저 인터페이스";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="기본 탭";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="정렬과 보기 모드";
@@ -2262,13 +2264,13 @@
 "Night"="밤";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="최소";
-/* Section title inside of Settings - User Interface, where you can change the app's launch. */
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
 "Launch"="실행";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="레이아웃";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="앱 아이콘";
-/* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
 "Configure default launch section."="기본 실행 섹션 설정";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기)";
@@ -2300,17 +2302,19 @@
 "File link unavailable"="파일 링크가 사용불가능합니다";
 /* Header of block with all shared files in chat. */
 "Shared Files"="공유된 파일";
-/* Over Disk Quota Screen Navigation Bar Title */
+/* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="저장소 가득 참";
 /* Over Disk Quota title message that tell customer your data at risk. */
 "Your Data is at Risk!"="당신의 데이터가 위험합니다!";
-/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 <b>%@</b>로 업그레이드가 필요합니다.</paragraph>";
-/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 개인화된 요금제를 위해 고객지원에 연락하는 것을 필요로 합니다.</paragraph>";
-/* Over Disk Quota of number of days */
+/* Over Disk Quota of number of days*/
 "%d days"="%d일";
-/* Over Disk Quota of must act immediately to save your data */
+/* Over Disk Quota of must act immediately to save your data*/
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>데이터를 지키려면 즉시 조치해야합니다.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>업그레이드까지 <warn>%@</warn> 남았습니다.</body>";
@@ -2363,7 +2367,7 @@
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="라벨";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="라벨…";
+"Label..."="라벨...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="라벨 제거";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2453,7 +2457,7 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="1개월";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="사용자 지정…";
+"Custom..."="사용자 지정...";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]님이 메시지 삭제 시간을[/B][A] %2$s[/A][B]로 변경하였습니다.[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2480,13 +2484,13 @@
 "1 month"="1개월";
 /* The number of months e.g. 2 months, 5 months etc. */
 "%1 months"="%1개월";
-/*  */
+/* */
 "1 year"="1년";
 /*  */
 "year"="년";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="공유";
-/* Search placeholder text in search bar on home screen */
+/* Search placeholder text in search bar on home screen*/
 "Search Your Files"="파일 찾기";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA 카메라 업로드 폴더";
@@ -2520,7 +2524,7 @@
 "TODAY"="오늘";
 /* Section title for the photo explorer view */
 "YESTERDAY"="어제";
-/* Photo Explorer Screen: No images in the accoun t */
+/* Photo Explorer Screen: No images in the accoun t*/
 "No images found"="이미지가 없습니다";
 /* Accessibility label for Home section in tabbar item */
 "Home"="홈";
@@ -2532,11 +2536,11 @@
 "Link Password"="링크 암호";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="이 링크의 암호를 공유하시겠습니까?";
-/* Accessibility message when a message is sent in chat */
+/*  Accessibility message when a message is sent in chat */
 "message sent"="메시지 발송됨";
 /* Accessibility message when a message sending fails in chat */
 "failed to send the message"="메시지 발송 실패";
-/* Accessibility message when a message is cancelled in chat */
+/*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="메시지 발송 취소";
 /* Cookie dialog header */
 "Before You Continue"="진행하기 전에";
