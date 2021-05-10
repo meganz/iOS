@@ -4,11 +4,11 @@
 "ok"="ตกลง";
 /* Button title to clear something */
 "clear"="ล้าง";
-/*  */
+/* */
 "yes"="ใช่";
-/*  */
+/* */
 "no"="ไม่ใช่";
-/*  */
+/* */
 "upload"="อัปโหลด";
 /*  */
 "error"="ผิดพลาด";
@@ -36,9 +36,9 @@
 "microphonePermissions"="กรุณาให้สิทธิ์แอป MEGA เพื่อเข้าถึงไมโครโฟนในการตั้งค่าของคุณ";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปถ่ายของคุณได้";
-/* Message shown when the user clicks on a confirm account link that has already been used */
+/* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="บัญชีของคุณถูกเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ";
-/*  */
+/* */
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="ลิงก์ยืนยันของคุณใช้ไม่ได้อีกต่อไป บัญชีของคุณอาจถูกเปิดใช้งานหรือคุณอาจยกเลิกการลงทะเบียนแล้ว";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
@@ -69,7 +69,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="รายการเนื้อหาที่คุณพยายามเข้าถึงยังไม่พร้อมใช้งานกับบัญชีนี้ กรุณาลองเข้าสู่ระบบด้วยบัญชีเดียวกับในไคลเอนต์เว็บบนมือถือ";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ…";
+"takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -132,7 +132,7 @@
 "passwordsDoNotMatch"="รหัสผ่านไม่ตรงกัน";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="คุณจะต้องเห็นด้วยกับเงื่อนไขการให้บริการในการลงทะเบียนบัญชีผู้ใช้บน MEGA";
-/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
 "termsForLosingPasswordCheckboxUnselected"="คุณต้องยอมรับว่าคุณเข้าใจถึงอันตราย หากลืมรหัสผ่าน";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="ที่อยู่อีเมลนี้เคยลงทะเบียนกับ MEGA แล้ว";
@@ -160,13 +160,13 @@
 "fileTooBigMessage_open"="ไฟล์ที่คุณกำลังพยายามเปิด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="ลิงก์ใช้งานไม่ได้";
-/*  */
+/* */
 "fileLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="ไฟล์ถูกลบออกเนื่องจากขัดต่อข้อกำหนดของการให้บริการและนโยบายการใช้งาน.";
-/*  */
+/* */
 "fileLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
-/*  */
+/* */
 "fileLinkUnavailableText4"="ไฟล์ถูกลบจากผู้ใช้งาน.";
 /* Message shown when a download starts */
 "downloadStarted"="เริ่มต้นดาวน์โหลด";
@@ -178,13 +178,13 @@
 "folderTooBigMessage"="โฟลเดอร์ที่คุณกำลังพยายามดาวน์โหลด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="โฟลเดอร์ '%@' ไม่สามารถสร้างได้";
-/*  */
+/* */
 "folderLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
-/*  */
+/* */
 "folderLinkUnavailableText2"="ลิงก์โฟลเดอร์ถูกลบออกแล้ว เนื่องจากละเมิด ToS/AUP";
-/*  */
+/* */
 "folderLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
-/*  */
+/* */
 "folderLinkUnavailableText4"="ลิงก์โฟลเดอร์ถูกปิดใช้งานโดยผู้ใช้";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
@@ -258,17 +258,15 @@
 "queued"="อยู่ในคิว";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="พักแล้ว";
-/* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="ยกเลิกแล้ว";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
-"Completing..."="กำลังเสร็จสิ้น…";
+"Completing..."="กำลังเสร็จสิ้น...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
-"Retrying..."="กำลังลองอีกครั้ง…";
+"Retrying..."="กำลังลองอีกครั้ง...";
 /* Section title of the 'Sort by' */
 "sortTitle"="เรียงตาม";
 /* Button title to 'Save' the selected option */
 "save"="บันทึก";
-/* Sort by option (1/6). This one orders the files alphabethically */
+/* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="ชื่อ (จากน้อยไปมาก)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="ชื่อ (จากมากไปน้อย)";
@@ -306,7 +304,7 @@
 "newFolder"="โฟล์เดอร์ใหม่";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="ชื่อสำหรับโฟลเดอร์ใหม่";
-/* Title button for the create folder alert. */
+/* Title button for the create folder alert.  */
 "createFolderButton"="สร้าง";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="มีโฟลเดอร์ชื่อเดียวกันอยู่แล้ว";
@@ -341,9 +339,9 @@
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="จัดการลิงก์";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="กำลังสร้างลิงก์…";
+"generatingLink"="กำลังสร้างลิงก์...";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="กำลังสร้างลิงก์…";
+"generatingLinks"="กำลังสร้างลิงก์...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="คัดลอกลิงก์แล้ว";
 /* Message shown when some links have been copied to the pasteboard */
@@ -381,12 +379,12 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="คัดลอกคีย์";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="เปิดด้วย…";
-/*  */
+"openIn"="เปิดด้วย...";
+/* */
 "uploadToMega"="อัปโหลดไปยัง MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="แตะไฟล์เพื่อเปลี่ยนชื่อ";
-/*  */
+/* */
 "sendToContact"="ส่งไปที่ผู้ติดต่อ";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="การแชทของฉัน";
@@ -448,12 +446,12 @@
 "copyFilesFolderMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกคัดลอกแล้ว";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกคัดลอกแล้ว";
-/* Title for the action that allows you to rename a file or folder */
+/* Title for the action that allows you to rename a file or folder  */
 "rename"="เปลี่ยนชื่อ";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="กรอกชื่อใหม่";
-/* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Rename File %@ ?";
+/* Alert title to ask if user want to rename the file. %@ is a place holder.*/
+"rename_file_alert_title"="Rename File %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Replace";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -852,6 +850,7 @@
 "yourPasswordHasBeenReset"="รหัสผ่านของคุณถูกรีเซ็ตเรียบร้อยแล้ว กรุณาเข้าสู่ระบบด้วยบัญชีตอนนี้ได้แล้ว";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="ส่ง";
+/* The title of the screen to park an account. */
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="เก็บบัญชี";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -984,7 +983,7 @@
 "xDaysLeft"="เหลืออีก %1 วัน";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(โบนัสจะหมดอายุใน [S]%1[/S] %2)";
-/* Add Phone Number title */
+/* Add Phone Number title  */
 "Add Phone Number"="เพิ่มหมายเลขโทรศัพท์";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="คุณได้รับพื้นที่เก็บข้อมูลจำนวน %1$s และโควต้าการถ่ายโอนอีก %2$s สำหรับการตรวจสอบหมายเลขโทรศัพท์ของคุณ";
@@ -1165,7 +1164,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] เปลี่ยนชื่อแชทกลุ่มเป็น ‘[B]’";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="เพิ่มผู้เข้าร่วม…";
+"addParticipant"="เพิ่มผู้เข้าร่วม...";
 /* Menu item to add participants to a chat */
 "addParticipants"="เพิ่มผู้เข้าร่วม";
 /* Title that refers to the status of the chat (Either Online or Offline) */
@@ -1182,9 +1181,9 @@
 "Use Mobile Data for Videos"="ใช้ข้อมูลมือถือสำหรับวิดีโอ";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="ไม่อยู่อัตโนมัติ";
-/*  */
+/* */
 "xMinutes"="[X] นาที";
-/*  */
+/* */
 "1Minute"="1 นาที";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="แสดงให้ฉันเห็นหลังจาก [X] นาทีที่ไม่มีการใช้งาน";
@@ -1279,13 +1278,13 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="ไม่พบแชท";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ กำลังพิมพ์…";
+"isTyping"="%@ กำลังพิมพ์...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
-"twoUsersAreTyping"="%1$s [A]กำลังพิมพ์…[/A]";
+"twoUsersAreTyping"="%1$s [A]กำลังพิมพ์...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
-"moreThanTwoUsersAreTyping"="%1$s [A]และคนอื่น ๆ กำลังพิมพ์…[/A]";
+"moreThanTwoUsersAreTyping"="%1$s [A]และคนอื่น ๆ กำลังพิมพ์...[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="เขียนข้อความถึง %s…";
+"writeAMessage"="เขียนข้อความถึง %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="ไม่มีประวัติการสนทนา";
 /* Button which allows to retry send message in chat conversation. */
@@ -1296,7 +1295,7 @@
 "fromCloudDrive"="จากคลาวด์ไดรฟ์";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="ส่งผู้ติดต่อ";
-/*  */
+/* */
 "done"="เรียบร้อย";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="เปิดใช้งานตัวอย่าง URL";
@@ -1306,13 +1305,13 @@
 "notNow"="ไม่ใช่ตอนนี้";
 /* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
 "Manage"="จัดการ";
-/*  */
+/* */
 "never"="ไม่เคยมี";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="คุณกำลังปิดใช้แสดงตัวอย่าง URL อย่างถาวร คุณสามารถเปิดใช้งานตัวอย่าง URL ได้ในการตั้งค่าของคุณ คุณต้องการดำเนินการต่อหรือไม่";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="นำตัวอย่างออก";
-/*  */
+/* */
 "warning"="คำเตือน";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="โควต้าการถ่ายโอนไม่เพียงพอ";
@@ -1357,13 +1356,14 @@
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
 /* Label in login screen to inform about the chat initialization proccess */
-"connecting"="กำลังเชื่อมต่อ…";
+"connecting"="กำลังเชื่อมต่อ...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="ไม่สามารถแชร์บางรายการกับ MEGA";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="แชร์เรียบร้อยแล้ว";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="ถ่ายโอนไม่สำเร็จ:";
+/* MEGAError */
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="ไม่มีข้อผิดพลาด";
 /* Label to show that an Internal error occurs during a SDK operation. */
@@ -1440,6 +1440,7 @@
 "HTTP error"="ข้อผิดพลาด HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA ให้บริการจัดเก็บข้อมูลบนระบบคลาวด์ที่ผู้ใช้ควบคุมได้ด้วยตนเองผ่านมาตรฐานเว็บเบราว์เซอร์ รวมถึงแอปพลิเคชันเฉพาะสำหรับโทรศัพท์มือถือ ซึ่งแตกต่างจากผู้ให้บริการจัดเก็บข้อมูลบนคลาวด์รายอื่น โดยที่ข้อมูลของคุณจะถูกเข้ารหัสและถอดรหัสโดยอุปกรณ์ไคลเอ็นต์ของคุณเท่านั้นและเราจะไม่เข้าไปยุ่งเกี่ยวกับข้อมูลใด ๆ ของคุณ";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1452,10 +1453,11 @@
 "generalDescriptionParagraph4"="MEGA มีพื้นที่เก็บข้อมูลฟรี 50 GB สำหรับผู้ใช้ที่ลงทะเบียนทุกคนพร้อมโบนัสพิเศษและเสนอแผนการจ่ายเงินที่มีให้เลือกมากมาย:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="สมัครใช้งาน Pro Lite: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 400 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน Pro I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 2 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน Pro II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน Pro III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 16 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายสิทธิส่วนบุคคล: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
-"calling..."="กำลังโทร…";
+"calling..."="กำลังโทร...";
 /* notification subtitle of incoming calls */
 "Incoming call"="สายเรียกเข้า";
 /* Button title to see the available bonus */
@@ -1473,7 +1475,7 @@
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
 "original"="ต้นฉบับ";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
-"preparing..."="กำลังจัดเตรียม…";
+"preparing..."="กำลังจัดเตรียม...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="คิวอาร์โค้ด";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1502,7 +1504,7 @@
 "versions"="เวอร์ชัน";
 /* Title label of a node property. */
 "location"="ตำแหน่งที่ตั้ง";
-/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="ขนาดทั้งหมด";
 /* Refers to the type of a file or folder. */
 "type"="ประเภท";
@@ -1560,11 +1562,11 @@
 "exportRecoveryKey"="ส่งออกคีย์การกู้คืน";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="ดำเนินการเพื่อออกจากระบบ";
-/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="คุณกำลังจะออกจากระบบ กรุณาทดสอบรหัสผ่านของคุณเพื่อให้แน่ใจว่าคุณจำได้ หากคุณทำรหัสผ่านหาย คุณจะไม่สามารถเข้าถึงข้อมูล MEGA ของคุณได้";
 /* state previous to import a file */
-"loading"="กำลังโหลด…";
-/*  */
+"loading"="กำลังโหลด...";
+/*   */
 "next"="ต่อไป";
 /* Button title to allow the user ignore something */
 "ignore"="ละเว้น";
@@ -1598,21 +1600,21 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]สิ้นสุดการโทรกลุ่มแล้ว[/A][C] รวมระยะเวลา: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="ระยะเวลา: %@";
-/*  */
+/* */
 "xSeconds"="%d วินาที";
-/*  */
+/* */
 "1Second"="1 วินาที";
-/*  */
+/* */
 "1Hour"="1 ชั่วโมง";
-/*  */
+/* */
 "xHours"="%d ชั่วโมง";
-/*  */
+/* */
 "1Hour1Minute"="1 ชั่วโมง 1 นาที";
-/*  */
+/* */
 "1HourxMinutes"="1 ชั่วโมง %d นาที";
-/*  */
+/* */
 "xHours1Minute"="%d ชั่วโมง 1 นาที";
-/*  */
+/* */
 "xHoursxMinutes"="%1$d ชั่วโมง %2$d นาที";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="ไฟล์ไม่ได้รับการสนับสนุน";
@@ -1773,7 +1775,7 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="บันทึกลงในรูปถ่าย";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="กำลังบันทึกไปยังรูปภาพ…";
+"Saving to Photos…"="กำลังบันทึกไปยังรูปภาพ...";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="สื่อทั้งหมด";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -1918,9 +1920,9 @@
 "Last seen %s"="ดูครั้งล่าสุด: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="ดูครั้งล่าสุดเมื่อนานมาแล้ว";
-/*  */
+/* */
 "Today"="วันนี้";
-/*  */
+/* */
 "Yesterday"="เมื่อวาน";
 /* Title of the button to share a location in a chat */
 "Send This Location"="ส่งตำแหน่งนี้";
@@ -1951,7 +1953,7 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="ไม่สามารถบันทึกข้อความเสียงในขณะที่มีการโทรได้";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="กำลังบันทึก…";
+"Recording..."="กำลังบันทึก...";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="สายที่กำลังโทร";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -2054,11 +2056,11 @@
 "My chat files"="ไฟล์แชทของฉัน";
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="แผน";
-/*  */
+/* */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="หากคุณทำคีย์การกู้คืนสูญหายและลืมรหัสผ่าน[B]ไฟล์ โฟลเดอร์และข้อความทั้งหมดของคุณจะไม่สามารถเข้าถึงได้ ไม่เว้นแม้แต่ MEGA[/B]";
-/*  */
+/* */
 "Business"="ธุรกิจ";
-/*  */
+/* */
 "Administrator"="แอดมิน";
 /* Business user role */
 "User"="ผู้ใช้";
@@ -2088,7 +2090,7 @@
 "Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกระงับ[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="แม้ว่า MEGA จะไม่สามารถเข้าถึงข้อมูลของคุณได้ แต่ผู้ดูแลระบบบัญชีธุรกิจของคุณก็มีความสามารถในการควบคุมและดูการอัปโหลดจากกล้องในบัญชีผู้ใช้ของคุณได้";
-/*  */
+/* */
 "Something went wrong"="มีบางอย่างผิดพลาด";
 /* Title of the "Links" Shared Items. */
 "Links"="ลิงก์";
@@ -2104,7 +2106,7 @@
 "Until this morning"="จนกว่าจะถึงเช้านี้";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
 "Until tomorrow morning"="จนกว่าจะถึงพรุ่งนี้เช้า";
-/* Chat Notifications DND: Option to turn the DND on forever */
+/*Chat Notifications DND: Option to turn the DND on forever */
 "Until I turn it back on"="จนกว่าฉันจะเปิดอีกครั้ง";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 นาที";
@@ -2127,7 +2129,7 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="การแจ้งเตือนถูกปิดเสียง";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="กำลังเชื่อมต่อใหม่…";
+"Reconnecting..."="กำลังเชื่อมต่อใหม่...";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="คุณกลับมาแล้ว";
 /* Subtitle of chat screen when the chat is inactive */
@@ -2186,7 +2188,7 @@
 "Your account is already verified"="บัญชีของคุณได้รับการตรวจสอบแล้ว";
 /* Place holder for enter mobile number field */
 "Your phone number"="หมายเลขโทรศัพท์ของคุณ";
-/* Text related to verified phone number. Used as title or cell description. */
+/* Text related to verified phone number. Used as title or cell description.  */
 "Phone Number"="หมายเลขโทรศัพท์";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="กรุณากรอกรหัสการตรวจสอบที่ส่งถึง";
@@ -2218,7 +2220,7 @@
 "Resume All"="ดำเนินการต่อทั้งหมด";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="ล้างทั้งหมด";
-/* Alert header for asking permission to resume transfers */
+/* Alert header for asking permission to resume transfers*/
 "Resume Transfers?"="ดำเนินการถ่ายโอนต่อหรือไม่";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="คุณภาพของรูป";
@@ -2249,8 +2251,8 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="ลากไปทางซ้ายเพื่อยกเลิก หรือปล่อยเพื่อส่ง";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="หน้าจอผู้ใช้";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
+"settings.section.userInterface"="หน้าจอผู้ใช้";
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="แท็บเริ่มต้น";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="เรียงลําดับและโหมดมุมมอง";
@@ -2262,13 +2264,13 @@
 "Night"="กลางคืน";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="เรียบง่าย";
-/* Section title inside of Settings - User Interface, where you can change the app's launch. */
+/* Section title inside of Settings - User Interface, where you can change the app's launch.*/
 "Launch"="เปิดแอป";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="เค้าโครง";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="ไอคอนแอป";
-/* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
+/* Footer text to explain what you could do in the Settings - User Interface - Launch section.*/
 "Configure default launch section."="กำหนดค่าส่วนการเปิดใช้งานเริ่มต้น";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="กำหนดค่าลำดับการเรียงและมุมมองเริ่มต้น (รายการหรือรูปขนาดย่อ)";
@@ -2300,17 +2302,19 @@
 "File link unavailable"="ลิงก์ไฟล์ไม่พร้อมใช้งาน";
 /* Header of block with all shared files in chat. */
 "Shared Files"="ไฟล์ที่ใช้ร่วมกัน";
-/* Over Disk Quota Screen Navigation Bar Title */
+/* Over Disk Quota Screen Navigation Bar Title*/
 "Storage Full"="พื้นที่เก็บข้อมูลเต็มแล้ว";
 /* Over Disk Quota title message that tell customer your data at risk. */
 "Your Data is at Risk!"="ข้อมูลของคุณอยู่ในความเสี่ยง!";
-/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>เราได้ติดต่อคุณทางอีเมล <b>%@</b> เมื่อ <b>%@</b> แต่คุณยังมีไฟล์ %@ ไฟล์ซึ่งมีเนื้อที่ <b>%@</b> ในบัญชี MEGA ของคุณ คุณจำเป็นต้องมีบัญชี <b>%@</b> เป็นอย่างน้อย</paragraph>";
-/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
+ subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>เราได้ติดต่อคุณทางอีเมล <b>%@</b> เมื่อ <b>%@</b> แต่คุณยังมีไฟล์ %@ ไฟล์ซึ่งมีเนื้อที่ <b>%@</b> ในบัญชี MEGA ของคุณ คุณจำเป็นต้องติดต่อฝ่ายสนับสนุนเพื่อกำหนดแผนบัญชีของคุณเอง</paragraph>";
-/* Over Disk Quota of number of days */
+/* Over Disk Quota of number of days*/
 "%d days"="%d วัน";
-/* Over Disk Quota of must act immediately to save your data */
+/* Over Disk Quota of must act immediately to save your data*/
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>คุณต้องดำเนินการทันทีเพื่อปกป้องข้อมูลของคุณ</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>คุณมีเวลาเหลืออีก <warn>%@</warn> ในการอัปเกรด</body>";
@@ -2363,7 +2367,7 @@
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="ป้ายชื่อ";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="ป้ายกำกับ…";
+"Label..."="ป้ายกำกับ...";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="ลบป้ายกำกับออก";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2480,13 +2484,13 @@
 "1 month"="1 เดือน";
 /* The number of months e.g. 2 months, 5 months etc. */
 "%1 months"="%1 เดือน";
-/*  */
+/* */
 "1 year"="1 ปี";
 /*  */
 "year"="ปี";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
 "SHARE"="แชร์";
-/* Search placeholder text in search bar on home screen */
+/* Search placeholder text in search bar on home screen*/
 "Search Your Files"="ค้นหาไฟล์ของคุณ";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
@@ -2520,7 +2524,7 @@
 "TODAY"="วันนี้";
 /* Section title for the photo explorer view */
 "YESTERDAY"="เมื่อวานนี้";
-/* Photo Explorer Screen: No images in the accoun t */
+/* Photo Explorer Screen: No images in the accoun t*/
 "No images found"="ไม่พบรูปภาพ";
 /* Accessibility label for Home section in tabbar item */
 "Home"="หน้าแรก";
@@ -2532,11 +2536,11 @@
 "Link Password"="รหัสผ่านลิงก์";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="คุณต้องการแชร์รหัสผ่านสำหรับลิงก์นี้หรือไม่";
-/* Accessibility message when a message is sent in chat */
+/*  Accessibility message when a message is sent in chat */
 "message sent"="ข้อความที่ส่งแล้ว";
 /* Accessibility message when a message sending fails in chat */
 "failed to send the message"="ส่งข้อความไม่สำเร็จ";
-/* Accessibility message when a message is cancelled in chat */
+/*  Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="ยกเลิกการส่งข้อความแล้ว";
 /* Cookie dialog header */
 "Before You Continue"="ก่อนที่คุณจะดำเนินการต่อ";

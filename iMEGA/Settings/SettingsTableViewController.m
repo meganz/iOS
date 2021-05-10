@@ -6,11 +6,10 @@
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
-typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
-    RegulationSectionPrivacyPolicy,
-    RegulationSectionCookiePolicy,
-    RegulationSectionCookieSettings,
-    RegulationSectionTermsOfService,
+typedef NS_ENUM(NSUInteger, LastSectionRow) {
+    LastSectionRowAbout,
+    LastSectionRowTermsAndPolicies,
+    LastSectionRowCookieSettings
 };
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -19,20 +18,17 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *securityOptionsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *securityLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *userInterfaceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fileManagementLabel;
-@property (weak, nonatomic) IBOutlet UILabel *appearanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *helpLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cookiePolicyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
+@property (weak, nonatomic) IBOutlet UILabel *termsAndPoliciesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cookieSettingsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
 
 @end
 
@@ -71,20 +67,17 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
     self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
     self.chatLabel.text = NSLocalizedString(@"chat", @"Chat section header");
     
-    self.securityOptionsLabel.text = NSLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
+    self.securityLabel.text = NSLocalizedString(@"settings.section.security", @"Title of the Settings section where you can configure security details of your MEGA account");
     
+    self.userInterfaceLabel.text = NSLocalizedString(@"settings.section.userInterface", @"Title of one of the Settings sections where you can customise the 'User Interface' of the app.");
     self.fileManagementLabel.text = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
-    self.appearanceLabel.text = NSLocalizedString(@"Appearance", @"Title of one of the Settings sections where you can customise the 'Appearance' of the app.");
     self.advancedLabel.text = NSLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options");
-    
-    self.aboutLabel.text = NSLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
     
     self.helpLabel.text = NSLocalizedString(@"help", @"Menu item");
     
-    self.privacyPolicyLabel.text = NSLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
-    self.cookiePolicyLabel.text = NSLocalizedString(@"Cookie Policy", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy'");
+    self.aboutLabel.text = NSLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
+    self.termsAndPoliciesLabel.text = NSLocalizedString(@"settings.section.termsAndPolicies", @"Title of one of the Settings sections where you can see the MEGA's 'Terms and Policies'");
     self.cookieSettingsLabel.text = NSLocalizedString(@"Cookie Settings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
-    self.termsOfServiceLabel.text = NSLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
 }
 
 - (void)updateAppearance {
@@ -105,29 +98,23 @@ typedef NS_ENUM(NSUInteger, RegulationSectionRows) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0: //Camera Uploads, Chat
-        case 1: //Pascode, Security Options
-        case 2: //File management - Appearance - Advanced
-        case 3: //About, Language
-        case 4: //Help
+        case 1: //Security Options
+        case 2: //File management - User Interface - Advanced
+        case 3: //Help
             break;
             
-        case 5: {
+        case 4: { //About - Terms and Policies - Cookie Settings
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 switch (indexPath.row) {
-                    case RegulationSectionPrivacyPolicy:
-                        [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
+                    case LastSectionRowTermsAndPolicies:
+                        [[TermsAndPoliciesRouter.alloc initWithNavigationController:self.navigationController] start];
                         break;
-                        
-                    case RegulationSectionCookiePolicy:
-                        [[NSURL URLWithString:@"https://mega.nz/cookie"] mnz_presentSafariViewController];
-                        break;
-                        
-                    case RegulationSectionCookieSettings:
+                    
+                    case LastSectionRowCookieSettings:
                         [self.navigationController presentViewController:[CookieSettingsFactory.new createCookieSettingsNC] animated:YES completion:nil];
                         break;
                         
-                    case RegulationSectionTermsOfService:
-                        [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
+                    default:
                         break;
                 }
             }
