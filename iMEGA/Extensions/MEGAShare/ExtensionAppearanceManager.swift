@@ -1,6 +1,5 @@
 
 import Foundation
-import SVProgressHUD
 
 class ExtensionAppearanceManager: NSObject {
     

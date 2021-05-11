@@ -1486,6 +1486,21 @@
 		B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B68BAEC5221DEB4E00FF6FCD /* SavedIdentifierParser.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
+		B695B5FF264B43160050DF09 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */; };
+		B695B600264B43160050DF09 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */; };
+		B695B601264B43160050DF09 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */; };
+		B695B602264B43160050DF09 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F8264B43160050DF09 /* SVProgressAnimatedView.m */; };
+		B695B603264B43160050DF09 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F8264B43160050DF09 /* SVProgressAnimatedView.m */; };
+		B695B604264B43160050DF09 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F8264B43160050DF09 /* SVProgressAnimatedView.m */; };
+		B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5FB264B43160050DF09 /* SVProgressHUD.m */; };
+		B695B606264B43160050DF09 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5FB264B43160050DF09 /* SVProgressHUD.m */; };
+		B695B607264B43160050DF09 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5FB264B43160050DF09 /* SVProgressHUD.m */; };
+		B695B608264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5FC264B43160050DF09 /* SVIndefiniteAnimatedView.m */; };
+		B695B609264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5FC264B43160050DF09 /* SVIndefiniteAnimatedView.m */; };
+		B695B60A264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5FC264B43160050DF09 /* SVIndefiniteAnimatedView.m */; };
+		B695B60B264B43160050DF09 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */; };
+		B695B60C264B43160050DF09 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */; };
+		B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */; };
 		B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
 		B699016F262F91D200176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
@@ -3492,6 +3507,16 @@
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
+		B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		B695B5F6264B43160050DF09 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		B695B5F7264B43160050DF09 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		B695B5F8264B43160050DF09 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		B695B5F9264B43160050DF09 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		B695B5FA264B43160050DF09 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		B695B5FB264B43160050DF09 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		B695B5FC264B43160050DF09 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		B695B5FE264B43160050DF09 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFunctions.swift; sourceTree = "<group>"; };
 		B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UncaughtExceptionHandler.swift; sourceTree = "<group>"; };
 		B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundRefreshPerformer.h; sourceTree = "<group>"; };
@@ -4642,6 +4667,7 @@
 				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
 				5BD4A01B1F8385EC000E24E6 /* FrameAccessor */,
 				5B22F9721F8373EC00D2B156 /* VENTokenField */,
+				B695B5F4264B43160050DF09 /* SVProgressHUD */,
 				41E250151D79E9EF00499A6C /* Import */,
 				41E2500E1D79E9D400499A6C /* SAMKeychain */,
 				41EC68561D76E101003EC803 /* PieChartView */,
@@ -8322,6 +8348,24 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		B695B5F4264B43160050DF09 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				B695B5F7264B43160050DF09 /* SVProgressHUD.h */,
+				B695B5FB264B43160050DF09 /* SVProgressHUD.m */,
+				B695B5FA264B43160050DF09 /* SVRadialGradientLayer.h */,
+				B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */,
+				B695B5FE264B43160050DF09 /* SVProgressAnimatedView.h */,
+				B695B5F8264B43160050DF09 /* SVProgressAnimatedView.m */,
+				B695B5F9264B43160050DF09 /* SVProgressHUD-Prefix.pch */,
+				B695B5F6264B43160050DF09 /* SVIndefiniteAnimatedView.h */,
+				B695B5FC264B43160050DF09 /* SVIndefiniteAnimatedView.m */,
+				B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */,
+			);
+			name = SVProgressHUD;
+			path = Vendor/SVProgressHUD/SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		B695E57E23275A3800D12B9E /* Functions */ = {
 			isa = PBXGroup;
 			children = (
@@ -9532,6 +9576,7 @@
 				5DD6B16D24D67E8500F14515 /* SlidePanelView.xib in Resources */,
 				5B727393240D32F9005816AB /* altIconMinimal@2x.png in Resources */,
 				A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */,
+				B695B60B264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
 				BFAB114F23CEA5C300BCE72D /* AlbumsTableViewController.xib in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
@@ -9694,6 +9739,7 @@
 				5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
 				B6831C0A25B65C7D0072827F /* CustomModalAlertViewController.xib in Resources */,
+				B695B60C264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9720,6 +9766,7 @@
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
+				B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
@@ -10245,6 +10292,7 @@
 				5D92DD1624BFE2B200D7D13B /* DateFormatter+TemplateFormatter.swift in Sources */,
 				A86B9F2E2316D6AB00F35E7A /* FLEXDictionaryExplorerViewController.m in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
+				B695B608264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BE689AA2419135400462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */,
@@ -10686,6 +10734,7 @@
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
 				C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */,
 				A86B9F392316D6AB00F35E7A /* FLEXTableViewCell.m in Sources */,
+				B695B602264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
@@ -10709,6 +10758,7 @@
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
 				B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */,
 				5BE7BEE523745FC700BBD23F /* EmptyStateView.m in Sources */,
+				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				BFAB113D23CEA5C300BCE72D /* PhotoGridViewCell.swift in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
 				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
@@ -11046,6 +11096,7 @@
 				A86B9F592316D6AB00F35E7A /* FLEXArgumentInputNotSupportedView.m in Sources */,
 				0D7E5FB92634E4E300C5CB2A /* DownloadFileRepositoryProtocol.swift in Sources */,
 				5B16A738220D6E0A00085F61 /* ThumbnailViewerTableViewCell.m in Sources */,
+				B695B5FF264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				B6B3C366222628C200918D44 /* TransferResponseValidator.m in Sources */,
 				5D64660824890BEA006030A5 /* HexColor.swift in Sources */,
 				83E3459B25B598A1006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */,
@@ -11229,6 +11280,7 @@
 				83B906BE249A29EC0088F15C /* UIButton+Additions.swift in Sources */,
 				5BE689932417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */,
+				B695B603264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
@@ -11249,10 +11301,12 @@
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
 				83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */,
 				5BE689B12419187F00462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
+				B695B609264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
 				5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */,
+				B695B600264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
 				831D61A7218738EB0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				5BE689B52419188D00462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
@@ -11285,6 +11339,7 @@
 				9456054E1EDD7DBD0094EF0F /* OpenInActivity.m in Sources */,
 				943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */,
 				8310488B21AECDBA0057400D /* DTConstants.m in Sources */,
+				B695B606264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
@@ -11363,6 +11418,7 @@
 				BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				5BE689B42419188A00462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
+				B695B60A264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				BF943EA62355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
@@ -11371,6 +11427,7 @@
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
+				B695B604264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */,
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
@@ -11378,7 +11435,9 @@
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
+				B695B607264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */,
+				B695B601264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				77C2E07C24BCBB9C00B4894A /* ActionSheetActions.swift in Sources */,

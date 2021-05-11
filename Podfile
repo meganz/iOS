@@ -10,7 +10,6 @@ workspace 'iMEGA'
 abstract_target 'iMEGA' do
   pod 'SDWebImageWebPCoder'
   pod 'Firebase/Crashlytics'
-  pod 'SVProgressHUD', :git => 'https://github.com/meganz/SVProgressHUD.git', :branch => 'shadow_customization'
   pod 'PureLayout', :git => 'https://github.com/PureLayout/PureLayout.git'
   pod 'GKContactImage', :git => 'https://github.com/meganz/GKContactImage.git'
 
@@ -82,12 +81,6 @@ post_install do |installer|
     
     target.build_configurations.each do |config|
       config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
-    end
-    
-    if target.name.end_with? "ProgressHUD"
-      target.build_configurations.each do |config|
-        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = ['$(inherited)', 'SV_APP_EXTENSIONS=1']
-      end
     end
 
   end
