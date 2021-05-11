@@ -29,5 +29,8 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypePresentNode,
     URLTypePresentOfflineFile,
     URLTypeNewTextFile,
+    URLTypePrivacyPolicy,
+    URLTypeCookiePolicy,
+    URLTypeTermsOfService,
     URLTypeTotal
 };

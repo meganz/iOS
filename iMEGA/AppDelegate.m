@@ -57,6 +57,7 @@
 #import "BackgroundRefreshPerformer.h"
 #import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 #import <SDWebImage/SDWebImage.h>
+#import "MEGASdkManager+CleanUp.h"
 
 #ifdef DEBUG
 #import <DoraemonKit/DoraemonManager.h>
@@ -188,6 +189,9 @@
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    [sharedUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
@@ -391,7 +395,8 @@
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
     
-    [self localLogoutSDKandChat];
+    [MEGASdkManager localLogout];
+    [MEGASdkManager deleteChatSdk];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -785,6 +790,8 @@
     [self showCookieDialogIfNeeded];
     
     [self showEnableTwoFactorAuthenticationIfNeeded];
+    
+    [self showLaunchTabDialogIfNeeded];
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -1210,22 +1217,6 @@
     }
 }
 
-- (void)localLogoutSDKandChat {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    [MEGASdkManager.sharedMEGASdk localLogoutWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-        if (MEGASdkManager.sharedMEGAChatSdk) {
-            [MEGASdkManager.sharedMEGAChatSdk localLogoutWithDelegate:[MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                dispatch_semaphore_signal(semaphore);
-            }]];
-        } else {
-            dispatch_semaphore_signal(semaphore);
-        }
-    }]];
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC));
-    dispatch_semaphore_wait(semaphore, timeout);
-    [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
-}
-
 - (void)presentLogoutFromOtherClientAlert {
     self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
     [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -1642,6 +1633,7 @@
                 if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
                     [MEGALinkManager resetLinkAndURLType];
                 }
+                [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
             }
                         
             [self initProviderDelegate];

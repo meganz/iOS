@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -134,34 +134,28 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkU-GJ-6dI">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ryc-to-2vF">
-                                                            <rect key="frame" x="0.0" y="24" width="12" height="12"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lK7-Z0-Lqo">
+                                                            <rect key="frame" x="60" y="36" width="83" height="12"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ggy-YX-bTg" userLabel="Middle Image View">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="PAo-IQ-7GW" userLabel="Arrow Image View">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="11" height="12"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="11" id="sKe-KE-57k"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fdf-zc-6Z9">
+                                                                    <rect key="frame" x="19" y="0.0" width="44" height="12"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="ggy-YX-bTg" userLabel="Middle Image View">
+                                                                    <rect key="frame" x="71" y="0.0" width="12" height="12"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="12" id="H1C-UC-K4Z"/>
                                                                         <constraint firstAttribute="width" constant="12" id="krT-ft-gYX"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                            </subviews>
-                                                        </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lK7-Z0-Lqo">
-                                                            <rect key="frame" x="60" y="36.5" width="261" height="11"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="PAo-IQ-7GW" userLabel="Arrow Image View">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="11" height="11"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="11" id="I76-lA-Hck"/>
-                                                                        <constraint firstAttribute="width" constant="11" id="sKe-KE-57k"/>
-                                                                    </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fdf-zc-6Z9">
-                                                                    <rect key="frame" x="19" y="0.0" width="242" height="11"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFk-6I-Pd0">
@@ -235,17 +229,14 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="oea-DZ-VA9" firstAttribute="centerY" secondItem="gkU-GJ-6dI" secondAttribute="centerY" multiplier="0.7" id="0AS-YC-rEW"/>
-                                                        <constraint firstItem="Ryc-to-2vF" firstAttribute="leading" secondItem="gkU-GJ-6dI" secondAttribute="leading" id="2wR-37-S8t"/>
                                                         <constraint firstItem="I0f-v7-OXa" firstAttribute="centerY" secondItem="gkU-GJ-6dI" secondAttribute="centerY" id="9k4-9f-4Zn"/>
                                                         <constraint firstItem="oea-DZ-VA9" firstAttribute="leading" secondItem="I0f-v7-OXa" secondAttribute="trailing" constant="8" id="AaI-4b-cxS"/>
-                                                        <constraint firstItem="I0f-v7-OXa" firstAttribute="leading" secondItem="Ryc-to-2vF" secondAttribute="trailing" id="MZg-Sk-KM0"/>
                                                         <constraint firstItem="UFk-6I-Pd0" firstAttribute="leading" secondItem="oea-DZ-VA9" secondAttribute="trailing" constant="8" id="PuB-fJ-eP5"/>
                                                         <constraint firstItem="UFk-6I-Pd0" firstAttribute="centerY" secondItem="gkU-GJ-6dI" secondAttribute="centerY" id="Q6d-4Z-Ucc"/>
-                                                        <constraint firstItem="UFk-6I-Pd0" firstAttribute="leading" secondItem="lK7-Z0-Lqo" secondAttribute="trailing" constant="8" id="fD5-1g-ePi"/>
+                                                        <constraint firstItem="UFk-6I-Pd0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lK7-Z0-Lqo" secondAttribute="trailing" constant="8" id="fD5-1g-ePi"/>
                                                         <constraint firstAttribute="trailing" secondItem="UFk-6I-Pd0" secondAttribute="trailing" id="lWP-3a-47m"/>
                                                         <constraint firstItem="I0f-v7-OXa" firstAttribute="leading" secondItem="gkU-GJ-6dI" secondAttribute="leading" constant="12" id="mvv-Tu-gdN"/>
                                                         <constraint firstItem="lK7-Z0-Lqo" firstAttribute="centerY" secondItem="gkU-GJ-6dI" secondAttribute="centerY" multiplier="1.4" id="w6l-zx-T1y"/>
-                                                        <constraint firstItem="Ryc-to-2vF" firstAttribute="centerY" secondItem="gkU-GJ-6dI" secondAttribute="centerY" id="wBd-ei-FWi"/>
                                                         <constraint firstAttribute="height" constant="60" id="wD2-tg-TNN"/>
                                                         <constraint firstItem="lK7-Z0-Lqo" firstAttribute="leading" secondItem="I0f-v7-OXa" secondAttribute="trailing" constant="8" id="wP4-16-mJc"/>
                                                     </constraints>
@@ -268,9 +259,9 @@
                                         <connections>
                                             <outlet property="cancelButton" destination="Hj9-SO-aAp" id="ylz-7F-6nv"/>
                                             <outlet property="downloadProgressView" destination="Hj9-IR-99g" id="9ND-rq-gRq"/>
+                                            <outlet property="downloadedImageView" destination="ggy-YX-bTg" id="VcK-rp-l3k"/>
                                             <outlet property="downloadingArrowImageView" destination="PAo-IQ-7GW" id="HF7-Mp-KU7"/>
                                             <outlet property="infoLabel" destination="fdf-zc-6Z9" id="8ma-iK-AR1"/>
-                                            <outlet property="middleImageView" destination="ggy-YX-bTg" id="qYU-0Q-3XY"/>
                                             <outlet property="moreButton" destination="fDO-bi-0NI" id="g5E-YY-QTm"/>
                                             <outlet property="nameLabel" destination="oea-DZ-VA9" id="YhC-Qv-gYD"/>
                                             <outlet property="thumbnailImageView" destination="AcD-BF-wor" id="0Nl-s4-lVE"/>
@@ -459,6 +450,7 @@
         <image name="cancel" width="46" height="44"/>
         <image name="cancelTransfers" width="22" height="22"/>
         <image name="downloadQueued" width="12" height="12"/>
+        <image name="downloaded" width="12" height="12"/>
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="pauseTransfers" width="28" height="28"/>

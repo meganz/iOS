@@ -13,7 +13,7 @@ struct NavbarItemModel: Equatable {
 }
 struct TextEditorNavbarItemsModel: Equatable {
     let leftItem: NavbarItemModel
-    let rightItem: NavbarItemModel
+    let rightItem: NavbarItemModel?
     let textEditorMode: TextEditorMode
 }
 

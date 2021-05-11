@@ -399,8 +399,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:self];
-                return viewController;
+                if (!node.mnz_isPlayable || (node.mnz_isPlayable && node.name.mnz_isVideoPathExtension)) {
+                    UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:self];
+                    return viewController;
+                }
             }
             break;
         }
@@ -1844,8 +1846,21 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        [self.cdTableView.tableView reloadData];
+    if (transfer.type == MEGATransferTypeDownload) {
+        switch (self.viewModePreference) {
+            case ViewModePreferenceList:
+                [self.cdTableView.tableView reloadData];
+                break;
+            case ViewModePreferenceThumbnail:
+                if (transfer.publicNode.isFile) {
+                    [self.cdCollectionView reloadFileItem:transfer.nodeHandle];
+                } else {
+                    [self.cdCollectionView reloadFolderItem:transfer.nodeHandle];
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 

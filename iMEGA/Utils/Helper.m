@@ -380,9 +380,11 @@ static MEGAIndexer *indexer;
 }
 
 + (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
-    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
+    NSString *localIdentifier = uploadTransfer.localIdentifier;
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil].firstObject;
     
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
+    
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent.mnz_fileNameWithLowercaseExtension;
         NSString *newName = [name mnz_sequentialFileNameInParentNode:parentNode];
@@ -390,7 +392,7 @@ static MEGAIndexer *indexer;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-        appData = [appData mnz_appDataToLocalIdentifier:uploadTransfer.localIdentifier];
+        appData = [appData mnz_appDataToLocalIdentifier:localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -405,8 +407,8 @@ static MEGAIndexer *indexer;
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:NO];
         }
         
-        if (uploadTransfer.localIdentifier) {
-            [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        if (localIdentifier) {
+            [[Helper uploadingNodes] addObject:localIdentifier];
         }
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
@@ -746,7 +748,14 @@ static MEGAIndexer *indexer;
 }
 
 + (void)resetFrameForSearchController:(UISearchController *)searchController {
-    searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, searchController.view.frame.size.width, searchController.view.frame.size.height);
+    CGFloat y;
+#ifdef MAIN_APP_TARGET
+    y = UIApplication.sharedApplication.statusBarFrame.size.height;
+#else
+    y = searchController.view.safeAreaInsets.top;
+#endif
+    
+    searchController.view.frame = CGRectMake(0, y, searchController.view.frame.size.width, searchController.view.frame.size.height);
     searchController.searchBar.superview.frame = CGRectMake(0, 0, searchController.searchBar.superview.frame.size.width, searchController.searchBar.superview.frame.size.height);
     searchController.searchBar.frame = CGRectMake(0, 0, searchController.searchBar.frame.size.width, searchController.searchBar.frame.size.height);
 }

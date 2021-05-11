@@ -10,7 +10,6 @@ extension UIViewController {
         } else {
             add(child: child, container: container)
         }
-        
     }
     
     private func add(child: UIViewController, container: UIView) {

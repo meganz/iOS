@@ -1724,6 +1724,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Allow Access";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -2249,7 +2253,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="User Interface";
+"settings.section.userInterface"="User Interface";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2600,3 +2604,9 @@
 "The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Change Launch Tab";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Change Setting";

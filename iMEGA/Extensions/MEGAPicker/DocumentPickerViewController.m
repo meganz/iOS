@@ -5,6 +5,7 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "MEGASdk+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "Helper.h"
 #import "LaunchViewController.h"
@@ -242,7 +243,7 @@
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
+    [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
 - (void)loginToMEGA {
