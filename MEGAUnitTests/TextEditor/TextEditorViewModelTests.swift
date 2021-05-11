@@ -553,8 +553,35 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showActions_calledTimes, 1)
     }
     
-    func testAction_cancel_create() {
-        let textFile = TextFile(fileName: "testAction_cancel_create")
+    func testAction_cancel_create_edit_contentChange() {
+        let textFile = TextFile(fileName: "testAction_cancel_contentChange")
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+    
+        let newContent = "new content"
+        
+        let testModes: [TextEditorMode] = [.create, .edit]
+        for textEditorMode in testModes {
+            let viewModel = TextEditorViewModel(
+                router: mockRouter,
+                textFile: textFile,
+                textEditorMode: textEditorMode,
+                uploadFileUseCase: mockUploadFileUC,
+                downloadFileUseCase: mockDownloadFileUC,
+                nodeActionUseCase: mockNodeActionUC
+            )
+
+            test(viewModel: viewModel,
+                 action: .cancelText(newContent),
+                 expectedCommands: [.showDiscardChangeAlert]
+            )
+        }
+    }
+    
+    func testAction_cancel_create_noContentChange() {
+        let textFile = TextFile(fileName: "testAction_cancel_create_noContentChange")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadFileUC = MockDownloadFileUseCase()
@@ -570,14 +597,14 @@ final class TextEditorViewModelTests: XCTestCase {
         )
 
         test(viewModel: viewModel,
-             action: .cancel,
+             action: .cancelText(textFile.content),
              expectedCommands: []
         )
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
     }
     
-    func testAction_cancel_edit() {
-        let textFile = TextFile(fileName: "testAction_cancel_edit")
+    func testAction_cancel_edit_noContentChange() {
+        let textFile = TextFile(fileName: "testAction_cancel_edit_noContentChange")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadFileUC = MockDownloadFileUseCase()
@@ -610,7 +637,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         test(viewModel: viewModel,
-             action: .cancel,
+             action: .cancelText(textFile.content),
              expectedCommands: [
                 .configView(textEditorViewModel),
                 .setupNavbarItems(navbarItemsModel)

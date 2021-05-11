@@ -7,6 +7,7 @@ enum TextEditorViewAction: ActionType {
     case dismissTextEditorVC
     case editFile
     case showActions(sender: Any)
+    case cancelText(_ content: String)
     case cancel
     case downloadToOffline
     case importNode
@@ -44,6 +45,7 @@ final class TextEditorViewModel: ViewModelType {
         case showError(_ error: String)
         case downloadToOffline
         case startDownload(status: String)
+        case showDiscardChangeAlert
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -94,6 +96,8 @@ final class TextEditorViewModel: ViewModelType {
             textEditorMode = .edit
         case .showActions(sender: let button):
             router.showActions(sender: button)
+        case .cancelText(let content):
+            cancelText(content)
         case .cancel:
             cancel()
         case .downloadToOffline:
@@ -174,6 +178,14 @@ final class TextEditorViewModel: ViewModelType {
             }
         } catch {
             MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
+        }
+    }
+    
+    private func cancelText(_ content: String) {
+        if content != textFile.content {
+            invokeCommand?(.showDiscardChangeAlert)
+        } else {
+            cancel()
         }
     }
     
