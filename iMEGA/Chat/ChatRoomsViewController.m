@@ -54,8 +54,12 @@
 @property (assign, nonatomic) BOOL isArchivedChatsRowVisible;
 @property (assign, nonatomic) BOOL isScrollAtTop;
 
-@property (weak, nonatomic) IBOutlet UIButton *topBannerButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBannerButtonTopConstraint;
+@property (weak, nonatomic) IBOutlet UIView *topBannerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBannerViewTopConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *topBannerLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *topBannerMicrophoneMutedImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *topBannerCameraEnabledImageView;
+
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSDate *baseDate;
 @property (assign, nonatomic) NSInteger initDuration;
@@ -138,11 +142,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (self.chatRoomOnGoingCall) {
-        self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    }
-    
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
         if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:1]) {
             [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:^{
@@ -170,17 +169,20 @@
     if ((chatRoomIDsWithCallInProgress.size > 0) && MEGAReachabilityManager.isReachable) {
         self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:[chatRoomIDsWithCallInProgress megaHandleAtIndex:0]];
         
-        if (self.topBannerButtonTopConstraint.constant == -44) {
+        if (self.chatRoomOnGoingCall) {
+            if (self.topBannerViewTopConstraint.constant == -44) {
+                [self showTopBanner];
+            }
+            
             MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
-            [self showTopBannerButton:call];
-            [self configureTopBannerButtonForInProgressCall:call];
-        }
-        
-        if (!self.chatRoomOnGoingCall && self.topBannerButtonTopConstraint.constant == 0) {
-            [self hideTopBannerButton];
+            [self configureTopBannerForInProgressCall:call];
+        } else {
+            if (self.topBannerViewTopConstraint.constant == 0) {
+                [self hideTopBanner];
+            }
         }
     } else {
-        [self hideTopBannerButton];
+        [self hideTopBanner];
     }
     
     self.globalDNDNotificationControl = [GlobalDNDNotificationControl.alloc initWithDelegate:self];
@@ -476,7 +478,8 @@
 
     self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
     
-    self.topBannerButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.topBannerView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.topBannerLabel.textColor = UIColor.whiteColor;
 }
 
 - (void)internetConnectionChanged {
@@ -845,32 +848,27 @@
 
 #pragma mark - TopBannerButton
 
-- (void)showTopBannerButton:(MEGAChatCall *)call {
-    if (self.topBannerButton.hidden) {
-         self.topBannerButton.hidden = NO;
-           [UIView animateWithDuration:.5f animations:^ {
-               self.topBannerButtonTopConstraint.constant = 0;
-               self.tableView.contentOffset = CGPointZero;
-               [self.view layoutIfNeeded];
-           } completion:nil];
+- (void)showTopBanner {
+    if (self.topBannerView.hidden) {
+        self.topBannerView.hidden = NO;
+        self.topBannerViewTopConstraint.constant = 0;
+        self.tableView.contentOffset = CGPointZero;
+        [self.view layoutIfNeeded];
     }
 }
 
-- (void)hideTopBannerButton {
-    if (!self.topBannerButton.hidden) {
+- (void)hideTopBanner {
+    if (!self.topBannerView.hidden) {
          [UIView animateWithDuration:.5f animations:^ {
-               self.topBannerButtonTopConstraint.constant = -44;
+               self.topBannerViewTopConstraint.constant = -44;
                [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
                [self.view layoutIfNeeded];
            } completion:^(BOOL finished) {
-               self.topBannerButton.hidden = YES;
+               self.topBannerView.hidden = YES;
            }];
     }
-}
-
-- (void)setTopBannerButtonTitle:(NSString *)title color:(UIColor *)color {
-    [self.topBannerButton setTitle:title forState:UIControlStateNormal];
-    self.topBannerButton.backgroundColor = color;
+    
+    [self.timer invalidate];
 }
 
 - (void)initTimerForCall:(MEGAChatCall *)call {
@@ -886,13 +884,37 @@
 - (void)updateDuration {
     if (!self.isReconnecting) {
         NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-        [self setTopBannerButtonTitle:[NSString stringWithFormat:NSLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
+        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]];
+        self.topBannerLabel.text = title;
+        
+        [self manageCallIndicators];
     }
 }
 
-- (void)configureTopBannerButtonForInProgressCall:(MEGAChatCall *)call {
+- (void)manageCallIndicators {
+    BOOL microphoneMuted = NO;
+    BOOL videoEnabled = NO;
+    if (self.chatRoomOnGoingCall.isGroup) {
+        microphoneMuted = ![NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalAudio"];
+        videoEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalVideo"];
+    } else {
+        microphoneMuted = [NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalAudio"];
+        videoEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalVideo"];
+    }
+    self.topBannerMicrophoneMutedImageView.hidden = !microphoneMuted;
+    self.topBannerCameraEnabledImageView.hidden = !videoEnabled;
+
+    if (microphoneMuted || videoEnabled) {
+        self.topBannerLabel.text = [self.topBannerLabel.text stringByAppendingString:@" •"];
+    }
+}
+
+- (void)configureTopBannerForInProgressCall:(MEGAChatCall *)call {
     if (self.isReconnecting) {
-        [self setTopBannerButtonTitle:NSLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
+        self.topBannerLabel.text = NSLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
+        self.topBannerView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        self.topBannerMicrophoneMutedImageView.hidden = YES;
+        self.topBannerCameraEnabledImageView.hidden = YES;
     }
     [self initTimerForCall:call];
 }
@@ -1551,28 +1573,27 @@
             break;
             
         case MEGAChatCallStatusJoining:
-            [self showTopBannerButton:call];
-            [self configureTopBannerButtonForInProgressCall:call];
+            [self showTopBanner];
+            [self configureTopBannerForInProgressCall:call];
             break;
             
         case MEGAChatCallStatusReconnecting:
             self.reconnecting = YES;
-            [self setTopBannerButtonTitle:NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
+            self.topBannerLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.");
+            self.topBannerView.backgroundColor = UIColor.systemOrangeColor;
+            self.topBannerMicrophoneMutedImageView.hidden = YES;
+            self.topBannerCameraEnabledImageView.hidden = YES;
             break;
             
         case MEGAChatCallStatusDestroyed: {
-            [self.timer invalidate];
             self.chatRoomOnGoingCall = nil;
             NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
+            [self hideTopBanner];
             break;
         }
-            
-        case MEGAChatCallStatusTerminatingUserParticipation:
-            [self hideTopBannerButton];
-            break;
             
         default:
             break;

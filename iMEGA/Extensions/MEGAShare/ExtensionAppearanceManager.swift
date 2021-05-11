@@ -1,5 +1,6 @@
 
 import Foundation
+import SVProgressHUD
 
 class ExtensionAppearanceManager: NSObject {
     
@@ -46,6 +47,7 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setRingRadius(16)
         SVProgressHUD.setRingNoTextRadius(16)
         SVProgressHUD.setCornerRadius(8)
+        
         SVProgressHUD.setShadowOffset(CGSize(width: 0, height: 1))
         SVProgressHUD.setShadowOpacity(0.15)
         SVProgressHUD.setShadowRadius(8)

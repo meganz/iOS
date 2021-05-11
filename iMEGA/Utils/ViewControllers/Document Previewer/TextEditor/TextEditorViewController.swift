@@ -67,6 +67,8 @@ extension TextEditorViewController: ViewType {
             startDownload(status: status)
         case .downloadToOffline:
             viewModel.dispatch(.downloadToOffline)
+        case .showDiscardChangeAlert:
+            showDiscardChangeAlert()
         }
     }
     
@@ -104,8 +106,14 @@ extension TextEditorViewController: ViewType {
     
     private func setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel) {
         switch navbarItemsModel.textEditorMode {
-        case .load,
-             .view:
+        case .load:
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: navbarItemsModel.leftItem.title,
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
+        case .view:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: navbarItemsModel.leftItem.title,
                 style: .plain,
@@ -113,7 +121,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(closeTapped)
             )
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: navbarItemsModel.rightItem.imageName ?? "moreSelected"),
+                image: UIImage(named: navbarItemsModel.rightItem?.imageName ?? "moreSelected"),
                 style: .plain,
                 target: self,
                 action: #selector(moreTapped(button:))
@@ -127,7 +135,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(cancelTapped)
             )
             let saveButton = UIBarButtonItem(
-                title: navbarItemsModel.rightItem.title,
+                title: navbarItemsModel.rightItem?.title,
                 style: .plain,
                 target: self,
                 action: #selector(saveTapped)
@@ -251,6 +259,17 @@ extension TextEditorViewController: ViewType {
         }
     }
     
+    private func showDiscardChangeAlert() {
+        guard let barButton = navigationItem.leftBarButtonItem else { return }
+        let discardChangesAC = UIAlertController().discardChanges(
+            fromBarButton: barButton,
+            withConfirmAction: {
+                self.viewModel.dispatch(.cancel)
+            }
+        )
+        present(discardChangesAC, animated: true, completion: nil)
+    }
+    
     private func configToolbar(accessLevel: NodeAccessTypeEntity) {
         let flexibleItem =
             UIBarButtonItem(
@@ -301,15 +320,7 @@ extension TextEditorViewController: ViewType {
     }
     
     @objc private func cancelTapped() {
-        guard let barButton = navigationItem.leftBarButtonItem else { return }
-        
-        let discardChangesAC = UIAlertController().discardChanges(
-            fromBarButton: barButton,
-            withConfirmAction: {
-                self.viewModel.dispatch(.cancel)
-            }
-        )
-        present(discardChangesAC, animated: true, completion: nil)
+        viewModel.dispatch(.cancelText(textView.text))
     }
     
     @objc private func saveTapped() {

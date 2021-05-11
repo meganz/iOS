@@ -21,10 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *activeCallImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *mutedChatImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *unreadCountLabelHorizontalMarginConstraint;
-@property (weak, nonatomic) IBOutlet UIStackView *onCallInfoView;
 @property (weak, nonatomic) IBOutlet UILabel *onCallDuration;
-@property (weak, nonatomic) IBOutlet UIImageView *onCallVideoImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *onCallMicImageView;
 
 - (void)configureCellForArchivedChat;
 - (void)updateUnreadCountChange:(NSInteger)unreadCount;

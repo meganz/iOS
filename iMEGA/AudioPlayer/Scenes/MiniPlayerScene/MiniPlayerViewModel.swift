@@ -12,6 +12,7 @@ enum MiniPlayerAction: ActionType {
 protocol MiniPlayerViewRouting: Routing {
     func dismiss()
     func showPlayer(node: MEGANode?, filePath: String?)
+    func isAFolderLinkPresenter() -> Bool
 }
 
 final class MiniPlayerViewModel: ViewModelType {
@@ -210,10 +211,18 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private func closeMiniPlayer() {
         streamingInfoUseCase?.stopServer()
-        if isFolderLink {
+        if isFolderLink, !router.isAFolderLinkPresenter() {
             nodeInfoUseCase?.folderLinkLogout()
         }
         router.dismiss()
+    }
+    
+    private func deInitActions() {
+        playerHandler.removePlayer(listener: self)
+        
+        if isFolderLink, !router.isAFolderLinkPresenter() {
+            nodeInfoUseCase?.folderLinkLogout()
+        }
     }
     
     // MARK: - Dispatch action
@@ -231,7 +240,7 @@ final class MiniPlayerViewModel: ViewModelType {
         case .onClose:
             closeMiniPlayer()
         case .deinit:
-            playerHandler.removePlayer(listener: self)
+            deInitActions()
         case .showPlayer(let node, let filePath):
             showFullScreenPlayer(node, path: filePath)
         }

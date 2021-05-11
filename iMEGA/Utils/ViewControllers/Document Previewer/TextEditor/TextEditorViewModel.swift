@@ -7,6 +7,7 @@ enum TextEditorViewAction: ActionType {
     case dismissTextEditorVC
     case editFile
     case showActions(sender: Any)
+    case cancelText(_ content: String)
     case cancel
     case downloadToOffline
     case importNode
@@ -44,6 +45,7 @@ final class TextEditorViewModel: ViewModelType {
         case showError(_ error: String)
         case downloadToOffline
         case startDownload(status: String)
+        case showDiscardChangeAlert
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -94,6 +96,8 @@ final class TextEditorViewModel: ViewModelType {
             textEditorMode = .edit
         case .showActions(sender: let button):
             router.showActions(sender: button)
+        case .cancelText(let content):
+            cancelText(content)
         case .cancel:
             cancel()
         case .downloadToOffline:
@@ -177,6 +181,14 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
+    private func cancelText(_ content: String) {
+        if content != textFile.content {
+            invokeCommand?(.showDiscardChangeAlert)
+        } else {
+            cancel()
+        }
+    }
+    
     private func cancel() {
         if textEditorMode == .create {
             router.dismissTextEditorVC()
@@ -211,6 +223,7 @@ final class TextEditorViewModel: ViewModelType {
                     self.textFile.content = try String(contentsOfFile: path)
                     self.textEditorMode = .view
                     self.invokeCommand?(.configView(self.makeTextEditorModel()))
+                    self.invokeCommand?(.setupNavbarItems(self.makeNavbarItemsModel()))
                 } catch {
                     self.router.dismissTextEditorVC()
                     self.router.showPreviewDocVC(fromFilePath: path)
@@ -240,8 +253,13 @@ final class TextEditorViewModel: ViewModelType {
     
     private func makeNavbarItemsModel() -> TextEditorNavbarItemsModel {
         switch textEditorMode {
-        case .load,
-            .view:
+        case .load:
+            return TextEditorNavbarItemsModel (
+                leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                rightItem: nil,
+                textEditorMode: textEditorMode
+            )
+            case .view:
             return TextEditorNavbarItemsModel (
                 leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
                 rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),

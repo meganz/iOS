@@ -78,7 +78,7 @@
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
         self.labelImageView.image = [UIImage imageNamed:labelString];
     }
-    self.middleImageView.hidden = !isDownloaded;
+    self.downloadedImageView.hidden = !isDownloaded;
     self.linkView.hidden = !node.isExported;
     
     if (node.hasThumbnail) {

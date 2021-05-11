@@ -4,7 +4,6 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "UIImage+MNZCategory.h"
-#import "UIImage+GKContact.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import <SDWebImage/SDWebImage.h>

@@ -922,7 +922,16 @@ static NSString* const B = @"[B]";
             dateString = [dateLastSeen formattedDateWithFormat:@"dd MMM"];
         }
         lastSeenMessage = NSLocalizedString(@"Last seen %s", @"Shown when viewing a 1on1 chat (at least for now), if the user is offline.");
-        BOOL isRTLLanguage = UIApplication.sharedApplication.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+        BOOL isRTLLanguage;
+        if ([[[[NSBundle mainBundle] bundlePath] pathExtension] isEqualToString:@"appex"]) {
+            // App Extensions may not access -[UIApplication sharedApplication]; fall back to checking the bundle's preferred localization character direction
+            isRTLLanguage = [NSLocale characterDirectionForLanguage:[[NSBundle mainBundle] preferredLocalizations][0]] == NSLocaleLanguageDirectionRightToLeft;
+        } else {
+            // Use dynamic call to sharedApplication to workaround compilation error when building against app extensions
+            isRTLLanguage = [[UIApplication performSelector:@selector(sharedApplication)] userInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+        }
+        
         if (isRTLLanguage) {
             lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%@ %@", timeString, dateString]];
         } else {

@@ -11,6 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (MEGASdk *)sharedMEGASdkFolder;
 
++ (void)deleteChatSdk;
++ (void)deleteSharedSdks;
+
 @end
 
 NS_ASSUME_NONNULL_END

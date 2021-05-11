@@ -8,6 +8,7 @@ import Foundation
     private var miniPlayerRouter: MiniPlayerViewRouter?
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
+    private var nodeInfoUseCase: NodeInfoUseCaseProtocol?
     
     override private init() {
         super.init()
@@ -192,6 +193,8 @@ import Foundation
     
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {
         if shouldReloadPlayerInfo {
+            if shouldResetPlayer { folderSDKLogoutIfNeeded() }
+            
             guard player != nil else { return }
             
             miniPlayerRouter = shouldResetPlayer ?
@@ -293,5 +296,20 @@ import Foundation
     
     func resetAudioPlayerConfiguration() {
         player?.resetAudioPlayerConfiguration()
+    }
+    
+    private func isFolderSDKLogoutRequired() -> Bool {
+        guard let miniPlayerRouter = miniPlayerRouter else { return false }
+        return miniPlayerRouter.isFolderSDKLogoutRequired()
+    }
+    
+    private func folderSDKLogoutIfNeeded() {
+        if isFolderSDKLogoutRequired() {
+            if nodeInfoUseCase == nil {
+                nodeInfoUseCase = NodeInfoUseCase()
+            }
+            nodeInfoUseCase?.folderLinkLogout()
+            miniPlayerRouter?.folderSDKLogout(required: false)
+        }
     }
 }
