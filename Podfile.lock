@@ -58,9 +58,9 @@ PODS:
   - GoogleUtilities/UserDefaults (7.1.1):
     - GoogleUtilities/Logger
   - Haptica (3.0.2)
-  - InputBarAccessoryView (4.3.3):
-    - InputBarAccessoryView/Core (= 4.3.3)
-  - InputBarAccessoryView/Core (4.3.3)
+  - InputBarAccessoryView (5.3.1):
+    - InputBarAccessoryView/Core (= 5.3.1)
+  - InputBarAccessoryView/Core (5.3.1)
   - ISEmojiView (0.2.6)
   - libwebp (1.1.0):
     - libwebp/demux (= 1.1.0)
@@ -71,8 +71,8 @@ PODS:
   - libwebp/mux (1.1.0):
     - libwebp/demux
   - libwebp/webp (1.1.0)
-  - MessageKit (3.1.0):
-    - InputBarAccessoryView (~> 4.3.0)
+  - MessageKit (3.6.0):
+    - InputBarAccessoryView (~> 5.3.1)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -104,7 +104,7 @@ DEPENDENCIES:
   - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
-  - MessageKit (from `https://github.com/lhr000lhrmega/MessageKit.git`)
+  - MessageKit
   - PanModal
   - PinLayout
   - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
@@ -129,6 +129,7 @@ SPEC REPOS:
     - Haptica
     - InputBarAccessoryView
     - libwebp
+    - MessageKit
     - nanopb
     - PanModal
     - PinLayout
@@ -146,8 +147,6 @@ EXTERNAL SOURCES:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
-  MessageKit:
-    :git: https://github.com/lhr000lhrmega/MessageKit.git
   PureLayout:
     :git: https://github.com/PureLayout/PureLayout.git
   SVProgressHUD:
@@ -164,9 +163,6 @@ CHECKOUT OPTIONS:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
-  MessageKit:
-    :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
-    :git: https://github.com/lhr000lhrmega/MessageKit.git
   PureLayout:
     :commit: 3bcbfe370f85b81254de4d6b9df3dd4a70d4ca89
     :git: https://github.com/PureLayout/PureLayout.git
@@ -190,10 +186,10 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   Haptica: dc206651beeca25ab4744c633fbf0ae4d1e86baf
-  InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
+  InputBarAccessoryView: 1f75d8c9f75e5e57f3ffac36ed58635a8005e0bc
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
-  MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
+  MessageKit: a8efaf55b021672b19ffdd5a85ce1c2f3b53058e
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PinLayout: 4d8733121f8687edcc8f00c19bf1379d12808767
@@ -204,6 +200,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 6ed134667e9ebb2f33679e8273cd48fd3fa349e5
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: ddd9c68778400c3159b1c73f41d5f2ada339dc23
+PODFILE CHECKSUM: e3bb7e4f6b5d14c7bdf4a081c5aa561ff066ef82
 
 COCOAPODS: 1.10.0

@@ -7,6 +7,16 @@ struct ConcreteMessageType: MessageType {
     var kind: MessageKind
 }
 
+extension ConcreteMessageType {
+    init(chatMessage: ChatMessage) {
+        self.sender = chatMessage.sender
+        self.messageId = chatMessage.messageId
+        self.sentDate = chatMessage.sentDate
+        chatMessage.message.generateAttributedString()
+        self.kind = .attributedText(chatMessage.message.attributedText)
+    }
+}
+
 class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelegate {
 
     open var richPreviewContentView: RichPreviewContentView = {
