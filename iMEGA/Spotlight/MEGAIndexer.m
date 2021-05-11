@@ -289,10 +289,18 @@
         return;
     }
     
+    if (self.shouldStop) {
+        return;
+    }
+    
     [self.indexSerialQueue addOperationWithBlock:^{
         NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
         MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
         for (MEGANode *node in nodesToIndex) {
+            if (self.shouldStop) {
+                break;
+            }
+            
             [self index:node];
         }
     }];
