@@ -78,7 +78,7 @@ final class FileUploadingRouter {
         }
 
         if let popover = documentPickerViewController.popoverPresentationController {
-            guard let barItem = homeViewController?.navigationItem.rightBarButtonItems?.first else {
+            guard let barItem = baseViewController?.navigationItem.rightBarButtonItems?.first else {
                 return
             }
             
@@ -166,14 +166,14 @@ final class FileUploadingRouter {
 
     // MARK: - Initialiser
 
-    init(navigationController: UINavigationController? = nil, homeViewController: HomeViewController) {
+    init(navigationController: UINavigationController? = nil, baseViewController: UIViewController) {
         self.navigationController = navigationController
-        self.homeViewController = homeViewController
+        self.baseViewController = baseViewController
     }
 
     private weak var navigationController: UINavigationController?
 
-    private weak var homeViewController: HomeViewController?
+    private weak var baseViewController: UIViewController?
 
     // MARK: - Event Source
 
