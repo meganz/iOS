@@ -34,3 +34,6 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/PhoneNumberKit"]
 	path = iMEGA/Vendor/PhoneNumberKit
 	url = https://github.com/marmelroy/PhoneNumberKit.git
+[submodule "iMEGA/Vendor/SVProgressHUD"]
+	path = iMEGA/Vendor/SVProgressHUD
+	url = https://github.com/SVProgressHUD/SVProgressHUD.git
