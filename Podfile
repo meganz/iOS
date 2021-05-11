@@ -16,7 +16,7 @@ abstract_target 'iMEGA' do
 
   target 'MEGA' do
     # Pods for MEGA
-    pod 'MessageKit', :git => 'https://github.com/lhr000lhrmega/MessageKit.git'
+    pod 'MessageKit'
     pod 'PanModal'
     pod 'FlexLayout'
     pod 'PinLayout'
