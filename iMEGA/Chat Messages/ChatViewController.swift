@@ -661,7 +661,7 @@ class ChatViewController: MessagesViewController {
         joinCallButton.autoSetDimension(.height, toSize: 40)
         joinCallButton.autoSetDimension(.width, toSize: 120, relation: .greaterThanOrEqual)
         joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30).isActive = true
-        joinCallButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
+        joinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
         joinCallButton.autoAlignAxis(toSuperviewAxis: .vertical)
         joinCallButton.isHidden = true
     }
@@ -992,6 +992,17 @@ class ChatViewController: MessagesViewController {
         MEGASdkManager.sharedMEGAChatSdk().answerChatCall(chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: delegate)
     }
     
+    private func joinActiveCall(isVideoEnabled: Bool) {
+        guard let activeCall = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
+            return
+        }
+        if activeCall.status == .userNoPresent {
+            startOutGoingCall(isVideoEnabled: isVideoEnabled)
+        } else {
+            startMeetingUI(isVideoEnabled: isVideoEnabled)
+        }
+    }
+    
     private func startMeetingUI(isVideoEnabled: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         
@@ -1026,7 +1037,7 @@ class ChatViewController: MessagesViewController {
         case .outgoing:
             startOutGoingCall(isVideoEnabled: videoCall)
         case .active:
-            startMeetingUI(isVideoEnabled: videoCall)
+            joinActiveCall(isVideoEnabled: videoCall)
         @unknown default:
             fatalError()
         }

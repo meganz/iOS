@@ -71,7 +71,7 @@ extension ChatViewController {
         showJoinButton()
     }
 
-    @objc func joinActiveCall() {
+    @objc func didTapJoinCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { granted in
             if granted {
                 self.timer?.invalidate()

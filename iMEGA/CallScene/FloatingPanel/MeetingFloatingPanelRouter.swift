@@ -20,14 +20,14 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
 
 final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private weak var baseViewController: UIViewController?
-    private weak var presenter: UIViewController?
+    private weak var presenter: UINavigationController?
     private weak var containerViewModel: MeetingContainerViewModel?
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
     private let isVideoEnabled: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     
-    init(presenter: UIViewController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
+    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
@@ -51,6 +51,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                                                       chatRoomUseCase: chatRoomUseCase,
+                                                      localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
                                                       isVideoEnabled: isVideoEnabled)
         
         let userImageUseCase = UserImageUseCase(

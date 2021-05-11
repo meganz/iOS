@@ -12,9 +12,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private let call: CallEntity
     private let isVideoEnabled: Bool
     
-    private weak var baseViewController: UIViewController?
+    private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
-    private weak var callViewRouter: CallViewRouter?
+    private weak var callViewRouter: MeetingParticipantsLayoutRouter?
     
     init(presenter: UIViewController, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
         self.presenter = presenter
@@ -70,9 +70,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     //MARK:- Private methods.
     private func showCallViewRouter(containerViewModel: MeetingContainerViewModel) {
         guard let baseViewController = baseViewController else { return }
-        let callViewRouter = CallViewRouter(presenter: baseViewController,
+        let callViewRouter = MeetingParticipantsLayoutRouter(presenter: baseViewController,
                                             containerViewModel: containerViewModel,
                                             chatRoom: chatRoom,
+                                            call: call,
                                             initialVideoCall: isVideoEnabled)
         callViewRouter.start()
         self.callViewRouter = callViewRouter

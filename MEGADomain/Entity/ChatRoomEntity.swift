@@ -1,5 +1,3 @@
-
-
 struct ChatRoomEntity {
     enum ChangeType: Int {
         case status           = 0x01

@@ -42,7 +42,6 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let videoDevices: [String]
     
     private let meetingUseCase: MeetingCreatingUseCaseProtocol
-    private let callManagerUseCase: CallManagerUseCaseProtocol
     private let callsUseCase: CallsUseCaseProtocol
 
     private var isVideoEnabled = false
@@ -57,7 +56,6 @@ final class MeetingCreatingViewModel: ViewModelType {
     init(router: MeetingCreatingViewRouting, meetingUseCase: MeetingCreatingUseCaseProtocol) {
         self.router = router
         self.meetingUseCase = meetingUseCase
-        callManagerUseCase = CallManagerUseCase()
         callsUseCase = CallsUseCase(repository: CallsRepository())
         videoDevices = meetingUseCase.videoDevices()
     }

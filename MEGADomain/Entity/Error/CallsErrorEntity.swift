@@ -4,4 +4,5 @@ enum CallsErrorEntity: Error {
     case tooManyParticipants
     case chatLocalVideoNotEnabled
     case chatLocalVideoNotDisabled
+    case requestResolutionVideoChange
 }

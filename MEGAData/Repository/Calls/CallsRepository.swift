@@ -13,6 +13,8 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     private var callId: MEGAHandle?
     private var call: CallEntity?
     
+    private var isReconnecting: Bool = false
+        
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = CallEntity(with: call)
@@ -24,6 +26,8 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
     
     func stopListeningForCall() {
+        self.call = nil
+        self.callId = MEGAInvalidHandle
         chatSdk.remove(self)
         self.callbacksDelegate = nil
     }
@@ -54,7 +58,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         }
     }
     
-    func startChatCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+    func startChatCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
         chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: MEGAChatStartCallRequestDelegate(completion: { [weak self] (error) in
             if error?.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
@@ -75,13 +79,13 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         }))
     }
     
-    func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
         guard let activeCall = chatSdk.chatCall(forChatId: chatId) else {
             completion(.failure(.generic))
             return
         }
         if activeCall.status == .userNoPresent {
-            startChatCall(for: chatId, withVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+            startChatCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
         } else {
             call = CallEntity(with: activeCall)
             callId = activeCall.callId
@@ -89,32 +93,13 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         }
     }
     
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
-            if error?.type == .MEGAChatErrorTypeOk {
-                completion(.success)
-            } else {
-                completion(.failure(.chatLocalVideoNotEnabled))
-            }
-        }))
-    }
-    
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
-            if error?.type == .MEGAChatErrorTypeOk {
-                completion(.success)
-            } else {
-                completion(.failure(.chatLocalVideoNotDisabled))
-            }
-        }))
-    }
-    
-    func videoDeviceSelected() -> String? {
-        chatSdk.videoDeviceSelected()
-    }
-    
-    func selectCamera(withLocalizedName localizedName: String) {
-        chatSdk.setChatVideoInDevices(localizedName)
+    func createActiveSessions() {
+        guard let call = call, !call.clientSessions.isEmpty else {
+            return
+        }
+        call.clientSessions.forEach {
+            callbacksDelegate?.createdSession($0, in: call.chatId)
+        }
     }
     
     func hangCall(for callId: MEGAHandle) {
@@ -161,6 +146,18 @@ extension CallsRepository: MEGAChatCallDelegate {
         if session.hasChanged(.remoteAvFlags) {
             callbacksDelegate?.avFlagsUpdated(for: ChatSessionEntity(with: session), in: chatId)
         }
+        
+        if session.hasChanged(.audioLevel) {
+            callbacksDelegate?.audioLevel(for: ChatSessionEntity(with: session), in: chatId)
+        }
+        
+        if session.hasChanged(.onHiRes) {
+            callbacksDelegate?.onHiResSession(ChatSessionEntity(with: session), in: chatId)
+        }
+        
+        if session.hasChanged(.onLowRes) {
+            callbacksDelegate?.onLowResSession(ChatSessionEntity(with: session), in: chatId)
+        }
     }
     
     func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
@@ -168,6 +165,10 @@ extension CallsRepository: MEGAChatCallDelegate {
             self.call = CallEntity(with: call)
         } else {
             return;
+        }
+        
+        if call.hasChanged(for: .localAVFlags) {
+            callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         }
         
         switch call.status {
@@ -180,13 +181,31 @@ extension CallsRepository: MEGAChatCallDelegate {
         case .joining:
             break
         case .inProgress:
+//            if isReconnecting {
+//                isReconnecting = false
+//                callbacksDelegate?.reconnected()
+//            }
+            
+            if call.hasChanged(for: .callComposition) {
+                switch call.callCompositionChange {
+                case .peerAdded:
+                    callbacksDelegate?.participantAdded(with: call.peeridCallCompositionChange)
+                case .peerRemoved:
+                    callbacksDelegate?.participantRemoved(with: call.peeridCallCompositionChange)
+                default:
+                    break
+                }
+            }
             break
         case .terminatingUserParticipation, .destroyed:
             callbacksDelegate?.callTerminated()
         case .userNoPresent:
             break
 //        case .reconnecting:
-//            break
+//            if !isReconnecting {
+//                isReconnecting = true
+//                callbacksDelegate?.reconnecting()
+//            }
         @unknown default:
             fatalError("Call status has an unkown status")
         }
