@@ -21,14 +21,16 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
             self.callId = call.callId
         }
 
-        chatSdk.add(self)
+        chatSdk.add(self as MEGAChatCallDelegate)
+        chatSdk.add(self as MEGAChatDelegate)
         self.callbacksDelegate = callbacksDelegate
     }
     
     func stopListeningForCall() {
+        chatSdk.remove(self as MEGAChatCallDelegate)
+        chatSdk.remove(self as MEGAChatDelegate)
         self.call = nil
         self.callId = MEGAInvalidHandle
-        chatSdk.remove(self)
         self.callbacksDelegate = nil
     }
     
@@ -209,5 +211,19 @@ extension CallsRepository: MEGAChatCallDelegate {
         @unknown default:
             fatalError("Call status has an unkown status")
         }
+    }
+}
+
+extension CallsRepository: MEGAChatDelegate {
+    func onChatListItemUpdate(_ api: MEGAChatSdk!, item: MEGAChatListItem!) {
+        guard let chatId = call?.chatId,
+              item.chatId == chatId,
+              item.hasChanged(for: .ownPrivilege),
+              let updatedPrivilage = ChatRoomEntity.Privilege(rawValue: item.ownPrivilege.rawValue),
+              let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
+            return
+        }
+        
+        callbacksDelegate?.ownPrivilegeChanged(to: updatedPrivilage, in: ChatRoomEntity(with: chatRoom))
     }
 }

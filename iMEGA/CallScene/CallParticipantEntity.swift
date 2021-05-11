@@ -11,7 +11,7 @@ protocol CallParticipantVideoDelegate {
 final class CallParticipantEntity: Equatable {
     enum AttendeeType {
         case moderator
-        case particpant
+        case participant
         case guest
     }
     
@@ -74,7 +74,7 @@ extension CallParticipantEntity {
             case MEGAChatRoomPrivilege.moderator.rawValue:
                 attendeeType = .moderator
             case MEGAChatRoomPrivilege.standard.rawValue:
-                attendeeType = .particpant
+                attendeeType = .participant
             default:
                 attendeeType = .guest
             }
@@ -106,7 +106,7 @@ extension CallParticipantEntity {
                                                 clientId: 0,
                                                 networkQuality: 0,
                                                 email: email,
-                                                attendeeType: ChatRoomEntity(with: chatRoom).ownPrivilege == .moderator ? .moderator : .particpant,
+                                                attendeeType: ChatRoomEntity(with: chatRoom).ownPrivilege == .moderator ? .moderator : .participant,
                                                 isInContactList: false)
         
         return participant

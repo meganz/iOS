@@ -642,7 +642,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       chatRoomUseCase: MockChatRoomUseCase(),
                                                       localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .particpant, isInContactList: false)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .participant, isInContactList: false)
         test(viewModel: viewModel,
              action: .changeModeratorTo(participant: particpant),
              expectedCommands: [

@@ -28,7 +28,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private let router: MeetingFloatingPanelRouting
-    private let chatRoom: ChatRoomEntity
+    private var chatRoom: ChatRoomEntity
     private let call: CallEntity
     private let callManagerUseCase: CallManagerUseCaseProtocol
     private let callsUseCase: CallsUseCaseProtocol
@@ -290,7 +290,24 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
         }
     }
     
-    func callTerminated() {    }
+    func callTerminated() { }
+    
+    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+        self.chatRoom = chatRoom
+        guard let attendee = callParticipants.first else { return }
+        switch privilege {
+        case .moderator:
+            attendee.attendeeType = .moderator
+        default:
+            attendee.attendeeType = .participant
+        }
+        invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
+                                   isOneToOneMeeting: !chatRoom.isGroup,
+                                   isVideoEnabled: isVideoEnabled,
+                                   cameraPosition: isVideoEnabled ? (isBackCameraSelected() ? .back : .front) : nil))
+        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+    }
+    
     func remoteVideoReady(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) {    }
     func audioLevel(for attende: CallParticipantEntity) {   }
     func participantAdded(with handle: MEGAHandle) {    }
