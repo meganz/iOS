@@ -34,7 +34,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_isAttendeeParticipant() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, networkQuality: 1, email: nil, attendeeType: .particpant, isInContactList: false)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, networkQuality: 1, email: nil, attendeeType: .participant, isInContactList: false)
         let userUseCase = MockUserUseCase(handle: 100)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))

@@ -361,6 +361,8 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             invokeCommand?(.switchLocalVideo)
         }
     }
+    
+    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) { }
 }
 
 extension MeetingParticipantsLayoutViewModel: CallsLocalVideoCallbacksUseCaseProtocol {

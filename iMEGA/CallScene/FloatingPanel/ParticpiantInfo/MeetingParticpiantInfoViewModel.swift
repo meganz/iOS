@@ -64,7 +64,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         switch attendee.attendeeType {
         case .moderator:
             actions.append(attendee.isInContactList ? sendMessageAction() : addContactAction())
-        case .particpant:
+        case .participant:
             actions.append(attendee.isInContactList ? sendMessageAction() : addContactAction())
             if isMyselfModerator {
                 actions.append(makeModeratorAction())

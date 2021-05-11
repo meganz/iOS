@@ -20,6 +20,7 @@ protocol CallsCallbacksUseCaseProtocol: AnyObject {
     func remoteVideoReady(for attendee: CallParticipantEntity, with resolution: CallParticipantVideoResolution)
     func audioLevel(for attendee: CallParticipantEntity)
     func callTerminated()
+    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
     func participantAdded(with handle: MEGAHandle)
     func participantRemoved(with handle: MEGAHandle)
     func reconnecting()
@@ -103,6 +104,10 @@ extension CallsUseCase: CallsCallbacksRepositoryProtocol {
     
     func callTerminated() {
         callbacksDelegate?.callTerminated()
+    }
+    
+    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+        callbacksDelegate?.ownPrivilegeChanged(to: privilege, in: chatRoom)
     }
     
     func participantAdded(with handle: MEGAHandle) {

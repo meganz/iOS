@@ -56,6 +56,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
         backgroundView.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1176470588, alpha: 0.88)
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
+        endQuickActionView.icon = UIImage(named: "hangCallMeetingAction")
+        endQuickActionView.name = NSLocalizedString("Leave", comment: "")
         updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
         
@@ -173,8 +175,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     private func updateUI(isMyselfAModerator: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPosition?) {
-        endQuickActionView.icon = UIImage(named: isMyselfAModerator ? "endCallMeetingAction" : "hangCallMeetingAction")
-        endQuickActionView.name = NSLocalizedString(isMyselfAModerator ? "End" : "Leave", comment: "")
         cameraQuickActionView.isSelected = isVideoEnabled
         if let cameraPosition = cameraPosition {
             flipQuickActionView.isSelected = cameraPosition == .back
