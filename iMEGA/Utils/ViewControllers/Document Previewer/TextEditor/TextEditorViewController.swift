@@ -67,6 +67,8 @@ extension TextEditorViewController: ViewType {
             startDownload(status: status)
         case .downloadToOffline:
             viewModel.dispatch(.downloadToOffline)
+        case .showDiscardChangeAlert:
+            showDiscardChangeAlert()
         }
     }
     
@@ -257,6 +259,17 @@ extension TextEditorViewController: ViewType {
         }
     }
     
+    private func showDiscardChangeAlert() {
+        guard let barButton = navigationItem.leftBarButtonItem else { return }
+        let discardChangesAC = UIAlertController().discardChanges(
+            fromBarButton: barButton,
+            withConfirmAction: {
+                self.viewModel.dispatch(.cancel)
+            }
+        )
+        present(discardChangesAC, animated: true, completion: nil)
+    }
+    
     private func configToolbar(accessLevel: NodeAccessTypeEntity) {
         let flexibleItem =
             UIBarButtonItem(
@@ -307,15 +320,7 @@ extension TextEditorViewController: ViewType {
     }
     
     @objc private func cancelTapped() {
-        guard let barButton = navigationItem.leftBarButtonItem else { return }
-        
-        let discardChangesAC = UIAlertController().discardChanges(
-            fromBarButton: barButton,
-            withConfirmAction: {
-                self.viewModel.dispatch(.cancel)
-            }
-        )
-        present(discardChangesAC, animated: true, completion: nil)
+        viewModel.dispatch(.cancelText(textView.text))
     }
     
     @objc private func saveTapped() {
