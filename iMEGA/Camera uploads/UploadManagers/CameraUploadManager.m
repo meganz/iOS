@@ -136,8 +136,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)registerNotificationsForUpload {
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMemoryWarningNotification) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveApplicationWillTerminateNotification) name:UIApplicationWillTerminateNotification object:nil];
-    
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoConcurrentCountChangedNotification:) name:MEGACameraUploadPhotoConcurrentCountChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoConcurrentCountChangedNotification:) name:MEGACameraUploadVideoConcurrentCountChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
@@ -789,11 +787,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
             }
         }
     }
-}
-
-- (void)didReceiveApplicationWillTerminateNotification {
-    MEGALogDebug(@"[Camera Upload] app will terminate");
-    [self cancelAllPendingOperations];
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
