@@ -1,5 +1,5 @@
 
-final class MeetingContainerViewController: UIViewController {
+final class MeetingContainerViewController: UINavigationController {
     
     private let viewModel: MeetingContainerViewModel
     

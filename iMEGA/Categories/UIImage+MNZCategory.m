@@ -12,6 +12,10 @@
 
 #pragma mark - Video calls
 
++ (UIImage *)mnz_convertToUIImage:(NSData *)data withWidth:(NSInteger)width withHeight:(NSInteger)height {
+    return [UIImage mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)data.bytes withWidth:width withHeight:height];
+}
+
 + (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer withWidth:(NSInteger)width withHeight:(NSInteger)height {
     size_t bufferLength = width * height * 4;
     CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, bufferLength, NULL);

@@ -1,15 +1,11 @@
 
 protocol CallsUseCaseProtocol {
-
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol)
     func stopListeningForCall()
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
-    func startOutgoingCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
-    func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
-    func videoDeviceSelected() -> String?
-    func selectCamera(withLocalizedName localizedName: String)
+    func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
+    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
+    func createActiveSessions()
     func hangCall(for callId: MEGAHandle)
     func endCall(for callId: MEGAHandle)
     func addPeer(toCall call: CallEntity, peerId: UInt64)
@@ -21,7 +17,14 @@ protocol CallsCallbacksUseCaseProtocol: AnyObject {
     func attendeeJoined(attendee: CallParticipantEntity)
     func attendeeLeft(attendee: CallParticipantEntity)
     func updateAttendee(_ attendee: CallParticipantEntity)
+    func remoteVideoReady(for attendee: CallParticipantEntity, with resolution: CallParticipantVideoResolution)
+    func audioLevel(for attendee: CallParticipantEntity)
     func callTerminated()
+    func participantAdded(with handle: MEGAHandle)
+    func participantRemoved(with handle: MEGAHandle)
+    func reconnecting()
+    func reconnected()
+    func localAvFlagsUpdated(video: Bool, audio: Bool)
 }
 
 final class CallsUseCase: NSObject, CallsUseCaseProtocol {
@@ -39,6 +42,7 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     }
     
     func stopListeningForCall() {
+        self.callbacksDelegate = nil
         repository.stopListeningForCall()
     }
     
@@ -46,38 +50,16 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
         repository.answerIncomingCall(for: chatId, completion: completion)
     }
     
-    func startOutgoingCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
-        repository.startChatCall(for: chatId, withVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+    func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+        repository.startChatCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
     }
     
-    func joinActiveCall(for chatId: MEGAHandle, withVideo enableVideo: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
-//        repository.joinActiveCall(for: chatId, withVideo: enableVideo) { [weak self] in
-//            switch $0 {
-//            case .success(let call):
-//                completion(.success(call))
-//                if call.sessionsPeerId.size > 0 {
-//                    self?.createActiveSessions(for: call)
-//                }
-//            case .failure(_):
-//                completion(.failure(.generic))
-//            }
-//        }
+    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+        repository.joinActiveCall(for: chatId, enableVideo: enableVideo, enableAudio: true, completion: completion)
     }
     
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        repository.enableLocalVideo(for: chatId, completion: completion)
-    }
-    
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
-        repository.disableLocalVideo(for: chatId, completion: completion)
-    }
-    
-    func videoDeviceSelected() -> String? {
-        repository.videoDeviceSelected()
-    }
-    
-    func selectCamera(withLocalizedName localizedName: String) {
-        repository.selectCamera(withLocalizedName: localizedName)
+    func createActiveSessions() {
+        repository.createActiveSessions()
     }
     
     func hangCall(for callId: MEGAHandle) {
@@ -99,10 +81,6 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         repository.makePeerAModerator(inCall: call, peerId: peerId)
     }
-    
-    private func createActiveSessions(for call: CallEntity) {
-//        call.sessions?.forEach { createdSession($0, in: call.chatId) }
-    }
 }
 
 extension CallsUseCase: CallsCallbacksRepositoryProtocol {
@@ -119,7 +97,39 @@ extension CallsUseCase: CallsCallbacksRepositoryProtocol {
         callbacksDelegate?.updateAttendee(CallParticipantEntity(session: session, chatId: chatId))
     }
     
+    func audioLevel(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: session, chatId: chatId))
+    }
+    
     func callTerminated() {
         callbacksDelegate?.callTerminated()
+    }
+    
+    func participantAdded(with handle: MEGAHandle) {
+        callbacksDelegate?.participantAdded(with: handle)
+    }
+    
+    func participantRemoved(with handle: MEGAHandle) {
+        callbacksDelegate?.participantRemoved(with: handle)
+    }
+    
+    func reconnecting() {
+        callbacksDelegate?.reconnecting()
+    }
+    
+    func reconnected() {
+        callbacksDelegate?.reconnected()
+    }
+    
+    func onHiResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        callbacksDelegate?.remoteVideoReady(for: CallParticipantEntity(session: session, chatId: chatId), with: .high)
+    }
+    
+    func onLowResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        callbacksDelegate?.remoteVideoReady(for: CallParticipantEntity(session: session, chatId: chatId), with: .low)
+    }
+    
+    func localAvFlagsUpdated(video: Bool, audio: Bool) {
+        callbacksDelegate?.localAvFlagsUpdated(video: video, audio: audio)
     }
 }

@@ -7,6 +7,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 @interface UIImage (MNZCategory)
 
++ (UIImage *)mnz_convertToUIImage:(NSData *)data withWidth:(NSInteger)width withHeight:(NSInteger)height;
 + (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer withWidth:(NSInteger)width withHeight:(NSInteger)height;
 
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle name:(NSString *)name size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate;

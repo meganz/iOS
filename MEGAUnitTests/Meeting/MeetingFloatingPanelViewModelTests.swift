@@ -19,6 +19,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -45,6 +46,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -61,7 +63,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callsUseCase: MockCallsUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100))
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let callUseCase = MockCallsUseCase()
-        callUseCase.videoDeviceSelectedString = "front"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.videoDeviceSelectedString = "front"
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
@@ -72,6 +75,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(cameraPositionName: "back"),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: true)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -88,7 +92,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callsUseCase: MockCallsUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100))
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let callUseCase = MockCallsUseCase()
-        callUseCase.videoDeviceSelectedString = "back"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.videoDeviceSelectedString = "back"
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
@@ -99,6 +104,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(cameraPositionName: "back"),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: true)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -125,6 +131,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -151,6 +158,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -179,10 +187,10 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController()), expectedCommands: [])
-
         XCTAssert(containerRouter.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
         XCTAssert(callUseCase.hangCall_CalledTimes == 1)
@@ -208,6 +216,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: chatRoomUseCase,
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 1)
@@ -232,6 +241,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 0)
@@ -256,6 +266,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel, action: .inviteParticipants(presenter: UIViewController()), expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
@@ -280,6 +291,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .guest, isInContactList: false)
         test(viewModel: viewModel, action: .onContextMenuTap(presenter: UIViewController(), sender: UIButton(), attendee: particpant), expectedCommands: [])
@@ -305,6 +317,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: true), expectedCommands: [.microphoneMuted(muted: true)])
         XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
@@ -329,6 +342,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: false), expectedCommands: [.microphoneMuted(muted: false)])
         XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
@@ -339,8 +353,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Back"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Back"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Back")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -356,6 +371,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
@@ -371,8 +387,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Back"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Back"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -388,6 +405,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
@@ -404,8 +422,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Back"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Back"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -421,6 +440,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                       isVideoEnabled: false)
         test(viewModel: viewModel,
              action: .turnCamera(on: false),
@@ -434,8 +454,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Back"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Back"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -451,6 +472,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         
         test(viewModel: viewModel,
@@ -458,7 +480,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .updatedCameraPosition(position: .back)
              ])
-        XCTAssert(callUseCase.selectedCamera_calledTimes == 1)
+        XCTAssert(localVideoUseCase.selectedCamera_calledTimes == 1)
     }
     
     func testAction_switchBackFrontCameraOn() {
@@ -466,8 +488,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Back"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Back"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -483,6 +506,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         
         test(viewModel: viewModel,
@@ -490,7 +514,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .updatedCameraPosition(position: .front)
              ])
-        XCTAssert(callUseCase.selectedCamera_calledTimes == 1)
+        XCTAssert(localVideoUseCase.selectedCamera_calledTimes == 1)
     }
     
     func testAction_alreadyOnFrontCamera_switchOnFrontCamera() {
@@ -498,8 +522,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Front"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Front"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -515,13 +540,14 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: false),
              expectedCommands: [
              ])
-        XCTAssert(callUseCase.selectedCamera_calledTimes == 0)
+        XCTAssert(localVideoUseCase.selectedCamera_calledTimes == 0)
     }
     
     func testAction_enableLoudSpeaker() {
@@ -529,8 +555,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Front"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Front"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -547,6 +574,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         
         test(viewModel: viewModel,
@@ -560,8 +588,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Front"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Front"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -578,6 +607,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         
         test(viewModel: viewModel,
@@ -591,8 +621,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 0, callId: 0, changeTye: nil, duration: 0, initialTimestamp: 0, finalTimestamp: 0, hasLocalAudio: false, hasLocalVideo: false, termCodeType: nil, isRinging: false, callCompositionChange: nil, numberOfParticipants: 0, isOnHold: false, sessionClientIds: [], clientSessions: [], participants: [], uuid: UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!)
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallsUseCase()
-        callUseCase.enableDisableVideoCompletion = .success(())
-        callUseCase.videoDeviceSelectedString = "Front"
+        let localVideoUseCase = MockCallsLocalVideoUseCase()
+        localVideoUseCase.enableDisableVideoCompletion = .success(())
+        localVideoUseCase.videoDeviceSelectedString = "Front"
         let callManagerUserCase = MockCallManagerUseCase()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100))
@@ -609,6 +640,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       isVideoEnabled: false)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .particpant, isInContactList: false)
         test(viewModel: viewModel,

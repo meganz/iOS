@@ -36,6 +36,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var isSpeakerEnabled = false
@@ -55,6 +56,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
          isVideoEnabled: Bool) {
         self.router = router
         self.containerViewModel = containerViewModel
@@ -66,6 +68,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.devicePermissionUseCase = devicePermissionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.localVideoUseCase = localVideoUseCase
         self.isVideoEnabled = isVideoEnabled
     }
     
@@ -87,6 +90,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                        isVideoEnabled: isVideoEnabled,
                                        cameraPosition: isVideoEnabled ? (isBackCameraSelected() ? .back : .front) : nil))
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            if isVideoEnabled {
+                checkForVideoPermission {
+                    self.turnCamera(on: true)
+                }
+            }
         case .hangCall(let presenter):
             containerViewModel?.dispatch(.hangCall(presenter: presenter))
         case .shareLink(let presenter, let sender):
@@ -181,7 +189,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func currentCameraPosition() -> CameraPosition {
-        return captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) == callsUseCase.videoDeviceSelected() ? .front : .back
+        return captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) == localVideoUseCase.videoDeviceSelected() ? .front : .back
     }
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
@@ -202,20 +210,19 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                                   bluetoothAudioRouteAvailable:  audioSessionUseCase.isBluetoothAudioRouteAvailable))
     }
     
-    
     private func switchCamera(backCameraOn: Bool) {
         guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: backCameraOn ? .back : .front),
-              callsUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
+              localVideoUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
             return
         }
-        callsUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
+        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
         let cameraPosition: CameraPosition = backCameraOn ? .back : .front
         invokeCommand?(.updatedCameraPosition(position: cameraPosition))
     }
     
     private func isBackCameraSelected() -> Bool {
         guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .back),
-              callsUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
+              localVideoUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
             return false
         }
         
@@ -224,7 +231,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func turnCamera(on: Bool) {
         if on {
-            callsUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
+            localVideoUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success:
@@ -238,7 +245,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 }
             }
         } else {
-            callsUseCase.disableLocalVideo(for: chatRoom.chatId) { result in
+            localVideoUseCase.disableLocalVideo(for: chatRoom.chatId) { result in
                 switch result {
                 case .success:
                     self.isVideoEnabled = on
@@ -284,4 +291,11 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func callTerminated() {    }
+    func remoteVideoReady(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) {    }
+    func audioLevel(for attende: CallParticipantEntity) {   }
+    func participantAdded(with handle: MEGAHandle) {    }
+    func participantRemoved(with handle: MEGAHandle) {  }
+    func reconnecting() {   }
+    func reconnected() {    }
+    func localAvFlagsUpdated(video: Bool, audio: Bool) {    }
 }

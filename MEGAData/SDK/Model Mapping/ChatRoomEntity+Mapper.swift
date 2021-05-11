@@ -1,4 +1,3 @@
-
 extension ChatRoomEntity {
     init(with chatRoom: MEGAChatRoom) {
         self.chatId = chatRoom.chatId
