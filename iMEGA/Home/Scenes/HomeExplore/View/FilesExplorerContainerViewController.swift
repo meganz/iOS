@@ -9,6 +9,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
 
     private let viewModel: FilesExplorerViewModel
+    private var uploadViewModel: HomeUploadingViewModelType?
     private let viewPreference: ViewPreference
     
     private lazy var selectAllBarButtonItem = UIBarButtonItem(
@@ -180,14 +181,38 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         
         var customizeActions:Array<ActionSheetAction>? = []
         if (viewModel.getExplorerType() == .document) {
-            let newFileAction = ActionSheetAction(
-                title: HomeLocalisation.textFile.rawValue,
-                detail: nil,
-                image: UIImage(named: "textfile"),
-                style: .default) {
-                CreateTextFileAlertViewRouter(presenter: self.navigationController).start()
+            let uploadViewModel = HomeUploadingViewModel(
+                uploadFilesUseCase: HomeUploadFileUseCase(
+                    uploadFromAlbum: .live,
+                    uploadFromURL: .live,
+                    uploadFromLocalPath: .live
+                ),
+                devicePermissionUseCase: DevicePermissionRequestUseCase(
+                    photoPermission: .live,
+                    devicePermission: .live
+                ),
+                reachabilityUseCase: ReachabilityUseCase(),
+                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
+            )
+            self.uploadViewModel = uploadViewModel
+            
+            let sources: [FileUploadingSourceItem.Source] = [.textFile, .documentScan, .imports]
+            for source in sources {
+                let item = FileUploadingSourceItem(source: source)
+                let action = ActionSheetAction(title: item.title, detail: nil, accessoryView: nil, image: item.icon, style: .default) {
+                    switch source {
+                    case .textFile:
+                        uploadViewModel.didTapUploadFromNewTextFile()
+                    case .documentScan:
+                        uploadViewModel.didTapUploadFromDocumentScan()
+                    case .imports:
+                        uploadViewModel.didTapUploadFromImports()
+                    default:
+                        break
+                    }
+                }
+                customizeActions?.append(action)
             }
-            customizeActions?.append(newFileAction)
         }
         
         var actionList = [sortPreferenceAction, selectAction]
