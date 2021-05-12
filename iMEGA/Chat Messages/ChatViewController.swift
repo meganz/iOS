@@ -844,7 +844,7 @@ class ChatViewController: MessagesViewController {
         }
         
         additionalBottomInset = keyboardFrame.height + inputAccessoryView.frame.height
-        messagesCollectionView.scrollToBottom()
+        messagesCollectionView.scrollToLastItem()
         keyboardVisible = true
     }
     
