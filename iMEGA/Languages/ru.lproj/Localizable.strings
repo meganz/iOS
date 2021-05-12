@@ -2604,3 +2604,15 @@
 "The device does not have enough space for MEGA to run properly."="Недостаточно свободного места на устройстве для нормальной работы MEGA.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Освободите место, удалив приложения, которыми вы больше не пользуетесь, или большие видеофайлы в галерее.Вы можете управлять своим хранилищем в %@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Безопасность";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Условия и политика";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="Пользовательский интерфейс";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Изменить стартовый раздел";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Теперь вы можете выбрать, какой раздел приложение будет открывать при запуске. Выберите тот, который больше соответствует вашим потребностям, будь то чат, облачный диск или «домой».";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Изменить";
