@@ -751,7 +751,7 @@
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="En exportant et en conservant la clé de récupération en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer de perdre des données.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une clé de récupération ?";
+"whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une clé de récupération ?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="La clé de récupération a été copiée dans le presse-papiers. Veuillez la conserver en lieu sûr.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -879,7 +879,7 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Veuillez saisir votre mot de passe pour confirmer votre adresse courriel";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : [X]";
+"congratulationsNewEmailAddress"="Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Fermer les autres sessions";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -951,7 +951,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Sélectionnez des contacts sur votre appareil ou saisissez plusieurs adresses courriel";
 /*  */
-"insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
+"insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
 "howItWorks"="Fonctionnement";
 /*  */
@@ -961,7 +961,7 @@
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu’un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
-"unlockedBonuses"="Primes déverrouillées :";
+"unlockedBonuses"="Primes déverrouillées :";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Quota de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1029,7 +1029,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Libre";
 /* title of the My Account screen */
-"accountType"="Type de compte :";
+"accountType"="Type de compte :";
 /* Label to indicate that the current user has a Free account. */
 "Free"="Gratuit";
 /* Text that shows the expiry date of the account PRO level */
@@ -1059,7 +1059,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Choisissez un des abonnements ci-dessous :";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Sélectionner un type de compte :";
+"selectOneAccountType"="Sélectionner un type de compte :";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="L’abonnement annuel est 10 % moins cher que 12 mensualités";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
@@ -1163,7 +1163,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] a été changé en [B] par [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] a changé le nom de la conversation de groupe en '[B]'.";
+"changedGroupChatNameTo"="[A] a changé le nom de la conversation de groupe en « [B] ».";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Ajouter un participant…";
 /* Menu item to add participants to a chat */
@@ -1337,7 +1337,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s est déjà un contact.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Contact envoyé : %s";
+"sentContact"="Contact envoyé : %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contacts envoyés.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1363,7 +1363,7 @@
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="A été partagé avec succès";
 /* Notification message shown when a transfer failed. Keep colon. */
-"Transfer failed:"="Échec de transfert :";
+"Transfer failed:"="Échec de transfert :";
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Aucune erreur";
 /* Label to show that an Internal error occurs during a SDK operation. */
@@ -1539,7 +1539,7 @@
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Versions actuelles";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
-"remindPasswordTitle"="Vous souvenez-vous de votre mot de passe ?";
+"remindPasswordTitle"="Vous souvenez-vous de votre mot de passe ?";
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="En raison de la technologie de chiffrement de MEGA, vous ne pouvez pas réinitialiser votre mot de passe sans perte de données. Veuillez faire en sorte de vous rappeler votre mot de passe.";
 /* Text that describes why the user should test his/her password before logging out */
@@ -2600,3 +2600,15 @@
 "The device does not have enough space for MEGA to run properly."="L’appareil n’a pas assez d’espace libre pour que MEGA fonctionne correctement.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libérez de l’espace en supprimant des applis que vous n’utilisez plus ou des fichiers vidéo volumineux dans votre galerie.Vous pouvez gérer votre mémoire dans %@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Sécurité";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Conditions générales et Politiques";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="Interface utilisateur";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Changer l’onglet de lancement";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Vous pouvez désormais sélectionner la section que l’appli ouvre au lancement. Choisissez celle qui correspond le mieux à vos besoins, que ce soit Dialogue en ligne, Disque nuagique ou Accueil.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Changer le paramètre";
