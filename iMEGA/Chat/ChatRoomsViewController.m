@@ -2,7 +2,6 @@
 
 #import <Contacts/Contacts.h>
 
-#import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -646,9 +645,6 @@
 }
 
 - (void)changeToOnlineStatus:(MEGAChatStatus)chatStatus {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    
     if (chatStatus != [[MEGASdkManager sharedMEGAChatSdk] onlineStatus]) {
         [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:chatStatus];
     }
@@ -1527,9 +1523,6 @@
     if (inProgress) {
         return;
     }
-    
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-    [SVProgressHUD dismiss];
     
     if (userHandle == api.myUserHandle) {
         [self customNavigationBarLabel];
