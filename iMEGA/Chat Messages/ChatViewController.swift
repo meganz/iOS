@@ -607,7 +607,9 @@ class ChatViewController: MessagesViewController {
     }
     
     func avatarImage(for message: MessageType) -> UIImage? {
-        return UIImage.mnz_image(forUserHandle: UInt64(message.sender.senderId)!, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (request, error) in
+        guard let userHandle = UInt64(message.sender.senderId) else { return nil }
+        
+        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (request, error) in
         })
     }
 
