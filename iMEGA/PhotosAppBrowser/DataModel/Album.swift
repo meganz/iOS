@@ -67,6 +67,7 @@ extension Album: PHPhotoLibraryChangeObserver {
             guard let self = self else { return }
             
             if let changeDetails = changeInstance.changeDetails(for: self.fetchResult) {
+                let previousPhotosCount = self.fetchResult.count
                 self.fetchResult = changeDetails.fetchResultAfterChanges
                 self.updatedFetchResultsHandler(self)
                 
@@ -78,9 +79,13 @@ extension Album: PHPhotoLibraryChangeObserver {
                     let insertedIndexPaths = changeDetails.insertedIndexes?.indexPaths(withSection: 0)
                     let changedIndexPaths = changeDetails.changedIndexes?.indexPaths(withSection: 0)
                     
-                    self.delegate?.didChange(removedIndexPaths: removedIndexPaths,
-                                             insertedIndexPaths: insertedIndexPaths,
-                                             changedIndexPaths: changedIndexPaths)
+                    if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= previousPhotosCount {
+                        self.delegate?.didResetFetchResult()
+                    } else {
+                        self.delegate?.didChange(removedIndexPaths: removedIndexPaths,
+                                                 insertedIndexPaths: insertedIndexPaths,
+                                                 changedIndexPaths: changedIndexPaths)
+                    }
                 }
             }
         }
