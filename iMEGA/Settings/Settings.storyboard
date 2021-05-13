@@ -1736,28 +1736,37 @@ You may still receive file versions from shared folders if your contacts have th
                         <sections>
                             <tableViewSection footerTitle="All items in the rubbish bin will be deleted." id="uEf-0Q-Bxj" userLabel="Clear Rubbish Bin">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="spm-Ox-MhN" detailTextLabel="aZ5-z0-nIP" style="IBUITableViewCellStyleValue1" id="uA2-V9-gyf" userLabel="Clear Rubbish Bin Table View Cell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uA2-V9-gyf" userLabel="Clear Rubbish Bin Table View Cell">
                                         <rect key="frame" x="0.0" y="18" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uA2-V9-gyf" id="uFB-GF-49Z">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear Rubbish Bin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="spm-Ox-MhN" userLabel="Clear Rubbish Bin Label">
-                                                    <rect key="frame" x="20" y="11.999999999999998" width="134.66666666666666" height="20.333333333333332"/>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="SB9-Sz-1lQ">
+                                                    <rect key="frame" x="359" y="12" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear Rubbish Bin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1Px-c1-9xq">
+                                                    <rect key="frame" x="20" y="11" width="135" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aZ5-z0-nIP" userLabel="Clear Rubbish Bin Detail Label">
-                                                    <rect key="frame" x="352.33333333333331" y="12.999999999999998" width="41.666666666666664" height="19.333333333333332"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vhM-TJ-KAP">
+                                                    <rect key="frame" x="348" y="12" width="42" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="vhM-TJ-KAP" secondAttribute="trailing" constant="24" id="Gvx-xu-jR9"/>
+                                                <constraint firstItem="SB9-Sz-1lQ" firstAttribute="centerY" secondItem="uFB-GF-49Z" secondAttribute="centerY" id="eJT-6d-D4E"/>
+                                                <constraint firstItem="SB9-Sz-1lQ" firstAttribute="centerY" secondItem="vhM-TJ-KAP" secondAttribute="centerY" id="eyK-Iz-1Yh"/>
+                                                <constraint firstItem="vhM-TJ-KAP" firstAttribute="centerY" secondItem="uFB-GF-49Z" secondAttribute="centerY" id="icB-og-xcL"/>
+                                                <constraint firstItem="SB9-Sz-1lQ" firstAttribute="centerX" secondItem="vhM-TJ-KAP" secondAttribute="centerX" id="lzG-8e-Z7s"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
@@ -1852,8 +1861,9 @@ You may still receive file versions from shared folders if your contacts have th
                         <barButtonItem key="backBarButtonItem" title=" " id="wtJ-oK-Adh"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="clearRubbishBinDetailLabel" destination="aZ5-z0-nIP" id="aAO-8R-FDU"/>
-                        <outlet property="clearRubbishBinLabel" destination="spm-Ox-MhN" id="kiR-ew-Xqa"/>
+                        <outlet property="clearRubbishBinAI" destination="SB9-Sz-1lQ" id="RYH-jW-I0a"/>
+                        <outlet property="clearRubbishBinDetailLabel" destination="vhM-TJ-KAP" id="OJm-RY-WHe"/>
+                        <outlet property="clearRubbishBinLabel" destination="1Px-c1-9xq" id="1xv-hK-Xck"/>
                         <outlet property="removeFilesOlderThanDetailLabel" destination="xgc-Px-gNe" id="dWJ-sC-sEo"/>
                         <outlet property="removeFilesOlderThanLabel" destination="HVw-Kh-PtP" id="Pnm-Uk-j7B"/>
                         <outlet property="rubbishBinCleaningSchedulerLabel" destination="abK-a2-a0A" id="vG0-2V-uQY"/>
@@ -1964,17 +1974,17 @@ You may still receive file versions from shared folders if your contacts have th
         </scene>
     </scenes>
     <resources>
-        <image name="aboutSettings" width="56" height="56"/>
-        <image name="advancedSettings" width="56" height="56"/>
-        <image name="cameraUploadsSettings" width="56" height="56"/>
-        <image name="chatSettings" width="56" height="56"/>
-        <image name="cookieSettings" width="56" height="56"/>
-        <image name="fileManagementSettings" width="56" height="56"/>
-        <image name="helpSettings" width="56" height="56"/>
+        <image name="aboutSettings" width="44" height="44"/>
+        <image name="advancedSettings" width="44" height="44"/>
+        <image name="cameraUploadsSettings" width="44" height="44"/>
+        <image name="chatSettings" width="44" height="44"/>
+        <image name="cookieSettings" width="44" height="44"/>
+        <image name="fileManagementSettings" width="44" height="44"/>
+        <image name="helpSettings" width="44" height="44"/>
         <image name="key_illustration" width="320" height="450"/>
-        <image name="securitySettings" width="56" height="56"/>
-        <image name="termsAndPoliciesSettings" width="56" height="56"/>
-        <image name="userInterfaceSettings" width="56" height="56"/>
+        <image name="securitySettings" width="44" height="44"/>
+        <image name="termsAndPoliciesSettings" width="44" height="44"/>
+        <image name="userInterfaceSettings" width="44" height="44"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
