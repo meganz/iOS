@@ -25,6 +25,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .dark
+        }
+        
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)
         }
@@ -49,8 +53,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         })
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                forceDarkNavigationUI()
+            }
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -72,6 +82,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
             callsCollectionView.collectionViewLayout.invalidateLayout()
             localUserView.positionView(by: localUserView.center)
+            forceDarkNavigationUI()
         case .toggleLayoutButton:
             titleView.toggleLayoutButton()
         case .switchLayoutMode(let layoutMode, let participantsCount):
@@ -129,14 +140,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     //MARK: - Private
     
-    func configureLayout(mode: CallLayoutMode, participantsCount: Int) {
+    private func configureLayout(mode: CallLayoutMode, participantsCount: Int) {
         titleView.switchLayoutMode(mode)
         speakerViews.forEach { $0.isHidden = mode == .grid }
         pageControl.isHidden = mode == .speaker
         callsCollectionView.changeLayoutMode(mode)
     }
     
-    func updateSpeaker(_ participant: CallParticipantEntity?) {
+    private func updateSpeaker(_ participant: CallParticipantEntity?) {
         guard let speaker = participant else {
             return
         }
@@ -145,13 +156,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         speakerRemoteVideoImageView.isHidden = speaker.video != .on
     }
     
-    func showNotification(message: String, color: UIColor) {
+    private func showNotification(message: String, color: UIColor) {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
         notification.show(message: message, backgroundColor: color)
     }
     
-    func updateNumberOfPageControl(for participantsCount: Int) {
+    private func updateNumberOfPageControl(for participantsCount: Int) {
         pageControl.numberOfPages = Int(ceil(Double(participantsCount) / 6.0))
         if pageControl.isHidden && participantsCount > 6 {
             pageControl.isHidden = false
@@ -161,6 +172,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             pageControl.isHidden = true
             callsCollectionView.collectionViewLayout.invalidateLayout()
             callsCollectionView.layoutIfNeeded()
+        }
+    }
+    
+    private func forceDarkNavigationUI() {
+        if #available(iOS 13.0, *) {
+            guard let navigationBar = navigationController?.navigationBar else  { return }
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         }
     }
 }
