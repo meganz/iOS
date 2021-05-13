@@ -309,17 +309,9 @@ enum SessionSectionRow: Int {
                     return
                 }
                 
-                var rowToReload: Int = 0
-                let rowsForProfileSectionArray = rowsForProfileSection()
-                if changeType == .email {
-                    rowToReload = rowsForProfileSectionArray.firstIndex(of: .changeEmail) ?? 0
-                } else if changeType == .password {
-                    rowToReload = rowsForProfileSectionArray.firstIndex(of: .changePassword) ?? 0
-                }
-                
                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     self.twoFactorAuthStatus = request.flag ? .enabled : .disabled
-                    self.tableView.reloadRows(at: [IndexPath(row: rowToReload, section: ProfileTableViewSection.profile.rawValue)], with: .automatic)
+                    self.tableView.reloadData()
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
                     navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
@@ -327,7 +319,7 @@ enum SessionSectionRow: Int {
                     self.present(navigationController, animated: true, completion: nil)
                 }))
                 twoFactorAuthStatus = .querying
-                tableView.reloadRows(at: [IndexPath(row: rowToReload, section: ProfileTableViewSection.profile.rawValue)], with: .automatic)
+                tableView.reloadData()
             case .querying:
                 return
             case .disabled, .enabled:
