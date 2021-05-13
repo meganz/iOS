@@ -307,6 +307,7 @@
 		5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D50259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift */; };
 		5B9F5D5B259DD72700BADB11 /* CookieSettingsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D5A259DD72700BADB11 /* CookieSettingsErrorEntity.swift */; };
 		5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */; };
+		5B9FBDFD26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */; };
 		5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA53FE82462B26000D168B9 /* InviteContact.storyboard */; };
 		5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5BA81EA21FC2FF0600C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
@@ -2392,6 +2393,7 @@
 		5B9F5D50259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		5B9F5D5A259DD72700BADB11 /* CookieSettingsErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsErrorEntity.swift; sourceTree = "<group>"; };
 		5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsRepository.swift; sourceTree = "<group>"; };
+		5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+InAppPurchase.swift"; sourceTree = "<group>"; };
 		5BA53FE82462B26000D168B9 /* InviteContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InviteContact.storyboard; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
@@ -5111,6 +5113,7 @@
 				2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */,
 				2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */,
 				8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */,
+				5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */,
 				8371320424E695A400149059 /* UIActivityViewController+MNZCategory.h */,
 				8371320524E695A400149059 /* UIActivityViewController+MNZCategory.m */,
 				BFCEE8B325102D9600D43448 /* IndexSet+Additions.swift */,
@@ -10569,6 +10572,7 @@
 				0D213E98263A625C00B43723 /* NodeAccessTypeEntity.swift in Sources */,
 				83BD328025DD3C7200F8B91D /* FavouriteItemsUseCase.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
+				5B9FBDFD26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift in Sources */,
 				5D8303F5256367D60082CA18 /* BannerErrorEntity.swift in Sources */,
 				B6472E082581D35D0040B2DB /* HeartbeatRequestDelegate.swift in Sources */,
 				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,

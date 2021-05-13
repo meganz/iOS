@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="รายปี";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="การซื้อภายในแอพรายการนี้ ไม่สามารถใช้งานได้บน App Store กรุณาลองใหม่อีกครั้งในภายหลัง";
+"inAppPurchase.error.alert.title.notAvailable"="การซื้อภายในแอพรายการนี้ ไม่สามารถใช้งานได้บน App Store กรุณาลองใหม่อีกครั้งในภายหลัง";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="ขอขอบคุณ";
 /* Alert message shown when a purchase was restored succesfully */
