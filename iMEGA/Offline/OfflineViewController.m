@@ -887,6 +887,11 @@ static NSString *kisDirectory = @"kisDirectory";
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
+        UITabBar *tabBar = self.tabBarController.tabBar;
+        if (tabBar == nil) {
+            return;
+        }
+        
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
@@ -896,11 +901,11 @@ static NSString *kisDirectory = @"kisDirectory";
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
-            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
                                                       [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
             
             [UIView animateWithDuration:0.33f animations:^ {
