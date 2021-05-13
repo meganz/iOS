@@ -36,6 +36,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func start() {
+        let presentedViewController = UIApplication.mnz_presentingViewController()
+        guard !(presentedViewController is MeetingContainerViewController) else {
+            MEGALogDebug("Meeting UI is already presented")
+            return
+        }
+        
         let vc = build()
         vc.modalPresentationStyle = .fullScreen
         presenter?.present(vc, animated: false) {

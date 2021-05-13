@@ -940,8 +940,6 @@
 		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		8393CD2025E8EF980012F505 /* Array+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A9F222F41F470059B39C /* Array+Additions.swift */; };
-		8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFA2211AE24100A1634A /* GroupCallViewController.m */; };
-		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */; };
 		8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */; };
 		8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */; };
@@ -1375,7 +1373,6 @@
 		A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
 		A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
-		A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262A91FA0B8F9006172CE /* CallViewController.m */; };
 		A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */; };
 		A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
@@ -1670,6 +1667,8 @@
 		BF66E037261420A000066F35 /* CallEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66E036261420A000066F35 /* CallEntity+Mapper.swift */; };
 		BF66E0412614236D00066F35 /* ChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66E0402614236D00066F35 /* ChatSessionEntity.swift */; };
 		BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66E04A2614269000066F35 /* ChatSessionEntity+Mapper.swift */; };
+		BF67C50B264B9A68003CE3C6 /* ChatRoomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C50A264B9A67003CE3C6 /* ChatRoomsViewController.swift */; };
+		BF67C527264CB0A7003CE3C6 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */; };
 		BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */; };
 		BF68244825E84D9F00A7740C /* MeetingFloatingPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
@@ -2998,11 +2997,7 @@
 		838A7B7B25D5679F00767DB0 /* CallsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		838A7B8525D56B6800767DB0 /* CallsErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsErrorEntity.swift; sourceTree = "<group>"; };
 		838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaChatResultRequestDelegate.swift; sourceTree = "<group>"; };
-		8394CFA1211AE24100A1634A /* GroupCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupCallViewController.h; path = Chat/GroupCallViewController.h; sourceTree = "<group>"; };
-		8394CFA2211AE24100A1634A /* GroupCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GroupCallViewController.m; path = Chat/GroupCallViewController.m; sourceTree = "<group>"; };
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
-		8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCallCollectionViewCell.h; sourceTree = "<group>"; };
-		8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCallCollectionViewCell.m; sourceTree = "<group>"; };
 		8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModelTests.swift; sourceTree = "<group>"; };
 		8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalVideoUseCase.swift; sourceTree = "<group>"; };
 		8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRemoteVideoUseCase.swift; sourceTree = "<group>"; };
@@ -3416,8 +3411,6 @@
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		A8C262A81FA0B8F9006172CE /* CallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CallViewController.h; path = Chat/CallViewController.h; sourceTree = "<group>"; };
-		A8C262A91FA0B8F9006172CE /* CallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CallViewController.m; path = Chat/CallViewController.m; sourceTree = "<group>"; };
 		A8C262AB1FA1D85E006172CE /* MEGARemoteImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGARemoteImageView.h; sourceTree = "<group>"; };
 		A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGARemoteImageView.m; sourceTree = "<group>"; };
 		A8C262AE1FA1D876006172CE /* MEGALocalImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalImageView.h; sourceTree = "<group>"; };
@@ -3791,6 +3784,8 @@
 		BF66E036261420A000066F35 /* CallEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BF66E0402614236D00066F35 /* ChatSessionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSessionEntity.swift; sourceTree = "<group>"; };
 		BF66E04A2614269000066F35 /* ChatSessionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatSessionEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BF67C50A264B9A67003CE3C6 /* ChatRoomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsViewController.swift; sourceTree = "<group>"; };
+		BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewController.swift; sourceTree = "<group>"; };
 		BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFloatingPanelViewController.xib; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
@@ -4752,6 +4747,7 @@
 				415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */,
 				E8CA8AAF1DF17F7500C205DE /* ContactDetailsViewController.h */,
 				E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */,
+				BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */,
 				E85EB30B1DF58EBA0066AC68 /* VerifyCredentialsViewController.h */,
 				E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */,
 				BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */,
@@ -5282,6 +5278,7 @@
 				41136FB91E1692650031C516 /* Views */,
 				415E69081DABCDF90043B75F /* ChatRoomsViewController.h */,
 				415E69091DABCDF90043B75F /* ChatRoomsViewController.m */,
+				BF67C50A264B9A67003CE3C6 /* ChatRoomsViewController.swift */,
 				419A02731DACE848000B9DC9 /* ChatRoomCell.h */,
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
 				2F3083BB2428169E0058DF91 /* Chat.storyboard */,
@@ -5296,8 +5293,6 @@
 				BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
 				E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */,
-				A8C262A81FA0B8F9006172CE /* CallViewController.h */,
-				A8C262A91FA0B8F9006172CE /* CallViewController.m */,
 				837A88C320B45C11007B55D1 /* SendToViewController.h */,
 				837A88C420B45C11007B55D1 /* SendToViewController.m */,
 				A89629731FACE78B00F02F7A /* MEGACallManager.h */,
@@ -5311,8 +5306,6 @@
 				A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */,
 				A8F1381D21D3F8AE003C7364 /* LocationSearchTableViewCell.h */,
 				A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */,
-				8394CFA1211AE24100A1634A /* GroupCallViewController.h */,
-				8394CFA2211AE24100A1634A /* GroupCallViewController.m */,
 				83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */,
 				83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */,
 				836370362461D2EA00842E38 /* SendLinkToChatsDelegate.swift */,
@@ -7188,8 +7181,6 @@
 			children = (
 				A81C659A254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift */,
 				A81C659B254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib */,
-				8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */,
-				8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */,
 			);
 			name = Cells;
 			path = Chat/Cells;
@@ -10669,7 +10660,6 @@
 				2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */,
 				A86B9F832316D6AB00F35E7A /* FLEXRuntimeUtility.m in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
-				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
 				2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				5DF0E3D22563A8540052CC95 /* MEGAResultRequestDelegate.swift in Sources */,
@@ -10793,7 +10783,6 @@
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */,
 				2FB90DB026098A850097D154 /* MeetingJoinAlertViewController.swift in Sources */,
-				A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */,
 				41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */,
 				83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */,
 				5DAC09D324CFC5B9001B6476 /* MEGABannerView.swift in Sources */,
@@ -10847,6 +10836,7 @@
 				A86B9F2C2316D6AB00F35E7A /* FLEXClassExplorerViewController.m in Sources */,
 				5D6D0F562527044D002A777D /* SDKAvatarClient.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
+				BF67C527264CB0A7003CE3C6 /* ContactDetailsViewController.swift in Sources */,
 				A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */,
 				A86B9F7C2316D6AB00F35E7A /* FLEXHierarchyTableViewCell.m in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
@@ -11267,7 +11257,6 @@
 				B616D812254F465600712012 /* CameraUploadNodeLoadOperation.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				A86B9F5E2316D6AB00F35E7A /* FLEXGlobalsTableViewController.m in Sources */,
-				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				5DD6B17024D6D51D00F14515 /* Reader.swift in Sources */,
 				830C272825E40DBB00E9B56E /* OfflineFileEntity.swift in Sources */,
@@ -11380,6 +11369,7 @@
 				BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */,
 				A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */,
 				A86B9F4A2316D6AB00F35E7A /* FLEXMethodCallingViewController.m in Sources */,
+				BF67C50B264B9A68003CE3C6 /* ChatRoomsViewController.swift in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
 				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,

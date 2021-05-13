@@ -1013,33 +1013,17 @@ class ChatViewController: MessagesViewController {
     }
 
     func openCallViewWithVideo(videoCall: Bool) {
-        var callType = CallType.outgoing
-        let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId)
-        
-        if let call = call {
-            callType = (call.isRinging || call.status == .userNoPresent) ? .incoming : .active
-        }
-        
-        if chatRoom.isGroup {
-            guard chatRoom.peerCount + 1 <= 20 || call?.status == .inProgress else {
-                if callType == .outgoing  {
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("Unable to start a call because the participants limit was exceeded.", comment: "Error shown when trying to start a call in a group with more peers than allowed"))
-                } else {
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("Error. No more participants are allowed in this group call.", comment: "Message show when a call cannot be established because there are too many participants in the group call"))
-                }
-                return
-            }
-        }
-        
-        switch callType {
-        case .incoming:
-            answerCall(isVideoEnabled: videoCall)
-        case .outgoing:
+        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
             startOutGoingCall(isVideoEnabled: videoCall)
-        case .active:
+            return
+        }
+        
+        if call.numParticipants >= 20 {
+            SVProgressHUD.showError(withStatus: NSLocalizedString("Error. No more participants are allowed in this group call.", comment: "Message show when a call cannot be established because there are too many participants in the group call"))
+        } else if call.isRinging || call.status == .userNoPresent {
+            answerCall(isVideoEnabled: videoCall)
+        } else {
             joinActiveCall(isVideoEnabled: videoCall)
-        @unknown default:
-            fatalError()
         }
     }
     

@@ -90,6 +90,14 @@ extension AppDelegate {
             }
         }
     }
+    
+    @objc func performCall(presenter: UIViewController, chatRoom: MEGAChatRoom, isVideoEnabled: Bool) {
+        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
+        MeetingContainerRouter(presenter: presenter,
+                               chatRoom: ChatRoomEntity(with: chatRoom),
+                               call: CallEntity(with: call),
+                               isVideoEnabled: isVideoEnabled).start()
+    }
         
     private func showCookieDialog() {
         let visibleViewController = UIApplication.mnz_visibleViewController()

@@ -111,8 +111,6 @@
 
 #import "GroupChatDetailsViewController.h"
 #import "ContactDetailsViewController.h"
-#import "GroupCallViewController.h"
-#import "CallViewController.h"
 #import "ContactsViewController.h"
 #import "LoginViewController.h"
 #import "SelectableTableViewCell.h"
@@ -158,7 +156,6 @@
 #import "MEGAChatError.h"
 #import "MEGAChatStartCallRequestDelegate.h"
 #import "MEGALocalImageView.h"
-#import "GroupCallCollectionViewCell.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAGroupCallPeer.h"
 #import "UIControl+YYAdd.h"

@@ -61,8 +61,8 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-        callManagerUseCase.endCall(callId: call.callId, chatId: chatRoom.chatId)
         callsUseCase.hangCall(for: call.callId)
+        callManagerUseCase.endCall(callId: call.callId, chatId: chatRoom.chatId)
         router.dismiss(completion: completion)
     }
     
