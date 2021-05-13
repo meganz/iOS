@@ -18,8 +18,6 @@
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactTableViewCell.h"
-#import "CallViewController.h"
-#import "GroupCallViewController.h"
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
@@ -561,15 +559,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
-    callVC.videoCall = videoCall;
-    callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
-    callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
-    callVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    
-    [self presentViewController:callVC animated:YES completion:nil];
+    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
+    if (active) {
+        [self joinMeetingWithChatRoom:chatRoom isVideoEnabled:videoCall];
+    } else {
+        MEGAChatStartCallRequestDelegate *startCallDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+            if (error.type == MEGAErrorTypeApiOk) {
+                [self joinMeetingWithChatRoom:chatRoom isVideoEnabled:videoCall];
+            }
+        }];
+        [MEGASdkManager.sharedMEGAChatSdk startChatCall:chatRoom.chatId enableVideo:videoCall enableAudio:YES delegate:startCallDelegate];
+    }
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {

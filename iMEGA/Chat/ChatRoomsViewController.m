@@ -19,13 +19,11 @@
 #import "UITableView+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 
-#import "CallViewController.h"
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
 #import "EmptyStateView.h"
-#import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
 #import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
@@ -903,27 +901,7 @@
     [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
         if (granted) {
             [self.timer invalidate];
-            if (self.chatRoomOnGoingCall.isGroup) {
-                GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-                groupCallVC.callType = CallTypeActive;
-                groupCallVC.videoCall = NO;
-                groupCallVC.chatRoom = self.chatRoomOnGoingCall;
-                groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                groupCallVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
-                groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
-                
-                [self presentViewController:groupCallVC animated:YES completion:nil];
-            } else {
-                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-                callVC.chatRoom = self.chatRoomOnGoingCall;
-                callVC.videoCall = NO;
-                callVC.callType = CallTypeActive;
-                callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
-                callVC.modalPresentationStyle = UIModalPresentationFullScreen;
-                
-                [self presentViewController:callVC animated:YES completion:nil];
-            }
+            [self joinActiveCallWithChatRoom:self.chatRoomOnGoingCall];
         } else {
             [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
         }

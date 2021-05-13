@@ -6,9 +6,7 @@
 
 #import "LTHPasscodeViewController.h"
 
-#import "CallViewController.h"
 #import "DevicePermissionsHelper.h"
-#import "GroupCallViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -71,11 +69,11 @@
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
     if (call && chatRoom) {
-//        [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]
-//                                  callerName:chatRoom.title
-//                                    hasVideo:call.hasVideoInitialCall
-//                                        uuid:call.uuid
-//                                      callId:callId];
+        [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]
+                                  callerName:chatRoom.title
+                                    hasVideo:call.hasLocalVideo
+                                        uuid:call.uuid
+                                      callId:callId];
     } else {
         self.callId = @(callId);
         self.chatId = @(chatId);
@@ -286,17 +284,17 @@
     uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
-//    MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
-//
-//    if (call) {
-//        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
-//        CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasVideoInitialCall];
-//        [provider reportCallWithUUID:call.uuid updated:update];
-//        [action fulfill];
-//        [self disablePasscodeIfNeeded];
-//    } else {
-//        [action fail];
-//    }
+    MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
+
+    if (call) {
+        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+        CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasLocalVideo];
+        [provider reportCallWithUUID:call.uuid updated:update];
+        [action fulfill];
+        [self disablePasscodeIfNeeded];
+    } else {
+        [action fail];
+    }
 }
 
 - (void)provider:(CXProvider *)provider performAnswerCallAction:(CXAnswerCallAction *)action {
@@ -309,7 +307,7 @@
     
     if (action.callUUID) {
         if (@available(iOS 14.0, *)) {
-            if (call.status != MEGAChatCallStatusUserNoPresent && call.isRinging) {
+            if (call.status != MEGAChatCallStatusUserNoPresent) {
                 [action fulfill];
                 return;
             }
@@ -320,57 +318,14 @@
             self.answerCallWhenConnect = YES;
         }
         
-//        MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
-//            if (error.type == MEGAChatErrorTypeOk) {
-//                [self answerWithCall:call chatRoom:chatRoom presenter:UIApplication.mnz_presentingViewController];
-//            }
-//        }];
-//        
-//        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:chatid enableVideo:NO enableAudio:NO delegate:answerCallRequestDelegate];
+        MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+            if (error.type == MEGAChatErrorTypeOk) {
+                [self answerWithCall:call chatRoom:chatRoom presenter:UIApplication.mnz_presentingViewController];
+            }
+        }];
+        
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:chatid enableVideo:call.hasLocalVideo enableAudio:call.hasLocalAudio delegate:answerCallRequestDelegate];
 
-        
-        
-        
-//        if (chatRoom.isGroup) {
-//            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-//            groupCallVC.videoCall = call.hasVideoInitialCall;
-//            groupCallVC.chatRoom = chatRoom;
-//            groupCallVC.megaCallManager = self.megaCallManager;
-//            groupCallVC.callId = callId;
-//            groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
-            
-//            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
-//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-//                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
-//                }];
-//            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
-//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-//                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
-//                }];
-//            } else {
-//                [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
-//            }
-//        } else {
-//            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-//            callVC.chatRoom  = chatRoom;
-//            callVC.videoCall = call.hasVideoInitialCall;
-//            callVC.callType = CallTypeIncoming;
-//            callVC.megaCallManager = self.megaCallManager;
-//            callVC.callId = callId;
-//            callVC.modalPresentationStyle = UIModalPresentationFullScreen;
-            
-//            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class] || [UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class])  {
-//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-//                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-//                }];
-//            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
-//                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-//                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-//                }];
-//            } else {
-//                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-//            }
-//        }
         [action fulfill];
         [self disablePasscodeIfNeeded];
     } else {

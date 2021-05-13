@@ -31,13 +31,11 @@
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "AchievementsViewController.h"
-#import "CallViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "CustomModalAlertViewController.h"
-#import "GroupCallViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
 #import "OnboardingViewController.h"
@@ -459,14 +457,8 @@
                         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                         if (call.status == MEGAChatCallStatusInProgress) {
                             MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                            UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
-                            if ([presentedVC isKindOfClass:CallViewController.class]) {
-                                CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
-                                if (!callVC.videoCall) {
-                                    [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                                    self.chatRoom = nil;
-                                }
-                            }
+                            [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isVideoEnabled:self.isVideoCall];
+                            self.chatRoom = nil;
                         } else {
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
@@ -511,18 +503,8 @@
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
                     MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                    UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
-                    if ([presentedVC isKindOfClass:GroupCallViewController.class]) {
-                        GroupCallViewController *callVC = (GroupCallViewController *)presentedVC;
-                        callVC.callType = CallTypeActive;
-                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                        self.chatRoom = nil;
-                    }
-                    if ([presentedVC isKindOfClass:CallViewController.class]) {
-                        CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
-                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                        self.chatRoom = nil;
-                    }
+                    [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isVideoEnabled:self.isVideoCall];
+                    self.chatRoom = nil;
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
                     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
@@ -942,27 +924,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 
 - (void)performCall {
-    if (self.chatRoom.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-        groupCallVC.callType = CallTypeOutgoing;
-        groupCallVC.videoCall = self.videoCall;
-        groupCallVC.chatRoom = self.chatRoom;
-        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.megaCallManager = self.megaCallManager;
-        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        
-        [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
-    } else {
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom = self.chatRoom;
-        callVC.videoCall = self.videoCall;
-        callVC.callType = CallTypeOutgoing;
-        callVC.megaCallManager = self.megaCallManager;
-        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        
-        [self.mainTBC presentViewController:callVC animated:YES completion:nil];
-    }
-    self.chatRoom = nil;
+    MEGAChatStartCallRequestDelegate *requestDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+        if (error.type == MEGAErrorTypeApiOk) {
+            [self performCallWithPresenter:self.mainTBC chatRoom:self.chatRoom isVideoEnabled:self.videoCall];
+        }
+        self.chatRoom = nil;
+    }];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:YES delegate:requestDelegate];
 }
 
 - (void)presentInviteContactCustomAlertViewController {
