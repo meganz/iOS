@@ -15,4 +15,8 @@ final class MeetingContainerViewController: UINavigationController {
     func configureUI() {
         viewModel.dispatch(.onViewReady)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
 }
