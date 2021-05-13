@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să reîncerci mai târziu.";
+"inAppPurchase.error.alert.title.notAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să reîncerci mai târziu.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Îți mulțumim";
 /* Alert message shown when a purchase was restored succesfully */

@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="Yearly";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please verify payment settings for your Apple ID.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="App Store Settings";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Thank you";
 /* Alert message shown when a purchase was restored succesfully */

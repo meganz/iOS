@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="年間";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="アプリ内購入使用としているそのアイテムは、現在アプストアにはありません。後日、またトライして下さい。";
+"inAppPurchase.error.alert.title.notAvailable"="アプリ内購入使用としているそのアイテムは、現在アプストアにはありません。後日、またトライして下さい。";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="ありがとうございました。";
 /* Alert message shown when a purchase was restored succesfully */
