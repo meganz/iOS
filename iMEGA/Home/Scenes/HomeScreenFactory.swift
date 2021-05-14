@@ -7,7 +7,7 @@ final class HomeScreenFactory: NSObject {
         let homeViewController = HomeViewController()
         let navigationController = MEGANavigationController(rootViewController: homeViewController)
 
-        let accountViewModel = HomeAccountViewModel(
+        let myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
                 userAlertsClient: .live
             ),
@@ -17,7 +17,7 @@ final class HomeScreenFactory: NSObject {
                 megaUserClient: .live,
                 filePathUseCase: MEGAAppGroupFilePathUseCase()
             ),
-            megaAavatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
+            megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
                 storeUserClient: .live,
                 megaAvatarClient: .live,
                 megaUserClient: .live
@@ -38,7 +38,7 @@ final class HomeScreenFactory: NSObject {
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
         )
 
-        homeViewController.accountViewModel = accountViewModel
+        homeViewController.myAvatarViewModel = myAvatarViewModel
         homeViewController.uploadViewModel = uploadViewModel
         homeViewController.startConversationViewModel = StartConversationViewModel(
             reachabilityUseCase: ReachabilityUseCase(),
