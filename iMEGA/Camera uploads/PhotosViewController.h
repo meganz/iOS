@@ -3,6 +3,8 @@
 
 #import "MEGASdkManager.h"
 
+@class MyAvatarManager;
+
 typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateDisabled,
     MEGACameraUploadsStateUploading,
@@ -14,5 +16,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 };
 
 @interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate>
+
+@property (nonatomic, strong) MyAvatarManager * _Nullable myAvatarManager;
 
 @end

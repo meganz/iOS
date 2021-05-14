@@ -31,14 +31,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIViewController *homeViewController = [self homeViewController];
     NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:5];
 
-    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
-    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
-    [defaultViewControllersMutableArray addObject:homeViewController];
-    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateInitialViewController]];
-    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController]];
+    [defaultViewControllersMutableArray addObject:[self cloudDriveViewController]];
+    [defaultViewControllersMutableArray addObject:[self photosViewController]];
+    [defaultViewControllersMutableArray addObject:[self homeViewController]];
+    [defaultViewControllersMutableArray addObject:[self chatViewController]];
+    [defaultViewControllersMutableArray addObject:[self SharedItemsViewController]];
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         MEGANavigationController *navigationController = defaultViewControllersMutableArray[i];
@@ -309,8 +308,40 @@
     self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 4 * 3 - 10, 6, 10, 10);
 }
 
+- (UIViewController *)cloudDriveViewController {
+    MEGANavigationController *cloudDriveNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController];
+    if ([[cloudDriveNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
+        [[cloudDriveNavigationController.viewControllers firstObject] configureMyAvatarManager];
+    }
+    return cloudDriveNavigationController;
+}
+
+- (UIViewController *)photosViewController {
+    MEGANavigationController *photosNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController];
+    if ([[photosNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
+        [[photosNavigationController.viewControllers firstObject] configureMyAvatarManager];
+    }
+    return photosNavigationController;
+}
+
 - (UIViewController *)homeViewController {
     return [HomeScreenFactory.new createHomeScreenFrom:self];
+}
+
+- (UIViewController *)chatViewController {
+    MEGANavigationController *chatNavigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateInitialViewController];
+    if ([[chatNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
+        [[chatNavigationController.viewControllers firstObject] configureMyAvatarManager];
+    }
+    return chatNavigationController;
+}
+
+- (UIViewController *)SharedItemsViewController {
+    MEGANavigationController *sharedItemsNavigationController = [[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController];
+    if ([[sharedItemsNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
+        [[sharedItemsNavigationController.viewControllers firstObject] configureMyAvatarManager];
+    }
+    return sharedItemsNavigationController;
 }
 
 - (void)showPSAViewIfNeeded {

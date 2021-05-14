@@ -187,6 +187,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.displayMode != DisplayModeRecents) {
         self.shouldRemovePlayerDelegate = YES;
     }
+    
+    if (self.myAvatarManager != nil) {
+        [self refreshMyAvatar];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
