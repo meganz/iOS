@@ -36,7 +36,7 @@ import Foundation
     }
     
     func isPlayerAlive() -> Bool {
-        player?.isPlaying ?? false || player?.isPaused ?? false
+        player?.isAlive ?? false
     }
     
     func isShuffleEnabled() -> Bool {
