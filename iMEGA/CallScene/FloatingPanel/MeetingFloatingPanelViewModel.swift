@@ -35,7 +35,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
@@ -55,7 +54,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
          localVideoUseCase: CallsLocalVideoUseCaseProtocol,
          isVideoEnabled: Bool) {
         self.router = router
@@ -67,7 +65,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.audioSessionUseCase = audioSessionUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
-        self.chatRoomUseCase = chatRoomUseCase
         self.localVideoUseCase = localVideoUseCase
         self.isVideoEnabled = isVideoEnabled
     }
@@ -98,14 +95,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .hangCall(let presenter):
             containerViewModel?.dispatch(.hangCall(presenter: presenter))
         case .shareLink(let presenter, let sender):
-            chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
-                switch result {
-                case .success(let link):
-                    self?.router.shareLink(presenter: presenter, sender: sender, link: link)
-                case .failure(_):
-                    MEGALogDebug("Could not get the chat link")
-                }
-            }
+            containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
         case .inviteParticipants(let presenter):
             let participantsIDs = callParticipants.map({ $0.participantId })
             router.inviteParticipants(presenter: presenter,

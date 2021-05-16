@@ -51,7 +51,7 @@ final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProt
     }
 }
 
-class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
+final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     let chatId: MEGAHandle
     let clientId: MEGAHandle
     var hiRes: Bool = false

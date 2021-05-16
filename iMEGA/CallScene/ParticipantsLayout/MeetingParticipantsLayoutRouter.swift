@@ -1,5 +1,5 @@
 
-@objc final class MeetingParticipantsLayoutRouter: NSObject, CallViewRouting {
+final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayoutRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UINavigationController?
     private weak var navigationController: UINavigationController?
@@ -54,5 +54,9 @@
             }
             LTHPasscodeViewController.sharedUser()?.enablePasscodeWhenApplicationEntersBackground()
         })
+    }
+    
+    func showRenameChatAlert() {
+        viewModel?.dispatch(.showRenameChatAlert)
     }
 }

@@ -74,4 +74,15 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         
         sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
     }
+    
+    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+        sdk.setChatTitle(chatId, title: title, delegate: MEGAChatGenericRequestDelegate { (request, error) in
+            guard error.type == .MEGAChatErrorTypeOk else {
+                completion(.failure(.generic))
+                return
+            }
+            
+            completion(.success(request.text))
+        })
+    }
 }

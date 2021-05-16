@@ -5,6 +5,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var publicLinkCompletion: Result<String, ChatLinkError> = .failure(.generic)
     var createChatRoomCompletion: Result<ChatRoomEntity, Error>?
     var chatRoomEntity: ChatRoomEntity?
+    var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .success("")
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -22,5 +23,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func userDisplayName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void) {
         completion(userDisplayNameCompletion)
+    }
+    
+    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+        completion(renameChatRoomCompletion)
     }
 }
