@@ -222,6 +222,7 @@
                     <connections>
                         <outlet property="callsCollectionView" destination="k2v-qd-Fep" id="FTo-Ev-kPp"/>
                         <outlet property="localUserView" destination="u0J-3Z-xXe" id="YkG-we-iwO"/>
+                        <outlet property="optionsMenuButton" destination="fZW-2k-AfW" id="NzG-nF-ccf"/>
                         <outlet property="pageControl" destination="x5T-c2-BAU" id="YYk-eE-4zA"/>
                         <outlet property="speakerAvatarImageView" destination="Ix5-jg-ZUT" id="zP5-Ib-4h1"/>
                         <outlet property="speakerRemoteVideoImageView" destination="5RU-hq-Kdg" id="4ho-gB-UYH"/>

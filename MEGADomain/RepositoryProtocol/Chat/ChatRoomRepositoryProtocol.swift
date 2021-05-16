@@ -6,5 +6,6 @@ protocol ChatRoomRepositoryProtocol {
     func createPublicLink(forChatId chatId: UInt64, completion: @escaping (Result<String, ChatLinkError>) -> Void)
     func queryChatLink(forChatId chatId: UInt64, completion: @escaping (Result<String, ChatLinkError>) -> Void)
     func userFullName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void)
+    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
 }
 

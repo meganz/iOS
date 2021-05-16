@@ -6,6 +6,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var callsCollectionView: CallsCollectionView!
     @IBOutlet private weak var titleView: CallTitleView!
     @IBOutlet private weak var localUserView: LocalUserView!
+    @IBOutlet weak var optionsMenuButton: UIBarButtonItem!
     
     @IBOutlet private weak var speakerAvatarImageView: UIImageView!
     @IBOutlet weak var speakerRemoteVideoImageView: UIImageView!
@@ -95,8 +96,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             titleView.configure(title: nil, subtitle: duration)
         case .updatePageControl(let count):
             updateNumberOfPageControl(for: count)
-        case .showMenuOptions:
-            break
         case .insertParticipant(let participants):
             callsCollectionView.addedParticipant(in: participants)
         case .deleteParticipantAt(let index, let participants):
@@ -118,6 +117,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .updatedCameraPosition(let position):
             localUserView.transformLocalVideo(for: position)
             break
+        case .showRenameAlert(let title):
+            showRenameAlert(title: title)
+        case .enableRenameButton(let enabled):
+            guard let renameAlertController = presentedViewController as? UIAlertController, let enableButton = renameAlertController.actions.last else {
+                return
+            }
+            enableButton.isEnabled = enabled
         }
     }
     
@@ -131,7 +137,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     @IBAction func didTapOptionsButton() {
-        viewModel.dispatch(.tapOnOptionsButton)
+        viewModel.dispatch(.tapOnOptionsMenuButton(presenter: navigationController ?? self, sender: optionsMenuButton))
     }
     
     @IBAction func didTapBackgroundView() {
@@ -175,6 +181,36 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
     }
     
+    func showRenameAlert(title: String) {
+        let renameAlertController = UIAlertController(title: NSLocalizedString("calls.options.rename", comment: ""), message: NSLocalizedString("renameNodeMessage", comment: "Hint text to suggest that the user have to write the new name for the file or folder"), preferredStyle: .alert)
+
+        renameAlertController.addTextField { textField in
+            textField.text = title
+            textField.returnKeyType = .done
+            textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        }
+
+        renameAlertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: { [weak self] _ in
+            self?.viewModel?.dispatch(.discardChangeTitle)
+        }))
+        renameAlertController.addAction(UIAlertAction(title: NSLocalizedString("rename", comment: "Title for the action that allows you to rename a file or folder"), style: .default, handler: { [weak self] action in
+            guard let newTitle = renameAlertController.textFields?.first?.text else {
+                return
+            }
+            self?.viewModel?.dispatch(.setNewTitle(newTitle))
+        }))
+        renameAlertController.actions.last?.isEnabled = false
+        
+        present(renameAlertController, animated: true, completion: nil)
+    }
+
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let text = textField.text else {
+            return
+        }
+        viewModel.dispatch(.renameTitleDidChange(text))
+    }
+
     private func forceDarkNavigationUI() {
         if #available(iOS 13.0, *) {
             guard let navigationBar = navigationController?.navigationBar else  { return }

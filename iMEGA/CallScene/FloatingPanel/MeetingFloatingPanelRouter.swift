@@ -50,7 +50,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-                                                      chatRoomUseCase: chatRoomUseCase,
                                                       localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
                                                       isVideoEnabled: isVideoEnabled)
         

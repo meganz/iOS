@@ -4,6 +4,7 @@ protocol ChatRoomUseCaseProtocol {
     func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void)
     func userDisplayName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void)
+    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
 }
 
 struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
@@ -38,5 +39,9 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
         }
 
         chatRoomRepo.userFullName(forPeerId: peerId, chatId: chatId, completion: completion)
+    }
+    
+    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+        chatRoomRepo.renameChatRoom(chatId: chatId, title: title, completion: completion)
     }
 }

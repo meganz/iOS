@@ -1,15 +1,20 @@
 
-protocol CallViewRouting: Routing {
+protocol MeetingParticipantsLayoutRouting: Routing {
     func dismissAndShowPasscodeIfNeeded()
+    func showRenameChatAlert()
 }
 
 enum CallViewAction: ActionType {
     case onViewReady
     case tapOnView
     case tapOnLayoutModeButton
-    case tapOnOptionsButton
+    case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
     case tapOnBackButton
     case switchIphoneOrientation(_ orientation: DeviceOrientation)
+    case showRenameChatAlert
+    case setNewTitle(String)
+    case discardChangeTitle
+    case renameTitleDidChange(String)
 }
 
 enum CallLayoutMode {
@@ -36,7 +41,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateName(String)
         case updateDuration(String)
         case updatePageControl(Int)
-        case showMenuOptions
         case insertParticipant([CallParticipantEntity])
         case deleteParticipantAt(Int, [CallParticipantEntity])
         case updateParticipantAt(Int, [CallParticipantEntity])
@@ -47,9 +51,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case reconnecting
         case reconnected
         case updatedCameraPosition(position: CameraPosition)
+        case showRenameAlert(title: String)
+        case enableRenameButton(Bool)
     }
     
-    private let router: CallViewRouting
+    private let router: MeetingParticipantsLayoutRouting
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
     private var initialVideoCall: Bool
@@ -71,7 +77,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: CallViewRouting, containerViewModel: MeetingContainerViewModel, callManager: CallManagerUseCaseProtocol, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
+    init(router: MeetingParticipantsLayoutRouting, containerViewModel: MeetingContainerViewModel, callManager: CallManagerUseCaseProtocol, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
         
         self.router = router
         self.containerViewModel = containerViewModel
@@ -215,9 +221,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             containerViewModel?.dispatch(.changeMenuVisibility)
         case .tapOnLayoutModeButton:
             switchLayout()
-        case .tapOnOptionsButton:
-            break
+        case .tapOnOptionsMenuButton(let presenter, let sender):
+            containerViewModel?.dispatch(.showOptionsMenu(presenter: presenter, sender: sender, isMyselfModerator: chatRoom.ownPrivilege == .moderator))
         case .tapOnBackButton:
+            callsUseCase.stopListeningForCall()
             timer?.invalidate()
             remoteVideoUseCase.disableAllRemoteVideos()
             containerViewModel?.dispatch(.tapOnBackButton)
@@ -229,6 +236,22 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             case .portrait:
                 invokeCommand?(.toggleLayoutButton)
             }
+        case .showRenameChatAlert:
+            invokeCommand?(.showRenameAlert(title: chatRoom.title ?? ""))
+        case .setNewTitle(let newTitle):
+            chatRoomUseCase.renameChatRoom(chatId: chatRoom.chatId, title: newTitle) { [weak self] result in
+                switch result {
+                case .success(let title):
+                    self?.invokeCommand?(.updateName(title))
+                case .failure(_):
+                    MEGALogDebug("Could not change the chat title")
+                }
+                self?.containerViewModel?.dispatch(.changeMenuVisibility)
+            }
+        case .discardChangeTitle:
+            containerViewModel?.dispatch(.changeMenuVisibility)
+        case .renameTitleDidChange(let newTitle):
+            invokeCommand?(.enableRenameButton(chatRoom.title != newTitle && !newTitle.isEmpty))
         }
     }
 }
@@ -324,6 +347,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func callTerminated() {
+        callsUseCase.stopListeningForCall()
         timer?.invalidate()
         //Play hang out sound
         router.dismissAndShowPasscodeIfNeeded()

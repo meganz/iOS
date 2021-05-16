@@ -115,8 +115,9 @@ class ActionSheetViewController: UIViewController {
     }
     
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
-        dismissCompletion?()
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) { [weak self] in
+            self?.dismissCompletion?()
+        }
     }
     
     func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
