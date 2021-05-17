@@ -135,9 +135,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         guard let baseViewController = baseViewController else { return }
         let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
                                                              containerViewModel: containerViewModel,
-                                                             chatRoom: chatRoom,
-                                                             call: call,
-                                                             isVideoEnabled: isVideoEnabled)
+                                                             chatRoom: chatRoom)
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }

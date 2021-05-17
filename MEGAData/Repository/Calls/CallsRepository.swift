@@ -34,6 +34,11 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         self.callbacksDelegate = nil
     }
     
+    func call(for chatId: MEGAHandle) -> CallEntity? {
+        guard let chatCall = chatSdk.chatCall(forChatId: chatId) else { return nil }
+        return CallEntity(with: chatCall)
+    }
+    
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
         if chatSdk.chatConnectionState(chatId) == .online {
             chatSdk.answerChatCall(chatId, enableVideo: false, enableAudio: true, delegate: MEGAChatAnswerCallRequestDelegate(completion: { [weak self] (error)  in

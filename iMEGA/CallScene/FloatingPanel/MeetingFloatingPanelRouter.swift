@@ -23,16 +23,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private weak var presenter: UINavigationController?
     private weak var containerViewModel: MeetingContainerViewModel?
     private let chatRoom: ChatRoomEntity
-    private let call: CallEntity
-    private let isVideoEnabled: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     
-    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
+    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.call = call
-        self.isVideoEnabled = isVideoEnabled
     }
     
     func build() -> UIViewController {
@@ -44,14 +40,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let viewModel = MeetingFloatingPanelViewModel(router: self,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
-                                                      call: call,
                                                       callManagerUseCase: CallManagerUseCase(),
                                                       callsUseCase: CallsUseCase(repository: CallsRepository()),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-                                                      localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
-                                                      isVideoEnabled: isVideoEnabled)
+                                                      localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()))
         
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),

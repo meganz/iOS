@@ -29,7 +29,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private let router: MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
-    private let call: CallEntity
+    private var call: CallEntity? {
+        return callsUseCase.call(for: chatRoom.chatId)
+    }
     private let callManagerUseCase: CallManagerUseCaseProtocol
     private let callsUseCase: CallsUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
@@ -39,7 +41,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var isSpeakerEnabled = false
-    private var isVideoEnabled = false
+    private var isVideoEnabled: Bool? {
+        return call?.hasLocalVideo
+    }
     private var isMyselfAModerator: Bool {
         return chatRoom.ownPrivilege == .moderator
     }
@@ -48,25 +52,21 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     init(router: MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
-         call: CallEntity,
          callManagerUseCase: CallManagerUseCaseProtocol,
          callsUseCase: CallsUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
-         isVideoEnabled: Bool) {
+         localVideoUseCase: CallsLocalVideoUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.call = call
         self.callManagerUseCase = callManagerUseCase
         self.callsUseCase = callsUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
-        self.isVideoEnabled = isVideoEnabled
     }
     
     deinit {
@@ -84,10 +84,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
                                        isOneToOneMeeting: !chatRoom.isGroup,
-                                       isVideoEnabled: isVideoEnabled,
-                                       cameraPosition: isVideoEnabled ? (isBackCameraSelected() ? .back : .front) : nil))
+                                       isVideoEnabled: isVideoEnabled ?? false,
+                                       cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-            if isVideoEnabled {
+            if isVideoEnabled == true {
                 checkForVideoPermission {
                     self.turnCamera(on: true)
                 }
@@ -100,8 +100,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             let participantsIDs = callParticipants.map({ $0.participantId })
             router.inviteParticipants(presenter: presenter,
                                       excludeParticpants: participantsIDs) { [weak self] userHandles in
-                guard let self = self else { return }
-                userHandles.forEach { self.callsUseCase.addPeer(toCall: self.call, peerId: $0) }
+                guard let self = self, let call = self.call else { return }
+                userHandles.forEach { self.callsUseCase.addPeer(toCall: call, peerId: $0) }
             }
         case .onContextMenuTap(let presenter, let sender, let attendee):
             router.showContextMenu(presenter: presenter,
@@ -112,7 +112,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
 
         case .muteUnmuteCall(let muted):
             checkForAudioPermission {
-                self.callManagerUseCase.muteUnmuteCall(callId: self.call.callId, chatId: self.chatRoom.chatId, muted: muted)
+                guard let call = self.call else { return }
+                self.callManagerUseCase.muteUnmuteCall(callId: call.callId, chatId: self.chatRoom.chatId, muted: muted)
                 self.invokeCommand?(.microphoneMuted(muted: muted))
             }
         case .turnCamera(let on):
@@ -120,12 +121,21 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 self.turnCamera(on: on)
             }
         case .switchCamera(let backCameraOn):
-            switchCamera(backCameraOn: backCameraOn)
+            checkForVideoPermission {
+                if self.isVideoEnabled == true {
+                    self.switchCamera(backCameraOn: backCameraOn)
+                } else {
+                    self.turnCamera(on: true) {
+                        self.switchCamera(backCameraOn: backCameraOn)
+                    }
+                }
+            }
         case .enableLoudSpeaker:
             enableLoudSpeaker()
         case .disableLoudSpeaker:
             disableLoudSpeaker()
         case .changeModeratorTo(let newModerator):
+            guard let call = call else { return }
             newModerator.attendeeType = .moderator
             callsUseCase.makePeerAModerator(inCall: call, peerId: newModerator.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
@@ -183,6 +193,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
+        guard let call = call else { return }
         switch routeChangedReason {
         case .override where audioSessionUseCase.isOutputFrom(port: .builtInReceiver) && isSpeakerEnabled,
              .categoryChange where (call.status == .reconnecting || call.status == .inProgress) && isSpeakerEnabled:
@@ -219,15 +230,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         return true
     }
     
-    private func turnCamera(on: Bool) {
+    private func turnCamera(on: Bool, completion: (() -> Void)? = nil) {
         if on {
             localVideoUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    self.isVideoEnabled = on
                     self.invokeCommand?(.cameraTurnedOn(on: on))
                     self.invokeCommand?(.updatedCameraPosition(position: self.isBackCameraSelected() ? .back : .front))
+                    completion?()
                 case .failure(_):
                     //TODO: show error local video HUD
                     MEGALogDebug("Error enabling local video")
@@ -238,8 +249,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             localVideoUseCase.disableLocalVideo(for: chatRoom.chatId) { result in
                 switch result {
                 case .success:
-                    self.isVideoEnabled = on
                     self.invokeCommand?(.cameraTurnedOn(on: on))
+                    completion?()
                 case .failure(_):
                     MEGALogDebug("Error disabling local video")
                 }
@@ -252,6 +263,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             callParticipants.append(myself)
         }
         
+        guard let call = call else { return }
         let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatId: chatRoom.chatId)})
         if !participants.isEmpty {
             callParticipants.append(contentsOf: participants)
@@ -293,8 +305,8 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
         }
         invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
                                    isOneToOneMeeting: !chatRoom.isGroup,
-                                   isVideoEnabled: isVideoEnabled,
-                                   cameraPosition: isVideoEnabled ? (isBackCameraSelected() ? .back : .front) : nil))
+                                   isVideoEnabled: isVideoEnabled ?? false,
+                                   cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
     

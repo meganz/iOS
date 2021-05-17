@@ -2,6 +2,7 @@
 protocol CallsUseCaseProtocol {
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol)
     func stopListeningForCall()
+    func call(for chatId: MEGAHandle) -> CallEntity?
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
     func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
     func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
@@ -45,6 +46,10 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     func stopListeningForCall() {
         self.callbacksDelegate = nil
         repository.stopListeningForCall()
+    }
+    
+    func call(for chatId: MEGAHandle) -> CallEntity? {
+        repository.call(for: chatId)
     }
     
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
