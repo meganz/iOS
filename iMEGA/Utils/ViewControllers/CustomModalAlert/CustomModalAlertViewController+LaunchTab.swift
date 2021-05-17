@@ -16,7 +16,7 @@ extension CustomModalAlertViewController {
                     return
                 }
                 let navigation = UINavigationController(rootViewController: defaultTabTableViewController)
-                defaultTabTableViewController.addRightCancelBarButtonItem()
+                defaultTabTableViewController.addRightDismissBarButtonItem(with: NSLocalizedString("close", comment: ""))
                 UIApplication.mnz_presentingViewController().present(navigation, animated: true, completion: nil)
             })
         }
