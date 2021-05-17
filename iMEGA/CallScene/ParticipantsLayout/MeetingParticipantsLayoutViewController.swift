@@ -4,24 +4,41 @@ import Foundation
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     
     @IBOutlet private weak var callsCollectionView: CallsCollectionView!
-    @IBOutlet private weak var titleView: CallTitleView!
     @IBOutlet private weak var localUserView: LocalUserView!
-    @IBOutlet weak var optionsMenuButton: UIBarButtonItem!
     
     @IBOutlet private weak var speakerAvatarImageView: UIImageView!
-    @IBOutlet weak var speakerRemoteVideoImageView: UIImageView!
+    @IBOutlet private weak var speakerRemoteVideoImageView: UIImageView!
     @IBOutlet private var speakerViews: Array<UIView>!
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet private weak var pageControl: UIPageControl!
     
     // MARK: - Internal properties
-    var viewModel: MeetingParticipantsLayoutViewModel!
-
+    private let viewModel: MeetingParticipantsLayoutViewModel
+    private var titleView: CallTitleView
+    lazy private var layoutModeBarButton = UIBarButtonItem(image: UIImage(named: "speakerView"),
+                                               style: .plain,
+                                               target: self,
+                                               action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton))
+    lazy private var optionsMenuButton = UIBarButtonItem(image: UIImage(named: "more"),
+                                                     style: .plain,
+                                                     target: self,
+                                                     action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton))
+    
     private var statusBarHidden = false {
       didSet(newValue) {
         setNeedsStatusBarAppearanceUpdate()
       }
     }
     
+    init(viewModel: MeetingParticipantsLayoutViewModel) {
+        self.viewModel = viewModel
+        self.titleView = CallTitleView.instanceFromNib
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +52,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         
         navigationItem.titleView = titleView
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapBackgroundView)))
 
         viewModel.dispatch(.onViewReady)
     }
@@ -72,7 +90,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     func executeCommand(_ command: MeetingParticipantsLayoutViewModel.Command) {
         switch command {
         case .configView(let title, let subtitle, let isVideoEnabled):
-            titleView.configure(title: title, subtitle: subtitle)
+            configureNavigationBar(title, subtitle)
             callsCollectionView.configure(with: self)
             localUserView.configure()
             if isVideoEnabled {
@@ -85,7 +103,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             localUserView.positionView(by: localUserView.center)
             forceDarkNavigationUI()
         case .toggleLayoutButton:
-            titleView.toggleLayoutButton()
+            layoutModeBarButton.isEnabled.toggle()
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
         case .switchLocalVideo:
@@ -128,26 +146,31 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     // MARK: - UI Actions
-    @IBAction func didTapBackButton() {
+    @objc func didTapBackButton() {
         viewModel.dispatch(.tapOnBackButton)
     }
 
-    @IBAction func didTapLayoutModeButton() {
+    @objc func didTapLayoutModeButton() {
         viewModel.dispatch(.tapOnLayoutModeButton)
     }
     
-    @IBAction func didTapOptionsButton() {
+    @objc func didTapOptionsButton() {
         viewModel.dispatch(.tapOnOptionsMenuButton(presenter: navigationController ?? self, sender: optionsMenuButton))
     }
     
-    @IBAction func didTapBackgroundView() {
+    @objc func didTapBackgroundView() {
         viewModel.dispatch(.tapOnView)
     }
     
     //MARK: - Private
     
     private func configureLayout(mode: CallLayoutMode, participantsCount: Int) {
-        titleView.switchLayoutMode(mode)
+        switch mode {
+        case .grid:
+            layoutModeBarButton.image = UIImage(named: "speakerView")
+        case .speaker:
+            layoutModeBarButton.image = UIImage(named: "thumbnailsThin")
+        }
         speakerViews.forEach { $0.isHidden = mode == .grid }
         pageControl.isHidden = mode == .speaker
         callsCollectionView.changeLayoutMode(mode)
@@ -182,7 +205,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     func showRenameAlert(title: String) {
-        let renameAlertController = UIAlertController(title: NSLocalizedString("calls.options.rename", comment: ""), message: NSLocalizedString("renameNodeMessage", comment: "Hint text to suggest that the user have to write the new name for the file or folder"), preferredStyle: .alert)
+        let renameAlertController = UIAlertController(title: NSLocalizedString("calls.action.rename", comment: ""), message: NSLocalizedString("renameNodeMessage", comment: "Hint text to suggest that the user have to write the new name for the file or folder"), preferredStyle: .alert)
 
         renameAlertController.addTextField { textField in
             textField.text = title
@@ -191,13 +214,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
 
         renameAlertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: { [weak self] _ in
-            self?.viewModel?.dispatch(.discardChangeTitle)
+            self?.viewModel.dispatch(.discardChangeTitle)
         }))
         renameAlertController.addAction(UIAlertAction(title: NSLocalizedString("rename", comment: "Title for the action that allows you to rename a file or folder"), style: .default, handler: { [weak self] action in
             guard let newTitle = renameAlertController.textFields?.first?.text else {
                 return
             }
-            self?.viewModel?.dispatch(.setNewTitle(newTitle))
+            self?.viewModel.dispatch(.setNewTitle(newTitle))
         }))
         renameAlertController.actions.last?.isEnabled = false
         
@@ -216,6 +239,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             guard let navigationBar = navigationController?.navigationBar else  { return }
             AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         }
+    }
+    
+    private func configureNavigationBar(_ title: String, _ subtitle: String) {
+        titleView.configure(title: title, subtitle: subtitle)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(self.didTapOptionsButton)),
+                                              layoutModeBarButton]
     }
 }
 

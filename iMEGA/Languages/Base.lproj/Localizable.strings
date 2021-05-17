@@ -2623,6 +2623,6 @@
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
 /* Action of a call/meeting to rename it */
-"calls.options.rename"="Rename Meeting";
+"calls.action.rename"="Rename Meeting";
 /* Action of a call/meeting to share its link */
-"calls.options.shareLink"="Share Meeting Link";
+"calls.action.shareLink"="Share Meeting Link";

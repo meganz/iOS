@@ -1,19 +1,20 @@
 
-protocol CallsCollectionViewScrollDelegate {
+protocol CallsCollectionViewScrollDelegate: class {
     func collectionViewDidChangeOffset(to page: Int)
 }
 
 class CallsCollectionView: UICollectionView {
     private var callParticipants = [CallParticipantEntity]()
     private var layoutMode: CallLayoutMode = .grid
-    private var scrollDelegate: CallsCollectionViewScrollDelegate?
-    
+    private weak var scrollDelegate: CallsCollectionViewScrollDelegate?
+
     private let spacingForCells: CGFloat = 1.0
 
     func configure(with scrollDelegate: CallsCollectionViewScrollDelegate) {
         dataSource = self
         delegate = self
         self.scrollDelegate = scrollDelegate
+        register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
     }
     
     func addedParticipant(in participants: [CallParticipantEntity]) {

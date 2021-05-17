@@ -8,14 +8,14 @@ protocol CallsRemoteVideoUseCaseProtocol {
     func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
 }
 
-protocol CallsRemoteVideoListenerUseCaseProtocol {
+protocol CallsRemoteVideoListenerUseCaseProtocol: class {
     func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data!)
 }
 
 final class CallsRemoteVideoUseCase: NSObject, CallsRemoteVideoUseCaseProtocol {
     
     private let repository: CallsRemoteVideoRepositoryProtocol
-    private var remoteVideoListener: CallsRemoteVideoListenerUseCaseProtocol?
+    private weak var remoteVideoListener: CallsRemoteVideoListenerUseCaseProtocol?
 
     init(repository: CallsRemoteVideoRepository) {
         self.repository = repository
