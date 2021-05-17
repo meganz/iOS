@@ -10,6 +10,7 @@ final class MockCallsUseCase: CallsUseCaseProtocol {
     var addPeer_CalledTimes = 0
     var removePeer_CalledTimes = 0
     var makePeer_CalledTimes = 0
+    var callEntity: CallEntity?
 
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol) {
         startListeningForCall_CalledTimes += 1
@@ -17,6 +18,10 @@ final class MockCallsUseCase: CallsUseCaseProtocol {
     
     func stopListeningForCall() {
         stopListeningForCall_CalledTimes += 1
+    }
+    
+    func call(for chatId: MEGAHandle) -> CallEntity? {
+        return callEntity
     }
     
     func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
