@@ -63,7 +63,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     }
     
     private func renameAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("calls.options.rename", comment: ""),
+        ActionSheetAction(title: NSLocalizedString("calls.action.rename", comment: ""),
                           detail: nil,
                           image: UIImage(named: "rename"),
                           style: .default) {
@@ -72,7 +72,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     }
     
     private func shareLinkAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("calls.options.shareLink", comment: ""),
+        ActionSheetAction(title: NSLocalizedString("calls.action.shareLink", comment: ""),
                           detail: nil,
                           image: UIImage(named: "share"),
                           style: .default) {

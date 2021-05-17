@@ -34,8 +34,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
                                call: call,
                                initialVideoCall: initialVideoCall)
         
-        let vc = UIStoryboard(name: "MeetingParticipantsLayout", bundle: nil).instantiateViewController(withIdentifier: "MeetingParticipantsLayoutViewControllerID") as! MeetingParticipantsLayoutViewController
-        vc.viewModel = vm
+        let vc = MeetingParticipantsLayoutViewController(viewModel: vm)
         baseViewController = vc
         viewModel = vm
         return vc

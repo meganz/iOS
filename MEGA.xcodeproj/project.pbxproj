@@ -877,12 +877,10 @@
 		83655B292593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */; };
 		836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */; };
 		836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */; };
-		836651522649766900BC02F0 /* MeetingParticipantsLayout.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8366514E2649766900BC02F0 /* MeetingParticipantsLayout.storyboard */; };
 		836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */; };
 		8366518626497B3600BC02F0 /* LocalUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366517D26497B3600BC02F0 /* LocalUserView.swift */; };
 		8366518726497B3600BC02F0 /* CallsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366517F26497B3600BC02F0 /* CallsCollectionView.swift */; };
 		8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366518126497B3600BC02F0 /* CallParticipantCell.swift */; };
-		8366518926497B3600BC02F0 /* CallTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366518226497B3600BC02F0 /* CallTitleView.swift */; };
 		8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366518426497B3600BC02F0 /* CallNotificationView.swift */; };
 		8366518B26497B3600BC02F0 /* CallNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8366518526497B3600BC02F0 /* CallNotificationView.xib */; };
 		836813532587C0B800596BBD /* QuickAccessItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836813522587C0B800596BBD /* QuickAccessItemModel.swift */; };
@@ -974,6 +972,10 @@
 		83BD329925DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */; };
 		83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C1B25125A7349000814074 /* QuickAccessWidgetViewModel.swift */; };
 		83C1B49225A8C14800814074 /* SectionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C1B49125A8C14800814074 /* SectionDetail.swift */; };
+		83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BA0265261B900A7764B /* MeetingParticipantsLayoutViewController.xib */; };
+		83C49BAF2652627500A7764B /* CallTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BAD2652627400A7764B /* CallTitleView.xib */; };
+		83C49BB02652627500A7764B /* CallTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C49BAE2652627400A7764B /* CallTitleView.swift */; };
+		83C49BC2265262AD00A7764B /* CallParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BC1265262AD00A7764B /* CallParticipantCell.xib */; };
 		83C570DE22E5BFCF00216896 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570C822E5BFCF00216896 /* Constants.swift */; };
 		83C570E022E5BFCF00216896 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CB22E5BFCF00216896 /* PhoneNumber.swift */; };
 		83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CC22E5BFCF00216896 /* RegexManager.swift */; };
@@ -2934,12 +2936,10 @@
 		83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineFilesUseCase.swift; sourceTree = "<group>"; };
 		8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewController.swift; sourceTree = "<group>"; };
 		8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModel.swift; sourceTree = "<group>"; };
-		8366514E2649766900BC02F0 /* MeetingParticipantsLayout.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MeetingParticipantsLayout.storyboard; sourceTree = "<group>"; };
 		8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutRouter.swift; sourceTree = "<group>"; };
 		8366517D26497B3600BC02F0 /* LocalUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalUserView.swift; sourceTree = "<group>"; };
 		8366517F26497B3600BC02F0 /* CallsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallsCollectionView.swift; sourceTree = "<group>"; };
 		8366518126497B3600BC02F0 /* CallParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallParticipantCell.swift; sourceTree = "<group>"; };
-		8366518226497B3600BC02F0 /* CallTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallTitleView.swift; sourceTree = "<group>"; };
 		8366518426497B3600BC02F0 /* CallNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallNotificationView.swift; sourceTree = "<group>"; };
 		8366518526497B3600BC02F0 /* CallNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallNotificationView.xib; sourceTree = "<group>"; };
 		836813522587C0B800596BBD /* QuickAccessItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessItemModel.swift; sourceTree = "<group>"; };
@@ -3028,6 +3028,10 @@
 		83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemsRepository.swift; sourceTree = "<group>"; };
 		83C1B25125A7349000814074 /* QuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
 		83C1B49125A8C14800814074 /* SectionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDetail.swift; sourceTree = "<group>"; };
+		83C49BA0265261B900A7764B /* MeetingParticipantsLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingParticipantsLayoutViewController.xib; sourceTree = "<group>"; };
+		83C49BAD2652627400A7764B /* CallTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallTitleView.xib; sourceTree = "<group>"; };
+		83C49BAE2652627400A7764B /* CallTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallTitleView.swift; sourceTree = "<group>"; };
+		83C49BC1265262AD00A7764B /* CallParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallParticipantCell.xib; sourceTree = "<group>"; };
 		83C570C822E5BFCF00216896 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		83C570CB22E5BFCF00216896 /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		83C570CC22E5BFCF00216896 /* RegexManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexManager.swift; sourceTree = "<group>"; };
@@ -7044,10 +7048,10 @@
 			children = (
 				839999D7264AE4E800520F38 /* OptionsMenu */,
 				8366517C26497B3600BC02F0 /* Views */,
-				8366514E2649766900BC02F0 /* MeetingParticipantsLayout.storyboard */,
 				8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */,
 				8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */,
 				8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */,
+				83C49BA0265261B900A7764B /* MeetingParticipantsLayoutViewController.xib */,
 			);
 			path = ParticipantsLayout;
 			sourceTree = "<group>";
@@ -7055,9 +7059,9 @@
 		8366517C26497B3600BC02F0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				83C49BAC2652627400A7764B /* TitleView */,
 				8366517D26497B3600BC02F0 /* LocalUserView.swift */,
 				8366517E26497B3600BC02F0 /* CollectionView */,
-				8366518226497B3600BC02F0 /* CallTitleView.swift */,
 				8366518326497B3600BC02F0 /* Notifications */,
 			);
 			path = Views;
@@ -7075,6 +7079,7 @@
 		8366518026497B3600BC02F0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				83C49BC1265262AD00A7764B /* CallParticipantCell.xib */,
 				8366518126497B3600BC02F0 /* CallParticipantCell.swift */,
 			);
 			path = Cell;
@@ -7234,6 +7239,15 @@
 				83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */,
 			);
 			path = ChatSharedItems;
+			sourceTree = "<group>";
+		};
+		83C49BAC2652627400A7764B /* TitleView */ = {
+			isa = PBXGroup;
+			children = (
+				83C49BAD2652627400A7764B /* CallTitleView.xib */,
+				83C49BAE2652627400A7764B /* CallTitleView.swift */,
+			);
+			path = TitleView;
 			sourceTree = "<group>";
 		};
 		83C570C722E5BFCF00216896 /* PhoneNumberKit */ = {
@@ -9984,14 +9998,15 @@
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				2F9E1E2C24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib in Resources */,
 				BFD6535525EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib in Resources */,
+				83C49BC2265262AD00A7764B /* CallParticipantCell.xib in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
 				2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
-				836651522649766900BC02F0 /* MeetingParticipantsLayout.storyboard in Resources */,
 				5B727394240D32F9005816AB /* altIconNight@2x.png in Resources */,
 				5B46D96924333D6100404ED4 /* Achievements.storyboard in Resources */,
 				5D79EDD5251C71B500C0307A /* SearchHintTableViewCell.xib in Resources */,
+				83C49BAF2652627500A7764B /* CallTitleView.xib in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
@@ -10004,6 +10019,7 @@
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
 				5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */,
 				BFC933E324A453B400BC2A75 /* EmojiReactionCollectionCell.xib in Resources */,
+				83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */,
 				BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */,
 				834EFDC224D9B373004BFECA /* Node.storyboard in Resources */,
 				BFAB113E23CEA5C300BCE72D /* PhotoGridViewCell.xib in Resources */,
@@ -10874,6 +10890,7 @@
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
+				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
 				A86B9F382316D6AB00F35E7A /* FLEXMultilineTableViewCell.m in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				5D6D0F4F252702C2002A777D /* UserSDKEntity.swift in Sources */,
@@ -11071,7 +11088,6 @@
 				B662B86E24F32ED70089376A /* RegionEntity.swift in Sources */,
 				C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */,
 				5D8DC6B5248CB1D70067A4F9 /* UIButton+BackgroundColor.swift in Sources */,
-				8366518926497B3600BC02F0 /* CallTitleView.swift in Sources */,
 				2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
