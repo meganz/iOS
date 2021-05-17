@@ -367,7 +367,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!fileName.mnz_isMultimediaPathExtension) {
+                if (![self shouldSkipQLPreviewForFile:fileName]) {
                     offsetIndex++;
                 }
             }
@@ -416,7 +416,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
                     }
-                } else {
+                } else if (![self shouldSkipQLPreviewForFile:fileName]) {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
                 }
@@ -434,6 +434,9 @@ static NSString *kisDirectory = @"kisDirectory";
     [self reloadData];
 }
 
+- (BOOL)shouldSkipQLPreviewForFile:(NSString *)fileName {
+    return fileName.mnz_isMultimediaPathExtension || fileName.mnz_isEditableTextFilePathExtension || [fileName.pathExtension isEqualToString:@"pdf"];
+}
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
     
@@ -871,10 +874,21 @@ static NSString *kisDirectory = @"kisDirectory";
                 }
             }
         } else {
-            [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
+            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+            if (previewController == nil) {
+                return;
+            }
+            [self presentViewController:previewController animated:YES completion:nil];
         }
-    } else {
+        
+    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || self.previewDocumentPath.mnz_isEditableTextFilePathExtension){
         [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
+    } else {
+        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+        if (previewController == nil) {
+            return;
+        }
+        [self presentViewController:previewController animated:YES completion:nil];
     }
 }
 
