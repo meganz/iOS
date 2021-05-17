@@ -493,9 +493,9 @@
     MEGAChatListItem *chatListItem = nil;
     if (indexPath) {
         if (self.searchController.isActive) {
-            chatListItem = [self.searchChatListItemArray objectAtIndex:indexPath.row];
+            chatListItem = [self.searchChatListItemArray objectOrNilAtIndex:indexPath.row];
         } else {
-            chatListItem = [self.chatListItemArray objectAtIndex:indexPath.row];
+            chatListItem = [self.chatListItemArray objectOrNilAtIndex:indexPath.row];
         }
     }
     return chatListItem;
@@ -719,7 +719,8 @@
 }
 
 - (void)createChatRoomWithUserAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self.searchUsersWithoutChatArray objectOrNilAtIndex:indexPath.row];
+    if (user == nil) { return; }
     
     [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
@@ -759,7 +760,8 @@
 
 - (UITableViewCell *)userCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
-    MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self.searchUsersWithoutChatArray objectOrNilAtIndex:indexPath.row];
+    if (user == nil) { return cell; }
     [cell configureCellForUser:user];
     return cell;
 }
