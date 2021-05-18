@@ -89,13 +89,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Execute command
     func executeCommand(_ command: MeetingParticipantsLayoutViewModel.Command) {
         switch command {
-        case .configView(let title, let subtitle, let isVideoEnabled):
+        case .configView(let title, let subtitle):
             configureNavigationBar(title, subtitle)
             callsCollectionView.configure(with: self)
             localUserView.configure()
-            if isVideoEnabled {
-                executeCommand(.switchLocalVideo)
-            }
         case .switchMenusVisibility:
             statusBarHidden.toggle()
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
