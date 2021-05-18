@@ -33,7 +33,7 @@ private enum CallViewModelConstant {
 
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(title: String, subtitle: String, isVideoEnabled: Bool)
+        case configView(title: String, subtitle: String)
         case switchMenusVisibility
         case toggleLayoutButton
         case switchLayoutMode(layout: CallLayoutMode, participantsCount: Int)
@@ -210,12 +210,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CallViewAction) {
         switch action {
         case .onViewReady:
-            invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: initialSubtitle(), isVideoEnabled: initialVideoCall))
+            invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: initialSubtitle()))
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             remoteVideoUseCase.addRemoteVideoListener(self)
             if callParticipants.isEmpty && !call.clientSessions.isEmpty {
                 callsUseCase.createActiveSessions()
             }
+            localAvFlagsUpdated(video: initialVideoCall, audio: true)
         case .tapOnView:
             invokeCommand?(.switchMenusVisibility)
             containerViewModel?.dispatch(.changeMenuVisibility)

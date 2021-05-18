@@ -24,7 +24,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(title: chatRoom.title ?? "", subtitle: viewModel.initialSubtitle(), isVideoEnabled: false)
+                .configView(title: chatRoom.title ?? "", subtitle: viewModel.initialSubtitle())
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
@@ -51,7 +51,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(title: chatRoom.title ?? "", subtitle: viewModel.initialSubtitle(), isVideoEnabled: false)
+                .configView(title: chatRoom.title ?? "", subtitle: viewModel.initialSubtitle())
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
