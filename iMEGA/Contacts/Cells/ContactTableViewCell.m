@@ -158,6 +158,7 @@
     switch (indexPath.row) {
         case ContactsStartConversationNewGroupChat:
             self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
+            self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
             break;
         case ContactsStartConversationNewChatLink:
             self.nameLabel.text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");

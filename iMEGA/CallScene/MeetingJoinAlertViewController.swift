@@ -20,7 +20,8 @@ class MeetingJoinAlertViewController: UIAlertController {
         addAction(cancelAction)
 
         let joinAction = UIAlertAction(title: NSLocalizedString("join", comment: ""), style: .default) { [weak self] (action) in
-            self?.viewModel.dispatch(.didTapJoinButton)
+            guard let link = self?.textFields?.first?.text else { return }
+            self?.viewModel.dispatch(.didTapJoinButton(link))
         }
         addAction(joinAction)
         

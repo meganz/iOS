@@ -2010,6 +2010,14 @@
 "No recent activity"="No Recent Activity";
 /* Plural of items which contains a folder. 2 items */
 "%1$d items"="%1$d items";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="Meeting Ended";
+/* Meeting ended Alert button -- Leave. */
+"meetings.alert.leave"="Leave";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="View Meeting Chat";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="The meeting you're trying to join has already ended. You can still view the meeting chat history.";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */

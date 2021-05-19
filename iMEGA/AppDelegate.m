@@ -215,9 +215,9 @@
         }
         
         isAccountFirstLogin = NO;
-        
+
         [self initProviderDelegate];
-        
+                
         MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");

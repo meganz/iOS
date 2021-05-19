@@ -14,9 +14,17 @@ class MeetingCreatingViewController: UIViewController {
         fatalError("init(coder:) is not supported")
     }
 
+    override var hidesBottomBarWhenPushed: Bool {
+        get {
+            return true
+        }
+        set {
+            super.hidesBottomBarWhenPushed = newValue
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.view.backgroundColor = .black
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "backArrow"),
@@ -28,8 +36,6 @@ class MeetingCreatingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.barTintColor = .black
     }
     
     override func loadView() {
@@ -37,8 +43,29 @@ class MeetingCreatingViewController: UIViewController {
     }
     
     // MARK: - Private methods.
-
+    
     @objc private func dissmissVC(_ barButtonItem: UIBarButtonItem) {
         viewModel.dispatch(.didTapCloseButton)
+    }
+    
+    private func forceDarkNavigationUI() {
+        if #available(iOS 13.0, *) {
+            guard let navigationBar = navigationController?.navigationBar else  { return }
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        }
+    }
+}
+
+extension MeetingCreatingViewController: TraitEnviromentAware {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        forceDarkNavigationUI()
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        if #available(iOS 13.0, *) {
+            guard let navigationBar = navigationController?.navigationBar else  { return }
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        }
     }
 }

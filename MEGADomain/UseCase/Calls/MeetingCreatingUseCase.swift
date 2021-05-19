@@ -4,11 +4,14 @@ protocol MeetingCreatingUseCaseProtocol {
     func openVideoDevice()
     func releaseDevice()
     func videoDevices() -> [String]
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
+    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
+    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
     func getUsername() -> String
     func getCall(forChatId chatId: UInt64) -> CallEntity?
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate)
 
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void)
+    func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
 }
 
 // MARK: - Use case implementation -
@@ -46,6 +49,10 @@ struct MeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         repository.startChatCall(meetingName: meetingName, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
     }
     
+    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+        repository.joinChatCall(forChatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+    }
+    
     func getUsername() -> String {
         repository.getUsername()
     }
@@ -57,4 +64,13 @@ struct MeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate) {
         repository.addChatLocalVideo(delegate: delegate)
     }
+    
+    func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+        repository.checkChatLink(link: link, completion: completion)
+    }
+
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void) {
+        repository.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, completion: completion)
+    }
+    
 }

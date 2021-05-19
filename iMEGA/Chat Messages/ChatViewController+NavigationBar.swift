@@ -24,7 +24,6 @@ extension ChatViewController {
         return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
             || chatConnection != .online
             || !MEGAReachabilityManager.isReachable()
-            || chatRoom.peerCount == 0
             || MEGASdkManager.sharedMEGAChatSdk().hasCall(inChatRoom: chatRoom.chatId)
             || MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
             || isVoiceRecordingInProgress
