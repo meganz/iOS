@@ -158,3 +158,5 @@
 #import "UIImage+YYAdd.h"
 #import "CameraUploadManager.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
+#import "PhotosViewController.h"
+#import "SharedItemsViewController.h"

@@ -17,7 +17,7 @@ final class HomeViewController: UIViewController {
 
     // MARK: - View Model
     
-    var accountViewModel: HomeAccountViewModelType!
+    var myAvatarViewModel: MyAvatarViewModelType!
 
     var uploadViewModel: HomeUploadingViewModelType!
     
@@ -107,7 +107,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func setupViewModelEventListening() {
-        accountViewModel.notifyUpdate = { [weak self] output in
+        myAvatarViewModel.notifyUpdate = { [weak self] output in
             guard let self = self else { return }
             let resizedImage = output.avatarImage
 
@@ -118,7 +118,7 @@ final class HomeViewController: UIViewController {
                 }
             }
         }
-        accountViewModel.inputs.viewIsReady()
+        myAvatarViewModel.inputs.viewIsReady()
 
         recentsViewModel.notifyUpdate = { [weak self] recentsViewModel in
             if let error = recentsViewModel.error {
@@ -178,7 +178,7 @@ final class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        accountViewModel.inputs.viewIsAppearing()
+        myAvatarViewModel.inputs.viewIsAppearing()
     }
 
     override func viewDidLayoutSubviews() {

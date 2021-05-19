@@ -133,8 +133,7 @@
 }
 
 - (void)presentProductUnavailableAlertController {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:NSLocalizedString(@"inAppPurchase.error.alert.title.notAvailable", @"Alert title to remenber the user that needs to enable purchases") alertMessage:nil];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
