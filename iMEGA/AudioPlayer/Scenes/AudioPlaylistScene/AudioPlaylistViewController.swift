@@ -112,7 +112,15 @@ final class AudioPlaylistViewController: UIViewController {
     
     private func reload(_ item: AudioPlayerItem) {
         guard let playlistSource = playlistSource, let indexPaths = playlistSource.indexPathsOf(item: item) else { return }
+        let selectedIndexPaths = tableView.indexPathsForSelectedRows
+        
+        tableView.beginUpdates()
         tableView.reloadRows(at: indexPaths, with: .none)
+        tableView.endUpdates()
+        
+        Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))).forEach {
+            tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+        }
     }
     
     private func enableUserInteraction() {
