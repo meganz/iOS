@@ -14,4 +14,8 @@ struct AuthRepository: AuthRepositoryProtocol {
     func login(sessionId: String, delegate: MEGARequestDelegate) {
         sdk.fastLogin(withSession: sessionId, delegate: delegate)
     }
+    
+    func isLoggedIn() -> Bool {
+        sdk.isLoggedIn() > 0
+    }
 }

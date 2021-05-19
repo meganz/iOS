@@ -361,6 +361,8 @@
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center removeAllPendingNotificationRequests];
     [center removeAllDeliveredNotifications];
+    
+    [self showTurnOnNotificationsIfNeeded];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
