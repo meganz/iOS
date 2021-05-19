@@ -115,6 +115,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     
     [self loadTargetFolder];
+    [self refreshMyAvatar];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -544,7 +545,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
-        self.navigationItem.leftBarButtonItems = @[];
+        self.navigationItem.leftBarButtonItems = @[self.myAvatarManager.myAvatarBarButton];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];

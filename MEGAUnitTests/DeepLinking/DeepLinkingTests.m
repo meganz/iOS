@@ -259,5 +259,10 @@
     XCTAssertEqual([url mnz_type], URLTypeDefault);
 }
 
+- (void)testDeepLinkShouldReturnTypeAppSettings {
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    XCTAssertEqual([url mnz_type], URLTypeAppSettings);
+}
+
 
 @end

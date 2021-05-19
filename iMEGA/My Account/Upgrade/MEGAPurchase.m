@@ -3,6 +3,8 @@
 
 #import "DTConstants.h"
 #import "SVProgressHUD.h"
+
+#import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 
 @interface MEGAPurchase ()
@@ -68,11 +70,10 @@
             [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
         } else {
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"appPurchaseDisabled", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            
+            UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:NSLocalizedString(@"appPurchaseDisabled", @"Error message shown the In App Purchase is disabled in the device Settings") alertMessage:nil];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         }
-        
     } else {
         MEGALogWarning(@"[StoreKit] Product \"%@\" not found", product.productIdentifier);
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:NSLocalizedString(@"productNotFound", nil), product.productIdentifier] message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -88,8 +89,8 @@
         [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"allowPurchase_title", nil) message:NSLocalizedString(@"allowPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        
+        UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:NSLocalizedString(@"allowPurchase_title", @"Alert title to remenber the user that needs to enable purchases") alertMessage:NSLocalizedString(@"allowPurchase_message", @"Alert message to remenber the user that needs to enable purchases before continue")];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
 }

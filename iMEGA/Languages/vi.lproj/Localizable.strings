@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Hàng năm";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Mặt hàng này hiện không tồn tại trong App Store vào lúc này. Xin thử lại sau.";
+"inAppPurchase.error.alert.title.notAvailable"="Mặt hàng này hiện không tồn tại trong App Store vào lúc này. Xin thử lại sau.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Cảm ơn quý khách";
 /* Alert message shown when a purchase was restored succesfully */

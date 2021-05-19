@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="Yearly";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please verify payment settings for your Apple ID.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="App Store Settings";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Thank you";
 /* Alert message shown when a purchase was restored succesfully */
@@ -2604,6 +2606,18 @@
 "The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
+/* The title of Turn on Notifications view */
+"dialog.turnOnNotifications.label.title"="Turn on Notifications";
+/* The description of Turn on Notifications view*/
+"dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
+/* First step to turn on notifications */
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Open <b>Settings</b>";
+/* Second step to turn on notifications */
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tap <b>Notifications</b>";
+/* Third step to turn on notifications */
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow Notifications</b>";
+/* Title of the button to open Settings */
+"dialog.turnOnNotifications.button.primary"="Open Settings";
 /* Title of the Settings section where you can configure security details of your MEGA account */
 "settings.section.security"="Security";
 /* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
