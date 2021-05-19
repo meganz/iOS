@@ -5,7 +5,9 @@ protocol CallsRemoteVideoUseCaseProtocol {
     func disableRemoteVideo(for participant: CallParticipantEntity)
     func disableAllRemoteVideos()
     func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
     func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
 }
 
 protocol CallsRemoteVideoListenerUseCaseProtocol: class {
@@ -41,8 +43,16 @@ final class CallsRemoteVideoUseCase: NSObject, CallsRemoteVideoUseCaseProtocol {
         repository.requestHighResolutionVideo(for: chatId, clientId: clientId, completion: completion)
     }
 
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        repository.stopHighResolutionVideo(for: chatId, clientIds: clientIds, completion: completion)
+    }
+    
     func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
         repository.requestLowResolutionVideos(for: chatId, clientIds: clientIds, completion: completion)
+    }
+    
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        repository.stopLowResolutionVideo(for: chatId, clientIds: clientIds, completion: completion)
     }
 }
 

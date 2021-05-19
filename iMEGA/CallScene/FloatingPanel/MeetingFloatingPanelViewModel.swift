@@ -310,7 +310,7 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
     
-    func remoteVideoReady(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) {    }
+    func remoteVideoResolutionChanged(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) {    }
     func audioLevel(for attende: CallParticipantEntity) {   }
     func participantAdded(with handle: MEGAHandle) {    }
     func participantRemoved(with handle: MEGAHandle) {  }

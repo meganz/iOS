@@ -141,10 +141,8 @@ extension CallsRepository: MEGAChatCallDelegate {
             switch session.status {
             case .inProgress:
                 callbacksDelegate?.createdSession(ChatSessionEntity(with: session), in: chatId)
-                break
             case .destroyed:
                 callbacksDelegate?.destroyedSession(ChatSessionEntity(with: session), in: chatId)
-                break
             default:
                 break
             }
@@ -158,11 +156,11 @@ extension CallsRepository: MEGAChatCallDelegate {
             callbacksDelegate?.audioLevel(for: ChatSessionEntity(with: session), in: chatId)
         }
         
-        if session.hasChanged(.onHiRes) {
+        if session.hasChanged(.onHiRes) && session.canReceiveVideoHiRes {
             callbacksDelegate?.onHiResSession(ChatSessionEntity(with: session), in: chatId)
         }
         
-        if session.hasChanged(.onLowRes) {
+        if session.hasChanged(.onLowRes) && session.canReceiveVideoLowRes {
             callbacksDelegate?.onLowResSession(ChatSessionEntity(with: session), in: chatId)
         }
     }
@@ -171,7 +169,7 @@ extension CallsRepository: MEGAChatCallDelegate {
         if (callId == call.callId) {
             self.call = CallEntity(with: call)
         } else {
-            return;
+            return
         }
         
         if call.hasChanged(for: .localAVFlags) {
