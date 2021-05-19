@@ -70,7 +70,6 @@ extension UIButton {
     
     @objc func mnz_setupCancel(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.clear
-        titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
         setTitleColor(UIColor.mnz_secondaryGray(for: traitCollection), for: UIControl.State.normal)
     }
     
