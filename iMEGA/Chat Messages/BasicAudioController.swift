@@ -148,6 +148,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         setProximitySensorEnabled(true)
         do {
             try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
+
         } catch {
             MEGALogInfo("Failed to set audio mode to default")
         }

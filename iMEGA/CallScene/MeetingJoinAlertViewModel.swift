@@ -3,13 +3,7 @@ import Foundation
 enum MeetingJoinViewAction: ActionType {
     case onViewReady
     
-    case didTapJoinButton
-}
-
-protocol MeetingJoinViewRouting: Routing {
-    func dismiss()
-    func joinMeeting()
-
+    case didTapJoinButton(String)
 }
 
 final class MeetingJoinViewModel: ViewModelType {
@@ -33,8 +27,10 @@ final class MeetingJoinViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             break
-        case .didTapJoinButton:
-            router.joinMeeting()
+        case .didTapJoinButton(let link):
+            let url =  URL(string: link)
+            MEGALinkManager.linkURL = url
+            MEGALinkManager.processLinkURL(url)
             break
         }
       

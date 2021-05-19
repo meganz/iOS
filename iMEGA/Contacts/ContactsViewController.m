@@ -991,7 +991,7 @@
 }
 
 - (void)newMeeting {
-    MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self];
+    MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self type:MeetingConfigurationTypeStart link:nil];
     [router start];
 }
 

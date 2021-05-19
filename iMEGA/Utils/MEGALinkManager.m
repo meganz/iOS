@@ -729,6 +729,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 + (void)handlePublicChatLink {
     NSURL *chatLinkUrl = MEGALinkManager.linkURL;
     [SVProgressHUD show];
+
     
     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
@@ -742,6 +743,60 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
             }
             return;
+        }
+        
+        if (request.paramType == 1) {
+            
+            if (request.flag) {
+                
+                // "It's a meeting, open join call"
+                MEGAHandleList *list = request.megaHandleList;
+                if (list.size > 0 && [list megaHandleAtIndex:0] != 0) {
+                    [MEGALinkManager createMeetingAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+                    
+                    [SVProgressHUD dismiss];
+                    
+                } else {
+                    //  meeing ended
+                    [SVProgressHUD dismiss];
+                    
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"meetings.alert.end", nil) message:NSLocalizedString(@"meetings.alert.end.description", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"meetings.alert.meetingchat", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+                        if (!chatRoom.isPreview && !chatRoom.isActive) {
+                            MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                if (error.type) {
+                                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                                    return;
+                                }
+                                [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+                                [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+                            [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+                        } else {
+                            [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+                        }
+                        
+                        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
+                        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
+                        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
+                        
+                    }]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"meetings.alert.leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                    
+                    
+                }
+                
+                return;
+            }
+            
         }
         
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
@@ -779,8 +834,82 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    [MEGASdkManager.sharedMEGAChatSdk connect];
-    [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
+    
+   [MEGASdkManager.sharedMEGAChatSdk connect];
+
+//    check meeting
+    [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:chatLinkUrl delegate:[[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+            if (error.type == MEGAChatErrorTypeNoEnt) {
+                [SVProgressHUD dismiss];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:NSLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+            } else {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+            }
+            return;
+        }
+        
+
+        if (request.paramType == 1) {
+            if (!request.flag) {
+                [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
+            }
+        } else {
+            
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+            if (!chatRoom.isPreview && !chatRoom.isActive) {
+                MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                    if (error.type) {
+                        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                        return;
+                    }
+                    [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+                    [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+                }];
+                [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+                [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+            } else {
+                [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+            }
+            
+            [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
+            [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
+            [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
+            
+            [SVProgressHUD dismiss];
+        }
+      
+    }]];
+}
+
++ (void)createMeetingAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
+    
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    if (chatRoom == nil) {
+        return;
+    }
+    
+    if ([rootViewController isKindOfClass:MainTabBarController.class]) {
+   
+        MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
+        mainTBC.selectedIndex = TabTypeChat;
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC type:MeetingConfigurationTypeJoin link:publicChatLink.absoluteString];
+        if (mainTBC.presentedViewController) {
+            [mainTBC dismissViewControllerAnimated:NO completion:^{
+                [router start];
+            }];
+        } else {
+            [router start];
+        }
+    } else {
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:UIApplication.mnz_visibleViewController type:MeetingConfigurationTypeJoin link:publicChatLink.absoluteString];
+        [router start];
+  }
 }
 
 + (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
@@ -822,7 +951,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
 }
 
-+ (void)pushChat:(ChatViewController *)chatViewController tabBar:(MainTabBarController *)mainTBC {
++ (void)pushChat:(UIViewController *)chatViewController tabBar:(MainTabBarController *)mainTBC {
     UINavigationController *chatNC = mainTBC.selectedViewController;
     
     for (UIViewController *viewController in chatNC.viewControllers) {

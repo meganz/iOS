@@ -109,6 +109,8 @@
 		2FDC6B9A260A9E00005A22B6 /* MeetingJoinAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC6B99260A9DFF005A22B6 /* MeetingJoinAlertViewModel.swift */; };
 		2FDDC6242630DE100060E02A /* JoinMegaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
+		2FE54377264DECBB00FF4955 /* MeetingCreateViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE54376264DECBB00FF4955 /* MeetingCreateViewModelTests.swift */; };
+		2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */; };
 		2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */; };
 		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
@@ -2171,6 +2173,8 @@
 		2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaViewModel.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
+		2FE54376264DECBB00FF4955 /* MeetingCreateViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreateViewModelTests.swift; sourceTree = "<group>"; };
+		2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingCreatingUseCase.swift; sourceTree = "<group>"; };
 		2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingView.swift; sourceTree = "<group>"; };
 		2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepLinkingTests.m; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
@@ -8918,6 +8922,7 @@
 			children = (
 				BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */,
 				BF8895BF2630F487002A18CA /* MockUserUseCase.swift */,
+				2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */,
 				BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */,
 				BF8895E72631213C002A18CA /* MockCallManagerUseCase.swift */,
 				BF8895F126312EA1002A18CA /* MockCallsUseCase.swift */,
@@ -9213,6 +9218,7 @@
 			children = (
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
+				2FE54376264DECBB00FF4955 /* MeetingCreateViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
 				BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */,
 				BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */,
@@ -11907,10 +11913,12 @@
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
+				2FE54377264DECBB00FF4955 /* MeetingCreateViewModelTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */,
 				A83CFEA025DAAAF300622675 /* ThrottlerTest.swift in Sources */,
+				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
