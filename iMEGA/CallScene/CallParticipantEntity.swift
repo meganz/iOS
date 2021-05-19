@@ -4,7 +4,7 @@ enum CallParticipantVideoResolution {
     case high
 }
 
-protocol CallParticipantVideoDelegate {
+protocol CallParticipantVideoDelegate: class {
     func frameData(width: Int, height: Int, buffer: Data!)
 }
 
@@ -31,9 +31,9 @@ final class CallParticipantEntity: Equatable {
     var isInContactList: Bool
     var video: CallParticipantAudioVideoFlag = .unknown
     var audio: CallParticipantAudioVideoFlag = .unknown
-    var videoResolution: CallParticipantVideoResolution = .low
-    var videoDataDelegate: CallParticipantVideoDelegate?
-    var speakerVideoDataDelegate: CallParticipantVideoDelegate?
+    var videoResolution: CallParticipantVideoResolution
+    weak var videoDataDelegate: CallParticipantVideoDelegate?
+    weak var speakerVideoDataDelegate: CallParticipantVideoDelegate?
     
     init(chatId: MEGAHandle,
          participantId: MEGAHandle,
@@ -43,7 +43,8 @@ final class CallParticipantEntity: Equatable {
          attendeeType: AttendeeType,
          isInContactList: Bool,
          video: CallParticipantAudioVideoFlag = .unknown,
-         audio: CallParticipantAudioVideoFlag = .unknown) {
+         audio: CallParticipantAudioVideoFlag = .unknown,
+         videoResolution: CallParticipantVideoResolution) {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
@@ -53,6 +54,7 @@ final class CallParticipantEntity: Equatable {
         self.isInContactList = isInContactList
         self.video = video
         self.audio = audio
+        self.videoResolution = videoResolution
     }
     
     static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
@@ -91,7 +93,8 @@ extension CallParticipantEntity {
                   attendeeType: attendeeType,
                   isInContactList: isInContactList,
                   video: session.hasVideo ? .on : .off,
-                  audio: session.hasAudio ? .on : .off)
+                  audio: session.hasAudio ? .on : .off,
+                  videoResolution: session.isHighResolution ? .high : .low)
     }
     
     static func myself(chatId: MEGAHandle) -> CallParticipantEntity? {
@@ -107,7 +110,8 @@ extension CallParticipantEntity {
                                                 networkQuality: 0,
                                                 email: email,
                                                 attendeeType: ChatRoomEntity(with: chatRoom).ownPrivilege == .moderator ? .moderator : .participant,
-                                                isInContactList: false)
+                                                isInContactList: false,
+                                                videoResolution: .high)
         
         return participant
     }

@@ -6,7 +6,9 @@ class MockCallsRemoteVideoUseCase: CallsRemoteVideoUseCaseProtocol {
     var enableRemoteVideo_CalledTimes = 0
     var disableRemoteVideo_CalledTimes = 0
     var requestHighResolutionVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
+    var stopHighResolutionVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
     var requestLowResolutionVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
+    var stopLowResolutionVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
 
     func addRemoteVideoListener(_ remoteVideoListener: CallsRemoteVideoListenerUseCaseProtocol) {
         addRemoteVideoListener_CalledTimes += 1
@@ -28,7 +30,15 @@ class MockCallsRemoteVideoUseCase: CallsRemoteVideoUseCaseProtocol {
         completion(requestHighResolutionVideoCompletion)
     }
     
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        completion(stopHighResolutionVideoCompletion)
+    }
+    
     func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
         completion(requestLowResolutionVideoCompletion)
+    }
+    
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        completion(stopLowResolutionVideoCompletion)
     }
 }

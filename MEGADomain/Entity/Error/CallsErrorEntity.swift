@@ -5,4 +5,6 @@ enum CallsErrorEntity: Error {
     case chatLocalVideoNotEnabled
     case chatLocalVideoNotDisabled
     case requestResolutionVideoChange
+    case stopHighResolutionVideo
+    case stopLowResolutionVideo
 }

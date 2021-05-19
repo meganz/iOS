@@ -17,5 +17,6 @@ struct ChatSessionEntity {
     let audioDetected: Bool
     let isOnHold: Bool
     let changes: Int
+    let isHighResolution: Bool
 }
 
