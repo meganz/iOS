@@ -1724,6 +1724,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Nos gustaría enviarte notificaciones para que recibas nuevos mensajes al instante en tu dispositivo.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Permite acceso";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Seguridad";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Términos y Políticas ";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gestión de archivos";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -2250,7 +2254,7 @@
 "Drag left to cancel, release to send"="Arrastra hacia la izquierda para cancelar, suelta para enviar";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="Interfaz de usuario";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Pestaña predeterminada";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Preferencias de ordenado y vista";
@@ -2600,15 +2604,9 @@
 "The device does not have enough space for MEGA to run properly."="El dispositivo no tiene suficiente espacio para que MEGA funcione correctamente.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados de tu galería. Puedes administrar tu almacenamiento en %@";
-/* Title of the Settings section where you can configure security details of your MEGA account */
-"settings.section.security"="Security";
-/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Terms and Policies";
-/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"settings.section.userInterface"="Interfaz de usuario";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change Launch Tab";
+"Change Launch Tab"="Cambiar la pestaña de inicio";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Selecciona la sección que quieres que se abra al iniciarse la aplicación. Elige la que mejor se adapte a tus necesidades, ya sea el chat, la nube o la pestaña de inicio. ";
 /* Dialog button text for the change launch tab screen */
-"Change Setting"="Change Setting";
+"Change Setting"="Cambiar ajustes";
