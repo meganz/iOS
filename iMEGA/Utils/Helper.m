@@ -589,6 +589,17 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (void)switchToStaging {
+    MEGAAPIEnv apiType = [NSUserDefaults.standardUserDefaults integerForKey:@"MEGAAPIEnv"];
+
+    if (apiType == MEGAAPIEnvStaging) {
+        return;
+    }
+    
+    [Helper setApiURL:MEGAAPIEnvStaging];
+    [Helper apiURLChanged];
+}
+
 + (void)restoreAPISetting {
     MEGAAPIEnv APItype = [NSUserDefaults.standardUserDefaults integerForKey:@"MEGAAPIEnv"];
     [Helper setApiURL:APItype];
