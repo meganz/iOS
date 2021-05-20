@@ -1577,13 +1577,13 @@
             [self configureTopBannerForInProgressCall:call];
             break;
             
-        case MEGAChatCallStatusReconnecting:
+//        case MEGAChatCallStatusReconnecting:
             // self.reconnecting = YES;
             // self.topBannerLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.");
             // self.topBannerView.backgroundColor = UIColor.systemOrangeColor;
             // self.topBannerMicrophoneMutedImageView.hidden = YES;
             // self.topBannerCameraEnabledImageView.hidden = YES;
-            break;
+//            break;
             
         case MEGAChatCallStatusDestroyed: {
             self.chatRoomOnGoingCall = nil;

@@ -51,7 +51,7 @@ class ChatViewController: MessagesViewController {
 
     // topbanner
     var timer: Timer?
-    var initDuration: TimeInterval?
+//    var initDuration: TimeInterval?
 
     lazy var joinCallButton: UIButton = {
         let button = UIButton()

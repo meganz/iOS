@@ -104,6 +104,7 @@ DEPENDENCIES:
   - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
+  - "Keyboard+LayoutGuide"
   - MessageKit
   - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
   - PinLayout
@@ -146,8 +147,6 @@ EXTERNAL SOURCES:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
-  MessageKit:
-    :git: https://github.com/lhr000lhrmega/MessageKit.git
   PanModal:
     :commit: ba721e8
     :git: https://github.com/ilia3546/PanModal.git
@@ -164,9 +163,6 @@ CHECKOUT OPTIONS:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
-  MessageKit:
-    :commit: 39a6b51ecf70998f0bcf48c611ebdf23bd457bdd
-    :git: https://github.com/lhr000lhrmega/MessageKit.git
   PanModal:
     :commit: ba721e8
     :git: https://github.com/ilia3546/PanModal.git
@@ -204,6 +200,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 40929d66678ae67af99553fe68d4fb0060b5029b
+PODFILE CHECKSUM: 398a309e10829da060ef643460c1663fca8976a9
 
 COCOAPODS: 1.10.0
