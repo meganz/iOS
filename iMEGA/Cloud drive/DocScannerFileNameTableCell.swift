@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol DocScannerFileInfoTableCellDelegate: class {
+protocol DocScannerFileInfoTableCellDelegate: AnyObject {
     func filenameChanged(_ newFilename: String)
 }
 

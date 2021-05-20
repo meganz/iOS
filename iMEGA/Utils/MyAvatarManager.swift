@@ -5,7 +5,7 @@
     func refreshMyAvatar()
 }
 
-@objc protocol MyAvatarPresenterProtocol: class {
+@objc protocol MyAvatarPresenterProtocol: AnyObject {
     func configureMyAvatarManager()
     func refreshMyAvatar()
     func setupMyAvatar(barButton: UIBarButtonItem)
