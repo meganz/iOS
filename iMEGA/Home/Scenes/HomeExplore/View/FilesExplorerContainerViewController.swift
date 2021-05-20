@@ -1,5 +1,5 @@
 
-class FilesExplorerContainerViewController: UIViewController {
+class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     //MARK:- Private variables
     
     enum ViewPreference {
@@ -9,6 +9,7 @@ class FilesExplorerContainerViewController: UIViewController {
     }
 
     private let viewModel: FilesExplorerViewModel
+    private var uploadViewModel: HomeUploadingViewModelType?
     private let viewPreference: ViewPreference
     
     private lazy var selectAllBarButtonItem = UIBarButtonItem(
@@ -178,9 +179,49 @@ class FilesExplorerContainerViewController: UIViewController {
             self?.currentState.setEditingMode()
         }
         
+        var customizeActions:Array<ActionSheetAction>? = []
+        if (viewModel.getExplorerType() == .document) {
+            let uploadViewModel = HomeUploadingViewModel(
+                uploadFilesUseCase: HomeUploadFileUseCase(
+                    uploadFromAlbum: .live,
+                    uploadFromURL: .live,
+                    uploadFromLocalPath: .live
+                ),
+                devicePermissionUseCase: DevicePermissionRequestUseCase(
+                    photoPermission: .live,
+                    devicePermission: .live
+                ),
+                reachabilityUseCase: ReachabilityUseCase(),
+                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
+            )
+            self.uploadViewModel = uploadViewModel
+            
+            let sources: [FileUploadingSourceItem.Source] = [.textFile, .documentScan, .imports]
+            for source in sources {
+                let item = FileUploadingSourceItem(source: source)
+                let action = ActionSheetAction(title: item.title, detail: nil, accessoryView: nil, image: item.icon, style: .default) {
+                    switch source {
+                    case .textFile:
+                        uploadViewModel.didTapUploadFromNewTextFile()
+                    case .documentScan:
+                        uploadViewModel.didTapUploadFromDocumentScan()
+                    case .imports:
+                        uploadViewModel.didTapUploadFromImports()
+                    default:
+                        break
+                    }
+                }
+                customizeActions?.append(action)
+            }
+        }
+        
         var actionList = [sortPreferenceAction, selectAction]
         if let action = viewPreferenceAction {
             actionList.insert(action, at: 0)
+        }
+        
+        if let actions = customizeActions {
+            actionList = actions + actionList
         }
         
         let actionSheetVC: ActionSheetViewController

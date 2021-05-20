@@ -185,9 +185,15 @@ class EnterEmailViewController: UIViewController {
 
     @IBAction func addContactsTapped(_ sender: UIButton) {
         if presentedViewController != nil {
-            presentedViewController?.dismiss(animated: false, completion: nil)
+            presentedViewController?.dismiss(animated: true) {
+                self.showContactsPicker()
+            }
+        } else {   
+            showContactsPicker()
         }
-
+    }
+    
+    private func showContactsPicker() {
         let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactEmailAddressesKey], delegate: self))
         present(contactsPickerNavigation, animated: true, completion: nil)
     }

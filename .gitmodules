@@ -1,21 +1,12 @@
 [submodule "iMEGA/Vendor/SDK"]
 	path = iMEGA/Vendor/SDK
 	url = https://code.developers.mega.co.nz/sdk/sdk.git
-[submodule "iMEGA/Vendor/SVProgressHUD"]
-	path = iMEGA/Vendor/SVProgressHUD
-	url = https://github.com/SVProgressHUD/SVProgressHUD.git
-[submodule "iMEGA/Vendor/GKContactImage"]
-	path = iMEGA/Vendor/GKContactImage
-	url = https://github.com/gekitz/GKContactImage.git
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/DateTools"]
 	path = iMEGA/Vendor/DateTools
 	url = https://github.com/MatthewYork/DateTools.git
-[submodule "iMEGA/Vendor/PureLayout"]
-	path = iMEGA/Vendor/PureLayout
-	url = https://github.com/smileyborg/PureLayout
 [submodule "iMEGA/Vendor/PieChartView"]
 	path = iMEGA/Vendor/PieChartView
 	url = https://github.com/astrokin/PieChart.git
@@ -43,3 +34,6 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/PhoneNumberKit"]
 	path = iMEGA/Vendor/PhoneNumberKit
 	url = https://github.com/marmelroy/PhoneNumberKit.git
+[submodule "iMEGA/Vendor/SVProgressHUD"]
+	path = iMEGA/Vendor/SVProgressHUD
+	url = https://github.com/SVProgressHUD/SVProgressHUD.git

@@ -4,6 +4,7 @@
 
 @class MEGANode;
 @class MEGAUser;
+@class MyAvatarManager;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
@@ -25,6 +26,8 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 @property (assign, nonatomic) BOOL allNodesSelected;
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
+
+@property (nonatomic, strong) MyAvatarManager * _Nullable myAvatarManager;
 
 - (void)presentUploadAlertController;
 - (void)presentScanDocument;

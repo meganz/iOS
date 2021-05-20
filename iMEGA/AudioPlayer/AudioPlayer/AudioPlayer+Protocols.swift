@@ -31,6 +31,7 @@ protocol AudioPlayerStateProtocol {
     func removeLoopItems()
     func repeatLastItem()
     func resetPlaylist()
+    func resetAudioPlayerConfiguration()
     func blockAudioPlayerInteraction()
     func unblockAudioPlayerInteraction()
 }
@@ -122,6 +123,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerCurrentItemTime() -> TimeInterval
     func playerQueueItems() -> [AudioPlayerItem]?
     func playerPlaylistItems() -> [AudioPlayerItem]?
+    func playerTracksContains(url: URL) -> Bool
 }
 
 //MARK: - Audio Player Playback Functions
@@ -163,6 +165,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
     func remoteCommandEnabled(_ enabled: Bool)
+    func resetAudioPlayerConfiguration()
 }
 
 //MARK: - Mini Audio Player Handlers Functions

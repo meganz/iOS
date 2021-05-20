@@ -338,7 +338,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 
 - (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (alertController) {
+    if ([alertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }
@@ -568,7 +568,12 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
-    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.navigationItem.leftBarButtonItem withConfirmAction:^{
+    UIBarButtonItem *barButton = self.navigationItem.leftBarButtonItem;
+    if (barButton == nil) {
+        return;
+    }
+    
+    UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:barButton withConfirmAction:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     [self presentViewController:confirmDismissAlert animated:YES completion:nil];

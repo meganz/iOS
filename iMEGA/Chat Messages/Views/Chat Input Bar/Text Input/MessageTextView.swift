@@ -153,7 +153,7 @@ class MessageTextView: UITextView {
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         
-        if action == NSSelectorFromString("paste:") && UIPasteboard.general.image != nil {
+        if action == NSSelectorFromString("paste:") && UIPasteboard.general.loadImage() != nil {
             return true
         }
         return super.canPerformAction(action, withSender: sender)
@@ -161,7 +161,7 @@ class MessageTextView: UITextView {
     
     open override func paste(_ sender: Any?) {
         
-        guard let image = UIPasteboard.general.image else {
+        guard let image = UIPasteboard.general.loadImage() else {
             return super.paste(sender)
         }
         pasteAction?(image)

@@ -89,14 +89,6 @@
 
 #pragma mark - Public
 
-- (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
-    [UIView performWithoutAnimation:^{
-        if (indexPath && [self.tableView hasRowAt:indexPath]) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }];
-}
-
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
     
@@ -335,7 +327,7 @@
             
             UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 if ([node mnz_downloadNode]) {
-                    [self reloadRowAtIndexPath:[self.cloudDrive.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+                    [self.tableView reloadData];
                 }
                 
                 [self setTableViewEditing:NO animated:YES];

@@ -3,11 +3,17 @@ import CoreServices
 import VisionKit
 
 final class FileUploadingRouter {
-
-    func didTrigger(from source: FileUploading) {
+    private var browserVCDelegate: TargetFolderBrowserVCDelegate?
+    
+    @available(iOS 13.0, *)
+    private lazy var vNDocumentCameraVCDelegate: VNDocumentCameraVCDelegate? = nil
+    
+    func upload(from source: FileUploadSource) {
         switch source {
         case .album(let completion):
             presentPhotoAlbumSelection(completion: completion)
+        case .textFile:
+            CreateTextFileAlertViewRouter(presenter: navigationController).start()
         case .camera(let completion):
             presentCameraViewController(withCompletion: completion)
         case .imports(let completion):
@@ -45,7 +51,7 @@ final class FileUploadingRouter {
     // MARK: - Display Import Selection View Controller
 
     private func presentImportSelection(withCompletion completion: @escaping (URL, MEGANode) -> Void) {
-        let documentMenuViewController = UIDocumentMenuViewController(
+        let documentPickerViewController = UIDocumentPickerViewController(
             documentTypes: [
                 kUTTypeContent as String,
                 kUTTypeData as String,
@@ -71,16 +77,16 @@ final class FileUploadingRouter {
             return documentImportsDelegate
         }
 
-        if let popover = documentMenuViewController.popoverPresentationController {
-            guard let barItem = homeViewController?.navigationItem.rightBarButtonItems?.first else {
+        if let popover = documentPickerViewController.popoverPresentationController {
+            guard let barItem = baseViewController?.navigationItem.rightBarButtonItems?.first else {
                 return
             }
             
             popover.barButtonItem = barItem
         }
         
-        documentMenuViewController.delegate = documentImportsDelegate
-        navigationController?.present(documentMenuViewController, animated: true, completion: nil)
+        documentPickerViewController.delegate = documentImportsDelegate
+        navigationController?.present(documentPickerViewController, animated: true, completion: nil)
     }
 
     // MARK: - Display Camera Capture View Controller
@@ -114,9 +120,8 @@ final class FileUploadingRouter {
         asyncOnMain { [weak self] in
             guard let self = self else { return }
             let scanViewController = VNDocumentCameraViewController()
-            let scanViewControllerDelegate = DocumentScanViewControllerDelegate()
-            scanViewControllerDelegate.completion = { [weak self, scanViewControllerDelegate] images in
-                _ = scanViewControllerDelegate
+            let vNDocumentCameraVCDelegate = VNDocumentCameraVCDelegate()
+            vNDocumentCameraVCDelegate.completion = { [weak self] images in
                 asyncOnMain {
                     guard let self = self else { return }
                     scanViewController.dismiss(animated: true, completion: nil)
@@ -125,7 +130,8 @@ final class FileUploadingRouter {
                     self.navigationController?.present(documentScanViewController, animated: true, completion: nil)
                 }
             }
-            scanViewController.delegate = scanViewControllerDelegate
+            scanViewController.delegate = vNDocumentCameraVCDelegate
+            self.vNDocumentCameraVCDelegate = vNDocumentCameraVCDelegate
             self.navigationController?.present(scanViewController, animated: true, completion: nil)
         }
     }
@@ -145,14 +151,13 @@ final class FileUploadingRouter {
     private func presentDestinationFolderBrowser(with completion: @escaping (MEGANode) -> Void) {
         let browserViewController = UIStoryboard(name: "Cloud", bundle: nil)
             .instantiateViewController(withIdentifier: "BrowserViewControllerID") as! BrowserViewController
-        let delegate = TargetFolderBrowserViewControllerDelegate()
-        delegate.completion = { [delegate] node in
-            _ = delegate
+        browserVCDelegate = TargetFolderBrowserVCDelegate()
+        browserVCDelegate?.completion = { node in
             completion(node)
             browserViewController.dismiss(animated: true, completion: nil)
         }
 
-        browserViewController.browserViewControllerDelegate = delegate
+        browserViewController.browserViewControllerDelegate = browserVCDelegate
         browserViewController.browserAction = .newHomeUpload
         let browserNavigationController = MEGANavigationController(rootViewController: browserViewController)
         browserNavigationController.setToolbarHidden(false, animated: false)
@@ -161,20 +166,23 @@ final class FileUploadingRouter {
 
     // MARK: - Initialiser
 
-    init(navigationController: UINavigationController? = nil, homeViewController: HomeViewController) {
+    init(navigationController: UINavigationController? = nil, baseViewController: UIViewController) {
         self.navigationController = navigationController
-        self.homeViewController = homeViewController
+        self.baseViewController = baseViewController
     }
 
     private weak var navigationController: UINavigationController?
 
-    private weak var homeViewController: HomeViewController?
+    private weak var baseViewController: UIViewController?
 
     // MARK: - Event Source
 
-    enum FileUploading {
+    enum FileUploadSource {
         // Upload from photo album
         case album(_ completion: ([PHAsset], MEGANode) -> Void)
+        
+        // Upload from new text file
+        case textFile
 
         // Upload from camera
         case camera(_ completion: (String, MEGANode) -> Void)
@@ -187,23 +195,11 @@ final class FileUploadingRouter {
     }
 }
 
-fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentMenuDelegate, UIDocumentPickerDelegate {
+fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentPickerDelegate {
 
     weak var navigationController: UINavigationController?
 
     var importsURLCompletion: ((URL) -> Void)?
-
-    // MARK: - UIDocumentMenuDelegate
-
-    func documentMenu(
-        _ documentMenu: UIDocumentMenuViewController,
-        didPickDocumentPicker documentPicker: UIDocumentPickerViewController
-    ) {
-        documentPicker.delegate = self
-        asyncOnMain(weakify(navigationController) { navigationController in
-            navigationController.present(documentPicker, animated: true, completion: nil)
-        })
-    }
 
     // MARK: - UIDocumentPickerDelegate
 
@@ -214,19 +210,18 @@ fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentMenuDelegat
     }
 }
 
-fileprivate final class TargetFolderBrowserViewControllerDelegate: NSObject, BrowserViewControllerDelegate {
+final class TargetFolderBrowserVCDelegate: NSObject, BrowserViewControllerDelegate {
     var completion: ((MEGANode) -> Void)?
 
     func upload(toParentNode parentNode: MEGANode!) {
         asyncOnMain(weakify(self) {
             $0.completion?(parentNode)
-            $0.completion = nil
         })
     }
 }
 
 @available(iOS 13, *)
-fileprivate final class DocumentScanViewControllerDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
+fileprivate final class VNDocumentCameraVCDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
     var completion: (([UIImage]) -> Void)?
 
     func documentCameraViewController(
@@ -238,7 +233,6 @@ fileprivate final class DocumentScanViewControllerDelegate: NSObject, VNDocument
         }
         asyncOnMain(weakify(self) {
             $0.completion?(scanedImages)
-            $0.completion = nil
         })
     }
 }

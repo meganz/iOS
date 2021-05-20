@@ -6,6 +6,7 @@
 #import "NSURL+MNZCategory.h"
 @import AVFoundation;
 @import CoreServices;
+@import Firebase;
 
 static NSString * const CameraUploadsDirectoryName = @"CameraUploads";
 static NSString * const AssetsDirectoryName = @"Assets";
@@ -18,7 +19,7 @@ static NSString * const AssetsDirectoryName = @"Assets";
     if (supportURL) {
         NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
         uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:CameraUploadsDirectoryName isDirectory:YES];
-        
+
         BOOL isDirectory = NO;
         if(!([NSFileManager.defaultManager fileExistsAtPath:uploadURL.path isDirectory:&isDirectory] && isDirectory)) {
             NSError *error = nil;
@@ -26,7 +27,7 @@ static NSString * const AssetsDirectoryName = @"Assets";
                 [uploadURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:nil];
             } else {
                 MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
-                uploadURL = nil;
+                [[FIRCrashlytics crashlytics] recordError:error];
             }
         }
     }

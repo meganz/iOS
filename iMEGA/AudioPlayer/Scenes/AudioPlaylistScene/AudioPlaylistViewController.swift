@@ -173,7 +173,7 @@ final class AudioPlaylistViewController: UIViewController {
         case .title(let title):
             titleLabel.text = title
         case .deselectAll:
-            tableView.indexPathsForSelectedRows?.forEach { tableView.deselectRow(at: $0, animated: true) }
+            tableView.indexPathsForSelectedRows?.forEach { tableView.deselectRow(at: $0, animated: false) }
             if tableView.numberOfRows(inSection: 1) == 0 {
                 hideToolbarIfNeeded()
             }

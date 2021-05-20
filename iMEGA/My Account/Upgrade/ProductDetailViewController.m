@@ -83,7 +83,7 @@
         self.navigationItem.rightBarButtonItem = manageBarButtonItem;
     }
     
-    [[MEGAPurchase sharedInstance] setDelegate:self];
+    [MEGAPurchase.sharedInstance.purchaseDelegateMutableArray addObject:self];
     isPurchased = NO;
     
     self.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
@@ -103,7 +103,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGAPurchase sharedInstance] setDelegate:nil];
+    if (self.isMovingFromParentViewController) {
+        [MEGAPurchase.sharedInstance.purchaseDelegateMutableArray removeObject:self];
+    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -131,8 +133,7 @@
 }
 
 - (void)presentProductUnavailableAlertController {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:NSLocalizedString(@"inAppPurchase.error.alert.title.notAvailable", @"Alert title to remenber the user that needs to enable purchases") alertMessage:nil];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

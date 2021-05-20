@@ -5,6 +5,7 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "MEGASdk+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "Helper.h"
 #import "LaunchViewController.h"
@@ -16,6 +17,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
 #import "MEGAGenericRequestDelegate.h"
+#import "MEGAPicker-Swift.h"
 
 @import Firebase;
 
@@ -45,6 +47,7 @@
     self = [super initWithCoder:coder];
     if (self) {
         [FIRApp configure];
+        [UncaughtExceptionHandler registerHandler];
     }
     return self;
 }
@@ -240,7 +243,7 @@
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
+    [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
 - (void)loginToMEGA {

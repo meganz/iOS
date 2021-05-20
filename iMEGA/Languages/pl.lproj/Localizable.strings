@@ -451,9 +451,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Wprowadź nową nazwę";
 /* Alert title to ask if user want to rename the file. %@ is a place holder.*/
-"rename_file_alert_title"="Rename File %@?";
+"rename_file_alert_title"="Zmiana nazwy pliku %@?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Zamień";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Przenieś do kosza";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -641,7 +641,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Polityka Prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Polityka Cookie";
+"Cookie Policy"="Polityka ciasteczek";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "Cookie Settings"="Ustawienia plików cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Link potwierdzający został już wygenerowany dla podanego adresu email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Sprawdź swoją pocztę i kliknij w otrzymany link w celu potwierdzenia adresu e-mail.";
+"emailIsChanging_description"="Przejdz do skrzynki email i kliknij w otrzymany link aby potwierdzić nowy adres email.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Wprowadź swoje hasło w celu weryfikacji adresu email";
 /* The [X] will be replaced with the e-mail address. */
@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Rocznie";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Produkt nie jest aktualnie dostępny w aplikacji. Spróbuj ponownie.";
+"inAppPurchase.error.alert.title.notAvailable"="Produkt nie jest aktualnie dostępny w aplikacji. Spróbuj ponownie.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Dziękujemy";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Wznów zatrzymane";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Jeżeli anulowałeś zgłoszenie lub zakup nie może być przywrócony, spróbuj ponownie lub skontaktuj się z ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Wybierz PRO";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Plan Pro ma tylko takie funkcje, jak ustawianie ochrony hasłem i dat wygaśnięcia dla plików publicznych.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Odblokuj tryb DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -2247,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Przeciągnij w lewo, aby anulować, zwolnij, aby wysłać";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="Interfejs";
+"settings.section.userInterface"="Interfejs";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="Zakładka domyślna";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2600,3 +2604,15 @@
 "The device does not have enough space for MEGA to run properly."="Urządzenie nie ma wystarczająco dużo miejsca, aby MEGA działała prawidłowo.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Zwolnij trochę miejsca, usuwając aplikacje, których już nie używasz, lub duże pliki wideo w swojej galerii. Możesz zarządzać swoją pamięcią masową w %@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="Interfejs";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Change Launch Tab";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Change Setting";

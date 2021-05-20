@@ -67,7 +67,7 @@ extension ChatViewController {
 
     private func didTapTitle() {
         if chatRoom.isGroup {
-            if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)) {
+            if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
                 return
             }
             pushGroupDetailsViewController()

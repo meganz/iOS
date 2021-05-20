@@ -21,6 +21,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     override init() {
         super.init()
         FirebaseApp.configure()
+        UncaughtExceptionHandler.registerHandler()
         NotificationService.setupLogging()
         MEGALogDebug("NSE Init, pid: \(ProcessInfo.processInfo.processIdentifier)")
     }
@@ -190,7 +191,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         checkDelaysWithMessage(message)
-        contentHandler(bestAttemptContent)
+        
+        if (message?.status == .seen) || message?.isDeleted ?? false {
+            contentHandler(UNNotificationContent()) // Don't deliver the notification to the user.
+        } else {
+            contentHandler(bestAttemptContent)
+        }
     }
     
     private func removePreviousGenericNotifications() {
@@ -349,11 +355,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private static func initExtensionProcess(with session: String) -> Bool {
         MEGALogDebug("Init extension process")
-        NSSetUncaughtExceptionHandler { (exception) in
-            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
-            MEGALogError("Stack trace: \(exception.callStackSymbols)")
-        }
-        
         copyDatabasesFromMainApp(with: session)
 
         let success = initChat(with: session)

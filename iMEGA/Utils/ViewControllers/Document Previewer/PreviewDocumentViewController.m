@@ -45,6 +45,7 @@
 
 @property (nonatomic) QLPreviewController *previewController;
 @property (nonatomic) NSString *nodeFilePath;
+@property (nonatomic, nullable) NSString * textContent;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
 @property (nonatomic) PDFSelection *searchedItem;
@@ -61,6 +62,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.thumbnailCache = [[NSCache alloc] init];
     
     [self configureNavigation];
     [self updateAppearance];
@@ -149,7 +152,11 @@
 
 - (void)loadPreview {
     NSURL *url = [self documentUrl];
-    if ([url.pathExtension isEqualToString:@"pdf"]) {
+    self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
+    if (self.textContent != nil
+        && ([url.path mnz_isEditableTextFilePathExtension] || url.pathExtension.length == 0)) {
+        [self loadTextView];
+    } else if ([url.pathExtension isEqualToString:@"pdf"]) {
         [self loadPdfKit:url];
     } else {
         [self loadQLController];
@@ -194,14 +201,14 @@
     }
 }
 
-- (void)presentWebCodeViewController {
-    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-    }];
+- (void)loadTextView {
+    UITextView *textView = [[UITextView alloc] init];
+    textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    textView.adjustsFontForContentSizeCategory = YES;
+    [self.view addSubview:textView];
+    [textView autoPinEdgesToSuperviewSafeArea];
+    [textView setEditable:NO];
+    textView.text = self.textContent;
 }
 
 - (void)import {
@@ -368,23 +375,7 @@
     }
     
     if (self.isViewLoaded && self.view.window) {
-        if (transfer.path.mnz_isWebCodePathExtension) {
-            [self presentWebCodeViewController];
-        } else {
-            if (transfer.path.pathExtension.length == 0) {
-                NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentTransfer.path];
-                NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
-                if (fileString.length) {
-                    [self presentWebCodeViewController];
-                    return;
-                }
-            }
-            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
-            } else {
-                [self loadQLController];
-            }
-        }
+        [self loadPreview];
     }
 }
 
@@ -620,18 +611,24 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ThumbnailPageID" forIndexPath:indexPath];
-    UIImageView *imageView = [cell viewWithTag:100];
     UILabel *pageLabel = [cell viewWithTag:1];
     pageLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.item + 1];
-    if ([self.thumbnailCache objectForKey:[NSNumber numberWithInteger:indexPath.item]]) {
-        imageView.image = [self.thumbnailCache objectForKey:[NSNumber numberWithInteger:indexPath.item]];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *imageView = [cell viewWithTag:100];
+    NSNumber *cachedImageKey = @(indexPath.item);
+    UIImage *cachedImage = [self.thumbnailCache objectForKey:cachedImageKey];
+    if (cachedImage) {
+        imageView.image = cachedImage;
     } else {
         PDFPage *page = [self.pdfView.document pageAtIndex:indexPath.item];
-        imageView.image = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
-        [self.thumbnailCache setObject:imageView.image forKey:[NSNumber numberWithInteger:indexPath.item]];
+        if (page) {
+            imageView.image = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
+            [self.thumbnailCache setObject:imageView.image forKey:cachedImageKey];
+        }
     }
-    
-    return cell;
 }
 
 #pragma mark - SearchInPdfViewControllerProtocol

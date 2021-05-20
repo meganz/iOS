@@ -66,12 +66,14 @@ platform :ios do
       xcodeproj: PROJECT
     )
 
+    sync_all_code_signing()
     match_configuration(type: "adhoc")
 
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
       export_method: "ad-hoc",
+      skip_profile_detection: true,
       output_directory: BUILD_DIR,
       export_options: {
         iCloudContainerEnvironment: "Production"
@@ -139,12 +141,14 @@ platform :ios do
       xcodeproj: PROJECT
     )
 
+    sync_all_code_signing()
     match_configuration(type: "appstore")
 
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
       export_method: 'app-store',
+      skip_profile_detection: true,
       output_name: "MEGA",
       output_directory: BUILD_DIR,
       configuration: 'Release',

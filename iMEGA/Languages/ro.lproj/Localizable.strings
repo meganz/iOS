@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Te rugăm să accesezi e-mailul și să dai clic pe link pentru a confirma adresa nouă de e-mail.";
+"emailIsChanging_description"="Te rugăm să accesezi e-mailul și să dai clic pe link pentru a-ți confirma noua adresă de e-mail.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Te rugăm să introduci parola pentru a-ți verifica adresa de e-mail";
 /* The [X] will be replaced with the e-mail address. */
@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să reîncerci mai târziu.";
+"inAppPurchase.error.alert.title.notAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să reîncerci mai târziu.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Îți mulțumim";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Fie cererea a fost anulată, fie achiziționarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Upgradează la Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Accesează funcțiile unice Pro precum setarea protecției prin parolă și datele de expirare pentru fișierele publice.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activează modul DEPANARE";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -2247,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Trage în stânga pentru a anula, eliberează pentru a trimite";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="Interfața utilizatorului";
+"settings.section.userInterface"="Interfața utilizatorului";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */

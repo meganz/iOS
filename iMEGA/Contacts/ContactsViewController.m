@@ -697,7 +697,7 @@
 
 - (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
-    if (addContactFromEmailAlertController) {
+    if ([addContactFromEmailAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
     }
@@ -1171,9 +1171,12 @@
         
         UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if (self.presentedViewController != nil) {
-                [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+                [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+                    [self showEmailContactPicker];
+                }];
+            } else {
+                [self showEmailContactPicker];
             }
-            [self showEmailContactPicker];
         }];
         [addContactAlertController addAction:addFromContactsAlertAction];
         
@@ -2072,6 +2075,11 @@
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
     if (self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
         UIBarButtonItem *sender = self.contactsMode == ContactsModeShareFoldersWith ? self.navigationItem.leftBarButtonItem : self.navigationItem.rightBarButtonItem;
+        
+        if (sender == nil) {
+            return;
+        }
+        
         UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:sender withConfirmAction:^{
             [self dismissViewControllerAnimated:YES completion:nil];
         }];

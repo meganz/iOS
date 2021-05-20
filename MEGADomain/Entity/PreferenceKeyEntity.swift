@@ -5,4 +5,8 @@ enum PreferenceKeyEntity: String {
     case backupHeartbeatRegistrationId
     case lastPSARequestTimestamp
     case launchTab
+    case lastDateTurnOnNotificationsShowed
+    case timesTurnOnNotificationsShowed
+    case launchTabSelected
+    case launchTabSuggested
 }

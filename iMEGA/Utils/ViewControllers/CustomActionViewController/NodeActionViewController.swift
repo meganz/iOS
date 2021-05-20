@@ -15,6 +15,7 @@ class NodeActionViewController: ActionSheetViewController {
     let nodeImageView = UIImageView.newAutoLayout()
     let titleLabel = UILabel.newAutoLayout()
     let subtitleLabel = UILabel.newAutoLayout()
+    let downloadImageView = UIImageView.newAutoLayout()
     let separatorLineView = UIView.newAutoLayout()
 
     // MARK: - NodeActionViewController initializers
@@ -27,6 +28,28 @@ class NodeActionViewController: ActionSheetViewController {
         sender: Any) {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
         self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, sender: sender)
+    }
+    
+    init?(
+        nodeHandle: MEGAHandle,
+        delegate: NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        sender: Any) {
+        
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
+        self.node = node
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .build()
     }
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
@@ -157,16 +180,28 @@ class NodeActionViewController: ActionSheetViewController {
         
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
-        subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
+        
+        if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
+            headerView?.addSubview(downloadImageView)
+            downloadImageView.autoSetDimensions(to: CGSize(width: 12, height: 12))
+            downloadImageView.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
+            downloadImageView.autoPinEdge(.leading, to: .trailing, of: subtitleLabel, withOffset: 4)
+            downloadImageView.autoPinEdge(toSuperviewSafeArea: .trailing, withInset: 10, relation: .greaterThanOrEqual)
+            downloadImageView.image = UIImage(named: "downloaded")
+        } else {
+            subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
+        }
+        
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
         subtitleLabel.font = .systemFont(ofSize: 12)
+        
         let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
         if node.isFile() {
             subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
-        
+    
         headerView?.addSubview(separatorLineView)
         separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
         separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)

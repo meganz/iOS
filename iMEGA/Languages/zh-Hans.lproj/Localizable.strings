@@ -451,9 +451,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="输入新名字";
 /* Alert title to ask if user want to rename the file. %@ is a place holder.*/
-"rename_file_alert_title"="Rename File %@?";
+"rename_file_alert_title"="是否重命名文件%@？";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="替换";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="移至垃圾桶";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="你已经为此电子邮件地址申请了确认信。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="请至您的收件匣查看确认信，并点击信中链接以确认您的新电子邮件地址";
+"emailIsChanging_description"="请打开您的收件箱，然后点击链接以确认您的新电子邮件地址。";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="请输入您的密码以验证您的电子邮件地址";
 /* The [X] will be replaced with the e-mail address. */
@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="这个In-APP内建购买项目目前于App Store未能选用。请晚点再试一次。";
+"inAppPurchase.error.alert.title.notAvailable"="这个In-APP内建购买项目目前于App Store未能选用。请晚点再试一次。";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="谢谢您";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="恢复停止";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="也许请求已取消或是先前的购买未能恢复。请稍后再试或联系ios@mega.nz";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="升级至Pro会员";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="享受Pro会员专属功能，例如为公共文件设置密码保护与链接到期日。";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="开启调试模式";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="您确定要清除此对话的全部历史记录吗？";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="聊天记录已清除";
+"Chat History has Been Cleared"="聊天记录已删除";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="错误，聊天记录未成功清除";
 /* 'Next' button in a dialog */
@@ -2247,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖动即可取消，松手发送";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="用户界面设置";
+"settings.section.userInterface"="用户界面设置";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="默认窗口";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2600,3 +2604,15 @@
 "The device does not have enough space for MEGA to run properly."="设备存储空间不足，MEGA无法正常运行";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="您可以通过删除不常用的应用程序或大视频文件以释放设备存储空间。您可以通过以下步骤进行设置：%@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="用户界面设置";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Change Launch Tab";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Change Setting";

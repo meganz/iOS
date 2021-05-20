@@ -126,6 +126,18 @@ final class NodeActionBuilder {
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
+        } else if displayMode == .textEditor {
+            if (accessLevel != .accessRead) && (accessLevel != .accessUnknown) {
+                nodeActions.append(NodeAction.textEditorAction())
+            }
+            nodeActions.append(NodeAction.downloadAction())
+            if accessLevel != .accessOwner {
+                nodeActions.append(NodeAction.importAction())
+            }
+            nodeActions.append(NodeAction.sendToChatAction())
+            if accessLevel == .accessOwner {
+                nodeActions.append(NodeAction.shareAction())
+            }
         } else if displayMode == .previewDocument {
             if isLink {
                 nodeActions.append(NodeAction.importAction())

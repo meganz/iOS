@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)tableViewSelectIndexPath:(NSIndexPath *)indexPath;
-- (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

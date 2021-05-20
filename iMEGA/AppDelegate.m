@@ -55,6 +55,7 @@
 #import "BackgroundRefreshPerformer.h"
 #import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 #import <SDWebImage/SDWebImage.h>
+#import "MEGASdkManager+CleanUp.h"
 
 #ifdef DEBUG
 #import <DoraemonKit/DoraemonManager.h>
@@ -110,7 +111,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    [UncaughtExceptionHandler registerHandler];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
@@ -186,6 +187,9 @@
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    [sharedUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
@@ -355,6 +359,8 @@
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center removeAllPendingNotificationRequests];
     [center removeAllDeliveredNotifications];
+    
+    [self showTurnOnNotificationsIfNeeded];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -377,6 +383,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
+    [MEGAIndexer.sharedIndexer stopIndexing];
+    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
@@ -387,7 +395,8 @@
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
     
-    [self localLogoutSDKandChat];
+    [MEGASdkManager localLogout];
+    [MEGASdkManager deleteChatSdk];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -640,14 +649,14 @@
         if ([self.window.rootViewController.presentedViewController isKindOfClass:CheckEmailAndFollowTheLinkViewController.class]) {
             CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = (CheckEmailAndFollowTheLinkViewController *)self.window.rootViewController.presentedViewController;
             if (checkEmailAndFollowTheLinkVC.presentedViewController) {
-                [checkEmailAndFollowTheLinkVC.presentedViewController dismissViewControllerAnimated:NO completion:^{
+                [checkEmailAndFollowTheLinkVC.presentedViewController dismissViewControllerAnimated:YES completion:^{
                     if (completion) completion();
                 }];
             } else {
                 if (completion) completion();
             }
         } else {
-            [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
+            [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
                 if (completion) completion();
             }];
         }
@@ -730,9 +739,9 @@
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
                     if (MEGAPurchase.sharedInstance.products.count > 0) {
-                        [self showChooseAccountType];
+                        [UpgradeAccountRouter.new presentChooseAccountType];
                     } else {
-                        [MEGAPurchase.sharedInstance setPricingsDelegate:self];
+                        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
                         self.chooseAccountTypeLater = YES;
                     }
                     self.newAccount = NO;
@@ -765,6 +774,8 @@
     [self showCookieDialogIfNeeded];
     
     [self showEnableTwoFactorAuthenticationIfNeeded];
+    
+    [self showLaunchTabDialogIfNeeded];
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -917,12 +928,6 @@
     }
 }
 
-void uncaughtExceptionHandler(NSException *exception) {
-    MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
-    MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
-}
-
-
 - (void)performCall {
     MEGAChatStartCallRequestDelegate *requestDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
         if (error.type == MEGAErrorTypeApiOk) {
@@ -986,15 +991,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             window.hidden = shouldHide;
         }
     }
-}
-
-- (void)showChooseAccountType {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    upgradeTVC.chooseAccountType = YES;
-    
-    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)initProviderDelegate {
@@ -1082,10 +1078,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                    
-                    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+                    [UpgradeAccountRouter.new presentUpgradeTVC];
                 } else {
                     // Redirect to my account if the products are not available
                     [self.mainTBC setSelectedIndex:4];
@@ -1193,22 +1186,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         businessStatusVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [UIApplication.mnz_presentingViewController presentViewController:businessStatusVC animated:YES completion:nil];
     }
-}
-
-- (void)localLogoutSDKandChat {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    [MEGASdkManager.sharedMEGASdk localLogoutWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-        if (MEGASdkManager.sharedMEGAChatSdk) {
-            [MEGASdkManager.sharedMEGAChatSdk localLogoutWithDelegate:[MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                dispatch_semaphore_signal(semaphore);
-            }]];
-        } else {
-            dispatch_semaphore_signal(semaphore);
-        }
-    }]];
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC));
-    dispatch_semaphore_wait(semaphore, timeout);
-//    [MEGASdkManager.sharedMEGAChatSdk deleteMegaChatApi];
 }
 
 - (void)presentLogoutFromOtherClientAlert {
@@ -1335,10 +1312,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)pricingsReady {
     if (self.showChooseAccountTypeLater) {
-        [self showChooseAccountType];
+        [UpgradeAccountRouter.new presentChooseAccountType];
         
         self.chooseAccountTypeLater = NO;
-        [[MEGAPurchase sharedInstance] setPricingsDelegate:nil];
+        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
     }
 }
 
@@ -1627,6 +1604,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
                     [MEGALinkManager resetLinkAndURLType];
                 }
+                [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
             }
                         
             [self initProviderDelegate];

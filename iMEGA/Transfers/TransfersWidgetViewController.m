@@ -160,9 +160,26 @@ static TransfersWidgetViewController* instance = nil;
             
         case TransfersWidgetSelectedCompleted:
             [self.clearAllButton setTitle:self.tableView.isEditing ? NSLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : NSLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
-            self.clearAllButton.enabled = !self.tableView.isEditing || self.selectedTransfers.count > 0;
             break;
+    }
+}
+
+- (void)updateViewState {
+    switch (self.transfersSelected) {
+        case TransfersWidgetSelectedAll: {
+            BOOL ongoingTransfers = self.transfers.count > 0;
+            self.editBarButtonItem.enabled = ongoingTransfers;
+            self.toolbar.hidden = !ongoingTransfers;
+            break;
+        }
             
+        case TransfersWidgetSelectedCompleted: {
+            BOOL completedTransfers = self.completedTransfers.count > 0;
+            self.editBarButtonItem.enabled = completedTransfers;
+            self.toolbar.hidden = !completedTransfers;
+            self.clearAllButton.enabled = !self.tableView.isEditing || completedTransfers;
+            break;
+        }
     }
 }
 
@@ -182,9 +199,6 @@ static TransfersWidgetViewController* instance = nil;
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
 }
-
-
-
 
 - (void)showCustomActionsForTransfer:(MEGATransfer *)transfer sender:(UIView *)sender {
     MEGANode *node = transfer.node;
@@ -258,7 +272,6 @@ static TransfersWidgetViewController* instance = nil;
         
         MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
         
-
         MEGANode *node = transfer.node;
         if (transfer.state == MEGATransferStateComplete) {
             NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
@@ -444,9 +457,8 @@ static TransfersWidgetViewController* instance = nil;
     
     [self getAllTransfers];
     [self updateSelector];
+    [self updateViewState];
     [self.tableView reloadData];
-    self.toolbar.hidden = self.tableView.isEditing && self.inProgressButton.selected;
-
 }
 
 - (void)getAllTransfers {
@@ -610,6 +622,7 @@ static TransfersWidgetViewController* instance = nil;
         }
     } else {
         [self.tableView debounce:@selector(reloadData) delay:0.1];
+        self.toolbar.hidden = NO;
     }
     
 }
@@ -695,11 +708,10 @@ static TransfersWidgetViewController* instance = nil;
             if (self.tableView.isEditing) {
                 [self.completedTransfers removeObjectsInArray:self.selectedTransfers];
                 [self.selectedTransfers removeAllObjects];
-                [self.tableView reloadData];
             } else {
                 [self.completedTransfers removeAllObjects];
-                [self.tableView reloadData];
             }
+            [self switchEdit];
             
             if (self.transfers.count == 0) {
                 [self.progressView dismissWidget];
@@ -745,7 +757,7 @@ static TransfersWidgetViewController* instance = nil;
         [self cancelTransfersForDirection:0];
         [self cancelTransfersForDirection:1];
         
-        [self reloadView];
+        [self switchEdit];
     }]];
     
     [self presentViewController:cancelTransfersAlert animated:YES completion:nil];

@@ -79,6 +79,7 @@ final class AudioPlaylistViewModel: ViewModelType {
         playerHandler?.delete(items: items)
         selectedItems?.removeAll()
         invokeCommand?(.deselectAll)
+        invokeCommand?(.hideToolbar)
     }
     
     // MARK: - Dispatch action

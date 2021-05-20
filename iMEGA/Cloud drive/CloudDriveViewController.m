@@ -50,7 +50,6 @@
 #import "PreviewDocumentViewController.h"
 #import "SearchOperation.h"
 #import "SharedItemsViewController.h"
-#import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
 
 @import Photos;
@@ -58,7 +57,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -187,6 +186,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     if (self.displayMode != DisplayModeRecents) {
         self.shouldRemovePlayerDelegate = YES;
+    }
+    
+    if (self.myAvatarManager != nil) {
+        [self refreshMyAvatar];
     }
 }
 
@@ -400,8 +403,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
-                return viewController;
+                if (!node.mnz_isPlayable || (node.mnz_isPlayable && node.name.mnz_isVideoPathExtension)) {
+                    UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:self];
+                    return viewController;
+                }
             }
             break;
         }
@@ -1073,14 +1078,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
-    if ([self.presentedViewController isKindOfClass:[UIAlertController class]]) {
-        UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
-        if (newFolderAlertController) {
-            UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
-            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
-            rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
-        }
+    UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
+    if ([newFolderAlertController isKindOfClass:UIAlertController.class]) {
+        UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
+        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }
 
@@ -1199,18 +1202,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
-            [self showUpgradeTVC];
+            [UpgradeAccountRouter.new presentUpgradeTVC];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
             alreadyPresented = YES;
         }
-    }
-}
-
-- (void)showUpgradeTVC {
-    if ([MEGAPurchase sharedInstance].products.count > 0) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
-        [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
 
@@ -1437,6 +1432,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self presentScanDocument];
         }]];
     }
+    
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
         UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
         
@@ -1470,6 +1466,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         
         [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
     }]];
+    
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
+        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController] start];
+    }]];
+    
     if ([self numberOfRows]) {
         NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
@@ -1602,7 +1603,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     for (MEGANode *node in self.selectedNodesArray) {
         if ([node mnz_downloadNode]) {
-            [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+            [self.cdTableView.tableView reloadData];
         } else {
             return;
         }
@@ -1805,8 +1806,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+        [self.cdTableView.tableView reloadData];
     }
 }
 
@@ -1850,9 +1850,21 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [self.cdTableView reloadRowAtIndexPath:self.nodesIndexPathMutableDictionary[base64Handle]];
+    if (transfer.type == MEGATransferTypeDownload) {
+        switch (self.viewModePreference) {
+            case ViewModePreferenceList:
+                [self.cdTableView.tableView reloadData];
+                break;
+            case ViewModePreferenceThumbnail:
+                if (transfer.publicNode.isFile) {
+                    [self.cdCollectionView reloadFileItem:transfer.nodeHandle];
+                } else {
+                    [self.cdCollectionView reloadFolderItem:transfer.nodeHandle];
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -1886,7 +1898,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             if ([node mnz_downloadNode]) {
-                [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+                [self.cdTableView.tableView reloadData];
             }
             break;
             

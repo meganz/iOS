@@ -73,6 +73,7 @@ class GetLinkViewController: UIViewController {
     private var nodes = [MEGANode]()
     private var getLinkVM = GetLinkViewModel()
     private var nodesToExportCount = 0
+    private var justUpgradedToProAccount = false
     
     @objc class func instantiate(withNodes nodes: [MEGANode]) -> MEGANavigationController {
         guard let getLinkVC = UIStoryboard(name: "GetLink", bundle: nil).instantiateViewController(withIdentifier: "GetLinksViewControllerID") as? GetLinkViewController else {
@@ -87,6 +88,13 @@ class GetLinkViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+            MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
+            
+            MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.add(self)
+            MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.add(self)
+        }
         
         configureNavigation()
         
@@ -111,6 +119,10 @@ class GetLinkViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         SVProgressHUD.dismiss()
+        
+        if isMovingFromParent && !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+            removeDelegates()
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -175,8 +187,8 @@ class GetLinkViewController: UIViewController {
     private func copyLinkToPasteboard(atIndex index: Int?) {
         guard let copyImage = UIImage(named: "copy") else { return }
         if getLinkVM.multilink {
-            if let index = index {
-                UIPasteboard.general.string = nodes[index].publicLink
+            if let index = index, let link = nodes[safe: index]?.publicLink {
+                UIPasteboard.general.string = link
                 SVProgressHUD.show(copyImage, status: NSLocalizedString("Link Copied to Clipboard", comment: "Message shown when the link has been copied to the Clipboard"))
             } else {
                 UIPasteboard.general.string = nodes.compactMap { $0.publicLink }.joined(separator: " ")
@@ -372,6 +384,27 @@ class GetLinkViewController: UIViewController {
         present(shareActivity, animated: true, completion: nil)
     }
     
+    private func showUpgradeToProCustomModalAlert() {
+        let upgradeToProCustomModalAlert = CustomModalAlertViewController()
+        upgradeToProCustomModalAlert.configureUpgradeToPro()
+
+        UIApplication.mnz_presentingViewController().present(upgradeToProCustomModalAlert, animated: true, completion: nil)
+    }
+    
+    private func reloadProSections() {
+        guard let expiryDateSection = sections().firstIndex(of: .expiryDate), let passwordSection = sections().firstIndex(of: .passwordProtection) else {
+            return
+        }
+        tableView.reloadSections([expiryDateSection, passwordSection], with: .automatic)
+    }
+    
+    private func removeDelegates() {
+        MEGASdkManager.sharedMEGASdk().remove(self as MEGARequestDelegate)
+        
+        MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.remove(self)
+        MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.remove(self)
+    }
+    
     //MARK: - IBActions
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
@@ -381,7 +414,17 @@ class GetLinkViewController: UIViewController {
         case .decryptKeySeparate:
             configureDecryptKeySeparate(isOn: sender.isOn)
         case .expiryDate:
-            configureExpiryDate(isOn: sender.isOn)
+            if justUpgradedToProAccount {
+                //Activity indicators are shown until the updated account details are received
+                return
+            }
+            
+            if MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+                configureExpiryDate(isOn: sender.isOn)
+            } else {
+                showUpgradeToProCustomModalAlert()
+                sender.isOn = false
+            }
         default:
             break
         }
@@ -452,7 +495,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkSwitchOptionTableViewCell")
         }
         
-        cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, enabled: MEGASdkManager.sharedMEGASdk().mnz_isProAccount)
+        cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, isPro:MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded:justUpgradedToProAccount)
         
         return cell
     }
@@ -482,7 +525,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkDetailTableViewCell")
         }
         
-        cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, enabled: MEGASdkManager.sharedMEGASdk().mnz_isProAccount)
+        cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, isPro:MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded:justUpgradedToProAccount)
         
         return cell
     }
@@ -770,8 +813,15 @@ extension GetLinkViewController: UITableViewDelegate {
             case .passwordProtection:
                 switch passwordProtectionRows()[indexPath.row] {
                 case .configurePasword:
+                    if justUpgradedToProAccount {
+                        //Activity indicators are shown until the updated account details are received
+                        return
+                    }
+                    
                     if MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
                         present(SetLinkPasswordViewController.instantiate(withDelegate: self), animated: true, completion: nil)
+                    } else {
+                        showUpgradeToProCustomModalAlert()
                     }
                 }
             case .link:
@@ -796,6 +846,24 @@ extension GetLinkViewController: UITableViewDelegate {
     }
 }
 
+//MARK: - MEGARequestDelegate
+
+extension GetLinkViewController: MEGARequestDelegate {
+    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        if request.type == .MEGARequestTypeAccountDetails {
+            if error.type == .apiOk {
+                if justUpgradedToProAccount {
+                    //Reset temporal flag when the account details are received to allow using the PRO features
+                    justUpgradedToProAccount = false
+                    reloadProSections()
+                    
+                    removeDelegates()
+                }
+            }
+        }
+    }
+}
+
 //MARK: - SetLinkPasswordViewControllerDelegate
 
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
@@ -806,5 +874,23 @@ extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController) {
         setLinkPassword.dismissView()
+    }
+}
+
+//MARK: - MEGAPurchaseDelegate
+
+extension GetLinkViewController: MEGAPurchaseDelegate {
+    func successfulPurchase(_ megaPurchase: MEGAPurchase!) {
+        justUpgradedToProAccount = true
+        reloadProSections()
+    }
+}
+
+//MARK: - MEGARestoreDelegate
+
+extension GetLinkViewController: MEGARestoreDelegate {
+    func successfulRestore(_ megaPurchase: MEGAPurchase!) {
+        justUpgradedToProAccount = true
+        reloadProSections()
     }
 }

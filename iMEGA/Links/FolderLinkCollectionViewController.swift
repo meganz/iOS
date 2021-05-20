@@ -38,7 +38,7 @@ class FolderLinkCollectionViewController: UIViewController  {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { (_) in
-            self.setupCollectionView()
+            self.layout.configThumbnailListColumnCount()
 
         }, completion: nil)
     }
@@ -47,7 +47,7 @@ class FolderLinkCollectionViewController: UIViewController  {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
         layout.minimumInteritemSpacing = 8
-        layout.columnCount = Int((collectionView.superview?.bounds.width ?? UIScreen.main.bounds.width - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))
+        layout.configThumbnailListColumnCount()
         
         collectionView.collectionViewLayout = layout
     }

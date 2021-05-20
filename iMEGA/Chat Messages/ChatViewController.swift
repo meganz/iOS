@@ -72,7 +72,7 @@ class ChatViewController: MessagesViewController {
         return chatRoomDelegate.messages
     }
 
-    var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle ?? 0), displayName: "")
+    var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle ), displayName: "")
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom)
@@ -233,6 +233,7 @@ class ChatViewController: MessagesViewController {
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
+        checkIfChatHasActiveCall()
                 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(becomeFirstResponder),
@@ -248,7 +249,7 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkIfChatHasActiveCall()
+        
         reloadInputViews()
         TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
         
@@ -256,6 +257,11 @@ class ChatViewController: MessagesViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: ""), style: .plain, target: self, action: #selector(dismissChatRoom))
         }
         
+        guard let publicChatLinkString = self.publicChatLink?.absoluteString else {
+            setLastMessageAsSeen()
+            loadDraft()
+            return
+        }
         if publicChatWithLinkCreated {
             let customModalAlertVC = CustomModalAlertViewController()
             customModalAlertVC.modalPresentationStyle = .overCurrentContext
@@ -268,7 +274,7 @@ class ChatViewController: MessagesViewController {
             customModalAlertVC.dismissButtonTitle = NSLocalizedString("dismiss", comment: "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
             customModalAlertVC.firstCompletion = { [weak customModalAlertVC] in
                 customModalAlertVC?.dismiss(animated: true, completion: {
-                    let activityVC = UIActivityViewController(activityItems: [self.publicChatLink?.absoluteString], applicationActivities: nil)
+                    let activityVC = UIActivityViewController(activityItems: [publicChatLinkString], applicationActivities: nil)
                     self.publicChatWithLinkCreated = false
                     if UIDevice.current.iPadDevice {
                         activityVC.popoverPresentationController?.sourceView = self.view
@@ -480,7 +486,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Interface methods
 
     @objc func updateUnreadLabel() {
-        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats ?? 0
+        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats 
         let unreadChatsString = unreadChats > 0 ? "\(unreadChats)" : ""
         
         let backBarButton = UIBarButtonItem(title: unreadChatsString, style: .plain, target: nil, action: nil)
@@ -589,12 +595,15 @@ class ChatViewController: MessagesViewController {
     }
 
     func initials(for message: MessageType) -> String {
-
-        if let user = MEGAStore.shareInstance().fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
-            return (user.displayName as NSString).mnz_initialForAvatar()
+        guard let userHandle = UInt64(message.sender.senderId) else {
+            return ""
         }
 
-        if let peerFullname = chatRoom.participantName(forUserHandle:UInt64(message.sender.senderId)!) {
+        if let displayName = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)?.displayName {
+            return (displayName as NSString).mnz_initialForAvatar()
+        }
+
+        if let peerFullname = chatRoom.participantName(forUserHandle: userHandle) {
             return (peerFullname as NSString).mnz_initialForAvatar()
         }
 
@@ -714,7 +723,7 @@ class ChatViewController: MessagesViewController {
     }
 
     @objc func update() {
-        guard isViewLoaded, chatRoom != nil else {
+        guard isViewLoaded else {
             return
         }
 
