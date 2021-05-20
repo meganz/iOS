@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol AudioRecordingInputBarDelegate: class {
+protocol AudioRecordingInputBarDelegate: AnyObject {
     func trashButtonTapped()
     func audioRecordingStarted()
     func audioRecordingEnded()

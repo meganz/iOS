@@ -5,7 +5,7 @@ import AVKit
 
 // MARK:- PhotoCarouselViewControllerDelegate.
 
-protocol PhotoCarouselViewControllerDelegate: class {
+protocol PhotoCarouselViewControllerDelegate: AnyObject {
     func selected(assets: [PHAsset])
     func sendButtonTapped()
 }
