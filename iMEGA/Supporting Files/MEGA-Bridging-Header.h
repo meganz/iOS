@@ -34,6 +34,7 @@
 #import "UIView+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "MEGATransfer+MNZCategory.h"
 #import "MEGATransferList+MNZCategory.h"
@@ -160,3 +161,6 @@
 #import "MEGAGroupCallPeer.h"
 #import "UIControl+YYAdd.h"
 #import "MEGAProviderDelegate.h"
+#import "MEGAChatAttachNodeRequestDelegate.h"
+#import "PhotosViewController.h"
+#import "SharedItemsViewController.h"

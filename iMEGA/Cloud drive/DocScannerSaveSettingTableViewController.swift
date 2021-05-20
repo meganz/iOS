@@ -60,8 +60,10 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         title = NSLocalizedString("Save Settings", comment: "Setting title for Doc scan view")
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
         let quality = UserDefaults.standard.string(forKey: keys.docScanQualityKey)
-        if fileType == nil || quality == nil  {
+        if fileType == nil || docs?.count ?? 0 > 1  {
             UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
+        }
+        if quality == nil {
             UserDefaults.standard.set(DocScanQuality.best.rawValue, forKey: keys.docScanQualityKey)
         }
         
@@ -152,6 +154,10 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             if let detailCell = tableView.dequeueReusableCell(withIdentifier: DocScannerDetailTableCell.reuseIdentifier, for: indexPath) as? DocScannerDetailTableCell,
                 let cellType = DocScannerDetailTableCell.CellType(rawValue: indexPath.row) {
                 detailCell.cellType = cellType
+                if docs?.count ?? 0 > 1 && indexPath.row == 0 {
+                    detailCell.accessoryType = .none
+                }
+                
                 cell = detailCell
             }
         } else {
@@ -196,27 +202,29 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                let alert = UIAlertController(title: nil, message: NSLocalizedString("File Type", comment: "file type title, used in changing the export format of scaned doc"), preferredStyle: .actionSheet)
-                let PDFAlertAction = UIAlertAction(title: "PDF", style: .default, handler: { _ in
-                    UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
-                    tableView.reloadData()
-                })
-                alert.addAction(PDFAlertAction)
-                
-                let JPGAlertAction = UIAlertAction(title: "JPG", style: .default, handler: { _ in
-                    UserDefaults.standard.set(DocScanExportFileType.jpg.rawValue, forKey: keys.docScanExportFileTypeKey)
-                    tableView.reloadData()
-                })
-                alert.addAction(JPGAlertAction)
-                
-                if let popover = alert.popoverPresentationController {
-                    popover.sourceView = tableView
-                    popover.sourceRect = tableView.rectForRow(at: indexPath)
+                if docs?.count ?? 0 < 2 {
+                    let alert = UIAlertController(title: nil, message: NSLocalizedString("File Type", comment: "file type title, used in changing the export format of scaned doc"), preferredStyle: .actionSheet)
+                    let PDFAlertAction = UIAlertAction(title: "PDF", style: .default, handler: { _ in
+                        UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
+                        tableView.reloadData()
+                    })
+                    alert.addAction(PDFAlertAction)
+                    
+                    let JPGAlertAction = UIAlertAction(title: "JPG", style: .default, handler: { _ in
+                        UserDefaults.standard.set(DocScanExportFileType.jpg.rawValue, forKey: keys.docScanExportFileTypeKey)
+                        tableView.reloadData()
+                    })
+                    alert.addAction(JPGAlertAction)
+                    
+                    if let popover = alert.popoverPresentationController {
+                        popover.sourceView = tableView
+                        popover.sourceRect = tableView.rectForRow(at: indexPath)
+                    }
+                    
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
+                    
+                    present(alert, animated: true, completion: nil)
                 }
-                
-                alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
-                
-                present(alert, animated: true, completion: nil)
             case 1:
                 let alert = UIAlertController(title: nil, message:
                     NSLocalizedString("Quality", comment: "Quality title, used in changing the export quality of scaned doc"), preferredStyle: .actionSheet)
@@ -335,13 +343,12 @@ extension DocScannerSaveSettingTableViewController {
             return []
         }
         let fileType = DocScanExportFileType(rawValue: storedExportFileTypeKey)
-        let scanQuality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey))
+        let scanQuality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)) ?? .best
         var tempPaths: [String] = []
         if fileType == .pdf {
             let pdfDoc = PDFDocument()
             docs?.enumerated().forEach {
-                if let quality = scanQuality,
-                   let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: quality),
+                if let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: scanQuality),
                    let shrinkedImage = UIImage(data: shrinkedImageData),
                    let pdfPage = PDFPage(image: shrinkedImage) {
                     pdfDoc.insert(pdfPage, at: $0.offset)
@@ -364,8 +371,7 @@ extension DocScannerSaveSettingTableViewController {
             }
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
-                if let quality = scanQuality,
-                   let data = $0.element.shrinkedImageData(docScanQuality: quality) {
+                if let data = $0.element.shrinkedImageData(docScanQuality: scanQuality) {
                     let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {

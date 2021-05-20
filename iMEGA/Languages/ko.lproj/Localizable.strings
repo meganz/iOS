@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="그 이메일 주소에 대한 확인 링크를 이미 요청하였습니다.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="수신함에 가서 새 이메일 주소의 확인 링크를 클릭하세요.";
+"emailIsChanging_description"="수신함에 가서 새 이메일 주소를 확인하는 링크를 클릭하세요.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="이메일 주소를 승인하려면 암호를 입력하세요";
 /* The [X] will be replaced with the e-mail address. */
@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="연간";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="이 앱 내 구매가 앱스토어에서 사용 불가합니다. 다시 시도하세요.";
+"inAppPurchase.error.alert.title.notAvailable"="이 앱 내 구매가 앱스토어에서 사용 불가합니다. 다시 시도하세요.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="고맙습니다";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="복구 중지됨";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="요청이 취소되었거나 이전 결제가 복구되지 않았습니다. 다시 시도하거나 ios@mega.nz로 연락하세요.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Pro로 업그레이드";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="공개 파일의 비밀번호 보호와 만료 시간 같은 Pro 전용 기능에 접근하세요.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="디버그 모드 활성화";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1833,9 +1837,9 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Pro 회원권이 곧 만료됩니다";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="게시 중단 알림";
+"Takedown notice"="게시중단 알림";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="게시 중단 복원됨";
+"Takedown reinstated"="게시중단된 항목이 재게시됨";
 /* Label shown inside an unseen notification */
 "New"="신규";
 /* When a contact sent a contact/friend request */
@@ -1899,9 +1903,9 @@
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="당신의 Pro 요금제가 %1일 전에 만료되었습니다";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="공개적으로 공유된 %1 (%2)가 게시 중단되었습니다.";
+"Your publicly shared %1 (%2) has been taken down."="공개적으로 공유된 %1 (%2)가 게시중단되었습니다.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="게시 중단 %1 (%2)가 복원되었습니다.";
+"Your taken down %1 (%2) has been reinstated."="게시중단된 %1 (%2)가 재게시되었습니다.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="음성 메시지";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2069,9 +2073,9 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="이 파일은 게시 중단 통보 대상입니다.";
+"This file has been the subject of a takedown notice."="이 파일은 게시중단 통보 대상입니다.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="이 폴더는 게시 중단 통보 대상입니다.";
+"This folder has been the subject of a takedown notice."="이 폴더는 게시중단 통보 대상입니다.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="게시중단 이의제기";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
@@ -2247,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="유저 인터페이스";
+"settings.section.userInterface"="유저 인터페이스";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="기본 탭";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2600,3 +2604,15 @@
 "The device does not have enough space for MEGA to run properly."="기기에 MEGA가 적절히 작동할 수준의 충분한 공간이 없습니다.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="사용하지 않는 앱을 삭제하거나 갤러리에서 큰 동영상 파일을 삭제하여 공간을 확보하세요. 다음의 메뉴에서 저장소를 관리할 수 있습니다 %@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="유저 인터페이스";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Change Launch Tab";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Change Setting";

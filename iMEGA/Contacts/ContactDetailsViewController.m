@@ -455,6 +455,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
 }
 - (void)showRemoveContactConfirmationFromSender:(UIView *)sender {
+    if (sender == nil) {
+        return;
+    }
+    
     UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:sender withConfirmAction:^{
         MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed

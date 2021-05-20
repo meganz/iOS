@@ -478,6 +478,16 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
             break;
             
+        case URLTypeNewTextFile:
+            [[CreateTextFileAlertViewRouter.alloc initWithPresenter:UIApplication.mnz_presentingViewController] start];
+            break;
+            
+        case URLTypeAppSettings:
+            if ([UIApplication.sharedApplication canOpenURL:url]) {
+                [UIApplication.sharedApplication openURL:url options:@{} completionHandler:nil];
+            }
+            break;
+            
         default:
             break;
     }
@@ -555,7 +565,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (alertController) {
+    if ([alertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = alertController.actions.firstObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }
@@ -936,7 +946,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         mainTBC.selectedIndex = TabTypeChat;
         
         if (mainTBC.presentedViewController) {
-            [mainTBC dismissViewControllerAnimated:NO completion:^{
+            [mainTBC dismissViewControllerAnimated:YES completion:^{
                 [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
             }];
         } else {

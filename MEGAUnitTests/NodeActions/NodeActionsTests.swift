@@ -241,6 +241,53 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download]))
     }
     
+    // MARK: - Text Editor
+    
+    func testTextEditorAcessUnknown() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessUnknown)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .import, .sendToChat]))
+    }
+    
+    func testTextEditorAcessRead() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessRead)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.download, .import, .sendToChat]))
+    }
+    
+    func testTextEditorAcessReadWrite() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessReadWrite)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .import, .sendToChat]))
+    }
+    
+    func testTextEditorAcessFull() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessFull)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .import, .sendToChat]))
+    }
+    
+    func testTextEditorAcessOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .sendToChat, .share]))
+    }
+
     // MARK: - Preview Documents
     
     func testDocumentPreviewFileLink() {

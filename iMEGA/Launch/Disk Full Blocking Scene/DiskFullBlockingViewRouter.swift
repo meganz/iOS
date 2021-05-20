@@ -18,6 +18,7 @@ final class DiskFullBlockingViewRouter: NSObject, DiskFullBlockingViewRouting {
     }
     
     func manageDiskSpace() {
+        MEGASdkManager.deleteSharedSdks()
         exit(0)
     }
 }

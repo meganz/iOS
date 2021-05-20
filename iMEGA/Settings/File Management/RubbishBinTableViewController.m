@@ -13,7 +13,6 @@
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
-#import "UpgradeTableViewController.h"
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
 
@@ -46,9 +45,7 @@
     self.navigationItem.title = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
     
     self.clearRubbishBinLabel.text = NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account");
-    NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
-    self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
+    [self updateClearRubbishBinDetailLabel];
     
     self.rubbishBinCleaningSchedulerLabel.text = [NSLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
     [self.rubbishBinCleaningSchedulerSwitch setOn:[[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled]];
@@ -82,10 +79,16 @@
 
 - (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {
     UIAlertController *scheduleRubbishBinClearingAlertController = (UIAlertController *)self.presentedViewController;
-    if (scheduleRubbishBinClearingAlertController) {
+    if ([scheduleRubbishBinClearingAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *doneAction = scheduleRubbishBinClearingAlertController.actions.lastObject;
         doneAction.enabled = textField.text.mnz_isDecimalNumber;
     }
+}
+
+- (void)updateClearRubbishBinDetailLabel {
+    NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
+    self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }
 
 #pragma mark - IBActions
@@ -106,10 +109,7 @@
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.firstCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                    
-                    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    [UpgradeAccountRouter.new presentUpgradeTVC];
                 }];
             };
             
@@ -161,7 +161,11 @@
                 UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBinWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                        if (error.type == MEGAErrorTypeApiOk) {
+                            [self updateClearRubbishBinDetailLabel];
+                        }
+                    }]];
                 }]];
                 [self presentViewController:emptyRubbishBinAlertController animated:YES completion:nil];
             }

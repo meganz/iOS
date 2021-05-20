@@ -143,9 +143,9 @@ final class AudioPlayerViewController: UIViewController {
         shuffleButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
     }
     
-    private func refreshStateOfLoadingView(_ enable: Bool) {
-        activityIndicatorView.isHidden = !enable
-        if enable {
+    private func refreshStateOfLoadingView(_ enabled: Bool) {
+        activityIndicatorView.isHidden = !enabled
+        if enabled {
             activityIndicatorView.startAnimating()
         } else {
             activityIndicatorView.stopAnimating()
@@ -172,17 +172,17 @@ final class AudioPlayerViewController: UIViewController {
         }
     }
     
-    private func userInteraction(enable: Bool) {
-        timeSliderView.isUserInteractionEnabled = enable
-        goBackwardButton.isEnabled = enable
-        previousButton.isEnabled = enable
-        playPauseButton.isEnabled = enable
-        nextButton.isEnabled = enable
-        goForwardButton.isEnabled = enable
+    private func userInteraction(enabled: Bool) {
+        timeSliderView.isUserInteractionEnabled = enabled
+        goBackwardButton.isEnabled = enabled
+        previousButton.isEnabled = enabled
+        playPauseButton.isEnabled = enabled
+        nextButton.isEnabled = enabled
+        goForwardButton.isEnabled = enabled
         if viewModel.playerType != .fileLink {
-            shuffleButton.isEnabled = enable
-            repeatButton.isEnabled = enable
-            gotoplaylistButton.isEnabled = enable
+            shuffleButton.isEnabled = enabled
+            repeatButton.isEnabled = enabled
+            gotoplaylistButton.isEnabled = enabled
         }
     }
     
@@ -361,9 +361,9 @@ final class AudioPlayerViewController: UIViewController {
             updateCurrentItem(name: name, artist: artist, thumbnail: thumbnail, nodeSize: nodeSize)
         case .reloadThumbnail(let thumbnail):
             imageView.image = thumbnail
-        case .showLoading(let enable):
-            timeSliderView.isUserInteractionEnabled = !enable
-            refreshStateOfLoadingView(enable)
+        case .showLoading(let enabled):
+            timeSliderView.isUserInteractionEnabled = !enabled
+            refreshStateOfLoadingView(enabled)
         case .updateRepeat(let status):
             updateRepeat(status)
         case .updateShuffle(let status):
@@ -374,12 +374,18 @@ final class AudioPlayerViewController: UIViewController {
             configureOfflinePlayer()
         case .configureFileLinkPlayer(let title, let subtitle):
             configureFileLinkPlayer(title: title, subtitle: subtitle)
-        case .enableUserInteraction(let enable):
-            userInteraction(enable: enable)
+        case .enableUserInteraction(let enabled):
+            userInteraction(enabled: enabled)
         case .didPausePlayback:
             playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         case .didResumePlayback:
             playPauseButton.setImage(UIImage(named: "play"), for: .normal)
+        case .shuffleAction(let enabled):
+            shuffleButton.isEnabled = enabled
+            shuffleButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
+        case .goToPlaylistAction(let enabled):
+            gotoplaylistButton.isEnabled = enabled
+            gotoplaylistButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
         }
     }
 }

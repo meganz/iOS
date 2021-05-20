@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="U heeft al een bevestigingskoppeling voor dat e-mailadres gevraagd.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Ga alstublieft naar uw inbox en klik op de koppeling om uw nieuwe e-mailadres te bevestigen.";
+"emailIsChanging_description"="Ga naar uw inbox en klik de koppeling om uw nieuwe email te bevestigen.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Vul alstublieft uw wachtwoord in om uw e-mailadres te controleren";
 /* The [X] will be replaced with the e-mail address. */
@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Dit In-Applicatie aankoop item is op dit moment niet beschikbaar in de Applicatie Winkel. Probeer alstublieft later opnieuw.";
+"inAppPurchase.error.alert.title.notAvailable"="Dit In-Applicatie aankoop item is op dit moment niet beschikbaar in de Applicatie Winkel. Probeer alstublieft later opnieuw.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Dank u";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="Herstel gestopt";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Uw verzoek is geannuleerd of de voorafgaande aankoop kon niet worden hersteld. Probeer alstublieft later opnieuw of neem contact op met ios@mega.nz.";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="Upgraden naar Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve PRO account functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1212,7 +1216,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Chatgeschiedenis is gewist";
+"Chat History has Been Cleared"="Gespreksgeschiedenis is gewist";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="Een fout heeft opgetreden. De chat geschiedenis is niet succesvol gewist";
 /* 'Next' button in a dialog */
@@ -2247,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Sleep naar links om te annuleren, laat los om te verzenden";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="Gebruikers Interface";
+"settings.section.userInterface"="Gebruikers Interface";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="Standaard Tabblad";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2600,3 +2604,15 @@
 "The device does not have enough space for MEGA to run properly."="MEGA heeft niet genoeg apparaat opslag om correct te werken.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Maak ruimte vrij door applicaties die u niet meer gebruikt of grote videobestanden in uw galerij te verwijderen. U kunt uw opslag beheren in %@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="Gebruikers Interface";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Change Launch Tab";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Change Setting";

@@ -6,6 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)abortAppWithError:(NSError *)error;
 + (BOOL)isSQLiteFullError:(NSError *)error;
++ (BOOL)hasSQLiteFullErrorInException:(NSException *)exception;
 
 @end
 

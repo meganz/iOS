@@ -208,7 +208,9 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 #pragma mark - data collation
 
 - (void)collateLocalAttributes {
-    NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+    NSURL *url = [self attributeDirectoryURL];
+    if (url == nil) { return; }
+    NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:url includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
     for (NSURL *URL in attributeDirectoryURLs) {
         AssetLocalAttribute *localAttribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
         if (!localAttribute.hasSavedAttributes) {

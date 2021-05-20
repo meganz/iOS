@@ -71,6 +71,21 @@ extension AppDelegate {
         }))
     }
     
+    @objc func showTurnOnNotificationsIfNeeded() {
+        UNUserNotificationCenter.current().getNotificationSettings { permission in
+            if permission.authorizationStatus == .denied {
+                asyncOnMain {
+                    let visibleViewController = UIApplication.mnz_visibleViewController()
+                    if visibleViewController is CustomModalAlertViewController ||
+                        visibleViewController is BusinessExpiredViewController
+                    { return }
+                    
+                    TurnOnNotificationsViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
+                }
+            }
+        }
+    }
+    
     @objc func showCookieDialogIfNeeded() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
@@ -112,6 +127,35 @@ extension AppDelegate {
         UIApplication.mnz_presentingViewController().present(cookieDialogCustomModalAlert, animated: true, completion: nil)
     }
 
+    @objc func showLaunchTabDialogIfNeeded() {
+        
+        if TabManager.isLaunchTabSelected() || TabManager.isLaunchTabDialogAlreadySuggested() {
+            return
+        }
+        
+        if let firstLoginDate = UserDefaults.standard.value(forKey: MEGAFirstLoginDate) {
+            guard let days = Calendar.current.dateComponents([.day], from: firstLoginDate as! Date, to: Date()).day else { return }
+            if days < 7 { return }
+        }
+        
+        showLaunchTabDialog()
+    }
+    
+    private func showLaunchTabDialog() {
+        let visibleViewController = UIApplication.mnz_visibleViewController()
+        if visibleViewController is CustomModalAlertViewController ||
+           visibleViewController is BusinessExpiredViewController {
+            return
+        }
+        
+        let launchTabDialogCustomModalAlert = CustomModalAlertViewController()
+        launchTabDialogCustomModalAlert.configureForChangeLaunchTab()
+
+        UIApplication.mnz_presentingViewController().present(launchTabDialogCustomModalAlert, animated: true) {
+            TabManager.setLaunchTabDialogAlreadyAsSuggested()
+        }
+    }
+    
     @objc func updateContactsNickname() {
         let requestDelegate = MEGAGenericRequestDelegate { request, error in
             guard error.type == .apiOk else { return }
@@ -191,7 +235,7 @@ extension AppDelegate {
     
     private func configAppWithNewCookieSettings() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
-        cookieSettingsUseCase.cookieSettings { [weak self] in
+        cookieSettingsUseCase.cookieSettings {
             switch $0 {
             case .success(let bitmap):
                 let cookiesBitmap = CookiesBitmap(rawValue: bitmap)

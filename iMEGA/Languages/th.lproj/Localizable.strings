@@ -874,7 +874,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="คุณได้ส่งคำขอลิงก์ยืนยันสำหรับที่อยู่อีเมลนั้นแล้ว";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="กรุณาไปที่กล่องจดหมายและคลิกลิงก์เพื่อยืนยันอีเมลใหม่ของคุณ";
+"emailIsChanging_description"="กรุณาไปที่กล่องจดหมายและคลิกลิงก์เพื่อยืนยันที่อยู่อีเมลใหม่ของคุณ";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="กรุณาใส่รหัสผ่านเพื่อตรวจสอบที่อยู่อีเมลของคุณ";
 /* The [X] will be replaced with the e-mail address. */
@@ -1094,7 +1094,7 @@
 /* "Yearly" subscriptions */
 "yearly"="รายปี";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="การซื้อภายในแอพรายการนี้ ไม่สามารถใช้งานได้บน App Store กรุณาลองใหม่อีกครั้งในภายหลัง";
+"inAppPurchase.error.alert.title.notAvailable"="การซื้อภายในแอพรายการนี้ ไม่สามารถใช้งานได้บน App Store กรุณาลองใหม่อีกครั้งในภายหลัง";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="ขอขอบคุณ";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1111,6 +1111,10 @@
 "failedRestore_title"="การกู้คืนหยุดทำงาน";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือไม่สามารถคืนการสั่งซื้อ กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
+/* Title of a warning recommending upgrade to Pro */
+"Upgrade to Pro"="อัปเกรดเป็นบัญชี Pro";
+/* A description of MEGA features available only with a Pro plan. */
+"Access Pro only features like setting password protection and expiry dates for public files."="การเข้าถึงฟีเจอร์เฉพาะบัญชี Pro เช่น การตั้งค่าการป้องกันด้วยรหัสผ่านและวันหมดอายุสำหรับไฟล์สาธารณะ";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="เปิดใช้งานโหมดดีบัก";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -2247,7 +2251,7 @@
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="ลากไปทางซ้ายเพื่อยกเลิก หรือปล่อยเพื่อส่ง";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"Appearance"="หน้าจอผู้ใช้";
+"settings.section.userInterface"="หน้าจอผู้ใช้";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
 "Default Tab"="แท็บเริ่มต้น";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
@@ -2600,3 +2604,15 @@
 "The device does not have enough space for MEGA to run properly."="MEGA มีพื้นที่เก็บข้อมูลอุปกรณ์ไม่เพียงพอที่จะทำงานได้อย่างถูกต้อง";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="เพิ่มพื้นที่ว่างโดยการลบแอปที่คุณไม่ใช้แล้วหรือไฟล์วิดีโอขนาดใหญ่ในแกลเลอรีของคุณคุณสามารถจัดการพื้นที่เก็บข้อมูลของคุณได้ที่ %@";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
+/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
+"settings.section.userInterface"="หน้าจอผู้ใช้";
+/* Dialog title for the change launch tab screen */
+"Change Launch Tab"="Change Launch Tab";
+/* Dialog description for the change launch tab screen */
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+/* Dialog button text for the change launch tab screen */
+"Change Setting"="Change Setting";

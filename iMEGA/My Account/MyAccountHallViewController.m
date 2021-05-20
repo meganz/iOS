@@ -18,7 +18,6 @@
 #import "TransfersWidgetViewController.h"
 #import "TransfersWidgetViewController.h"
 #import "UIImage+MNZCategory.h"
-#import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
 typedef NS_ENUM(NSInteger, MyAccountSection) {
@@ -82,8 +81,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     self.qrCodeImageView.image = self.qrCodeImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.viewAndEditProfileImageView.image = self.viewAndEditProfileImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.addPhoneNumberImageView.image = self.addPhoneNumberImageView.image.imageFlippedForRightToLeftLayoutDirection;
-
-    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+    
+    [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
     
     UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
     self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
@@ -121,6 +120,11 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
+    }
+    
     NSInteger index = self.navigationController.viewControllers.count-1;
     if (![self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] &&
         !self.isMovingFromParentViewController) {
@@ -276,13 +280,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
-    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-        
-        [self.navigationController pushViewController:upgradeTVC animated:YES];
-    } else {
-         [MEGAReachabilityManager isReachableHUDIfNot];
-    }
+    [UpgradeAccountRouter.new pushUpgradeTVCWithNavigationController:self.navigationController];
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {

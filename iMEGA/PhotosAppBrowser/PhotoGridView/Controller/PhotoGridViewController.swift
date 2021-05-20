@@ -173,8 +173,9 @@ extension PhotoGridViewController: UIAdaptivePresentationControllerDelegate {
     }
     
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        guard let barButton = navigationItem.rightBarButtonItem else { return }
         if (dataSource?.selectedAssets.count ?? 0) > 0 {
-            let discardChangesActionSheet = UIAlertController().discardChanges(fromBarButton: navigationItem.rightBarButtonItem, withConfirmAction: {
+            let discardChangesActionSheet = UIAlertController().discardChanges(fromBarButton: barButton, withConfirmAction: {
                 self.dismiss(animated: true, completion: nil)
             })
             present(discardChangesActionSheet, animated: true, completion: nil)

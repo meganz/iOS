@@ -78,7 +78,7 @@ enum SessionSectionRow: Int {
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
-        MEGAPurchase.sharedInstance()?.pricingsDelegate = self
+        MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.add(self)
 
         updateAppearance()
     }
@@ -96,6 +96,7 @@ enum SessionSectionRow: Int {
         
         if isMovingFromParent {
             MEGASdkManager.sharedMEGASdk().remove(self)
+            MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.remove(self)
         }
     }
     
@@ -607,12 +608,10 @@ extension ProfileViewController: UITableViewDelegate {
             switch rowsForPlanSection()[indexPath.row] {
             default:
                 if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
-                    if (MEGASdkManager.sharedMEGASdk().mnz_accountDetails != nil && (MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0)) {
-                        let upgradeViewController = UIStoryboard.init(name: "UpgradeAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
-                        navigationController?.pushViewController(upgradeViewController, animated: true)
-                    } else {
-                        MEGAReachabilityManager.isReachableHUDIfNot()
+                    guard let navigationController = navigationController else {
+                        return
                     }
+                    UpgradeAccountRouter().pushUpgradeTVC(navigationController: navigationController)
                 }
             }
         case .session:

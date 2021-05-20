@@ -15,6 +15,10 @@ enum DeeplinkPathKey: String {
     case publicChat = "/chat"
     case loginrequired = "/loginrequired"
     case achievements = "/achievements"
+    case newTextFile = "/newText"
+    case privacyPolicy = "/privacy"
+    case cookiePolicy = "/cookie"
+    case termsOfService = "/terms"
 }
 
 enum DeeplinkFragmentKey: String {
@@ -56,6 +60,7 @@ enum DeeplinkSchemeKey: String {
     case file = "file"
     case mega = "mega"
     case http = "https"
+    case appsettings = "app-settings"
 }
 
 extension NSURL {
@@ -70,6 +75,8 @@ extension NSURL {
             return parseMEGASchemeURL()
         case .http:
             return parseUniversalLinkURL()
+        case .appsettings:
+            return .appSettings
         case .none:
             return .default
         }
@@ -77,37 +84,40 @@ extension NSURL {
     }
     
     private func parseFragmentType() -> URLType {
-        guard let fragment = fragment  else {
-            return .default
-        }
-        if fragment.hasPrefix(DeeplinkFragmentKey.file.rawValue) {
-            return .fileLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.folder.rawValue) {
-            return .folderLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.confirmation.rawValue) {
-            return .confirmationLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.encrypted.rawValue) {
-            return .encryptedLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.newSignUp.rawValue) {
-            return .newSignUpLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.backup.rawValue) {
-            return .backupLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.incomingPendingContacts.rawValue) {
-            return .incomingPendingContactsLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.changeEmail.rawValue) {
-            return .changeEmailLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.cancelAccount.rawValue) {
-            return .cancelAccountLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.recover.rawValue) {
-            return .recoverLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.contact.rawValue) {
-            return .contactLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.openChatSection.rawValue) {
-            return .openChatSectionLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.publicChat.rawValue) {
-            return .publicChatLink
-        } else if !fragment.isEmpty {
-            return .handleLink
+        let isMEGAhost = host?.lowercased().contains("mega") ?? false
+        if isMEGAhost || DeeplinkSchemeKey(rawValue: scheme ?? "") == DeeplinkSchemeKey.mega {
+            guard let fragment = fragment  else {
+                return .default
+            }
+            if fragment.hasPrefix(DeeplinkFragmentKey.file.rawValue) {
+                return .fileLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.folder.rawValue) {
+                return .folderLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.confirmation.rawValue) {
+                return .confirmationLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.encrypted.rawValue) {
+                return .encryptedLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.newSignUp.rawValue) {
+                return .newSignUpLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.backup.rawValue) {
+                return .backupLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.incomingPendingContacts.rawValue) {
+                return .incomingPendingContactsLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.changeEmail.rawValue) {
+                return .changeEmailLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.cancelAccount.rawValue) {
+                return .cancelAccountLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.recover.rawValue) {
+                return .recoverLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.contact.rawValue) {
+                return .contactLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.openChatSection.rawValue) {
+                return .openChatSectionLink
+            } else if fragment.hasPrefix(DeeplinkFragmentKey.publicChat.rawValue) {
+                return .publicChatLink
+            } else if !fragment.isEmpty {
+                return .handleLink
+            }
         }
         
         return .default
@@ -177,6 +187,14 @@ extension NSURL {
             return .loginRequiredLink
         } else if path.hasPrefix(DeeplinkPathKey.achievements.rawValue) {
             return .achievementsLink
+        } else if path.hasPrefix(DeeplinkPathKey.newTextFile.rawValue) {
+            return .newTextFile
+        } else if path.hasPrefix(DeeplinkPathKey.privacyPolicy.rawValue) {
+            return .default
+        } else if path.hasPrefix(DeeplinkPathKey.cookiePolicy.rawValue) {
+            return .default
+        } else if path.hasPrefix(DeeplinkPathKey.termsOfService.rawValue) {
+            return .default
         }
         
         if fragment != nil {

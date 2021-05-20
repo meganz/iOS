@@ -2,14 +2,14 @@ extension UIAlertController {
     
     //MARK - UIAlertController for interactive dismissal
     
-    @objc func discardChanges(fromBarButton barButton: UIBarButtonItem?, withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
+    @objc func discardChanges(fromBarButton barButton: UIBarButtonItem, withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
         let alert = discardChangesAlert(withConfirmAction: action)
         alert.popoverPresentationController?.barButtonItem = barButton
         
         return alert
     }
     
-    @objc func discardChanges(fromSourceView sourceView: UIView?, sourceRect: CGRect, withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
+    @objc func discardChanges(fromSourceView sourceView: UIView, sourceRect: CGRect, withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
         let alert = discardChangesAlert(withConfirmAction: action)
         alert.popoverPresentationController?.sourceView = sourceView
         alert.popoverPresentationController?.sourceRect = sourceRect

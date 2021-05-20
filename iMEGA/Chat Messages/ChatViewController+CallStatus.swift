@@ -44,6 +44,9 @@ extension ChatViewController {
     private func initTimerForCall(_ call: MEGAChatCall) {
         initDuration = TimeInterval(call.duration)
         if let initDuration = initDuration, !(timer?.isValid ?? false) {
+            let bgColor = UIColor.mnz_turquoise(for: traitCollection)
+            topBannerView.backgroundColor = bgColor
+            
             let startTime = Date().timeIntervalSince1970
             let time = Date().timeIntervalSince1970 - startTime + initDuration
 
@@ -66,7 +69,7 @@ extension ChatViewController {
         showJoinButton()
     }
 
-    private func configureTopBannerButtonForActiveCall(_: MEGAChatCall) {
+    private func configureTopBannerForActiveCall(_: MEGAChatCall) {
         let title = chatRoom.isGroup ? NSLocalizedString("There is an active group call. Tap to join.", comment: "Message shown in a chat room when there is an active group call") : NSLocalizedString("Tap to return to call", comment: "Message shown in a chat room for a one on one call")
         showJoinButton()
     }
@@ -79,6 +82,24 @@ extension ChatViewController {
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
+        }
+    }
+    
+    private func manageCallIndicators() {
+        var microphoneMuted = false
+        var videoEnabled = false
+        if chatRoom.isGroup {
+            microphoneMuted = !UserDefaults.standard.bool(forKey: "groupCallLocalAudio")
+            videoEnabled = UserDefaults.standard.bool(forKey: "groupCallLocalVideo")
+        } else {
+            microphoneMuted = UserDefaults.standard.bool(forKey: "oneOnOneCallLocalAudio")
+            videoEnabled = UserDefaults.standard.bool(forKey: "oneOnOneCallLocalVideo")
+        }
+        topBannerMicrophoneMuted?.isHidden = !microphoneMuted
+        topBannerVideoEnabled?.isHidden = !videoEnabled
+        
+        if microphoneMuted || videoEnabled {
+            topBannerLabel?.text = (topBannerLabel?.text ?? "") + " •"
         }
     }
 }
@@ -97,7 +118,6 @@ extension ChatViewController: MEGAChatCallDelegate {
 //        case .reconnecting:
 //            setTopBannerButton(title: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
         case .destroyed:
-            timer?.invalidate()
             configureNavigationBar()
             hideJoinButton()
         default:

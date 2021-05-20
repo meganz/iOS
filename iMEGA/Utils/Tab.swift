@@ -9,11 +9,16 @@
 @objc final class TabManager: NSObject {
     @PreferenceWrapper(key: .launchTab, defaultValue: TabType.home.rawValue)
     private static var launchTabPreference: Int
-    
+    @PreferenceWrapper(key: .launchTabSelected, defaultValue: false)
+    private static var launchTabSelected: Bool
+    @PreferenceWrapper(key: .launchTabSuggested, defaultValue: false)
+    private static var launchTabDialogAlreadySuggested: Bool
+
     @objc static let avaliableTabs = TabType.allCases.count
     
     @objc static func setPreferenceTab(tab: Tab) {
         launchTabPreference = tab.tabType.rawValue
+        launchTabSelected = true
     }
     
     @objc static func getPreferenceTab() -> Tab {
@@ -21,6 +26,18 @@
             return Tab(tabType: TabType.home)
         }
         return Tab(tabType: tabType)
+    }
+    
+    @objc static func isLaunchTabSelected() -> Bool {
+        launchTabSelected
+    }
+    
+    @objc static func isLaunchTabDialogAlreadySuggested() -> Bool {
+        launchTabDialogAlreadySuggested
+    }
+    
+    @objc static func setLaunchTabDialogAlreadyAsSuggested() {
+        launchTabDialogAlreadySuggested = true
     }
 }
 

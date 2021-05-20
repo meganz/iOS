@@ -107,7 +107,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate { (_) in
-            self.layout.columnCount = self.calculateColumnCount()
+            self.layout.configThumbnailListColumnCount()
         }
     }
 
@@ -116,16 +116,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
         layout.minimumInteritemSpacing = 8
-        layout.columnCount = calculateColumnCount()
-    }
-
-    private func calculateColumnCount() -> Int {
-        var containerWidth = UIScreen.main.bounds.width - layout.sectionInset.left - layout.sectionInset.right;
-        if let keyWindow = UIApplication.shared.keyWindow {
-            containerWidth = containerWidth - keyWindow.safeAreaInsets.left - keyWindow.safeAreaInsets.right;
-        }
-        let columns = Int((containerWidth - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(ThumbnailSize.width.rawValue))
-        return max(2, columns)
+        layout.configThumbnailListColumnCount()
     }
     
     // MARK: - Execute command

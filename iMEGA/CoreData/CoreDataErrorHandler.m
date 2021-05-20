@@ -29,4 +29,14 @@
     return NO;
 }
 
++ (BOOL)hasSQLiteFullErrorInException:(NSException *)exception {
+    if ([exception.userInfo[@"UserInfo"][@"NSSQLiteErrorDomain"] integerValue] == SQLITE_FULL) {
+        return YES;
+    } else if ([exception.reason containsString:@"NSSQLiteErrorDomain=13"]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 @end

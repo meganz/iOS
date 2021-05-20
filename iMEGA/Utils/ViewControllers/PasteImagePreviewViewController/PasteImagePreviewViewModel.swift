@@ -40,7 +40,7 @@ final class PasteImagePreviewViewModel: ViewModelType {
     
     private func didClickSend() {
         router.dismiss()
-        guard let image = UIPasteboard.general.image else {
+        guard let image = UIPasteboard.general.loadImage() else {
             return
         }
         ChatUploader.sharedInstance.upload(image: image, chatRoomId: chatRoom.chatId)

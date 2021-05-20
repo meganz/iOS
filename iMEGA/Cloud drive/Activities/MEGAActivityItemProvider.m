@@ -62,7 +62,7 @@
                 @strongify(self)
                 if (transfer.nodeHandle == self.node.handle) {
                     self.link = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]].absoluteString;
-                    [self.alertController dismissViewControllerAnimated:NO completion:nil];
+                    [self.alertController dismissViewControllerAnimated:YES completion:nil];
                     dispatch_semaphore_signal(semaphore);
                 }
             } onError:^(MEGATransfer *transfer, MEGAError *error) {
@@ -70,7 +70,7 @@
                 
                 [self cancel];
                 
-                [self.alertController dismissViewControllerAnimated:NO completion:nil];
+                [self.alertController dismissViewControllerAnimated:YES completion:nil];
                 dispatch_semaphore_signal(semaphore);
             }];
             
@@ -84,7 +84,7 @@
             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
             [self.api removeMEGATransferDelegate:delegate];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.alertController dismissViewControllerAnimated:NO completion:nil];
+                [self.alertController dismissViewControllerAnimated:YES completion:nil];
             });
         } else {
             if (!self.node.isExported) {

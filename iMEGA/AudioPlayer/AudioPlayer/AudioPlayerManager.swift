@@ -8,6 +8,7 @@ import Foundation
     private var miniPlayerRouter: MiniPlayerViewRouter?
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
+    private var nodeInfoUseCase: NodeInfoUseCaseProtocol?
     
     override private init() {
         super.init()
@@ -35,7 +36,7 @@ import Foundation
     }
     
     func isPlayerAlive() -> Bool {
-        player?.isPlaying ?? false || player?.isPaused ?? false
+        player?.isAlive ?? false
     }
     
     func isShuffleEnabled() -> Bool {
@@ -178,6 +179,10 @@ import Foundation
         player?.tracks
     }
     
+    func playerTracksContains(url: URL) -> Bool {
+        player?.playerTracksContains(url: url) ?? false
+    }
+    
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
         if let node = node {
             AudioPlayerViewRouter(node: node, fileLink: fileLink, isFolderLink: isFolderLink, presenter: presenter, playerHandler: self).start()
@@ -188,6 +193,8 @@ import Foundation
     
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {
         if shouldReloadPlayerInfo {
+            if shouldResetPlayer { folderSDKLogoutIfNeeded() }
+            
             guard player != nil else { return }
             
             miniPlayerRouter = shouldResetPlayer ?
@@ -285,5 +292,24 @@ import Foundation
     
     func remoteCommandEnabled(_ enabled: Bool) {
         enabled ? player?.enableRemoteCommands() : player?.disableRemoteCommands()
+    }
+    
+    func resetAudioPlayerConfiguration() {
+        player?.resetAudioPlayerConfiguration()
+    }
+    
+    private func isFolderSDKLogoutRequired() -> Bool {
+        guard let miniPlayerRouter = miniPlayerRouter else { return false }
+        return miniPlayerRouter.isFolderSDKLogoutRequired()
+    }
+    
+    private func folderSDKLogoutIfNeeded() {
+        if isFolderSDKLogoutRequired() {
+            if nodeInfoUseCase == nil {
+                nodeInfoUseCase = NodeInfoUseCase()
+            }
+            nodeInfoUseCase?.folderLinkLogout()
+            miniPlayerRouter?.folderSDKLogout(required: false)
+        }
     }
 }

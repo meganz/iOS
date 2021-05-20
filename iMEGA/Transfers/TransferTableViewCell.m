@@ -261,7 +261,7 @@
             
         case MEGATransferStateCancelled: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
-            NSAttributedString *status = [NSAttributedString.alloc initWithString:NSLocalizedString(@"Cancelled", @"Cancelled") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSAttributedString *status = [NSAttributedString.alloc initWithString:NSLocalizedString(@"Cancelled", @"Possible state of a transfer. When the transfer was cancelled") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;

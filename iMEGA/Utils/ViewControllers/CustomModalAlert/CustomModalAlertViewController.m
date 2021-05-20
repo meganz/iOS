@@ -83,6 +83,10 @@
         [self.detailLabel addGestureRecognizer:self.detailTapGestureRecognizer];
     }
     
+    if (self.firstButtonStyle == MEGACustomButtonStyleNone) {
+        self.firstButtonStyle = MEGACustomButtonStylePrimary;
+    }
+    
     if (self.firstButtonTitle) {
         [self.firstButton setTitle:self.firstButtonTitle forState:UIControlStateNormal];
     } else {
@@ -138,7 +142,7 @@
     }
 #endif
     
-    [self.firstButton mnz_setupPrimary:self.traitCollection];
+    [self.firstButton mnz_setup:self.firstButtonStyle traitCollection:self.traitCollection];
     [self.secondButton mnz_setupDestructive:self.traitCollection];
     [self.dismissButton mnz_setup:self.dismissButtonStyle traitCollection:self.traitCollection];
 }

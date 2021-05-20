@@ -17,7 +17,7 @@ final class HomeViewController: UIViewController {
 
     // MARK: - View Model
     
-    var accountViewModel: HomeAccountViewModelType!
+    var myAvatarViewModel: MyAvatarViewModelType!
 
     var uploadViewModel: HomeUploadingViewModelType!
     
@@ -107,7 +107,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func setupViewModelEventListening() {
-        accountViewModel.notifyUpdate = { [weak self] output in
+        myAvatarViewModel.notifyUpdate = { [weak self] output in
             guard let self = self else { return }
             let resizedImage = output.avatarImage
 
@@ -118,7 +118,7 @@ final class HomeViewController: UIViewController {
                 }
             }
         }
-        accountViewModel.inputs.viewIsReady()
+        myAvatarViewModel.inputs.viewIsReady()
 
         recentsViewModel.notifyUpdate = { [weak self] recentsViewModel in
             if let error = recentsViewModel.error {
@@ -178,7 +178,7 @@ final class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        accountViewModel.inputs.viewIsAppearing()
+        myAvatarViewModel.inputs.viewIsAppearing()
     }
 
     override func viewDidLayoutSubviews() {
@@ -344,7 +344,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func activateSearch() {
-        let _ = searchBarView.becomeFirstResponder()
+        let _ = searchBarView?.becomeFirstResponder()
     }
 }
 
@@ -470,6 +470,8 @@ extension HomeViewController {
         switch source {
         case .photos:
             uploadViewModel.inputs.didTapUploadFromPhotoAlbum()
+        case .textFile:
+            uploadViewModel.inputs.didTapUploadFromNewTextFile()
         case .capture:
             uploadViewModel.inputs.didTapUploadFromCamera()
         case .imports:
@@ -631,11 +633,11 @@ extension HomeViewController: MEGASearchBarViewDelegate {
 
     func didFinishSearchSessionOnSearchController(_ searchController: MEGASearchBarView) {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        searchResultViewController.willMove(toParent: nil)
-        searchResultContainerView.constraints.deactivate()
-        searchResultViewController.view.removeFromSuperview()
-        searchResultViewController.removeFromParent()
-        searchResultContainerView.removeFromSuperview()
+        searchResultViewController?.willMove(toParent: nil)
+        searchResultContainerView?.constraints.deactivate()
+        searchResultViewController?.view.removeFromSuperview()
+        searchResultViewController?.removeFromParent()
+        searchResultContainerView?.removeFromSuperview()
         searchResultContainerView = nil
     }
 }

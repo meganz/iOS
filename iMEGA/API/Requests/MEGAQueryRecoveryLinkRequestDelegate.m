@@ -49,8 +49,8 @@
     
     UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
     if ([visibleViewController isKindOfClass:UIAlertController.class]) {
-        [visibleViewController dismissViewControllerAnimated:NO completion:^{
-            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+        [visibleViewController dismissViewControllerAnimated:YES completion:^{
+            [visibleViewController presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
         [visibleViewController presentViewController:navigationController animated:YES completion:nil];
@@ -59,7 +59,7 @@
 
 - (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (alertController) {
+    if ([alertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }

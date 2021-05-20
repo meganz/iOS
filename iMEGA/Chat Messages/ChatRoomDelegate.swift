@@ -17,7 +17,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     var loadingState = true
     private(set) var hasChatRoomClosed: Bool = false
     var isFullChatHistoryLoaded: Bool {
-        return MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) ?? true
+        return MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) 
     }
 
     var whoIsTyping: [UInt64: Timer] = [:]

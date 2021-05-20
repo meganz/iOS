@@ -863,6 +863,10 @@
 }
 
 - (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    if (self.cancelBarButtonItem == nil) {
+        return;
+    }
+    
     UIAlertController *confirmDismissAlert = [UIAlertController.alloc discardChangesFromBarButton:self.cancelBarButtonItem withConfirmAction:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];

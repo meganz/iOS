@@ -4,6 +4,6 @@
 
 @interface ShareViewController : UIViewController <BrowserViewControllerDelegate, SendToViewControllerDelegate>
 
-- (void)dismissWithCompletionHandler:(void (^)(void))completion;
+- (void)hideViewWithCompletion:(void (^)(void))completion;
 
 @end

@@ -162,6 +162,8 @@
     [self reloadUI];
     
     self.shouldRemovePlayerDelegate = YES;
+    
+    [self refreshMyAvatar];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -674,7 +676,7 @@
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
-        self.navigationItem.leftBarButtonItems = @[];
+        self.navigationItem.leftBarButtonItems = @[self.myAvatarManager.myAvatarBarButton];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];

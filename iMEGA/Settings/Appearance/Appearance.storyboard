@@ -10,7 +10,7 @@
         <!--Default Tab Table View Controller-->
         <scene sceneID="faI-Bl-9g5">
             <objects>
-                <tableViewController id="bST-eZ-4ZW" customClass="DefaultTabTableViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DefaultTabTableViewControllerID" id="bST-eZ-4ZW" customClass="DefaultTabTableViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="IXC-Hd-SlD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

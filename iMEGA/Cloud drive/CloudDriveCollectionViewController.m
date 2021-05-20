@@ -33,7 +33,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.layout.columnCount = [self calculateColumnCount];
+        [self.layout configThumbnailListColumnCount];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
 }
 
@@ -44,7 +44,7 @@
     self.layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
     self.layout.minimumColumnSpacing = 8;
     self.layout.minimumInteritemSpacing = 8;
-    self.layout.columnCount = [self calculateColumnCount];
+    [self.layout configThumbnailListColumnCount];
     
     self.collectionView.collectionViewLayout = self.layout;
 }
@@ -199,18 +199,18 @@
     [self.collectionView reloadData];
 }
 
+- (void)reloadFileItem:(MEGAHandle)nodeHandle {
+    [self reloadItem:nodeHandle section:ThumbnailSectionFile];
+}
+
+- (void)reloadFolderItem:(MEGAHandle)nodeHandle {
+    [self reloadItem:nodeHandle section:ThumbnailSectionFolder];
+}
+
 #pragma mark - Private methods
 
 - (nullable MEGANode *)thumbnailNodeAtIndexPath:(NSIndexPath *)indexPath {
     return indexPath.section == ThumbnailSectionFile ? [self.fileList objectOrNilAtIndex:indexPath.row] : [self.folderList objectOrNilAtIndex:indexPath.row];
-}
-
-- (NSInteger)calculateColumnCount {
-    CGFloat containerWidth = CGRectGetWidth(UIScreen.mainScreen.bounds) - self.layout.sectionInset.left - self.layout.sectionInset.right;
-    containerWidth = containerWidth - UIApplication.sharedApplication.keyWindow.safeAreaInsets.left - UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
-    NSInteger columns = ((containerWidth) / ThumbnailSizeWidth);
-
-    return MAX(2, columns);
 }
 
 - (NSArray *)buildListFor:(FileType) fileOrFolder {
@@ -231,6 +231,25 @@
     }
     return list.copy;
 }
+
+- (void)reloadItem:(MEGAHandle)nodeHandle section:(ThumbnailSection)section {
+    [UIView performWithoutAnimation:^{
+        if (nodeHandle) {
+            NSMutableArray *filteredArray = [NSMutableArray new];
+            [self.fileList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if (((MEGANode*)obj).handle == nodeHandle) {
+                    if (section == ThumbnailSectionFile) {
+                        [filteredArray addObject:[NSIndexPath indexPathForRow:idx inSection:ThumbnailSectionFile]];
+                    } else {
+                        [filteredArray addObject:[NSIndexPath indexPathForRow:idx inSection:ThumbnailSectionFolder]];
+                    }
+                }
+            }];
+            [self.collectionView reloadItemsAtIndexPaths:filteredArray];
+        }
+    }];
+}
+
 
 #pragma mark - getters
 

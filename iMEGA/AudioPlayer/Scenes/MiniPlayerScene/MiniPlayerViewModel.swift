@@ -12,6 +12,7 @@ enum MiniPlayerAction: ActionType {
 protocol MiniPlayerViewRouting: Routing {
     func dismiss()
     func showPlayer(node: MEGANode?, filePath: String?)
+    func isAFolderLinkPresenter() -> Bool
 }
 
 final class MiniPlayerViewModel: ViewModelType {
@@ -121,9 +122,33 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
+        resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
         playerHandler.autoPlay(enable: playerType != .fileLink)
         playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
+    }
+    
+    private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) {
+        switch playerType {
+        case .default:
+            if let currentNode = playerHandler.playerCurrentItem()?.node {
+                guard let nextCurrentNode = nextCurrentTrack.node,
+                      nextCurrentNode.parentHandle != currentNode.parentHandle else { return }
+            }
+            
+        case .folderLink:
+            guard !playerHandler.playerTracksContains(url: nextCurrentTrack.url) else { return }
+            
+        case .offline:
+            let nextCurrentItemDirectoryURL = nextCurrentTrack.url.deletingLastPathComponent()
+            guard let currentItemDirectoryURL = playerHandler.playerCurrentItem()?.url.deletingLastPathComponent(),
+                  nextCurrentItemDirectoryURL != currentItemDirectoryURL else { return }
+            
+        default:
+            break
+        }
+        
+        playerHandler.resetAudioPlayerConfiguration()
     }
 
     private func preparePlayer() {
@@ -186,10 +211,18 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private func closeMiniPlayer() {
         streamingInfoUseCase?.stopServer()
-        if isFolderLink {
+        if isFolderLink, !router.isAFolderLinkPresenter() {
             nodeInfoUseCase?.folderLinkLogout()
         }
         router.dismiss()
+    }
+    
+    private func deInitActions() {
+        playerHandler.removePlayer(listener: self)
+        
+        if isFolderLink, !router.isAFolderLinkPresenter() {
+            nodeInfoUseCase?.folderLinkLogout()
+        }
     }
     
     // MARK: - Dispatch action
@@ -207,7 +240,7 @@ final class MiniPlayerViewModel: ViewModelType {
         case .onClose:
             closeMiniPlayer()
         case .deinit:
-            playerHandler.removePlayer(listener: self)
+            deInitActions()
         case .showPlayer(let node, let filePath):
             showFullScreenPlayer(node, path: filePath)
         }

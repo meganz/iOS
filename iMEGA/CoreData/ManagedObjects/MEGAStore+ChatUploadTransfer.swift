@@ -37,24 +37,6 @@ extension MEGAStore {
         }
     }
     
-    func fetchMostRecentChatUploadTransfer(context: NSManagedObjectContext) -> ChatUploadTransfer? {
-        let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
-        fetchRequest.fetchLimit = 1
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
-        
-        var transfer: ChatUploadTransfer?
-        
-        context.performAndWait {
-            do {
-                transfer = try context.fetch(fetchRequest).last
-            } catch {
-                MEGALogError("Could not fetch ChatUploadTransfer \(error.localizedDescription)")
-            }
-        }
-        
-        return transfer
-    }
-    
     func fetchAllChatUploadTransfer(withChatRoomId chatRoomId: String, context: NSManagedObjectContext) -> [ChatUploadTransfer] {
         let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "chatRoomId == %@", chatRoomId)
@@ -124,5 +106,25 @@ extension MEGAStore {
                 MEGALogError("Could not delete ChatUploadTransfer object : \(error.localizedDescription)")
             }
         }
+    }
+    
+    //MARK: - Private methods.
+    
+    private func fetchMostRecentChatUploadTransfer(context: NSManagedObjectContext) -> ChatUploadTransfer? {
+        let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
+        fetchRequest.fetchLimit = 1
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
+        
+        var transfer: ChatUploadTransfer?
+        
+        context.performAndWait {
+            do {
+                transfer = try context.fetch(fetchRequest).last
+            } catch {
+                MEGALogError("Could not fetch ChatUploadTransfer \(error.localizedDescription)")
+            }
+        }
+        
+        return transfer
     }
 }

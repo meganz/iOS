@@ -8,6 +8,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGAStore.h"
 
 @interface NodeCollectionViewCell ()
 
@@ -77,8 +78,9 @@
         self.durationLabel.layer.masksToBounds = true;
         self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
     }
-
-    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    
+    self.downloadedImageView.hidden = !(node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
+    
     [self setupAppearance];
 }
 

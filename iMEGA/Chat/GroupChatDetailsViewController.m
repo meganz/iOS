@@ -170,7 +170,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 - (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    if (alertController) {
+    if ([alertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         BOOL enableRightButton = NO;
         if ((textField.text.length > 0) && ![textField.text isEqualToString:self.chatRoom.title] && ![[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""] && ([textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] < 31)) {
@@ -564,18 +564,23 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             
             [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
             
-            NSString *peerFullname;
+            NSString *peerDisplayName;
             NSString *peerEmail;
             MEGAChatRoomPrivilege privilege;
             MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:base64Handle];
 
             if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
                 NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-                peerFullname = [NSString stringWithFormat:@"%@ (%@)", myFullname, NSLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
+                peerDisplayName = [NSString stringWithFormat:@"%@ (%@)", myFullname, NSLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
-            } else {
-                peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
+            } else {                
+                NSString *nickname = user.mnz_nickname;
+                if (nickname.length > 0) {
+                    peerDisplayName = nickname;
+                } else {
+                    peerDisplayName = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
+                }
                 if (user.visibility == MEGAUserVisibilityVisible || user.visibility == MEGAUserVisibilityInactive) {
                     peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
                 } else {
@@ -583,8 +588,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 }
                 
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
-                if (!peerFullname) {
-                    peerFullname = @"";
+                if (!peerDisplayName) {
+                    peerDisplayName = @"";
                     if (![self.requestedParticipantsMutableSet containsObject:[self.participantsMutableArray objectAtIndex:index]]) {
                         self.pendingCellsToLoadAfterThreshold++;
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -594,12 +599,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 }
             }
             
-            BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+            BOOL isNameEmpty = [[peerDisplayName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
             if (isNameEmpty) {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
             } else {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantTypeID" forIndexPath:indexPath];
-                cell.nameLabel.text = peerFullname;
+                cell.nameLabel.text = peerDisplayName;
                 [cell.leftImageView mnz_setImageForUserHandle:handle];
             }
             

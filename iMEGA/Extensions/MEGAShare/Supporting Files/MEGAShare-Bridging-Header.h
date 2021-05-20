@@ -6,7 +6,6 @@
 
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
-#import <PureLayout/PureLayout.h>
 
 #import "NSDate+DateTools.h"
 

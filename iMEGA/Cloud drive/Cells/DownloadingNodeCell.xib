@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,18 +19,6 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvI-GL-N00">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8RQ-dr-zoW">
-                                <rect key="frame" x="0.0" y="24" width="12" height="12"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SPP-pU-gGW" userLabel="Middle Image View">
-                                        <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="12" id="Jfh-7f-0SE"/>
-                                            <constraint firstAttribute="width" constant="12" id="ROG-Ey-uuT"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                            </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="DAP-wt-uy0" userLabel="Arrow Image View">
                                 <rect key="frame" x="62" y="35" width="11" height="11"/>
                                 <constraints>
@@ -44,6 +32,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="b5H-sM-qLn" userLabel="Arrow Image View">
+                                <rect key="frame" x="133" y="35" width="11" height="11"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="11" id="MTH-XK-zMw"/>
+                                    <constraint firstAttribute="height" constant="11" id="hXi-Rj-S5P"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UI3-Mw-4mK" userLabel="Info Button">
                                 <rect key="frame" x="329" y="8" width="46" height="44"/>
                                 <constraints>
@@ -96,12 +91,10 @@
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="8RQ-dr-zoW" firstAttribute="centerY" secondItem="yvI-GL-N00" secondAttribute="centerY" id="3VU-Bf-oaR"/>
                             <constraint firstAttribute="trailing" secondItem="UI3-Mw-4mK" secondAttribute="trailing" id="7my-yd-IKd"/>
                             <constraint firstItem="hJG-bM-I9k" firstAttribute="top" secondItem="GiK-Fk-Iw7" secondAttribute="bottom" constant="3" id="9Ve-0b-NYN"/>
                             <constraint firstItem="GiK-Fk-Iw7" firstAttribute="top" secondItem="cmI-pY-rca" secondAttribute="top" constant="2" id="9dq-3g-vSi"/>
                             <constraint firstItem="hJG-bM-I9k" firstAttribute="leading" secondItem="DAP-wt-uy0" secondAttribute="trailing" constant="8" id="Ea0-qy-Rqc"/>
-                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hJG-bM-I9k" secondAttribute="trailing" constant="10" id="EwN-IR-NjU"/>
                             <constraint firstItem="cmI-pY-rca" firstAttribute="centerY" secondItem="yvI-GL-N00" secondAttribute="centerY" id="GhY-7R-foM"/>
                             <constraint firstAttribute="height" constant="60" id="MKb-aJ-UGf"/>
                             <constraint firstItem="DAP-wt-uy0" firstAttribute="centerY" secondItem="hJG-bM-I9k" secondAttribute="centerY" id="MOs-WZ-ARg"/>
@@ -110,8 +103,9 @@
                             <constraint firstItem="UI3-Mw-4mK" firstAttribute="centerY" secondItem="yvI-GL-N00" secondAttribute="centerY" id="dbX-7V-BIQ"/>
                             <constraint firstItem="UI3-Mw-4mK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GiK-Fk-Iw7" secondAttribute="trailing" constant="10" id="fln-er-1zc"/>
                             <constraint firstItem="GiK-Fk-Iw7" firstAttribute="leading" secondItem="cmI-pY-rca" secondAttribute="trailing" constant="10" id="q2g-Yl-NaG"/>
-                            <constraint firstItem="cmI-pY-rca" firstAttribute="leading" secondItem="8RQ-dr-zoW" secondAttribute="trailing" id="r9a-Nn-0DD"/>
-                            <constraint firstItem="8RQ-dr-zoW" firstAttribute="leading" secondItem="yvI-GL-N00" secondAttribute="leading" id="xjH-EA-pFv"/>
+                            <constraint firstItem="b5H-sM-qLn" firstAttribute="leading" secondItem="hJG-bM-I9k" secondAttribute="trailing" constant="8" id="tyL-ie-TNY"/>
+                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="b5H-sM-qLn" secondAttribute="trailing" constant="10" id="uTU-eX-ZkK"/>
+                            <constraint firstItem="b5H-sM-qLn" firstAttribute="centerY" secondItem="hJG-bM-I9k" secondAttribute="centerY" id="xa7-Pm-mPp"/>
                         </constraints>
                     </view>
                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sF2-iE-K9y">
@@ -135,9 +129,9 @@
             <connections>
                 <outlet property="cancelButton" destination="UI3-Mw-4mK" id="NYp-hJ-Y7a"/>
                 <outlet property="downloadProgressView" destination="sF2-iE-K9y" id="s28-qf-syp"/>
+                <outlet property="downloadedImageView" destination="b5H-sM-qLn" id="D0s-zi-fsQ"/>
                 <outlet property="downloadingArrowImageView" destination="DAP-wt-uy0" id="2bn-qh-lo4"/>
                 <outlet property="infoLabel" destination="hJG-bM-I9k" id="S3r-hF-cNB"/>
-                <outlet property="middleImageView" destination="SPP-pU-gGW" id="grW-Sw-2Nl"/>
                 <outlet property="nameLabel" destination="GiK-Fk-Iw7" id="Tdy-vK-RQd"/>
                 <outlet property="thumbnailImageView" destination="M8e-CK-IiW" id="qpA-cx-Cpz"/>
                 <outlet property="thumbnailPlayImageView" destination="iwu-dT-aLC" id="bOb-Yv-QmT"/>
@@ -148,6 +142,7 @@
     <resources>
         <image name="cancel" width="46" height="44"/>
         <image name="downloadQueued" width="12" height="12"/>
+        <image name="downloaded" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

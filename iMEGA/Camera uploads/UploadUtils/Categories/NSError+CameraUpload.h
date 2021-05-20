@@ -22,7 +22,8 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorUnknownMediaType,
     CameraUploadErrorDisabledMediaSubtype,
     CameraUploadErrorEmptyFileName,
-    CameraUploadErrorFileHandleException
+    CameraUploadErrorFileHandleException,
+    CameraUploadErrorCoreDataException
 };
 
 @interface NSError (CameraUpload)
@@ -122,6 +123,14 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  @return a NSError object with CameraUploadErrorFileHandleException error code
  */
 + (NSError *)mnz_cameraUploadFileHandleException:(NSException *)exception;
+
+/**
+ create a NSError object when we encountered a core data exception
+
+ @param exception the exception throw from core data
+ @return a NSError object with CameraUploadErrorCoreDataException error code
+ */
++ (NSError *)mnz_cameraUploadCoreDataException:(NSException *)exception;
 
 @end
 

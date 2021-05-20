@@ -22,6 +22,22 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         
         if let image = item?.artwork {
             thumbnailImageView.image = image
+        } else if let node = item?.node {
+            if node.hasThumbnail() {
+                let thumbnailFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "thumbnailsV3")
+                if FileManager.default.fileExists(atPath: thumbnailFilePath) {
+                    thumbnailImageView.image = UIImage(contentsOfFile: thumbnailFilePath)
+                } else {
+                    MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
+                        if request.nodeHandle == node.handle && error.type == .apiOk {
+                            self?.thumbnailImageView.image = UIImage(contentsOfFile: request.file)
+                        }
+                    })
+                }
+            } else {
+                thumbnailImageView.mnz_image(for: node)
+            }
+           
         } else {
             thumbnailImageView.image = UIImage(named: "defaultArtwork")
         }

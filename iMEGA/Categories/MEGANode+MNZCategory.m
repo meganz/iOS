@@ -34,6 +34,7 @@
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"
+#import "MEGAStartUploadTransferDelegate.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -104,7 +105,7 @@
                 [AudioPlayerManager.shared initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC];
             }
         } else {
-            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
+            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:navigationController.viewControllers.lastObject];
             if (viewController) {
                 [navigationController presentViewController:viewController animated:YES completion:nil];
             }
@@ -113,6 +114,10 @@
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
+    return [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:nil];
+}
+
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *_Nullable)viewController {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
@@ -143,27 +148,25 @@
                 
                 return previewController;
             }
-        } else if (previewDocumentPath.mnz_isWebCodePathExtension) {
-            return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
-        } else {
-            if (previewDocumentPath.pathExtension.length == 0) {
-                NSData *fileData = [NSData dataWithContentsOfFile:previewDocumentPath];
-                NSString *fileString = fileData.length ? [NSString stringWithUTF8String:fileData.bytes] : nil;
-                if (fileString.length) {
-                    return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
-                }
+        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
+            NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:nil error:nil];
+            if (textContent != nil) {
+                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent];
+                NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView nodeEntity:nodeEntity presenter:nil] build];
             }
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-            PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-            previewController.api = api;
-            previewController.filePath = previewDocumentPath;
-            previewController.node = self;
-            previewController.isLink = isFolderLink;
-            previewController.fileLink = fileLink;
-            
-            return navigationController;
         }
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        previewController.api = api;
+        previewController.filePath = previewDocumentPath;
+        previewController.node = self;
+        previewController.isLink = isFolderLink;
+        previewController.fileLink = fileLink;
+        
+        return navigationController;
+        
     } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:NO port:4443]) {
         if (self.mnz_isPlayable) {
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
@@ -175,6 +178,12 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
+                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name];
+                NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:nil] build];
+            }
+            
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -326,7 +335,7 @@
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
-                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:alertViewTextField.text];
+                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:alertViewTextField.text recursive:NO];
                 
                 if (self.isFolder) {
                     if ([childrenNodeList mnz_existsFolderWithName:alertViewTextField.text]) {
@@ -494,15 +503,6 @@
     browserVC.browserAction = BrowserActionCopy;
     
     [viewController setEditing:NO animated:YES];
-}
-
-#pragma mark - Private
-
-- (MEGANavigationController *)mnz_webCodeViewControllerWithFilePath:(NSString *)filePath {
-    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"ok", nil)];
-    return navigationController;
 }
 
 #pragma mark - File links
@@ -967,7 +967,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     BOOL shouldReturn = YES;
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (renameAlertController) {
+    if ([renameAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         shouldReturn = rightButtonAction.enabled;
     }
@@ -978,7 +978,7 @@
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if (renameAlertController) {
+    if ([renameAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         BOOL enableRightButton = NO;
         
