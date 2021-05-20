@@ -1519,7 +1519,7 @@
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versions";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Souhaitez-vous supprimer cette version ?";
+"deleteVersion"="Voulez-vous supprimer cette version ?";
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="Elle sera supprimée définitivement";
 /*  */
@@ -1724,6 +1724,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez les nouveaux messages instantanément sur votre appareil.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Autoriser l’accès";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Sécurité";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Conditions générales et Politiques";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gestion des fichiers";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1757,7 +1761,7 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la corbeille ou pour définir une période de conservation plus longue, vous devez détenir un abonnement PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Souhaitez-vous fermer toutes les autres sessions ? Vous serez déconnecté de toutes les autres sessions, sauf de la session actuelle.";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Voulez-vous fermer toutes les autres sessions ? Vous serez déconnecté de toutes les autres sessions, sauf de la session actuelle.";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ s’est joint à l’appel.";
 /* Message to inform the local user that someone has left the current group call */
@@ -2250,7 +2254,7 @@
 "Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer.";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="Interface utilisateur";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Onglet par défaut";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tri et mode d’affichage";
@@ -2600,12 +2604,6 @@
 "The device does not have enough space for MEGA to run properly."="L’appareil n’a pas assez d’espace libre pour que MEGA fonctionne correctement.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libérez de l’espace en supprimant des applis que vous n’utilisez plus ou des fichiers vidéo volumineux dans votre galerie.Vous pouvez gérer votre mémoire dans %@";
-/* Title of the Settings section where you can configure security details of your MEGA account */
-"settings.section.security"="Sécurité";
-/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Conditions générales et Politiques";
-/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"settings.section.userInterface"="Interface utilisateur";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Changer l’onglet de lancement";
 /* Dialog description for the change launch tab screen */

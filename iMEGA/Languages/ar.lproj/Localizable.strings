@@ -1,9 +1,9 @@
 /* Button title to cancel something */
 "cancel"="الغاء";
 /* Button title to accept something */
-"ok"="حسنا";
+"ok"="حسناً";
 /* Button title to clear something */
-"clear"="تنظيف ذاكرة التخزين المؤقت";
+"clear"="مسح";
 /*  */
 "yes"="نعم";
 /*  */
@@ -21,13 +21,13 @@
 /*  */
 "passcode"="رمز المرور";
 /* "Size" of the file or folder you are sharing */
-"size"="الحجم";
+"size"="حجم";
 /* Quality title, used in changing the export quality of scaned doc */
 "Quality"="جودة";
 /*  */
-"folder"="المجلد";
+"folder"="مجلد";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="لا يوجد كاميرا متاحة";
+"noCamera"="الكاميرا غير متاحة";
 /* Alert title to attract attention */
 "attention"="تنبيه";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
@@ -1724,6 +1724,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="نحن نرغب بارسال اخطارات اليك حتى تتمكن من استقبال الرسائل على جهازك بشكل فوري.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="السماح بالوصول";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="إدارة الملف";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -2600,12 +2604,6 @@
 "The device does not have enough space for MEGA to run properly."="لا يحتوي الجهاز على مساحة كافية لتشغيل ميغا MEGA بشكل صحيح.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="قم بتحرير بعض المساحة عن طريق حذف التطبيقات التي لم تعد تستخدمها أو حذف ملفات الفيديو الكبيرة في معرض الصور الخاص بك. يمكنك إدارة مساحة التخزين الخاص بك في %@";
-/* Title of the Settings section where you can configure security details of your MEGA account */
-"settings.section.security"="Security";
-/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Terms and Policies";
-/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"settings.section.userInterface"="واجهة المستخدم";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Change Launch Tab";
 /* Dialog description for the change launch tab screen */

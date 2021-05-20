@@ -1724,6 +1724,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Kami ingin mengirimkan pemberitahuan kepada Anda sehingga Anda menerima pesan baru di perangkat Anda secara instan.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Izinkan Akses";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Pengelolaan File";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -2250,7 +2254,7 @@
 "Drag left to cancel, release to send"="Tarik ke kiri untuk membatalkan, lepaskan untuk mengirim";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="User Interface";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Tab Default";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mode Penyortiran Dan Tampilan";
@@ -2600,12 +2604,6 @@
 "The device does not have enough space for MEGA to run properly."="Perangkat tidak memiliki cukup ruang untuk MEGA untuk bekerja dengan baik.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Kosongkan sebagian ruang dengan menghapus aplikasi yang tidak lagi anda gunakan atau file video besar di galeri anda.Anda dapat mengelola penyimpanan anda di %@";
-/* Title of the Settings section where you can configure security details of your MEGA account */
-"settings.section.security"="Security";
-/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Terms and Policies";
-/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"settings.section.userInterface"="User Interface";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Change Launch Tab";
 /* Dialog description for the change launch tab screen */
