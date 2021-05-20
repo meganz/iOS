@@ -63,6 +63,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (self.node == nil && self.nodeHandle != MEGAInvalidHandle) {
+        self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+    }
+    
     self.thumbnailCache = [[NSCache alloc] init];
     
     [self configureNavigation];
@@ -148,6 +152,7 @@
         [self.imageView mnz_setImageForExtension:self.filePath.pathExtension];
     }
     
+    [self.navigationController.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
 }
 
 - (void)loadPreview {

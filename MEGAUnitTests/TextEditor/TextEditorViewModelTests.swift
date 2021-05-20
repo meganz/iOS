@@ -201,7 +201,6 @@ final class TextEditorViewModelTests: XCTestCase {
                 .updateProgressView(progress: percentage)
              ]
         )
-        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
         XCTAssertEqual(mockRouter.presentPreviewDocVC_calledTimes, 1)
     }
     
@@ -265,7 +264,8 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_saveText_edit_success() {
         let textFile = TextFile(
             fileName: "testAction_saveText_edit_success",
-            content: "test content"
+            content: "test content",
+            encode: String.Encoding.utf8.rawValue
         )
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -317,7 +317,8 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_saveText_edit_failed() {
         let textFile = TextFile(
             fileName: "testAction_saveText_edit_failed",
-            content: "test content"
+            content: "test content",
+            encode: String.Encoding.utf8.rawValue
         )
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()

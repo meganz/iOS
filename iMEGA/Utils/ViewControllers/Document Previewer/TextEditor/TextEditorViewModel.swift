@@ -156,7 +156,7 @@ final class TextEditorViewModel: ViewModelType {
         let content = textFile.content
         let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
         do {
-            try content.write(toFile: tempPath, atomically: true, encoding: .utf8)
+            try content.write(toFile: tempPath, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
             uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle) { (result) in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
@@ -220,12 +220,13 @@ final class TextEditorViewModel: ViewModelType {
             case .success(let transferEntity):
                 guard let path = transferEntity.path else { return }
                 do {
-                    self.textFile.content = try String(contentsOfFile: path)
+                    var encode: String.Encoding = .utf8
+                    self.textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
+                    self.textFile.encode = encode.rawValue
                     self.textEditorMode = .view
                     self.invokeCommand?(.configView(self.makeTextEditorModel()))
                     self.invokeCommand?(.setupNavbarItems(self.makeNavbarItemsModel()))
                 } catch {
-                    self.router.dismissTextEditorVC()
                     self.router.showPreviewDocVC(fromFilePath: path)
                 }
             }

@@ -102,9 +102,14 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let nc = UIStoryboard(name: "DocumentPreviewer", bundle: nil).instantiateViewController(withIdentifier: "previewDocumentNavigationID") as? MEGANavigationController
         let previewVC = nc?.viewControllers.first as? PreviewDocumentViewController
         previewVC?.filePath = path
+        if let nodeHandle = nodeHandle {
+            previewVC?.nodeHandle = nodeHandle
+        }
         nc?.modalPresentationStyle = .fullScreen
         guard let navigationController = nc else { return }
-        presenter?.present(navigationController, animated: true, completion: nil)
+        baseViewController?.dismiss(animated: true, completion: {
+            self.presenter?.present(navigationController, animated: true, completion: nil)
+        })
     }
 }
 
