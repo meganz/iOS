@@ -149,11 +149,12 @@
                 return previewController;
             }
         } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
-            NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:nil error:nil];
+            NSStringEncoding encode;
+            NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:&encode error:nil];
             if (textContent != nil) {
-                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent];
+                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent encode:encode];
                 NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView nodeEntity:nodeEntity presenter:nil] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView nodeEntity:nodeEntity presenter:viewController.navigationController] build];
             }
         }
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -181,7 +182,7 @@
             if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name];
                 NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:nil] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:viewController.navigationController] build];
             }
             
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
