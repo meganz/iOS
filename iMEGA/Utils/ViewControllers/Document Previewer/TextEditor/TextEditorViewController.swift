@@ -42,16 +42,16 @@ final class TextEditorViewController: UIViewController {
 extension TextEditorViewController: ViewType {
     func executeCommand(_ command: TextEditorViewModel.Command) {
         switch command {
-        case .configView(let textEditorModel):
-            configView(textEditorModel)
+        case .configView(let textEditorModel, let shallUpdateContent):
+            configView(textEditorModel, shallUpdateContent: shallUpdateContent)
         case .setupNavbarItems(let navbarItemsModel):
             setupNavbarItems(navbarItemsModel)
         case .setupLoadViews:
             setUpLoadViews()
         case .updateProgressView(let percentage):
-            setProgressView(percentage)
+            setProgressView(percentage: percentage)
         case .editFile:
-            editFile()
+            viewModel.dispatch(.editFile)
         case .showDuplicateNameAlert(let textEditorDuplicateNameAlertModel):
             configDuplicateNameAlert(textEditorDuplicateNameAlertModel)
         case .showRenameAlert(let textEditorRenameAlertModel):
@@ -71,20 +71,23 @@ extension TextEditorViewController: ViewType {
         }
     }
     
-    private func configView(_ textEditorModel: TextEditorModel) {
+    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool) {
         navigationItem.title = textEditorModel.textFile.fileName
         
         let contentOffset = textView.contentOffset
-        textView.text = textEditorModel.textFile.content
+        if shallUpdateContent {
+            textView.text = textEditorModel.textFile.content
+        }
         textView.isEditable = textEditorModel.isEditable
+        let position = textView.closestPosition(to: contentOffset) ?? textView.beginningOfDocument
         if textEditorModel.isEditable {
             textView.becomeFirstResponder()
-            let position = textView.closestPosition(to: contentOffset) ?? textView.beginningOfDocument
-            textView.isScrollEnabled = false
             textView.selectedTextRange = textView.textRange(from: position, to: position)
-            textView.isScrollEnabled = true
         }
-        textView.setContentOffset(contentOffset, animated: true)
+        if shallUpdateContent {
+            let location = textView.offset(from: textView.beginningOfDocument, to: position)
+            textView.scrollRangeToVisible(NSRange(location: location, length: 0))
+        }
         
         if textEditorModel.textEditorMode == .load {
             imageView?.mnz_setImage(forExtension: NSString(string: textEditorModel.textFile.fileName).pathExtension)
@@ -167,15 +170,10 @@ extension TextEditorViewController: ViewType {
         self.imageView = imageView
     }
     
-    private func setProgressView(_ percentage: Float) {
+    private func setProgressView(percentage: Float) {
         activityIndicator?.stopAnimating()
         progressView?.isHidden = false
         progressView?.setProgress(percentage, animated: true)
-    }
-    
-    private func editFile() {
-        viewModel.dispatch(.editFile)
-        viewModel.dispatch(.setUpView)
     }
     
     private func configDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel) {
@@ -238,7 +236,7 @@ extension TextEditorViewController: ViewType {
             handler: { _ in
                 guard let newInputName = renameAC.textFields?.first?.text else { return }
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
-                    self.viewModel.dispatch(.renameFileTo(newInputName))
+                    self.viewModel.dispatch(.renameFileTo(newInputName: newInputName))
                     self.navigationItem.title = newInputName
                 }
             })
@@ -320,11 +318,11 @@ extension TextEditorViewController: ViewType {
     }
     
     @objc private func cancelTapped() {
-        viewModel.dispatch(.cancelText(textView.text))
+        viewModel.dispatch(.cancelText(content: textView.text))
     }
     
     @objc private func saveTapped() {
-        viewModel.dispatch(.saveText(textView.text))
+        viewModel.dispatch(.saveText(content: textView.text))
     }
     
     @objc private func closeTapped() {

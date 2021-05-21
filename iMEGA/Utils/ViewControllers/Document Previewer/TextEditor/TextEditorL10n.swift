@@ -23,4 +23,5 @@ enum TextEditorL10n {
     static let upload = NSLocalizedString("upload", comment: "")
     static let download = NSLocalizedString("download", comment: "")
     static let downloadMessage = NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
+    static let uneditableLargeFileMessage = NSLocalizedString("general.textEditor.hud.uneditableLargeFile", comment: "Hud info message when edit large text file.")
 }
