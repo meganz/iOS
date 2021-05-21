@@ -2628,3 +2628,5 @@
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
+/* Hud info message when edit large text file. */
+"general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";

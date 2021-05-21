@@ -43,7 +43,7 @@
         
         // MARK: - Files
         
-        size: Decimal,
+        size: UInt64,
         createTime: Date?,
         modificationTime: Date,
         
@@ -161,7 +161,7 @@
 
     // MARK: - File
 
-    let size: Decimal
+    let size: UInt64
     let createTime: Date?
     let modificationTime: Date
 
