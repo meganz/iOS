@@ -59,7 +59,7 @@
     
     if (error.type) {        
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        if (error.type == MEGAErrorTypeApiEBusinessPastDue) {
+        if (error.type == MEGAErrorTypeApiEBusinessPastDue || error.type == MEGAErrorTypeApiEOverQuota) {
             [SVProgressHUD dismiss];
         } else {
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
