@@ -1,8 +1,9 @@
 extension MEGAChatSdk {
     @objc var mnz_existsActiveCall: Bool {
-        let undefinedSize: UInt = chatCalls(withState: .undefined)?.size ?? 0
-        let noPresentSize: UInt = chatCalls(withState: .userNoPresent)?.size ?? 0
-        return undefinedSize > noPresentSize
+        var totalCalls = chatCalls(withState: .inProgress)?.size ?? 0
+        totalCalls += chatCalls(withState: .connecting)?.size ?? 0
+        totalCalls += chatCalls(withState: .joining)?.size ?? 0
+        return totalCalls > 0
     }
     
     @objc func mnz_createChatRoom(userHandle: UInt64, completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) {
