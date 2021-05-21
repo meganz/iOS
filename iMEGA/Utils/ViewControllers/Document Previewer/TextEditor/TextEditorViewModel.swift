@@ -128,8 +128,12 @@ final class TextEditorViewModel: ViewModelType {
             invokeCommand?(.startLoading)
             uploadFile()
         } else if textEditorMode == .create {
-            router.chooseParentNode { (parentHandle) in
-                self.uploadTo(parentHandle)
+            if let parentHandle = parentHandle {
+                uploadTo(parentHandle)
+            } else {
+                router.chooseParentNode { (parentHandle) in
+                    self.uploadTo(parentHandle)
+                }
             }
         }
     }

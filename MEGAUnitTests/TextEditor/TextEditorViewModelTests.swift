@@ -348,9 +348,110 @@ final class TextEditorViewModelTests: XCTestCase {
              ]
         )
     }
+    
+    func testAction_saveText_create_hasParent_duplicateName() {
+        let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_duplicateName")
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        mockUploadFileUC.duplicate = true
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+        let textEditorMode: TextEditorMode = .create
+        let mockParentHandle: MEGAHandle = 123
+        
+        let duplicateNameAlertModel = TextEditorDuplicateNameAlertModel(
+            alertTitle: String(format: TextEditorL10n.duplicateNameAlertTitle, textFile.fileName),
+            alertMessage: TextEditorL10n.duplicateNameAlertMessage,
+            cancelButtonTitle: TextEditorL10n.cancel,
+            replaceButtonTitle: TextEditorL10n.replace,
+            renameButtonTitle: TextEditorL10n.rename
+        )
 
-    func testAction_saveText_create_duplicateName() {
-        let textFile = TextFile(fileName: "testAction_saveText_create_duplicateName")
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: textEditorMode,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadFileUseCase: mockDownloadFileUC,
+            nodeActionUseCase: mockNodeActionUC,
+            parentHandle: mockParentHandle
+        )
+        
+        let createContent = "create content"
+
+        test(viewModel: viewModel,
+             action: .saveText(createContent),
+             expectedCommands: [.showDuplicateNameAlert(duplicateNameAlertModel)]
+        )
+        XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
+    }
+    
+    func testAction_saveText_create_hasParent_uniqueName_success() {
+        let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_uniqueName_success")
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        mockUploadFileUC.duplicate = false
+        mockUploadFileUC.result = .success((mockTransferEntity(transferTypeEntity: .upload)))
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+        let textEditorMode: TextEditorMode = .create
+        let mockParentHandle: MEGAHandle = 123
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: textEditorMode,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadFileUseCase: mockDownloadFileUC,
+            nodeActionUseCase: mockNodeActionUC,
+            parentHandle: mockParentHandle
+        )
+        
+        let createContent = "create content"
+
+        test(viewModel: viewModel,
+             action: .saveText(createContent),
+             expectedCommands: []
+        )
+        XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
+    }
+    
+    func testAction_saveText_create_hasParent_uniqueName_failed() {
+        let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_uniqueName_failed")
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        mockUploadFileUC.duplicate = false
+        mockUploadFileUC.result = .failure(TransferErrorEntity.upload)
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+        let textEditorMode: TextEditorMode = .create
+        let mockParentHandle: MEGAHandle = 123
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: textEditorMode,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadFileUseCase: mockDownloadFileUC,
+            nodeActionUseCase: mockNodeActionUC,
+            parentHandle: mockParentHandle
+        )
+        
+        let createContent = "create content"
+
+        test(viewModel: viewModel,
+             action: .saveText(createContent),
+             expectedCommands: [.showError(TextEditorL10n.transferError + " " + TextEditorL10n.upload)]
+        )
+        XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
+    }
+
+    func testAction_saveText_create_noParent_duplicateName() {
+        let textFile = TextFile(fileName: "testAction_saveText_create_noParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = true
@@ -384,8 +485,8 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 1)
     }
     
-    func testAction_saveText_create_uniqueName_success() {
-        let textFile = TextFile(fileName: "testAction_saveText_create_uniqueName_success")
+    func testAction_saveText_create_noParent_uniqueName_success() {
+        let textFile = TextFile(fileName: "testAction_saveText_create_noParent_uniqueName_success")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = false
@@ -414,8 +515,8 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
     
-    func testAction_saveText_create_uniqueName_failed() {
-        let textFile = TextFile(fileName: "testAction_saveText_create_uniqueName_failed")
+    func testAction_saveText_create_noParent_uniqueName_failed() {
+        let textFile = TextFile(fileName: "testAction_saveText_create_noParent_uniqueName_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = false
