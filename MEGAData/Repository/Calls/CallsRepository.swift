@@ -148,20 +148,22 @@ extension CallsRepository: MEGAChatCallDelegate {
             }
         }
         
-        if session.hasChanged(.remoteAvFlags) {
-            callbacksDelegate?.avFlagsUpdated(for: ChatSessionEntity(with: session), in: chatId)
-        }
-        
-        if session.hasChanged(.audioLevel) {
-            callbacksDelegate?.audioLevel(for: ChatSessionEntity(with: session), in: chatId)
-        }
-        
-        if session.hasChanged(.onHiRes) && session.canReceiveVideoHiRes {
-            callbacksDelegate?.onHiResSession(ChatSessionEntity(with: session), in: chatId)
-        }
-        
-        if session.hasChanged(.onLowRes) && session.canReceiveVideoLowRes {
-            callbacksDelegate?.onLowResSession(ChatSessionEntity(with: session), in: chatId)
+        if session.status == .inProgress {
+            if session.hasChanged(.remoteAvFlags) {
+                callbacksDelegate?.avFlagsUpdated(for: ChatSessionEntity(with: session), in: chatId)
+            }
+            
+            if session.hasChanged(.audioLevel) {
+                callbacksDelegate?.audioLevel(for: ChatSessionEntity(with: session), in: chatId)
+            }
+            
+            if session.hasChanged(.onHiRes) && session.canReceiveVideoHiRes {
+                callbacksDelegate?.onHiResSession(ChatSessionEntity(with: session), in: chatId)
+            }
+            
+            if session.hasChanged(.onLowRes) && session.canReceiveVideoLowRes {
+                callbacksDelegate?.onLowResSession(ChatSessionEntity(with: session), in: chatId)
+            }
         }
     }
     

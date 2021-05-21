@@ -345,7 +345,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     func attendeeLeft(attendee: CallParticipantEntity) {
         if let index = callParticipants.firstIndex(of: attendee) {
             if attendee.video == .on {
-                remoteVideoUseCase.disableRemoteVideo(for: attendee)
+                remoteVideoUseCase.disableRemoteVideo(for: callParticipants[index])
             }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
