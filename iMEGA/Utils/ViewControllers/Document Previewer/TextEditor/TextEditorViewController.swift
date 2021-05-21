@@ -1,6 +1,5 @@
 final class TextEditorViewController: UIViewController {
     private var viewModel: TextEditorViewModel
-    private var fileName: String?
     
     private lazy var textView: UITextView = UITextView()
     private weak var activityIndicator: UIActivityIndicatorView?
@@ -222,7 +221,7 @@ extension TextEditorViewController: ViewType {
         )
         renameAC.addTextField {(textField) in
             textField.text = textEditorRenameAlertModel.textFileName
-            self.fileName = textEditorRenameAlertModel.textFileName
+            textField.placeholder = textEditorRenameAlertModel.textFileName
             textField.addTarget(self, action: #selector(self.renameAlertTextFieldBeginEdit), for: .editingDidBegin)
             textField.addTarget(self, action: #selector(self.renameAlertTextFieldDidChange), for: .editingChanged)
         }
@@ -240,6 +239,7 @@ extension TextEditorViewController: ViewType {
                 guard let newInputName = renameAC.textFields?.first?.text else { return }
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     self.viewModel.dispatch(.renameFileTo(newInputName))
+                    self.navigationItem.title = newInputName
                 }
             })
         renameAction.isEnabled = false
@@ -356,7 +356,7 @@ extension TextEditorViewController: ViewType {
             let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
             textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
             let empty = textField.text?.mnz_isEmpty() ?? true
-            let noChange = textField.text == fileName
+            let noChange = textField.text == textField.placeholder
             rightButtonAction?.isEnabled = (!empty && !containsInvalidChars && !noChange)
         }
     }

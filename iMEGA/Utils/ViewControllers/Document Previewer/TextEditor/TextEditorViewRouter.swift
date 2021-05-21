@@ -23,6 +23,16 @@ final class TextEditorViewRouter: NSObject {
         self.parentHandle = nodeEntity?.parentHandle
         self.presenter = presenter
     }
+    
+    convenience init(
+        textFile: TextFile,
+        textEditorMode: TextEditorMode,
+        parentHandle: MEGAHandle? = nil,
+        presenter: UIViewController
+    ) {
+        self.init(textFile: textFile, textEditorMode: textEditorMode, nodeEntity: nil, presenter: presenter)
+        self.parentHandle = parentHandle
+    }
 }
 
 extension TextEditorViewRouter: TextEditorViewRouting {

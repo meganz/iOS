@@ -1468,7 +1468,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController] start];
+        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
     }]];
     
     if ([self numberOfRows]) {
