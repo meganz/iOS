@@ -235,17 +235,9 @@
 - (void)reloadItem:(MEGAHandle)nodeHandle section:(ThumbnailSection)section {
     [UIView performWithoutAnimation:^{
         if (nodeHandle) {
-            NSMutableArray *filteredArray = [NSMutableArray new];
-            [self.fileList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                if (((MEGANode*)obj).handle == nodeHandle) {
-                    if (section == ThumbnailSectionFile) {
-                        [filteredArray addObject:[NSIndexPath indexPathForRow:idx inSection:ThumbnailSectionFile]];
-                    } else {
-                        [filteredArray addObject:[NSIndexPath indexPathForRow:idx inSection:ThumbnailSectionFolder]];
-                    }
-                }
-            }];
-            [self.collectionView reloadItemsAtIndexPaths:filteredArray];
+            if (self.collectionView.numberOfSections > section) {
+                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
+            }
         }
     }];
 }
