@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol ReactedUsersListPageViewControllerDelegate: class {
+protocol ReactedUsersListPageViewControllerDelegate: AnyObject {
     func userHandleList(atIndex index: Int) -> [UInt64]
     func pageChanged(toIndex index: Int)
     func didSelectUserhandle(_ userhandle: UInt64)

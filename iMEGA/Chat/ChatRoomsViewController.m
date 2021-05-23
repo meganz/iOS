@@ -186,6 +186,8 @@
     
     self.globalDNDNotificationControl = [GlobalDNDNotificationControl.alloc initWithDelegate:self];
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
+    
+    [self refreshMyAvatar];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

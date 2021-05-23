@@ -34,15 +34,18 @@ final class AudioPlayer: NSObject {
         }
     }
     var onClosePlayerCompletion: (() -> Void)?
+    var isAutoPlayEnabled: Bool = true
+    var isAudioPlayerInterrupted: Bool = false
+    var isPaused: Bool = false
+    var isCloseRequested: Bool = false
     
     //MARK: - Private properties
     private let assetQueue = DispatchQueue(label: "player.queue", qos: .utility)
     private let assetKeysRequiredToPlay = ["playable"]
     private var playerViewControllerKVOContext = 0
     private var timer: Timer?
-    
     private var taskId: UIBackgroundTaskIdentifier?
-  
+    
     //MARK: - Internal Computed Properties
     var currentIndex: Int? {
         queuePlayer?.items().firstIndex(where:{$0 as? AudioPlayerItem == currentItem()})
@@ -79,6 +82,14 @@ final class AudioPlayer: NSObject {
         set { queuePlayer?.rate = newValue }
     }
     
+    var isPlaying: Bool {
+        rate > Float(0.0)
+    }
+    
+    var isAlive: Bool {
+        (isPlaying || isPaused) && !isCloseRequested
+    }
+    
     //MARK: - Private Computed Properties
     private var duration: Double {
         guard let currentItem = queuePlayer?.currentItem, currentItem.duration.isValid else { return 0.0 }
@@ -89,15 +100,6 @@ final class AudioPlayer: NSObject {
     private var percentageCompleted: Float {
         currentTime == 0.0 || duration == 0.0 ? 0.0 : Float(currentTime / duration)
     }
-    
-    @objc var isPlaying: Bool {
-        rate > Float(0.0)
-    }
-    
-    @objc var isPaused: Bool = false
-    
-    var isAutoPlayEnabled: Bool = true
-    var isAudioPlayerInterrupted: Bool = false
     
     //MARK: - Private Functions
     init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false]) {
@@ -111,6 +113,7 @@ final class AudioPlayer: NSObject {
     
     @objc func close(_ completion: @escaping () -> Void) {
         onClosePlayerCompletion = completion
+        isCloseRequested = true
         if isPlaying {
             pause()
         }
@@ -215,7 +218,7 @@ final class AudioPlayer: NSObject {
     
     func updateContentViews() {
         presenterListenerManager.notify {
-            $0.updateContentView(isPlaying ? 60: 0)
+            $0.updateContentView(isAlive ? 60: 0)
         }
     }
     

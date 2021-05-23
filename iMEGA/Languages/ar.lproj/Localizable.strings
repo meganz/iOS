@@ -1095,7 +1095,7 @@
 /* "Yearly" subscriptions */
 "yearly"="سنويًا";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="هذا العنصر غير متوفر للشراء من داخل التطبيق في متجر التطبيقات حاليا، الرجاء المحاولة لاحقا.";
+"inAppPurchase.error.alert.title.notAvailable"="هذا العنصر غير متوفر للشراء من داخل التطبيق في متجر التطبيقات حاليا، الرجاء المحاولة لاحقا.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="شكرا";
 /* Alert message shown when a purchase was restored succesfully */

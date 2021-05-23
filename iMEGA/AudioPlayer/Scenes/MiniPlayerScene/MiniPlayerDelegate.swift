@@ -1,6 +1,6 @@
 import Foundation
 
-protocol MiniPlayerActionsDelegate: class {
+protocol MiniPlayerActionsDelegate: AnyObject {
     func play(index: IndexPath)
     func showPlayer(node: MEGANode, filePath: String?)
     func showPlayer(filePath: String?)

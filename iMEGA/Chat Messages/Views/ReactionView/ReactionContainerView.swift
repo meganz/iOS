@@ -3,7 +3,7 @@ import FlexLayout
 import PinLayout
 import Haptica
 
-protocol ReactionEmojiViewDelegate: class {
+protocol ReactionEmojiViewDelegate: AnyObject {
     func emojiLongPressed(_ emoji: String, sender: UIView)
     func addMorePressed(sender: UIView)
 }

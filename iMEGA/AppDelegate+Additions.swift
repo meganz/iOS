@@ -71,6 +71,21 @@ extension AppDelegate {
         }))
     }
     
+    @objc func showTurnOnNotificationsIfNeeded() {
+        UNUserNotificationCenter.current().getNotificationSettings { permission in
+            if permission.authorizationStatus == .denied {
+                asyncOnMain {
+                    let visibleViewController = UIApplication.mnz_visibleViewController()
+                    if visibleViewController is CustomModalAlertViewController ||
+                        visibleViewController is BusinessExpiredViewController
+                    { return }
+                    
+                    TurnOnNotificationsViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
+                }
+            }
+        }
+    }
+    
     @objc func showCookieDialogIfNeeded() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         

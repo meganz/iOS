@@ -1095,7 +1095,7 @@
 /* "Yearly" subscriptions */
 "yearly"="연간";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="이 앱 내 구매가 앱스토어에서 사용 불가합니다. 다시 시도하세요.";
+"inAppPurchase.error.alert.title.notAvailable"="이 앱 내 구매가 앱스토어에서 사용 불가합니다. 다시 시도하세요.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="고맙습니다";
 /* Alert message shown when a purchase was restored succesfully */

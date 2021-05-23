@@ -1,6 +1,6 @@
 import Foundation
 
-protocol AudioPlaylistSourceDelegate: class {
+protocol AudioPlaylistSourceDelegate: AnyObject {
     func move(item: AudioPlayerItem, position: IndexPath, direction: MovementDirection)
 }
 

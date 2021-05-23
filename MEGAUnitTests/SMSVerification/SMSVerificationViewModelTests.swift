@@ -8,7 +8,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                            smsUseCase: sms,
                                            achievementUseCase: MockAchievementUseCase(),
-                                           authUseCase: MockAuthUseCase(),
+                                           authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                            verificationType: .unblockAccount)
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.configView(.unblockAccount)])
@@ -24,7 +24,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
             let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                                smsUseCase: sms,
                                                achievementUseCase: MockAchievementUseCase(result: .failure(error)),
-                                               authUseCase: MockAuthUseCase(),
+                                               authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                                verificationType: .addPhoneNumber)
             
             test(viewModel: sut,
@@ -41,7 +41,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                            smsUseCase: sms,
                                            achievementUseCase: MockAchievementUseCase(),
-                                           authUseCase: MockAuthUseCase(),
+                                           authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                            verificationType: .unblockAccount)
         
         test(viewModel: sut,
@@ -59,7 +59,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                            smsUseCase: sms,
                                            achievementUseCase: MockAchievementUseCase(),
-                                           authUseCase: MockAuthUseCase(),
+                                           authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                            verificationType: .unblockAccount)
         
         test(viewModel: sut,
@@ -74,7 +74,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
             let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                                smsUseCase: sms,
                                                achievementUseCase: MockAchievementUseCase(),
-                                               authUseCase: MockAuthUseCase(),
+                                               authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                                verificationType: .unblockAccount)
             test(viewModel: sut,
                  action: SMSVerificationAction.loadRegionCodes,
@@ -87,7 +87,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let sut = SMSVerificationViewModel(router: router,
                                            smsUseCase: SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase()),
                                            achievementUseCase: MockAchievementUseCase(),
-                                           authUseCase: MockAuthUseCase(),
+                                           authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                            verificationType: .unblockAccount)
         test(viewModel: sut, action: SMSVerificationAction.showRegionList, expectedCommands: [])
         XCTAssertEqual(router.goToRegionList_calledTimes, 1)
@@ -98,7 +98,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let sut = SMSVerificationViewModel(router: router,
                                            smsUseCase: SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase()),
                                            achievementUseCase: MockAchievementUseCase(),
-                                           authUseCase: MockAuthUseCase(),
+                                           authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                            verificationType: .unblockAccount)
         test(viewModel: sut, action: SMSVerificationAction.cancel, expectedCommands: [])
         XCTAssertEqual(router.dismiss_calledTimes, 1)
@@ -111,7 +111,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let sut = SMSVerificationViewModel(router: router,
                                            smsUseCase: sms,
                                            achievementUseCase: MockAchievementUseCase(),
-                                           authUseCase: MockAuthUseCase(),
+                                           authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                            verificationType: .unblockAccount)
         test(viewModel: sut,
              action: SMSVerificationAction.sendCodeToLocalPhoneNumber("+64273142791"),
@@ -141,7 +141,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
             let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                                smsUseCase: sms,
                                                achievementUseCase: MockAchievementUseCase(),
-                                               authUseCase: MockAuthUseCase(),
+                                               authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                                verificationType: .unblockAccount)
             test(viewModel: sut,
                  action: SMSVerificationAction.sendCodeToLocalPhoneNumber("+64273142791"),
