@@ -482,6 +482,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [[CreateTextFileAlertViewRouter.alloc initWithPresenter:UIApplication.mnz_presentingViewController] start];
             break;
             
+        case URLTypeAppSettings:
+            if ([UIApplication.sharedApplication canOpenURL:url]) {
+                [UIApplication.sharedApplication openURL:url options:@{} completionHandler:nil];
+            }
+            break;
+            
         default:
             break;
     }

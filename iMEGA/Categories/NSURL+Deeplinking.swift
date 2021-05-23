@@ -60,6 +60,7 @@ enum DeeplinkSchemeKey: String {
     case file = "file"
     case mega = "mega"
     case http = "https"
+    case appsettings = "app-settings"
 }
 
 extension NSURL {
@@ -74,6 +75,8 @@ extension NSURL {
             return parseMEGASchemeURL()
         case .http:
             return parseUniversalLinkURL()
+        case .appsettings:
+            return .appSettings
         case .none:
             return .default
         }

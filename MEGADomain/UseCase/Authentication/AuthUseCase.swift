@@ -5,6 +5,7 @@ protocol AuthUseCaseProtocol {
     func logout()
     func login(sessionId: String, delegate: MEGARequestDelegate)
     func sessionId() -> String?
+    func isLoggedIn() -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -32,5 +33,9 @@ struct AuthUseCase: AuthUseCaseProtocol {
     
     func sessionId() -> String? {
         credentialRepo.sessionId(service: Constants.keychainServiceName, account: Constants.keychainAccountName)
+    }
+    
+    func isLoggedIn() -> Bool {
+        repo.isLoggedIn()
     }
 }

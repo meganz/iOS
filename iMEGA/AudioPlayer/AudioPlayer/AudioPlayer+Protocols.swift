@@ -2,7 +2,7 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
-@objc protocol AudioPlayerProtocol: class {}
+@objc protocol AudioPlayerProtocol: AnyObject {}
 
 //MARK: - Audio Player Control State Functions
 protocol AudioPlayerStateProtocol {
@@ -109,7 +109,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
 @objc protocol AudioPlayerHandlerProtocol: AudioPlayerCurrentStatusProtocol & AudioPlayerPlaybackProtocol & AudioPlayerConfigurationProtocol {}
 
 //MARK: - Audio Player Current Status Functions
-@objc protocol AudioPlayerCurrentStatusProtocol: class {
+@objc protocol AudioPlayerCurrentStatusProtocol: AnyObject {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
     func isShuffleEnabled() -> Bool
@@ -127,7 +127,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
 }
 
 //MARK: - Audio Player Playback Functions
-@objc protocol AudioPlayerPlaybackProtocol: class {
+@objc protocol AudioPlayerPlaybackProtocol: AnyObject {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem])
     func playerProgressCompleted(percentage: Float)
@@ -149,7 +149,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
 }
 
 //MARK: - Audio Player Configuration Functions
-@objc protocol AudioPlayerConfigurationProtocol: class {
+@objc protocol AudioPlayerConfigurationProtocol: AnyObject {
     func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool)
     func addPlayer(tracks: [AudioPlayerItem])
     func addPlayer(listener: AudioPlayerObserversProtocol)

@@ -1095,7 +1095,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Tahunan";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Item Pembelian In-App ini tidak lagi tersedia di App Store pada saat ini. Harap coba lagi kembali.";
+"inAppPurchase.error.alert.title.notAvailable"="Item Pembelian In-App ini tidak lagi tersedia di App Store pada saat ini. Harap coba lagi kembali.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Terima kasih";
 /* Alert message shown when a purchase was restored succesfully */

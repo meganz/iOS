@@ -6,7 +6,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
     func testAction_onViewReady_addPhoneNumber() {
         let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                             checkSMSUseCase: MockCheckSMSUseCase(),
-                                            authUseCase: MockAuthUseCase(),
+                                            authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .addPhoneNumber,
                                             phoneNumber: "+64272320000")
         
@@ -18,7 +18,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
     func testAction_onViewReady_unblockAccount() {
         let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                             checkSMSUseCase: MockCheckSMSUseCase(),
-                                            authUseCase: MockAuthUseCase(),
+                                            authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
                                             phoneNumber: "+64272320000")
         
@@ -31,7 +31,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
-                                            authUseCase: MockAuthUseCase(),
+                                            authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .addPhoneNumber,
                                             phoneNumber: "")
         
@@ -43,7 +43,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
-                                            authUseCase: MockAuthUseCase(),
+                                            authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .addPhoneNumber,
                                             phoneNumber: "")
         
@@ -55,7 +55,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
-                                            authUseCase: MockAuthUseCase(),
+                                            authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
                                             phoneNumber: "")
         
@@ -68,7 +68,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
-                                            authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId"),
+                                            authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId",
+                                                                         isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
                                             phoneNumber: "")
         
@@ -79,7 +80,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
     func testAction_checkVerificationCode_success() {
         let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                             checkSMSUseCase: MockCheckSMSUseCase(checkCodeResult: .success("")),
-                                            authUseCase: MockAuthUseCase(),
+                                            authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
                                             phoneNumber: "")
         
@@ -100,7 +101,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         for (error, message) in errorMessageDict {
             let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                                 checkSMSUseCase: MockCheckSMSUseCase(checkCodeResult: .failure(error)),
-                                                authUseCase: MockAuthUseCase(),
+                                                authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                                 verificationType: .unblockAccount,
                                                 phoneNumber: "")
             

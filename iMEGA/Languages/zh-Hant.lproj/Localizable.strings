@@ -1095,7 +1095,7 @@
 /* "Yearly" subscriptions */
 "yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="這個In-APP內建購買項目目前於App Store未能選用。請晚點再試一次。";
+"inAppPurchase.error.alert.title.notAvailable"="這個In-APP內建購買項目目前於App Store未能選用。請晚點再試一次。";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="謝謝您";
 /* Alert message shown when a purchase was restored succesfully */

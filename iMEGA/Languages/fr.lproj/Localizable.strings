@@ -1095,7 +1095,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuel";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans le magasin App Store pour l’instant. Veuillez réessayer ultérieurement.";
+"inAppPurchase.error.alert.title.notAvailable"="Cet élément d’achat intégré n’est pas proposé dans le magasin App Store pour l’instant. Veuillez réessayer ultérieurement.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Merci";
 /* Alert message shown when a purchase was restored succesfully */

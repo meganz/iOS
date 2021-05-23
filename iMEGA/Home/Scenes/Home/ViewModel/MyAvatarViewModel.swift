@@ -1,6 +1,6 @@
 import Foundation
 
-protocol HomeAccountViewModelInputs {
+protocol MyAvatarViewModelInputs {
 
     /// Tells view model that view is ready to display the account
     func viewIsReady()
@@ -8,7 +8,7 @@ protocol HomeAccountViewModelInputs {
     func viewIsAppearing()
 }
 
-protocol HomeAccountViewModelOutputs {
+protocol MyAvatarViewModelOutputs {
 
     /// Stores user's avatar image once loaded.
     var avatarImage: UIImage { get }
@@ -17,20 +17,20 @@ protocol HomeAccountViewModelOutputs {
     var notificationNumber: String { get }
 }
 
-protocol HomeAccountViewModelType {
+protocol MyAvatarViewModelType {
 
-    var inputs: HomeAccountViewModelInputs { get }
+    var inputs: MyAvatarViewModelInputs { get }
 
-    var outputs: HomeAccountViewModelOutputs { get }
+    var outputs: MyAvatarViewModelOutputs { get }
 
-    var notifyUpdate: ((HomeAccountViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: ((MyAvatarViewModelOutputs) -> Void)? { get set }
 }
 
-final class HomeAccountViewModel {
+final class MyAvatarViewModel: NSObject {
 
-    // MARK: - HomeAccountViewModelType
+    // MARK: - MyAvatarViewModelType
 
-    var notifyUpdate: ((HomeAccountViewModelOutputs) -> Void)?
+    var notifyUpdate: ((MyAvatarViewModelOutputs) -> Void)?
 
     // MARK: - View States
 
@@ -46,22 +46,22 @@ final class HomeAccountViewModel {
 
     private let megaAvatarUseCase: MEGAAvatarUseCaseProtocol
 
-    private let megaAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol
+    private let megaAvatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol
 
     init(
         megaNotificationUseCase: MEGANotificationUseCaseProtocol,
         megaAvatarUseCase: MEGAAvatarUseCaseProtocol,
-        megaAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol
+        megaAvatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol
     ) {
         self.megaNotificationUseCase = megaNotificationUseCase
         self.megaAvatarUseCase = megaAvatarUseCase
-        self.megaAavatarGeneratingUseCase = megaAavatarGeneratingUseCase
+        self.megaAvatarGeneratingUseCase = megaAvatarGeneratingUseCase
     }
 }
 
-// MARK: - HomeAccountViewModelInputs
+// MARK: - MyAvatarViewModelInputs
 
-extension HomeAccountViewModel: HomeAccountViewModelInputs {
+extension MyAvatarViewModel: MyAvatarViewModelInputs {
 
     func viewIsReady() {
         observeUserAlertsAndContactRequests()
@@ -74,7 +74,7 @@ extension HomeAccountViewModel: HomeAccountViewModelInputs {
 
 // MARK: - Load Avatar Image
 
-extension HomeAccountViewModel {
+extension MyAvatarViewModel {
 
     private func loadAvatarImage() {
         if let cachedAvatarImage = megaAvatarUseCase.getCachedAvatarImage() {
@@ -96,8 +96,8 @@ extension HomeAccountViewModel {
     }
 
     private func generatedAvatarImage(withAvatarSize avatarSize: CGSize) -> UIImage? {
-        guard let avatarName = megaAavatarGeneratingUseCase.avatarName(),
-              let avatarBackgroundColorHex = megaAavatarGeneratingUseCase.avatarBackgroundColorHex(),
+        guard let avatarName = megaAvatarGeneratingUseCase.avatarName(),
+              let avatarBackgroundColorHex = megaAvatarGeneratingUseCase.avatarBackgroundColorHex(),
               !avatarName.isEmpty
         else {
             return nil
@@ -126,7 +126,7 @@ extension HomeAccountViewModel {
 
 // MARK: - Load User Alerts
 
-extension HomeAccountViewModel {
+extension MyAvatarViewModel {
 
     private func observeUserAlertsAndContactRequests() {
         megaNotificationUseCase.observeUserContactRequests { [weak self] in
@@ -149,20 +149,20 @@ extension HomeAccountViewModel {
     }
 }
 
-// MARK: - HomeAccountViewModelType
+// MARK: - MyAvatarViewModelType
 
-extension HomeAccountViewModel: HomeAccountViewModelType {
+extension MyAvatarViewModel: MyAvatarViewModelType {
 
-    var inputs: HomeAccountViewModelInputs { self }
+    var inputs: MyAvatarViewModelInputs { self }
 
-    var outputs: HomeAccountViewModelOutputs {
-        HomeAccountOutputViewModel(
+    var outputs: MyAvatarViewModelOutputs {
+        MyAvatarOutputViewModel(
             avatarImage: resizedAvartarImage,
             notificationNumber: notificationNumber
         )
     }
 
-    // MARK: - HomeAccountViewModelOutputs
+    // MARK: - MyAvatarViewModelOutputs
 
     private var resizedAvartarImage: UIImage {
         switch avatarImage {
@@ -177,7 +177,7 @@ extension HomeAccountViewModel: HomeAccountViewModelType {
         userAlertCount + incomingContactRequestCount > 0 ? "\(userAlertCount + incomingContactRequestCount)" : ""
     }
 
-    struct HomeAccountOutputViewModel: HomeAccountViewModelOutputs {
+    struct MyAvatarOutputViewModel: MyAvatarViewModelOutputs {
 
         var avatarImage: UIImage
 

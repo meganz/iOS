@@ -1095,7 +1095,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Dit In-Applicatie aankoop item is op dit moment niet beschikbaar in de Applicatie Winkel. Probeer alstublieft later opnieuw.";
+"inAppPurchase.error.alert.title.notAvailable"="Dit In-Applicatie aankoop item is op dit moment niet beschikbaar in de Applicatie Winkel. Probeer alstublieft later opnieuw.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Dank u";
 /* Alert message shown when a purchase was restored succesfully */

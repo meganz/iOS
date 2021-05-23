@@ -1,6 +1,6 @@
 import Foundation
 
-protocol AudioPlaylistDelegate: class {
+protocol AudioPlaylistDelegate: AnyObject {
     func didSelect(item: AudioPlayerItem)
     func didDeselect(item: AudioPlayerItem)
 }
