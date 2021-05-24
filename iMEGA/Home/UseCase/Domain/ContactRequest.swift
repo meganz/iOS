@@ -4,7 +4,7 @@ struct ContactRequest {
 
     let handle: MEGAHandle
 
-    let sourceEmail: String
+    let sourceEmail: String?
 
     let sourceMessage: String?
 
