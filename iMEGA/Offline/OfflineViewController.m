@@ -278,13 +278,11 @@ static NSString *kisDirectory = @"kisDirectory";
     self.viewModePreference = ViewModePreferenceList;
     
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
-    [self addChildViewController:self.offlineTableView];
-    self.offlineTableView.view.frame = self.containerView.bounds;
-    [self.containerView addSubview:self.offlineTableView.view];
-    [self.offlineTableView didMoveToParentViewController:self];
-    
     self.offlineTableView.offline = self;
-
+   
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    [self add:bannerContainerVC container:self.containerView animate:NO];
+    
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
@@ -305,10 +303,8 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
-    [self addChildViewController:self.offlineCollectionView];
-    self.offlineCollectionView.view.frame = self.containerView.bounds;
-    [self.containerView addSubview:self.offlineCollectionView.view];
-    [self.offlineCollectionView didMoveToParentViewController:self];
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    [self add:bannerContainerVC container:self.containerView animate:NO];
     
     self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
     self.offlineCollectionView.collectionView.emptyDataSetSource = self;

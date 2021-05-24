@@ -52,6 +52,9 @@ enum SessionSectionRow: Int {
     
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
     
+    @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
+    private var offlineLogOutWarningDismissed: Bool
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -81,6 +84,8 @@ enum SessionSectionRow: Int {
         MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.add(self)
 
         updateAppearance()
+        
+        $offlineLogOutWarningDismissed.useCase = PreferenceUseCase.default
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -614,6 +619,7 @@ extension ProfileViewController: UITableViewDelegate {
                         return
                     }
                     MEGASdkManager.sharedMEGASdk().shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
+                    offlineLogOutWarningDismissed = false
                 }
             }
         }

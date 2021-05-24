@@ -1808,6 +1808,7 @@
 		BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */; };
 		BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
+		C44947762652A466004B4C8E /* BannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44947752652A466004B4C8E /* BannerType.swift */; };
 		C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */; };
 		C44CE0112590C66F00313719 /* AudioPlayer+EventObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */; };
 		C44CE01B2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */; };
@@ -1850,6 +1851,12 @@
 		C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
+		C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527D326526BBA00371270 /* BannerContainerViewController.swift */; };
+		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
+		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
+		C4652805265294C700371270 /* BannerContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4652804265294C700371270 /* BannerContainer.storyboard */; };
+		C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */; };
+		C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */; };
 		C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D675250DBAAB00D74666 /* StoreUserClient.swift */; };
 		C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */; };
 		C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */; };
@@ -3862,6 +3869,7 @@
 		BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodeClipboardOperationRepository.swift; sourceTree = "<group>"; };
 		BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeClipboardOperationUseCase.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
+		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
 		C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+RemoteCommand.swift"; sourceTree = "<group>"; };
 		C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+EventObservers.swift"; sourceTree = "<group>"; };
 		C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+PlaybackEvents.swift"; sourceTree = "<group>"; };
@@ -3902,6 +3910,12 @@
 		C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAProgressBarView.swift; sourceTree = "<group>"; };
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
+		C46527D326526BBA00371270 /* BannerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewController.swift; sourceTree = "<group>"; };
+		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
+		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
+		C4652804265294C700371270 /* BannerContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BannerContainer.storyboard; sourceTree = "<group>"; };
+		C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBannerContainerViewRouter.swift; sourceTree = "<group>"; };
+		C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModelTests.swift; sourceTree = "<group>"; };
 		C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
 		C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModelTests.swift; sourceTree = "<group>"; };
 		C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoRepository.swift; sourceTree = "<group>"; };
@@ -7373,6 +7387,7 @@
 				832E1020202B097900BDD30F /* CustomActionViewController */,
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				7795677421C80C43002B6227 /* OnboardingViewController */,
+				C46527CD26526AEA00371270 /* Banner Container */,
 				83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */,
 				83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */,
 				2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */,
@@ -8534,6 +8549,7 @@
 				5DF330E624B7EE5C0099D936 /* DateFormatting */,
 				837B9C0824781B1600D409B4 /* NodeActions */,
 				C452B66225CD4E550073B22C /* AudioPlayer */,
+				C46D4A7B26557AB900748BD3 /* BannerContainer */,
 				B6CED48F22B8AC70009C4861 /* Info.plist */,
 				5B076EDA22C251BF00D773B9 /* CameraUpload */,
 			);
@@ -9069,6 +9085,59 @@
 				C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		C46527CD26526AEA00371270 /* Banner Container */ = {
+			isa = PBXGroup;
+			children = (
+				C4652804265294C700371270 /* BannerContainer.storyboard */,
+				C46527D226526BA000371270 /* Scenes */,
+			);
+			path = "Banner Container";
+			sourceTree = "<group>";
+		};
+		C46527D226526BA000371270 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C46527EF26526C0400371270 /* BannerContainerScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C46527EF26526C0400371270 /* BannerContainerScene */ = {
+			isa = PBXGroup;
+			children = (
+				C46527D326526BBA00371270 /* BannerContainerViewController.swift */,
+				C46527F026526C2300371270 /* BannerContainerViewModel.swift */,
+				C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */,
+				C44947752652A466004B4C8E /* BannerType.swift */,
+			);
+			path = BannerContainerScene;
+			sourceTree = "<group>";
+		};
+		C46D4A7B26557AB900748BD3 /* BannerContainer */ = {
+			isa = PBXGroup;
+			children = (
+				C46D4A7D26557AD800748BD3 /* Router */,
+				C46D4A7C26557AD000748BD3 /* ViewModel */,
+			);
+			path = BannerContainer;
+			sourceTree = "<group>";
+		};
+		C46D4A7C26557AD000748BD3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C46D4A7D26557AD800748BD3 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		C47E7C0025D18FC800DB6FF5 /* Repository */ = {
@@ -9686,6 +9755,7 @@
 				BF99A3F324AC43F70035A183 /* emojis_v3.json in Resources */,
 				83C570E622E5BFCF00216896 /* PhoneNumberMetadata.json in Resources */,
 				BF7EBD35244FA92B0015255F /* AddToChatCameraCollectionCell.xib in Resources */,
+				C4652805265294C700371270 /* BannerContainer.storyboard in Resources */,
 				77D9A56E202355F800B48470 /* PhotoBrowser.storyboard in Resources */,
 				837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */,
 				BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */,
@@ -10277,6 +10347,7 @@
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				C45F982B264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift in Sources */,
 				B662B85924ECB3500089376A /* AddPhoneNumberViewModel.swift in Sources */,
+				C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
 				BF99A42024B2AD040035A183 /* ChatUploadTransfer+CoreDataProperties.swift in Sources */,
@@ -10460,6 +10531,7 @@
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				A86B9F3D2316D6AB00F35E7A /* FLEXNetworkRecorder.m in Sources */,
 				5BFA9645252E12A9003653EB /* ManageChatHistoryErrorEntity.swift in Sources */,
+				C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
 				83BD328D25DD3CDA00F8B91D /* FavouriteItemsRepositoryProtocol.swift in Sources */,
 				5D87C1F424E922D600BB5AB0 /* SDKUserClient.swift in Sources */,
@@ -10482,6 +10554,7 @@
 				5D92DD1124BFE2B200D7D13B /* DateFormatting.swift in Sources */,
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
 				A86B9F4B2316D6AB00F35E7A /* FLEXIvarEditorViewController.m in Sources */,
+				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
 				A86B9F6E2316D6AB00F35E7A /* FLEXAddressExplorerCoordinator.m in Sources */,
 				5D667EEC24ECF9400092474D /* StoreUser.swift in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
@@ -10746,6 +10819,7 @@
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				5DC0FD4B24D8FB94004DB649 /* SegmentTitleView.swift in Sources */,
 				A86B9F872316D6AB00F35E7A /* FLEXResources.m in Sources */,
+				C44947762652A466004B4C8E /* BannerType.swift in Sources */,
 				5D69E2342511A0EA00A61195 /* MEGAHandle.swift in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
@@ -11632,6 +11706,8 @@
 				B66BA2472514DD2C009787BD /* MockPreferenceUseCase.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
+				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
+				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
 				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
 				B6AADF122518BB67009A874C /* MockAchievementRepository.swift in Sources */,
