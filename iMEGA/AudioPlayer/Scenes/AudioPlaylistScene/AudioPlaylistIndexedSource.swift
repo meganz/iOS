@@ -56,5 +56,6 @@ final class AudioPlaylistIndexedSource: NSObject, AudioPlaylistSource, UITableVi
                 return IndexPath(row: row, section: section)
             }
         }.reduce([], +)
+        .removeDuplicates()
     }
 }
