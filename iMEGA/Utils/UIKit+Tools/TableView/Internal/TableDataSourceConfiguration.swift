@@ -10,7 +10,7 @@ struct TableDataSourceConfiguration<Item> {
 
     let itemAtIndexPath: (
         _ indexPath: IndexPath
-    ) -> Item
+    ) -> Item?
 
     let headerTitle: (
         _ forSection: Int
