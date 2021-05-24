@@ -24,6 +24,10 @@ xcuserdata/
 ## Fastlane
 fastlane/report.xml
 
+## Translation
+transifex/transifexConfig.json
+transifex/Translations*
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
