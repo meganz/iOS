@@ -303,7 +303,8 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
-    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineCollectionView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
     [self add:bannerContainerVC container:self.containerView animate:NO];
     
     self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
