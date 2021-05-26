@@ -6,7 +6,7 @@ final class MockCallManagerUseCase: CallManagerUseCaseProtocol {
     var addCall_CalledTimes = 0
     var startCall_CalledTimes = 0
     
-    func endCall(callId: MEGAHandle, chatId: MEGAHandle) {
+    func endCall(_ call: CallEntity) {
         endCall_calledTimes += 1
     }
     

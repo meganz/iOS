@@ -341,7 +341,7 @@
     
     if (action.callUUID) {
         if (call) {
-//            [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
+            [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
         } else {
             self.endCallWhenConnect = YES;
             self.muteAudioWhenConnect = self.answerCallWhenConnect = NO;
