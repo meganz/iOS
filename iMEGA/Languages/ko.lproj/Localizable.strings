@@ -1980,6 +1980,10 @@
 "New Group Chat"="새 단체 대화";
 /* Title for the recents section. */
 "Recents"="최근";
+/* Title show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.title"="최근 활동 숨겨짐";
+/* Title of the button show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.button"="활동 보기";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="이미지 %1개";
 /* Multiple videos title shown in recents section of web client. */
@@ -2258,6 +2262,10 @@
 "Default Tab"="기본 탭";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="정렬과 보기 모드";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
+"settings.userInterface.hideRecentActivity"="최근 활동 숨기기";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
+"settings.userInterface.hideRecentActivity.footer"="홈 섹션에서 최근 활동 숨기기";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="기본";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2630,3 +2638,5 @@
 "dialog.shareOwnerStorageQuota.message"="대상 이용자의 저장소 할당량이 초과되어 파일을 전송할 수 없습니다.";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="파일이 너무 커서 편집할 수 없습니다.";
+/* Hud info message when read unknown encode file. */
+"general.textEditor.hud.unknownEncode"="항목의 인코딩을 알 수 없어서 파일을 편집할 수 없습니다.";
