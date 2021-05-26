@@ -19,7 +19,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="저장됨";
 /*  */
-"passcode"="패스코드";
+"passcode"="암호";
 /* "Size" of the file or folder you are sharing */
 "size"="크기";
 /* Quality title, used in changing the export quality of scaned doc */
@@ -33,27 +33,27 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="설정에서 MEGA 앱에 카메라 접근 권한을 주세요";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="설정에서 MEGA 앱이 마이크에 접근할 수 있도록 해주세요";
+"microphonePermissions"="설정에서 MEGA 앱에 마이크 접근 권한을 주세요";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="설정에서 MEGA 앱이 사진 라이브러리에 접근할 수 있는 권한을 주세요";
+"photoLibraryPermissions"="설정에서 MEGA 앱에 사진 라이브러리 접근 권한을 주세요";
 /* Message shown when the user clicks on a confirm account link that has already been used */
-"accountAlreadyConfirmed"="당신의 계정은 활성화되었습니다. 로그인 하세요.";
+"accountAlreadyConfirmed"="계정이 활성화되었습니다. 로그인 하세요.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 당신의 계정이 이미 활성화되었거나 등록을 취소했을 수 있습니다.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 계정이 이미 활성화되었거나 가입을 취소했을 수 있습니다.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="이 링크를 만든 계정은 다수의 [A]이용 약관[/A] 위반으로 인하여 삭제되었습니다.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="해독 키를 입력하세요";
+"decryptionKeyAlertTitle"="복호화 키를 입력하세요";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="이 폴더/파일에 접근하려면, 해독 키가 필요합니다. 키가 없다면, 이 링크의 생성자에게 연락하세요.";
+"decryptionKeyAlertMessage"="이 폴더/파일에 접근하려면, 복호화 키가 필요합니다. 키가 없다면, 이 링크의 생성자에게 연락하세요.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="해독 키";
+"decryptionKey"="복호화 키";
 /* Button title to try to decrypt the link */
-"decrypt"="해독";
+"decrypt"="복호화";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="잘못된 해독 키";
+"decryptionKeyNotValid"="잘못된 복호화 키";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
 "To access this link, you will need its password."="이 링크에 접근하려면, 암호가 필요합니다.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
@@ -63,9 +63,9 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="로그아웃됨";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
+"loggedOutFromAnotherLocation"="다른 위치에서 이 장치를 로그아웃 하였습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구사항이 있는 공개 와이파이에 접속했을 수 있습니다.";
+"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구 사항이 있는 공개 Wi-Fi에 접속했을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="계정을 확인하려면 이메일을 확인하고 링크를 따라가세요.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="계정이 막혔습니다. support@mega.nz로 연락하세요";
+"accountBlocked"="계정이 차단 되었습니다. support@mega.nz로 연락하세요";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="올바른 이메일을 입력하세요";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -109,23 +109,23 @@
 /*  */
 "weak"="약함";
 /*  */
-"passwordVeryWeakOrWeak"="당신의 비밀번호는 쉽게 추측됩니다. 비밀번호를 더 길게 만드세요. 대문자와 소문자를 조합하세요. 특수 문자를 삽입하세요. 이름이나 사전적 단어를 사용하지 마세요.";
+"passwordVeryWeakOrWeak"="당신의 암호는 쉽게 추측됩니다. 암호를 더 길게 만드세요. 대문자와 소문자를 조합하세요. 특수 문자를 삽입하세요. 이름이나 사전적 단어를 사용하지 마세요.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="보통";
 /*  */
-"passwordMedium"="당신의 비밀번호는 진행하기에 충분히 좋습니다, 하지만 비밀번호를 더 강력하게 만드는 것을 추천합니다.";
+"passwordMedium"="당신의 암호는 진행하기에 충분히 좋습니다, 하지만 암호를 더 강력하게 만드는 것을 추천합니다.";
 /*  */
 "good"="좋음";
 /*  */
-"passwordGood"="이 비밀번호는 대부분의 보통 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
+"passwordGood"="이 암호는 대부분의 보통 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="강함";
 /*  */
-"passwordStrong"="이 비밀번호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
+"passwordStrong"="이 암호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /*  */
-"agreeWithTheMEGATermsOfService"="나는 MEGA의 <a href=\"terms\">이용약관</a>에 동의합니다";
+"agreeWithTheMEGATermsOfService"="나는 MEGA의 <a href=\"terms\">이용 약관</a>에 동의합니다";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="[S]만약 내가 비밀번호를 잊으면, 내 데이터를 잃는다는 것을[/S] 이해하였습니다. 자세한 사항은 <a href=\"terms\">MEGA의 종단간 암호화</a>를 읽어보세요.";
+"agreeWithLosingPasswordYouLoseData"="[S]만약 내가 암호를 잊으면, 내 데이터를 잃는다는 것을[/S] 이해하였습니다. 자세한 사항은 <a href=\"terms\">MEGA의 종단간 암호화</a>를 읽어보세요.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
 /* Error text shown when you have not written the same password */
@@ -133,7 +133,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
-"termsForLosingPasswordCheckboxUnselected"="비밀번호를 잊는 것에 대한 위험성을 이해하였다는데에 동의해야합니다";
+"termsForLosingPasswordCheckboxUnselected"="암호 분실의 위험성을 이해하였다는 데에 동의해야 합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -169,7 +169,7 @@
 /*  */
 "fileLinkUnavailableText4"="이 파일은 이용자에 의해 삭제되었습니다.";
 /* Message shown when a download starts */
-"downloadStarted"="다운로드가 시작되었습니다";
+"downloadStarted"="다운로드 시작됨";
 /* Title for the folder link view */
 "folderLink"="폴더 링크";
 /* Button title which downloads a file/folder to your device */
@@ -177,7 +177,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="다운로드 하려는 폴더가 사용가능한 메모리보다 큽니다.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="'%@' 폴더를 생성할 수 없습니다";
+"folderCreationError"="\"%@\" 폴더를 생성할 수 없습니다";
 /*  */
 "folderLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
 /*  */
@@ -185,13 +185,13 @@
 /*  */
 "folderLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
 /*  */
-"folderLinkUnavailableText4"="폴더 링크가 이용자에 의해 삭제되었습니다.";
+"folderLinkUnavailableText4"="폴더 링크가 이용자에 의해 비활성화 되었습니다.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="인터넷 연결 없음";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="폴더에 파일이 없음";
+"emptyFolder"="빈 폴더";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="당신의 클라우드 드라이브에 파일이 없습니다";
+"cloudDriveEmptyState_title"="클라우드 드라이브에 파일 없음";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="파일 추가";
 /* Title shown when you make a search and there is 'No Results' */
@@ -201,7 +201,7 @@
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="오프라인용으로 저장된 파일 없음";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="연락처가 없습니다";
+"contactsEmptyState_title"="연락처 없음";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="들어오는 공유된 폴더 없음";
 /* Title shown when there's no outgoing Shared Items */
@@ -239,31 +239,31 @@
 /* Title of the Cloud Drive section */
 "cloudDrive"="클라우드 드라이브";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d개의 파일";
+"oneFile"="파일 %d개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d개의 파일";
+"files"="파일 %d개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d개의 폴더";
+"oneFolder"="폴더 %d개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d개의 폴더";
+"folders"="폴더 %d개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 폴더 • 1 파일";
+"folderAndFile"="폴더 1개 • 파일 1개";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] 폴더 • [B] 파일";
+"foldersAndFiles"="폴더 [A]개 • 파일 [B]개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d 폴더 • 1 파일";
+"foldersAndFile"="폴더 %d개 • 파일 1개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 폴더 • %d 파일";
+"folderAndFiles"="폴더 1개 • 파일 %d개";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="대기열";
+"queued"="대기 중";
 /* A label to indicate a paused state for a transfer item (upload/download). */
-"paused"="일시정지됨";
+"paused"="일시정지 중";
 /* Possible state of a transfer. When the transfer was cancelled */
 "Cancelled"="취소됨";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
-"Completing..."="완료중…";
+"Completing..."="완료 중…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
-"Retrying..."="재시도중…";
+"Retrying..."="재시도 중…";
 /* Section title of the 'Sort by' */
 "sortTitle"="정렬 기준";
 /* Button title to 'Save' the selected option */
@@ -273,17 +273,17 @@
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="이름 (내림차순)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="최대";
+"largest"="큰 순";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
 "smallest"="작은 순";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="최신";
+"newest"="최신순";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="오래된 순";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="사진에서 선택";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="캡쳐";
+"capturePhotoVideo"="캡처";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="문서 스캔";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -341,9 +341,9 @@
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="링크 관리";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="링크 생성중…";
+"generatingLink"="링크 생성 중…";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="링크 생성중…";
+"generatingLinks"="링크 생성 중…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="링크 복사됨";
 /* Message shown when some links have been copied to the pasteboard */
@@ -393,11 +393,11 @@
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="파일이 대화로 전송됨";
 /* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="%1$d개의 대화에 파일 보냄";
+"fileSentToXChats"="대화 %1$d개에 파일 보냄";
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="파일이 대화로 전송됨";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d개의 파일이 잘 전송되었습니다";
+"xfilesSentSuccesfully"="파일 %d개 전송됨";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="링크 제거";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -407,7 +407,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="링크 삭제됨";
 /* Title show when a file is being downloaded */
-"downloading"="다운로드중";
+"downloading"="다운로드 중";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="목적지 선택";
 /* Text of the button for user to select files in MEGA. */
@@ -415,39 +415,39 @@
 /* Title for the action that allows you to move a file or folder */
 "move"="이동";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1개의 파일이 이동됨";
+"moveFileMessage"="파일 1개 이동됨";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d개의 파일 이동됨";
+"moveFilesMessage"="파일 %d개 이동됨";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1개의 폴더 이동됨";
+"moveFolderMessage"="폴더 1개 이동됨";
 /* Success message shown when you have moved {1+} folders */
 "moveFoldersMessage"="폴더 %d개 이동됨";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 파일과 1 폴더 이동됨";
+"moveFileFolderMessage"="파일 1개와 폴더 1개 이동됨";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="파일 1개와 폴더 %d개가 이동됨";
+"moveFileFoldersMessage"="파일 1개와 폴더 %d개 이동됨";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d 파일과 1 폴더 이동됨";
+"moveFilesFolderMessage"="파일 %d개와 폴더 1개 이동됨";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] 파일과 [B] 폴더가 이동됨";
+"moveFilesFoldersMessage"="파일 [A]개와 폴더 [B]개 이동됨";
 /* List option shown on the details of a file or folder */
 "copy"="복사";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1개의 파일이 복사됨";
+"copyFileMessage"="파일 1개 복사됨";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d개의 파일 복사됨";
+"copyFilesMessage"="파일 %d개 복사됨";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="1개의 폴더 복사됨";
+"copyFolderMessage"="폴더 1개 복사됨";
 /* Success message shown when you have copied {1+} folders */
 "copyFoldersMessage"="폴더 %d개 복사됨";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="1 파일과 1 폴더 복사됨";
+"copyFileFolderMessage"="파일 1개와 폴더 1개 복사됨";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="1 파일과 %d 폴더 복사됨";
+"copyFileFoldersMessage"="파일 1개와 폴더 %d개 복사됨";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d 파일과 1 폴더 복사됨";
+"copyFilesFolderMessage"="파일 %d개와 폴더 1개 복사됨";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] 파일과 [B] 폴더가 복사됨";
+"copyFilesFoldersMessage"="파일 [A]개와 폴더 [B]개 복사됨";
 /* Title for the action that allows you to rename a file or folder */
 "rename"="이름 바꾸기";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -481,17 +481,17 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="폴더 공유됨";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d개의 폴더가 성공적으로 공유되었습니다.";
+"sharedFolders_success"="폴더 %d개가 공유됨";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="클라우드 드라이브로 들여오기";
 /* Message shown when a file has been imported */
 "fileImported"="파일 들여옴";
 /* Message shown when some files have been imported */
-"filesImported"="들여온 파일";
+"filesImported"="파일 들여옴";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="항목 선택";
 /* Button title that skips the current action */
-"skipButton"="넘기기";
+"skipButton"="건너뛰기";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="자동으로 당신의 사진과 동영상을 클라우드 드라이브에 백업합니다.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
@@ -505,21 +505,21 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="업로드 진행중, 파일 %lu개 대기중";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 1개 보류중";
+"Upload paused because of no WiFi, 1 file pending"="Wi-Fi 연결이 없어서 업로드가 일시정지되었습니다, 파일 1개 보류중";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 %lu개 보류중";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져있습니다; 1개의 동영상이 업로드 되지 않았습니다.";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져 있습니다; 동영상 1개가 업로드 되지 않았습니다.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져있습니다; %lu개의 동영상이 업로드 되지 않았습니다.";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져 있습니다; 동영상 %lu개가 업로드 되지 않았습니다.";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="파일 %2$d개 중 %1$d개";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "indexOfTotalFiles"="파일 %2$d개 중 %1$d개";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu 항목 선택됨";
+"oneItemSelected"="%lu개 선택됨";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu 항목 선택됨";
+"itemsSelected"="%lu개 선택됨";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1개 선택됨";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -537,7 +537,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="폴더 1개";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d개의 폴더";
+"foldersShared"="폴더 %d개";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="이메일 주소를 입력하세요";
 /* Title of Shared Items section */
@@ -549,7 +549,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="나감";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="%d 명의 연락처와 공유됨";
+"sharedWithXContacts"="%d명의 연락처와 공유됨";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="권한이 변경됨";
 /* Message shown when a share has been left */
@@ -561,15 +561,15 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="공유 제거";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="이 공유를 삭제하시겠습니까? (1개의 연락처와 공유됨)";
+"removeOneShareOneContactMessage"="이 공유를 삭제하시겠습니까? (연락처 1명과 공유됨)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="이 공유를 삭제하시겠습니까? (%d개의 연락처와 공유됨)";
+"removeOneShareMultipleContactsMessage"="이 공유를 삭제하시겠습니까? (연락처 %d명과 공유됨)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="이 공유들을 삭제하시겠습니까? (%d개의 연락처와 공유됨)";
+"removeMultipleSharesMultipleContactsMessage"="이 공유들을 삭제하시겠습니까? (연락처 %d명과 공유됨)";
 /* Message shown when a share have been removed */
-"shareRemoved"="공유가 올바르게 삭제되었습니다";
+"shareRemoved"="공유 제거됨";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="공유가 제거됨";
+"sharesRemoved"="공유 제거됨";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="공유된 사람";
 /* Item menu option to add a contact through your device app Contacts */
@@ -593,21 +593,21 @@
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="연락처 %@ 삭제됨";
 /* Label shown when a contact request is pending */
-"pending"="대기중";
+"pending"="보류 중";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="떠나기";
 /* Alert message shown when the user tap on the leave share action for one inshare */
 "leaveShareAlertMessage"="이 공유를 떠나시겠습니까?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="이 공유들에서 나가시겠습니까?";
+"leaveSharesAlertMessage"="이 공유들에서 떠나시겠습니까?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="공유";
 /* Select all items/elements on the list */
 "selectAll"="모두 선택";
 /*  */
-"oneContact"="1개의 연락처";
+"oneContact"="연락처 1명";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X]개의 연락처";
+"XContactsSelected"="연락처 [X]명";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="폴더 공유";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -641,7 +641,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="개인정보 보호정책";
+"privacyPolicyLabel"="개인 정보 보호 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "Cookie Policy"="쿠키 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -649,7 +649,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="데이터 보호 규정";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="끔";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -749,7 +749,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="암호 변경";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하는 것은 데이터 손실 없이 새 비밀번호를 설정할 수 있도록 해줍니다.";
+"exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하는 것은 데이터 손실 없이 새 암호를 설정할 수 있도록 해줍니다.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -787,7 +787,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="계정을 삭제하는 마지막 단계입니다. 클라우드에 저장된 모든 데이터를 잃게 됩니다. 아래에 비밀번호를 입력하세요.";
+"enterYourPasswordToConfirmThatYouWanToClose"="계정을 삭제하는 마지막 단계입니다. 클라우드에 저장된 모든 데이터를 잃게 됩니다. 아래에 암호를 입력하세요.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="계정이 성공적으로 삭제되었습니다.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -797,21 +797,21 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="삭제 승인";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="영구적으로 1 파일을 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFileToRubbishBinMessage"="파일 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="영구적으로 %d 파일을 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFilesToRubbishBinMessage"="파일 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="영구적으로 %d 폴더를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFolderToRubbishBinMessage"="폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="영구적으로 폴더 %d개를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 취소할 수 없습니다)";
+"removeFoldersToRubbishBinMessage"="폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 취소할 수 없습니다)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="영구적으로 1 파일과 1 폴더를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFileFolderToRubbishBinMessage"="파일 1개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="영구적으로 1 파일과 %d 폴더를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFileFoldersToRubbishBinMessage"="파일 1개와 폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="영구적으로 %d 파일과 1 폴더를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFilesFolderToRubbishBinMessage"="파일 %d개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="[A] 파일과 [B] 폴더를 영구적으로 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFilesFoldersToRubbishBinMessage"="파일 [A]개와 폴더 [B]개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="MEGA에서 파일 1개 삭제됨";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -847,15 +847,15 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="잘못된 복구 키";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="복구 키는 비밀번호를 초기화하는데에 사용될 것입니다. 새 비밀번호를 입력하세요.";
+"youRecoveryKeyIsGoingTo"="복구 키는 암호를 재설정하는 데에 사용될 것입니다. 새 암호를 입력하세요.";
 /*  */
-"yourPasswordHasBeenReset"="비밀번호가 성공적으로 재설정되었습니다. 이제 당신의 계정으로 로그인할 수 있습니다.";
+"yourPasswordHasBeenReset"="암호가 성공적으로 재설정되었습니다. 이제 당신의 계정으로 로그인할 수 있습니다.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="보내기";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="계정 보류";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="나는 비어있는 새로운 계정을 시작하고, 내가 비밀번호를 다시 떠올리거나 저장된 복구 키의 위치를 찾아내지 못한다면 현재 계정의 모든 데이터를 잃어버린다는 것을 알고 있습니다.";
+"startingFreshAccount"="나는 비어있는 새로운 계정을 시작하고, 내가 암호를 다시 떠올리거나 저장한 복구 키의 위치를 찾아내지 못한다면 현재 계정의 모든 데이터를 잃어버린다는 것을 알고 있습니다.";
 /* Caption of the button to proceed */
 "startNewAccount"="새 계정을 시작";
 /*  */
@@ -865,13 +865,13 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="이메일 확인";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="새 이메일 승인";
+"confirmNewEmail"="새 이메일 확인";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="이메일 변경";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="새 이메일과 이전 이메일이 일치하지 않아야합니다";
+"oldAndNewEmailMatch"="새 이메일과 기존 이메일이 일치하지 않아야 합니다";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="이메일이 맞지 않습니다";
+"emailsDoNotMatch"="이메일이 일치하지 않습니다";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="그 이메일 주소에 대한 확인 링크를 이미 요청하였습니다.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -879,7 +879,7 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="이메일 주소를 승인하려면 암호를 입력하세요";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="축하합니다, 이 MEGA 계정에 대한 새 이메일 주소는 다음입니다: [X]";
+"congratulationsNewEmailAddress"="축하합니다, 이 MEGA 계정에 대한 새 이메일 주소는 다음과 같습니다: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="다른 세션 닫기";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="연간";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="이 앱 내 구매가 앱스토어에서 사용 불가합니다. 다시 시도하세요.";
+"inAppPurchase.error.alert.title.notAvailable"="지금 이 앱 내 결제 항목을 App Storer에서 이용할 수 없습니다. Appe ID에서 결제 설정을 확인하세요.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="App Store 설정";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="고맙습니다";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1115,7 +1117,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Pro로 업그레이드";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="공개 파일의 비밀번호 보호와 만료 시간 같은 Pro 전용 기능에 접근하세요.";
+"Access Pro only features like setting password protection and expiry dates for public files."="공개 파일의 암호 보호와 만료 시간 같은 Pro 전용 기능에 접근하세요.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="디버그 모드 활성화";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1273,7 +1275,7 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 제어하는) 암호화를 통해 보호합니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]기밀성.[/S] 오직 작성자와 의도된 수신자만 항목을 해독하고 읽을 수 있습니다.";
+"confidentialityExplanation"="[S]기밀성.[/S] 오직 작성자와 의도된 수신자만 항목을 복호화하고 읽을 수 있습니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]진실성.[/S] 시스템은 수신한 데이터가 발송인이 보여준 것인지, 전송 과정에서 조작되지 않았는지 확인합니다.";
 /* Alert message shown when a chat does not exist */
@@ -1393,7 +1395,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="완료되지 않음";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="해독 오류";
+"Invalid key/Decryption error"="복호화 오류";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="세션 ID 오류";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1441,11 +1443,11 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA는 모바일 기기를 위한 전용 앱과 함께 표준 웹 브라우저를 통해 사용 가능한 이용자가 제어하는 암호화된 클라우드 저장소를 제공합니다. 다른 클라우드 저장소 제공자들과 달리 당신의 데이터는 절대 우리가 아니라 당신의 클라이언트 기기를 통해 암호화되고 해독됩니다.";
+"generalDescriptionParagraph1"="MEGA는 휴대 기기를 위한 전용 앱을 더불어, 표준 웹 브라우저를 통해 이용자 제어 암호화 클라우드 저장소와 대화를 제공합니다. 다른 클라우드 저장소 제공자들과 달리, 당신의 데이터는 우리가 아닌 당신의 클라이언트 기기에서만 암호화되고 복호화됩니다.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="당신의 스마트폰이나 태블릿에서 파일을 업로드하고, 어느 기기에서나 어디서든지 당신의 파일을 검색, 보관, 다운로드, 스트림, 보기, 공유, 이름변경 또는 삭제하세요. 당신의 연락처와 폴더를 공유하고 그들의 업데이트를 실시간으로 보세요.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="암호화 과정은 우리가 당신의 비밀번호에 접근하거나 초기화할 수 없기 때문에 반드시 기억해야한다는 것입니다 (복구 키를 백업하지 않는 이상) 그렇지 않으면 저장된 파일에 대한 접근을 잃게 됩니다.";
+"generalDescriptionParagraph3"="암호화 과정은 우리가 당신의 암호에 접근하거나 재설정할 수 없다는 것을 의미하므로 반드시 기억하지 않으면 (복구 키를 백업하지 않았다면) 저장한 파일들에 대한 접근을 잃게 됩니다.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="종단간 이용자 암호화 MEGA 영상 대화는 완전한 프라이버시가 가능하게 하고, 2016년부터 브라우저를 통하여 가능했습니다. 그것은 모바일 앱으로 확장되었고, 여러 기기에서 대화 기록에 접근할 수 있습니다. 이용자들은 그들의 MEGA 클라우드 드라이브에서 대화에 쉽게 파일을 추가할 수 있습니다.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1541,9 +1543,9 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="암호가 기억났나요?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="MEGA의 암호화 기술로 인하여 데이터 손실 없이 비밀번호를 초기화할 수 없습니다. 비밀번호를 반드시 기억하도록 하세요.";
+"remindPasswordText"="MEGA의 암호화 기술로 인하여 데이터 손실 없이 암호를 초기화할 수 없습니다. 암호를 반드시 기억하도록 하세요.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="로그아웃 하기 전에 당신의 복구 키를 안전한 곳에 복사할 것을 권장합니다. 복구 키를 잊어버렸을 경우 비밀번호를 초기화할 수 없다는 사실을 기억하세요.";
+"remindPasswordLogoutText"="로그아웃 하기 전에 당신의 복구 키를 안전한 곳에 저장할 것을 권장합니다. 복구 키를 잊어버렸을 경우 암호를 초기화할 수 없다는 사실을 기억하세요.";
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="다시 보여주지 마세요";
 /* Label for test password button and titles */
@@ -1551,7 +1553,7 @@
 /* Label for recovery key button */
 "backupRecoveryKey"="복구 키 백업";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="아래에 당신의 비밀번호를 시험해보고 확실히 기억하세요. 비밀번호를 잊어버리면, 당신의 MEGA 데이터에 접근을 할 수 없습니다. [A]더 알아보기[/A]";
+"testPasswordText"="아래에 당신의 암호를 시험해보고 기억했는지 확인하세요. 암호를 잊어버리면, 당신의 MEGA 데이터에 접근을 할 수 없습니다. [A]더 알아보기[/A]";
 /* Title text for the account confirmation. */
 "confirm"="확인";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -1561,7 +1563,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="로그아웃 진행";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordLogoutText"="당신은 지금 로그아웃 하려고 합니다, 당신이 비밀번호를 기억하는지 테스트하세요. 만약 비밀번호를 잊어버리면, 당신의 MEGA 데이터에 접근할 수 없습니다.";
+"testPasswordLogoutText"="당신은 지금 로그아웃 하려고 합니다, 당신이 암호를 확실히 기억하는지 시험하세요. 만약 암호를 잊어버리면, 당신의 MEGA 데이터에 접근할 수 없습니다.";
 /* state previous to import a file */
 "loading"="불러오는 중…";
 /*  */
@@ -1647,7 +1649,7 @@
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
 "whatIsTwoFactorAuthentication"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다. 당신만이 접근할 수 있는 6자리 코드가 없으면, 당신의 비밀번호를 알고 있을지라도 접근할 수 없습니다.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다. 당신만이 접근할 수 있는 여섯 자리 코드가 없으면, 당신의 암호를 알고 있을지라도 접근할 수 없습니다.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="인증기 앱 필요";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
@@ -2059,7 +2061,7 @@
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="요금제";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="만약 이 복구 키도 잃어버리고 비밀번호도 잊으셨다면, [B]MEGA 조차도 당신의 모든 파일, 폴더 그리고 메시지에 접근이 불가능합니다.[/B]";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="만약 이 복구 키도 잃어버리고 암호도 잊으셨다면, [B]MEGA도 당신의 모든 파일, 폴더 그리고 메시지에 접근이 불가능합니다.[/B]";
 /*  */
 "Business"="기업용";
 /*  */
@@ -2144,8 +2146,6 @@
 "Remove Nickname"="별명 삭제";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="가명 / 별명";
-/* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="결제 기한 초과";
 /* Business account status */
@@ -2209,9 +2209,9 @@
 /* Title of a helping view about locked accounts */
 "Locked Accounts"="잠긴 계정들";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
-"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 암호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 암호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="전송 할당량 초과";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
@@ -2387,7 +2387,7 @@
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="키";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="해독 키를 따로 보냄";
+"Send Decryption Key Separately"="복호화 키를 따로 보냄";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="만료일";
 /* Text for options in Get Link View to set expiry date */
@@ -2397,7 +2397,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="암호 설정";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="링크와 해독 키를 따로 내보냅니다.";
+"Export the link and decryption key separately."="링크와 복호화 키를 따로 내보냅니다.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="더 알아보기";
 /* Text indicating the date until a link will be valid */
@@ -2407,7 +2407,7 @@
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="모두 복사";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="해독 키 따로 보내기, 만료일 또는 비밀번호 설정 등의 옵션은 단일 항목에만 설정 가능합니다.";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="복호화 키 따로 보내기, 만료일 또는 암호 설정 등의 옵션은 단일 항목에만 설정 가능합니다.";
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="링크가 클립보드에 복사되었습니다";
 /* Message shown when some links have been copied to the Clipboard */
@@ -2417,9 +2417,9 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="암호가 클립보드에 복사되었습니다";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="우리의 종단간 암호화 시스템은 이 파일을 위해 자동으로 생성된 고유의 키를 필요로 합니다. 이 키에 대한 링크는 자동으로 생성되지만, 보안을 위해 해독 키를 별도로 내보낼 수 있습니다.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="우리의 종단간 암호화 시스템은 이 파일을 위해 자동으로 생성된 고유의 키를 필요로 합니다. 이 키에 대한 링크는 자동으로 생성되지만, 보안을 위해 복호화 키를 별도로 내보낼 수 있습니다.";
 /* Text related to the decryption key of a public link */
-"Decryption Key"="해독 키";
+"Decryption Key"="복호화 키";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="암호 제거";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2525,13 +2525,13 @@
 /* Section title for the photo explorer view */
 "YESTERDAY"="어제";
 /* Photo Explorer Screen: No images in the accoun t */
-"No images found"="이미지가 없습니다";
+"No images found"="이미지 없음";
 /* Accessibility label for Home section in tabbar item */
 "Home"="홈";
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="문서";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="이 링크는 해독 키 없이 공유되었습니다. 키를 공유하시겠습니까?";
+"This link was shared without a decryption key. Do you want to share its key?"="이 링크는 복호화 키 없이 공유되었습니다. 키를 공유하시겠습니까?";
 /* Title for password protect link alert */
 "Link Password"="링크 암호";
 /* Message shown when a link is shared having a password */
@@ -2604,9 +2604,29 @@
 "The device does not have enough space for MEGA to run properly."="기기에 MEGA가 적절히 작동할 수준의 충분한 공간이 없습니다.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="사용하지 않는 앱을 삭제하거나 갤러리에서 큰 동영상 파일을 삭제하여 공간을 확보하세요. 다음의 메뉴에서 저장소를 관리할 수 있습니다 %@";
+/* The title of Turn on Notifications view */
+"dialog.turnOnNotifications.label.title"="알림 켜기";
+/* The description of Turn on Notifications view */
+"dialog.turnOnNotifications.label.description"="이 방법은, 새 메시지를 당신의 기기에서 즉시 볼 수 있습니다.";
+/* First step to turn on notifications */
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> <b>설정</b> 열기";
+/* Second step to turn on notifications */
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> <b>알림</b> 탭하기";
+/* Third step to turn on notifications */
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> <b>알림 허용</b> 켜기";
+/* Title of the button to open Settings */
+"dialog.turnOnNotifications.button.primary"="설정 열기";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="시작 탭 변경";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="이제 앱을 시작할 때 열릴 섹션을 선택할 수 있습니다. 대화, 클라우드 드라이브, 또는 홈 중 어떠한 것이든 당신에게 필요한 것을 선택할 수 있습니다.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="설정 변경";
+/* Offline log out warning message */
+"offline.logOut.warning.message"="로그아웃하면 이 기기에서 당신의 콘텐츠가 삭제됩니다.";
+/* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="공유 소유자의 저장소 할당량 초과.";
+/* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
+"dialog.shareOwnerStorageQuota.message"="대상 이용자의 저장소 할당량이 초과되어 파일을 전송할 수 없습니다.";
+/* Hud info message when edit large text file. */
+"general.textEditor.hud.uneditableLargeFile"="파일이 너무 커서 편집할 수 없습니다.";

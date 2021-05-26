@@ -2614,7 +2614,7 @@
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="Turn on Notifications";
-/* The description of Turn on Notifications view*/
+/* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
 /* First step to turn on notifications */
 "dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Open <b>Settings</b>";
