@@ -1793,6 +1793,7 @@
 		BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */; };
 		BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
+		BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE6906825350DF300CD21F9 /* EmptyStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6906725350DF300CD21F9 /* EmptyStateViewModel.swift */; };
@@ -3855,6 +3856,7 @@
 		BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerDetailTableCell.swift; sourceTree = "<group>"; };
 		BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerActionTableViewCell.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		BFE6906725350DF300CD21F9 /* EmptyStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateViewModel.swift; sourceTree = "<group>"; };
 		BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioExploreViewConfiguration.swift; sourceTree = "<group>"; };
@@ -8775,6 +8777,7 @@
 			children = (
 				BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */,
 				BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */,
+				BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */,
 				BFAB111223CEA5C300BCE72D /* Controller */,
 				BFAB111523CEA5C300BCE72D /* Cell */,
 				BFAB110F23CEA5C300BCE72D /* FlowLayout */,
@@ -10730,6 +10733,7 @@
 				5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */,
 				5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */,
 				BFAB114E23CEA5C300BCE72D /* AlbumsTableViewController.swift in Sources */,
+				BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */,
 				A86B9F672316D6AB00F35E7A /* FLEXFileBrowserTableViewController.m in Sources */,
 				B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */,
 				83B906BC249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,

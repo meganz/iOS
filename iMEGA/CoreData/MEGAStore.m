@@ -437,11 +437,13 @@
 
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     if (uploadTransfer) {
-        [self.managedObjectContext deleteObject:uploadTransfer];
-        
-        MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
-        
-        [self saveContext:self.managedObjectContext];
+        [self.managedObjectContext performBlockAndWait:^{
+            [self.managedObjectContext deleteObject:uploadTransfer];
+            
+            MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
+            
+            [self saveContext:self.managedObjectContext];
+        }];
     }
 }
 
