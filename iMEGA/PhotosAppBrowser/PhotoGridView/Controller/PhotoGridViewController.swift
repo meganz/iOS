@@ -8,6 +8,16 @@ final class PhotoGridViewController: UIViewController {
     private var sendBarButton: UIBarButtonItem?
     
     private var dataSource: PhotoGridViewDataSource?
+    @available(iOS 13.0, *)
+    private lazy var diffableDataSource: PhotoGridViewDiffableDataSource? = {
+        PhotoGridViewDiffableDataSource(
+            collectionView: collectionView,
+            selectedAssets: []
+        ) { [weak self] asset, indexPath, cellSize, touchPoint in
+            guard let self = self else { return }
+            self.didSelect(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
+        }
+    }()
     private var delegate: PhotoGridViewDelegate?
     
     private let album: Album
@@ -52,6 +62,10 @@ final class PhotoGridViewController: UIViewController {
         
         navigationController?.presentationController?.delegate = self
         album.delegate = self
+        
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.reload(assets: album.allAssets)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,7 +87,14 @@ final class PhotoGridViewController: UIViewController {
     // MARK:- Private methods.
     
     private func showDetail(indexPath: IndexPath) {
-        guard let selectedAssets = dataSource?.selectedAssets else {
+        let selectedAssets: [PHAsset]?
+        if #available(iOS 13.0, *) {
+            selectedAssets = diffableDataSource?.selectedAssets
+        } else {
+            selectedAssets = dataSource?.selectedAssets
+        }
+        
+        guard let selectedAssets = selectedAssets  else {
             return
         }
         
@@ -87,13 +108,19 @@ final class PhotoGridViewController: UIViewController {
     }
     
     private func updateBottomView() {
-        if let assetsCount = dataSource?.selectedAssets.count,
-            (assetsCount > 0) {
+        let assetsCount: Int
+        if #available(iOS 13.0, *) {
+            assetsCount = diffableDataSource?.selectedAssets.count ?? 0
+        } else {
+            assetsCount = dataSource?.selectedAssets.count ?? 0
+        }
+        
+        if assetsCount > 0 {
             sendBarButton?.title = String(format: selectionActionText, assetsCount)
         }
         
         if navigationController?.topViewController == self {
-            navigationController?.setToolbarHidden((dataSource?.selectedAssets.count ?? 0) == 0,
+            navigationController?.setToolbarHidden(assetsCount == 0,
                                                    animated: true)
         }
     }
@@ -101,21 +128,18 @@ final class PhotoGridViewController: UIViewController {
     private func updateView() {
         title = album.title
         
-        dataSource = PhotoGridViewDataSource(album: album,
-                                             collectionView: collectionView,
-                                             selectedAssets: []) { [weak self] asset, indexPath, size, point in
-                                                guard let weakself = self else {
-                                                    return
-                                                }
-                                                
-                                                if point.x >= (size.width / 2.0)
-                                                    && point.y <= (size.height / 2.0) {
-                                                    self?.dataSource?.didSelect(asset: asset, atIndexPath: indexPath)
-                                                } else {
-                                                    self?.showDetail(indexPath: indexPath)
-                                                }
-                                                
-                                                weakself.updateBottomView()
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.configureDataSource()
+        } else {
+            dataSource = PhotoGridViewDataSource(
+                album: album,
+                collectionView: collectionView,
+                selectedAssets: []
+            ) { [weak self] asset, indexPath, cellSize, touchPoint in
+                guard let self = self else { return }
+                self.didSelect(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
+            }
+            collectionView.dataSource = dataSource
         }
         
         delegate = PhotoGridViewDelegate(collectionView: collectionView) { [weak self] in
@@ -136,8 +160,22 @@ final class PhotoGridViewController: UIViewController {
             return cellsPerRow
         }
         
-        collectionView.dataSource = dataSource
         collectionView.delegate = delegate
+    }
+    
+    private func didSelect(asset: PHAsset, indexPath: IndexPath, cellSize: CGSize, touchPoint: CGPoint) {
+        if touchPoint.x >= (cellSize.width / 2.0)
+            && touchPoint.y <= (cellSize.height / 2.0) {
+            if #available(iOS 13.0, *) {
+                diffableDataSource?.didSelect(asset: asset)
+            } else {
+                dataSource?.didSelect(asset: asset, atIndexPath: indexPath)
+            }
+        } else {
+            showDetail(indexPath: indexPath)
+        }
+        
+        updateBottomView()
     }
     
     private func addToolbar() {
@@ -149,13 +187,25 @@ final class PhotoGridViewController: UIViewController {
 
 extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
     func selected(assets: [PHAsset]) {
-        dataSource?.selectedAssets = assets
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.selectedAssets = assets
+            diffableDataSource?.reload(assets: album.allAssets)
+        } else {
+            dataSource?.selectedAssets = assets
+            collectionView.reloadData()
+        }
         updateBottomView()
-        collectionView.reloadData()
     }
     
     @objc func sendButtonTapped() {
-        guard let selectedAssets = dataSource?.selectedAssets else {
+        let selectedAssets: [PHAsset]
+        if #available(iOS 13.0, *) {
+            selectedAssets = diffableDataSource?.selectedAssets ?? []
+        } else {
+            selectedAssets = dataSource?.selectedAssets ?? []
+        }
+        
+        guard !selectedAssets.isEmpty else {
             return
         }
         
@@ -169,12 +219,28 @@ extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
 
 extension PhotoGridViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
-        dataSource?.selectedAssets.count == 0
+        let assetsCount: Int
+        
+        if #available(iOS 13.0, *) {
+            assetsCount = diffableDataSource?.selectedAssets.count ?? 0
+        } else {
+            assetsCount = dataSource?.selectedAssets.count ?? 0
+        }
+        
+        return assetsCount == 0
     }
     
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         guard let barButton = navigationItem.rightBarButtonItem else { return }
-        if (dataSource?.selectedAssets.count ?? 0) > 0 {
+        let assetsCount: Int
+        
+        if #available(iOS 13.0, *) {
+            assetsCount = diffableDataSource?.selectedAssets.count ?? 0
+        } else {
+            assetsCount = dataSource?.selectedAssets.count ?? 0
+        }
+        
+        if assetsCount > 0 {
             let discardChangesActionSheet = UIAlertController().discardChanges(fromBarButton: barButton, withConfirmAction: {
                 self.dismiss(animated: true, completion: nil)
             })
@@ -185,40 +251,50 @@ extension PhotoGridViewController: UIAdaptivePresentationControllerDelegate {
 
 extension PhotoGridViewController: AlbumDelegate {
     func didResetFetchResult() {
-        collectionView.reloadData()
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.reload(assets: album.allAssets)
+        } else {
+            collectionView.reloadData()
+        }
     }
     
     func didChange(removedIndexPaths: [IndexPath]?,
                    insertedIndexPaths: [IndexPath]?,
                    changedIndexPaths: [IndexPath]?) {
-        if let removedIndexPaths = removedIndexPaths,
-              let changedIndexPaths = changedIndexPaths,
-              !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
-            collectionView.reloadData()
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.reload(assets: album.allAssets)
+            updateBottomView()
             return
-        }
-        
-        if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= album.assetCount() {
-            collectionView.reloadData()
-            return
-        }
-        
-        collectionView.performBatchUpdates({
-            if let removedIndexPaths = removedIndexPaths {
-                let selectedIndexPathsToBeDeleted = removeSelectedAssets(forIndexPaths: removedIndexPaths)
-                let selectedIndexPathsToBeReloaded = visibleSelectedAssetsIndexPaths(ignoreIndexPaths: selectedIndexPathsToBeDeleted)
-                collectionView.reloadItems(at:selectedIndexPathsToBeReloaded)
-                collectionView.deleteItems(at: removedIndexPaths)
+        } else {
+            if let removedIndexPaths = removedIndexPaths,
+                  let changedIndexPaths = changedIndexPaths,
+                  !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
+                collectionView.reloadData()
+                return
             }
             
-            if let insertedIndexPaths = insertedIndexPaths {
-                collectionView.insertItems(at: insertedIndexPaths)
+            if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= album.assetCount() {
+                collectionView.reloadData()
+                return
             }
             
-            if let changedIndexPaths = changedIndexPaths {
-                collectionView.reloadItems(at: changedIndexPaths)
-            }
-        }, completion: nil)
+            collectionView.performBatchUpdates({
+                if let removedIndexPaths = removedIndexPaths {
+                    let selectedIndexPathsToBeDeleted = removeSelectedAssets(forIndexPaths: removedIndexPaths)
+                    let selectedIndexPathsToBeReloaded = visibleSelectedAssetsIndexPaths(ignoreIndexPaths: selectedIndexPathsToBeDeleted)
+                    collectionView.reloadItems(at:selectedIndexPathsToBeReloaded)
+                    collectionView.deleteItems(at: removedIndexPaths)
+                }
+                
+                if let insertedIndexPaths = insertedIndexPaths {
+                    collectionView.insertItems(at: insertedIndexPaths)
+                }
+                
+                if let changedIndexPaths = changedIndexPaths {
+                    collectionView.reloadItems(at: changedIndexPaths)
+                }
+            }, completion: nil)
+        }
     }
     
     private func removeSelectedAssets(forIndexPaths indexPaths: [IndexPath]) -> [IndexPath] {

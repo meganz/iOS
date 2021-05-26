@@ -11,7 +11,12 @@ protocol AlbumDelegate: AnyObject {
 
 final class Album: NSObject {
     let title: String
-    private var fetchResult: PHFetchResult<PHAsset>
+    private var fetchResult: PHFetchResult<PHAsset> {
+        didSet {
+            allAssets = (0..<fetchResult.count).map { fetchResult.object(at: $0) }
+        }
+    }
+    private(set) var allAssets: [PHAsset] = []
     typealias UpdatedFetchResultsHandler = ((Album) -> Void)
     private let updatedFetchResultsHandler: UpdatedFetchResultsHandler
 
@@ -22,6 +27,7 @@ final class Album: NSObject {
     init(title: String, fetchResult: PHFetchResult<PHAsset>, updatedFetchResultsHandler: @escaping UpdatedFetchResultsHandler) {
         self.title = title
         self.fetchResult = fetchResult
+        self.allAssets = (0..<fetchResult.count).map { fetchResult.object(at: $0) }
         self.updatedFetchResultsHandler = updatedFetchResultsHandler
         super.init()
         PHPhotoLibrary.shared().register(self)

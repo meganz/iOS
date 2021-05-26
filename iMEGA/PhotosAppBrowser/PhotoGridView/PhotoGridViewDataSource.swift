@@ -93,5 +93,3 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
         return cell
     }
 }
-
-
