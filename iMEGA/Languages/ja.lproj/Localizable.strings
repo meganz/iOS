@@ -1980,6 +1980,10 @@
 "New Group Chat"="新しいグループチャット";
 /* Title for the recents section. */
 "Recents"="最近";
+/* Title show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.title"="最近のアクティビティは非表示です";
+/* Title of the button show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.button"="アクティビティを表示";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1個の画像";
 /* Multiple videos title shown in recents section of web client. */
@@ -2258,6 +2262,10 @@
 "Default Tab"="デフォルトタブ";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="並べ替えと表示モード";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
+"settings.userInterface.hideRecentActivity"="最近のアクティビティを非表示にする";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
+"settings.userInterface.hideRecentActivity.footer"="ホームセクションの最近のアクティビティを非表示にします。";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="デフォルト";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2630,3 +2638,5 @@
 "dialog.shareOwnerStorageQuota.message"="ターゲットユーザーはストレージ容量を超えているため、ファイルを送信できません。";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="ファイルが大きすぎて編集できません。";
+/* Hud info message when read unknown encode file. */
+"general.textEditor.hud.unknownEncode"="コンテンツのエンコーディングが不明なため、ファイルを編集できませんでした。";
