@@ -17,6 +17,7 @@
     func build() -> UIViewController {
         let vm = CreateTextFileAlertViewModel(router: self)
         let vc = CreateTextFileAlertViewController(title: nil, message: nil, preferredStyle: .alert)
+        vc.configView()
         vc.viewModel = vm
         baseViewController = vc
         return vc
