@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuale";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Questo elemento di acquisto in-app non è disponibile al momento nell'App Store. Per favore, riprova.";
+"inAppPurchase.error.alert.title.notAvailable"="Questo acouisto in-app non è disponibile nell'App Store al momento. Per favore, verifica le impostazioni del pagamento per il tuo Apple ID.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="Impostazioni dell'App Store";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Grazie";
 /* Alert message shown when a purchase was restored succesfully */
@@ -2144,8 +2146,6 @@
 "Remove Nickname"="Rimuovi nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias / Nickname";
-/* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Non è stato possibile ottenere il contenuto di questo file, in quanto non è codificato in UTF-8 né ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pagamento in ritardo";
 /* Business account status */
@@ -2604,9 +2604,29 @@
 "The device does not have enough space for MEGA to run properly."="Il dispositivo non ha abbastanza spazio libero affinché MEGA possa funzionare correttamente.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera un po’ di spazio eliminando le app che non usi più o i video di grandi dimensioni nella tua galleria.Puoi gestire il tuo spazio in %@";
+/* The title of Turn on Notifications view */
+"dialog.turnOnNotifications.label.title"="Attiva le notifiche";
+/* The description of Turn on Notifications view */
+"dialog.turnOnNotifications.label.description"="In questo modo, vedrai istantaneamente i nuovi messaggi sul tuo dispositivo.";
+/* First step to turn on notifications */
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Apri le <b>Impostazioni</b>";
+/* Second step to turn on notifications */
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Clicca su <b>Notifiche</b>";
+/* Third step to turn on notifications */
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Attiva <b>Permetti notifiche</b>";
+/* Title of the button to open Settings */
+"dialog.turnOnNotifications.button.primary"="Apri le Impostazioni";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Cambia finestra di avvio";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Adesso puoi selezionare la finestra che viene aperta dall'app all'avvio. Scegli quella che incontra meglio i tuoi bisogni, tra Chat, Cloud Drive, o Home.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Cambia impostazioni";
+/* Offline log out warning message */
+"offline.logOut.warning.message"="Il tuo contenuto verrà eliminato da questo dispositivo quando effettuerai il logout.";
+/* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="Il proprietario della condivisione ha superato il limite dello spazio di archiviazione.";
+/* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
+"dialog.shareOwnerStorageQuota.message"="Il file non può essere inviato in quanto l'utente destinatario ha superato il limite dello spazio di archiviazione.";
+/* Hud info message when edit large text file. */
+"general.textEditor.hud.uneditableLargeFile"="Il file è troppo grande e non può essere modificato.";

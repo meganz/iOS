@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="這個In-APP內建購買項目目前於App Store未能選用。請晚點再試一次。";
+"inAppPurchase.error.alert.title.notAvailable"="此應用程式內的購買項目在App Store尚未能購買。請驗證您的Apple ID的付款設定。";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="App Store設定";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="謝謝您";
 /* Alert message shown when a purchase was restored succesfully */
@@ -2144,8 +2146,6 @@
 "Remove Nickname"="移除暱稱";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="別名 / 暱稱";
-/* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="付款逾期";
 /* Business account status */
@@ -2604,9 +2604,29 @@
 "The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間來讓MEGA正確的運行";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="請刪除您沒在使用的應用程式或相簿裡大容量的影片檔案以釋放一些空間。您可以在%@管理您的儲存空間。";
+/* The title of Turn on Notifications view */
+"dialog.turnOnNotifications.label.title"="開啟提醒通知";
+/* The description of Turn on Notifications view */
+"dialog.turnOnNotifications.label.description"="這樣您將在您的裝置上立即看到新的訊息。";
+/* First step to turn on notifications */
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> 開啟<b>設定</b>";
+/* Second step to turn on notifications */
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> 點擊<b>通知</b>";
+/* Third step to turn on notifications */
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> 啟用<b>允許通知</b>";
+/* Title of the button to open Settings */
+"dialog.turnOnNotifications.button.primary"="開啟設定";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="變更啟動按鈕";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="您現在可以選擇在啟動時打開應用程式的哪個部分功能。選擇最適合您需求的，無論是聊天室、雲端硬碟、或首頁。";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="變更設定";
+/* Offline log out warning message */
+"offline.logOut.warning.message"="當您登出時，您在此裝置的內容將被刪除。";
+/* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="共享擁有著超出其空間配額。";
+/* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
+"dialog.shareOwnerStorageQuota.message"="檔案無法傳送給接收者，因為對方超出其空間配額。";
+/* Hud info message when edit large text file. */
+"general.textEditor.hud.uneditableLargeFile"="檔案太大無法編輯";

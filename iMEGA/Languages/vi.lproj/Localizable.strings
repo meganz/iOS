@@ -41,7 +41,7 @@
 /*  */
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Liên kết xác nhận không còn hiệu lực. Tài khoản của có thể đã được kích hoạt rồi hoặc việc đăng ký đã bị hủy.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Đường dẫn liên kết không hợp lệ";
+"linkNotValid"="Đường liên kết không hợp lệ";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Tài khoản người dùng sở hữu đường liên kết này đã bị chấm dứt do vi phạm nhiều [A] Điều khoản Dịch vụ [/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chìa khóa mã";
 /* Button title to try to decrypt the link */
-"decrypt"="Giải khóa mã";
+"decrypt"="Giải mã";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Chìa khóa mã không hợp lệ";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi email. Xin sử dụng email hiện thời của tài khoản này và sau đó clíck vào đường liên kết xác thực.";
+"needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi email. Xin sử dụng email hiện thời của tài khoản này và sau đó clíck vào đường liên kết để xác nhận.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Đăng nhập";
 /* Button title which triggers the action to create a MEGA account */
@@ -151,7 +151,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA cần ít nhân thêm %@. Xin xóa bớt ứng dụng ít dùng tới hoặc các videos có kích thước lớn trong kho ảnh. Kiểm tra các nội dung đã được lưu lại từ MEGA vào trong mát nếu cần thiết.";
 /* Title for the file link view */
-"fileLink"="Đường liên kết tới tệp tin";
+"fileLink"="Đường liên kết Tệp Tin";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Mở";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -161,27 +161,27 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Đường liên kết không còn tồn tại";
 /*  */
-"fileLinkUnavailableText1"="Điều này có thể do:";
+"fileLinkUnavailableText1"="Điều này xảy ra có thể do:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều Khoản DV hay Chính Sách SD.";
+"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều Khoản DV / Chính Sách SD.";
 /*  */
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
 "fileLinkUnavailableText4"="Tệp tin đã bị xóa bởi người cung cấp.";
 /* Message shown when a download starts */
-"downloadStarted"="Đang tải xuống";
+"downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
-"folderLink"="Đường dẫn liên kết Thư Mục";
+"folderLink"="Đường liên kết Thư Mục";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Thư mục bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Không tạo được thư mục '%@'";
+"folderCreationError"="Không tạo được thư mục “%@”";
 /*  */
-"folderLinkUnavailableText1"="Điều này có thể do:";
+"folderLinkUnavailableText1"="Điều này xảy ra có thể do:";
 /*  */
-"folderLinkUnavailableText2"="Liên kết thư mục đã bị xóa bỏ bởi vì vi phạm Điều Khoản DV hay Chính Sách SD.";
+"folderLinkUnavailableText2"="Liên kết thư mục đã bị xóa bỏ bởi vì vi phạm Điều Khoản DV / Chính Sách SD.";
 /*  */
 "folderLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
@@ -199,7 +199,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Thùng Rác Trống";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Không có tệp tin nào được Lưu về Ngoại Tuyến";
+"offlineEmptyState_title"="Không có tệp nào trong Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Không Có Tên Liên Lạc Nào";
 /* Title shown when there's no incoming Shared Items */
@@ -211,11 +211,11 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Thêm tên liên lạc";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Mời Vào MEGA";
+"inviteContact"="Mời vào MEGA";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Lời Mời Đã Gửi";
 /* Button title to allow the user postpone an action */
-"later"="Chờ lúc khác";
+"later"="Lúc khác";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Đã nhận";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -293,11 +293,11 @@
 /* Menu option from the `Add` section that allows the user to share contact. */
 "Contact"="Tên liên lạc";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="Tạo nhóm chat";
+"Start Group"="Tạo Nhóm Chát";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Vị trí";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Tin nhắn thoại";
+"Voice Clip"="Tin Nhắn Thoại";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Tệp Tin Văn Bản Mới";
 /* Hint text shown on the new text file alert. */
@@ -305,7 +305,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư Mục Mới";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="Đặt tên cho thư mục";
+"newFolderMessage"="Đặt tên cho thư mục mới";
 /* Title button for the create folder alert. */
 "createFolderButton"="Tạo";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
@@ -321,13 +321,13 @@
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d tệp tin bạn vừa chọn đã được tải lên và có trong thư mục này rồi.";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Đang tải lên";
+"uploadStarted_Message"="Tải lên được bắt đầu";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="Bạn không còn quyền hạn để truy cập tệp tin này nữa";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Bạn không còn quyền hạn để truy cập thư mục này nữa";
 /* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Lưu để dùng ngoại tuyến";
+"saveForOffline"="Lưu về dùng ngoại tuyến";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Hộp thư được bảo lưu cho Apple sử dụng.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -343,11 +343,11 @@
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Đang tạo đường liên kết…";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="Đang tạo đường liên kết…";
+"generatingLinks"="Đang tạo các đường liên kết…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Liên kết đã được ghi vào bộ nhớ";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Các đường liên kết đã được sao chép";
+"linksCopied"="Các liên kết đã được ghi vào bộ nhớ";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Đã lưu vào bộ ghi nhớ";
 /* A title for the Copyright Warning dialog. */
@@ -361,7 +361,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="Đồng ý";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Không chấp thuận";
+"disagree"="Không đồng ý";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Liên kết không kèm chìa khóa";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -377,7 +377,7 @@
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypted"="Mã hoá";
 /* Title for a button to copy the link to the clipboard */
-"copyLink"="Sao chép đường liên kết";
+"copyLink"="Sao chép liên kết";
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="Sao chép mã khóa";
 /* Title shown under the action that allows you to open a file in another app */
@@ -387,7 +387,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Chạm vào tệp để đổi tên";
 /*  */
-"sendToContact"="Gửi đến người khác";
+"sendToContact"="Gửi đến Tên Liên Lạc";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Các cuộc chát";
 /* Toast text upon sending a single file to chat */
@@ -417,7 +417,7 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 tệp tin đã được chuyển";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="Di chuyển xong %d tệp tin";
+"moveFilesMessage"="%d tệp tin đã được chuyển xong";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="1 thư mục đã được chuyển";
 /* Success message shown when you have moved {1+} folders */
@@ -813,7 +813,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Bạn đang chuẩn bị xóa vĩnh viễn [A] tệp tin và [B] thư mục. Bạn có muốn tiến hành không? (Bạn sẽ không thể khôi phục lại việc làm này.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="Đã khóa 1 tệp tin khỏi MEGA";
+"fileRemovedToRubbishBinMessage"="Đã xóa 1 tệp tin khỏi MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
 "filesRemovedToRubbishBinMessage"="%d tệp tin đã xóa khỏi MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
@@ -831,9 +831,9 @@
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Mật khẩu mới";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Xác nhận mật khẩu";
+"confirmPassword"="Xác Nhận Lại Mật Khẩu";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Bạn vừa đổi mật khẩu.";
+"passwordChanged"="Mật khẩu đã được thay đổi.";
 /* An option to reset the password. */
 "forgotPassword"="Quên mất mật khẩu?";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -843,11 +843,11 @@
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Xin nhập Mã Phục Hồi";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Mã Khóa Phục Hồi";
+"recoveryKey"="Mã Phục Hồi";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Sai Mã Khóa Phục Hồi";
+"invalidRecoveryKey"="Sai Mã Phục Hồi";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Mã Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin mật khẩu mới bạn muốn dùng.";
+"youRecoveryKeyIsGoingTo"="Mã Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin mật khẩu mới bạn muốn dùng.";
 /*  */
 "yourPasswordHasBeenReset"="Mật khẩu đã được đặt lại thành công. Bạn có thể đăng nhập vào tài khoản ngay bây giờ.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -865,7 +865,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Xác nhận thay đổi email";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Nhập lại địa chỉ email";
+"confirmNewEmail"="Xác nhận lại email mới";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Đổi Địa Chỉ Email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -873,9 +873,9 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Địa chỉ email vừa nhập không trùng khớp";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="Bạn đã yêu cầu gửi một đường liên kết xác thực cho địa chỉ email này rồi.";
+"emailAddressChangeAlreadyRequested"="Bạn đã yêu cầu gửi một đường liên kết xác nhận cho địa chỉ email này rồi.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Xin kiểm tra hộp thư và click vào đường liên kết để xác thực địa chỉ email mới.";
+"emailIsChanging_description"="Xin kiểm tra hộp thư và clíck vào đường liên kết để xác nhận địa chỉ email mới.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Xin nhập mật khẩu để xác thực đây là email của bạn";
 /* The [X] will be replaced with the e-mail address. */
@@ -1035,7 +1035,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="Ngày chu kỳ mới";
+"Renews on"="Ngày tự gia hạn";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Mục Chia Sẻ Nhận Được";
 /* Button title which triggers the action to upgrade your MEGA account level */
@@ -1061,9 +1061,9 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Chọn dạng tài khoản:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Cước phí thường niên rẻ hơn 17% so với chi trả 12 tháng riêng rẽ";
+"twoMonthsFree"="Thuê bao thường niên rẻ hơn 17% so với chi trả 12 tháng riêng rẽ";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói dịch vụ hiện tại, xin liên hệ với đội trợ giúp để có một [A]gói cước theo nhu cầu[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói thuê bao hiện tại, xin liên hệ với đội hỗ trợ để có một [A]gói theo nhu cầu[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Gói Hiện Tại:";
 /* A label which shows the user's current PRO plan. */
@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="Hàng năm";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Mặt hàng này hiện không tồn tại trong App Store vào lúc này. Xin thử lại sau.";
+"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please verify payment settings for your Apple ID.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="Cài đặt App Store";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Cảm ơn quý khách";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1153,17 +1155,17 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Tôi";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] đã bị xóa khỏi nhóm chat bởi [B].";
+"wasRemovedFromTheGroupChatBy"="[A] đã bị xóa khỏi nhóm chát bởi [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] đã rời khỏi nhóm chát.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chat từ lời mời của [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chát từ lời mời của [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] đã xóa lịch sử cuộc trò chuyện.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] được đổi thành [B] bởi [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chat thành '[B]'";
+"changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chát thành “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Mời thêm người vào trò chuyện…";
 /* Menu item to add participants to a chat */
@@ -1331,7 +1333,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Bạn có chắc muốn hủy bỏ việc đăng ký?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa cho chính xác rồi clíck nút 'Gửi lại'.";
+"misspelledEmailAddress"="Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa cho chính xác rồi clíck nút “Gửi lại”.";
 /* A button to resend the email confirmation. */
 "resend"="Gửi lại";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1353,7 +1355,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu TIN NHẮN CHƯA ĐỌC";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA Pro của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
+"autorenewableDescription"="Các gói thuê bao sẽ được tự động gia hạn chu kỳ kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID. Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA Pro của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi bật-tắt để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Mở app MEGA và đăng nhập để tiếp tục";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1451,7 +1453,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA cũng cấp cho mỗi thành viên 50 GB không gian để lưu trữ hoàn toàn miễn phí, kèm thêm nhiều cách ưu đãi để mở rộng hạn mức cùng với hạng tài khoản trả phí:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Gói Pro Lite: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 400 GB không gian lưu trữ và 1 TB cho băng thông truyền tải mỗi tháng.\nGói Pro I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 2 TB không gian lưu trữ và 2 TB cho băng thông truyền tải mỗi tháng.\nGói Pro II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 8 TB cho băng thông truyền tải mỗi tháng.\nGói Pro III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 16 TB không gian lưu trữ và 16 TB cho băng thông truyền tải mỗi tháng.";
+"generalDescriptionParagraph5"="Gói thuê bao Pro Lite: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 400 GB không gian lưu trữ và 1 TB cho lượng băng thông tải mỗi tháng.\nGói Pro I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 2 TB không gian lưu trữ và 2 TB cho lượng băng thông tải mỗi tháng.\nGói Pro II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 8 TB cho lượng băng thông tải mỗi tháng.\nGói Pro III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 16 TB không gian lưu trữ và 16 TB cho lượng băng thông tải mỗi tháng.";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nĐiều Khoản Sử Dụng Dịch Vụ: https://mega.nz/terms\nChính Sách Quyền Riêng Tư: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
@@ -2144,8 +2146,6 @@
 "Remove Nickname"="Xóa biệt danh";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Tên hay biệt danh dễ nhớ";
-/* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Hệ thống đã không thể thu thập nội dung của tệp tin này, bởi vì tệp tin không có viết ở dạng mã UTF-8 hoặc ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Thánh toán bị quá hạn";
 /* Business account status */
@@ -2604,9 +2604,29 @@
 "The device does not have enough space for MEGA to run properly."="Thiết bị này không đủ không gian để MEGA chạy bình thường.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Giảm tải không gian bằng cách xóa đi các ứng dụng không có sử dụng hoặc các video có kích thước lớn trong thư viện ảnh. Quản lý không gian trong phần %@";
+/* The title of Turn on Notifications view */
+"dialog.turnOnNotifications.label.title"="Bật Thông Báo";
+/* The description of Turn on Notifications view */
+"dialog.turnOnNotifications.label.description"="Khi được bật, bạn sẽ thấy được tin nhắn trên thiết bị ngay tức thì.";
+/* First step to turn on notifications */
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Mở <b>Cài đặt</b>";
+/* Second step to turn on notifications */
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Chạm vào <b>Thông báo</b>";
+/* Third step to turn on notifications */
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Bật <b>Cho phép thông báo</b>";
+/* Title of the button to open Settings */
+"dialog.turnOnNotifications.button.primary"="Đi tới Cài đặt";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Đổi Tab Khởi Động";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ Mây, hoặc Trang Chủ.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Thay đổi Thiết Đặt";
+/* Offline log out warning message */
+"offline.logOut.warning.message"="Nội dung lưu ngoại tuyến sẽ bị xóa khỏi thiết bị khi bạn đăng xuất.";
+/* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="Chủ sở hữu dùng hết lượng băng thông.";
+/* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
+"dialog.shareOwnerStorageQuota.message"="Tệp tin không thể gửi tới người đã chọn vì họ đã dùng hết lượng băng thông lưu trữ của mình.";
+/* Hud info message when edit large text file. */
+"general.textEditor.hud.uneditableLargeFile"="Tệp tin có kích thước quá lớn và không thể chỉnh sửa được.";
