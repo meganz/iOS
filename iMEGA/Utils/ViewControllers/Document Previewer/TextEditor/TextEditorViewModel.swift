@@ -12,6 +12,7 @@ enum TextEditorViewAction: ActionType {
     case downloadToOffline
     case importNode
     case share(sender: Any)
+    case editAfterOpen
 }
 
 @objc enum TextEditorMode: Int, CaseIterable {
@@ -57,6 +58,8 @@ final class TextEditorViewModel: ViewModelType {
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadFileUseCase: DownloadFileUseCaseProtocol
     private var nodeActionUseCase: NodeActionUseCaseProtocol
+    private var shouldEditAfterOpen: Bool = false
+    private var showErrorWhenToSetupView: Command?
     
     init(
         router: TextEditorViewRouting,
@@ -93,7 +96,9 @@ final class TextEditorViewModel: ViewModelType {
         case .dismissTextEditorVC:
             router.dismissTextEditorVC()
         case .editFile:
-            editFile()
+            editFile(shallUpdateContent: false)
+        case .editAfterOpen:
+            editAfterOpen()
         case .showActions(sender: let button):
             router.showActions(sender: button)
         case .cancelText(let content):
@@ -107,6 +112,7 @@ final class TextEditorViewModel: ViewModelType {
         case .share(sender: let button):
             router.share(nodeHandle: nodeHandle, sender: button)
         }
+        
     }
     
     //MARK: - Private functions
@@ -119,6 +125,11 @@ final class TextEditorViewModel: ViewModelType {
         } else {
             invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+        }
+        
+        if let command = showErrorWhenToSetupView {
+            invokeCommand?(command)
+            showErrorWhenToSetupView = nil
         }
     }
     
@@ -184,12 +195,24 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func editFile() {
+    private func editFile(shallUpdateContent: Bool) {
         if textFile.size < TextFile.maxEditableFileSize {
             textEditorMode = .edit
-            setupView(shallUpdateContent: false)
+            setupView(shallUpdateContent: shallUpdateContent)
         } else {
-            invokeCommand?(.showError(message: TextEditorL10n.uneditableLargeFileMessage))
+            if invokeCommand != nil {
+                invokeCommand?(.showError(message: TextEditorL10n.uneditableLargeFileMessage))
+            } else {
+                showErrorWhenToSetupView = .showError(message: TextEditorL10n.uneditableLargeFileMessage)
+            }
+        }
+    }
+    
+    private func editAfterOpen() {
+        if textEditorMode == .view {
+            editFile(shallUpdateContent: true)
+        } else if textEditorMode == .load {
+            shouldEditAfterOpen = true
         }
     }
     
@@ -234,8 +257,13 @@ final class TextEditorViewModel: ViewModelType {
                     var encode: String.Encoding = .utf8
                     self.textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
                     self.textFile.encode = encode.rawValue
-                    self.textEditorMode = .view
-                    self.setupView(shallUpdateContent: true)
+                    if self.shouldEditAfterOpen {
+                        self.editFile(shallUpdateContent: true)
+                        self.shouldEditAfterOpen = false
+                    } else {
+                        self.textEditorMode = .view
+                        self.setupView(shallUpdateContent: true)
+                    }
                 } catch {
                     self.router.showPreviewDocVC(fromFilePath: path)
                 }

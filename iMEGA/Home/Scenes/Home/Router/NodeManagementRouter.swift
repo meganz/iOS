@@ -45,4 +45,10 @@ final class NodeManagementRouter: NSObject {
             }
         }
     }
+    
+    func showEditTextFile(for node: MEGANode) {
+        if let vc = navigationController?.viewControllers.last {
+            node.mnz_editTextFile(in: vc)
+        }
+    }
 }

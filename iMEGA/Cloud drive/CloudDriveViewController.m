@@ -1895,6 +1895,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
+        case MegaNodeActionTypeEditTextFile: {
+            [node mnz_editTextFileInViewController:self];
+            break;
+        }
+
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             if ([node mnz_downloadNode]) {

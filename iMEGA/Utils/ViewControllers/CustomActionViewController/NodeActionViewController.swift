@@ -66,6 +66,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .setIsMediaFile(node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable()))
+            .setIsEditableTextFile(node.isFile() && node.name.mnz_isEditableTextFilePathExtension)
             .setIsFile(node.isFile())
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)

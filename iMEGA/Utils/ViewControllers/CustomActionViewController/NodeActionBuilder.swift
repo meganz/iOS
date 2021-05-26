@@ -4,6 +4,7 @@ final class NodeActionBuilder {
     private var displayMode: DisplayMode = .unknown
     private var accessLevel: MEGAShareType = .accessUnknown
     private var isMediaFile: Bool = false
+    private var isEditableTextFile: Bool = false
     private var isFile: Bool = false
     private var isFavourite: Bool = false
     private var label: MEGANodeLabel = .unknown
@@ -29,6 +30,11 @@ final class NodeActionBuilder {
     
     func setIsMediaFile(_ isMediaFile: Bool) -> NodeActionBuilder {
         self.isMediaFile = isMediaFile
+        return self
+    }
+    
+    func setIsEditableTextFile(_ isEditableTextFile: Bool) -> NodeActionBuilder {
+        self.isEditableTextFile = isEditableTextFile
         return self
     }
     
@@ -181,6 +187,9 @@ final class NodeActionBuilder {
                 nodeActions.append(NodeAction.downloadAction())
                 
             case .accessRead, .accessReadWrite:
+                if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+                    nodeActions.append(NodeAction.textEditorAction())
+                }
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
                     nodeActions.append(NodeAction.infoAction())
                 }
@@ -198,6 +207,9 @@ final class NodeActionBuilder {
                 }
                 
             case .accessFull:
+                if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+                    nodeActions.append(NodeAction.textEditorAction())
+                }
                 if displayMode != .nodeInfo && displayMode != .nodeVersions {
                     nodeActions.append(NodeAction.infoAction())
                     nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
@@ -225,6 +237,9 @@ final class NodeActionBuilder {
                 
             case .accessOwner:
                 if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
+                    if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+                        nodeActions.append(NodeAction.textEditorAction())
+                    }
                     if displayMode != .nodeInfo {
                         nodeActions.append(NodeAction.infoAction())
                         nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))

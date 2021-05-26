@@ -704,6 +704,103 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
+    func testAction_editAfterOpen_view_editableSize() {
+        let textFile = TextFile(
+            fileName: "testAction_editAfterOpen_view_editableSize",
+            content: "test content",
+            size: TextFile.maxEditableFileSize - 1,
+            encode: String.Encoding.utf8.rawValue
+        )
+        
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .view,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadFileUseCase: mockDownloadFileUC,
+            nodeActionUseCase: mockNodeActionUC
+        )
+        
+        let textEditorModel = TextEditorModel(
+            textFile: textFile,
+            textEditorMode: .edit,
+            accessLevel: nil
+        )
+        
+        let navbarItemsModel = TextEditorNavbarItemsModel (
+            leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
+            rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+            textEditorMode: .edit
+        )
+
+        test(viewModel: viewModel,
+             action: .editAfterOpen,
+             expectedCommands: [
+                .configView(textEditorModel, shallUpdateContent: true),
+                .setupNavbarItems(navbarItemsModel)
+             ]
+        )
+    }
+    
+    func testAction_editAfterOpen_view_ineditableSize() {
+        let textFile = TextFile(
+            fileName: "testAction_editAfterOpen_view_ineditableSize",
+            content: "test content",
+            size: TextFile.maxEditableFileSize,
+            encode: String.Encoding.utf8.rawValue
+        )
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .view,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadFileUseCase: mockDownloadFileUC,
+            nodeActionUseCase: mockNodeActionUC
+        )
+
+        test(viewModel: viewModel,
+             action: .editAfterOpen,
+             expectedCommands: [.showError(message: TextEditorL10n.uneditableLargeFileMessage)]
+        )
+    }
+    
+    func testAction_editAfterOpen_load() {
+        let textFile = TextFile(
+            fileName: "testAction_editAfterOpen_load",
+            content: "test content",
+            size: TextFile.maxEditableFileSize,
+            encode: String.Encoding.utf8.rawValue
+        )
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        let mockDownloadFileUC = MockDownloadFileUseCase()
+        let mockNodeActionUC = MockNodeActionUseCase()
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .load,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadFileUseCase: mockDownloadFileUC,
+            nodeActionUseCase: mockNodeActionUC
+        )
+
+        test(viewModel: viewModel,
+             action: .editAfterOpen,
+             expectedCommands: []
+        )
+    }
+    
     func testAction_showActions_view() {
         let textFile = TextFile(fileName: "testAction_showActions_view")
         let mockRouter = MockTextEditorViewRouter()

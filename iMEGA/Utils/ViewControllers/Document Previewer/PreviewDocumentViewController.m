@@ -75,6 +75,10 @@
     self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
     
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    if (self.showUnknownEncodeHud) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"general.textEditor.hud.unknownEncode", @"Hud info message when read unknown encode file.")];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -159,7 +163,7 @@
     NSURL *url = [self documentUrl];
     self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
     if (self.textContent != nil
-        && ([url.path mnz_isEditableTextFilePathExtension] || url.pathExtension.length == 0)) {
+        && [url.path mnz_isEditableTextFilePathExtension]) {
         [self loadTextView];
     } else if ([url.pathExtension isEqualToString:@"pdf"]) {
         [self loadPdfKit:url];

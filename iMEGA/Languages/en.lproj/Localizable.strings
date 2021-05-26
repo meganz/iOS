@@ -2630,3 +2630,5 @@
 "dialog.shareOwnerStorageQuota.message"="The file cannot be sent as the target user is over their storage quota.";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";
+/* Hud info message when read unknown encode file. */
+"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";

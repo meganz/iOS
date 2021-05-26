@@ -35,6 +35,7 @@ enum HomeRoutingSource {
     case shareFolder(MEGANode)
     case manageShare(MEGANode)
     case setLabel(MEGANode)
+    case editTextFile(MEGANode)
 }
 
 final class HomeRouter: HomeRouterProtocol {
@@ -107,7 +108,7 @@ final class HomeRouter: HomeRouterProtocol {
         case .removeLink(let node):
             nodeLinkManagementRouter.showRemoveLink(for: node)
 
-        // MARK: - Node Copy & Move & Delete
+        // MARK: - Node Copy & Move & Delete & Edit
         case .copy(let node):
             nodeManageRouter.showCopyDestination(for: node)
         case .move(let node):
@@ -116,6 +117,8 @@ final class HomeRouter: HomeRouterProtocol {
             nodeManageRouter.showMoveToRubbishBin(for: node)
         case .setLabel(let node):
             nodeManageRouter.showLabelColorAction(for: node)
+        case .editTextFile(let node):
+            nodeManageRouter.showEditTextFile(for: node)
 
         // MARK: - Share
         case .share(let node, let sender):
