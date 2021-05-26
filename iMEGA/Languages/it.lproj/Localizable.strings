@@ -1980,6 +1980,10 @@
 "New Group Chat"="Nuova chat di gruppo";
 /* Title for the recents section. */
 "Recents"="Recenti";
+/* Title show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.title"="Attività recente nascosta";
+/* Title of the button show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.button"="Mostra attività";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 immagini";
 /* Multiple videos title shown in recents section of web client. */
@@ -2258,6 +2262,10 @@
 "Default Tab"="Pagina predefinita";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Modalità di elencazione e di vista";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
+"settings.userInterface.hideRecentActivity"="Nascondi attività recente";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
+"settings.userInterface.hideRecentActivity.footer"="Nascondi l'attività recente nella Home.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Default";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2630,3 +2638,5 @@
 "dialog.shareOwnerStorageQuota.message"="Il file non può essere inviato in quanto l'utente destinatario ha superato il limite dello spazio di archiviazione.";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="Il file è troppo grande e non può essere modificato.";
+/* Hud info message when read unknown encode file. */
+"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
