@@ -10,4 +10,5 @@ enum PreferenceKeyEntity: String {
     case launchTabSelected
     case launchTabSuggested
     case offlineLogOutWarningDismissed
+    case showRecents
 }

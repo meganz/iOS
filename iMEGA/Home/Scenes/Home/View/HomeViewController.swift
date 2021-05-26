@@ -173,7 +173,11 @@ final class HomeViewController: UIViewController {
     private func toggleBannerCollectionView(isOn: Bool) {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: [], animations:  {
             self.bannerCollectionView.isHidden = !isOn
-        }, completion: nil)
+        }) { _ in
+            if !RecentsPreferenceManager.showRecents() {
+                NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGABannerChangedHomeHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue : isOn])
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -415,6 +419,13 @@ extension HomeViewController: SlidePanelDelegate {
 
     func slidePanel(_ panel: SlidePanelView, didStopPanningWithVelocity velocity: CGPoint) {
         slidePanelAnimator.completeAnimation(withVelocityY: velocity.y)
+        
+        if slidePanelAnimator.isInBottomDockingPosition() {
+            NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGAHomeChangedHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue : false])
+        } else {
+            let notificationName = bannerCollectionView.isHidden ? NSNotification.Name.MEGAHomeChangedHeight.rawValue : NSNotification.Name.MEGABannerChangedHomeHeight.rawValue
+            NotificationCenter.default.post(name: NSNotification.Name.init(notificationName), object: nil, userInfo: [notificationName : slidePanelAnimator.isInTopDockingPosition()])
+        }
     }
 
     func slidePanel(_ panel: SlidePanelView, translated: CGPoint, velocity: CGPoint) {

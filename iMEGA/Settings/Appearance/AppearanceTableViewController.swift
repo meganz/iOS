@@ -2,9 +2,10 @@
 import UIKit
 
 enum AppearanceSection: Int {
-    case launch = 0
-    case layout = 1
-    case appIcon = 2
+    case launch
+    case layout
+    case recents
+    case appIcon
 }
 
 enum IconName: String {
@@ -18,6 +19,9 @@ class AppearanceTableViewController: UITableViewController {
     @IBOutlet weak var sortingAndViewModeLabel: UILabel!
     @IBOutlet weak var defaultTabLabel: UILabel!
     @IBOutlet weak var defaultTabDetailLabel: UILabel!
+    
+    @IBOutlet weak var hideRecentActivityLabel: UILabel!
+    @IBOutlet weak var hideRecentActivitySwitch: UISwitch!
     
     @IBOutlet weak var defaultIconContainerView: UIView!
     @IBOutlet weak var defaultIconButton: UIButton!
@@ -45,6 +49,9 @@ class AppearanceTableViewController: UITableViewController {
         defaultTabLabel.text = NSLocalizedString("Default Tab", comment: "Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.")
         
         sortingAndViewModeLabel.text = NSLocalizedString("Sorting And View Mode", comment: "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app.")
+        
+        hideRecentActivityLabel.text = NSLocalizedString("settings.userInterface.hideRecentActivity", comment: "In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section")
+        hideRecentActivitySwitch.isOn = !RecentsPreferenceManager.showRecents()
         
         defaultIconLabel.text = NSLocalizedString("Default", comment: "Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible).")
         dayIconLabel.text = NSLocalizedString("Day", comment: "Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible).")
@@ -151,6 +158,10 @@ class AppearanceTableViewController: UITableViewController {
     
     // MARK: - IBActions
     
+    @IBAction func hideRecentActivityValueChanged(_ sender: UISwitch) {
+        RecentsPreferenceManager.setShowRecents(!sender.isOn)
+    }
+    
     @IBAction func defaultIconTouchUpInside(_ sender: UIButton) {
         changeAppIcon(to: nil)
     }
@@ -181,6 +192,9 @@ class AppearanceTableViewController: UITableViewController {
         case .layout:
             return NSLocalizedString("Layout", comment: "Section title inside of Settings - Appearance, where you can change the app's layout distribution.")
             
+        case .recents:
+            return NSLocalizedString("Recents", comment: "Title for the recents section.")
+            
         case .appIcon:
             return NSLocalizedString("App Icon", comment: "Section title inside of Settings - Appearance, where you can change the app's icon.")
             
@@ -196,6 +210,9 @@ class AppearanceTableViewController: UITableViewController {
         
         case .layout:
             return NSLocalizedString("Configure sorting order and the default view (List or Thumbnail).", comment: "Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section.")
+            
+        case .recents:
+            return NSLocalizedString("settings.userInterface.hideRecentActivity.footer", comment: "In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option.")
             
         case .appIcon:
             return nil
