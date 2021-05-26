@@ -56,12 +56,8 @@ static MEGASdk *_megaSDKFolder;
     return _megaSDKFolder;
 }
 
-+ (void)deleteChatSdk {
-    [_MEGAChatSdk deleteMegaChatApi];
-}
-
 + (void)deleteSharedSdks {
-    [self deleteChatSdk];
+    [_MEGAChatSdk deleteMegaChatApi];
     [_megaSDK deleteMegaApi];
     [_megaSDKFolder deleteMegaApi];
 }

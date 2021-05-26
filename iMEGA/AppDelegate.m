@@ -397,8 +397,7 @@
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
     
-    [MEGASdkManager localLogout];
-    [MEGASdkManager deleteChatSdk];
+    [MEGASdkManager localLogoutAndCleanUp];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
