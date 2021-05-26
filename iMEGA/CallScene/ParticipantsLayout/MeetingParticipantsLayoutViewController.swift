@@ -248,7 +248,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
 
 // MARK: - Use case protocol -
 protocol CallManagerUseCaseProtocol {
-    func endCall(callId: MEGAHandle, chatId: MEGAHandle)
+    func endCall(_ call: CallEntity)
     func muteUnmuteCall(callId: MEGAHandle, chatId: MEGAHandle, muted: Bool)
     func addCall(_ call: CallEntity)
     func startCall(_ call: CallEntity)
@@ -271,8 +271,9 @@ struct CallManagerUseCase: CallManagerUseCaseProtocol {
         megaCallManager.startCall(withChatId: call.chatId)
     }
     
-    func endCall(callId: MEGAHandle, chatId: MEGAHandle) {
-        megaCallManager.endCall(withCallId: callId, chatId: chatId)
+    func endCall(_ call: CallEntity) {
+        megaCallManager.endCall(withCallId: call.callId, chatId: call.chatId)
+        megaCallManager.removeCall(by: call.uuid)
     }
     
     func muteUnmuteCall(callId: MEGAHandle, chatId: MEGAHandle, muted: Bool) {
