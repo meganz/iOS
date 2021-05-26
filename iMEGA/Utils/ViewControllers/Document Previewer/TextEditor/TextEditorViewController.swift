@@ -51,7 +51,7 @@ extension TextEditorViewController: ViewType {
         case .updateProgressView(let percentage):
             setProgressView(percentage: percentage)
         case .editFile:
-            viewModel.dispatch(.editFile)
+            editTapped()
         case .showDuplicateNameAlert(let textEditorDuplicateNameAlertModel):
             configDuplicateNameAlert(textEditorDuplicateNameAlertModel)
         case .showRenameAlert(let textEditorRenameAlertModel):
@@ -69,6 +69,10 @@ extension TextEditorViewController: ViewType {
         case .showDiscardChangeAlert:
             showDiscardChangeAlert()
         }
+    }
+    
+    @objc func editAfterOpen() {
+        viewModel.dispatch(.editAfterOpen)
     }
     
     private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool) {
@@ -283,6 +287,17 @@ extension TextEditorViewController: ViewType {
                 action: #selector(downloadTapped)
             )
         var toolbarItems = [downloadBarButtonItem, flexibleItem]
+        
+        let editBarButtonItem =
+            UIBarButtonItem(
+                image: UIImage(named: "edittext"),
+                style: .plain,
+                target: self,
+                action: #selector(editTapped)
+            )
+        toolbarItems.append(editBarButtonItem)
+        toolbarItems.append(flexibleItem)
+        
         if accessLevel == .owner {
             let shareBarButtonItem =
                 UIBarButtonItem(
@@ -307,6 +322,10 @@ extension TextEditorViewController: ViewType {
     
     @objc private func downloadTapped() {
         viewModel.dispatch(.downloadToOffline)
+    }
+    
+    @objc private func editTapped() {
+        viewModel.dispatch(.editFile)
     }
     
     @objc private func shareTapped(button: UIBarButtonItem) {

@@ -85,7 +85,7 @@ static NSString* const B = @"[B]";
 }
 
 - (BOOL)mnz_isEditableTextFilePathExtension {
-    return self.mnz_isWebCodePathExtension || self.mnz_isTextPathExtension;
+    return self.mnz_isWebCodePathExtension || self.mnz_isTextPathExtension || self.pathExtension.length == 0;
 }
 
 - (BOOL)mnz_isTextPathExtension {

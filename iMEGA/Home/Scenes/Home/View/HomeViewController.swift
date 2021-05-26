@@ -504,7 +504,7 @@ extension HomeViewController: HomeRouting {
 
 // MARK: - RecentNodeActionDelegate
 
-extension HomeViewController: RecentNodeActionDelegate {
+extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
     func showSelectedNode(in viewController: UIViewController?) {
         guard let controller = viewController else { return }
@@ -515,6 +515,9 @@ extension HomeViewController: RecentNodeActionDelegate {
         let selectionAction: (MEGANode, MegaNodeActionType) -> Void = { [router, weak self] node, action in
             guard let self = self else { return }
             switch action {
+            
+            case .editTextFile:
+                router?.didTap(on: .editTextFile(node))
 
             // MARK: - Info
             case .info:

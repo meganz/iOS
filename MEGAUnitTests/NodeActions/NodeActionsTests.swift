@@ -109,6 +109,17 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testCloudDriveNodeTextFile() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsEditableTextFile(true)
+            .setIsFile(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+    }
+    
     func testCloudDriveNodeExportedFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
@@ -162,6 +173,17 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .rename, .copy, .leaveSharing]))
     }
     
+    func testIncomingFullSharedFolderTextFile() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessFull)
+            .setIsEditableTextFile(true)
+            .setIsFile(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .copy]))
+    }
+    
     func testIncomingReadAndReadWriteSharedFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -171,6 +193,17 @@ class NodeActionsTests: XCTestCase {
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .copy, .leaveSharing]))
+    }
+    
+    func testIncomingReadAndReadWriteSharedFolderTextFile() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessReadWrite)
+            .setIsEditableTextFile(true)
+            .setIsFile(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .download, .copy]))
     }
     
     func testOutgoingSharedFolder() {
