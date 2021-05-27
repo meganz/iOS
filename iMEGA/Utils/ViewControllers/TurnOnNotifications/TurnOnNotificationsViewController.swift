@@ -8,6 +8,8 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     private lazy var headerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return imageView
     }()
     
@@ -125,10 +127,8 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     private func setupViews() {
         view.addSubview(headerImageView)
         
-        [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 83),
-         headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-         headerImageView.heightAnchor.constraint(equalToConstant: 80),
-         headerImageView.widthAnchor.constraint(equalToConstant: 85)].activate()
+        [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.size.height * 0.05),
+         headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)].activate()
         
         let stepOneStack = UIStackView(arrangedSubviews: [openSettingsImageView, openSettingsLabel])
         stepOneStack.axis = .horizontal
