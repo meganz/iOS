@@ -108,11 +108,11 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
-    func showPreviewDocVC(fromFilePath path: String) {
+    func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
         let nc = UIStoryboard(name: "DocumentPreviewer", bundle: nil).instantiateViewController(withIdentifier: "previewDocumentNavigationID") as? MEGANavigationController
         let previewVC = nc?.viewControllers.first as? PreviewDocumentViewController
         previewVC?.filePath = path
-        previewVC?.showUnknownEncodeHud = true
+        previewVC?.showUnknownEncodeHud = showUneditableError
         if let nodeHandle = nodeHandle {
             previewVC?.nodeHandle = nodeHandle
         }

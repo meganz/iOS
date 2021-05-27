@@ -1044,7 +1044,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         showActions_calledTimes += 1
     }
     
-    func showPreviewDocVC(fromFilePath path: String) {
+    func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
         presentPreviewDocVC_calledTimes += 1
     }
     

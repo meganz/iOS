@@ -27,7 +27,7 @@ protocol TextEditorViewRouting: Routing {
     func dismissTextEditorVC()
     func dismissBrowserVC()
     func showActions(sender button: Any)
-    func showPreviewDocVC(fromFilePath path: String)
+    func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool)
     func importNode(nodeHandle: MEGAHandle?)
     func share(nodeHandle: MEGAHandle?, sender button: Any)
 }
@@ -265,7 +265,7 @@ final class TextEditorViewModel: ViewModelType {
                         self.setupView(shallUpdateContent: true)
                     }
                 } catch {
-                    self.router.showPreviewDocVC(fromFilePath: path)
+                    self.router.showPreviewDocVC(fromFilePath: path, showUneditableError: self.shouldEditAfterOpen)
                 }
             }
         }
