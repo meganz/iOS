@@ -1450,8 +1450,6 @@
 "generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="终端至终端加密保护的MEGA视频聊天为您的聊天提供完全的隐私，自2016年来一直通过浏览器使用。它已扩展到我们的移动应用程序，并可在多个设备上访问聊天记录。用户还能轻松地从MEGA云盘向聊天添加文件。";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Pro Lite订阅：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），享有400 GB的存储空间和每月1 TB的传输流量。\nPro I订阅：每月€9.99欧元（$9.99美元）或每年€99.99欧元（$99.99美元），享有2 TB的存储空间和每月 2 TB的传输流量。\nPro II订阅：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），享有8 TB的存储空间和每月8 TB的传输流量。\nPro III订阅：每月€29.99欧元（$29.99美元）或每年€299.99欧元（$299.99美元），享有16 TB的存储空间和每月16 TB的传输流量。";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
