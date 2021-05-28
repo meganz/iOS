@@ -55,6 +55,7 @@
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *inviteBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
@@ -311,6 +312,12 @@
                 self.noContactsDescriptionLabel.text = NSLocalizedString(@"Invite contacts and start chatting securely with MEGA’s encrypted chat.", @"Text encouraging the user to invite contacts to MEGA");
                 self.inviteContactButton.titleLabel.text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             }
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            self.inviteBarButtonItem.title = NSLocalizedString(@"inviteContact", nil);
+            [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
+            self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
+            [self.navigationController setToolbarHidden:NO];
+            
             break;
         }
             
@@ -458,6 +465,10 @@
             self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
             break;
         }
+        case ContactsModeChatStartConversation:
+               [self.navigationController setToolbarHidden:NO];
+            break;
+
             
         default: { //ContactsModeChatStartConversation, ContactsModeChatAttachParticipant, ContactsModeChatCreateGroup and ContactsModeChatNamingGroup
             for (MEGAUser *user in visibleContactsArray) {
@@ -996,7 +1007,7 @@
 }
 
 - (void)joinMeeting {
-    MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self];
+    MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
     [router start];
 }
 
@@ -1223,6 +1234,10 @@
     for (MEGAUser *user in self.selectedUsersArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
+}
+
+- (IBAction)inviteContact:(UIBarButtonItem *)sender {
+    [self addContact:sender];
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {

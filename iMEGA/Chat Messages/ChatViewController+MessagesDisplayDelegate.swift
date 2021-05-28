@@ -115,7 +115,11 @@ extension ChatViewController: MessagesDisplayDelegate {
                              for message: MessageType,
                              at indexPath: IndexPath,
                              in messagesCollectionView: MessagesCollectionView) {
-        if !isFromCurrentSender(message: message) {
+        
+        guard let chatMessage = self.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
+            return
+        }
+        if !chatMessage.message.isManagementMessage && !isFromCurrentSender(message: message) {
             if indexPath.section < messages.count - 1 {
                 guard messages[indexPath.section + 1].sender.senderId != message.sender.senderId else {
                     avatarView.isHidden = true

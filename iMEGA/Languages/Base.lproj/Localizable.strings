@@ -1976,6 +1976,8 @@
 "Enabled"="Enabled";
 /* Text button for init a group chat with link. */
 "New Chat Link"="New Chat Link";
+/* Title for Enter Meeting Link. */
+"Enter Meeting Link"="Enter Meeting Link";
 /* Text button for init a Meeting. */
 "New Meeting"="New Meeting";
 /* Text button for init a group chat */

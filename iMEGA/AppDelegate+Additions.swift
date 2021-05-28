@@ -23,6 +23,8 @@ extension AppDelegate {
         
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
 
+        if MEGASdkManager.sharedMEGASdk().mnz_isGuestAccount { return }
+
         if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
 
         if UserDefaults.standard.bool(forKey: "dontShowAgainAddPhoneNumber") {

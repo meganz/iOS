@@ -49,7 +49,7 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         addChatLocalVideo_CalledTimes += 1
     }
     
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void) {
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void) {
         if let completionBlock = requestCompletion {
             completion(completionBlock)
         }

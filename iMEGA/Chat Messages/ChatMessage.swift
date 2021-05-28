@@ -65,7 +65,7 @@ extension ChatMessage: MessageType {
 extension ChatMessage: SenderType {
     var senderId: String {
         if message.isManagementMessage {
-            return "0"
+            return "-1"
         }
         
         if transfer?.type == .upload {

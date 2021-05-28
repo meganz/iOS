@@ -326,6 +326,7 @@
                         <outlet property="getChatLinkTopSeparatorView" destination="U36-hv-0ot" id="48a-Vc-M9K"/>
                         <outlet property="getChatLinkView" destination="NeF-Yr-Pu6" id="eKp-kS-cbT"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
+                        <outlet property="inviteBarButtonItem" destination="gzn-jq-9Ww" id="Lnr-1L-RZH"/>
                         <outlet property="inviteContactButton" destination="zK0-Pj-pEl" id="Ws7-Pp-x29"/>
                         <outlet property="itemListView" destination="nEj-Ji-K4x" id="xz1-HU-QcL"/>
                         <outlet property="itemListViewHeightConstraint" destination="zPE-QJ-FoW" id="NAu-He-T3N"/>
@@ -547,6 +548,11 @@
                 <barButtonItem title="Insert an email" style="plain" id="EYv-wx-auj" userLabel="Insert an email Bar Button Item">
                     <connections>
                         <action selector="addContact:" destination="4jb-uN-Eto" id="fFY-4A-7qZ"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="plain" id="gzn-jq-9Ww" userLabel="Invite Bar Button Item">
+                    <connections>
+                        <action selector="inviteContact:" destination="4jb-uN-Eto" id="lZf-Is-f4z"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Share folder" style="plain" id="43b-TZ-Eh5" userLabel="Share folder with Bar Button Item">

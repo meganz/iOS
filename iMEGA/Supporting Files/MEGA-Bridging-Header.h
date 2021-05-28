@@ -103,6 +103,7 @@
 #import "TransfersWidgetViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGAChatResultDelegate.h"
 #import "MEGAChatPeerList.h"
 #import "MEGAChatRoom.h"
 #import "MEGARequest.h"

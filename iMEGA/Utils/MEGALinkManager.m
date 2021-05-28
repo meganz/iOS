@@ -904,11 +904,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         return;
     }
     
+    BOOL isLoggedIn = MEGASdkManager.sharedMEGASdk.isLoggedIn;
     if ([rootViewController isKindOfClass:MainTabBarController.class]) {
    
         MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
         mainTBC.selectedIndex = TabTypeChat;
-        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC type:MeetingConfigurationTypeJoin link:publicChatLink.absoluteString];
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC
+                                                                                                          type: isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
+                                                                                                          link:publicChatLink.absoluteString];
         if (mainTBC.presentedViewController) {
             [mainTBC dismissViewControllerAnimated:NO completion:^{
                 [router start];
@@ -917,7 +920,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [router start];
         }
     } else {
-        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:UIApplication.mnz_visibleViewController type:MeetingConfigurationTypeJoin link:publicChatLink.absoluteString];
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:UIApplication.mnz_visibleViewController
+                                                                                                          type:isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
+                                                                                                          link:publicChatLink.absoluteString];
         [router start];
   }
 }
