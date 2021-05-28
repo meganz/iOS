@@ -129,33 +129,22 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                     case .failure(let errorType):
                         completion(.failure(errorType))
                     case .success(let request):
-                        
-                        self.sdk.fetchNodes(with: RequestDelegate(completion: { (result) in
-                            switch result {
-                            case .success(_):
-                                self.chatSdk.connect(with: MEGAChatResultRequestDelegate(completion: { _  in
-                                    self.chatSdk.openChatPreview(url, delegate: MEGAChatResultRequestDelegate(completion: { [weak self] in
-                                        switch $0 {
-                                        case .success(let chatRequest):
-                                            self?.chatResultDelegate = MEGAChatResultDelegate(completion: { (sdk, chatId, newState) in
-                                                if chatRequest.chatHandle == chatId, newState == .online {
-                                                    self?.chatSdk.remove(self?.chatResultDelegate)
-                                                    completion(.success(request))
-                                                }
-                                            })
-                                            self?.chatSdk.add(self?.chatResultDelegate)
-                                        case .failure(_):
-                                            self?.sdk.mnz_isGuestAccount = false
-                                            completion(.failure(.unexpected))
+                        self.chatSdk.connect(with: MEGAChatResultRequestDelegate(completion: { _  in
+                            self.chatSdk.openChatPreview(url, delegate: MEGAChatResultRequestDelegate(completion: { [weak self] in
+                                switch $0 {
+                                case .success(let chatRequest):
+                                    self?.chatResultDelegate = MEGAChatResultDelegate(completion: { (sdk, chatId, newState) in
+                                        if chatRequest.chatHandle == chatId, newState == .online {
+                                            self?.chatSdk.remove(self?.chatResultDelegate)
+                                            completion(.success(request))
                                         }
-                                    }))
-                                    
-                                }))
-                                
-                            case .failure(_):
-                                self.sdk.mnz_isGuestAccount = false
-                                completion(.failure(.unexpected))
-                            }
+                                    })
+                                    self?.chatSdk.add(self?.chatResultDelegate)
+                                case .failure(_):
+                                    self?.sdk.mnz_isGuestAccount = false
+                                    completion(.failure(.unexpected))
+                                }
+                            }))
                         }))
                     }
                 })
