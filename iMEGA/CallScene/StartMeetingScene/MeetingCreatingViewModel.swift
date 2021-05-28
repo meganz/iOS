@@ -24,6 +24,7 @@ enum MeetingCameraType: Int {
 @objc
 enum MeetingConfigurationType: Int {
     case start
+    case guestJoin
     case join
 }
 
@@ -79,8 +80,9 @@ final class MeetingCreatingViewModel: ViewModelType {
     func dispatch(_ action: MeetingCreatingViewAction) {
         switch action {
         case .onViewReady:
+
             switch type {
-            case .join:
+            case .join, .guestJoin:
                 guard let link = link else {
                     return
                 }
@@ -100,13 +102,18 @@ final class MeetingCreatingViewModel: ViewModelType {
             
         case .didTapStartMeetingButton:
             switch type {
+            case .start:
+                startChatCall()
             case .join:
                 guard let chatId = chatId else {
                     return
                 }
                 joinChatCall(chatId: chatId)
-            case .start:
-                startChatCall()
+            case .guestJoin:
+                guard let chatId = chatId else {
+                    return
+                }
+                createEphemeralAccountAndJoinChat(chatId: chatId)
             }
             invokeCommand?(.loadingStartMeeting)
         case .didTapCloseButton:
@@ -129,11 +136,16 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func createEphemeralAccountAndJoinChat(chatId: UInt64) {
-        meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName) { [weak self] in
+        guard let link = link else {
+            return
+        }
+        
+        self.meetingUseCase.createEphemeralAccountAndJoinChat(firstName: self.firstName, lastName: self.lastName, link: link) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(_):
                 self.joinChatCall(chatId: chatId)
+                
             case .failure(_):
                 self.router.dismiss(completion: {})
             }
@@ -149,6 +161,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else { return }
                 self.router.dismiss(completion: {
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
+                    
                 })
             case .failure(_):
                 self.router.dismiss(completion: {})
@@ -219,7 +232,7 @@ final class MeetingCreatingViewModel: ViewModelType {
 
             switch $0 {
             case .success(let chatRoom):
-                self.invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: link, type: .join))
+                self.invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: link, type: self.type))
                 self.chatId = chatRoom.chatId
             case .failure(_):
                 self.router.dismiss(completion: {})

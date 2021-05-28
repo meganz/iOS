@@ -2,7 +2,7 @@ import UIKit
 import FlexLayout
 import KeyboardLayoutGuide
 
-class MeetingCreatingView: UIView {
+class MeetingCreatingView: UIView, UITextFieldDelegate {
    
     private weak var vc: MeetingCreatingViewController!
     private let containerView = UIView()
@@ -10,6 +10,7 @@ class MeetingCreatingView: UIView {
         let localVideoImageView = MEGALocalImageView()
         localVideoImageView.isHidden = true
         localVideoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        localVideoImageView.contentMode = .scaleAspectFill
         viewModel.dispatch(.addChatLocalVideo(delegate: localVideoImageView))
         return localVideoImageView
     }()
@@ -54,6 +55,7 @@ class MeetingCreatingView: UIView {
         input.keyboardAppearance = .dark
         input.font = .systemFont(ofSize: 20, weight: .semibold)
         input.textColor = .white
+        input.delegate = self
         input.placeholder = NSLocalizedString("firstName", comment: "")
         input.setBlockFor(.editingChanged) { [weak self] textField in
             if let textField = textField as? UITextField, let text = textField.text {
@@ -69,6 +71,7 @@ class MeetingCreatingView: UIView {
         input.keyboardAppearance = .dark
         input.font = .systemFont(ofSize: 20, weight: .semibold)
         input.textColor = .white
+        input.delegate = self
         input.placeholder = NSLocalizedString("lastName", comment: "")
         input.setBlockFor(.editingChanged) { [weak self] textField in
             if let textField = textField as? UITextField, let text = textField.text {
@@ -84,6 +87,7 @@ class MeetingCreatingView: UIView {
         input.keyboardAppearance = .dark
         input.font = .systemFont(ofSize: 20, weight: .semibold)
         input.textColor = .white
+        input.delegate = self
         input.setBlockFor(.editingChanged) { [weak self] textField in
             if let textField = textField as? UITextField, let text = textField.text {
                 self?.viewModel.dispatch(.updateMeetingName(text))
@@ -95,6 +99,7 @@ class MeetingCreatingView: UIView {
         let button = UIButton()
         button.setTitle(NSLocalizedString("Start Meeting", comment: ""), for: .normal)
         button.mnz_setupPrimary(traitCollection)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button
     }()
     
@@ -111,7 +116,7 @@ class MeetingCreatingView: UIView {
         super.init(frame: .zero)
         self.vc = vc
         self.viewModel = viewModel
-        containerView.flex.backgroundColor(.systemGray).alignItems(.center).justifyContent(.end).define { flex in
+        containerView.flex.backgroundColor(#colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)).alignItems(.center).justifyContent(.end).define { flex in
             // video view
             flex.addItem(localVideoImageView).position(.absolute).all(0)
             flex.addItem().grow(1).shrink(1).justifyContent(.end).alignItems(.center).define { flex in
@@ -131,10 +136,10 @@ class MeetingCreatingView: UIView {
             flex.addItem().width(100%).paddingHorizontal(43).backgroundColor(.black).justifyContent(.center).define({ flex in
                 // control panel
                 flex.addItem().width(100%).marginTop(12).marginBottom(28).direction(.row).define { flex in
-                    flex.addItem(firstNametTextfield).grow(1).shrink(1).paddingHorizontal(8)
-                    flex.addItem(lastNametTextfield).grow(1).shrink(1).paddingHorizontal(8)
+                    flex.addItem(firstNametTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
+                    flex.addItem(lastNametTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
                     
-                    flex.addItem(meetingNameInputTextfield).grow(1).shrink(1).display(.none)
+                    flex.addItem(meetingNameInputTextfield).grow(1).shrink(1)
 
                 }
                 flex.addItem(startMeetingButton).height(50).marginBottom(16).grow(1).shrink(1)
@@ -176,6 +181,16 @@ class MeetingCreatingView: UIView {
     
     // MARK: - Private methods.
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == firstNametTextfield {
+            lastNametTextfield.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
     @objc func didTapVideoButton() {
         viewModel.dispatch(.didTapVideoButton)
     }
@@ -205,6 +220,16 @@ class MeetingCreatingView: UIView {
             meetingNameInputTextfield.isEnabled = type == .start
 
             switch type {
+            case .guestJoin:
+                meetingNameInputTextfield.isHidden = true
+                vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
+                startMeetingButton.setTitle(NSLocalizedString("Join Meeting", comment: ""), for: .normal)
+                
+                firstNametTextfield.flex.display(.flex)
+                lastNametTextfield.flex.display(.flex)
+
+                meetingNameInputTextfield.flex.display(.none)
+          
             case .join:
                 meetingNameInputTextfield.isHidden = true
                 vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
@@ -222,7 +247,6 @@ class MeetingCreatingView: UIView {
 
                 meetingNameInputTextfield.flex.display(.flex)
 
-                break
             }
             
             containerView.flex.layout()
@@ -231,8 +255,9 @@ class MeetingCreatingView: UIView {
             vc.title = name.isEmpty ? meetingNameInputTextfield.placeholder : name
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
+            avatarImageView.isHidden = isSelected
             localVideoImageView.isHidden = !isSelected
-            containerView.flex.layout()
+            
         case .updateSpeakerButton(enabled: let isSelected):
             enableDisableSpeakerButton.isSelected = isSelected
         case .updateCameraSwitchType(type: let type):
@@ -253,12 +278,30 @@ class MeetingCreatingView: UIView {
             loadingIndicator.startAnimating()
 
             containerView.flex.layout()
+            
+            firstNametTextfield.isEnabled = false
+            lastNametTextfield.isEnabled = false
+            meetingNameInputTextfield.isEnabled = false
+            
+            enableDisableVideoButton.isUserInteractionEnabled = false
+            enableDisableSpeakerButton.isUserInteractionEnabled = false
+            muteUnmuteMicrophoneButton.isUserInteractionEnabled = false
+            
+            resignFirstResponder()
         case .loadingEndMeeting:
             startMeetingButton.flex.display(.flex)
             loadingIndicator.flex.display(.none)
             loadingIndicator.stopAnimating()
 
             containerView.flex.layout()
+            
+            firstNametTextfield.isEnabled = true
+            lastNametTextfield.isEnabled = true
+            meetingNameInputTextfield.isEnabled = true
+            
+            enableDisableVideoButton.isUserInteractionEnabled = true
+            enableDisableSpeakerButton.isUserInteractionEnabled = true
+            muteUnmuteMicrophoneButton.isUserInteractionEnabled = true
         }
     }
 }

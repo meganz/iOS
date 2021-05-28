@@ -257,7 +257,7 @@
 - (IBAction)thirdButtonTapped:(UIButton *)sender {
     switch (self.type) {
         case OnboardingTypeDefault: {
-            MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self];
+            MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self isGuest:YES];
             [router start];
             break;
         }

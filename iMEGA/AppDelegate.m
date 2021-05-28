@@ -1472,7 +1472,7 @@
     switch ([request type]) {
             
         case MEGARequestTypeLogout: {
-            if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
+            if (MEGALinkManager.urlType == URLTypeCancelAccountLink || MEGASdkManager.sharedMEGASdk.mnz_isGuestAccount) {
                 return;
             }
             
@@ -1618,7 +1618,12 @@
             break;
         }
             
+        case MEGARequestTypeCreateAccount: {
+            [self initProviderDelegate];
+        }
+            
         case MEGARequestTypeFetchNodes: {
+            
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -1641,6 +1646,10 @@
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
             [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
             
+            if ([MEGASdkManager sharedMEGASdk].mnz_isGuestAccount) {
+                return;
+            }
+            
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
                 [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
             } else {
@@ -1650,7 +1659,7 @@
             if (!isAccountFirstLogin) {
                 [self showMainTabBar];
                 if (self.openChatLater) {
-                    [self.mainTBC openChatRoomNumber:self.openChatLater];                    
+                    [self.mainTBC openChatRoomNumber:self.openChatLater];
                 }
             }
       

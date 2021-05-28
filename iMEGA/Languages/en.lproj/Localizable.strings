@@ -1095,7 +1095,9 @@
 /* "Yearly" subscriptions */
 "yearly"="Yearly";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please verify payment settings for your Apple ID.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="App Store Settings";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Thank you";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1724,6 +1726,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Allow Access";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="Security";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="Terms and Policies";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1970,8 +1976,26 @@
 "Enabled"="Enabled";
 /* Text button for init a group chat with link. */
 "New Chat Link"="New Chat Link";
+/* Title for Enter Meeting Link. */
+"Enter Meeting Link"="Enter Meeting Link";
+/* Text button for init a Meeting. */
+"New Meeting"="New Meeting";
 /* Text button for init a group chat */
 "New Group Chat"="New Group Chat";
+/* Meeting Title */
+"%@ Meeting"="%@ Meeting";
+/* Join MEGA Title */
+"Do More With MEGA"="Do More With MEGA";
+/* Join MEGA subtitle */
+"Sign up for a free account and get up to 50GB of storage"="Sign up for a free account and get up to 50GB of storage";
+/* paragraph 1 for Mega decription. */
+"Meeting.CreateAccount.Paragraph.1"="Top level encryption and up to 16TB to store all your your files and keep them safe.";
+/* paragraph 2 for Mega decription. */
+"Meeting.CreateAccount.Paragraph.2"="Your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+/* paragraph 3 for Mega decription. */
+"Meeting.CreateAccount.Paragraph.3"="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+/* paragraph 4 for Mega decription. */
+"Meeting.CreateAccount.Paragraph.4"="Camera Uploads is an essential feature for any mobile device and we got you covered.";
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Multiple Images title shown in recents section of webclient */
@@ -1996,6 +2020,14 @@
 "No recent activity"="No Recent Activity";
 /* Plural of items which contains a folder. 2 items */
 "%1$d items"="%1$d items";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="Meeting Ended";
+/* Meeting ended Alert button -- Leave. */
+"meetings.alert.leave"="Leave";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="View Meeting Chat";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="The meeting you're trying to join has already ended. You can still view the meeting chat history.";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2250,7 +2282,7 @@
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="User Interface";
-/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.*/
+/* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Default Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorting And View Mode";
@@ -2580,6 +2612,10 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="My Account";
+/* Contacts selection screen header: Invite contacts to meetings */
+"Invite Participants" = "Invite Participants";
+/* Meetings: Floating panel participants count header */
+"In the meeting (%d)" = "In the meeting (%d)";
 /* Text for title for favourite nodes */
 "Favourites"="Favourites";
 /* Text describing that there is not any node marked as favourite */
@@ -2596,6 +2632,8 @@
 "Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Quickly access files from your Offline section";
+/* Meetings: End a call */
+"End"="End";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
 /* Dialog description for the no enough device storage screen */

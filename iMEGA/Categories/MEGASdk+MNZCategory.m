@@ -33,6 +33,14 @@ static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
     return [self.mnz_accountDetails type] > MEGAAccountTypeFree;
 }
 
+- (BOOL)mnz_isGuestAccount {
+    return [objc_getAssociatedObject(self, @selector(mnz_isGuestAccount:)) boolValue];
+}
+
+- (void)mnz_isGuestAccount:(BOOL)isGuestAccount {
+    objc_setAssociatedObject(self, @selector(mnz_isGuestAccount:), @(isGuestAccount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (BOOL)mnz_shouldRequestAccountDetails {
     return [objc_getAssociatedObject(self, @selector(mnz_setShouldRequestAccountDetails:)) boolValue];
 }

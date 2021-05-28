@@ -1025,7 +1025,7 @@
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Join Meeting", nil) detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         @strongify(self)
-        MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self];
+        MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
         [router start];
     }]];
     

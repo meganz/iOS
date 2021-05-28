@@ -77,6 +77,9 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func hangCall(presenter: UIViewController) {
         if userUseCase.hasUserLoggedIn {
+            if MEGASdkManager.sharedMEGASdk().mnz_isGuestAccount {
+                MEGASdkManager.sharedMEGASdk().logout()
+            }
             dismissCall(completion: nil)
         } else {
             router.showEndMeetingOptions(presenter: presenter, meetingContainerViewModel: self)
