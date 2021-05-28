@@ -23,10 +23,10 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jOP-gA-9dj">
-                    <rect key="frame" x="124.66666666666669" y="457.33333333333331" width="165" height="54.999999999999943"/>
+                    <rect key="frame" x="114.66666666666669" y="457.33333333333331" width="185" height="54.999999999999943"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-3x-tfh">
-                            <rect key="frame" x="0.0" y="0.0" width="165" height="22"/>
+                            <rect key="frame" x="0.0" y="0.0" width="185" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="s20-oA-dSm"/>
                             </constraints>
@@ -35,7 +35,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jU8-Oa-6ip">
-                            <rect key="frame" x="0.0" y="38" width="165" height="17"/>
+                            <rect key="frame" x="0.0" y="38" width="185" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="gCF-ST-Qgu"/>
                             </constraints>
@@ -44,8 +44,12 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1UQ-rI-V75">
-                            <rect key="frame" x="0.0" y="55.000000000000057" width="165" height="0.0"/>
+                            <rect key="frame" x="0.0" y="55.000000000000057" width="185" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="3Ta-Fe-JkC"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                             <state key="normal" title="Show Recent Activity"/>
                         </button>
                     </subviews>
