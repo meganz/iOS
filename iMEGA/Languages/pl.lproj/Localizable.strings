@@ -1450,8 +1450,6 @@
 "generalDescriptionParagraph3"="Procesz szyfrowania powoduje, że nie mamy dostępu oraz możliwości zresetowania Twojego hasła, dlatego hasło MUSISZ pamiętać (chyba, że posiadasz kopię klucza) lub stracisz dostęp do przechowywanych plików.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="Kompleksowy, zaszyfrowany przez użytkownika czat wideo MEGA zapewnia całkowitą prywatność i jest dostępny przez przeglądarkę od 2016 roku. Został rozszerzony na naszą aplikację mobilną, z historią czatów dostępną na wielu urządzeniach. Użytkownicy mogą także łatwo dodawać pliki do czatu ze swojego dysku MEGA w chmurze.";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGA oferuje hojne 50 GB bezpłatnej przestrzeni dyskowej dla wszystkich zarejestrowanych użytkowników z premiowymi osiągnięciami i oferuje płatne plany o znacznie wyższych limitach:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Subskrypcja Pro Lite: 4,99 EUR (4,99 USD) miesięcznie lub 49,99 EUR (49,99 USD) rocznie zapewnia 400 GB miejsca na dane i 1 TB limitu transferu miesięcznie.\n Subskrypcja Pro I: 9,99 EUR (9,99 USD) miesięcznie lub 99,99 EUR (99,99 USD) rocznie daje 2 TB przestrzeni dyskowej i 2 TB limitu transferu miesięcznie.\nSubskrypcja Pro II: 19,99 EUR (19,99 USD) miesięcznie lub 199,99 EUR (199,99 USD) za rok daje 8 TB przestrzeni dyskowej i 8 TB limitu transferu miesięcznie. \nSubskrypcja Pro III: 29,99 EUR (29,99 USD) miesięcznie lub 299,99 EUR (299,99 USD) rocznie zapewnia 16 TB przestrzeni dyskowej i 16 TB kwoty transferu miesięcznie.";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -2059,7 +2057,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="KONTAKTY NA MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Cześć! Nawiąż ze mną bezpieczne rozmowy na temat MEGA i uzyskaj do 50 GB bezpłatnej przestrzeni dyskowej.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Title of the section about the plan in the storage tab in My Account Section */

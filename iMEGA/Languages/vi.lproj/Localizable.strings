@@ -167,7 +167,7 @@
 /*  */
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
-"fileLinkUnavailableText4"="Tệp tin đã bị xóa bởi người cung cấp.";
+"fileLinkUnavailableText4"="Tệp tin đã bị xóa bởi chính người sở hữu.";
 /* Message shown when a download starts */
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
@@ -1450,12 +1450,10 @@
 "generalDescriptionParagraph3"="Với quá trình mã hóa hoàn toàn mang nghĩa rằng ngay cả máy hệ thống của MEGA sẽ không thể đọc được dữ liệu của bạn hay có khả năng giúp bạn khôi phục mật khẩu. Người dùng BUỘC PHẢI nhớ (hay có Mã Phục Hồi) còn không mọi dữ liệu sẽ bị mất.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="Công nghệ mã hóa đầu-cuối từ hai phía người sử dụng của MEGA cung cấp tính năng bảo mật tuyệt đối, và được hỗ trợ hoàn toàn trên trình duyệt web từ năm 2016. Giờ đây đã được mang lên ứng dụng cho điện thoại, lịch sử cuộc chat có thể được xem trên thiết bị tùy thích. Người dùng còn có thể thêm và chia sẻ tệp tin vào cuộc trò chuyện từ ổ mây MEGA của mình.";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGA cũng cấp cho mỗi thành viên 50 GB không gian để lưu trữ hoàn toàn miễn phí, kèm thêm nhiều cách ưu đãi để mở rộng hạn mức cùng với hạng tài khoản trả phí:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Gói thuê bao Pro Lite: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 400 GB không gian lưu trữ và 1 TB cho lượng băng thông tải mỗi tháng.\nGói Pro I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 2 TB không gian lưu trữ và 2 TB cho lượng băng thông tải mỗi tháng.\nGói Pro II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 8 TB cho lượng băng thông tải mỗi tháng.\nGói Pro III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 16 TB không gian lưu trữ và 16 TB cho lượng băng thông tải mỗi tháng.";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nĐiều Khoản Sử Dụng Dịch Vụ: https://mega.nz/terms\nChính Sách Quyền Riêng Tư: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Đang gọi…";
 /* notification subtitle of incoming calls */
@@ -2059,7 +2057,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="SỔ LIÊN LẠC TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Xin chào! Mời bạn cùng sử dụng MEGA để có ngay 50 GB không gian lưu trữ miễn phí và công cụ giao tiếp bảo mật.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
