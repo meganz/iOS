@@ -1450,8 +1450,6 @@
 "generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="终端至终端加密保护的MEGA视频聊天为您的聊天提供完全的隐私，自2016年来一直通过浏览器使用。它已扩展到我们的移动应用程序，并可在多个设备上访问聊天记录。用户还能轻松地从MEGA云盘向聊天添加文件。";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Pro Lite订阅：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），享有400 GB的存储空间和每月1 TB的传输流量。\nPro I订阅：每月€9.99欧元（$9.99美元）或每年€99.99欧元（$99.99美元），享有2 TB的存储空间和每月 2 TB的传输流量。\nPro II订阅：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），享有8 TB的存储空间和每月8 TB的传输流量。\nPro III订阅：每月€29.99欧元（$29.99美元）或每年€299.99欧元（$299.99美元），享有16 TB的存储空间和每月16 TB的传输流量。";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -1981,9 +1979,9 @@
 /* Title for the recents section. */
 "Recents"="近期";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
+"recents.emptyState.activityHidden.title"="近期动态已隐藏";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Show Activity";
+"recents.emptyState.activityHidden.button"="显示动态";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1张照片";
 /* Multiple videos title shown in recents section of web client. */
@@ -2059,7 +2057,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="嗨！和我一起使用MEGA，并获得最高50GB的免费存储空间。";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="你好！与我一起使用MEGA，获得至少20GB+的免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2263,9 +2261,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和视图模式";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="隐藏近期动态";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="在主页部分隐藏近期动态。";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="默认";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2639,4 +2637,4 @@
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="文件太大，无法编辑。";
 /* Hud info message when read unknown encode file. */
-"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+"general.textEditor.hud.unknownEncode"="由于未知的内容编码，文件无法编辑。";

@@ -1450,8 +1450,6 @@
 "generalDescriptionParagraph3"="暗号化プロセスでは、当社はあなたのパスワードにアクセスしたり、それをリセットしたりすることができないため、あなたはパスワードを必ず覚えておく必要があります（復元キーをバックアップしない限り）。そうしないと、保存されたファイルにアクセスできなくなります。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="エンドツーエンドのユーザー暗号化MEGAビデオチャットは完全なプライバシー保護を可能にし、2016年からブラウザを通じてご利用いただいております。これはモバイルアプリにも拡張され、複数の端末間でチャット履歴にアクセスできます。またユーザー様は、MEGAクラウドドライブからチャットに簡単にファイルも追加できます。";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGAは、ボーナスを達成された、ご登録済みの全ユーザー様に50 GBの豊富な無料ストレージをご提供しております。また、上限がはるかに高い有料プランもご用意しております：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Pro Liteサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、400GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPro Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、2TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPro II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、8TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPro IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、16TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -2059,7 +2057,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上の連絡先";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="こんにちは！　私とMEGAでセキュアな会話をして、最大50GBの無料ストレージを獲得しましょう。";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="こんにちは！　私とMEGAで安全に会話をして、最大20GBの無料ストレージを獲得しましょう。";
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
 /* Title of the section about the plan in the storage tab in My Account Section */
