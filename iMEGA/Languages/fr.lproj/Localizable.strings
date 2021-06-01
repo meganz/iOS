@@ -1450,6 +1450,8 @@
 "generalDescriptionParagraph3"="Le processus de chiffrement implique que nous ne pouvons ni accéder à votre mot de passe ni le réinitialiser. Vous DEVEZ donc le mémoriser (à moins que vous ayez sauvegardé votre clé de récupération) ou vous perdrez l’accès à vos fichiers stockés.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="Le système de dialogue vidéo de MEGA, chiffré de bout en bout par l’utilisateur, permet une confidentialité totale et est proposé pour les navigateurs depuis 2016. Le service a été étendu à notre appli mobile, avec un historique de conversations accessible à partir de plusieurs appareils. Les utilisateurs peuvent aussi facilement ajouter des fichiers à une conversation à partir de leur disque nuagique MEGA.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="MEGA offre un généreux espace de stockage gratuit de 50 Go à tous les utilisateurs inscrits, avec des primes d’objectif, et propose des abonnements payants avec des limites beaucoup plus élevées :";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Abonnement Pro Léger : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 400 Go d’espace de stockage et 1 To de quota de transfert par mois.\nAbonnement Pro I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 2 To d’espace de stockage et 2 To de quota de transfert par mois.\nAbonnement Pro II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 8 To d’espace de stockage et 8 To de quota de transfert par mois.\nAbonnement Pro III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 16 To d’espace de stockage et 16 To de quota de transfert par mois.";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -2057,7 +2059,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS SUR MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bonjour. Conversez avec moi en toute sécurité sur MEGA et obtenez jusqu’à 50 Go d’espace de stockage gratuits.";
 /* Destination folder name of chat files */
 "My chat files"="Mes fichiers de dialogue en ligne";
 /* Title of the section about the plan in the storage tab in My Account Section */

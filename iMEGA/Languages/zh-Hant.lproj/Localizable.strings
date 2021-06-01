@@ -649,7 +649,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="資料保護規格";
+"dataProtectionRegulationLabel"="資料保護條例";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="關閉";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -1375,7 +1375,7 @@
 /* Label to show that a request error occurs during a SDK operation. */
 "Request failed, retrying"="請求失敗，重試中";
 /* Label to show that the rate limit has been reached during a SDK operation. */
-"Rate limit exceeded"="超過速率限制";
+"Rate limit exceeded"="超過速度限制";
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="已失敗";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
@@ -1450,6 +1450,8 @@
 "generalDescriptionParagraph3"="此加密方式也代表我們無法存取或重新設定您的密碼，因此您必須牢牢記住它 (除非您有備份還原金鑰)，否則您將無法存取您所儲存的檔案。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="點對點用戶加密技術的MEGA視訊聊天提供完整的隱私，2016年之後的瀏覽器都有支援。它也延伸至我們的手機應用程式，可以在多個裝置上查詢聊天記錄。用戶還可以輕鬆地將他們自己MEGA雲端硬碟的檔案添加到聊天室窗裡。";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="MEGA提供超大的50GB免費儲存空間給所有獲得獎勵成就的用戶，並提供更大空間的付費方案：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="專業版Lite 訂閱方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），即可享有400GB的儲存空間和每月1TB的傳輸配額。\n專業版I 訂閱方案：每月€9.99歐元（$9.99美元）或每年€99.99歐元（$99.99美元）即可享有2TB的儲存空間和每月2TB的傳輸配額。\n專業版II 訂閱方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元）即可享有8TB的儲存空間和每月8TB的傳輸配額。\n專業版III 訂閱方案：每月€29.99歐元（$29.99美元）或每年€299.99歐元（$299.99美元）即可享有16TB的儲存空間和每月16TB傳輸配額。";
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -1945,9 +1947,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="固定位置";
 /* Plural of participant. 2 participants */
-"%d participants"="%d位參與者";
+"%d participants"="%d位與會者";
 /* Singular of participant. 1 participant */
-"%d participant"="%d位參與者";
+"%d participant"="%d位與會者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 滑動以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -1979,9 +1981,9 @@
 /* Title for the recents section. */
 "Recents"="近期的";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="隱藏的近期活動";
+"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="顯示活動";
+"recents.emptyState.activityHidden.button"="Show Activity";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1張圖像";
 /* Multiple videos title shown in recents section of web client. */
@@ -2057,7 +2059,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="在MEGA上面的聯絡人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="嗨，一起在MEGA上與我進行安全的對談，並獲得50GB的免費儲存空間。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天檔案";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2261,9 +2263,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和查看模式";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="隱藏近期活動";
+"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="隱藏在首頁的近期活動";
+"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="預設";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2367,9 +2369,9 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="版本";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="喜歡";
+"Favourite"="我的最愛";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="移除喜歡";
+"Remove Favourite"="移除我的最愛";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="標籤";
 /* Context menu item which allows to mark folders with own color label */
