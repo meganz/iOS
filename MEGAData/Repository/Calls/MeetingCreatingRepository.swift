@@ -113,11 +113,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         }))
     }
     
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void) {
-        guard let url = URL(string: link) else {
-            completion(.failure(.unexpected))
-            return
-        }
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
         sdk.mnz_isGuestAccount = true
         
         chatSdk.logout(with: MEGAChatResultRequestDelegate(completion: { (result) in
@@ -129,23 +125,19 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                     case .failure(let errorType):
                         completion(.failure(errorType))
                     case .success(let request):
-                        self.chatSdk.connect(with: MEGAChatResultRequestDelegate(completion: { _  in
-                            self.chatSdk.openChatPreview(url, delegate: MEGAChatResultRequestDelegate(completion: { [weak self] in
-                                switch $0 {
-                                case .success(let chatRequest):
-                                    self?.chatResultDelegate = MEGAChatResultDelegate(completion: { (sdk, chatId, newState) in
-                                        if chatRequest.chatHandle == chatId, newState == .online {
-                                            self?.chatSdk.remove(self?.chatResultDelegate)
-                                            completion(.success(request))
-                                        }
-                                    })
-                                    self?.chatSdk.add(self?.chatResultDelegate)
+                        if request.paramType == CreateAccountAction.resumeEphemeralPlusPlus.rawValue {
+                            self.sdk.fetchNodes(with: RequestDelegate(completion: { (result) in
+                                switch result {
+                                case .success(_):
+                                    self.connectToChat(link: link, request: request, completion: completion)
                                 case .failure(_):
-                                    self?.sdk.mnz_isGuestAccount = false
+                                    self.sdk.mnz_isGuestAccount = false
                                     completion(.failure(.unexpected))
                                 }
                             }))
-                        }))
+                        } else {
+                            self.connectToChat(link: link, request: request, completion: completion)
+                        }
                     }
                 })
             case .failure(_):
@@ -156,6 +148,29 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         }))
     }
     
-    
+    private func connectToChat(link: String, request: MEGARequest, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
+        guard let url = URL(string: link) else {
+            completion(.failure(.unexpected))
+            return
+        }
+        
+        self.chatSdk.connect(with: MEGAChatResultRequestDelegate(completion: { _  in
+            self.chatSdk.openChatPreview(url, delegate: MEGAChatResultRequestDelegate(completion: { [weak self] in
+                switch $0 {
+                case .success(let chatRequest):
+                    self?.chatResultDelegate = MEGAChatResultDelegate(completion: { (sdk, chatId, newState) in
+                        if chatRequest.chatHandle == chatId, newState == .online {
+                            self?.chatSdk.remove(self?.chatResultDelegate)
+                            completion(.success(()))
+                        }
+                    })
+                    self?.chatSdk.add(self?.chatResultDelegate)
+                case .failure(_):
+                    self?.sdk.mnz_isGuestAccount = false
+                    completion(.failure(.unexpected))
+                }
+            }))
+        }))
+    }
 }
 

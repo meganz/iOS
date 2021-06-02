@@ -12,6 +12,8 @@ struct SDKUserClient {
     var userForSharedNode: (
         _ nodeHandle: MEGAHandle
     ) -> UserSDKEntity?
+    
+    var isGuestAccount: () -> Bool
 }
 
 extension SDKUserClient {
@@ -33,6 +35,9 @@ extension SDKUserClient {
                 guard let user = api.userFrom(inShare: node) else { return nil }
                 let base64Handle = MEGASdk.base64Handle(forUserHandle: user.handle)
                 return UserSDKEntity(with: user, base64Handle: base64Handle)
+            },
+            isGuestAccount: {
+                api.mnz_isGuestAccount
             }
         )
     }

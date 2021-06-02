@@ -38,7 +38,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   callsUseCase: CallsUseCase(repository: CallsRepository()),
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
-                                                  userUseCase: UserUseCase(repo: .live))
+                                                  userUseCase: UserUseCase(repo: .live),
+                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())))
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         return vc

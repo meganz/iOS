@@ -21,6 +21,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let callManagerUseCase: CallManagerUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let authUseCase: AuthUseCaseProtocol
     private var call: CallEntity
 
     init(router: MeetingContainerRouting,
@@ -29,7 +30,8 @@ final class MeetingContainerViewModel: ViewModelType {
          callsUseCase: CallsUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         userUseCase: UserUseCaseProtocol,
+         authUseCase: AuthUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.call = call
@@ -37,6 +39,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.callManagerUseCase = callManagerUseCase
         self.userUseCase = userUseCase
+        self.authUseCase = authUseCase
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -50,7 +53,13 @@ final class MeetingContainerViewModel: ViewModelType {
         case.hangCall(let presenter):
             hangCall(presenter: presenter)
         case .tapOnBackButton:
-            router.dismiss(completion: nil)
+            if userUseCase.isGuestAccount {
+                dismissCall {
+                    self.authUseCase.logout()
+                }
+            } else {
+                router.dismiss(completion: nil)
+            }
         case .changeMenuVisibility:
             router.toggleFloatingPanel(containerViewModel: self)
         case .showOptionsMenu(let presenter, let sender, let isMyselfModerator):
@@ -77,10 +86,11 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func hangCall(presenter: UIViewController) {
         if userUseCase.hasUserLoggedIn {
-            if MEGASdkManager.sharedMEGASdk().mnz_isGuestAccount {
-                MEGASdkManager.sharedMEGASdk().logout()
+            dismissCall {
+                if self.userUseCase.isGuestAccount {
+                    self.authUseCase.logout()
+                }
             }
-            dismissCall(completion: nil)
         } else {
             router.showEndMeetingOptions(presenter: presenter, meetingContainerViewModel: self)
         }

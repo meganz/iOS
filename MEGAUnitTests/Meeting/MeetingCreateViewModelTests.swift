@@ -72,9 +72,8 @@ final class MockMeetingCreateRouter: MeetingCreatingViewRouting {
     var goToMeetingRoom_calledTimes = 0
     var openChatRoom_calledTimes = 0
 
-    func dismiss(completion: @escaping () -> Void) {
+    func dismiss() {
         dismiss_calledTimes += 1
-        completion()
     }
     
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {

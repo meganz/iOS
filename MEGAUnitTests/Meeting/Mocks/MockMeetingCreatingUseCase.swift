@@ -3,6 +3,7 @@
 final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     var chatCallCompletion: Result<ChatRoomEntity, CallsErrorEntity>?
     var requestCompletion: Result<MEGARequest, MEGASDKErrorType>?
+    var createEpehemeralAccountCompletion: Result<Void, MEGASDKErrorType>?
 
     var setChatVideoInDevices_CalledTimes = 0
     var openVideo_calledTimes = 0
@@ -61,4 +62,9 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         }
     }
  
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
+        if let completionBlock = createEpehemeralAccountCompletion {
+            completion(completionBlock)
+        }
+    }
 }

@@ -3,7 +3,8 @@
 struct MockUserUseCase: UserUseCaseProtocol {
     let handle: UInt64
     var hasUserLoggedIn: Bool = true
-
+    var isGuestAccount: Bool = false
+    
     var myHandle: UInt64? {
         return handle
     }
