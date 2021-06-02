@@ -9,6 +9,8 @@ extension SDKUserClient {
             false
         }, userForSharedNode: { _ in
             return nil
+        }, isGuestAccount: {
+            false
         })
     }
 
@@ -19,6 +21,8 @@ extension SDKUserClient {
             false
         }, userForSharedNode: { _ in
             return UserSDKEntity.mockUser
+        }, isGuestAccount: {
+            false
         })
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol MeetingCreatingViewRouting: Routing {
-    func dismiss(completion: @escaping () -> Void)
+    func dismiss()
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool)
     func openChatRoom(withChatId chatId: UInt64)
 }
@@ -38,8 +38,8 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     }
     
     // MARK: - UI Actions
-    func dismiss(completion: @escaping () -> Void) {
-        baseViewController?.dismiss(animated: true, completion: completion)
+    func dismiss() {
+        baseViewController?.dismiss(animated: false, completion: nil)
     }
     
     func openChatRoom(withChatId chatId: UInt64) {

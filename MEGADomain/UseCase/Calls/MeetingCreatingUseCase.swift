@@ -9,8 +9,7 @@ protocol MeetingCreatingUseCaseProtocol {
     func getUsername() -> String
     func getCall(forChatId chatId: UInt64) -> CallEntity?
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate)
-
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void)
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void)
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
 }
 
@@ -69,7 +68,7 @@ struct MeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         repository.checkChatLink(link: link, completion: completion)
     }
 
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<MEGARequest, MEGASDKErrorType>) -> Void) {
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
         repository.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: link, completion: completion)
     }
     

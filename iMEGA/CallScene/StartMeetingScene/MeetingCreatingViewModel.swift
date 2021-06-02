@@ -118,7 +118,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             invokeCommand?(.loadingStartMeeting)
         case .didTapCloseButton:
             meetingUseCase.releaseDevice()
-            router.dismiss(completion: {})
+            router.dismiss()
         case .updateMeetingName(let name):
             meetingName = name
             invokeCommand?(.updateMeetingName(meetingName))    
@@ -147,24 +147,25 @@ final class MeetingCreatingViewModel: ViewModelType {
                 self.joinChatCall(chatId: chatId)
                 
             case .failure(_):
-                self.router.dismiss(completion: {})
+                self.router.dismiss()
             }
         }
     }
     
     private func joinChatCall(chatId: UInt64) {
-        
         meetingUseCase.joinChatCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: !isMuteMicroPhoneEnabled) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
-                guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else { return }
-                self.router.dismiss(completion: {
+                guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
+                    MEGALogError("Can not join meeting, not call found for chat")
+                    self.router.dismiss()
+                    return
+                }
+                self.router.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
-                    
-                })
             case .failure(_):
-                self.router.dismiss(completion: {})
+                self.router.dismiss()
             }
         }
     }
@@ -175,14 +176,14 @@ final class MeetingCreatingViewModel: ViewModelType {
             switch $0 {
             case .success(let chatRoom):
                 guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
-                    self.router.dismiss(completion: {})
+                    MEGALogError("Can not start meeting, not call found for chat")
+                    self.router.dismiss()
                     return
                 }
-                self.router.dismiss(completion: {
+                self.router.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
-                })
             case .failure(_):
-                self.router.dismiss(completion: {})
+                self.router.dismiss()
             }
         }
     }
@@ -235,7 +236,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 self.invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: link, type: self.type))
                 self.chatId = chatRoom.chatId
             case .failure(_):
-                self.router.dismiss(completion: {})
+                self.router.dismiss()
             }
         }
     }
