@@ -167,7 +167,7 @@
 /*  */
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
-"fileLinkUnavailableText4"="Tệp tin đã bị xóa bởi người cung cấp.";
+"fileLinkUnavailableText4"="Tệp tin đã bị xóa bởi chính người sở hữu.";
 /* Message shown when a download starts */
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */

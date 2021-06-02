@@ -2263,9 +2263,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Classificação e tipo de visualização";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="Ocultar Atividades recentes.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="Ocultar Atividades recentes no Início.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Predeterminado";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2601,7 +2601,7 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Quick Access";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Acesse rapidamente arquivos em Recentes, Favoritos ou a seção Offline";
+"Quickly access files on Recents, Favourites, or Offline section"="Acesse rapidamente arquivos das Atividades recentes, os Favoritos ou a seção Offline";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Acesse rapidamente os arquivos na área Favoritos";
 /* Text description for the Recents QuickAccess widget */
