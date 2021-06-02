@@ -13,6 +13,7 @@ enum NodeInfoTableViewSection: Int {
 
 enum InfoSectionRow: Int {
     case preview
+    case owner
 }
 
 enum DetailsSectionRow: Int {
@@ -297,7 +298,12 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func infoRows() -> [InfoSectionRow] {
-        return [.preview]
+        var infoRows = [InfoSectionRow]()
+        infoRows.append(.preview)
+        if node.isInShare() {
+            infoRows.append(.owner)
+        }
+        return infoRows
     }
     
     private func detailRows() -> [DetailsSectionRow] {
@@ -338,6 +344,18 @@ class NodeInfoViewController: UIViewController {
         }
         
         cell.configure(forNode: node, folderInfo: folderInfo)
+        return cell
+    }
+    
+    private func ownerCell(forIndexPath indexPath: IndexPath) -> NodeOwnerInfoTableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "nodeOwnerInfoTableViewCell", for: indexPath) as? NodeOwnerInfoTableViewCell else {
+            fatalError("Could not get NodeInfoDetailTableViewCell")
+        }
+        
+        if let user = MEGASdkManager.sharedMEGASdk().userFrom(inShare: node) {
+            cell.configure(user: user)
+        }
+        
         return cell
     }
     
@@ -468,6 +486,8 @@ extension NodeInfoViewController: UITableViewDataSource {
             switch infoRows()[indexPath.row] {
             case .preview:
                 return previewCell(forIndexPath: indexPath)
+            case .owner:
+                return ownerCell(forIndexPath: indexPath)
             }
         case .details:
             return detailCell(forIndexPath: indexPath)
@@ -504,6 +524,8 @@ extension NodeInfoViewController: UITableViewDelegate {
             switch infoRows()[indexPath.row] {
             case .preview:
                 return 230
+            case .owner:
+                return UITableView.automaticDimension
             }
         }
     }
