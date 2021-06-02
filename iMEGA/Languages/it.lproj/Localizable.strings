@@ -2639,4 +2639,4 @@
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="Il file è troppo grande e non può essere modificato.";
 /* Hud info message when read unknown encode file. */
-"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+"general.textEditor.hud.unknownEncode"="Non è stato possibile modificare il file a causa di contenuti sconosciuti nella codifica.";

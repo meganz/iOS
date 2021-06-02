@@ -2617,13 +2617,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Ainsi, vous verrez instantanément les nouveaux messages sur votre appareil.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Ouvrez les <b>réglages</b>";
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Ouvrez <b>Réglages</b>";
 /* Second step to turn on notifications */
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Touchez <b>Notifications</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Activez <b>Autoriser les notifications</b>";
 /* Title of the button to open Settings */
-"dialog.turnOnNotifications.button.primary"="Ouvrir les réglages";
+"dialog.turnOnNotifications.button.primary"="Ouvrir Réglages";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Changer l’onglet de lancement";
 /* Dialog description for the change launch tab screen */

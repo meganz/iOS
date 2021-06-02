@@ -31,51 +31,51 @@
 /* Alert title to attract attention */
 "attention"="請注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="請在設置中允許 MEGA App 訪問您的相機。";
+"cameraPermissions"="請在設定中允許MEGA App使用您的相機。";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="請於您的設定中授予MEGA應用程式使用您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="請在設置中允許 MEGA App 訪問您的照片庫。";
+"photoLibraryPermissions"="請在設定中允許MEGA App存取您的相簿。";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已無效。您的帳戶可能已啟用，或您可能已取消註冊";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已無效。您的帳戶可能已啟用，或您可能已取消註冊。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此創建此連結的帳戶已被停權。";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此建立此連結的帳戶已被停權。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="要存取此資料夾/檔案，您需要解密密鑰。如果您沒有密鑰，請聯絡此連結的建立者。";
+"decryptionKeyAlertMessage"="要存取此資料夾/檔案，您需要解密金鑰。如果您沒有金鑰，請聯絡此連結的建立者。";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="解密密鑰";
+"decryptionKey"="解密金鑰";
 /* Button title to try to decrypt the link */
 "decrypt"="解密";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="無效的密鑰";
+"decryptionKeyNotValid"="無效的金鑰";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
-"To access this link, you will need its password."="若要取得連結權限，您將需要此連結的密碼。";
+"To access this link, you will need its password."="若要存取此連結，您將需要它的密碼。";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
-"If you do not have the password, contact the creator of the link."="若您沒有密碼，請聯絡該連結的創建者。";
+"If you do not have the password, contact the creator of the link."="若您沒有密碼，請聯絡該連結的建立者。";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
 "Enter the password"="請輸入密碼";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
+"loggedOutFromAnotherLocation"="您已從其他位置登出此裝置";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA無法透過SSL安全地連線，您可能在使用有額外要求的公共Wi-Fi。";
+"sslUnverified_alertTitle"="MEGA無法透過SSL安全的連線，您可能在使用有額外要求的公共Wi-Fi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著以在手機瀏覽器中所登入的相同帳戶進行登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="此處理過程比預期的長些。請稍候…";
+"takingLongerThanExpected"="此處理過程比預期的要長。請稍候…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="系統忙碌中，請稍候。";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="無法連上MEGA。請檢查您的網路連線或於稍後重試。";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="太多程序進行中。請稍候。";
+"tooManyRequest"="太多佇列進行中。請稍候。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="請登入您的帳號。";
 /* Error message when a user attempts to change their email without an active login session. */
@@ -83,23 +83,23 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="創建帳戶";
+"createAccount"="建立帳戶";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="郵箱地址或密碼無效。請重試";
+"invalidMailOrPassword"="無效的電子郵件地址或密碼。請重試";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至 %@ 後再重試。";
+"tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至%@後再重試。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="請檢查您的電子信箱，並點擊信中的連結以確認啟用您的帳戶。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的帳號已被鎖定。請連繫support@mega.nz";
+"accountBlocked"="您的帳號已被鎖定。請連繫 support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
-"emailInvalidFormat"="請輸入有效的郵箱地址";
+"emailInvalidFormat"="請輸入有效的電子郵件地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="email格式無效";
+"theEmailAddressFormatIsInvalid"="無效的email格式";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="請輸入有效的密碼";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="郵箱地址";
+"emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密碼";
 /*  */
@@ -109,7 +109,7 @@
 /*  */
 "weak"="弱";
 /*  */
-"passwordVeryWeakOrWeak"="您的密碼太容易被猜到了。請使用更長的密碼。結合大小寫字母，或添加特殊字符。請避免使用名字或字典中的單詞。";
+"passwordVeryWeakOrWeak"="您的密碼太容易被猜到了。請使用更長的密碼。結合大小寫字母，或加入特殊字符。請避免使用名字或字典中的單字。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="普通";
 /*  */
@@ -117,11 +117,11 @@
 /*  */
 "good"="好";
 /*  */
-"passwordGood"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
+"passwordGood"="這個密碼將可抵擋最典型的暴力破解攻擊。請確保您會記好。";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="強";
 /*  */
-"passwordStrong"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
+"passwordStrong"="這個密碼將可扺擋最典型的暴力破解攻擊。請確保您會記好。";
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服務條款</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
@@ -129,79 +129,79 @@
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="請輸入有效的名字";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="密碼不匹配";
+"passwordsDoNotMatch"="密碼不符";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="您需要同意MEGA服務條款才可註冊帳號。";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="您需要同意您了解遺失密碼的風險";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="這個電郵在之前已登記過了";
+"emailAlreadyRegistered"="此電子郵件地址已在MEGA註冊過帳戶";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="正在等待確認電子信箱。";
+"awaitingEmailConfirmation"="等待電子郵件確認中。";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="請輸入您的密碼以確認帳戶";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="確認帳戶";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="錯誤密碼";
+"passwordWrong"="密碼錯誤";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="發生錯誤，此電子信箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="您的設備內存不足";
+"nodeTooBig"="您需要釋出裝置上一些空間";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA最少需要%@安裝空間。請刪除您不再使用的app或相簿裡較大的影片檔案以釋放一些空間。您也可以管理MEGA在您裝置上儲存的資料。";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA最少需要%@的安裝空間。請刪除您不再使用的app或相簿裡較大的影片檔案以釋出一些空間。您也可以管理MEGA存放在您裝置上的資料。";
 /* Title for the file link view */
-"fileLink"="檔案鏈接";
+"fileLink"="檔案連結";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="開啟";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="您正在嘗試下載的檔案大於可用內存。";
+"fileTooBigMessage"="您正在嘗試下載的檔案大於可用的內存。";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="您正在嘗試打開的檔案大於可用內存。";
+"fileTooBigMessage_open"="您正在嘗試打開的檔案大於可用的內存。";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="不可用的連結";
 /*  */
-"fileLinkUnavailableText1"="這可能因下列因素造成:";
+"fileLinkUnavailableText1"="這可能因下列因素造成：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="因為違反了ToS/ AUP，該檔案已被移除。";
 /*  */
-"fileLinkUnavailableText3"="無效的連結-你嘗試連結的檔案不存在";
+"fileLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
 "fileLinkUnavailableText4"="該檔案已被用戶刪除。";
 /* Message shown when a download starts */
 "downloadStarted"="已開始下載";
 /* Title for the folder link view */
-"folderLink"="檔案夾鏈接";
+"folderLink"="資料夾連結";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下載";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="您正在嘗試下載的資料夾大於可用內存。";
+"folderTooBigMessage"="您正在嘗試下載的資料夾大於可用的內存。";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="資料夾 '%@' 創建失敗";
+"folderCreationError"="資料夾 “%@” 建立失敗";
 /*  */
-"folderLinkUnavailableText1"="這可能因下列因素造成:";
+"folderLinkUnavailableText1"="這可能因下列因素造成：";
 /*  */
 "folderLinkUnavailableText2"="該資料夾連結因違反ToS/AUP使用條款已被移除。";
 /*  */
-"folderLinkUnavailableText3"="無效的連結-你嘗試連結的檔案不存在";
+"folderLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
 "folderLinkUnavailableText4"="該資料夾連結被使用者關閉。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="無網絡連接";
+"noInternetConnection"="無網路連線";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="文件夾中沒有文件";
+"emptyFolder"="空白資料夾";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="您的雲端硬盤沒有檔案";
+"cloudDriveEmptyState_title"="您的雲端硬碟沒有檔案";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="新增檔案";
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="沒有符合搜尋的項目";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="空的垃圾桶";
+"cloudDriveEmptyState_titleRubbishBin"="空的垃圾筒";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="沒有任何可離線存取檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="沒有聯繫人";
+"contactsEmptyState_title"="沒有聯絡人";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
@@ -217,7 +217,7 @@
 /* Button title to allow the user postpone an action */
 "later"="稍後再詢問";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="已收到的";
+"received"="已收到";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="已寄出";
 /* Success message shown when you acepted a contact request */
@@ -227,37 +227,37 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="已刪除聯絡人邀請";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="已無尚待處理的聯絡人邀請";
+"noRequestPending"="沒有待處理的聯絡人邀請";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="傳輸暫停";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="無傳輸/不傳輸";
+"transfersEmptyState_titleAll"="沒有傳輸";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="無下載/不下載";
+"transfersEmptyState_titleDownload"="沒有下載";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="無上傳";
+"transfersEmptyState_titleUpload"="沒有上傳";
 /* Title of the Cloud Drive section */
 "cloudDrive"="雲端硬碟";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d 個檔案";
+"oneFile"="%d個檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d 個檔案";
+"files"="%d個檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d 個資料夾";
+"oneFolder"="%d個資料夾";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d 個資料夾";
+"folders"="%d個資料夾";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 資料夾 • 1 檔案";
+"folderAndFile"="1資料夾 • 1檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] 資料夾 • [B] 檔案";
+"foldersAndFiles"="[A]資料夾 • [B]檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d 資料夾 • 1 檔案";
+"foldersAndFile"="%d資料夾 • 1檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 資料夾 • %d 檔案";
+"folderAndFiles"="1資料夾 • %d檔案";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="已入排程";
+"queued"="已入佇列";
 /* A label to indicate a paused state for a transfer item (upload/download). */
-"paused"="暫停";
+"paused"="已暫停";
 /* Possible state of a transfer. When the transfer was cancelled */
 "Cancelled"="已取消";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
@@ -269,17 +269,17 @@
 /* Button title to 'Save' the selected option */
 "save"="儲存";
 /* Sort by option (1/6). This one orders the files alphabethically */
-"nameAscending"="名字（升序）";
+"nameAscending"="名字（升冪）";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="名字（降序）";
+"nameDescending"="名字（降冪）";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="从大到小";
+"largest"="由大到小";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="由小至大";
+"smallest"="由小到大";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
 "newest"="由新到舊";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="由舊至新";
+"oldest"="由舊到新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="從相片中選擇";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -293,59 +293,59 @@
 /* Menu option from the `Add` section that allows the user to share contact. */
 "Contact"="聯絡人";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="群組聊天";
+"Start Group"="群組對話";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="位置";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="錄音";
+"Voice Clip"="語音剪輯";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="新的文字檔案";
 /* Hint text shown on the new text file alert. */
 "file_name"="檔案名稱";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="新增資料夾";
+"newFolder"="新的資料夾";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="新資料夾的名字";
+"newFolderMessage"="新資料夾名稱";
 /* Title button for the create folder alert. */
 "createFolderButton"="建立";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
-"There is already a folder with the same name"="已經有一個同名的資料夾";
+"There is already a folder with the same name"="已經有一個相同名稱的資料夾";
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="無法進行文件掃描";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="已經有一個同名的檔案";
+"There is already a file with the same name"="已經有一個相同名稱的檔案";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="匯入";
+"uploadFrom"="從…匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="已成功上傳 [A] 檔案，其於MEGA的名稱為 [B]";
+"fileExistAlertController_Message"="已使用名稱[B]上傳[A]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d個檔案已被上傳到這個資料夾";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="已開始上傳";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="您沒有訪問該檔案的權限";
+"youNoLongerHaveAccessToThisFile_alertTitle"="您不再有存取此檔案的權限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="您沒有訪問該資料夾的權限";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="您不再有存取此資料夾的權限";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="儲存為可離線存取";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="這個收件夾標籤僅供Apple使用";
+"folderInboxError"="這個收件夾僅保留給Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="儲存圖片";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="取得鏈接";
+"getLink"="取得連結";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="取得分享連結";
+"getLinks"="取得共享連結";
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="管理連結";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="管理連結";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="正在生成連接…";
+"generatingLink"="產生連結中…";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="產生連結網址中…";
+"generatingLinks"="產生連結中…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="連結已複製";
+"linkCopied"="已複製連結";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="已複製連結";
 /* Text of the button after the links were copied to the clipboard */
@@ -363,11 +363,11 @@
 /* button caption text that the user clicks when he disagrees */
 "disagree"="不同意";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
-"linkWithoutKey"="連結不包含密鑰";
+"linkWithoutKey"="連結不包含金鑰";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
-"linkWithKey"="連結包含密鑰";
+"linkWithKey"="連結包含金鑰";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(PRO專業版限定)";
+"proOnly"="（PRO專業版限定）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="設定有效日期";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -377,25 +377,25 @@
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypted"="已加密";
 /* Title for a button to copy the link to the clipboard */
-"copyLink"="複製鏈接";
+"copyLink"="複製連結";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="複製密鑰";
+"copyKey"="複製金鑰";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="開啟於…";
+"openIn"="從…開啟";
 /*  */
 "uploadToMega"="上傳至MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="在檔案上點擊可重新命名";
 /*  */
-"sendToContact"="寄給連絡人";
+"sendToContact"="傳送至聯絡人";
 /* Column header of my contacts/chats at copy dialog */
-"My chats"="我的聊天";
+"My chats"="我的對話";
 /* Toast text upon sending a single file to chat */
-"fileSentToChat"="檔案已發送至聊天對話中";
+"fileSentToChat"="檔案已發送至對話中";
 /* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="檔案已發送至%1$d個聊天對話中";
+"fileSentToXChats"="檔案已發送至%1$d個對話中";
 /* Toast text upon sending multiple files to chat */
-"filesSentToChat"="檔案已發送至聊天對話中";
+"filesSentToChat"="檔案已發送至對話中";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="已成功發送%d個檔案";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -417,31 +417,31 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="已移動1個檔案";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d 個檔案已被移動";
+"moveFilesMessage"="已移動%d個檔案";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 個資料夾已移動";
+"moveFolderMessage"="已移動1個資料夾";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="已被移動 %d 個資料夾";
+"moveFoldersMessage"="已移動%d個資料夾";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="已移動 1 個檔案和 1 個資料夾";
+"moveFileFolderMessage"="已移動1個檔案和1個資料夾";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="已移動 1 個檔案和 %d 個資料夾";
+"moveFileFoldersMessage"="已移動1個檔案和%d個資料夾";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="已移動 %d 個檔案和 1 個資料夾";
+"moveFilesFolderMessage"="已移動%d個檔案和1個資料夾";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="已移動 [A] 個檔案與 [B] 個資料夾";
+"moveFilesFoldersMessage"="已移動[A]個檔案與[B]個資料夾";
 /* List option shown on the details of a file or folder */
 "copy"="複製";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="已複製 1 個檔案";
+"copyFileMessage"="已複製1個檔案";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="已複製 %d 個檔案";
+"copyFilesMessage"="已複製%d個檔案";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="已複製 1 個資料夾";
+"copyFolderMessage"="已複製1個資料夾";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="已複製 %d 個資料夾";
+"copyFoldersMessage"="已複製%d個資料夾";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="已複製 1 個檔案和 1 個資料夾";
+"copyFileFolderMessage"="已複製1個檔案和1個資料夾";
 /* Success message shown when you have copied 1 file and {1+} folders */
 "copyFileFoldersMessage"="已複製 1 個檔案和 %d 個資料夾";
 /* Success message shown when you have copied {1+} files and 1 folder */
@@ -457,23 +457,23 @@
 /* Title for the action that allows you to replace a file. */
 "replace"="取代";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="移至垃圾桶";
+"moveToTheRubbishBin"="移至垃圾筒";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 個檔案已被移動到垃圾桶";
+"fileMovedToRubbishBinMessage"="1 個檔案已被移動到垃圾筒";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d 個檔案已被移動到垃圾桶";
+"filesMovedToRubbishBinMessage"="%d 個檔案已被移動到垃圾筒";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="已將1個資料夾移到垃圾桶";
+"folderMovedToRubbishBinMessage"="已將1個資料夾移到垃圾筒";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="已將%d個資料夾移到垃圾桶";
+"foldersMovedToRubbishBinMessage"="已將%d個資料夾移到垃圾筒";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1個檔案與1個資料夾已移到垃圾桶";
+"fileFolderMovedToRubbishBinMessage"="1個檔案與1個資料夾已移到垃圾筒";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1個檔案與%d個資料夾已移到垃圾桶";
+"fileFoldersMovedToRubbishBinMessage"="1個檔案與%d個資料夾已移到垃圾筒";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d個檔案與1個資料夾已移到垃圾桶";
+"filesFolderMovedToRubbishBinMessage"="%d個檔案與1個資料夾已移到垃圾筒";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A]個檔案與[B]個資料夾已移到垃圾桶";
+"filesFoldersMovedToRubbishBinMessage"="[A]個檔案與[B]個資料夾已移到垃圾筒";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="權限錯誤";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -627,7 +627,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相機上傳";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="垃圾桶";
+"rubbishBinLabel"="垃圾筒";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="進階";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -649,7 +649,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="資料保護條例";
+"dataProtectionRegulationLabel"="資料保護規格";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="關閉";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -767,9 +767,9 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="於MEGA上";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="清空垃圾桶";
+"emptyRubbishBin"="清空垃圾筒";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="所有垃圾桶中的項目將均被刪除";
+"emptyRubbishBinAlertTitle"="所有垃圾筒中的項目將均被刪除";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -785,7 +785,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡support@mega.nz。";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="註銷連接已失效。";
+"cancellationLinkHasExpired"="取消連結已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
 /* During account cancellation (deletion) */
@@ -1121,7 +1121,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="開啟調試模式";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="將在離線存取區（MEGAiOS.log）創建一個日誌。日誌可包含與您的帳戶相關的資訊。";
+"enableDebugMode_message"="將在離線存取區（MEGAiOS.log）建立一個日誌。日誌可包含與您的帳戶相關的資訊。";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="關閉調試模式";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1375,7 +1375,7 @@
 /* Label to show that a request error occurs during a SDK operation. */
 "Request failed, retrying"="請求失敗，重試中";
 /* Label to show that the rate limit has been reached during a SDK operation. */
-"Rate limit exceeded"="超過速度限制";
+"Rate limit exceeded"="超過速率限制";
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="已失敗";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
@@ -1405,7 +1405,7 @@
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="暫時無法取得";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
-"Connection overflow"="連接過量";
+"Connection overflow"="連線過量";
 /* Label to show that an error related with an write error occurs during a SDK operation. */
 "Write error"="寫入錯誤";
 /* Label to show that an error related with an read error occurs during a SDK operation. */
@@ -1697,7 +1697,7 @@
 /* Description shown in a page of the onboarding screens explaining the chat feature */
 "Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="完全加密的語音聊天及視訊通話，群組聊天以並整合雲端硬碟的檔案共享。";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="創建您的網絡";
+"Create your Network"="建立您的網絡";
 /* Description shown in a page of the onboarding screens explaining contacts */
 "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="無需離開MEGA即可加入聯絡人、建立連線，協作及撥打語音與視訊通話";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
@@ -1751,17 +1751,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="您即將刪除所有檔案的版本歷史記錄。從聯繫人分享給您的任何檔案版本都只有分享者能刪除。\n\n請注意，當前的這個檔案不會被刪除。";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="垃圾桶清理時程";
+"Rubbish-Bin Cleaning Scheduler:"="垃圾筒清理時程";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="刪除較舊的檔案，早於";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="日";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾桶會自動清除。最短清除間隔為7天，最長清除間隔為30天。";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾筒會自動清除。最短清除間隔為7天，最長清除間隔為30天。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾桶可執行自動清除。最短清除間隔為7天。";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾筒可執行自動清除。最短清除間隔為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾桶清理排程或設定更長的保留期限，您需要訂閱一個PRO計劃。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒清理排程或設定更長的保留期限，您需要訂閱一個PRO計劃。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他頁面嗎？這將使您登出除了目前頁面之外的所有其他活動頁面。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1799,7 +1799,7 @@
 /* Footer to explain why key rotation is disabled for public chats with many participants */
 "Key rotation is disabled for conversations with more than 100 participants."="與超過100位參與者的對話無法使用加密金鑰輪替功能。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="您必須為該群組命名，才能創建聊天連結。";
+"To create a chat link you must name the group."="您必須為該群組命名，才能建立聊天連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="聊天室連結";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1947,9 +1947,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="固定位置";
 /* Plural of participant. 2 participants */
-"%d participants"="%d位與會者";
+"%d participants"="%d位參與者";
 /* Singular of participant. 1 participant */
-"%d participant"="%d位與會者";
+"%d participant"="%d位參與者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 滑動以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -1981,9 +1981,9 @@
 /* Title for the recents section. */
 "Recents"="近期的";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
+"recents.emptyState.activityHidden.title"="隱藏的近期活動";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Show Activity";
+"recents.emptyState.activityHidden.button"="顯示活動";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1張圖像";
 /* Multiple videos title shown in recents section of web client. */
@@ -2263,9 +2263,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和查看模式";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="隱藏近期活動";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="隱藏在首頁的近期活動";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="預設";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2309,7 +2309,7 @@
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="資料夾連結無法使用";
 /* Error message shown when opening a file link which doesn’t exist */
-"File link unavailable"="這不是有效的檔案連接";
+"File link unavailable"="這不是有效的檔案連結";
 /* Header of block with all shared files in chat. */
 "Shared Files"="共享檔案";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -2369,9 +2369,9 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="版本";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="我的最愛";
+"Favourite"="喜歡";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="移除我的最愛";
+"Remove Favourite"="移除喜歡";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="標籤";
 /* Context menu item which allows to mark folders with own color label */
@@ -2507,7 +2507,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="播放中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將相片上傳資料夾移至垃圾桶嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將相片上傳資料夾移至垃圾筒嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="上傳檔案";
 /* Text title for shortcuts, ie in the widget */
