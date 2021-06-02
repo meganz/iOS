@@ -67,7 +67,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var localVideoEnabled: Bool = false
     private weak var containerViewModel: MeetingContainerViewModel?
 
-    private let callManagerUseCase: CallManagerUseCaseProtocol
     private let callsUseCase: CallsUseCaseProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
@@ -77,11 +76,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: MeetingParticipantsLayoutRouting, containerViewModel: MeetingContainerViewModel, callManager: CallManagerUseCaseProtocol, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
+    init(router: MeetingParticipantsLayoutRouting, containerViewModel: MeetingContainerViewModel, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
         
         self.router = router
         self.containerViewModel = containerViewModel
-        self.callManagerUseCase = callManager
         self.callsUseCase = callsUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase

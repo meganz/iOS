@@ -113,7 +113,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .muteUnmuteCall(let muted):
             checkForAudioPermission {
                 guard let call = self.call else { return }
-                self.callManagerUseCase.muteUnmuteCall(callId: call.callId, chatId: self.chatRoom.chatId, muted: muted)
+                self.callManagerUseCase.muteUnmuteCall( call, muted: muted)
                 self.invokeCommand?(.microphoneMuted(muted: muted))
             }
         case .turnCamera(let on):

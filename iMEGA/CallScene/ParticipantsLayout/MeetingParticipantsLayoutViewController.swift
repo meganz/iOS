@@ -246,41 +246,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
 }
 
-// MARK: - Use case protocol -
-protocol CallManagerUseCaseProtocol {
-    func endCall(_ call: CallEntity)
-    func muteUnmuteCall(callId: MEGAHandle, chatId: MEGAHandle, muted: Bool)
-    func addCall(_ call: CallEntity)
-    func startCall(_ call: CallEntity)
-}
-
-// MARK: - Use case implementation -
-struct CallManagerUseCase: CallManagerUseCaseProtocol {
-    
-    let megaCallManager: MEGACallManager
-
-    init(megaCallManager: MEGACallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager!) {
-        self.megaCallManager = megaCallManager
-    }
-
-    func addCall(_ call: CallEntity) {
-        megaCallManager.addCall(withCallId: call.callId, uuid: call.uuid)
-    }
-    
-    func startCall(_ call: CallEntity) {
-        megaCallManager.startCall(withChatId: call.chatId)
-    }
-    
-    func endCall(_ call: CallEntity) {
-        megaCallManager.endCall(withCallId: call.callId, chatId: call.chatId)
-        megaCallManager.removeCall(by: call.uuid)
-    }
-    
-    func muteUnmuteCall(callId: MEGAHandle, chatId: MEGAHandle, muted: Bool) {
-        megaCallManager.muteUnmuteCall(withCallId: callId, chatId: chatId, muted: muted)
-    }
-}
-
 extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate {
     func frameData(width: Int, height: Int, buffer: Data!) {
         speakerRemoteVideoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
