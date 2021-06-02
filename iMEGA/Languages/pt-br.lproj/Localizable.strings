@@ -1442,18 +1442,6 @@
 "HTTP error"="Erro HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="O MEGA oferece armazenamento em nuvem criptografado controlado pelo usuário por meio de navegadores padrão, assim como aplicativos para dispositivos móveis. Diferentemente de outros provedores de armazenamento em nuvem, no MEGA os seus dados são criptografados e descriptografados apenas pelos seus dispositivos, e nunca por nós.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Faça o upload dos seus arquivos a partir do seu smartphone ou tablet e, em seguida, procure, armazene, faça download, transmita, visualize, compartilhe, renomeie ou elimine os seus arquivos a qualquer momento, a partir de qualquer dispositivo, em qualquer lugar. Compartilhe pastas com os seus contatos e veja as atualizações deles em tempo real.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="O processo de criptografia significa que não podemos acessar ou redefinir a sua senha: é IMPRESCINDÍVEL que você se lembre dela (a menos que você tenha a sua chave de recuperação salva), ou você perderá o acesso aos seus arquivos armazenados.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="O chat de vídeo criptografado de ponta a ponta pelo usuário garante uma privacidade total, e está disponível no navegador desde 2016. Atualmente foi ampliado para o nosso aplicativo móvel, e o histórico do chat é acessível em vários dispositivos. Os usuários também podem facilmente adicionar arquivos da sua Nuvem de arquivos no MEGA em um chat.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Assinatura Pro Lite: 4,99€ (US$4,99) por mês ou 49,99€ (US$49,99) por ano - oferece 400 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura Pro I: 9,99€ (US$9,99) por mês ou 99,99€ (US$99,99) por ano - oferece 2 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura Pro II: 19,99€ (US$19,99) por mês ou 199,99€ (US$199,99) por ano - oferece 8 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura Pro III: 29,99 (US$29,99) por mês ou 299,99€ (US$299,99) por ano - oferece 16 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Chamando…";
 /* notification subtitle of incoming calls */

@@ -1442,18 +1442,6 @@
 "HTTP error"="ข้อผิดพลาด HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA ให้บริการจัดเก็บข้อมูลบนระบบคลาวด์ที่ผู้ใช้ควบคุมได้ด้วยตนเองผ่านมาตรฐานเว็บเบราว์เซอร์ รวมถึงแอปพลิเคชันเฉพาะสำหรับโทรศัพท์มือถือ ซึ่งแตกต่างจากผู้ให้บริการจัดเก็บข้อมูลบนคลาวด์รายอื่น โดยที่ข้อมูลของคุณจะถูกเข้ารหัสและถอดรหัสโดยอุปกรณ์ไคลเอ็นต์ของคุณเท่านั้นและเราจะไม่เข้าไปยุ่งเกี่ยวกับข้อมูลใด ๆ ของคุณ";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="อัปโหลดไฟล์จากสมาร์ทโฟนหรือแท็บเล็ต จากนั้นค่อยค้นหา จัดเก็บ ดาวน์โหลด สตรีม ดู แชร์ เปลี่ยนชื่อหรือลบไฟล์ของคุณได้ตลอดเวลาจากอุปกรณ์ใดก็ได้จากทุกที่ แชร์โฟลเดอร์กับผู้ติดต่อของคุณและดูข้อมูลอัปเดตของพวกเขาในแบบเรียลไทม์";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="กระบวนการเข้ารหัสหมายความว่า เราไม่สามารถเข้าถึงหรือรีเซ็ตรหัสผ่านของคุณได้ ดังนั้น คุณต้องจำไว้ให้ดี (เว้นแต่ว่าคุณได้ทำการสำรองคีย์การกู้คืนไว้ก่อนหน้าแล้ว) ไม่เช่นนั้นคุณจะไม่สามารถเข้าถึงไฟล์ที่เก็บไว้ได้";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="การวิดีโอคอลของ MEGA ได้ปกป้องความเป็นส่วนตัวของคุณด้วยการเข้ารหัสลับแบบต้นทางถึงปลายมาตั้งแต่ปี 2016 สามารถใช้งานได้ผ่านทางเบราว์เซอร์ และขยายบริการไปยังแอปบนอุปกรณ์เคลื่อนที่ของเรา พร้อมด้วยประวัติการแชทที่สามารถเข้าถึงได้ผ่านอุปกรณ์หลายเครื่อง ผู้ใช้ยังสามารถเพิ่มไฟล์ลงในการแชทจากคลาวด์ไดร์ฟของ MEGA ได้อย่างง่ายดาย";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="สมัครใช้งาน Pro Lite: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 400 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน Pro I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 2 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน Pro II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน Pro III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 16 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายสิทธิส่วนบุคคล: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="กำลังโทร…";
 /* notification subtitle of incoming calls */

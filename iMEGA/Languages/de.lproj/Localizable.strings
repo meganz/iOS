@@ -1442,18 +1442,6 @@
 "HTTP error"="HTTP Error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unbekannter Fehler";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA ist sicherer Speicherplatz in der Cloud mit Browser- und App-Zugang. Im Gegensatz zu allen anderen großen Anbietern erfolgt die Ver- und Entschlüsselung der Daten ausschließlich auf den Endgeräten der Benutzer.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Laden Sie Ihre Dateien von Ihrem Smartphone oder Tablet hoch, dann durchsuchen, speichern, downloaden, streamen, betrachten, teilen oder löschen Sie sie - jederzeit und von jedem Gerät an jedem Ort der Welt mit Internetzugang. Geben Sie Ordner mit Echtzeit-Änderungsverfolgung an Ihre Kontakte frei.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Unsere sichere Verschlüsselung macht das Zurücksetzen Ihres Passworts unmöglich. Sie benötigen entweder Ihr Passwort oder den exportierten Rettungsschlüssel, um auf Ihre gespeicherten Daten zugreifen zu können.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Lite subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 400 GB of storage space and 1 TB of transfer quota per month.\nPro I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 2 TB of storage space and 2 TB of transfer quota per month.\nPro II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 8 TB of storage space and 8 TB of transfer quota per month.\nPro III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 16 TB of storage space and 16 TB of transfer quota per month.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Mehr Informationen auf unserer Website: https://mega.nz/\nBenutzungsbedingungen: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Es wird angerufen:";
 /* notification subtitle of incoming calls */

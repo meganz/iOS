@@ -1442,18 +1442,6 @@
 "HTTP error"="HTTPエラー";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="不明なエラー";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGAは、標準のウェブブラウザを通じてユーザー制御の暗号化クラウドストレージを、モバイル端末用の専用アプリケーションとともにご提供いたします。他のクラウドストレージプロバイダとは異なり、あなたのデータはあなたのクライアント端末によってのみ暗号化され、復号されます（当社では決して行いません）。";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="スマートフォンやタブレットからファイルをアップロードしてから、いつでも、どこでも、どんな端末からでも、ファイルの検索、保存、ダウンロード、ストリーム配信、表示、共有、名前の変更、削除を行うことができます。あなたの連絡先とフォルダを共有し、連絡先の最新情報をリアルタイムで表示します。";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="暗号化プロセスでは、当社はあなたのパスワードにアクセスしたり、それをリセットしたりすることができないため、あなたはパスワードを必ず覚えておく必要があります（復元キーをバックアップしない限り）。そうしないと、保存されたファイルにアクセスできなくなります。";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="エンドツーエンドのユーザー暗号化MEGAビデオチャットは完全なプライバシー保護を可能にし、2016年からブラウザを通じてご利用いただいております。これはモバイルアプリにも拡張され、複数の端末間でチャット履歴にアクセスできます。またユーザー様は、MEGAクラウドドライブからチャットに簡単にファイルも追加できます。";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Liteサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、400GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPro Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、2TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPro II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、8TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPro IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、16TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="詳細については、当社のウェブサイトをご覧ください：https://mega.nz/\nご利用規約：https://mega.nz/terms\nプライバシーポリシー：https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="呼び出し中…";
 /* notification subtitle of incoming calls */

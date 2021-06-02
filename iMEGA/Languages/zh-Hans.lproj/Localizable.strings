@@ -1442,18 +1442,6 @@
 "HTTP error"="HTTP错误";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA通过网页浏览器以及移动客户端的应用程序提供由用户控制的加密云储存服务。不同于其他云储存供应商，您的数据仅由用户客户端设备进行加密与解密，而从不是经由我们加解密。";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="从您的智能手机或平板电脑上传您的文件后，随时可从任何设备搜索、储存、下载、串流、查看、共享、重新命名或删除您的文件。并可与您的联系人共享文件夹，随时查看其更新。";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="终端至终端加密保护的MEGA视频聊天为您的聊天提供完全的隐私，自2016年来一直通过浏览器使用。它已扩展到我们的移动应用程序，并可在多个设备上访问聊天记录。用户还能轻松地从MEGA云盘向聊天添加文件。";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Lite订阅：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），享有400 GB的存储空间和每月1 TB的传输流量。\nPro I订阅：每月€9.99欧元（$9.99美元）或每年€99.99欧元（$99.99美元），享有2 TB的存储空间和每月 2 TB的传输流量。\nPro II订阅：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），享有8 TB的存储空间和每月8 TB的传输流量。\nPro III订阅：每月€29.99欧元（$29.99美元）或每年€299.99欧元（$299.99美元），享有16 TB的存储空间和每月16 TB的传输流量。";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="欲了解更多信息，请浏览我们的网站：https://mega.nz/\n服务条款：https://mega.nz/terms\n隐私政策：https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="正在通话中…";
 /* notification subtitle of incoming calls */

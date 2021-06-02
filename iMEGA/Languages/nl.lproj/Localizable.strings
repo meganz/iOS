@@ -1442,18 +1442,6 @@
 "HTTP error"="HTTP fout";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Onbekende fout";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA biedt gebruikers-gecontroleerde gecodeerde cloud opslag via standaard webbrowsers, samen met toegewijde applicaties voor mobiele apparaten. Anders dan andere cloud opslag aanbieders, worden uw gegevens gecodeerd en gedecodeerd door alleen uw klant apparaat en nooit door ons.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Upload uw bestanden vanaf uw smartphone of tablet, daarna zoek, opslaan, download, stream, bekijk, deel, hernoem of verwijder uw bestanden op elk moment vanaf elk apparaat, overal. Deel mappen met uw contacten en zie de updates in real time.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="De coderingsprocedure betekend dat we geen toegang hebben of uw wachtwoord kunnen herstellen dus u MOET het onthouden (behalve als u uw Herstelsleutel opgeslagen heeft) of u verliest toegang tot uw opgeslagen bestanden.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end gebruikers-gecodeerde MEGA video gesprek biedt totale privacy, en is beschikbaar via de browser sinds 2016. Het is verlengt naar onze mobiele applicatie, met gespreksgeschiedenis toegankelijk over meerdere apparaten. Gebruikers kunnen ook makkelijk bestanden toevoegen tot een gesprek vanuit hun MEGA cloud schijf.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Pro Lite-abonnement: €4,99 (US$4,99) per maand of €49,99 (US$49,99) per jaar geeft u 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \nPro I-abonnement: €9,99 (US$9,99) per maand of €99,99 (US$99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n Pro II-abonnement: €19,99 (US$19,99) per maand of €199,99 (US$199,99) per jaar geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n Pro III-abonnement: € 29,99 (US$29,99) per maand of €299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nPrivacy Beleid: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Bellen…";
 /* notification subtitle of incoming calls */
