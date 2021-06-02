@@ -23,7 +23,6 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         guard let containerViewModel = containerViewModel else { return UIViewController() }
         let vm = MeetingParticipantsLayoutViewModel(router: self,
                                containerViewModel: containerViewModel,
-                               callManager: CallManagerUseCase(),
                                callsUseCase: CallsUseCase(repository: CallsRepository()),
                                captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                                localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),

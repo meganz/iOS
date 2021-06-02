@@ -833,6 +833,7 @@
 		83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
 		8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
+		8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338E0F22666552900D1458B /* CallManagerUseCase.swift */; };
 		83422B25255984C300D46907 /* MEGAWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83422B20255984C300D46907 /* MEGAWidget.swift */; };
 		83422B28255984C300D46907 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83422B23255984C300D46907 /* Assets.xcassets */; };
 		834AFD1D2492567A005DF37C /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */; };
@@ -2985,6 +2986,7 @@
 		83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveCollectionViewController.h; sourceTree = "<group>"; };
 		83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveCollectionViewController.m; sourceTree = "<group>"; };
 		8337BC60256283F400F3A81A /* ShortcutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutDetail.swift; sourceTree = "<group>"; };
+		8338E0F22666552900D1458B /* CallManagerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManagerUseCase.swift; sourceTree = "<group>"; };
 		83422B20255984C300D46907 /* MEGAWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAWidget.swift; sourceTree = "<group>"; };
 		83422B23255984C300D46907 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAChatPeerList+Additions.swift"; sourceTree = "<group>"; };
@@ -7389,6 +7391,7 @@
 				83143B712604AB380033161A /* CallsLocalVideoUseCase.swift */,
 				83143BB52604E61B0033161A /* CallsRemoteVideoUseCase.swift */,
 				2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */,
+				8338E0F22666552900D1458B /* CallManagerUseCase.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -11405,6 +11408,7 @@
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				0D0B53B626264B3200E9BB16 /* TransferEntity+Mapper.swift in Sources */,
+				8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */,
 				BF7EBD3F24526A140015255F /* AddToChatMediaCollectionSource.swift in Sources */,
 				BF5E33A02558D3EB0055395E /* FileExplorerGridCellViewModel.swift in Sources */,
 				C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */,
