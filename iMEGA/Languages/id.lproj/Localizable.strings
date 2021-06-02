@@ -1442,18 +1442,6 @@
 "HTTP error"="Kesalahan HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error tidak diketahui";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA menyediakan cloud storage terenkripsi yang dikontrol pengguna melalui browser web standar, bersama dengan aplikasi khusus untuk perangkat seluler. Tidak seperti penyedia cloud storage lainnya, data Anda dienkripsi dan didekripsi oleh perangkat klien Anda saja dan tidak pernah oleh kami.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Upload file anda dari smartphone atau tablet, lalu cari, simpan, download, stream, view, share, beri nama atau hapus file anda kapanpun, melalui perangkat apapun, dimanapun. Bagikan folder dengan kontak anda dan lihat update mereka pada real time.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Proses enkripsi berarti kami tidak dapat akses atau merubah password anda jadi anda HARUS mengingat nya (kecuali anda memiliki back up Recovery Key) atau anda akan kehilangan akses ke file tersimpan anda.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="Obrolan video MEGA yang dienkripsi pengguna ujung ke ujung memungkinkan privasi total, dan telah tersedia melalui browser sejak 2016. Ini telah diperluas ke aplikasi seluler kami, dengan riwayat obrolan dapat diakses di berbagai perangkat. Pengguna juga dapat dengan mudah menambahkan file ke obrolan dari MEGA Cloud Drive mereka.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Langganan Pro Lite: €4,99 (US$4,99) per bulan atau €49,99 (US$49,99) per tahun memberi anda ruang penyimpanan 400 GB dan kuota transfer 1 TB per bulan.\nLangganan Pro I: €9,99 (US$9,99) per bulan atau €99,99 (US$99,99) per tahun memberi anda ruang penyimpanan 2 TB dan kuota transfer 2 TB per bulan.\n Langganan Pro II: €19,99 (US$19,99) per bulan atau €199,99 (US$199,99) per tahun memberi Anda 8 TB ruang penyimpanan dan 8 TB kuota transfer per bulan.\nLangganan Pro III: €29,99 (US$29,99) per bulan atau €299,99 (US$299,99) per tahun memberi anda ruang penyimpanan 16 TB dan 16 TB kuota transfer per bulan.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Untuk info lebih lanjut, silakan cek situs web kami: https://mega.nz/\nKetentuan Layanan: https://mega.nz/terms\nKebijakan Privasi: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Panggilan…";
 /* notification subtitle of incoming calls */

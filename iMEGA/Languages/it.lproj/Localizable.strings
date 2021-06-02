@@ -1442,18 +1442,6 @@
 "HTTP error"="Errore HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA fornisce uno spazio di archiviazione Cloud criptato controllato dall'utente attraverso i browser web, insieme ad applicazioni dedicate sui dispositivi mobili. Diversamente da altri provider di spazio di archiviazione cloud, i tuoi dati sono criptati e decriptati solo dai tuoi dispositivi e mai da noi.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Carica i tuoi file dal tuo smartphone o dal tuo tablet, poi cerca, archivia, scarica, streamma, vedi, condividi, rinomina o cancella i tuoi file in ogni momento, da qualsiasi dispositivo, ovunque tu voglia. Condividi le cartelle con i tuoi contatti e vedi i loro aggiornamenti in tempo reale.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Il processo di criptazione implica che non possiamo accedere o cambiare la tua password, quindi DEVI ricordarla (tranne nel caso in cui tu abbia copia della tua Chiave di Ripristino) o perderai l'accesso ai tuoi file archiviati.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="Le conversazioni video criptate end-to-end di MEGA permettono una privacy totale, e sono state disponibili tramite browser dal 2016. Esse sono state estese alla nostra app mobile, insieme alla cronologia della chat accessibili su più dispositivi. Gli utenti possono inoltre aggiungere facilmente file ad una chat dal loro Cloud Drive MEGA.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abbonamento Pro Lite: €4.99 (US$4.99) al mese o €49.99 (US$49.99) all’anno ti dà 400GB di spazio di archiviazione e 1TB di banda di trasferimento ogni mese.\nAbbonamento Pro I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) all’anno ti dà 2TB di spazio di archiviazione e 2TB di banda di trasferimento ogni mese.\nAbbonamento Pro II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) all’anno ti dà 8TB di spazio di archiviazione e 8TB di banda di trasferimento ogni mese.\nAbbonamento Pro III: €29.99 (US$299.99) al mese o €299.99 (US$299.99) all’anno ti dà 16TB di spazio di archiviazione e 16TB di banda di trasferimento ogni mese.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Per maggiori informazioni, per favore visita il nostro sito web: https://mega.nz/\nTermini di Servizio: https://mega.nz/terms\nPolitica sulla Privacy: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Chiamata in corso…";
 /* notification subtitle of incoming calls */
