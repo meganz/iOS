@@ -3,7 +3,8 @@
 
 @interface AchievementsDetailsViewController : UIViewController
 
-@property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
-@property (nonatomic) NSUInteger index;
+@property (nonatomic, nullable) MEGAAchievementsDetails *achievementsDetails;
+@property (nonatomic, nullable) NSNumber* completedAchievementIndex;
+@property (nonatomic) MEGAAchievement achievementClass;
 
 @end
