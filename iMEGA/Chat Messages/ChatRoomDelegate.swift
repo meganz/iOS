@@ -351,6 +351,18 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                         chatViewController?.messagesCollectionView.performBatchUpdates({
                             chatViewController?.messagesCollectionView.deleteSections([index])
                         }, completion: nil)
+                        
+                        let unreadNotiMessageIndex = chatMessages.firstIndex { $0 is ChatNotificationMessage }
+                        if let unreadNotiMessageIndex = unreadNotiMessageIndex,
+                           let notificationMessage = chatMessages[unreadNotiMessageIndex] as? ChatNotificationMessage,
+                           case let .unreadMessage(count) = notificationMessage.type {
+                            if unreadNotiMessageIndex < index {
+                                chatMessages[unreadNotiMessageIndex] = ChatNotificationMessage(type: .unreadMessage(count - 1))
+                                chatViewController?.messagesCollectionView.performBatchUpdates({
+                                    chatViewController?.messagesCollectionView.reloadSections([unreadNotiMessageIndex])
+                                }, completion: nil)
+                            }
+                        }
                     }
                 }
             }
@@ -443,13 +455,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     
 
     func updateUnreadMessagesLabel(unreads: Int) {
-        let index = messages.firstIndex { object -> Bool in
-            guard object is ChatNotificationMessage else {
-                return false
-            }
-
-            return true
-        }
+        let index = messages.firstIndex { $0 is ChatNotificationMessage }
         if let index = index {
             if unreads == 0 {
                 chatMessages.remove(at: index)
@@ -481,12 +487,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         let lastSectionVisible = isLastSectionVisible()
         let unreads = MEGASdkManager.sharedMEGAChatSdk().myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
 
-        let index = chatMessages.firstIndex { object -> Bool in
-            guard object is ChatNotificationMessage else {
-                return false
-            }
-            return true
-        }
+        let index = chatMessages.firstIndex { $0 is ChatNotificationMessage }
 
         if let index = index,
             let notificationMessage = chatMessages[index] as? ChatNotificationMessage,
