@@ -147,6 +147,31 @@
 
 }
 
+- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+
+    NSPredicate *predicate;
+    NSString *fingerprint = node.fingerprint;
+    if(fingerprint) {
+        predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"base64Handle == %@", node.base64Handle];
+    }
+    
+    [request setPredicate:predicate];
+    
+    __block NSArray<MOOfflineNode *> *array;
+    
+    [context performBlockAndWait:^{
+        array = [context executeFetchRequest:request error:nil];
+    }];
+    
+    return [array firstObject];    
+}
+
 - (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle {
     if (self.managedObjectContext == nil) return nil;
     

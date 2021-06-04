@@ -72,6 +72,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
+    private let dispatchQueue: DispatchQueueProtocol
     private var isFolderLink: Bool = false
     private var playerHandler: AudioPlayerHandlerProtocol
     private var repeatItemsState: RepeatMode {
@@ -95,7 +96,8 @@ final class AudioPlayerViewModel: ViewModelType {
          router: AudioPlayerViewRouting,
          playerHandler: AudioPlayerHandlerProtocol,
          nodeInfoUseCase: NodeInfoUseCaseProtocol,
-         streamingInfoUseCase: StreamingInfoUseCaseProtocol) {
+         streamingInfoUseCase: StreamingInfoUseCaseProtocol,
+         dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
         self.node = node
         self.fileLink = fileLink
         self.isFolderLink = isFolderLink
@@ -107,6 +109,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = nil
         self.repeatItemsState = playerHandler.currentRepeatMode()
+        self.dispatchQueue = dispatchQueue
     }
     
     // MARK: - Offline Init
@@ -114,7 +117,8 @@ final class AudioPlayerViewModel: ViewModelType {
          filePaths: [String]?,
          router: AudioPlayerViewRouting,
          playerHandler: AudioPlayerHandlerProtocol,
-         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol) {
+         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol,
+         dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
         self.node = nil
         self.fileLink = nil
         self.selectedFilePath = selectedFile
@@ -125,6 +129,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.streamingInfoUseCase = nil
         self.offlineInfoUseCase = offlineInfoUseCase
         self.repeatItemsState = playerHandler.currentRepeatMode()
+        self.dispatchQueue = dispatchQueue
     }
     
     // MARK: - Private functions
@@ -238,7 +243,9 @@ final class AudioPlayerViewModel: ViewModelType {
         switch action {
         case .onViewDidLoad:
             invokeCommand?(.showLoading(true))
-            preparePlayer()
+            dispatchQueue.async(qos: .userInteractive) {
+                self.preparePlayer()
+            }
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .updateCurrentTime(let percentage):
             playerHandler.playerProgressCompleted(percentage: percentage)
