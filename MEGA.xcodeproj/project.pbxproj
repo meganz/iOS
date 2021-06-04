@@ -1211,6 +1211,7 @@
 		A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
+		A85808E82668F74F0085B995 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85808E72668F74F0085B995 /* NSManagedObjectContext.swift */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
 		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
@@ -1828,6 +1829,8 @@
 		C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390D62565BB840026F215 /* MEGASelectedButton.swift */; };
 		C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */; };
 		C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */; };
+		C4575F2C265FA2B800D527DC /* DispatchQueue+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4575F2B265FA2B800D527DC /* DispatchQueue+Additions.swift */; };
+		C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4575F30265FA3D500D527DC /* MockDispatchQueue.swift */; };
 		C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */; };
 		C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */; };
 		C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */; };
@@ -3119,6 +3122,7 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
+		A85808E72668F74F0085B995 /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
@@ -3894,6 +3898,8 @@
 		C45390D62565BB840026F215 /* MEGASelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASelectedButton.swift; sourceTree = "<group>"; };
 		C453AB76256E6985005E4E1B /* NodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCase.swift; sourceTree = "<group>"; };
+		C4575F2B265FA2B800D527DC /* DispatchQueue+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Additions.swift"; sourceTree = "<group>"; };
+		C4575F30265FA3D500D527DC /* MockDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDispatchQueue.swift; sourceTree = "<group>"; };
 		C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeOwnerInfoTableViewCell.swift; sourceTree = "<group>"; };
 		C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Notifiers.swift"; sourceTree = "<group>"; };
 		C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -5177,6 +5183,7 @@
 				C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */,
 				83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */,
 				0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */,
+				C4575F2B265FA2B800D527DC /* DispatchQueue+Additions.swift */,
 				C4EDB733266550A5006A114F /* UIFont+Additions.swift */,
 			);
 			path = Categories;
@@ -6533,6 +6540,7 @@
 		5DD8C8E224B5AF400033F479 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				A85808E62668F74F0085B995 /* CoreData */,
 				5DD8C8E324B5AF400033F479 /* Date */,
 			);
 			path = Extension;
@@ -7438,6 +7446,14 @@
 				A83CFE9F25DAAAF300622675 /* ThrottlerTest.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		A85808E62668F74F0085B995 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A85808E72668F74F0085B995 /* NSManagedObjectContext.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		A85A01D2228B0DA100C6ADBB /* FLEX */ = {
@@ -9004,6 +9020,7 @@
 				C47E7C0025D18FC800DB6FF5 /* Repository */,
 				C45A2E3625D2F7F100915A83 /* UseCases */,
 				C45A2E0625D2B9C200915A83 /* Routers */,
+				C4575F2F265FA3C000D527DC /* DispatchQueue */,
 				C45A2DF325D2B93B00915A83 /* ViewModel */,
 			);
 			path = AudioPlayer;
@@ -9052,6 +9069,14 @@
 				C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */,
 			);
 			path = AudioPlaylistScene;
+			sourceTree = "<group>";
+		};
+		C4575F2F265FA3C000D527DC /* DispatchQueue */ = {
+			isa = PBXGroup;
+			children = (
+				C4575F30265FA3D500D527DC /* MockDispatchQueue.swift */,
+			);
+			path = DispatchQueue;
 			sourceTree = "<group>";
 		};
 		C45A2DF325D2B93B00915A83 /* ViewModel */ = {
@@ -10769,6 +10794,7 @@
 				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				5D3CD8A625318FB600E3B459 /* NodeThumbnailUseCase.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
+				A85808E82668F74F0085B995 /* NSManagedObjectContext.swift in Sources */,
 				BF5E33FC2559E29B0055395E /* FilesExplorerContainerViewState.swift in Sources */,
 				5D6092A6255D609F005FA3E4 /* NodeLabelActionUseCase.swift in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
@@ -11038,6 +11064,7 @@
 				A86B9F2A2316D6AB00F35E7A /* FLEXArrayExplorerViewController.m in Sources */,
 				B6E7A8D92500D7A800CD6AC2 /* UIView+Layout.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
+				C4575F2C265FA2B800D527DC /* DispatchQueue+Additions.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
 				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
@@ -11712,6 +11739,7 @@
 				837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */,
 				5D52C74C250C4FA700286A43 /* ContactRequest.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
+				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
