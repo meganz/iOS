@@ -1442,20 +1442,6 @@
 "HTTP error"="HTTP錯誤";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的錯誤";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA提供極為安全的雲端空間，若您是使用正常的網頁瀏覽器與手機應用程式，則可保證資料完全由使用者操控。不同於其他雲端空間供應商，您的資料僅由用戶端設備進行加密和解密，我們不會經手您的資料，以完整保障您的隱私權。";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="從您的智慧型手機或平板電腦上傳您的檔案後，隨時可從任何設備搜尋、儲存、下載、串流、查看、共享、重新命名或刪除您的檔案。並可與您的聯絡人共享資料夾，隨時查看其更新。";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="此加密方式也代表我們無法存取或重新設定您的密碼，因此您必須牢牢記住它 (除非您有備份還原金鑰)，否則您將無法存取您所儲存的檔案。";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="點對點用戶加密技術的MEGA視訊聊天提供完整的隱私，2016年之後的瀏覽器都有支援。它也延伸至我們的手機應用程式，可以在多個裝置上查詢聊天記錄。用戶還可以輕鬆地將他們自己MEGA雲端硬碟的檔案添加到聊天室窗裡。";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGA提供超大的50GB免費儲存空間給所有獲得獎勵成就的用戶，並提供更大空間的付費方案：";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="專業版Lite 訂閱方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），即可享有400GB的儲存空間和每月1TB的傳輸配額。\n專業版I 訂閱方案：每月€9.99歐元（$9.99美元）或每年€99.99歐元（$99.99美元）即可享有2TB的儲存空間和每月2TB的傳輸配額。\n專業版II 訂閱方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元）即可享有8TB的儲存空間和每月8TB的傳輸配額。\n專業版III 訂閱方案：每月€29.99歐元（$29.99美元）或每年€299.99歐元（$299.99美元）即可享有16TB的儲存空間和每月16TB傳輸配額。";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="欲了解更多資訊，請參考我們的網站： https://mega.nz/\n服務條款： https://mega.nz/terms\n隱私權政策： https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="撥號中…";
 /* notification subtitle of incoming calls */
