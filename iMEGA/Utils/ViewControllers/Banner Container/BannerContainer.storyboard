@@ -24,16 +24,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="F6D-9M-u40">
-                                                <rect key="frame" x="16" y="0.0" width="393" height="50"/>
+                                                <rect key="frame" x="24" y="0.0" width="385" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewo-rJ-P9N">
-                                                        <rect key="frame" x="0.0" y="0.0" width="338" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruQ-wi-V6P">
-                                                        <rect key="frame" x="343" y="0.0" width="50" height="50"/>
+                                                        <rect key="frame" x="335" y="0.0" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="XQX-UA-JHV"/>
                                                             <constraint firstAttribute="width" secondItem="ruQ-wi-V6P" secondAttribute="height" multiplier="1:1" id="bxY-dg-oKc"/>
@@ -50,7 +50,7 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="F6D-9M-u40" firstAttribute="leading" secondItem="Osi-p2-OId" secondAttribute="leading" constant="16" id="JO8-Kh-pa2"/>
+                                            <constraint firstItem="F6D-9M-u40" firstAttribute="leading" secondItem="Osi-p2-OId" secondAttribute="leading" constant="24" id="JO8-Kh-pa2"/>
                                             <constraint firstAttribute="height" constant="50" id="Xd5-by-0NU"/>
                                             <constraint firstItem="F6D-9M-u40" firstAttribute="centerY" secondItem="Osi-p2-OId" secondAttribute="centerY" id="noW-J8-rMy"/>
                                             <constraint firstAttribute="trailing" secondItem="F6D-9M-u40" secondAttribute="trailing" constant="5" id="nwh-rH-hEy"/>
