@@ -28,7 +28,7 @@
     
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     
-    self.navigationItem.title = NSLocalizedString(@"account.achievement.referral.title", nil);
+    self.navigationItem.title = NSLocalizedString(@"account.achievement.referralBonus.title", nil);
     
     self.inviteAchievementsIndexesMutableArray = [[NSMutableArray alloc] init];
     NSUInteger awardsCount = self.achievementsDetails.awardsCount;

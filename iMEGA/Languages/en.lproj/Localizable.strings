@@ -969,7 +969,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Referral bonuses";
+"account.achievement.referralBonus.title"="Referral bonuses";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Install MEGA desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
