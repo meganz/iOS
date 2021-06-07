@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Ключ дешифрования";
 /* Button title to try to decrypt the link */
-"decrypt"="Дешифрировать";
+"decrypt"="Дешифровать";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Неправильный ключ дешифрования";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -99,7 +99,7 @@
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Введите правильный пароль";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Email";
+"emailPlaceholder"="Адрес электронной почты";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Пароль";
 /*  */
@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Ваш пароль легко подбирается. Попробуйте использовать более длинный пароль. Используйте сочетания прописных и строчных букв. Используйте символы. Не используйте имена или словарные слова";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Средний";
+"PasswordStrengthMedium"="Среднее";
 /*  */
 "passwordMedium"="Ваш пароль достаточно надежен для продолжения, но мы рекомендуем все же усилить надежность пароля.";
 /*  */
@@ -135,13 +135,13 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Вы должны согласиться с тем, что понимаете опасность потери пароля";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="На введенный вами электронный адрес уже зарегистрирована учётная запись сервиса MEGA.";
+"emailAlreadyRegistered"="На введённый вами адрес электронной почты уже зарегистрирован аккаунт MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Ожидание подтверждения по электронной почте.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Пожалуйста, введите пароль, чтобы подтвердить свою учётную запись";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="Подтвердить уч. запись";
+"Confirm account"="Подтвердите аккаунт";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Неверный пароль";
 /* Error shown when the user tries to change his mail to one that is already used */
@@ -283,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Выбрать из фотографий";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Съёмка";
+"capturePhotoVideo"="Cнимок";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Сканировать документ";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="Сканирование документов недоступно";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Файл с таким именем уже существует";
+"There is already a file with the same name"="Уже есть файл с таким именем";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Импорт из…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -379,7 +379,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Скопировать ссылку";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Скопировать ключ";
+"copyKey"="Копировать ключ";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Открыть в…";
 /*  */
@@ -581,9 +581,9 @@
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Добавить";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
+"noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный email адрес";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Пользователь приглашён. Он появится в вашем списке контактов, если согласится.";
+"theUserHasBeenInvited"="Пользователь приглашён. Он появится в ваших контактах, когда примет приглашение.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Пользователи приглашены. Они появятся в вашем списке контактов, если согласятся.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -601,7 +601,7 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Действительно покинуть?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="Общий доступ";
+"share"="Поделиться";
 /* Select all items/elements on the list */
 "selectAll"="Выбрать все";
 /*  */
@@ -625,7 +625,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Настройки";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Загрузки с камеры";
+"cameraUploadsLabel"="Загрузки из камеры";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Корзина";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Отправить отзыв";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Пожалуйста, напишите свой отзыв здесь:";
+"pleaseWriteYourFeedback"="Пожалуйста, оставьте отзыв:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="На вашем устройстве не найдено ни одной учётной записи с адресом эл. почты";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -645,7 +645,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "Cookie Policy"="Политика использования файлов cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Настройки куки";
+"Cookie Settings"="Настройки куки-файлов";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия предоставления услуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -885,7 +885,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Сессии закрыты";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Изменить пароль";
+"changePasscodeLabel"="Изменить код доступа";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Простой код доступа";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -942,12 +942,10 @@
 "profile"="Профиль";
 /* Title of the Achievements section */
 "achievementsTitle"="Достижения";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Приглашайте друзей и получайте бонусы";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="Пригласите друзей";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Получите %1$s места на диске и %2$s трафика за каждого, кто примет приглашение";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="Пригласите друзей";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Выберите из телефонных контактов или введите несколько адресов электронной почты";
 /*  */
@@ -961,33 +959,41 @@
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Вы не получите бонус за приглашение тех, кто раньше использовал MEGA, и вы не будете уведомлены об отказе.";
 /* Header of block with achievements bonuses. */
-"unlockedBonuses"="Полученные бонусы:";
+"unlockedBonuses"="Разблокированные бонусы:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Квота на свободное место";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Квота на передачу";
-/* achievement type */
-"registrationBonus"="Бонус регистрации";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Получено %1 места для хранения за регистрацию.";
-/* achievement type */
-"referralBonuses"="Бонусы за приглашения";
-/*  */
-"installMEGASync"="Установить MEGAsync";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Получено %1 места для хранения и %2 трафика за установку MEGAsync.";
-/*  */
-"installOurMobileApp"="Установить мобильное приложение";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="Получено %1 места для хранения и %2 трафика за установку мобильного приложения.";
-/*  */
-"xDaysLeft"="Осталось %1 дн.";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(Бонус действует [S]%1[/S] %2)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="Бонус регистрации";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="Бонусы за приглашения";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="Установите MEGA на ПК";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="Install MEGA mobile app";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
 /* Add Phone Number title */
 "Add Phone Number"="Добавить телефонный номер";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Вы получили %1$s для хранения и %2$s трафика за подтверждение телефонного номера.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Получите %@ бесплатно, когда добавите свой номер телефона. Это поможет вашим контактам найти вас в MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="месяцев";
 /*  */
 "days"="д.";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="Истекло";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Выйти";
 /* String shown when you are logging out of your account. */
@@ -1037,7 +1041,7 @@
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Обновляется";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Входящие общие папки";
+"incomingShares"="Входящие общие элементы";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Улучшить аккаунт";
 /* account management button title in business account’s landing page */
@@ -1049,7 +1053,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
-"Storage"="Хранилище";
+"Storage"="на диске";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Ограничено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1069,9 +1073,9 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="Текущий план";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Перейти на индивидуальный план";
+"Upgrade to a custom plan"="Собственный план";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Спросите нас, как перейти на индивидуальный план:";
+"Ask us how you can upgrade to a custom plan:"="Спросите нас, как вы можете перейти на собственный план:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Запросить план";
 /* Header shown to help on the purchasin process */
@@ -1115,7 +1119,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Запрос был отменён, либо предыдущую покупку нельзя восстановить. Пожалуйста, повторите попытку позже или свяжитесь с ios@mega.nz.";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="Улучшить до Pro";
+"Upgrade to Pro"="Улучшение до Pro";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Разблокируйте возможности Pro, такие как защита публичных файлов паролем и срок годности.";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1379,7 +1383,7 @@
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="Окончательная ошибка";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
-"Too many concurrent connections or transfers"="Слишком много одновременных соединений или пересылок";
+"Too many concurrent connections or transfers"="Слишком много одновременных соединений или передач";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
 "Out of range"="Вне диапазона";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
@@ -1401,7 +1405,7 @@
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Заблокировано";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Превышение квоты";
+"Over quota"="Превышена квота";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Временно недоступно";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1467,7 +1471,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Низкое";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Средний";
+"medium"="Среднее";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Высокое";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -2057,7 +2061,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="КОНТАКТЫ В MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Привет! Начните зашифрованное общение с помощью MEGA и получите 50 ГБ бесплатного хранилища.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Мои файлы из чата";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2103,7 +2107,7 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Нет публичных ссылок";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Управлять обменом";
+"Manage Share"="Управлять доступом";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Поделиться с";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2367,7 +2371,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="ВЕРСИИ";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Избранное";
+"Favourite"="Популярные";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Удалить из избранного";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2423,7 +2427,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Пароль скопирован в буфер обмена";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Наша система сквозного шифрования требует уникальный ключ, автоматически сгенерированный для этого файла. Ссылка с этим ключом создается по умолчанию, но вы можете экспортировать ключ дешифрования отдельно для дополнительного уровня безопасности.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Наша система сквозного шифрования требует, чтобы для этого файла автоматически генерировался уникальный ключ. Ссылка с этим ключом создается по умолчанию, но вы можете экспортировать ключ дешифрования отдельно для дополнительного уровня безопасности.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Ключ дешифрирования";
 /* Text to indicate the user to remove the password of a link */
@@ -2549,7 +2553,7 @@
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="отправка сообщения отменена";
 /* Cookie dialog header */
-"Before You Continue"="Прежде чем вы продолжите";
+"Before You Continue"="Прежде чем продолжить";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем локальное хранилище и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
 /* Cookie dialog button label. */
