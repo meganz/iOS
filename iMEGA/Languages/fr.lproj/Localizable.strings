@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas des noms ou des mots du dictionnaire.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Moyen";
+"PasswordStrengthMedium"="Moyenne";
 /*  */
 "passwordMedium"="Votre mot de passe est assez bon pour poursuivre, mais il est recommandé de le renforcer.";
 /*  */
@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="En pause";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Annulée";
+"Cancelled"="Annulé";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Finalisation…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="La numérisation de documents n’est pas proposée";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Un fichier du même nom existe déjà";
+"There is already a file with the same name"="Un fichier porte déjà ce nom";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer de…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -583,7 +583,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Il est inutile d’ajouter votre propre adresse courriel";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="L’utilisateur a été invité et apparaîtra dans votre liste de contacts si l’invitation est acceptée.";
+"theUserHasBeenInvited"="L’utilisateur a été invité et apparaîtra dans votre liste de contacts une fois l’invitation acceptée.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s’ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -643,7 +643,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politique des témoins de navigation";
+"Cookie Policy"="Politique sur les Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "Cookie Settings"="Paramètres des Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -911,7 +911,7 @@
 /* Title of the Transfers section */
 "transfers"="Transferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Tous";
+"all"="Tout";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="En cours";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
@@ -942,12 +942,10 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invitez des amis et obtenez des primes";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="Inviter vos amis";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Obtenez %1$s d’espace de stockage et %2$s de transferts pour chaque parrainage";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="Inviter vos amis";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque parrainage. \nValide pendant 365 jours.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Sélectionnez des contacts sur votre appareil ou saisissez plusieurs adresses courriel";
 /*  */
@@ -966,28 +964,36 @@
 "storageQuota"="Quota de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Quota de transfert";
-/* achievement type */
-"registrationBonus"="Prime d’inscription";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Vous avez reçu %1 d’espace de stockage comme prime gratuite d’inscription.";
-/* achievement type */
-"referralBonuses"="Primes de parrainage";
-/*  */
-"installMEGASync"="Installer MEGAsync";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Vous avez reçu %1 d’espace de stockage et %2 de quota de transfert pour avoir installé MEGAsync.";
-/*  */
-"installOurMobileApp"="Installer notre appli mobile";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="Vous avez reçu %1 d’espace de stockage et %2 de quota de transfert pour avoir installé notre appli mobile.";
-/*  */
-"xDaysLeft"="Il reste %1 jours";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(La prime arrive à expiration dans [S]%1[/S] %2)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="Prime d’inscription";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="Vous avez reçu %@ d’espace de stockage comme prime gratuite d’inscription.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="Primes de parrainage";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="Installer l’appli MEGA pour ordinateur";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="Vous avez obtenu %@ d’espace de stockage pour avoir installé notre appli MEGA pour ordinateur.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="En installant l’appli MEGA pour ordinateur, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA pour ordinateur est offerte pour Windows, macOS et la plupart des versions de Linux.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="Installer l’appli MEGA mobile";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé notre appli MEGA mobile.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="En installant notre appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA mobile est proposées pour iOS, Android et Windows Phone.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@ d’espace de stockage. Valide pendant 365 jours.";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="Il reste %@ jours";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="La prime arrivera à expiration dans %@ jours.";
 /* Add Phone Number title */
 "Add Phone Number"="Ajouter un numéro de téléphone";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Vous avez reçu %1$s d’espace de stockage et %2$s de quota de transfert pour avoir confirmé votre numéro de téléphone.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir ajouté votre numéro de téléphone.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="Quand vous ajoutez votre numéro de téléphone, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtenez %@ gratuits si vous ajoutez votre numéro de téléphone. Vos contacts vous trouveront plus facilement sur MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="mois";
 /*  */
 "days"="jours";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="Expiré";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Déconnexion";
 /* String shown when you are logging out of your account. */
@@ -1069,7 +1073,7 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="Abonnement actuel";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Passer à un abonnement personnalisé";
+"Upgrade to a custom plan"="Surclassement vers un abonnement personnalisé";
 /* Mail subject to upgrade to a custom plan */
 "Ask us how you can upgrade to a custom plan:"="Demandez-nous comment passer à un abonnement personnalisé :";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1467,7 +1471,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Basse";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Moyen";
+"medium"="Moyenne";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Haute";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1907,7 +1911,7 @@
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Votre %1 (%2) partagé publiquement a été retiré.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli";
+"Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Message vocal";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2043,7 +2047,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact a été trouvé sur MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Ouvrir les réglages";
+"Open Settings"="Ouvrir Réglages";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invitez des contacts et commencez à dialoguer en toute sécurité grâce au dialogue en ligne chiffré de MEGA.";
 /* Text showing the user how many contacts would be invited */
@@ -2057,7 +2061,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS SUR MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bonjour. Conversez avec moi en toute sécurité sur MEGA et obtenez jusqu’à 50 Go d’espace de stockage gratuits.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Bonjour. Conversez avec moi en toute sécurité sur MEGA et obtenez jusqu’à 20 Go d’espace de stockage gratuits.";
 /* Destination folder name of chat files */
 "My chat files"="Mes fichiers de dialogue en ligne";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2263,7 +2267,7 @@
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Cacher l’activité récente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Cacher l’activité récente dans la section Accueil";
+"settings.userInterface.hideRecentActivity.footer"="Cacher l’activité récente dans la section Accueil.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Par défaut";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2515,7 +2519,7 @@
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
-"Audio"="Sons";
+"Audio"="Son";
 /* Title for video explorer view */
 "Videos"="Vidéos";
 /* Photo Explorer Screen: No documents in the account */
