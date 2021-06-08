@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Angehalten";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Abgebrochen";
+"Cancelled"="Storniert";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Abschluss…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -283,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Choose from Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Aufnehmen";
+"capturePhotoVideo"="Foto machen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -583,7 +583,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Der Benutzer wurde eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
+"theUserHasBeenInvited"="Der Benutzer wurde eingeladen und erscheint nach Annahme der Einladung in Ihrer Kontaktliste.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Die Benutzer wurden eingeladen und werden in Ihrer Kontaktliste auftauchen, sobald sie die Einladung annehmen.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Bewertung abgeben";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Bitte geben Sie Ihre Kommentare hier ein:";
+"pleaseWriteYourFeedback"="Ihr Kommentar:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Auf Ihrem Gerät ist kein E-Mail-Account eingerichtet";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -942,12 +942,10 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Errungenschaften";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Freunde einladen und Boni einstreichen";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="Laden Sie Ihre Freunde und Bekannten ein";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Wir belohnen jede Vermittlung mit %1$s Speicherplatz und %2$s Transfervolumen";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="Laden Sie Ihre Freunde und Bekannten ein";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
@@ -966,28 +964,36 @@
 "storageQuota"="Speicherplatz";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Übertragungsvolumen";
-/* achievement type */
-"registrationBonus"="Bonus für neue Nutzer";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Sie haben %1 Speicherplatz als kostenlosen Registrierungsbonus erhalten.";
-/* achievement type */
-"referralBonuses"="Nutzer werben";
-/*  */
-"installMEGASync"="MEGAsync installieren";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Sie haben für die erfolgreiche Installation von MEGAsync %1 Speicherplatz und %2 Transfervolumen erhalten.";
-/*  */
-"installOurMobileApp"="Mobil-App installieren";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="Sie haben für die erfolgreiche Installation unserer Mobil-App %1 Speicherplatz und %2 Transfervolumen erhalten.";
-/*  */
-"xDaysLeft"="noch %1 Tage";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(Bonus noch [S]%1[/S] %2 gültig)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="Bonus für neue Nutzer";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="Nutzer werben";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="MEGA-Desktop-App installieren";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="Install MEGA mobile app";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
 /* Add Phone Number title */
 "Add Phone Number"="Add Phone Number";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Sie haben %1$s Speicherplatz und %2$s Transfervolumen als Verifikationsbonus erhalten.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="Monate";
 /*  */
 "days"="Tagen";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="Abgelaufen";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Ausloggen";
 /* String shown when you are logging out of your account. */
@@ -2045,7 +2049,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS ON MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Chatdateien";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2091,7 +2095,7 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Keine exportierten Links";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Ordnerfreigabe bearbeiten";
+"Manage Share"="Freigabe verwalten";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Freigeben an";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2626,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (Owner)";

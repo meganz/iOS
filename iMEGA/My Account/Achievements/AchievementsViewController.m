@@ -183,7 +183,7 @@
 
     switch (achievementClass) {
         case MEGAAchievementInvite: {
-            cell.titleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
+            cell.titleLabel.text = NSLocalizedString(@"account.achievement.referralBonus.title", nil);
             break;
         }
             

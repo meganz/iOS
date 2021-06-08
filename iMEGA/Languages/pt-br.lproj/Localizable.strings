@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pausado";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Cancelado";
+"Cancelled"="Cancelada";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Completando…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -379,7 +379,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Copiar link";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copiar chave";
+"copyKey"="Copiar a chave";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Abrir em…";
 /*  */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar comentários";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Por favor, escreva seu comentário aqui:";
+"pleaseWriteYourFeedback"="Escreva os seus comentários aqui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não há uma conta de email configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -942,12 +942,10 @@
 "profile"="Perfil";
 /* Title of the Achievements section */
 "achievementsTitle"="Conquistas";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Convide amigos e ganhe bônus";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="Convide os seus amigos";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Ganhe %1$s de espaço de armazenamento e %2$s de cota de transferência para cada indicação";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="Convide os seus amigos";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selecione entre os seus contatos ou digite vários emails";
 /*  */
@@ -966,28 +964,36 @@
 "storageQuota"="Cota de armazenamento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Cota de transferência";
-/* achievement type */
-"registrationBonus"="Bônus de cadastro";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Você recebeu %1 de espaço de armazenamento como bônus por criar uma conta.";
-/* achievement type */
-"referralBonuses"="Bônus de indicação";
-/*  */
-"installMEGASync"="Instalar o MEGAsync";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Você recebeu %1 de espaço de armazenamento e %2 de cota de transferência por instalar o MEGAsync.";
-/*  */
-"installOurMobileApp"="Instalar o nosso aplicativo para celular";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="Você recebeu %1 de espaço de armazenamento e %2 de cota de transferência por ter instalado o nosso aplicativo para dispositivos móveis.";
-/*  */
-"xDaysLeft"="%1 dias restantes";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(O bônus expira em [S]%1[/S] %2)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="Bônus de cadastro";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="Bônus de indicação";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="Instale MEGA desktop app";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="Install MEGA mobile app";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
 /* Add Phone Number title */
 "Add Phone Number"="Adicionar número de telefone";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Você recebeu %1$s de espaço de armazenamento e %2$s de cota de transferência por confirmar seu número de telefone.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtenha %@ grátis ao adicionar o seu número de telefone, e assim os seus contatos o encontrarão com mais facilidade.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="meses";
 /*  */
 "days"="dias";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="Expirado";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Fazer logout";
 /* String shown when you are logging out of your account. */
@@ -2045,7 +2049,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTATOS COM CONTA NO MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Oi! Converse comigo com segurança e obtenha até 50 GB de armazenamento gratuito no MEGA.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Arquivos dos meus chats";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2249,9 +2253,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Classificação e tipo de visualização";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Ocultar Atividades recentes.";
+"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Ocultar Atividades recentes no Início.";
+"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Predeterminado";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2411,7 +2415,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Senha copiada para a área de transferência";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="O nosso sistema de criptografia de ponta a ponta requer uma chave exclusiva, que é gerada automaticamente para este arquivo. O link é criado de forma predeterminada com essa chave, mas você pode exportar a chave de decodificação separadamente, para que o compartilhamento seja mais seguro.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nosso sistema de criptografia de ponta a ponta requer uma chave exclusiva gerada automaticamente para este arquivo. Um link com esta chave será criado de maneira predeterminada, mas você pode exportar a chave de decodificação separadamente para assim garantir uma camada adicional de segurança.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Chave de decodificação";
 /* Text to indicate the user to remove the password of a link */
@@ -2587,7 +2591,7 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Quick Access";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Acesse rapidamente arquivos das Atividades recentes, os Favoritos ou a seção Offline";
+"Quickly access files on Recents, Favourites, or Offline section"="Acesse rapidamente arquivos em Recentes, Favoritos ou a seção Offline";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Acesse rapidamente os arquivos na área Favoritos";
 /* Text description for the Recents QuickAccess widget */
@@ -2626,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (Owner)";

@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="당신의 암호는 쉽게 추측됩니다. 암호를 더 길게 만드세요. 대문자와 소문자를 조합하세요. 특수 문자를 삽입하세요. 이름이나 사전적 단어를 사용하지 마세요.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="보통";
+"PasswordStrengthMedium"="중간";
 /*  */
 "passwordMedium"="당신의 암호는 진행하기에 충분히 좋습니다, 하지만 암호를 더 강력하게 만드는 것을 추천합니다.";
 /*  */
@@ -133,7 +133,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
-"termsForLosingPasswordCheckboxUnselected"="암호 분실의 위험성을 이해하였다는 데에 동의해야 합니다";
+"termsForLosingPasswordCheckboxUnselected"="암호를 잊는 것에 대한 위험성을 이해하였다는 데에 동의해야 합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -225,7 +225,7 @@
 /* Success message shown when you Cancelled a contact request */
 "requestCancelled"="요청 취소됨";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="요청 삭제됨";
+"requestDeleted"="요청이 삭제되었습니다";
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="대기중인 요청 없음";
 /* Title shown when the transfers are paused */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="문서 스캔 이용 불가";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다.";
+"There is already a file with the same name"="같은 이름의 파일이 존재합니다";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="다음에서 들여오기…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -353,7 +353,7 @@
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="저작권 경고";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="모든 사용자에게 저작권 경고";
+"copyrightWarningToAll"="모든 이용자에게 저작권 경고";
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA는 다른 사람들의 저작권을 존중하고 MEGA 클라우드 서비스의 이용자들이 저작권법을 준수할 것을 요구합니다.";
 /* String already exists: 367, but we need to split paragraphs */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="건너뛰기";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="자동으로 당신의 사진과 동영상을 클라우드 드라이브에 백업합니다.";
+"Automatically backup your photos and videos to the Cloud Drive."="클라우드 드라이브에 자동으로 사진과 동영상을 백업하세요.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 활성화";
 /* Success message shown when Camera Uploads has been enabled */
@@ -551,7 +551,7 @@
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="%d명의 연락처와 공유됨";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="권한이 변경됨";
+"permissionsChanged"="권한이 변경되었습니다";
 /* Message shown when a share has been left */
 "shareLeft"="공유 떠남";
 /* Message shown when some shares have been left */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="피드백 보내기";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="여기에 피드백을 쓰세요:";
+"pleaseWriteYourFeedback"="여기에 의견을 적으세요:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -942,12 +942,10 @@
 "profile"="프로필";
 /* Title of the Achievements section */
 "achievementsTitle"="도전 과제";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="친구들을 초대하고 보너스를 받으세요";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="친구를 초대하세요";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="친구를 초대하세요";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="추천한 가입자마다 %@의 용량. \n365일간 이용 가능.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="휴대 전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
@@ -966,28 +964,36 @@
 "storageQuota"="저장공간 할당량";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="전송 할당량";
-/* achievement type */
-"registrationBonus"="가입 보너스";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="무료 가입 보너스로 %1의 저장 공간을 받았습니다.";
-/* achievement type */
-"referralBonuses"="초대 보너스";
-/*  */
-"installMEGASync"="MEGAsync 설치";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="MEGAsync를 설치하여 %1의 저장 공간과 %2의 전송 한도를 받았습니다.";
-/*  */
-"installOurMobileApp"="모바일 앱 설치";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="모바일 앱을 설치하여 %1의 저장 공간과 %2의 전송 한도를 받았습니다.";
-/*  */
-"xDaysLeft"="%1일 남음";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="([S]%1[/S] %2 후 보너스 만료)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="가입 보너스";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="무료 가입 보너스로 %@의 저장 공간을 받았습니다.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="초대 보너스";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="MEGA 데스크톱 앱 설치";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="MEGA 데스크톱 앱을 설치하여 %@의 저장 공간을 받았습니다.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="MEGA 데스크톱 앱을 설치하면 %@의 무료 저장 공간을 받게 되며, 365일간 이용 가능합니다. MEGA 데스크톱 앱은 Windows, macOS 그리고 대부분의 Linux 배포판에서 이용 가능합니다.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="MEGA 모바일 앱 설치";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="MEGA 모바일 앱을 설치하여 저장소 공간 %@를 받았습니다.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="MEGA 모바일 앱을 설치하면 %@의 무료 저장 공간을 받게 되며, 365일간 이용 가능합니다. MEGA 모바일 앱은 iOS, Android 그리고 Windows Phone에서 이용 가능합니다.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@의 저장소. 365일간 이용 가능";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="%@일 남음";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="보너스가 %@일 이내에 만료됩니다.";
 /* Add Phone Number title */
 "Add Phone Number"="전화번호 추가";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="전화번호를 인증하여서 %1$s의 무료 저장 공간과 %2$s의 전송 할당량을 받았습니다.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="휴대 전화 번호를 추가하여 %@의 저장 공간을 받았습니다.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="휴대 전화 번호를 추가하면 %@의 무료 저장 공간을 받게 되며, 365일 간 이용 가능합니다.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="전화번호를 추가하고 %@을/를 무료로 받으세요. 이것은 당신의 지인들이 당신을 MEGA에서 찾기 더 쉽게 해줍니다.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="개월";
 /*  */
 "days"="일";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="만료됨";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
@@ -1069,9 +1073,9 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="현재 요금제";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="맞춤 요금제로 업그레이드";
+"Upgrade to a custom plan"="커스텀 요금제로 업그레이드";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="맞춤 요금제로 업그레이드하는 방법을 문의하세요:";
+"Ask us how you can upgrade to a custom plan:"="어떻게 커스텀 요금제로 업그레이드할 수 있는지 물어보세요:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="요금제 요청";
 /* Header shown to help on the purchasin process */
@@ -1139,7 +1143,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="이 메시지는 최대 반응 한도 %d개에 도달하였습니다.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="최대 반응 한도 %d에 도달하였습니다";
+"You have reached the maximum limit of %d reactions."="당신은 최대 반응 한도 %d개에 도달하였습니다.";
 /* Chat section header */
 "chat"="대화";
 /* Empty Conversations section */
@@ -1231,7 +1235,7 @@
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="현실에서 가장 확실한 방법은 직접 만나는 것입니다. 만약 증명된 OTR이나 PGP 같은 이미 증명된 다른 방법이 있다면, 그것을 사용해도 좋습니다.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"My credentials"="내 자격증명";
+"My credentials"="내 자격 증명";
 /* Button to reset the password */
 "reset"="재설정";
 /* Button title */
@@ -1363,7 +1367,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="올바르게 공유되었습니다";
+"Shared successfully"="성공적으로 공유되었습니다";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="전송 실패:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1455,7 +1459,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="낮음";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="보통";
+"medium"="중간";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="높음";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1485,7 +1489,7 @@
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="공유된 사람:";
 /* Item menu option upon right click on one or multiple files. */
-"sharing"="공유하기";
+"sharing"="공유 중";
 /* Title of section to display number of all historical versions of files. */
 "versions"="버전";
 /* Title label of a node property. */
@@ -1783,7 +1787,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="암호화 키 순환은 약간 더 안전하지만, 대화 링크를 만들 수 없고 새 참여자들이 지난 메시지를 볼 수 없게 됩니다.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="암호화 키 순환은 100명 이상의 참여자가 있는 대화에서는 해제됩니다.";
+"Key rotation is disabled for conversations with more than 100 participants."="암호화 키 순환은 100명 이상의 참여자가 있는 대화에서는 비활성화됩니다.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="대화 링크를 생성하려면 그룹 이름을 지어야합니다.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1857,7 +1861,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="당신의 연락처 요청이 거절되었습니다";
 /* notification text */
-"A user has left the shared folder {0}"="이용자가 공유된 폴더 {0}을/를 떠났습니다";
+"A user has left the shared folder {0}"="이용자가 공유된 {0} 폴더를 떠났습니다";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="폴더에 대한 접근이 제거됨";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2007,7 +2011,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="당신의 기기의 개인정보 보호 섹션으로 가세요. 위치 서비스를 활성화하고 MEGA를 앱을 사용중일 때 또는 항상으로 설정해주세요.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA는 당신이 당신의 연락처와 위치를 공유하거나 카메라 업로드의 \"백그라운드에서 업로드\"가 활성화되어있는 경우 당신이 장소를 이동할 때 사진과 동영상을 업로드할 수 있도록 당신의 위치에 접근합니다.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA는 당신이 당신의 연락처와 위치를 공유하거나 카메라 업로드의 \"백그라운드에서 업로드\"가 활성화되어있는 경우 당신의 위치가 바뀔 때 사진과 동영상을 업로드할 수 있도록 당신의 위치에 접근합니다.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="모바일 데이터가 꺼져있습니다";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2045,7 +2049,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA의 연락처";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="안녕하세요! MEGA를 사용하여 저와 암호화된 대화를 하고 최대 50GB의 무료 공간을 받읍시다.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="안녕하세요! MEGA에서 저와 안전하게 대화하고 최대 20GB 이상의 무료 저장소를 받으세요.";
 /* Destination folder name of chat files */
 "My chat files"="내 대화 파일";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2285,7 +2289,7 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="로그아웃하면, 진행중인 전송은 취소됩니다.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="로그아웃하면 오프라인 섹션의 파일들이 당신의 기기에서 삭제됩니다.";
+"When you logout, files from your Offline section will be deleted from your device."="로그아웃할 때, 오프라인 섹션의 파일들이 당신의 기기에서 삭제됩니다.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="로그아웃하면, 기기의 오프라인 섹션의 파일들이 삭제되고 진행중인 전송이 취소됩니다.";
 /* Default title of an empty chat. */
@@ -2451,11 +2455,11 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="1개월";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="사용자 지정…";
+"Custom..."="설정…";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]님이 메시지 삭제 시간을[/B][A] %2$s[/A][B]로 변경하였습니다.[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]님이 메시지 삭제를 해제하였습니다.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]님이 메시지 비우기를 비활성화 하였습니다.[/B]";
 /*  */
 "hour"="시간";
 /*  */
@@ -2503,7 +2507,7 @@
 /* Title for document explorer view */
 "Documents"="문서";
 /* Title for audio explorer view */
-"Audio"="음성";
+"Audio"="오디오";
 /* Title for video explorer view */
 "Videos"="동영상";
 /* Photo Explorer Screen: No documents in the account */
@@ -2547,15 +2551,15 @@
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "Always On"="항상 켬";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="필수 사항은 우리 서비스에 대한 안전한 접근과 중요한 기능을 제공하기 위함입니다. 이러한 이유로, 동의가 필요하지 않습니다.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="중요한 기능과 우리 서비스에 대한 안전한 접근을 제공하기 위해 필수적입니다. 이러한 이유로, 동의가 필요하지 않습니다.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="선호 사항 쿠키";
+"Preference Cookies"="선호 쿠키";
 /* Cookie settings dialog text. */
 "Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="당신이 선택한 어떠한 표기나 형식 설정을 기억하도록 허용합니다. 이 쿠키를 허용하지 않으면 당신이 선호하는 화면 배치 등을 저장할 수 없습니다.";
 /* Cookie settings dialog text. */
 "Performance and Analytics Cookies"="성능과 분석 쿠키";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="당신이 우리의 서비스를 어떻게 이용하는지 이해하도록 돕고 우리가 향상시킬 수 있도록 데이터를 제공해주세요. 이 쿠키를 허용하지 않는다면 설계를 향상시킬 수 있는 데이터가 우리에게 덜 제공됩니다.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="당신이 우리의 서비스를 어떻게 이용하는지 이해할 수 있도록 도와주시고 향상할 수 있도록 데이터를 제공해주세요. 이러한 쿠키들을 허용하지 않는 것은 우리가 설계를 개선하는 데에 쓸 수 있는 데이터가 적어진다는 뜻입니다.";
 /* Cookie settings dialog text. */
 "Advertising Cookies"="광고 쿠키";
 /* Cookie settings dialog text. */
@@ -2626,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="파일이 너무 커서 편집할 수 없습니다.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="항목의 인코딩을 알 수 없어서 파일을 편집할 수 없습니다.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (소유자)";
