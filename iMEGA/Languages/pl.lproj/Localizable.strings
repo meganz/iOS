@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Twoje hasło można łatwo odgadnąć. Spróbuj zwiększyć swoje hasło. Połącz wielkie i małe litery. Dodaj znaki specjalne. Nie używaj nazw ani słów słownikowych.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Średnie";
+"PasswordStrengthMedium"="Średnia";
 /*  */
 "passwordMedium"="Twoje hasło jest wystarczająco bezpieczne aby kontynuować, ale rekomendujemy wzmocnienie hasła później.";
 /*  */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="Skanowanie dokumentów nie jest dostępne";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Istnieje już plik o takiej nazwie";
+"There is already a file with the same name"="Istnieje już plik o tej samej nazwie";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importuj z…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Pomiń";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Automatyczne tworzenie kopii zapasowych zdjęć i filmów na dysku Cloud.";
+"Automatically backup your photos and videos to the Cloud Drive."="Automatyczne tworzenie kopii zapasowych zdjęć i filmów na dysku w chmurze.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Włącz wgrwyanie plików z kamery";
 /* Success message shown when Camera Uploads has been enabled */
@@ -637,15 +637,15 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Wyślij opinię";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Napisz swoją wiadomość tutaj:";
+"pleaseWriteYourFeedback"="Napisz swoją opinię tutaj:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Nie ustawiono adresu email na Twoim urządzeniu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Polityka Prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Polityka ciasteczek";
+"Cookie Policy"="Polityka Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Ustawienia plików cookie";
+"Cookie Settings"="Ustawienia ciasteczek";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Regulamin serwisu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -942,12 +942,10 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Osiągnięcia";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Zaproś znajomych i odbierz bonusy";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="Zaproś znajomych";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Odbierz %1$s dodatkowej powierzchni i %2$s dodatkowego transferu za każde polecenie";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="Zaproś znajomych";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="%@ pamięci masowej dla każdego poleconego. \nWażny przez 365 dni.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Wybierz z kontaktów telefonu lub wprowadź wiele adresów e-mail";
 /*  */
@@ -966,28 +964,36 @@
 "storageQuota"="Limit powierzchni";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Limit transferu";
-/* achievement type */
-"registrationBonus"="Rejestracja Bonusa";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Otrzymałeś bonus w postaci %1 powierzchni na pliki za rejestrację w serwisie.";
-/* achievement type */
-"referralBonuses"="Bonus za polecenia";
-/*  */
-"installMEGASync"="Zainstaluj MEGAsync";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Otrzymałeś %1 dodatkowej przestrzeni na pliki i %2 limitu transferu za zainstalowanie aplikacji MEGAsync.";
-/*  */
-"installOurMobileApp"="Zainstaluj naszą aplikację mobilną";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="Otrzymałeś %1 dodatkowej przestrzeni na pliki i %2 limitu transferu za zainstalowanie naszej aplikacji mobilnej.";
-/*  */
-"xDaysLeft"="%1 dni pozostało";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(Bonus wygasa za [S]%1[/S] %2)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="Rejestracja Bonusa";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="Otrzymałeś %@ przestrzeni dyskowej jako bonus za darmową rejestrację.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="Bonus za polecenia";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="Zainstaluj aplikację MEGA";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="Otrzymałeś %@ przestrzeni dyskowej do instalacji aplikacji desktopowej MEGA.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji MEGA desktop otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja MEGA jest dostępna dla systemów Windows, macOS i większości systemów Linux.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="Zainstaluj aplikację mobilną MEGA";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="Otrzymałeś %@ przestrzeni dyskowej do instalacji aplikacji MEGA mobile.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji MEGA mobile otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja MEGA mobile jest dostępna dla systemów iOS, Android i Windows Phone.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@ pamięci do przechowywania danych. Ważne przez 365 dni.";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="Pozostało %@ dni";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="Bonus wygasa za %@ dni.";
 /* Add Phone Number title */
 "Add Phone Number"="Dodaj numer telefonu";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Otrzymałeś %1$s przestrzeni dyskowej i %2$s limitu transferu na weryfikację twojego numeru telefonu.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="Otrzymałeś %@ przestrzeni dyskowej za dodanie swojego numeru telefonu.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="Gdy dodasz swój numer telefonu, otrzymasz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Uzyskaj %@ za darmo, dodając swój numer telefonu. Ułatwia to kontaktom znalezienie Cię w MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="miesiące";
 /*  */
 "days"="dni";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="Wygasło";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Wyloguj się";
 /* String shown when you are logging out of your account. */
@@ -1069,9 +1073,9 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="Obecny plan";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Przejdź na plan niestandardowy";
+"Upgrade to a custom plan"="Przejdź na niestandardowy abonament";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Zapytaj nas, jak możesz przejść na plan niestandardowy:";
+"Ask us how you can upgrade to a custom plan:"="Zapytaj nas, jak możesz przejść na niestandardowy abonament:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Zmień konto";
 /* Header shown to help on the purchasin process */
@@ -1115,7 +1119,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Jeżeli anulowałeś zgłoszenie lub zakup nie może być przywrócony, spróbuj ponownie lub skontaktuj się z ios@mega.nz.";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="Wybierz PRO";
+"Upgrade to Pro"="Zmień na wersję Pro";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Plan Pro ma tylko takie funkcje, jak ustawianie ochrony hasłem i dat wygaśnięcia dla plików publicznych.";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1415,7 +1419,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Naruszono warunki korzystania z usługi";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Przesyłanie nie powiodło się z powodu rekurencyjnej struktury katalogów";
+"Upload produces recursivity"="Transfer nie powiódł się z powodu rekursywnej struktury katalogów";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="Niedostępny z powodu naruszenia ToS / AUP";
 /* Error shown when SSL check has failed */
@@ -1455,7 +1459,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Niska";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Średnie";
+"medium"="Średnia";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Wysoka";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1551,7 +1555,7 @@
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Za chwilę się wylogujesz, sprawdź swoje hasło, aby je zapamiętać. Jeśli zgubisz hasło, utracisz dostęp do swoich danych MEGA.";
 /* state previous to import a file */
-"loading"="Pobieranie danych…";
+"loading"="Ładowanie…";
 /*  */
 "next"="Dalej";
 /* Button title to allow the user ignore something */
@@ -2045,7 +2049,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="KONTAKTY NA MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Cześć! Nawiąż ze mną bezpieczne rozmowy na temat MEGA i uzyskaj do 50 GB bezpłatnej przestrzeni dyskowej.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Cześć! Prowadź ze mną bezpieczne rozmowy na MEGA i zyskaj do 20GB+ darmowej przestrzeni dyskowej.";
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2091,7 +2095,7 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Brak linków publicznych";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Zarządzaj udziałem";
+"Manage Share"="Zarządzaj udostępnianiem";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Udostępnij za pomocą";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2411,7 +2415,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Hasło zostało skopiowane do schowka";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nasz kompleksowy system szyfrowania wymaga unikatowego klucza generowanego automatycznie dla tego pliku. Łącze z tym kluczem jest tworzone domyślnie, ale można wyeksportować klucz odszyfrowywania osobno dla dodatkowej warstwy bezpieczeństwa.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nasz system szyfrowania end-to-end wymaga unikalnego klucza generowanego automatycznie dla tego pliku. Łącze z tym kluczem jest tworzone domyślnie, ale możesz wyeksportować klucz deszyfrowania osobno, aby uzyskać dodatkową warstwę bezpieczeństwa.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Klucz deszyfrujący";
 /* Text to indicate the user to remove the password of a link */
@@ -2451,7 +2455,7 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="Jeden miesiąc";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Dowolne…";
+"Custom..."="Inne…";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] zmienił czas usuwania komunikatu na[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2503,7 +2507,7 @@
 /* Title for document explorer view */
 "Documents"="Dokumenty";
 /* Title for audio explorer view */
-"Audio"="Audio";
+"Audio"="Dzwięk";
 /* Title for video explorer view */
 "Videos"="Filmy";
 /* Photo Explorer Screen: No documents in the account */
@@ -2541,15 +2545,15 @@
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Korzystamy z lokalnej pamięci masowej i podobnych technologii (“pliki cookie”), aby świadczyć nasze usługi na rzecz użytkownika, poprawić jakość korzystania z naszych usług i dostosować reklamy, które użytkownik widzi, w tym za pośrednictwem stron trzecich. Zaakceptuj wykorzystanie przez nas plików cookie od początku wizyty lub dostosuj pliki cookie w Ustawieniach plików cookie. Przeczytaj więcej w naszej [A]Polityce plików cookie[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Akceptuję ciasteczka";
+"Accept Cookies"="Zaakceptuj pliki cookie";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Niezbędne pliki cookie";
+"Essential Cookies"="Niezbędne ciasteczka";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "Always On"="Zawsze włączone";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Niezbędne do zapewnienia ważnych funkcji i bezpiecznego dostępu do naszych usług. Z tego powodu nie wymagają zgody.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Niezbędne do zapewnienia Państwu ważnych funkcji i bezpiecznego dostępu do naszych usług. Z tego powodu nie wymagają one zgody.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preferencyjne pliki cookie";
+"Preference Cookies"="Pliki cookie dotyczące preferencji";
 /* Cookie settings dialog text. */
 "Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Pozwól nam zapamiętać wybrane przez Ciebie ustawienia wyświetlania i formatowania. Brak akceptacji tych plików cookie oznacza, że nie będziemy w stanie zapamiętać niektórych rzeczy, takich jak preferowany układ ekranu.";
 /* Cookie settings dialog text. */
@@ -2599,7 +2603,7 @@
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Zwolnij trochę miejsca, usuwając aplikacje, których już nie używasz, lub duże pliki wideo w swojej galerii. Możesz zarządzać swoją pamięcią masową w %@";
 /* The title of Turn on Notifications view */
-"dialog.turnOnNotifications.label.title"="Włącz powiadomienia";
+"dialog.turnOnNotifications.label.title"="Włączyć powiadomienia";
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="W ten sposób natychmiast zobaczysz nowe wiadomości na swoim urządzeniu.";
 /* First step to turn on notifications */
@@ -2626,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="Plik jest zbyt duży i nie może być edytowany.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="Plik nie mógł być edytowany z powodu nieznanego kodowania zawartości.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"=" %@(Właściciel)";
