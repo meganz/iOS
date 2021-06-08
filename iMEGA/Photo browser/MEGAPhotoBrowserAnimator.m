@@ -37,8 +37,8 @@
     switch (self.mode) {
         case MEGAPhotoBrowserAnimatorModePresent: {
             UIView *targetView = [transitionContext viewForKey:UITransitionContextToViewKey];
-            
-            CGRect finalFrame = targetView.frame;
+            UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+            CGRect finalFrame = [transitionContext finalFrameForViewController:toVC];
             CGAffineTransform scaleTransform = [self transformForFrame:finalFrame];
             
             targetView.transform = scaleTransform;
@@ -49,11 +49,12 @@
             
             [UIView animateWithDuration:self.duration
                              animations:^{
-                                 targetView.transform = CGAffineTransformIdentity;
-                                 targetView.center = [self centerPointForFrame:finalFrame];
-                             } completion:^(BOOL finished) {
-                                 [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
-                             }];
+                targetView.transform = CGAffineTransformIdentity;
+                targetView.center = [self centerPointForFrame:finalFrame];
+                [targetView setFrame:finalFrame];
+            } completion:^(BOOL finished) {
+                [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+            }];
             
             break;
         }
