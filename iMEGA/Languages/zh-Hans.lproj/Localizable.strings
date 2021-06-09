@@ -99,7 +99,7 @@
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="请输入有效的密码";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="电子邮件";
+"emailPlaceholder"="邮箱地址";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密码";
 /*  */
@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="您的密码过于简单。请尝试增加密码长度。结合字母大小写。添加特殊字符。切勿使用名字或单词。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="中";
+"PasswordStrengthMedium"="中等";
 /*  */
 "passwordMedium"="您可使用此密码，但建议您增加密码强度。";
 /*  */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="无法进行文件扫描";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="已有一个相同的文件名";
+"There is already a file with the same name"="已经有一个同名的文件";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="导入从……";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="跳过";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="自动备份您的照片和视频到您的云盘。";
+"Automatically backup your photos and videos to the Cloud Drive."="自动备份照片和视频至您的云盘";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="启用相机上传";
 /* Success message shown when Camera Uploads has been enabled */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="发送反馈";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="请在这里写下您的反馈：";
+"pleaseWriteYourFeedback"="请于此处写下您的意见";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您在该设备中尚未登录";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -1073,9 +1073,9 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="当前方案";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="升级至定制专属方案";
+"Upgrade to a custom plan"="升级至自定义会员方案";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="询问我们如何升级至定制专属方案：";
+"Ask us how you can upgrade to a custom plan:"="询问我们如何升级至自定义会员方案：";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽询定制专属方案";
 /* Header shown to help on the purchasin process */
@@ -1119,7 +1119,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="也许请求已取消或是先前的购买未能恢复。请稍后再试或联系ios@mega.nz";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="升级到Pro会员";
+"Upgrade to Pro"="升级至Pro会员";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="享受Pro会员专属功能，例如为公共文件设置密码保护与链接到期日。";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1419,7 +1419,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="已违反服务条款";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="传输失败，递归目录结构错误。";
+"Upload produces recursivity"="递归目录结构时出现错误，传输失败";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="由于违反ToS服务条款或AUP可接受的使用政策而无法访问";
 /* Error shown when SSL check has failed */
@@ -1459,7 +1459,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="低";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="中";
+"medium"="中等";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="高";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1717,7 +1717,7 @@
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="允许访问";
 /* Title of the Settings section where you can configure security details of your MEGA account */
-"settings.section.security"="安全性";
+"settings.section.security"="安全";
 /* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
 "settings.section.termsAndPolicies"="条款与政策";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
@@ -1971,9 +1971,9 @@
 /* Title for the recents section. */
 "Recents"="近期";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
+"recents.emptyState.activityHidden.title"="近期动态已隐藏";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Show Activity";
+"recents.emptyState.activityHidden.button"="显示动态";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1张照片";
 /* Multiple videos title shown in recents section of web client. */
@@ -2049,7 +2049,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hi! Have secure conversations on MEGA with me and get up to 20GB+ free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="你好！与我一起使用MEGA，获得至少20GB+的免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2253,9 +2253,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和视图模式";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="隐藏近期动态";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="在主页部分隐藏近期动态。";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="默认";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2415,7 +2415,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="已复制密码到剪贴板";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我们的端到端加密系统需要为此文件自动生成唯一密钥。 默认情况下会创建带有此密钥的链接，您也可以单独导出解密密钥以增加链接安全性。";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我们的端到端加密系统需要为此文件自动生成唯一密钥。 默认情况下会创建带有此密钥的链接，您也可以单独导出解密密钥增加链接安全性。";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="解密密钥";
 /* Text to indicate the user to remove the password of a link */
@@ -2507,7 +2507,7 @@
 /* Title for document explorer view */
 "Documents"="文档";
 /* Title for audio explorer view */
-"Audio"="语音";
+"Audio"="音频";
 /* Title for video explorer view */
 "Videos"="视频";
 /* Photo Explorer Screen: No documents in the account */
@@ -2545,15 +2545,15 @@
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
 "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用本地存储和类似技术（“ Cookies”）为您提供服务，通过我们的服务增强您的体验，并定制您所看到的广告（包括通过第三方）。从访问开始就接受我们对Cookie的使用，或在Cookie设置中自定义Cookie。您可以在我们的[A]《Cookie政策》[/A]中了解更多信息。";
 /* Cookie dialog button label. */
-"Accept Cookies"="接受Cookie";
+"Accept Cookies"="接受Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="基本Cookie";
+"Essential Cookies"="基本Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "Always On"="始终开启";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="为您提供重要功能和安全访问我们服务的必要条件。 因此，无需进行设置。";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="基本Cookie为您提供重要功能以及对我们服务的安全访问。因此，无需经过同意。";
 /* Cookie settings dialog text. */
-"Preference Cookies"="偏好Cookie";
+"Preference Cookies"="偏好Cookies";
 /* Cookie settings dialog text. */
 "Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="我们将记住您选择的某些显示与格式设置。不接受这些Cookies意味着我们无法记住您的偏好，例如您偏好的屏幕布局。";
 /* Cookie settings dialog text. */
@@ -2565,7 +2565,7 @@
 /* Cookie settings dialog text. */
 "Cookie settings dialog text -- Used by us and our approved advertising partners..."="我们和我们认可的广告合作商将根据您的浏览历史记录来自定义您在我们的服务和其他网站上显示的广告。不接受这些Cookies意味着我们可能会显示不相关的广告。";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="第三方Cookie";
+"Third Party Cookies"="第三方Cookies";
 /* Cookie settings dialog text. */
 "Cookie settings dialog text -- These are Cookies which are controlled by..."="这些Cookies并非由我们控制，我们使用它来提供上述功能类别。根据每个第三方Cookie的类别，不接受这些Cookies会产生不同含义。请点击下方的“更多信息”获取我们使用的所有第三方Cookie详细信息。";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
@@ -2603,7 +2603,7 @@
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="您可以通过删除不常用的应用程序或大视频文件以释放设备存储空间。您可以通过以下步骤进行设置：%@";
 /* The title of Turn on Notifications view */
-"dialog.turnOnNotifications.label.title"="开启通知";
+"dialog.turnOnNotifications.label.title"="打开通知";
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="随后，您就会在此设备上收到新消息。";
 /* First step to turn on notifications */
@@ -2623,12 +2623,12 @@
 /* Offline log out warning message */
 "offline.logOut.warning.message"="当您登出帐户时，您保存在离线的文件将被删除。";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
-"transfer.cell.shareOwnerStorageQuota.infoLabel"="共享所有者帐户已超出存储空间。";
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="共享所有者已超出其存储空间。";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
 "dialog.shareOwnerStorageQuota.message"="由于目标用户帐户已超出其存储空间，无法发送此文件。";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="文件太大，无法编辑。";
 /* Hud info message when read unknown encode file. */
-"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+"general.textEditor.hud.unknownEncode"="由于未知的内容编码，文件无法编辑。";
 /* Show the node owner's name. The %@ is the owner's name */
-"cloudDrive.nodeInfo.owner"="%@ (Owner)";
+"cloudDrive.nodeInfo.owner"="%@（创建者）";
