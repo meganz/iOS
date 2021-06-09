@@ -283,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Elige desde Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Hacer foto";
+"capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Escanear documento";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Realiza una copia de seguridad automática de tus fotos y videos en tu Nube.";
+"Automatically backup your photos and videos to the Cloud Drive."="Realizar copias de seguridad automáticas de fotos y videos en la Nube.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar las Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
@@ -529,7 +529,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Contactos";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
-"Requests"="Invitaciones";
+"Requests"="Recibidas";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
 "Groups"="Grupos";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar valoración";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Escribe tus comentarios:";
+"pleaseWriteYourFeedback"="Por favor, escribe tus comentarios:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="No hay una cuenta de correo electrónico configurada";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -1419,7 +1419,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Términos de uso incumplidos";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="La transferencia ha fallado debido a una estructura de directorio recursiva";
+"Upload produces recursivity"="Transferencia fallida debido a una estructura de carpetas recursiva";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="No accesible por infringir los Términos de servicio";
 /* Error shown when SSL check has failed */
@@ -1446,18 +1446,6 @@
 "HTTP error"="Error HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error desconocido";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA ofrece un servicio de almacenamiento en la nube cifrado y controlado por el usuario a través del navegador web y de la aplicación para dispositivos móviles. A diferencia de otros proveedores de almacenamiento en la nube, tus datos son cifrados y descifrados únicamente por tus dispositivos y nunca por nosotros.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Sube tus archivos desde tu smartphone o tablet, luego busca, almacena, descarga, muestra, reproduce, comparte, renombra o elimina tus archivos en cualquier momento, desde cualquier dispositivo, desde cualquier lugar. Comparte carpetas con tus contactos y comprueba sus actualizaciones en tiempo real.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="El proceso de cifrado implica que no podemos acceder o restablecer tu contraseña por lo que DEBES recordarla (a menos que tengas copia de seguridad de tu Clave de recuperación) o perderás el acceso a tus archivos almacenados.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="El video chat de MEGA cifrado punto a punto permite total privacidad y puedes usarlo a través del navegador desde 2016. Ahora está disponible también en nuestra app para móvil y su historial de chat es accesible a través de múltiples dispositivos. Además los usuarios pueden añadir fácilmente archivos a un chat directamente desde su nube MEGA.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Suscripción Pro Lite: 4,99€ (US$4.99) al mes o 49,99€ (US$49.99) al año, con 400 GB de espacio de almacenamiento y 1 TB de cuota de transferencia al mes.\nSuscripción Pro I: 9,99€ (US$9.99) al mes o 99,99€ (US$99.99) al año, con 2 TB de espacio de almacenamiento y 2 TB de cuota de transferencia al mes.\nSuscripción Pro II: 19,99€ al mes (US$19.99) o 199,99€ (US$199.99) al año, con 8 TB de espacio de almacenamiento y 8 TB de cuota de transferencia al mes.\nSuscripción Pro III: 29,99€ (US$29.99) al mes o 299,99€ (US$299.99) al año, con 16 TB de espacio de almacenamiento y 16 TB de cuota de transferencia al mes.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para más información, entra en nuestra web: https://mega.nz/\n Términos de servicio: https://mega.nz/terms\n Política de privacidad: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Llamando…";
 /* notification subtitle of incoming calls */
@@ -2047,7 +2035,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contacto encontrado en MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Abrir los Ajustes";
+"Open Settings"="Abrir los ajustes";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invita a contactos y chatea de forma segura con el chat cifrado de MEGA.";
 /* Text showing the user how many contacts would be invited */
@@ -2371,7 +2359,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIONES";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favorito";
+"Favourite"="Favoritos";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Eliminar favoritos";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2409,7 +2397,7 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exportar el enlace y la clave de descifrado por separado.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Más info";
+"Learn more"="Más información";
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Los enlaces caducan el %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
@@ -2615,7 +2603,7 @@
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados de tu galería. Puedes administrar tu almacenamiento en %@";
 /* The title of Turn on Notifications view */
-"dialog.turnOnNotifications.label.title"="Activar las notificaciones";
+"dialog.turnOnNotifications.label.title"="Activar Notificaciones";
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="De esta manera, verás los nuevos mensajes al instante en tu dispositivo. ";
 /* First step to turn on notifications */
@@ -2642,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="El archivo es demasiado grande y no se puede editar.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="El archivo no se ha podido editar debido a una codificación de contenido desconocida.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (Propietario)";

@@ -241,11 +241,11 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d de fișiere";
+"files"="%d fișiere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
 "oneFolder"="%d folder";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d de foldere";
+"folders"="%d foldere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 folder + 1 fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pus pe pauză";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Anulat";
+"Cancelled"="Anulat(ă)";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Se finalizează…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -537,7 +537,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d de foldere";
+"foldersShared"="%d foldere";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Inserează o adresă de e-mail";
 /* Title of Shared Items section */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Trimite feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul aici:";
+"pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul tău aici:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -1075,7 +1075,7 @@
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgradează la un plan personalizat";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți să upgradezi la un plan personalizat:";
+"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un plan personalizat";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
 /* Header shown to help on the purchasin process */
@@ -1446,18 +1446,6 @@
 "HTTP error"="Eroare HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Eroare necunoscută";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori, prin intermediul browserelor web standard, împreună cu aplicații dedicate pentru dispozitivele mobile. Spre deosebire de ceilalți furnizori de stocare în cloud, datele tale sunt criptate și decriptate doar de către dispozitivele client ale tale și niciodată de către noi.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Încarcă fișierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, redă în flux, vezi, partajează, redenumește sau șterge fișierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale și vezi modificările acestora în timp real.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Procesul de criptare înseamnă că nu putem să îți accesăm sau să îți resetăm parola astfel încât TREBUIE să o reții (excepție făcând cazul în care ai cheia de recuperare păstrată ca backup) sau vei pierde accesul la fișierele tale stocate.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonamentul Pro Lite: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îți oferă 400 GB spațiu de stocare și 1 TB cotă de transfer pe lună.\nAbonamentul Pro I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îți oferă 2 TB spațiu de stocare și 2 TB cotă de transfer pe lună.\nAbonamentul Pro II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îți oferă 8 TB spațiu de stocare și 8 TB cotă de transfer pe lună.\nAbonamentul Pro III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îți oferă 16 TB spațiu de stocare și 16 TB cotă de transfer pe lună.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Pentru mai multe informații, te rugăm să verifici site-ul nostru web: https://mega.nz/\nTermenii de utilizare a serviciului: https://mega.nz/terms\nPolitica de confidențialitate: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Se apelează…";
 /* notification subtitle of incoming calls */
@@ -2007,7 +1995,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Nicio activitate recentă";
 /* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d de elemente";
+"%1$d items"="%1$d elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Link de chat indisponibil";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2323,7 +2311,7 @@
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să contactezi asistența pentru un plan personalizat.</paragraph>";
 /* Over Disk Quota of number of days */
-"%d days"="%d de zile";
+"%d days"="%d zile";
 /* Over Disk Quota of must act immediately to save your data */
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Trebuie să acționezi numaidecât pentru a-ți salva datele.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
@@ -2371,7 +2359,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIUNI";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favorit";
+"Favourite"="Adaugă la favorite";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2642,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (Owner)";

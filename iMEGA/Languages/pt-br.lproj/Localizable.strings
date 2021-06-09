@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pausado";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Cancelada";
+"Cancelled"="Cancelado";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Completando…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -379,7 +379,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Copiar link";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copiar a chave";
+"copyKey"="Copiar chave";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Abrir em…";
 /*  */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar comentários";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Escreva os seus comentários aqui:";
+"pleaseWriteYourFeedback"="Por favor, escreva seu comentário aqui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não há uma conta de email configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -1446,18 +1446,6 @@
 "HTTP error"="Erro HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="O MEGA oferece armazenamento em nuvem criptografado controlado pelo usuário por meio de navegadores padrão, assim como aplicativos para dispositivos móveis. Diferentemente de outros provedores de armazenamento em nuvem, no MEGA os seus dados são criptografados e descriptografados apenas pelos seus dispositivos, e nunca por nós.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Faça o upload dos seus arquivos a partir do seu smartphone ou tablet e, em seguida, procure, armazene, faça download, transmita, visualize, compartilhe, renomeie ou elimine os seus arquivos a qualquer momento, a partir de qualquer dispositivo, em qualquer lugar. Compartilhe pastas com os seus contatos e veja as atualizações deles em tempo real.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="O processo de criptografia significa que não podemos acessar ou redefinir a sua senha: é IMPRESCINDÍVEL que você se lembre dela (a menos que você tenha a sua chave de recuperação salva), ou você perderá o acesso aos seus arquivos armazenados.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="O chat de vídeo criptografado de ponta a ponta pelo usuário garante uma privacidade total, e está disponível no navegador desde 2016. Atualmente foi ampliado para o nosso aplicativo móvel, e o histórico do chat é acessível em vários dispositivos. Os usuários também podem facilmente adicionar arquivos da sua Nuvem de arquivos no MEGA em um chat.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Assinatura Pro Lite: 4,99€ (US$4,99) por mês ou 49,99€ (US$49,99) por ano - oferece 400 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura Pro I: 9,99€ (US$9,99) por mês ou 99,99€ (US$99,99) por ano - oferece 2 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura Pro II: 19,99€ (US$19,99) por mês ou 199,99€ (US$199,99) por ano - oferece 8 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura Pro III: 29,99 (US$29,99) por mês ou 299,99€ (US$299,99) por ano - oferece 16 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Chamando…";
 /* notification subtitle of incoming calls */
@@ -2265,9 +2253,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Classificação e tipo de visualização";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="Ocultar Atividades recentes.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="Ocultar Atividades recentes no Início.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Predeterminado";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2427,7 +2415,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Senha copiada para a área de transferência";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nosso sistema de criptografia de ponta a ponta requer uma chave exclusiva gerada automaticamente para este arquivo. Um link com esta chave será criado de maneira predeterminada, mas você pode exportar a chave de decodificação separadamente para assim garantir uma camada adicional de segurança.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="O nosso sistema de criptografia de ponta a ponta requer uma chave exclusiva, que é gerada automaticamente para este arquivo. O link é criado de forma predeterminada com essa chave, mas você pode exportar a chave de decodificação separadamente, para que o compartilhamento seja mais seguro.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Chave de decodificação";
 /* Text to indicate the user to remove the password of a link */
@@ -2603,7 +2591,7 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Quick Access";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Acesse rapidamente arquivos em Recentes, Favoritos ou a seção Offline";
+"Quickly access files on Recents, Favourites, or Offline section"="Acesse rapidamente arquivos das Atividades recentes, os Favoritos ou a seção Offline";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Acesse rapidamente os arquivos na área Favoritos";
 /* Text description for the Recents QuickAccess widget */
@@ -2642,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (Owner)";
