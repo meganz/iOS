@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chìa khóa mã";
 /* Button title to try to decrypt the link */
-"decrypt"="Giải khóa mã";
+"decrypt"="Giải mã";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Chìa khóa mã không hợp lệ";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -139,7 +139,7 @@
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Đang chờ việc xác nhận email.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Xin nhập mật khẩu để xác thực tài khoản";
+"confirmText"="Xin nhập mật khẩu để xác nhận tài khoản";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="Xác nhận tài khoản";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
@@ -151,7 +151,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA cần ít nhân thêm %@. Xin xóa bớt ứng dụng ít dùng tới hoặc các videos có kích thước lớn trong kho ảnh. Kiểm tra các nội dung đã được lưu lại từ MEGA vào trong mát nếu cần thiết.";
 /* Title for the file link view */
-"fileLink"="Đường liên kết tới tệp tin";
+"fileLink"="Đường liên kết Tệp Tin";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Mở";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -191,7 +191,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Thư Mục Rỗng";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Cloud Drive của bạn không có tập tin.";
+"cloudDriveEmptyState_title"="Ổ Mây không có tệp tin nào";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Thêm tệp tin";
 /* Title shown when you make a search and there is 'No Results' */
@@ -199,13 +199,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Thùng Rác Trống";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Không có tệp nào trong Lưu về Ngoại Tuyến";
+"offlineEmptyState_title"="Không có tệp tin nào trong Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Không Có Tên Liên Lạc Nào";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ nào được gửi tới cho bạn";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Chưa có Thư Mục Chia Sẻ nào được gửi đi từ bạn";
+"noOutgoingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ nào được gửi đi từ bạn";
 /* Title of Contacts requests section */
 "contactRequests"="Các yêu cầu thêm liên lạc";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -215,7 +215,7 @@
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Lời Mời Đã Gửi";
 /* Button title to allow the user postpone an action */
-"later"="Chờ lúc khác";
+"later"="Lúc khác";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Đã nhận";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -231,7 +231,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Các Truyền Tải Bị Dừng";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Không Có Truyền Tải Nào";
+"transfersEmptyState_titleAll"="Không Có Phiên Truyền Tải";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="Không có phiên tải xuống";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
@@ -297,9 +297,9 @@
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Vị trí";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Tin nhắn thoại";
+"Voice Clip"="Tin Nhắn Thoại";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
-"new_text_file"="Tệp Tin Văn Bản Mới";
+"new_text_file"="Tệp Văn Bản Mới";
 /* Hint text shown on the new text file alert. */
 "file_name"="Tên tệp";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="Quét Tài Liệu không khả dụng";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Đã có một tệp tin tồn tại với cùng tên này";
+"There is already a file with the same name"="Đã có một tệp tin với cái tên này rồi";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Chuyển nhập từ…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -379,7 +379,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Sao chép liên kết";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Sao chép chìa khóa";
+"copyKey"="Sao chép mã khóa";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Mở với…";
 /*  */
@@ -407,7 +407,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Các đường liên kết đã được xóa";
 /* Title show when a file is being downloaded */
-"downloading"="Đang tải xuống";
+"downloading"="Đang tải về";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Chọn vi trí đích";
 /* Text of the button for user to select files in MEGA. */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Tự động sao lưu dự phòng hình ảnh và videos của bạn lên Ổ Mây.";
+"Automatically backup your photos and videos to the Cloud Drive."="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Bật tính năng Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -583,7 +583,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào sổ liên lạc";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Đối tượng đã được mời và sẽ xuất hiện trong sổ liên lạc sau khi họ chấp nhận lời mời.";
+"theUserHasBeenInvited"="Đối tượng đã được mời và sẽ xuất hiện trong sổ liên lạc khi họ chấp nhận lời mời của bạn.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Tên của những người quý khách vừa mời sẽ xuất hiện trong sổ liên lạc sau khi họ dùng lời mời của quý khách để tạo tài khoản.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Gửi Phản Hồi";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Xin viết lời phản hồi ở đây:";
+"pleaseWriteYourFeedback"="Xin điền lời phản hồi của bạn ở đây:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -963,7 +963,7 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Hạn Mức Lưu Trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Lượng Băng Thông";
+"Transfer Quota"="Lượng băng thông";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Thưởng cho Đăng Ký Tạo Tài Khoản";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1119,7 +1119,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây. Xin thử lại sau, hoặc liên hệ ios@mega.nz để được trợ giúp.";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="Nâng cấp lên Pro";
+"Upgrade to Pro"="Nâng cấp lên hạng Pro";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Sử dụng các tính mà chỉ có hạng Pro mới có, như đặt mật khẩu và gia hạn thời gian truy cập cho từng tệp tin muốn chia sẻ.";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1171,7 +1171,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chát thành “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="Thêm người vào chát…";
+"addParticipant"="Mời thêm người vào trò chuyện…";
 /* Menu item to add participants to a chat */
 "addParticipants"="Thêm thành viên";
 /* Title that refers to the status of the chat (Either Online or Offline) */
@@ -1249,7 +1249,7 @@
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Rời khỏi";
 /* Top menu option which opens more menu options in a context menu. */
-"more"="Hiện thêm";
+"more"="Thêm nữa";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Tắt tiếng";
 /* A button label. The button allows the user to unmute a conversation. */
@@ -1385,9 +1385,9 @@
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
 "Too many concurrent connections or transfers"="Quá nhiều kết nối/truyền tải cùng lúc";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
-"Out of range"="Nằm ngoài phạm vi";
+"Out of range"="Quá kích thước";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
-"Expired"="Hết hạn";
+"Expired"="Hết";
 /* Label to show that an error related with a resource Not found occurs during a SDK operation. */
 "Not found"="Không tìm thấy";
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
@@ -1405,7 +1405,7 @@
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bị chặn";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Quá mức băng thông";
+"Over quota"="Quá giới hạn";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Tạm thời không khả dụng";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1446,18 +1446,6 @@
 "HTTP error"="Lỗi HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Lỗi không xác định được";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA là một dịch vụ lưu trữ điện toán đám mây đuợc bảo mật người dùng làm chủ thông qua trình duyệt web hiện hành. Không giống như các hãng khác, dữ liệu của bạn được mã hóa tuyệt đối, không ai mở được ngay cả MEGA và chỉ có thiết bị bạn sử dụng mới giải mã được.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Đăng tải tệp tin bạn có từ smartphone hay máy tính bảng của mình, dễ dàng tra cứu, lưu trữ, tải về lại, truyền, xem, sửa, đổi tên hay xóa đi ngay bất cứ khi nào bạn mướn, từ bất kể nơi đâu, mọi thiết bị, mọi lúc. Chi sẻ thư mục vớI các tên liên hệ trong danh bạ và xem hoạt động chỉnh sửa của họ theo thời gian.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Với quá trình mã hóa hoàn toàn mang nghĩa rằng ngay cả máy hệ thống của MEGA sẽ không thể đọc được dữ liệu của bạn hay có khả năng giúp bạn khôi phục mật khẩu. Người dùng BUỘC PHẢI nhớ (hay có Mã Phục Hồi) còn không mọi dữ liệu sẽ bị mất.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="Công nghệ mã hóa đầu-cuối từ hai phía người sử dụng của MEGA cung cấp tính năng bảo mật tuyệt đối, và được hỗ trợ hoàn toàn trên trình duyệt web từ năm 2016. Giờ đây đã được mang lên ứng dụng cho điện thoại, lịch sử cuộc chat có thể được xem trên thiết bị tùy thích. Người dùng còn có thể thêm và chia sẻ tệp tin vào cuộc trò chuyện từ ổ mây MEGA của mình.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Gói thuê bao Pro Lite: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 400 GB không gian lưu trữ và 1 TB cho lượng băng thông tải mỗi tháng.\nGói Pro I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 2 TB không gian lưu trữ và 2 TB cho lượng băng thông tải mỗi tháng.\nGói Pro II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 8 TB cho lượng băng thông tải mỗi tháng.\nGói Pro III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 16 TB không gian lưu trữ và 16 TB cho lượng băng thông tải mỗi tháng.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Đang gọi…";
 /* notification subtitle of incoming calls */
@@ -1609,7 +1597,7 @@
 /*  */
 "1Hour"="1 giờ";
 /*  */
-"xHours"="%d tiếng";
+"xHours"="%d giờ";
 /*  */
 "1Hour1Minute"="1 giờ và 1 phút";
 /*  */
@@ -2023,7 +2011,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Xin đi vào mục Quyền Riêng Tư trong Cài Đặt của iOS. Bật chức năng Dịch Vụ Định Vị và chỉnh MEGA từ “Khi dùng Ứng dụng” sang “Luôn luôn”.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA truy cập vào dịch vụ dịnh vị khi người dùng chia sẻ địa điểm của mình tới các tên liên lạc trong chát hoặc có tùy chọn “Tải Lên trong Nền” cho Camera Uploads để thực hiện việc tải lên hình ảnh và videos dựa vào các thay đổi vị trí của người dùng.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA truy cập vào dịch vụ dịnh vị khi người dùng chia sẻ địa điểm của mình tới các người khác trong khi chát hoặc có tùy chọn ”Tải Lên trong Nền” cho Camera Uploads để thực hiện việc tải lên hình ảnh và videos dựa vào các thay đổi vị trí của người dùng.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Sử dụng Mạng Viễn Thông đã tắt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2047,7 +2035,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="Đã tìm thấy 1 tên liên lạc trên MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Đi tới Cài đặt";
+"Open Settings"="Đi tới Cài Đặt của iOS";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Mời thêm tên liên lạc và để bắt đầu trò chuyện thông qua MEGA và được bảo mật mạnh mẽ.";
 /* Text showing the user how many contacts would be invited */
@@ -2093,7 +2081,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Đã có vấn đề xảy ra với việc thanh toán gần đây. Xin truy cập MEGA bằng trình duyệt web trên máy tính để biết thêm thông tin.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Tài khoản Doanh Nghiệp đã hết hạn";
+"Your business account is expired"="Tài khoản doanh nghiệp đã hết hạn";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Đã có vấn đề xảy ra với việc xử lý thanh toán gần đây. Tài khoản sẽ bị giới hạn chức năng cho đến khi việc thanh toán được thực hiện giải quyết trên phiên bản nền web.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2123,9 +2111,9 @@
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 giờ";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 tiếng";
+"6 hours"="6 giờ";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 tiếng";
+"24 hours"="24 giờ";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Im lặng tất cả các âm báo chát trong";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
@@ -2209,7 +2197,7 @@
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
 "[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Xin xác thực địa chỉ email[/S] và thực hiện các bước tiếp theo có trong email gửi từ MEGA để mở khóa tài khoản.";
 /* Text for button to open an helping view */
-"Why am I seeing this?"="Tại sao tôi thấy cái này?";
+"Why am I seeing this?"="Tại sao tôi đang thấy cái này?";
 /* Text to notify user an email has been sent */
 "Email sent"="Email đã được gửi";
 /* Title of a helping view about locked accounts */
@@ -2371,7 +2359,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="PHIÊN BẢN LƯU";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Đánh dấu ưa thích";
+"Favourite"="Đánh dấu Ưa Thích";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Loại bỏ Ưa Thích";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2427,7 +2415,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Mật Khẩu đã được ghi vào Bộ Nhớ";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Cấu trúc của mã hóa đầu-cuối yêu cầu một chìa khóa được tạo ra dành cho tệp tin này. Đường liên kết với chìa khóa này được ra sẵn theo chế độ mặc định, nhưng bạn có thể xuất mã giải khóa ra riêng để tăng cường thêm lớp bảo mật.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Hệ thống mã hóa đầu-cuối tự động yêu cầu phải tạo ra một chìa khóa cho tệp tin này. Liên kết với chìa khóa này được tạo theo cài đặt mặc định, nhưng bạn có thể xuất chìa khóa mã ra riêng để tăng thêm một lớp bảo mật bổ sung.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Chìa Khóa Mã";
 /* Text to indicate the user to remove the password of a link */
@@ -2467,7 +2455,7 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="Một Tháng";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Tự chọn…";
+"Custom..."="Chỉnh…";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] đã thay đổi thời gian tự động xóa tin nhắn đã có lâu là[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2517,9 +2505,9 @@
 /* Text description leading the user to perform an action, ie the shortcuts widget */
 "Launch the MEGA app to perform an action"="Khởi động ứng dụng MEGA để thực hiện tác vụ";
 /* Title for document explorer view */
-"Documents"="Tài Liệu";
+"Documents"="Tệp Tài Liệu";
 /* Title for audio explorer view */
-"Audio"="Thoại";
+"Audio"="Âm Thanh";
 /* Title for video explorer view */
 "Videos"="Videos";
 /* Photo Explorer Screen: No documents in the account */
@@ -2539,7 +2527,7 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Trang Chủ";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Văn bản";
+"Docs"="Văn Bản";
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có mã giải khóa. Ban có muốn chia sẻ mã bây giờ không?";
 /* Title for password protect link alert */
@@ -2642,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="Tệp tin có kích thước quá lớn và không thể chỉnh sửa được.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="Tệp tin không thể chỉnh sửa được do lỗi không xác định được từ việc mã hóa.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (Chủ sở hữu)";

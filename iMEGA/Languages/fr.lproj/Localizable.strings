@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas des noms ou des mots du dictionnaire.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Moyenne";
+"PasswordStrengthMedium"="Moyen";
 /*  */
 "passwordMedium"="Votre mot de passe est assez bon pour poursuivre, mais il est recommandé de le renforcer.";
 /*  */
@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="En pause";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Annulé";
+"Cancelled"="Annulée";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Finalisation…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="La numérisation de documents n’est pas proposée";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Un fichier porte déjà ce nom";
+"There is already a file with the same name"="Un fichier du même nom existe déjà";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer de…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -583,7 +583,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Il est inutile d’ajouter votre propre adresse courriel";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="L’utilisateur a été invité et apparaîtra dans votre liste de contacts une fois l’invitation acceptée.";
+"theUserHasBeenInvited"="L’utilisateur a été invité et apparaîtra dans votre liste de contacts si l’invitation est acceptée.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s’ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -643,7 +643,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politique sur les Témoins de navigation";
+"Cookie Policy"="Politique des témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "Cookie Settings"="Paramètres des Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -911,7 +911,7 @@
 /* Title of the Transfers section */
 "transfers"="Transferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Tout";
+"all"="Tous";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="En cours";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
@@ -1073,7 +1073,7 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="Abonnement actuel";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Surclassement vers un abonnement personnalisé";
+"Upgrade to a custom plan"="Passer à un abonnement personnalisé";
 /* Mail subject to upgrade to a custom plan */
 "Ask us how you can upgrade to a custom plan:"="Demandez-nous comment passer à un abonnement personnalisé :";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1161,7 +1161,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] a été exclu de la conversation de groupe par [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] a quitté la conversation de groupe";
+"leftTheGroupChat"="[A] a quitté la conversation de groupe.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] s’est joint à la conversation de groupe sur invitation de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1446,18 +1446,6 @@
 "HTTP error"="Erreur HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA offre un service de stockage nuagique chiffré contrôlé par l’utilisateur, en utilisant des navigateurs Web normaux, mais aussi des applis dédiées pour les appareils mobiles. Contrairement aux autres fournisseurs de services de stockage nuagique, vos données ne sont chiffrées et déchiffrées que par vos appareils client et jamais par nous.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Téléversez vos fichiers de votre téléphone intelligent ou tablette, puis recherchez, stockez, téléchargez, lisez en continu, visualisez, partagez, renommez ou supprimez vos fichiers n’importe quand, de n’importe quel appareil, n’importe où. Partagez des dossiers avec vos contacts et suivez leurs modifications en temps réel.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Le processus de chiffrement implique que nous ne pouvons ni accéder à votre mot de passe ni le réinitialiser. Vous DEVEZ donc le mémoriser (à moins que vous ayez sauvegardé votre clé de récupération) ou vous perdrez l’accès à vos fichiers stockés.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="Le système de dialogue vidéo de MEGA, chiffré de bout en bout par l’utilisateur, permet une confidentialité totale et est proposé pour les navigateurs depuis 2016. Le service a été étendu à notre appli mobile, avec un historique de conversations accessible à partir de plusieurs appareils. Les utilisateurs peuvent aussi facilement ajouter des fichiers à une conversation à partir de leur disque nuagique MEGA.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonnement Pro Léger : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 400 Go d’espace de stockage et 1 To de quota de transfert par mois.\nAbonnement Pro I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 2 To d’espace de stockage et 2 To de quota de transfert par mois.\nAbonnement Pro II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 8 To d’espace de stockage et 8 To de quota de transfert par mois.\nAbonnement Pro III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 16 To d’espace de stockage et 16 To de quota de transfert par mois.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Pour de plus amples renseignements, veuillez consulter notre site Web : https://mega.nz/\nConditions générales d’utilisation : https://mega.nz/terms\nPolitique de confidentialité : https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Appel…";
 /* notification subtitle of incoming calls */
@@ -1471,7 +1459,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Basse";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Moyenne";
+"medium"="Moyen";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Haute";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -2047,7 +2035,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact a été trouvé sur MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Ouvrir Réglages";
+"Open Settings"="Ouvrir les réglages";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invitez des contacts et commencez à dialoguer en toute sécurité grâce au dialogue en ligne chiffré de MEGA.";
 /* Text showing the user how many contacts would be invited */
@@ -2519,7 +2507,7 @@
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
-"Audio"="Son";
+"Audio"="Sons";
 /* Title for video explorer view */
 "Videos"="Vidéos";
 /* Photo Explorer Screen: No documents in the account */
@@ -2642,3 +2630,5 @@
 "general.textEditor.hud.uneditableLargeFile"="Le fichier est trop gros et ne peut pas être modifié.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="Le fichier n’a pas pu être modifié en raison d’un encodage de contenu inconnu.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (propriétaire)";
