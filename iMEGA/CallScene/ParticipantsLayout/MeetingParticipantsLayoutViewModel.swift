@@ -218,7 +218,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CallViewAction) {
         switch action {
         case .onViewReady:
-            invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: initialSubtitle()))
+            if chatRoom.isMeeting {
+                invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: ""))
+                initTimerIfNeeded(with: Int(call.duration))
+            } else {
+                invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: initialSubtitle()))
+            }
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             remoteVideoUseCase.addRemoteVideoListener(self)
             if callParticipants.isEmpty && !call.clientSessions.isEmpty {

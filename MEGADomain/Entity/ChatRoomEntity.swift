@@ -41,4 +41,5 @@ struct ChatRoomEntity {
     let isPreview: Bool
     let isactive: Bool
     let isArchived: Bool
+    let isMeeting: Bool
 }

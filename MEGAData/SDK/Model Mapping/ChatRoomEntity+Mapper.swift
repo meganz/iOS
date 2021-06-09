@@ -18,5 +18,6 @@ extension ChatRoomEntity {
         self.isPreview = chatRoom.isPreview
         self.isactive = chatRoom.isActive
         self.isArchived = chatRoom.isArchived
+        self.isMeeting = chatRoom.isMeeting
     }
 }
