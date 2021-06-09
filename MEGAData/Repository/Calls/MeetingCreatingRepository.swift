@@ -125,7 +125,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                     case .failure(let errorType):
                         completion(.failure(errorType))
                     case .success(let request):
-                        if request.paramType == CreateAccountAction.resumeEphemeralPlusPlus.rawValue {
+                        if request.paramType == AccountActionType.resumeEphemeralPlusPlus.rawValue {
                             self.sdk.fetchNodes(with: RequestDelegate(completion: { (result) in
                                 switch result {
                                 case .success(_):
