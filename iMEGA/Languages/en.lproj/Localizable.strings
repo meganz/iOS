@@ -2614,8 +2614,6 @@
 "My Account"="My Account";
 /* Contacts selection screen header: Invite contacts to meetings */
 "Invite Participants" = "Invite Participants";
-/* Meetings: Floating panel participants count header */
-"In the meeting (%d)" = "In the meeting (%d)";
 /* Text for title for favourite nodes */
 "Favourites"="Favourites";
 /* Text describing that there is not any node marked as favourite */
