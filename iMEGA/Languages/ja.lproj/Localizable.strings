@@ -17,7 +17,7 @@
 /* Caption of a button to edit the files that are selected */
 "edit"="編集";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="保存済み";
+"saved"="保存しました";
 /*  */
 "passcode"="パスコード";
 /* "Size" of the file or folder you are sharing */
@@ -41,21 +41,21 @@
 /*  */
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="あなたの確認リンクはもう有効ではありません。あなたのアカウントは既に有効になっているか、登録をキャンセルしたかもしれません。";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="リンクが無効です";
+"linkNotValid"="リンク無効";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="このリンクを作成したアカウントは、当社の[A]ご利用規約[/A]に複数違反したため停止されました。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="復号キーを入力してください";
+"decryptionKeyAlertTitle"="復号化鍵を入力してください。";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="このフォルダ/ファイルにアクセスするには、その復号キーが必要です。そのキーをお持ちではない場合、リンクの作成者に尋ねてください。";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="復号キー";
+"decryptionKey"="復号化キー";
 /* Button title to try to decrypt the link */
 "decrypt"="復号化";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="復号化キーが無効です";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
-"To access this link, you will need its password."="このリンクにアクセスするには、そのパスワードが必要となります。";
+"To access this link, you will need its password."="このリンクにアクセスするには、そのパスワードが必要です。";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="そのパスワードをお持ちではない場合、リンクの作成者に尋ねてください。";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
@@ -85,7 +85,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="アカウント作成";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="メールアドレスやパスワードが無効です。 もう一度お試しください。";
+"invalidMailOrPassword"="メールアドレスまたはパスワードが無効です。もう一度お試しください";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="あなたは何度もログインしようとしました。%@まで待ってからもう一度お試しください。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -95,11 +95,11 @@
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="正しいメールを入力してください";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="メールアドレスのフォーマットが正しくありません";
+"theEmailAddressFormatIsInvalid"="メールアドレスのフォーマットが正しくありません。";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="有効なパスワードを入力してください";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="メールアドレス";
+"emailPlaceholder"="メール";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="パスワード";
 /*  */
@@ -111,13 +111,13 @@
 /*  */
 "passwordVeryWeakOrWeak"="あなたのパスワードは簡単に推測されます。パスワードを長くしてみてください。大文字と小文字を組み合わせます。特殊文字を追加してください。名前や辞書の単語を使わないでください。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="中";
+"PasswordStrengthMedium"="普通";
 /*  */
 "passwordMedium"="あなたのパスワードはそのままでも行けますが、更に強度を高めることをお勧めいたします。";
 /*  */
 "good"="良好";
 /*  */
-"passwordGood"="このパスワードは、最も一般的なブルートフォース攻撃に耐えます。覚えておいてください。";
+"passwordGood"="このパスワードは、大半の一般的なブルートフォース攻撃に耐えます。覚えておいてください。";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="強い";
 /*  */
@@ -131,13 +131,13 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="パスワードが合いません。";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="MEGAにアカウントを登録するには、ご利用規約に同意していただく必要があります。";
+"termsCheckboxUnselected"="MEGAにアカウントをご登録いただくために、ご利用規約に同意していただく必要がございます。";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="パスワードを失う危険性を理解していることに同意していただく必要がございます";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="このメールアドレスはすでにMEGAでアカウントを登録しています。";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="メールアドレスの確認を待っています。";
+"awaitingEmailConfirmation"="少々お待ちください。メール確認が届きます。";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="アカウント確認のため、パスワードを入力してください。";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
@@ -145,7 +145,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="パスワードが違います";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="エラー。 このメールアドレスはすでに使用されています。";
+"emailAlreadyInUse"="エラー。入力したメールアドレスは既に使用されています。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="お使いのデバイス上の領域を解放する必要があります";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -163,9 +163,9 @@
 /*  */
 "fileLinkUnavailableText1"="これは以下の理由によるものであると考えられます：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="ファイルはToS（ご利用規約）/AUP（ご利用規定）違反のため削除されました。";
+"fileLinkUnavailableText2"="そのファイルはTos（ご利用規約）/AUP（ご利用規定）違反のため削除されました。";
 /*  */
-"fileLinkUnavailableText3"="無効なURL：アクセスしようとしているリンクは存在しません。";
+"fileLinkUnavailableText3"="無効なURL－アクセスしようとしているリンクは存在しません。";
 /*  */
 "fileLinkUnavailableText4"="このファイルはユーザーによって削除されています。";
 /* Message shown when a download starts */
@@ -181,27 +181,27 @@
 /*  */
 "folderLinkUnavailableText1"="これは以下の理由によるものであると考えられます：";
 /*  */
-"folderLinkUnavailableText2"="そのリンクはToS（ご利用規約）/AUP（ご利用規定）違反のため削除されました。";
+"folderLinkUnavailableText2"="そのリンクはTos（ご利用規約）/AUP（ご利用規定）違反のため削除されました。";
 /*  */
 "folderLinkUnavailableText3"="無効なURL：アクセスしようとしているリンクは存在しません。";
 /*  */
-"folderLinkUnavailableText4"="そのリンクはユーザーによって無効化されました。";
+"folderLinkUnavailableText4"="そのリンクはユーザーによって無効とされました。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ネット接続なし";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="フォルダが空です";
+"emptyFolder"="空のフォルダ";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="あなたのクラウドドライブにファイルがありません";
+"cloudDriveEmptyState_title"="あなたのクラウドデバイスにはファイルが存在しません。";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="ファイルを追加";
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="結果なし";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="ごみ箱は空です";
+"cloudDriveEmptyState_titleRubbishBin"="空のごみ箱";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="オフライン用に保存されたファイルはありません";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="連絡先がありません";
+"contactsEmptyState_title"="連絡先なし";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="受信共有フォルダなし";
 /* Title shown when there's no outgoing Shared Items */
@@ -255,7 +255,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1個のフォルダ・%d個のファイル";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="キューに入れられました";
+"queued"="待機中";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="一時停止中";
 /* Possible state of a transfer. When the transfer was cancelled */
@@ -345,7 +345,7 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="リンクを作成中…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="リンクをコピーしました";
+"linkCopied"="リンクがコピーされました";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="リンクがコピーされました";
 /* Text of the button after the links were copied to the clipboard */
@@ -353,9 +353,9 @@
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="著作権に関する警告";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="全ユーザー様への著作権警告";
+"copyrightWarningToAll"="すべてのユーザー様に対する著作権の警告";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGAは他人の著作権を尊重し、MEGAクラウドサービスのユーザー様が著作権に関する法律に従うことを義務づけています";
+"copyrightMessagePart1"="MEGAは他人の著作権を尊重し、MEGAクラウドサービスのユーザーが著作権に関する法律に従うことを義務づけています";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="MEGAクラウドサービスを使用して著作権を侵害することは厳しく禁止されています。あなたは、個人または団体の著作権またはその他の財産権を侵害するファイル、データ、またはコンテンツをアップロード、ダウンロード、保存、共有、表示、ストリーム配信、配布、メールで送信、リンク、送信、またはその他の方法で利用可能にすることはできません。";
 /* button caption text that the user clicks when he agrees */
@@ -369,9 +369,9 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="（PROのみ）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="有効期限を設定する";
+"setExpiryDate"="失効日を選ぶ";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="パスワード保護を設定";
+"setPasswordProtection"="パスワード保護の設定";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="暗号化する";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -451,7 +451,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="名前を変更";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="新しい名前を入力してください";
+"renameNodeMessage"="新しい名前を入力してください。";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="ファイル%@の名前を変更しますか？";
 /* Title for the action that allows you to replace a file. */
@@ -553,7 +553,7 @@
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="権限を変更しました";
 /* Message shown when a share has been left */
-"shareLeft"="共有が残りました";
+"shareLeft"="共有から出ました";
 /* Message shown when some shares have been left */
 "sharesLeft"="共有から出ました";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
@@ -581,11 +581,11 @@
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="追加";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="ご自分のメールアドレスを追加する必要はありません";
+"noNeedToAddYourOwnEmailAddress"="あなたご自身のメールアドレスを追加する必要はありません";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="そのユーザーさんは招待済みで、受け入れられ次第すぐにあなたの連絡先リストに表示されます。";
 /* Success message shown when some contacts have been invited */
-"theUsersHaveBeenInvited"="複数のユーザーが招待されており、承認されると連絡先リストに表示されます。";
+"theUsersHaveBeenInvited"="複数のユーザーが招待されています。承認されると連絡先リストに表示されます。";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="連絡先を削除";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
@@ -605,9 +605,9 @@
 /* Select all items/elements on the list */
 "selectAll"="すべて選択";
 /*  */
-"oneContact"="1件の連絡先";
+"oneContact"="1人の連絡先";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X]件の連絡先";
+"XContactsSelected"="[X]人の連絡先";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="フォルダを共有";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -617,7 +617,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="権限";
 /* Permissions given to the user you share your folder with */
-"readOnly"="読み取り専用";
+"readOnly"="読み取り専用\n";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="読み取りと書き込み";
 /* Permissions given to the user you share your folder with */
@@ -633,7 +633,7 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="セキュリティオプション";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="会社概要";
+"about"="概要";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="フィードバックを送信";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -649,7 +649,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="ご利用規約";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="データ保護規則";
+"dataProtectionRegulationLabel"="データ保護規制";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="オフ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -785,7 +785,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="メールにアクセスできない場合に、support@mega.nzへご連絡してください。";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="キャンセルリンクの有効期限が切れました。";
+"cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントを削除する最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
 /* During account cancellation (deletion) */
@@ -839,7 +839,7 @@
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="この回復リンクは期限切れになっています。もう一度やり直してください。";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="パスワードをリセット";
+"passwordReset"="パスワードのリセット";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="回復キーを入力してください";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -849,7 +849,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="あなたの回復キーは、パスワードのリセットに使用されます。あなたの新しいパスワードを入力してください。";
 /*  */
-"yourPasswordHasBeenReset"="パスワードの再設定が完了しました。 今すぐアカウントにログインしてください。";
+"yourPasswordHasBeenReset"="パスワードが正常にリセットされました。アカウントにログインしてください。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送信";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -873,9 +873,9 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="メールアドレスが一致しません";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="すでにそのメールアドレス用の確認リンクを要求しています。";
+"emailAddressChangeAlreadyRequested"="あなたはすでにそのメールアドレス用の確認リンクを要求しています。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="受信トレイに移動し、新しいメールアドレスを確認するためにリンクをクリックしてください。";
+"emailIsChanging_description"="受信トレイに移動し、新しいメールアドレスを確認するためのリンクをクリックしてください。";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="メールアドレスを確認するためにパスワードを入力してください";
 /* The [X] will be replaced with the e-mail address. */
@@ -949,7 +949,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="電話の連絡先から選択するか、複数のメールアドレスを入力してください";
 /*  */
-"insertYourFriendsEmails"="ご友人のメールアドレス（複数）を入力してください：";
+"insertYourFriendsEmails"="ご友人のメールアドレス（複数）を入力：";
 /*  */
 "howItWorks"="仕組み";
 /*  */
@@ -1025,9 +1025,9 @@
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="プロファイルが正常に変更されました。";
 /* Hint text for the first name (Placeholder) */
-"firstName"="名";
+"firstName"="名前";
 /* Hint text for the last name (Placeholder) */
-"lastName"="姓";
+"lastName"="苗字";
 /* Title for "Local" used space. */
 "localLabel"="ローカル";
 /* Title for MEGA "Available" space. */
@@ -1047,7 +1047,7 @@
 /* account management button title in business account’s landing page */
 "Manage Account"="アカウントの管理";
 /*  */
-"chooseYourAccountType"="アカウントの種類を選択";
+"chooseYourAccountType"="アカウントのタイプを選択してください。";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]Proアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1151,7 +1151,7 @@
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="エンドツーエンドの暗号化を使用して、ご連絡先と安全にチャットを開始してください";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
-"enable"="有効化";
+"enable"="オンにする";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="招待";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1181,7 +1181,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="MEGAchat体験を強化します。URLコンテンツがエンドツーエンドの暗号化なしで取得されます。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="音声・ビデオ通話";
+"voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="モバイルデータを利用します";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1227,13 +1227,13 @@
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="エラーが発生しました。チャット履歴が正常にクリアされませんでした";
 /* 'Next' button in a dialog */
-"continue"="続行";
+"continue"="続ける";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="共有フォルダ";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="連絡先認証情報";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="これは、実際に顔を合わせて行うのが一番です。 検証済みのOTR（オフレコメッセージング）やPGP（プリティグッドプライバシー）など、すでに検証済みの他のチャンネルがある場合は、そちらを使用しても構いません。";
+"thisIsBestDoneInRealLife"="実際に顔を合わせるのが一番いい方法です。すでに認証済みのOTRやPGRがあれば、それを使うのも良いでしょう。";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="私の認証情報";
 /* Button to reset the password */
@@ -1313,9 +1313,9 @@
 /* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
 "Manage"="管理";
 /*  */
-"never"="絶対しない";
+"never"="決してしない";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="あなたはリッチURLプレビューを恒久的に無効にしています。リッチURLプレビューを設定で再度有効にできます。続行しますか？　";
+"richPreviewsConfirmation"="あなたはリッチURLプレビューを永久に無効にしています。リッチURLプレビューを設定で再度有効にできます。続行しますか？　";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="プレビューを削除";
 /*  */
@@ -1335,7 +1335,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新しい共有フォルダ";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="ご登録を中止しますか？";
+"areYouSureYouWantToAbortTheRegistration"="登録を中止してもよろしいですか？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="メールアドレスのスペルを間違った場合、それを修正して「再送信」をクリックしてください。";
 /* A button to resend the email confirmation. */
@@ -1343,11 +1343,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%sさんはすでに連絡先に入っています。";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="連絡先を送信しました：%s";
+"sentContact"="連絡先を送信：%s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s人の連絡先を送信しました。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="添付されました：%s";
+"attachedFile"="添付：%s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s個のファイルを添付しました。";
 /* Label in a button that allows to jump to the latest item */
@@ -1459,7 +1459,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="低い";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="中";
+"medium"="普通";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="高い";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1547,7 +1547,7 @@
 /* Title text for the account confirmation. */
 "confirm"="確認";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
-"passwordAccepted"="パスワードが承認されました";
+"passwordAccepted"="パスワードが受け入れられました";
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="回復キーをエクスポート";
 /* Title to confirm that you want to logout */
@@ -1555,9 +1555,9 @@
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="ログアウトしようとしています。確実にパスワードを覚えるために、パスワードをテストしてください。パスワードを失った場合、MEGAのデータにアクセスできなくなります。";
 /* state previous to import a file */
-"loading"="読み込み中…";
+"loading"="アップロード中";
 /*  */
-"next"="次";
+"next"="次へ";
 /* Button title to allow the user ignore something */
 "ignore"="無視する";
 /* Button title to allow the user open the default browser */
@@ -1575,9 +1575,9 @@
 /* Title of the notification for a missed call */
 "missedCall"="不在着信";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="通話が拒否されました";
+"callWasRejected"="着信が拒否されました。";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="通話がキャンセルされました";
+"callWasCancelled"="着信が取り消されました。";
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="着信に応答されませんでした";
 /* When an active call of user A with user B had failed */
@@ -1619,7 +1619,7 @@
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="この会話をアーカイブしてもよろしいですか？　";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="この会話のアーカイブを解除してもよろしいですか？　";
+"unarchiveChatMessage"="この会話のアーカイブを解除してもよろしいですか？";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="チャットのアーカイブを解除";
 /* Title of button to archive chats. */
@@ -1743,7 +1743,7 @@
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
 "Rubbish-Bin Cleaning Scheduler:"="ごみ箱クリアスケジューラ";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
-"Remove files older than"="以下の日数より古いファイルを削除します：";
+"Remove files older than"="次の日数より古いファイルを削除：";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="日";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -1829,7 +1829,7 @@
 /* The header of a notification related to payments */
 "Payment info"="お支払い情報";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Proメンバーシッププランが間もなく失効いたします";
+"PRO membership plan expiring soon"="Proメンバーシッププランが間もなく失効します";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="削除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1837,23 +1837,23 @@
 /* Label shown inside an unseen notification */
 "New"="新";
 /* When a contact sent a contact/friend request */
-"Sent you a contact request"="連絡先要求を送信しました";
+"Sent you a contact request"="連絡先要求送信しました";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
-"Cancelled their contact request"="相手からの連絡先要求をキャンセルしました";
+"Cancelled their contact request"="連絡先要求をキャンセルしました";
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="お知らせ：連絡先要求があります";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
-"Deleted you as a contact"="あなたは連絡先から削除されました";
+"Deleted you as a contact"="連絡先から削除されました";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="連絡先関係が確立されました";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="アカウントが削除/無効化されました";
+"Account has been deleted/deactivated"="アカウントが削除/非アクティブ化されました";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="連絡先としてブロックされました";
 /* Response text after clicking Ignore on an incoming contact request notification. */
-"You ignored a contact request"="連作先要求を無視しました";
+"You ignored a contact request"="連絡先要求を無視しました";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="連作先要求を受け入れました";
+"You accepted a contact request"="連絡先要求を受け入れました";
 /* Response text after clicking Deny on an incoming contact request notification. */
 "You denied a contact request"="連絡先要求を拒否しました";
 /* When somebody accepted your contact request */
@@ -1883,11 +1883,11 @@
 /* Notification when on client side when owner of a shared folder removes folder/file from it. */
 "Removed item from shared folder"="項目が共有フォルダから削除されました";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
-"Removed [X] items from a share"="共有から[X]項目が削除されました";
+"Removed [X] items from a share"="[X]項目が共有から削除されました";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="%1プランのお支払いをお受けいたしました。";
+"Your payment for the %1 plan was received."="%1 プランのお支払いを受領いたしました。";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="%1プランのお支払いに失敗しました。";
+"Your payment for the %1 plan was unsuccessful."="%1プランのお支払いは受領できませんでした。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="お客様のPROメンバーシッププランは明日失効いたします。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1905,7 +1905,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="この操作は、現在のストレージ容量上限を超えてしまうため、完了できません。";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="アカウントがいっぱいのため、アップロード（複数）は続行できません";
+"Your upload(s) cannot proceed because your account is full"="あなたのアカウントがいっぱいのため、あなたのアップロード（複数）は続行できません";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先がMEGAであなたが最後に活動していた時間を見れるようにします。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -1961,7 +1961,7 @@
 /* Title of the button in the contact info screen to start an audio call */
 "Call"="通話";
 /* Title of the button in the contact info screen to start a video call */
-"Video"="ビデオ";
+"Video"="動画";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="有効になっています";
 /* Text button for init a group chat with link. */
@@ -1993,7 +1993,7 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1が%3さんによって作成されました";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="最近のアクティビティはありません";
+"No recent activity"="最近の活動はありません";
 /* Plural of items which contains a folder. 2 items */
 "%1$d items"="%1$d項目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -2045,7 +2045,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="メールアドレスを入力";
 /* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="MEGAで";
+"On MEGA"="MEGAに";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上の連絡先";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2081,7 +2081,7 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="最後のお支払いに問題がございました。詳細については、デスクトップブラウザを使用してMEGAにアクセスしてください。";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="お客様のビジネスアカウントは期限切れです";
+"Your business account is expired"="あなたのビジネスアカウントは期限切れです";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="お支払いの処理中に問題が発生しました。MEGAは、この問題がデスクトップウェブブラウザで修正されるまで、表示のみに制限されています。";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2089,7 +2089,7 @@
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGAはあなたのデータにアクセスしませんが、あなたのビジネスアカウントの管理者様は、あなたのユーザーアカウントのカメラアップロードを管理し、表示することができます。";
 /*  */
-"Something went wrong"="何かがうまくいきませんでした";
+"Something went wrong"="ちょと、うまく行かなかったようです。";
 /* Title of the "Links" Shared Items. */
 "Links"="リンク";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2099,7 +2099,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="共有先";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Contact your business account administrator to resolve the issue and activate your account."="お客様のビジネスアカウント管理者に連絡して問題を解決し、お客様のアカウントを有効にしてください。";
+"Contact your business account administrator to resolve the issue and activate your account."="あなたのビジネスアカウント管理者に連絡して問題を解決し、あなたのアカウントを有効にしてください。";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
 "Until this morning"="今日の朝まで";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
@@ -2141,9 +2141,9 @@
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="エイリアス/ニックネーム";
 /* Business expired account Overdue payment page header. */
-"Payment overdue"="お支払い期日超過";
+"Payment overdue"="支払い延滞";
 /* Business account status */
-"Active"="有効";
+"Active"="アクティブ";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="役職：";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2201,7 +2201,7 @@
 /* Text to notify user an email has been sent */
 "Email sent"="メールが送信されました";
 /* Title of a helping view about locked accounts */
-"Locked Accounts"="ロックされたアカウント";
+"Locked Accounts"="アカウントがロックされました";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="おそらく、MEGAアカウントで他のサービスと同じパスワードを使用しており、それらのサービスの少なくとも1つがデータ侵害を受けていると思われます。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
@@ -2281,7 +2281,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="並べ替え設定";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"View mode preference"="表示モードの設定";
+"View mode preference"="表示モード設定";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="フォルダごとに列の並べ替え順を設定するか、すべてのフォルダに同じ順序を使用します。";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
@@ -2297,9 +2297,9 @@
 /* Title shown when there are no shared files */
 "No Shared Files"="共有ファイルはありません";
 /* Error message shown when opening a folder link which doesn’t exist */
-"Folder link unavailable"="フォルダリンクが利用できません";
+"Folder link unavailable"="フォルダリンクが使用できません";
 /* Error message shown when opening a file link which doesn’t exist */
-"File link unavailable"="ファイルリンクが使用できません";
+"File link unavailable"="ファイルリンクがありません";
 /* Header of block with all shared files in chat. */
 "Shared Files"="共有ファイル";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -2365,7 +2365,7 @@
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "Label"="ラベル";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="ラベル…";
+"Label..."="色を選択…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="ラベルを削除";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2397,7 +2397,7 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="リンクと復号キーを個別にエクスポート。";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="さらに詳しく";
+"Learn more"="詳細情報";
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="リンクの有効期限は%@です";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
@@ -2417,7 +2417,7 @@
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="当社のエンドツーエンドの暗号化システムでは、このファイルに対して自動的に生成される一意のキーが必要です。このキーを有するリンクはデフォルトで作成されますが、セキュリティの層を追加するために、復号キーを個別にエクスポートできます。";
 /* Text related to the decryption key of a public link */
-"Decryption Key"="復号化キー";
+"Decryption Key"="復号キー";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="パスワードを削除";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2471,13 +2471,13 @@
 /*  */
 "week"="週";
 /*  */
-"weeks"="週";
+"weeks"="月";
 /*  */
 "1 week"="1週";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
 "%1 weeks"="%1週";
 /*  */
-"month"="か月";
+"month"="月";
 /*  */
 "1 month"="1か月";
 /* The number of months e.g. 2 months, 5 months etc. */
@@ -2505,7 +2505,7 @@
 /* Text description leading the user to perform an action, ie the shortcuts widget */
 "Launch the MEGA app to perform an action"="MEGAアプリを起動してアクションを実行します";
 /* Title for document explorer view */
-"Documents"="ドキュメント";
+"Documents"="文書";
 /* Title for audio explorer view */
 "Audio"="音声";
 /* Title for video explorer view */
@@ -2553,7 +2553,7 @@
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="必須クッキーは、重要な機能と当社サービスへの安全なアクセスをご提供するのに不可欠なクッキーです。このため、同意は必要ありません。";
 /* Cookie settings dialog text. */
-"Preference Cookies"="プリファレンスクッキー";
+"Preference Cookies"="お好みのクッキー";
 /* Cookie settings dialog text. */
 "Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="ご選択された特定の表示とフォーマット設定を当社が覚えておけるようにするクッキーです。これらのクッキーを受け入れない場合、ご希望の画面レイアウトなど、当社は覚えておくことができません。";
 /* Cookie settings dialog text. */
@@ -2581,7 +2581,7 @@
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
-"My Account"="私のアカウント";
+"My Account"="アカウント設定";
 /* Text for title for favourite nodes */
 "Favourites"="お気に入り";
 /* Text describing that there is not any node marked as favourite */
