@@ -174,7 +174,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     
     func testAction_sendMessage() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", attendeeType: .guest, isInContactList: false, videoResolution: .high)
-        let chatRoomEntity = ChatRoomEntity(chatId: 1, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: true, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false)
+        let chatRoomEntity = ChatRoomEntity(chatId: 1, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: true, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, isMeeting: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
