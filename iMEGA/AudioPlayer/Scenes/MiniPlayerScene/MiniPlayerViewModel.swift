@@ -152,6 +152,8 @@ final class MiniPlayerViewModel: ViewModelType {
     }
 
     private func preparePlayer() {
+        invokeCommand?(.showLoading(!playerHandler.isPlayerPaused()))
+        
         if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()
         }
