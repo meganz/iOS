@@ -1450,8 +1450,6 @@
 "calling..."="Đang gọi…";
 /* notification subtitle of incoming calls */
 "Incoming call"="Cuộc gọi đến";
-/* Button title to see the available bonus */
-"getBonus"="Nhận thêm Thưởng";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Chất lượng hình ảnh của video khi đăng tải lên chát";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="SỔ LIÊN LẠC TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Xin chào! Mời bạn cùng sử dụng MEGA để có ngay 20+ GB không gian lưu trữ miễn phí và công cụ giao tiếp bảo mật.";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */

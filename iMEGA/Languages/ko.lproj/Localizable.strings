@@ -1450,8 +1450,6 @@
 "calling..."="통화중…";
 /* notification subtitle of incoming calls */
 "Incoming call"="전화 수신중";
-/* Button title to see the available bonus */
-"getBonus"="보너스 얻기";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="대화에 업로드된 동영상의 품질";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA의 연락처";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="안녕하세요! MEGA에서 저와 안전하게 대화하고 최대 20GB 이상의 무료 저장소를 받으세요.";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="내 대화 파일";
 /* Title of the section about the plan in the storage tab in My Account Section */

@@ -1099,9 +1099,6 @@
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
         customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"getBonus", @"Button title to see the available bonus");
-        }
         customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
@@ -1119,16 +1116,6 @@
         customModalAlertVC.dismissCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
-            }];
-        };
-        
-        customModalAlertVC.secondCompletion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:^{
-                self.upgradeVCPresented = NO;
-                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-                achievementsVC.enableCloseBarButton = YES;
-                UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-                [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
             }];
         };
         

@@ -1450,8 +1450,6 @@
 "calling..."="กำลังโทร…";
 /* notification subtitle of incoming calls */
 "Incoming call"="สายเรียกเข้า";
-/* Button title to see the available bonus */
-"getBonus"="รับโบนัส";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="คุณภาพของวิดีโอที่อัปโหลดไปยังการแชท";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="ผู้ติดต่อใน MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="สวัสดีจ้า! เข้าร่วมสนทนาบน MEGA กับฉันได้อย่างปลอดภัย พร้อมรับพื้นที่เก็บข้อมูลฟรีสูงสุดถึง 20 GB+";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="ไฟล์แชทของฉัน";
 /* Title of the section about the plan in the storage tab in My Account Section */
