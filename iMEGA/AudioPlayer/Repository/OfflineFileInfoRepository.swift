@@ -21,16 +21,17 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
     
     func localPath(fromNode: MEGANode) -> URL? {
         let childQueueContext = megaStore.stack.newBackgroundContext()
-        let url = childQueueContext?.performAndWait({ () -> URL? in
-            guard let offlineNode = megaStore.offlineNode(with: fromNode, context: childQueueContext) else {
+        var url: URL?
+        childQueueContext?.performAndWait {
+            if let offlineNode = megaStore.offlineNode(with: fromNode, context: childQueueContext) {
+                url = URL(fileURLWithPath: Helper.pathForOffline().append(pathComponent: offlineNode.localPath))
+            } else {
                 let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: fromNode.base64Handle)
                 let tmpFilePath = nodeFolderPath.append(pathComponent: fromNode.name)
             
-                return fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath:tmpFilePath) : nil
+                url = fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath:tmpFilePath) : nil
             }
-            
-            return URL(fileURLWithPath: Helper.pathForOffline().append(pathComponent: offlineNode.localPath))
-        })
+        }
         return url
     }
 }
