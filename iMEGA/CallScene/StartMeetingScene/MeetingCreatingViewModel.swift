@@ -30,12 +30,12 @@ enum MeetingConfigurationType: Int {
 
 final class MeetingCreatingViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(title: String, subtitle: String, type: MeetingConfigurationType)
+        case configView(title: String, subtitle: String, type: MeetingConfigurationType, isMicrophoneEnabled: Bool)
         case updateMeetingName(String)
         
         case updateVideoButton(enabled: Bool)
         case updateSpeakerButton(enabled: Bool)
-        case updateMicroPhoneButton(enabled: Bool)
+        case updateMicrophoneButton(enabled: Bool)
 
         case updateCameraSwitchType(type: MeetingCameraType)
         case loadingStartMeeting
@@ -58,7 +58,7 @@ final class MeetingCreatingViewModel: ViewModelType {
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = false
-    private var isMuteMicroPhoneEnabled = true
+    private var isMicrophoneEnabled = true
     private var cameraType = MeetingCameraType.back
     
     private var chatId: UInt64?
@@ -89,7 +89,12 @@ final class MeetingCreatingViewModel: ViewModelType {
                 checkChatLink(link: link)
             case .start:
                 meetingName = String(format: NSLocalizedString("%@ Meeting", comment: "Meeting Title"), meetingUseCase.getUsername())
-                invokeCommand?(.configView(title: meetingName, subtitle: "", type: type))
+                invokeCommand?(
+                    .configView(title: meetingName,
+                                subtitle: "",
+                                type: type,
+                                isMicrophoneEnabled: isMicrophoneEnabled)
+                )
             }
 
         case .didTapMicroPhoneButton:
@@ -153,7 +158,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func joinChatCall(chatId: UInt64) {
-        meetingUseCase.joinChatCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: !isMuteMicroPhoneEnabled) { [weak self] in
+        meetingUseCase.joinChatCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
@@ -171,7 +176,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func startChatCall() {
-        meetingUseCase.startChatCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: !isMuteMicroPhoneEnabled) { [weak self] in
+        meetingUseCase.startChatCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
@@ -216,8 +221,8 @@ final class MeetingCreatingViewModel: ViewModelType {
     private func didTapMicroPhoneButton() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
-                self.isMuteMicroPhoneEnabled = !self.isMuteMicroPhoneEnabled
-                self.invokeCommand?(.updateMicroPhoneButton(enabled: self.isMuteMicroPhoneEnabled))
+                self.isMicrophoneEnabled = !self.isMicrophoneEnabled
+                self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
@@ -233,7 +238,13 @@ final class MeetingCreatingViewModel: ViewModelType {
 
             switch $0 {
             case .success(let chatRoom):
-                self.invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: link, type: self.type))
+                self.invokeCommand?(
+                    .configView(
+                        title: chatRoom.title ?? "",
+                        subtitle: link,
+                        type: self.type,
+                        isMicrophoneEnabled: self.isMicrophoneEnabled)
+                )
                 self.chatId = chatRoom.chatId
             case .failure(_):
                 self.router.dismiss()

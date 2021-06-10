@@ -214,10 +214,11 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     
     private func excuteCommand(_ command: MeetingCreatingViewModel.Command) {
         switch command {
-        case .configView(let title, let subtitle, let type):
+        case .configView(let title, let subtitle, let type, let isMicrophoneEnabled):
             vc.title = title
             meetingNameInputTextfield.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.2)])
             meetingNameInputTextfield.isEnabled = type == .start
+            muteUnmuteMicrophoneButton.isSelected = isMicrophoneEnabled
 
             switch type {
             case .guestJoin:
@@ -269,7 +270,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
 
             }
             
-        case .updateMicroPhoneButton(enabled: let isSelected):
+        case .updateMicrophoneButton(enabled: let isSelected):
             muteUnmuteMicrophoneButton.isSelected = isSelected
 
         case .loadingStartMeeting:
