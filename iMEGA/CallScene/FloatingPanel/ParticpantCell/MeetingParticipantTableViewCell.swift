@@ -13,7 +13,7 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         super.awakeFromNib()
         moderatorTextLabel.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.1957759226)
         moderatorTextLabel.layer.cornerRadius = 4.0
-        moderatorTextLabel.text = "  \(NSLocalizedString("moderator", comment: ""))  "
+        moderatorTextLabel.text = "  \(NSLocalizedString("MODERATOR", comment: ""))  "
     }
     
     var viewModel: MeetingParticipantViewModel? {

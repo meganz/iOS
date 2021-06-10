@@ -2616,6 +2616,8 @@
 "Invite Participants" = "Invite Participants";
 /* Meetings: Floating panel participants count header */
 "Participants (%d)" = "Participants (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator*/
+"MODERATOR"="MODERATOR";
 /* Text for title for favourite nodes */
 "Favourites"="Favourites";
 /* Text describing that there is not any node marked as favourite */
