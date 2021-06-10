@@ -1450,8 +1450,6 @@
 "calling..."="Chiamata in corso…";
 /* notification subtitle of incoming calls */
 "Incoming call"="Chiamata in arrivo";
-/* Button title to see the available bonus */
-"getBonus"="Ottieni il bonus";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Qualità dei video caricati in una chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTATTI SU MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Ciao! Chatta con me in sicurezza su MEGA e ottieni fino a 20GB+ di spazio di archiviazione gratuito.";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="File delle mie chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
