@@ -82,6 +82,10 @@ extension CallParticipantEntity {
             }
         }
         
+        if MEGASdkManager.sharedMEGAChatSdk().contacEmail(byHandle: session.peerId) == nil {
+            attendeeType = .guest
+        }
+        
         let contactList = MEGASdkManager.sharedMEGASdk().contacts()
         let isInContactList = (0..<contactList.size.intValue).compactMap(contactList.user(at:)).contains(where: { $0.handle == session.peerId })
         
