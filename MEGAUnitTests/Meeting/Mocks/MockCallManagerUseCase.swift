@@ -10,7 +10,7 @@ final class MockCallManagerUseCase: CallManagerUseCaseProtocol {
         endCall_calledTimes += 1
     }
     
-    func muteUnmuteCall(callId: MEGAHandle, chatId: MEGAHandle, muted: Bool) {
+    func muteUnmuteCall(_ call: CallEntity, muted: Bool) {
         muteUnmute_CalledTimes += 1
     }
     
