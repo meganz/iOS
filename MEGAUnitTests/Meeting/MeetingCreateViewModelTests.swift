@@ -16,7 +16,7 @@ final class MeetingCreateViewModelTests: XCTestCase {
     func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false)
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, isMeeting: true)
 
         useCase.chatCallCompletion = .success(chatRoom)
         let viewModel = MeetingCreatingViewModel(router: router, type: .join, meetingUseCase: useCase, link: "")
@@ -54,7 +54,7 @@ final class MeetingCreateViewModelTests: XCTestCase {
     func testAction_joinChatCall() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false)
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, isMeeting: true)
 
         useCase.chatCallCompletion = .success(chatRoom)
         let viewModel = MeetingCreatingViewModel(router: router, type: .start, meetingUseCase: useCase, link: "")
