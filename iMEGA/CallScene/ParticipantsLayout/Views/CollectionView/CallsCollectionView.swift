@@ -1,5 +1,5 @@
 
-protocol CallsCollectionViewScrollDelegate: class {
+protocol CallsCollectionViewScrollDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int)
 }
 
