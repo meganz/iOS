@@ -131,7 +131,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showNotification(message: NSLocalizedString("online", comment: ""), color: UIColor.systemGreen)
         case .updatedCameraPosition(let position):
             localUserView.transformLocalVideo(for: position)
-            break
         case .showRenameAlert(let title):
             showRenameAlert(title: title)
         case .enableRenameButton(let enabled):

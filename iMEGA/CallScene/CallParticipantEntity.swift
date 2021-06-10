@@ -4,7 +4,7 @@ enum CallParticipantVideoResolution {
     case high
 }
 
-protocol CallParticipantVideoDelegate: class {
+protocol CallParticipantVideoDelegate: AnyObject {
     func frameData(width: Int, height: Int, buffer: Data!)
 }
 
