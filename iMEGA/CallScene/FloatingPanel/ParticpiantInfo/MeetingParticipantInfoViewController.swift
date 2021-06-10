@@ -64,9 +64,4 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
         cell.textLabel?.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return cell
     }
-    
-    override func updateAppearance() {
-        super.updateAppearance()
-        tableView.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1176470588, alpha: 1)
-    }
 }

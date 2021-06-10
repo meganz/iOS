@@ -46,7 +46,12 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
                                                         userInviteUseCase: userInviteUseCase,
                                                         isMyselfModerator: isMyselfModerator,
                                                         router: self)
-        return MeetingParticipantInfoViewController(viewModel: viewModel, sender: sender)
+        let participantInfoViewController = MeetingParticipantInfoViewController(viewModel: viewModel, sender: sender)
+        if #available(iOS 13.0, *) {
+            participantInfoViewController.overrideUserInterfaceStyle = .dark
+        }
+    
+        return participantInfoViewController
     }
     
     func start() {
