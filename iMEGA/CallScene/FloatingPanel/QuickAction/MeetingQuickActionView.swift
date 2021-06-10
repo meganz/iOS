@@ -14,8 +14,6 @@ class MeetingQuickActionView: UIView {
         }
     }
     
-    
-    
     @IBOutlet weak fileprivate var circularView: CircularView!
     @IBOutlet weak fileprivate var iconImageView: UIImageView!
     @IBOutlet weak fileprivate var nameLabel: UILabel!
