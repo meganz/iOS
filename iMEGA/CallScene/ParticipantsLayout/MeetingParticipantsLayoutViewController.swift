@@ -29,6 +29,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
       }
     }
     
+    private var isUserAGuest: Bool {
+        guard let email = MEGASdkManager.sharedMEGASdk().myUser?.email else {
+            return true
+        }
+        
+        return email.isEmpty
+    }
+    
     init(viewModel: MeetingParticipantsLayoutViewModel) {
         self.viewModel = viewModel
         self.titleView = CallTitleView.instanceFromNib
@@ -239,7 +247,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func configureNavigationBar(_ title: String, _ subtitle: String) {
         titleView.configure(title: title, subtitle: subtitle)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
+        if !isUserAGuest {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
+        }
         navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(self.didTapOptionsButton)),
                                               layoutModeBarButton]
     }
