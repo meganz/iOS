@@ -87,11 +87,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                        isVideoEnabled: isVideoEnabled ?? false,
                                        cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-            if isVideoEnabled == true {
+            if isVideoEnabled ?? false {
                 checkForVideoPermission {
                     self.turnCamera(on: true)
                 }
             }
+            
+            dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? false)))
         case .hangCall(let presenter):
             containerViewModel?.dispatch(.hangCall(presenter: presenter))
         case .shareLink(let presenter, let sender):

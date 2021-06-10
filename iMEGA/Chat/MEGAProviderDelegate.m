@@ -361,9 +361,9 @@
     
     if (action.callUUID) {
         if (call) {
-            if (call.hasLocalAudio) {
+            if (call.hasLocalAudio && action.muted) {
                 [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:call.chatId];
-            } else {
+            } else if (!call.hasLocalAudio && !action.muted) {
                 [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:call.chatId];
             }
         } else {
