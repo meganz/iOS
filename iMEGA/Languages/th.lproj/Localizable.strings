@@ -113,7 +113,7 @@
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="ปานกลาง";
 /*  */
-"passwordMedium"="รหัสผ่านของคุณพร้อมที่จะดำเนินการต่อแล้ว แต่ขอแนะนำให้ใช้รหัสผ่านที่แน่นหนายิ่งขึ้น";
+"passwordMedium"="รหัสผ่านของคุณพร้อมที่จะดำเนินการต่อไปแล้ว แต่เราก็ยังคงแนะนำให้คุณใช้รหัสผ่านที่คาดเดาได้ยากต่อไปอีก";
 /*  */
 "good"="คาดเดาได้ยาก";
 /*  */
@@ -199,7 +199,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="ล้างข้อมูลในถังขยะ";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="ไม่มีไฟล์ที่บันทึกออฟไลน์ไว้";
+"offlineEmptyState_title"="ไม่มีไฟล์ที่บันทึกออฟไลน์";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="ไม่มีผู้ติดต่อ";
 /* Title shown when there's no incoming Shared Items */
@@ -283,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="เลือกจากรูปภาพ";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="จับภาพ";
+"capturePhotoVideo"="ถ่ายภาพ";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="สแกนเอกสาร";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -645,7 +645,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "Cookie Policy"="นโยบายคุกกี้";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="ตั้งค่าคุกกี้";
+"Cookie Settings"="การตั้งค่าคุกกี้";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="เงื่อนไขการให้บริการ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -1119,7 +1119,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือไม่สามารถคืนการสั่งซื้อ กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="อัปเกรดเป็นบัญชี Pro";
+"Upgrade to Pro"="อัปเกรดเป็น Pro";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="การเข้าถึงฟีเจอร์เฉพาะบัญชี Pro เช่น การตั้งค่าการป้องกันด้วยรหัสผ่านและวันหมดอายุสำหรับไฟล์สาธารณะ";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1143,7 +1143,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="ข้อความนี้แสดงความรู้สึกถึงขีดจำกัดสูงสุด %d ครั้งแล้ว";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="คุณได้แสดงความรู้ถึงขีดจำกัดสูงสุดที่ %d ครั้งแล้ว";
+"You have reached the maximum limit of %d reactions."="คุณแสดงความรู้ถึงขีดจำกัดสูงสุด %d ครั้งแล้ว";
 /* Chat section header */
 "chat"="แชท";
 /* Empty Conversations section */
@@ -1385,7 +1385,7 @@
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
 "Too many concurrent connections or transfers"="มีการเชื่อมต่อหรือถ่ายโอนพร้อมกันมากเกินไป";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
-"Out of range"="เกินขอบเขตที่กำหนด";
+"Out of range"="ไม่อยู่ในช่วงที่กำหนด";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "Expired"="หมดอายุแล้ว";
 /* Label to show that an error related with a resource Not found occurs during a SDK operation. */
@@ -2413,7 +2413,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="คัดลอกรหัสผ่านไปยังคลิปบอร์ดแล้ว";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="ระบบการเข้ารหัสแบบครบวงจรของเรา มีการใช้คีย์เฉพาะที่สร้างขึ้นโดยอัตโนมัติของไฟล์นี้ ลิงก์ที่มีคีย์นี้จะถูกสร้างขึ้นตามค่าเริ่มต้น แต่คุณสามารถส่งออกคีย์ถอดรหัสแบบแยกต่างหากเพื่อเพิ่มระดับความปลอดภัยได้";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="ระบบเข้ารหัสจากต้นทางถึงปลายทางของเรา มีการใช้คีย์เฉพาะที่สร้างขึ้นโดยอัตโนมัติของไฟล์นี้ ลิงก์ที่มีคีย์นี้จะถูกสร้างขึ้นตามค่าเริ่มต้น แต่คุณสามารถส่งออกคีย์ถอดรหัสแบบแยกต่างหากเพื่อเพิ่มระดับความปลอดภัยได้";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="คีย์ถอดรหัสลับ";
 /* Text to indicate the user to remove the password of a link */
@@ -2623,7 +2623,7 @@
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="เจ้าของการแชร์ได้ใช้พื้นที่เก็บข้อมูลเกินโควต้า";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
-"dialog.shareOwnerStorageQuota.message"="ไม่สามารถส่งไฟล์ได้เนื่องจากผู้ใช้ปลายทางใช้โควต้าพื้นที่เก็บข้อมูลเกินกว่าที่กำหนดแล้ว";
+"dialog.shareOwnerStorageQuota.message"="ไม่สามารถส่งไฟล์ไปยังผู้ใช้ปลายทางได้ เนื่องจากเกินโควต้าการจัดเก็บข้อมูลแล้ว";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="ไฟล์มีขนาดใหญ่เกินไป ไม่สามารถแก้ไขได้";
 /* Hud info message when read unknown encode file. */

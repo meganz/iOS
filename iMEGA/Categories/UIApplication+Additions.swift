@@ -11,4 +11,9 @@ extension UIApplication {
         guard let url = URL(string: "itms-ui://") else { return }
         self.shared.open(url, options: [:], completionHandler: nil)
     }
+    
+    var isSplitOrSlideOver: Bool {
+        guard let w = self.delegate?.window, let window = w else { return false }
+        return !window.frame.equalTo(window.screen.bounds)
+    }
 }

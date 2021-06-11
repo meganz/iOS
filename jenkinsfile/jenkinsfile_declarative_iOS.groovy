@@ -27,7 +27,7 @@ pipeline {
    agent any
    options {
         timeout(time: 1, unit: 'HOURS') 
-        gitLabConnection('hl')
+        gitLabConnection('iosdev')
    }
     environment {
         APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
