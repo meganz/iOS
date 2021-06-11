@@ -964,6 +964,8 @@
 		837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */; };
 		837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */; };
 		837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20E253DBABD0083D927 /* GetLinkViewController.swift */; };
+		8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */; };
+		8383CEFB26736B3600E6A0FF /* EmptyMeetingMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */; };
 		838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
 		838A7B5625D55EFA00767DB0 /* CallsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B5525D55EFA00767DB0 /* CallsUseCase.swift */; };
 		838A7B6925D5678C00767DB0 /* CallsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallsRepository.swift */; };
@@ -3080,6 +3082,8 @@
 		837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecryptionKeysViewController.swift; sourceTree = "<group>"; };
 		837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLinkPasswordViewController.swift; sourceTree = "<group>"; };
 		837EE20E253DBABD0083D927 /* GetLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkViewController.swift; sourceTree = "<group>"; };
+		8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMeetingMessageView.swift; sourceTree = "<group>"; };
+		8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMeetingMessageView.xib; sourceTree = "<group>"; };
 		838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+TwoFactorAuthentication.swift"; sourceTree = "<group>"; };
 		838A7B5525D55EFA00767DB0 /* CallsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsUseCase.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsRepository.swift; sourceTree = "<group>"; };
@@ -7293,6 +7297,7 @@
 		8366517C26497B3600BC02F0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8383CEF726736ADF00E6A0FF /* EmptyMeetingMessage */,
 				83C49BAC2652627400A7764B /* TitleView */,
 				8366517D26497B3600BC02F0 /* LocalUserView.swift */,
 				8366517E26497B3600BC02F0 /* CollectionView */,
@@ -7382,6 +7387,15 @@
 				837EE204253DB8540083D927 /* GetLink.storyboard */,
 			);
 			path = GetLink;
+			sourceTree = "<group>";
+		};
+		8383CEF726736ADF00E6A0FF /* EmptyMeetingMessage */ = {
+			isa = PBXGroup;
+			children = (
+				8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */,
+				8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */,
+			);
+			path = EmptyMeetingMessage;
 			sourceTree = "<group>";
 		};
 		838A7B5225D55EE200767DB0 /* Calls */ = {
@@ -10210,6 +10224,7 @@
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */,
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
+				8383CEFB26736B3600E6A0FF /* EmptyMeetingMessageView.xib in Resources */,
 				BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				5B727399240D3465005816AB /* altIconMinimal@3x.png in Resources */,
@@ -10853,6 +10868,7 @@
 				A896DFE325D68E8300BC481D /* Throttler.swift in Sources */,
 				5D8DC6A9248CB0390067A4F9 /* BackgroundStyle.swift in Sources */,
 				A86B9F462316D6AB00F35E7A /* FLEXManager.m in Sources */,
+				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				A86B9F6D2316D6AB00F35E7A /* FLEXSystemLogTableViewCell.m in Sources */,
