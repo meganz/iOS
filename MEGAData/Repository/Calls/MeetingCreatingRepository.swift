@@ -114,7 +114,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     }
     
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
-        sdk.mnz_isGuestAccount = true
         
         chatSdk.logout(with: MEGAChatResultRequestDelegate(completion: { (result) in
             switch result {
@@ -131,7 +130,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                                 case .success(_):
                                     self.connectToChat(link: link, request: request, completion: completion)
                                 case .failure(_):
-                                    self.sdk.mnz_isGuestAccount = false
                                     completion(.failure(.unexpected))
                                 }
                             }))
@@ -141,7 +139,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                     }
                 })
             case .failure(_):
-                self.sdk.mnz_isGuestAccount = false
                 completion(.failure(.unexpected))
             }
             
@@ -166,7 +163,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                     })
                     self?.chatSdk.add(self?.chatResultDelegate)
                 case .failure(_):
-                    self?.sdk.mnz_isGuestAccount = false
                     completion(.failure(.unexpected))
                 }
             }))
