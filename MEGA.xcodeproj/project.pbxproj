@@ -1214,6 +1214,7 @@
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
 		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
+		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86B9F252316D6AB00F35E7A /* FLEXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E472316D6AA00F35E7A /* FLEXTableViewController.m */; };
 		A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E4A2316D6AA00F35E7A /* FLEXScopeCarousel.m */; };
 		A86B9F272316D6AB00F35E7A /* FLEXTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E4B2316D6AA00F35E7A /* FLEXTableViewSection.m */; };
@@ -3128,6 +3129,7 @@
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A8665F5020ADA1600044F8F6 /* PWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWProgressView.m; sourceTree = "<group>"; };
 		A8665F5120ADA1600044F8F6 /* PWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWProgressView.h; sourceTree = "<group>"; };
+		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86B9E452316D6AA00F35E7A /* FLEXManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXManager.h; sourceTree = "<group>"; };
 		A86B9E472316D6AA00F35E7A /* FLEXTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLEXTableViewController.m; sourceTree = "<group>"; };
 		A86B9E482316D6AA00F35E7A /* FLEXTableViewSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXTableViewSection.h; sourceTree = "<group>"; };
@@ -7477,6 +7479,16 @@
 			path = Vendor/PWProgressView/PWProgressView;
 			sourceTree = "<group>";
 		};
+		A86AC4AA26710A9000E8E89A /* ChangeName */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */,
+				5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */,
+				A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */,
+			);
+			path = ChangeName;
+			sourceTree = "<group>";
+		};
 		A86B9E442316D6AA00F35E7A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -7988,6 +8000,7 @@
 		A8C93C0A22D718030030CE1B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				A86AC4AA26710A9000E8E89A /* ChangeName */,
 				5B8D209C246AAB45009BD3E9 /* ChangeCredentials */,
 				A8C93C0B22D718030030CE1B /* ProfileViewController.swift */,
 				A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */,
@@ -9306,8 +9319,6 @@
 				5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */,
 				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
 				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
-				5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */,
-				5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */,
 			);
 			path = "My Account";
 			sourceTree = "<group>";
@@ -9844,6 +9855,7 @@
 				5B727394240D32F9005816AB /* altIconNight@2x.png in Resources */,
 				5B46D96924333D6100404ED4 /* Achievements.storyboard in Resources */,
 				5D79EDD5251C71B500C0307A /* SearchHintTableViewCell.xib in Resources */,
+				A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,

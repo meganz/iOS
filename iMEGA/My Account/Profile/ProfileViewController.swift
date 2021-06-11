@@ -577,7 +577,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .profile:
             switch rowsForProfileSection()[indexPath.row] {
             case .changeName:
-                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
+                let changeNameNavigationController = UIStoryboard.init(name: "ChangeName", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
                 navigationController?.present(changeNameNavigationController, animated: true)
             case .changePhoto:
                 guard let cell = tableView.cellForRow(at: indexPath) else {
