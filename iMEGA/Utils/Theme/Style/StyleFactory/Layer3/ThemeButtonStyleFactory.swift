@@ -5,7 +5,8 @@ extension InterfaceStyle {
     var themeButtonStyle: ThemeButtonStyleFactory {
         return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory,
                                            cornerStyleFactory: cornerStyleFactory,
-                                           shadowStyleFactory: shadowStyleFactory)
+                                           shadowStyleFactory: shadowStyleFactory,
+                                           textStyleFactory: textStyleFactory)
     }
 }
 
@@ -24,10 +25,9 @@ protocol ThemeButtonStyleFactory {
 private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
 
     let colorFactory: ColorFactory
-
     let cornerStyleFactory: CornerStyleFactory
-
     let shadowStyleFactory: ShadowStyleFactory
+    let textStyleFactory: TextStyleFactory
 
     func styler(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler {
         let cornerStyle = cornerStyleFactory.cornerStyle(of: .round)
@@ -88,15 +88,15 @@ private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
         switch buttonStyle {
         case .primary:
             return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .headline),
-                .disabled: TextStyle(font: .headline),
-                .highlighted: TextStyle(font: .headline)
+                .normal: textStyleFactory.textStyle(of: .headline),
+                .disabled: textStyleFactory.textStyle(of: .headline),
+                .highlighted: textStyleFactory.textStyle(of: .headline)
             ])
         case .secondary:
             return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .headline),
-                .disabled: TextStyle(font: .headline),
-                .highlighted: TextStyle(font: .headline)
+                .normal: textStyleFactory.textStyle(of: .headline),
+                .disabled: textStyleFactory.textStyle(of: .headline),
+                .highlighted: textStyleFactory.textStyle(of: .headline)
             ])
         }
     }

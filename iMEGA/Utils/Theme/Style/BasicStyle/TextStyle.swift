@@ -39,14 +39,14 @@ extension TextStyle {
 
 fileprivate func apply(style: TextStyle) -> (UILabel) -> UILabel {
     return { label in
-        label.font = style.font.uiFont
+        label.font = style.font.value
         return label
     }
 }
 
 fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
     return { button in
-        button.titleLabel?.font = style.font.uiFont
+        button.titleLabel?.font = style.font.value
         return button
     }
 }
@@ -55,14 +55,14 @@ typealias TextAttributes = [NSAttributedString.Key: Any]
 fileprivate func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         var copyAttributes = attributes
-        copyAttributes[.font] = style.font.uiFont
+        copyAttributes[.font] = style.font.value
         return copyAttributes
     }
 }
 
 fileprivate func apply(style: TextStyle) -> (UITextField) -> UITextField {
     return { textField in
-        textField.font = style.font.uiFont
+        textField.font = style.font.value
         return textField
     }
 }

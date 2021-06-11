@@ -1878,6 +1878,7 @@
 		C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */; };
 		C49F8639255AE2030074A054 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8638255AE2030074A054 /* AudioPlayer.swift */; };
 		C49FB1EE258B6F1000B1280D /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */; };
+		C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C4A9146725814E2B008D879F /* UICollectionView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */; };
 		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
 		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
@@ -3945,6 +3946,7 @@
 		C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
 		C49F8638255AE2030074A054 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Additions.swift"; sourceTree = "<group>"; };
+		C4A5F0E7266E31DD001D783B /* MEGALabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGALabel.swift; sourceTree = "<group>"; };
 		C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Additions.swift"; sourceTree = "<group>"; };
 		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -5633,6 +5635,7 @@
 				C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */,
 				C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */,
 				C4EDB73726655229006A114F /* RoundedView.swift */,
+				C4A5F0E7266E31DD001D783B /* MEGALabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -10563,6 +10566,7 @@
 				0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
+				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
 				5BB8448B259CA85F008BDD2A /* CookieSettingsFactory.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
