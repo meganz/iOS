@@ -61,11 +61,12 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             if let textField = textField as? UITextField, let text = textField.text {
                 self?.viewModel.dispatch(.updateFirstName(text))
             }
+            self?.updateJoinMeetingButton()
         }
         return input
     }()
     
-    private lazy var lastNametTextfield: UITextField = {
+    private lazy var lastNameTextfield: UITextField = {
         let input = UITextField()
         input.textAlignment = .center
         input.keyboardAppearance = .dark
@@ -77,6 +78,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             if let textField = textField as? UITextField, let text = textField.text {
                 self?.viewModel.dispatch(.updateLastName(text))
             }
+            self?.updateJoinMeetingButton()
         }
         return input
     }()
@@ -111,6 +113,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
 
     // MARK: - Internal properties
     var viewModel: MeetingCreatingViewModel!
+    var configurationType: MeetingConfigurationType?
     
     init(viewModel: MeetingCreatingViewModel, vc: MeetingCreatingViewController) {
         super.init(frame: .zero)
@@ -137,7 +140,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 // control panel
                 flex.addItem().width(100%).marginTop(12).marginBottom(28).direction(.row).define { flex in
                     flex.addItem(firstNametTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
-                    flex.addItem(lastNametTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
+                    flex.addItem(lastNameTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
                     
                     flex.addItem(meetingNameInputTextfield).grow(1).shrink(1)
 
@@ -183,7 +186,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNametTextfield {
-            lastNametTextfield.becomeFirstResponder()
+            lastNameTextfield.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
         }
@@ -216,6 +219,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         switch command {
         case .configView(let title, let subtitle, let type, let isMicrophoneEnabled):
             vc.title = title
+            configurationType = type
             meetingNameInputTextfield.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.2)])
             meetingNameInputTextfield.isEnabled = type == .start
             muteUnmuteMicrophoneButton.isSelected = isMicrophoneEnabled
@@ -225,9 +229,11 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 meetingNameInputTextfield.isHidden = true
                 vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
                 startMeetingButton.setTitle(NSLocalizedString("Join Meeting", comment: ""), for: .normal)
+                startMeetingButton.isEnabled = false
+                startMeetingButton.alpha = 0.5
                 
                 firstNametTextfield.flex.display(.flex)
-                lastNametTextfield.flex.display(.flex)
+                lastNameTextfield.flex.display(.flex)
 
                 meetingNameInputTextfield.flex.display(.none)
           
@@ -237,14 +243,14 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 startMeetingButton.setTitle(NSLocalizedString("Join Meeting", comment: ""), for: .normal)
                 
                 firstNametTextfield.flex.display(.none)
-                lastNametTextfield.flex.display(.none)
+                lastNameTextfield.flex.display(.none)
 
                 meetingNameInputTextfield.flex.display(.flex)
                 
             case .start:
                 
                 firstNametTextfield.flex.display(.none)
-                lastNametTextfield.flex.display(.none)
+                lastNameTextfield.flex.display(.none)
 
                 meetingNameInputTextfield.flex.display(.flex)
 
@@ -281,7 +287,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             containerView.flex.layout()
             
             firstNametTextfield.isEnabled = false
-            lastNametTextfield.isEnabled = false
+            lastNameTextfield.isEnabled = false
             meetingNameInputTextfield.isEnabled = false
             
             enableDisableVideoButton.isUserInteractionEnabled = false
@@ -297,12 +303,24 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             containerView.flex.layout()
             
             firstNametTextfield.isEnabled = true
-            lastNametTextfield.isEnabled = true
+            lastNameTextfield.isEnabled = true
             meetingNameInputTextfield.isEnabled = true
             
             enableDisableVideoButton.isUserInteractionEnabled = true
             enableDisableSpeakerButton.isUserInteractionEnabled = true
             muteUnmuteMicrophoneButton.isUserInteractionEnabled = true
         }
+    }
+    
+    private func updateJoinMeetingButton() {
+        guard let configType = configurationType,
+              configType == .guestJoin,
+              let firstName = firstNametTextfield.text,
+              let lastname = lastNameTextfield.text else {
+            return
+        }
+        
+        startMeetingButton.isEnabled = !firstName.isEmpty && !lastname.isEmpty
+        startMeetingButton.alpha = startMeetingButton.isEnabled ? 1.0 : 0.5
     }
 }

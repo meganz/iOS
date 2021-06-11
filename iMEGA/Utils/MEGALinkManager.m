@@ -739,7 +739,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 + (void)handlePublicChatLink {
     NSURL *chatLinkUrl = MEGALinkManager.linkURL;
     [SVProgressHUD show];
-
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear]; // Disable background user interaction.
     
     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
